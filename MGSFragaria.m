@@ -400,7 +400,7 @@ char kcLineWrapPrefChanged;
  - goToLine:centered:
  
  */
-- (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered
+- (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight
 {
 	NSInteger lineNumber;
 	NSInteger idx;
@@ -447,7 +447,9 @@ char kcLineWrapPrefChanged;
         }
     }
     
-	[self.textView setSelectedRange:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
+    if (highlight) {
+        [self.textView setSelectedRange:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
+    }
 	[self.textView scrollRangeToVisible:[completeString lineRangeForRange:NSMakeRange(idx, toRange)]];
 }
 

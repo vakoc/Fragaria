@@ -84,7 +84,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (void)setObject:(id)object forKey:(id)key;
 - (id)objectForKey:(id)key;
 - (void)embedInView:(NSView *)view;
-- (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered;
+- (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight;
 - (void)setString:(NSString *)aString;
 - (void)setString:(NSString *)aString options:(NSDictionary *)options;
 - (void)setAttributedString:(NSAttributedString *)aString;

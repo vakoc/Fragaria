@@ -798,7 +798,7 @@ static id sharedInstance = nil;
  */
 - (void)performGoToLine:(NSInteger)lineToGoTo
 {
-  [[MGSFragaria currentInstance] goToLine:lineToGoTo centered:NO];
+  [[MGSFragaria currentInstance] goToLine:lineToGoTo centered:NO highlight:YES];
 }
 
 #pragma mark -
