@@ -1827,29 +1827,36 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
             [highlightedRows addObject:[NSNumber numberWithInt:err.line]];
             
             // Add highlight for background
-            [firstLayoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1] forCharacterRange:lineRange];
+            if (!err.customBackgroundColor) {
+                [firstLayoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1] forCharacterRange:lineRange];
+            } else {
+                [firstLayoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.customBackgroundColor forCharacterRange:lineRange];
+            }
             
-            [firstLayoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
+            if ([err.description length] > 0)
+                [firstLayoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
             
-            NSInteger glyphIndex = [firstLayoutManager glyphIndexForCharacterAtIndex:lineRange.location];
-            
-            NSRect linePos = [firstLayoutManager boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1) inTextContainer:[textView textContainer]];
-            
-            // Add button
-            float scrollOffset = textView.superview.bounds.origin.x - 0; 
-            
-            NSButton* warningButton = [[NSButton alloc] initWithFrame:NSMakeRect(textView.superview.frame.size.width - 32 + scrollOffset, linePos.origin.y-2, 16, 16)];
-            
-            [warningButton setButtonType:NSMomentaryChangeButton];
-            [warningButton setBezelStyle:NSRegularSquareBezelStyle];
-            [warningButton setBordered:NO];
-            [warningButton setImagePosition:NSImageOnly];
-            [warningButton setImage:[MGSFragaria imageNamed:@"editor-warning.png"]];
-            [warningButton setTag:err.line];
-            [warningButton setTarget:self];
-            [warningButton setAction:@selector(pressedWarningBtn:)];
-            
-            [textView addSubview:warningButton];
+            if (!err.hideWarning) {
+                NSInteger glyphIndex = [firstLayoutManager glyphIndexForCharacterAtIndex:lineRange.location];
+                
+                NSRect linePos = [firstLayoutManager boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1) inTextContainer:[textView textContainer]];
+                
+                // Add button
+                float scrollOffset = textView.superview.bounds.origin.x - 0;
+                
+                NSButton* warningButton = [[NSButton alloc] initWithFrame:NSMakeRect(textView.superview.frame.size.width - 32 + scrollOffset, linePos.origin.y-2, 16, 16)];
+                
+                [warningButton setButtonType:NSMomentaryChangeButton];
+                [warningButton setBezelStyle:NSRegularSquareBezelStyle];
+                [warningButton setBordered:NO];
+                [warningButton setImagePosition:NSImageOnly];
+                [warningButton setImage:[MGSFragaria imageNamed:@"editor-warning.png"]];
+                [warningButton setTag:err.line];
+                [warningButton setTarget:self];
+                [warningButton setAction:@selector(pressedWarningBtn:)];
+                
+                [textView addSubview:warningButton];
+            }
         }
     }
 }

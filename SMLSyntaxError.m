@@ -10,7 +10,7 @@
 
 @implementation SMLSyntaxError
 
-@synthesize line, character, code, length, description;
+@synthesize line, character, code, length, description, hideWarning, customBackgroundColor;
 
 
 @end
