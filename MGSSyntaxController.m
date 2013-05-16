@@ -150,7 +150,7 @@ static id sharedInstance = nil;
 	extension = [extension lowercaseString];
 	
 	for (id item in self.syntaxDefinitions) {
-		NSString *extensions = [item valueForKey:@"extensions"];
+		NSString *extensions = [self.syntaxDefinitions[item] valueForKey:@"extensions"];
 		
 		if (!extensions || [extensions isEqualToString:@""]) {
 			continue;
@@ -159,7 +159,7 @@ static id sharedInstance = nil;
 		NSMutableString *extensionsString = [NSMutableString stringWithString:extensions];
 		[extensionsString replaceOccurrencesOfString:@"." withString:@"" options:NSLiteralSearch range:NSMakeRange(0, [extensionsString length])];
 		if ([[extensionsString componentsSeparatedByString:@" "] containsObject:extension]) {
-			definition = item;
+			definition = self.syntaxDefinitions[item];
 			break;
 		}
 
@@ -207,6 +207,7 @@ static id sharedInstance = nil;
 		[syntaxDefinition setValue:name forKey:@"name"];
 		[syntaxDefinition setValue:[item valueForKey:@"file"] forKey:@"file"];
 		[syntaxDefinition setValue:[NSNumber numberWithInteger:idx] forKey:@"sortOrder"];
+		[syntaxDefinition setValue:[item valueForKey:@"extensions"] forKey:@"extensions"];
 		idx++;
 		
 		// key is lowercase name
