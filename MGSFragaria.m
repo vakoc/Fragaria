@@ -254,6 +254,8 @@ char kcLineWrapPrefChanged;
 			self.docSpec = [[self class] createDocSpec];
 		}
         
+        _startingLineNumber = 0;
+        
         // register the font transformer
         FRAFontTransformer *fontTransformer = [[FRAFontTransformer alloc] init];
         [NSValueTransformer setValueTransformer:fontTransformer forName:@"FontTransformer"];
@@ -342,6 +344,7 @@ char kcLineWrapPrefChanged;
 
     // create line numbers
 	SMLLineNumbers *lineNumbers = [[lineNumberClass alloc] initWithDocument:self.docSpec];
+    [lineNumbers setStartingLineNumber: _startingLineNumber];
 	[self.docSpec setValue:lineNumbers forKey:ro_MGSFOLineNumbers];
 
     // SMLLineNumbers will be notified of changes to the text scroll view content view due to scrolling
@@ -504,6 +507,26 @@ char kcLineWrapPrefChanged;
 - (NSTextView *)textView
 {
 	return [self objectForKey:ro_MGSFOTextView];
+}
+
+/*
+ 
+ - setStartingLineNumber:
+ 
+ */
+- (void)setStartingLineNumber:(NSUInteger)value
+{
+    _startingLineNumber = value;
+    [self updateGutterView];
+}
+/*
+ 
+ - startingLineNumber
+ 
+ */
+- (NSUInteger)startingLineNumber
+{
+    return _startingLineNumber;
 }
 
 /*
@@ -732,6 +755,10 @@ char kcLineWrapPrefChanged;
         [textScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
         [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
     }
+    
+    // get line numbers
+    SMLLineNumbers *lineNumbers = (SMLLineNumbers *)[document valueForKey:ro_MGSFOLineNumbers];
+    [lineNumbers setStartingLineNumber: _startingLineNumber];
     
     // get content view
     NSView *contentView = [textScrollView superview];

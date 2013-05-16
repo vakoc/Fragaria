@@ -59,6 +59,8 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
     id docSpec;
     NSSet* objectGetterKeys;
     NSSet* objectSetterKeys;
+  
+    NSUInteger _startingLineNumber;
 }
 
 @property (nonatomic, readonly) MGSExtraInterfaceController *extraInterfaceController;
@@ -101,6 +103,8 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (BOOL)hasVerticalScroller;
 - (void)setDisableScrollElasticity:(BOOL)value;
 - (BOOL)isScrollElasticityDisabled;
+- (void)setStartingLineNumber:(NSUInteger)value;
+- (NSUInteger)startingLineNumber;
 
 - (void)setSyntaxErrors:(NSArray *)errors;
 - (NSArray *)syntaxErrors;

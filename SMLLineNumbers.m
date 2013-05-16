@@ -57,6 +57,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		
 		self.document = theDocument;
 		zeroPoint = NSMakePoint(0, 0);
+    _startingLineNumber = 0;
 		
 		self.attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
@@ -187,7 +188,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
         // wrap or not
 		if (idx == indexNonWrap) {
 			lineNumber++;
-			[lineNumbersString appendFormat:@"%li\n", (long)lineNumber];
+			[lineNumbersString appendFormat:@"%li\n", (long)(lineNumber + _startingLineNumber)];
             textLine++;
             
             // flag breakpoints
@@ -261,4 +262,24 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	
 	self.updatingLineNumbersForClipView = nil;
 }
+
+/*
+ 
+ - setStartingLineNumber:
+ 
+ */
+- (void)setStartingLineNumber:(NSUInteger)value {
+  _startingLineNumber = value;
+  [self updateLineNumbersForClipView:[[document valueForKey:ro_MGSFOScrollView] contentView] checkWidth:YES recolour:YES];
+}
+
+/*
+ 
+ - startingLineNumber:
+ 
+ */
+- (NSUInteger)startingLineNumber {
+  return _startingLineNumber;
+}
+
 @end
