@@ -21,9 +21,9 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import "MGSFragariaFramework.h"
 
 @interface SMLLineNumbers()
-@property (retain) NSDictionary *attributes;
-@property (retain) id document;
-@property (retain) NSClipView *updatingLineNumbersForClipView;
+@property (strong) NSDictionary *attributes;
+@property (strong) id document;
+@property (strong) NSClipView *updatingLineNumbersForClipView;
 
 @end
 
@@ -58,7 +58,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		self.document = theDocument;
 		zeroPoint = NSMakePoint(0, 0);
 		
-		self.attributes = [[[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil] autorelease];
+		self.attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
 	}
@@ -75,8 +75,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(NSString *)context isEqualToString:@"TextFontChanged"]) {
-		self.attributes = [[[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil] autorelease];
+	if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
+		self.attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
@@ -135,7 +135,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		if (checkWidth == YES && recolour == YES) {
 			[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolourTextView:textView];
 		}
-		goto allDone;
+    self.updatingLineNumbersForClipView = nil;
+    return;
 	}
 	
 	NSScrollView *scrollView = (NSScrollView *)[clipView superview];
@@ -143,7 +144,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	if (scrollView == [document valueForKey:ro_MGSFOScrollView]) {
 		gutterScrollView = [document valueForKey:ro_MGSFOGutterScrollView];
 	} else {
-		goto allDone;
+    self.updatingLineNumbersForClipView = nil;
+    return;
 	}
     
     // get break points from delegate
@@ -174,7 +176,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 			oneMoreTime = YES; // Continue one more time through the loop if the last glyph isn't newline
 		}
 	}
-	NSMutableString *lineNumbersString = [[[NSMutableString alloc] init] autorelease];
+	NSMutableString *lineNumbersString = [[NSMutableString alloc] init];
 	
     int textLine = 0;
     NSMutableArray* textLineBreakpoints = [NSMutableArray array];
@@ -256,8 +258,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		
 		[[gutterScrollView contentView] scrollToPoint:NSMakePoint(0, y)];
 	}
-	
-allDone:
 	
 	self.updatingLineNumbersForClipView = nil;
 }
