@@ -188,8 +188,8 @@
 		AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SyntaxDefinitions.plist; sourceTree = "<group>"; };
 		AB397291118C28E700AEF388 /* Syntax Definitions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Syntax Definitions"; sourceTree = "<group>"; };
 		AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLLineNumbers.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragaria.m; sourceTree = "<group>"; };
-		AB41C1261192049F004F0CB5 /* SMLLineNumbers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLLineNumbers.h; sourceTree = "<group>"; };
+		AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragaria.m; sourceTree = "<group>"; tabWidth = 4; };
+		AB41C1261192049F004F0CB5 /* SMLLineNumbers.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = SMLLineNumbers.h; sourceTree = "<group>"; tabWidth = 4; };
 		AB41C12E11920514004F0CB5 /* SMLGutterTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLGutterTextView.h; sourceTree = "<group>"; };
 		AB472B6E129972E400202CB5 /* MGSTextMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MGSTextMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB472B7B1299732F00202CB5 /* MGSTextMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTextMenuController.h; sourceTree = "<group>"; };
@@ -215,7 +215,7 @@
 		AB648E4D11FB3A5200AEF7BD /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MyDocument.xib; sourceTree = "<group>"; };
 		AB69B62B118B745700903D1D /* MGSFragaria.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MGSFragaria.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB69B62C118B745700903D1D /* MGSFragaria-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MGSFragaria-Info.plist"; sourceTree = "<group>"; };
-		AB69B65A118B75FB00903D1D /* SMLSyntaxColouring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLSyntaxColouring.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AB69B65A118B75FB00903D1D /* SMLSyntaxColouring.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLSyntaxColouring.m; sourceTree = "<group>"; tabWidth = 4; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB69B662118B763A00903D1D /* SMLStandardHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLStandardHeader.h; sourceTree = "<group>"; };
 		AB69B664118B766300903D1D /* SMLSyntaxColouring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLSyntaxColouring.h; sourceTree = "<group>"; };
 		AB69B666118B768000903D1D /* SMLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLTextView.h; sourceTree = "<group>"; };
@@ -246,7 +246,7 @@
 		AB69B6AF118B7A9600903D1D /* uversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uversion.h; sourceTree = "<group>"; };
 		AB69B6CB118B7D3E00903D1D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
 		AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLLayoutManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AB69B753118B830700903D1D /* MGSFragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragaria.h; sourceTree = "<group>"; };
+		AB69B753118B830700903D1D /* MGSFragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragaria.h; sourceTree = "<group>"; tabWidth = 4; };
 		AB69B809118B8D0400903D1D /* MGSPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPreferencesController.h; sourceTree = "<group>"; };
 		AB69B80A118B8D0400903D1D /* MGSPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MGSPreferencesController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB6C86C1160FA2B500488AF2 /* MGSGlyphGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSGlyphGenerator.h; sourceTree = "<group>"; };
@@ -286,7 +286,7 @@
 		E3C1850117175ED900801FE5 /* SMLErrorPopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLErrorPopOver.h; sourceTree = "<group>"; };
 		E3C1850217175ED900801FE5 /* SMLErrorPopOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLErrorPopOver.m; sourceTree = "<group>"; };
 		E3CF4B7816E6927300C27B5C /* MGSBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBreakpointDelegate.h; sourceTree = "<group>"; };
-		E3D4B2751714D89700BB2CC6 /* SMLSyntaxError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLSyntaxError.h; sourceTree = "<group>"; };
+		E3D4B2751714D89700BB2CC6 /* SMLSyntaxError.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = SMLSyntaxError.h; sourceTree = "<group>"; tabWidth = 4; };
 		E3D4B2761714D89700BB2CC6 /* SMLSyntaxError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLSyntaxError.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
