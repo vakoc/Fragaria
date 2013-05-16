@@ -271,7 +271,8 @@ char kcLineWrapPrefChanged;
         // Create the Sets containing the valid setter/getter combinations for the Docspec
         
         // Define read/write keys
-        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOIsEdited, MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
+        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOIsEdited,
+                            MGSFOHasVerticalScroller, MGSFODisableScrollElasticity, MGSFODocumentName,
                             MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate, MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate,
                             nil];
         
@@ -507,6 +508,44 @@ char kcLineWrapPrefChanged;
 - (NSTextView *)textView
 {
 	return [self objectForKey:ro_MGSFOTextView];
+}
+
+/*
+ 
+ - setSyntaxDefinitionName:
+ 
+ */
+- (void)setSyntaxDefinitionName:(NSString *)value
+{
+    [self setObject:value forKey:MGSFOSyntaxDefinitionName];
+}
+/*
+ 
+ - syntaxDefinitionName
+ 
+ */
+- (NSString *)syntaxDefinitionName
+{
+    return [self objectForKey:MGSFOSyntaxDefinitionName];
+}
+
+/*
+ 
+ - setDocumentName:
+ 
+ */
+- (void)setDocumentName:(NSString *)value
+{
+    [self setObject:value forKey:MGSFODocumentName];
+}
+/*
+ 
+ - documentName
+ 
+ */
+- (NSString *)documentName
+{
+    return [self objectForKey:MGSFODocumentName];
 }
 
 /*

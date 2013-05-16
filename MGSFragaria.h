@@ -105,6 +105,10 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (BOOL)isScrollElasticityDisabled;
 - (void)setStartingLineNumber:(NSUInteger)value;
 - (NSUInteger)startingLineNumber;
+- (void)setDocumentName:(NSString *)value;
+- (NSString *)documentName;
+- (void)setSyntaxDefinitionName:(NSString *)value;
+- (NSString *)syntaxDefinitionName;
 
 - (void)setSyntaxErrors:(NSArray *)errors;
 - (NSArray *)syntaxErrors;
