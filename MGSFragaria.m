@@ -17,6 +17,7 @@
 NSString * const MGSFOIsSyntaxColoured = @"isSyntaxColoured";
 NSString * const MGSFOShowLineNumberGutter = @"showLineNumberGutter";
 NSString * const MGSFOIsEdited = @"isEdited";
+NSString * const MGSFOHasVerticalScroller = @"hasVerticalScroller";
 
 // string
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
@@ -139,6 +140,7 @@ char kcLineWrapPrefChanged;
 			[defaults objectForKey:MGSFragariaPrefsSyntaxColourNewDocuments], MGSFOIsSyntaxColoured,
             [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
             [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
+            [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
 			@"Standard", MGSFOSyntaxDefinitionName,
 			nil];
 }
@@ -265,7 +267,7 @@ char kcLineWrapPrefChanged;
         // Create the Sets containing the valid setter/getter combinations for the Docspec
         
         // Define read/write keys
-        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOIsEdited,
+        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOIsEdited, MGSFOHasVerticalScroller,
                             MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate, MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate,
                             nil];
         
@@ -315,8 +317,13 @@ char kcLineWrapPrefChanged;
 	NSScrollView *textScrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
 	NSSize contentSize = [textScrollView contentSize];
 	[textScrollView setBorderType:NSNoBorder];
-	[textScrollView setHasVerticalScroller:YES];
-	[textScrollView setAutohidesScrollers:YES];
+    if (self.hasVerticalScroller) {
+        [textScrollView setHasVerticalScroller:YES];
+        [textScrollView setAutohidesScrollers:YES];
+	} else {
+        [textScrollView setHasVerticalScroller:NO];
+        [textScrollView setAutohidesScrollers:NO];
+    }
 	[textScrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[[textScrollView contentView] setAutoresizesSubviews:YES];
 	[textScrollView setPostsFrameChangedNotifications:YES];
@@ -489,6 +496,27 @@ char kcLineWrapPrefChanged;
 
 /*
  
+ - setHasVerticalScroller:
+ 
+ */
+- (void)setHasVerticalScroller:(BOOL)value
+{
+  [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOHasVerticalScroller];
+  [self updateGutterView];
+}
+/*
+ 
+ - hasVerticalScroller
+ 
+ */
+- (BOOL)hasVerticalScroller
+{
+  NSNumber *value = [self objectForKey:MGSFOHasVerticalScroller];
+  return [value boolValue];
+}
+
+/*
+ 
  - setShowsLineNumbers:
  
  */
@@ -639,7 +667,8 @@ char kcLineWrapPrefChanged;
  */
 - (void) updateGutterView {
     id document = self.docSpec;
-    
+
+    BOOL hasVerticalScroller = [[self.docSpec valueForKey:MGSFOHasVerticalScroller] boolValue];
     BOOL showGutter = [[self.docSpec valueForKey:MGSFOShowLineNumberGutter] boolValue];
 	NSUInteger gutterWidth = [[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] integerValue];
     NSUInteger gutterOffset = (showGutter ? gutterWidth : 0);
@@ -653,6 +682,14 @@ char kcLineWrapPrefChanged;
     NSScrollView *gutterScrollView = (NSScrollView *) [document valueForKey:ro_MGSFOGutterScrollView];
     NSTextView *textView = (NSTextView *)[document valueForKey:ro_MGSFOTextView];
     
+    // update scroller
+    if (hasVerticalScroller) {
+        [textScrollView setHasVerticalScroller:YES];
+        [textScrollView setAutohidesScrollers:YES];
+    } else {
+        [textScrollView setHasVerticalScroller:NO];
+        [textScrollView setAutohidesScrollers:NO];
+    }
     // get content view
     NSView *contentView = [textScrollView superview];
     CGFloat contentWidth = [contentView bounds].size.width;

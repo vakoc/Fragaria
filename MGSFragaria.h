@@ -15,6 +15,7 @@
 extern NSString * const MGSFOIsSyntaxColoured;
 extern NSString * const MGSFOShowLineNumberGutter;
 extern NSString * const MGSFOIsEdited;
+extern NSString * const MGSFOHasVerticalScroller;
 
 // string
 extern NSString * const MGSFOSyntaxDefinitionName;
@@ -95,6 +96,8 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (void)setShowsLineNumbers:(BOOL)value;
 - (BOOL)showsLineNumbers;
 - (void)reloadString;
+- (void)setHasVerticalScroller:(BOOL)value;
+- (BOOL)hasVerticalScroller;
 
 - (void)setSyntaxErrors:(NSArray *)errors;
 - (NSArray *)syntaxErrors;
