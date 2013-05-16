@@ -18,6 +18,7 @@ NSString * const MGSFOIsSyntaxColoured = @"isSyntaxColoured";
 NSString * const MGSFOShowLineNumberGutter = @"showLineNumberGutter";
 NSString * const MGSFOIsEdited = @"isEdited";
 NSString * const MGSFOHasVerticalScroller = @"hasVerticalScroller";
+NSString * const MGSFODisableScrollElasticity = @"disableScrollElasticity";
 
 // string
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
@@ -141,6 +142,7 @@ char kcLineWrapPrefChanged;
             [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
             [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
             [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
+            [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
 			@"Standard", MGSFOSyntaxDefinitionName,
 			nil];
 }
@@ -267,7 +269,7 @@ char kcLineWrapPrefChanged;
         // Create the Sets containing the valid setter/getter combinations for the Docspec
         
         // Define read/write keys
-        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOIsEdited, MGSFOHasVerticalScroller,
+        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOIsEdited, MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
                             MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate, MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate,
                             nil];
         
@@ -324,6 +326,11 @@ char kcLineWrapPrefChanged;
         [textScrollView setHasVerticalScroller:NO];
         [textScrollView setAutohidesScrollers:NO];
     }
+    if (self.isScrollElasticityDisabled) {
+        [textScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+    } else {
+        [textScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+    }
 	[textScrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[[textScrollView contentView] setAutoresizesSubviews:YES];
 	[textScrollView setPostsFrameChangedNotifications:YES];
@@ -346,6 +353,11 @@ char kcLineWrapPrefChanged;
 	[gutterScrollView setBorderType:NSNoBorder];
 	[gutterScrollView setHasVerticalScroller:NO];
 	[gutterScrollView setHasHorizontalScroller:NO];
+    if (self.isScrollElasticityDisabled) {
+        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+    } else {
+        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+    }
 	[gutterScrollView setAutoresizingMask:NSViewHeightSizable];
 	[[gutterScrollView contentView] setAutoresizesSubviews:YES];
 	
@@ -492,6 +504,27 @@ char kcLineWrapPrefChanged;
 - (NSTextView *)textView
 {
 	return [self objectForKey:ro_MGSFOTextView];
+}
+
+/*
+ 
+ - setDisableScrollElasticity:
+ 
+ */
+- (void)setDisableScrollElasticity:(BOOL)value
+{
+    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFODisableScrollElasticity];
+    [self updateGutterView];
+}
+/*
+ 
+ - isScrollElasticityDisabled
+ 
+ */
+- (BOOL)isScrollElasticityDisabled
+{
+    NSNumber *value = [self objectForKey:MGSFODisableScrollElasticity];
+    return [value boolValue];
 }
 
 /*
@@ -669,6 +702,8 @@ char kcLineWrapPrefChanged;
     id document = self.docSpec;
 
     BOOL hasVerticalScroller = [[self.docSpec valueForKey:MGSFOHasVerticalScroller] boolValue];
+    BOOL isScrollElasticityDisabled = [[self.docSpec valueForKey:MGSFODisableScrollElasticity] boolValue];
+
     BOOL showGutter = [[self.docSpec valueForKey:MGSFOShowLineNumberGutter] boolValue];
 	NSUInteger gutterWidth = [[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] integerValue];
     NSUInteger gutterOffset = (showGutter ? gutterWidth : 0);
@@ -690,6 +725,14 @@ char kcLineWrapPrefChanged;
         [textScrollView setHasVerticalScroller:NO];
         [textScrollView setAutohidesScrollers:NO];
     }
+    if (isScrollElasticityDisabled) {
+        [textScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+    } else {
+        [textScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+    }
+    
     // get content view
     NSView *contentView = [textScrollView superview];
     CGFloat contentWidth = [contentView bounds].size.width;
