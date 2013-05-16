@@ -394,6 +394,64 @@ char kcLineWrapPrefChanged;
 
 }
 
+
+/*
+ 
+ - goToLine:centered:
+ 
+ */
+- (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered
+{
+	NSInteger lineNumber;
+	NSInteger idx;
+	NSString *completeString = self.textView.string;
+	NSInteger completeStringLength = [completeString length];
+	NSInteger numberOfLinesInDocument;
+	for (idx = 0, numberOfLinesInDocument = 1; idx < completeStringLength; numberOfLinesInDocument++) {
+		idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
+	}
+	if (lineToGoTo > numberOfLinesInDocument) {
+		NSBeep();
+		return;
+	}
+	
+	for (idx = 0, lineNumber = 1; lineNumber < lineToGoTo; lineNumber++) {
+		idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
+	}
+    
+	NSInteger toRange = 0;
+    if (centered) {
+        // get the number of visible lines
+        NSRect visibleRect = [self.textView visibleRect];
+        NSLayoutManager *layoutManager = [self.textView layoutManager];
+        NSTextContainer *textContainer = [self.textView textContainer];
+
+        NSRange visibleGlyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:textContainer];
+        NSRange visibleCharRange = [layoutManager characterRangeForGlyphRange:visibleGlyphRange actualGlyphRange:NULL];
+        NSString *textString = [self.textView string];
+        NSString *searchString = [textString substringWithRange:NSMakeRange(0, visibleCharRange.length)];
+        
+        NSInteger numberOfVisibleLines = 0;
+        NSInteger idx2;
+        for (idx2 = 0, numberOfVisibleLines = 0; idx2 < (NSInteger)visibleCharRange.length; numberOfVisibleLines++) {
+            idx2 = NSMaxRange([searchString lineRangeForRange:NSMakeRange(idx2, 0)]);
+        }
+        
+        if (numberOfVisibleLines > 0) {
+            toRange = (numberOfVisibleLines-1) / 2;
+            if (lineToGoTo + toRange >= numberOfLinesInDocument) {
+                toRange = numberOfLinesInDocument - lineToGoTo;
+            } else {
+                toRange = lineToGoTo + toRange;
+            }
+        }
+    }
+    
+	[self.textView setSelectedRange:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
+	[self.textView scrollRangeToVisible:[completeString lineRangeForRange:NSMakeRange(idx, toRange)]];
+}
+
+
 #pragma mark -
 #pragma mark Document specification
 

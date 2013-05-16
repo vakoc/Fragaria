@@ -798,25 +798,7 @@ static id sharedInstance = nil;
  */
 - (void)performGoToLine:(NSInteger)lineToGoTo
 {
-	NSInteger lineNumber;
-	NSInteger idx;
-	NSString *completeString = SMLCurrentText;
-	NSInteger completeStringLength = [completeString length];
-	NSInteger numberOfLinesInDocument;
-	for (idx = 0, numberOfLinesInDocument = 1; idx < completeStringLength; numberOfLinesInDocument++) {
-		idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
-	}
-	if (lineToGoTo > numberOfLinesInDocument) {
-		NSBeep();
-		return;
-	}
-	
-	for (idx = 0, lineNumber = 1; lineNumber < lineToGoTo; lineNumber++) {
-		idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
-	}
-	
-	[SMLCurrentTextView setSelectedRange:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
-	[SMLCurrentTextView scrollRangeToVisible:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
+  [[MGSFragaria currentInstance] goToLine:lineToGoTo centered:NO];
 }
 
 #pragma mark -
