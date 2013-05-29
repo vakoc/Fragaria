@@ -36,6 +36,11 @@
 }
 
 
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self ];
+}
+
 /*
  
  - showWindow:
