@@ -138,12 +138,12 @@ char kcLineWrapPrefChanged;
     
     // initialise document spec from user defaults
 	return [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			[defaults objectForKey:MGSFragariaPrefsSyntaxColourNewDocuments], MGSFOIsSyntaxColoured,
-            [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
-            [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
             [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
             [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
-			@"Standard", MGSFOSyntaxDefinitionName,
+            @"Standard", MGSFOSyntaxDefinitionName,
+            [defaults objectForKey:MGSFragariaPrefsSyntaxColourNewDocuments], MGSFOIsSyntaxColoured,
+            [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
+            [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
 			nil];
 }
 
