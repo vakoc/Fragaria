@@ -290,6 +290,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 
 -(void)dealloc
 {
+    [document removeObserver:self forKeyPath:@"syntaxDefinition"];
     [[NSNotificationCenter defaultCenter] removeObserver:self ];
 }
 
