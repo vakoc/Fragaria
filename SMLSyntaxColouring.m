@@ -318,7 +318,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	NSString *definitionName = [document valueForKey:MGSFOSyntaxDefinitionName];
 	
 	// if document has no syntax definition name then assign one
-	if (!definitionName) {
+	if (!definitionName || [definitionName length] == 0) {
 		definitionName = [self assignSyntaxDefinition];
 	}
 	
@@ -336,7 +336,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 - (NSString *)assignSyntaxDefinition
 {
 	NSString *definitionName = [document valueForKey:MGSFOSyntaxDefinitionName];
-	if (definitionName) return definitionName;
+	if (definitionName && [definitionName length] > 0) return definitionName;
 
 	NSString *documentExtension = [[document valueForKey:MGSFODocumentName] pathExtension];
 	
@@ -358,7 +358,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
         definitionName = [[MGSSyntaxController sharedInstance] syntaxDefinitionNameWithExtension:lowercaseExtension];
     }
 	
-	if (!definitionName) {
+	if (!definitionName || [definitionName length] == 0) {
 		definitionName = [MGSSyntaxController standardSyntaxDefinitionName];
 	}
 	
