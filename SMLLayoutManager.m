@@ -374,14 +374,17 @@ forStartingGlyphAtIndex:(NSUInteger)glyphIndex
         NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:tabCharacter attributes:defAttributes];
         CTLineRef textLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
         [lineRefs addObject:(__bridge id)textLine]; // kTabLine
-      
+        CFRelease(textLine);
+        
         attrString = [[NSAttributedString alloc] initWithString:spaceCharacter attributes:defAttributes];
         textLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
         [lineRefs addObject:(__bridge id)textLine]; // kSpaceLine
+        CFRelease(textLine);
         
         attrString = [[NSAttributedString alloc] initWithString:newLineCharacter attributes:defAttributes];
         textLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
         [lineRefs addObject:(__bridge id)textLine]; // kNewLineLine
+        CFRelease(textLine);
     }
     
     // experimental glyph substitution
