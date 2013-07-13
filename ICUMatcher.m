@@ -192,7 +192,8 @@ typedef struct URegularExpression URegularExpression;
 			replacementCompleted = YES;
 		}
 	}
-	
+	free(replacementText);
+  
 	NSString *result = [[NSString alloc] initWithBytes:destString
 												 length:resultLength * sizeof(UChar)
 											   encoding:[NSString nativeUTF16Encoding]];

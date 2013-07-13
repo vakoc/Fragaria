@@ -65,7 +65,8 @@ unsigned const ICUUnicodeWordBoundaries = UREGEX_UWORD;
 	UErrorCode status = 0;
 	UChar *regexStr = [aPattern copyUTF16String];
 	URegularExpression *e = uregex_open(regexStr, -1, flags, &err, &status);
-
+  free(regexStr);
+  
 	if(U_FAILURE(status)) {
 		[NSException raise:@"Invalid Pattern Exception"
 					format:@"Could not compile pattern: %s", u_errorName(status)];
@@ -81,9 +82,11 @@ unsigned const ICUUnicodeWordBoundaries = UREGEX_UWORD;
 }
 
 -(void)dealloc {
+  if (re != NULL)
+    uregex_close(re);
 
 //	if(re != NULL)
-//		NSZoneFree([self zone], re);
+//		NSZoneFree(nil, re);
 
 	if(textToSearch != NULL)
 		free(textToSearch);
