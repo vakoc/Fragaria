@@ -63,6 +63,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		self.document = theDocument;
 		zeroPoint = NSMakePoint(0, 0);
     _startingLineNumber = 0;
+    _numberOfVisibleLines = 0;
 		
 		self.attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
@@ -134,7 +135,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		return;
 	}
 	self.updatingLineNumbersForClipView = clipView;
-	
+	_numberOfVisibleLines = 0;
+  
 	SMLTextView *textView = [clipView documentView];
 	
 	if ([[document valueForKey:MGSFOShowLineNumberGutter] boolValue] == NO || textView == nil) {
@@ -193,6 +195,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
         // wrap or not
 		if (idx == indexNonWrap) {
 			lineNumber++;
+			_numberOfVisibleLines++;
+      
 			[lineNumbersString appendFormat:@"%li\n", (long)(lineNumber + _startingLineNumber)];
             textLine++;
             
@@ -285,6 +289,15 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (NSUInteger)startingLineNumber {
   return _startingLineNumber;
+}
+
+/*
+ 
+ - numberOfVisibleLines:
+ 
+ */
+- (NSUInteger)numberOfVisibleLines {
+  return _numberOfVisibleLines;
 }
 
 @end

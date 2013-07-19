@@ -422,49 +422,56 @@ char kcLineWrapPrefChanged;
 		idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
 	}
     
+	NSInteger idxStart = 0;
 	NSInteger idxEnd = 0;
     if (centered) {
-        // get the number of visible lines
-        NSRect visibleRect = [self.textView visibleRect];
-        NSLayoutManager *layoutManager = [self.textView layoutManager];
-        NSTextContainer *textContainer = [self.textView textContainer];
-
-        NSRange visibleGlyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:textContainer];
-        NSRange visibleCharRange = [layoutManager characterRangeForGlyphRange:visibleGlyphRange actualGlyphRange:NULL];
-        NSString *textString = [self.textView string];
-        NSString *searchString = [textString substringWithRange:NSMakeRange(0, visibleCharRange.length)];
+        // get the number of visible lines, since we always show line numbers, just re-use that calculations
+        id document = self.docSpec;
+        SMLLineNumbers *lineNumbers = (SMLLineNumbers *)[document valueForKey:ro_MGSFOLineNumbers];
         
-        NSInteger numberOfVisibleLines = 0;
-        NSInteger idx2;
-        for (idx2 = 0, numberOfVisibleLines = 0; idx2 < (NSInteger)visibleCharRange.length; numberOfVisibleLines++) {
-            idx2 = NSMaxRange([searchString lineRangeForRange:NSMakeRange(idx2, 0)]);
-        }
+        NSInteger numberOfVisibleLines = [lineNumbers numberOfVisibleLines];
         
         if (numberOfVisibleLines > 0) {
-            NSInteger endLine = (numberOfVisibleLines-1) / 2;
-            if (lineToGoTo + endLine >= numberOfLinesInDocument) {
-                endLine = numberOfLinesInDocument - lineToGoTo;
-            } else {
-                endLine = lineToGoTo + endLine;
+            NSInteger startLine = 0;
+            NSInteger endLine = 0;
+            NSInteger visibleLinesByHalf = 0;
+            if (numberOfVisibleLines > 1) {
+                visibleLinesByHalf = (numberOfVisibleLines-1) / 2;
             }
             
-            for (idxEnd = 0, lineNumber = 1; lineNumber < endLine; lineNumber++) {
+            if (lineToGoTo > visibleLinesByHalf) {
+                startLine = lineToGoTo - visibleLinesByHalf;
+            } else {
+                startLine = 0;
+            }
+            
+            endLine = startLine + numberOfVisibleLines;
+            if (endLine > numberOfLinesInDocument) {
+                endLine = numberOfLinesInDocument;
+                startLine = numberOfLinesInDocument - numberOfVisibleLines;
+                if (startLine < 0)
+                    startLine = 0;
+            }
+
+            for (idxStart = 0, lineNumber = 1; lineNumber < startLine; lineNumber++) {
+                idxStart = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idxStart, 0)]);
+            }
+            
+            for (idxEnd = idxStart, lineNumber = startLine; lineNumber < endLine; lineNumber++) {
                 idxEnd = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idxEnd, 0)]);
             }
-            
-            if (idxEnd > 0) {
-                if (idxEnd <= idx)
-                    idxEnd = 0;
-                else
-                    idxEnd -= idx;
-            }
+            idxEnd -= idxStart;
+        } else {
+            idxStart = idx;
         }
+    } else {
+        idxStart = idx;
     }
     
     if (highlight) {
         [self.textView setSelectedRange:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
     }
-	[self.textView scrollRangeToVisible:[completeString lineRangeForRange:NSMakeRange(idx, idxEnd)]];
+	[self.textView scrollRangeToVisible:[completeString lineRangeForRange:NSMakeRange(idxStart, idxEnd)]];
 }
 
 

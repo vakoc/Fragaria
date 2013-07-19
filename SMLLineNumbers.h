@@ -28,6 +28,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
     id document;
   
     NSUInteger _startingLineNumber;
+    NSUInteger _numberOfVisibleLines;
 }
 
 - (id)initWithDocument:(id)theDocument;
@@ -36,5 +37,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (void)updateLineNumbersForClipView:(NSClipView *)clipView checkWidth:(BOOL)checkWidth recolour:(BOOL)recolour;
 - (void)setStartingLineNumber:(NSUInteger)value;
 - (NSUInteger)startingLineNumber;
+- (NSUInteger)numberOfVisibleLines;
 
 @end
