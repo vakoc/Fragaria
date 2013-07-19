@@ -422,7 +422,7 @@ char kcLineWrapPrefChanged;
 		idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
 	}
     
-	NSInteger toRange = 0;
+	NSInteger idxEnd = 0;
     if (centered) {
         // get the number of visible lines
         NSRect visibleRect = [self.textView visibleRect];
@@ -441,11 +441,22 @@ char kcLineWrapPrefChanged;
         }
         
         if (numberOfVisibleLines > 0) {
-            toRange = (numberOfVisibleLines-1) / 2;
-            if (lineToGoTo + toRange >= numberOfLinesInDocument) {
-                toRange = numberOfLinesInDocument - lineToGoTo;
+            NSInteger endLine = (numberOfVisibleLines-1) / 2;
+            if (lineToGoTo + endLine >= numberOfLinesInDocument) {
+                endLine = numberOfLinesInDocument - lineToGoTo;
             } else {
-                toRange = lineToGoTo + toRange;
+                endLine = lineToGoTo + endLine;
+            }
+            
+            for (idxEnd = 0, lineNumber = 1; lineNumber < endLine; lineNumber++) {
+                idxEnd = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idxEnd, 0)]);
+            }
+            
+            if (idxEnd > 0) {
+                if (idxEnd <= idx)
+                    idxEnd = 0;
+                else
+                    idxEnd -= idx;
             }
         }
     }
@@ -453,7 +464,7 @@ char kcLineWrapPrefChanged;
     if (highlight) {
         [self.textView setSelectedRange:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
     }
-	[self.textView scrollRangeToVisible:[completeString lineRangeForRange:NSMakeRange(idx, toRange)]];
+	[self.textView scrollRangeToVisible:[completeString lineRangeForRange:NSMakeRange(idx, idxEnd)]];
 }
 
 
