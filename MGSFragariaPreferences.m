@@ -158,6 +158,8 @@ static id sharedInstance = nil;
 	[dictionary setValue:[NSNumber numberWithBool:NO] forKey:MGSFragariaPrefsAutoInsertAClosingParenthesis];
 	[dictionary setValue:[NSNumber numberWithBool:NO] forKey:MGSFragariaPrefsAutoInsertAClosingBrace];
 	[dictionary setValue:@"Standard" forKey:MGSFragariaPrefsSyntaxColouringPopUpString];
+    
+    [dictionary setValue:[NSArchiver archivedDataWithRootObject:[NSColor controlTextColor]] forKeyPath:MGSFragariaPrefsInvisibleCharactersColourWell];
 	
 	[defaultsController setInitialValues:dictionary];
 	
