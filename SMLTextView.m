@@ -999,7 +999,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
     }
     
     // Create char set with characters valid for variables
-    NSCharacterSet* variableChars = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXYZ0123456789_"];
+    NSCharacterSet* variableChars = [NSCharacterSet characterSetWithCharactersInString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVXYZ0123456789_\\"];
     
     NSString* text = [self string];
     
