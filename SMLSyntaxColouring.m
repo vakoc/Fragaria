@@ -81,7 +81,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 @property (retain) NSString *endCommand;
 @property (retain) NSSet *keywords;
 @property (retain) NSSet *autocompleteWords;
-@property (retain) NSArray *keywordsAndAutocompleteWords;
 @property (retain) NSString *beginInstruction;
 @property (retain) NSString *endInstruction;
 @property (retain) NSCharacterSet *beginVariableCharacterSet;

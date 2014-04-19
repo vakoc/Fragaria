@@ -89,6 +89,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 @property (retain) NSUndoManager *undoManager;
 @property (nonatomic, retain) NSArray* syntaxErrors;
 
+@property (retain) NSArray *keywordsAndAutocompleteWords;
+
 - (id)initWithDocument:(id)document;
 - (void)pageRecolourTextView:(SMLTextView *)textView;
 - (void)pageRecolour;
