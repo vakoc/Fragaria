@@ -24,6 +24,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 @property (strong) NSDictionary *attributes;
 @property (strong) id document;
 @property (strong) NSClipView *updatingLineNumbersForClipView;
+@property BOOL shouldHandleBoundsChange;
 
 @end
 
@@ -64,7 +65,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		zeroPoint = NSMakePoint(0, 0);
     _startingLineNumber = 0;
     _numberOfVisibleLines = 0;
-		
+		_shouldHandleBoundsChange = YES;
+    
 		self.attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
@@ -120,6 +122,11 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)updateLineNumbersForClipView:(NSClipView *)clipView checkWidth:(BOOL)checkWidth recolour:(BOOL)recolour
 {
+  if (!self.shouldHandleBoundsChange)
+    return;
+  
+  self.shouldHandleBoundsChange = NO;
+  
 	NSScrollView *gutterScrollView = nil;
 	NSInteger idx = 0;
 	NSInteger lineNumber = 0;
@@ -270,6 +277,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	}
 	
 	self.updatingLineNumbersForClipView = nil;
+  self.shouldHandleBoundsChange = YES;
 }
 
 /*
