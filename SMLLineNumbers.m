@@ -139,6 +139,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	CGFloat addToScrollPoint;
 	
 	if (self.updatingLineNumbersForClipView == clipView) {
+    self.shouldHandleBoundsChange = YES;
 		return;
 	}
 	self.updatingLineNumbersForClipView = clipView;
@@ -151,6 +152,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 			[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolourTextView:textView];
 		}
     self.updatingLineNumbersForClipView = nil;
+    self.shouldHandleBoundsChange = YES;
     return;
 	}
 	
@@ -160,6 +162,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		gutterScrollView = [document valueForKey:ro_MGSFOGutterScrollView];
 	} else {
     self.updatingLineNumbersForClipView = nil;
+    self.shouldHandleBoundsChange = YES;
     return;
 	}
     
