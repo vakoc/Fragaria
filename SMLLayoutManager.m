@@ -381,12 +381,14 @@ forStartingGlyphAtIndex:(NSUInteger)glyphIndex
         [lineRefs addObject:(id)textLine]; // kTabLine
         
         attrString = [[[NSAttributedString alloc] initWithString:spaceCharacter attributes:defAttributes] autorelease];
-        textLine = CFMakeCollectable(CTLineCreateWithAttributedString((CFAttributedStringRef)attrString));
-        [lineRefs addObject:(id)textLine]; // kSpaceLine
+        textLine = CTLineCreateWithAttributedString((CFAttributedStringRef)attrString);
+        [lineRefs addObject:textLine]; // kSpaceLine
+        CFRelease(textLine);
         
         attrString = [[[NSAttributedString alloc] initWithString:newLineCharacter attributes:defAttributes] autorelease];
-        textLine = CFMakeCollectable(CTLineCreateWithAttributedString((CFAttributedStringRef)attrString));
+        textLine = CTLineCreateWithAttributedString((CFAttributedStringRef)attrString);
         [lineRefs addObject:(id)textLine]; // kNewLineLine
+        CFRelease(textLine);
     }
     
     // experimental glyph substitution
