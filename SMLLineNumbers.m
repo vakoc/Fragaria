@@ -178,6 +178,17 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	NSRect visibleRect = [[scrollView contentView] documentVisibleRect];
 	NSRange visibleRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
 	NSString *textString = [textView string];
+    
+    // wat? Sometimes glyphRangeForBoundingRect: returns NSNotFound, but then in debugger returns a valid range? Let's see if this works around it:
+    if (visibleRange.location == NSNotFound)
+        visibleRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
+    
+    if (visibleRange.location == NSNotFound)
+    {
+        NSLog(@"visibleRange.location still == NSNotFound after second attempte");
+        return;
+    }
+    
 	NSString *searchString = [textString substringWithRange:NSMakeRange(0,visibleRange.location)];
 	
 	for (idx = 0, lineNumber = 0; idx < (NSInteger)visibleRange.location; lineNumber++) {
