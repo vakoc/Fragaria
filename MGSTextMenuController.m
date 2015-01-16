@@ -176,7 +176,7 @@ static id sharedInstance = nil;
 	BOOL enableMenuItem = YES;
 	SEL action = [anItem action];
 	
-	id responder = [SMLCurrentWindow firstResponder];
+	id responder = [[NSApp keyWindow] firstResponder];
 	if (![responder isKindOfClass:[SMLTextView class]]) {
 		return NO;
 	}
