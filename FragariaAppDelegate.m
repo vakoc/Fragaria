@@ -9,6 +9,7 @@
 #import "FragariaAppDelegate.h"
 #import <MGSFragaria/MGSFragaria.h>
 #import "MGSPreferencesController.h"
+#import "MGSSimpleBreakpointDelegate.h"
 
 @implementation FragariaAppDelegate
 
@@ -71,6 +72,9 @@
     syntaxError.length = 10;
     
     fragaria.syntaxErrors = @[syntaxError];
+    
+    breakptDelegate = [[MGSSimpleBreakpointDelegate alloc] init];
+    [fragaria setObject:breakptDelegate forKey:MGSFOBreakpointDelegate];
     
 #pragma unused(textView)
 	

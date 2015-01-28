@@ -10,12 +10,14 @@
 
 @class SMLTextView;
 @class MGSFragaria;
+@class MGSSimpleBreakpointDelegate;
 
 @interface FragariaAppDelegate : NSObject <NSApplicationDelegate> {
     NSWindow *window;
 	IBOutlet NSView *editView;
 	MGSFragaria *fragaria;
 	BOOL isEdited;
+    MGSSimpleBreakpointDelegate *breakptDelegate;
 }
 
 - (IBAction)showPreferencesWindow:(id)sender;
