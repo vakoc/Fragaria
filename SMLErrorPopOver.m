@@ -26,7 +26,8 @@
     if (!errors.count) return;
     
     // Create view controller
-    NSViewController* vc = [[NSViewController alloc] initWithNibName:@"ErrorPopoverView" bundle:[NSBundle bundleForClass:[self class]]];
+    NSViewController *vc = [[NSViewController alloc] init];
+    [vc setView:[[NSView alloc] init]];
     
     errorsString = [[NSMutableAttributedString alloc] init];
     i = 0;

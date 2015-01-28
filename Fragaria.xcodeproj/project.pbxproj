@@ -92,7 +92,6 @@
 		ABF28AF014C075D400ECAD48 /* NSScanner+Fragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */; };
 		ABF28AF114C075D400ECAD48 /* NSScanner+Fragaria.h in Headers */ = {isa = PBXBuildFile; fileRef = ABF28AEF14C075D400ECAD48 /* NSScanner+Fragaria.h */; };
 		E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E38654AD1717652000A345B9 /* ErrorPopoverView.xib in Resources */ = {isa = PBXBuildFile; fileRef = E38654AC1717652000A345B9 /* ErrorPopoverView.xib */; };
 		E3AA871B16E1817800585940 /* editor-breakpoint.png in Resources */ = {isa = PBXBuildFile; fileRef = E3AA871A16E1817800585940 /* editor-breakpoint.png */; };
 		E3BBA50B16E52FE600D89923 /* editor-breakpoint-0.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */; };
 		E3BBA50C16E52FE600D89923 /* editor-breakpoint-1.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA50916E52FE600D89923 /* editor-breakpoint-1.png */; };
@@ -249,7 +248,6 @@
 		ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSScanner+Fragaria.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		ABF28AEF14C075D400ECAD48 /* NSScanner+Fragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScanner+Fragaria.h"; sourceTree = "<group>"; };
 		E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLAutoCompleteDelegate.h; sourceTree = "<group>"; };
-		E38654AC1717652000A345B9 /* ErrorPopoverView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ErrorPopoverView.xib; sourceTree = "<group>"; };
 		E3AA871A16E1817800585940 /* editor-breakpoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint.png"; sourceTree = "<group>"; };
 		E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint-0.png"; sourceTree = "<group>"; };
 		E3BBA50916E52FE600D89923 /* editor-breakpoint-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint-1.png"; sourceTree = "<group>"; };
@@ -531,7 +529,6 @@
 			children = (
 				E3C1850117175ED900801FE5 /* SMLErrorPopOver.h */,
 				E3C1850217175ED900801FE5 /* SMLErrorPopOver.m */,
-				E38654AC1717652000A345B9 /* ErrorPopoverView.xib */,
 			);
 			name = "Error Popover";
 			sourceTree = "<group>";
@@ -767,7 +764,6 @@
 				E3BBA50C16E52FE600D89923 /* editor-breakpoint-1.png in Resources */,
 				E3BBA50D16E52FE600D89923 /* editor-breakpoint-2.png in Resources */,
 				E3C185001717597200801FE5 /* editor-warning.png in Resources */,
-				E38654AD1717652000A345B9 /* ErrorPopoverView.xib in Resources */,
 				AB8386D91719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib in Resources */,
 				01BB1BD71A7959D4006C0056 /* LICENSE.html in Resources */,
 				AB8386DA1719E3D3004408F4 /* MGSPreferencesTextEditing.xib in Resources */,
