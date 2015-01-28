@@ -208,7 +208,7 @@
 										<object class="NSButton" id="775373912">
 											<reference key="NSNextResponder" ref="920959633"/>
 											<int key="NSvFlags">264</int>
-											<string key="NSFrame">{{422, 278}, {80, 28}}</string>
+											<string key="NSFrame">{{422, 278}, {82, 28}}</string>
 											<reference key="NSSuperview" ref="920959633"/>
 											<reference key="NSNextKeyView" ref="827893609"/>
 											<bool key="NSEnabled">YES</bool>
@@ -701,7 +701,7 @@
 												<string key="NSContents">Box</string>
 												<reference key="NSSupport" ref="153691136"/>
 												<reference key="NSBackgroundColor" ref="891104474"/>
-												<object class="NSColor" key="NSTextColor" id="764032644">
+												<object class="NSColor" key="NSTextColor" id="464380086">
 													<int key="NSColorSpace">6</int>
 													<string key="NSCatalogName">System</string>
 													<string key="NSColorName">labelColor</string>
@@ -764,7 +764,7 @@
 												<string key="NSContents">Box</string>
 												<reference key="NSSupport" ref="153691136"/>
 												<reference key="NSBackgroundColor" ref="891104474"/>
-												<reference key="NSTextColor" ref="764032644"/>
+												<reference key="NSTextColor" ref="464380086"/>
 											</object>
 											<int key="NSBorderType">3</int>
 											<int key="NSBoxType">2</int>
@@ -1067,7 +1067,7 @@
 												<string key="NSContents">Box</string>
 												<reference key="NSSupport" ref="153691136"/>
 												<reference key="NSBackgroundColor" ref="891104474"/>
-												<reference key="NSTextColor" ref="764032644"/>
+												<reference key="NSTextColor" ref="464380086"/>
 											</object>
 											<int key="NSBorderType">3</int>
 											<int key="NSBoxType">2</int>

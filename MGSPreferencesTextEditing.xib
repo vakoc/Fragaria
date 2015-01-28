@@ -49,6 +49,7 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{13, 10}, {574, 314}}</string>
 						<reference key="NSSuperview" ref="704015996"/>
+						<reference key="NSNextKeyView" ref="111009061"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<array class="NSMutableArray" key="NSTabViewItems">
 							<object class="NSTabViewItem" id="1041110331">
@@ -147,7 +148,7 @@
 										<object class="NSTextField" id="948425585">
 											<reference key="NSNextResponder" ref="111009061"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrame">{{496, 92}, {41, 11}}</string>
+											<string key="NSFrame">{{496, 91}, {41, 12}}</string>
 											<reference key="NSSuperview" ref="111009061"/>
 											<reference key="NSNextKeyView" ref="712500256"/>
 											<bool key="NSEnabled">YES</bool>
@@ -190,11 +191,11 @@
 														</object>
 														<object class="NSAttributedString" key="attributedStringForNotANumber" id="147635344">
 															<string key="NSString">NaN</string>
-															<dictionary key="NSAttributes" id="962989100"/>
+															<dictionary key="NSAttributes" id="517789538"/>
 														</object>
 														<object class="NSAttributedString" key="attributedStringForZero" id="869635960">
 															<string key="NSString">0,0</string>
-															<reference key="NSAttributes" ref="962989100"/>
+															<reference key="NSAttributes" ref="517789538"/>
 														</object>
 														<string key="decimalSeparator">,</string>
 														<integer value="1000" key="formatterBehavior"/>
@@ -399,11 +400,11 @@
 														</object>
 														<object class="NSAttributedString" key="attributedStringForNotANumber" id="352296031">
 															<string key="NSString">NaN</string>
-															<reference key="NSAttributes" ref="962989100"/>
+															<reference key="NSAttributes" ref="517789538"/>
 														</object>
 														<object class="NSAttributedString" key="attributedStringForZero" id="1067227449">
 															<string key="NSString">0</string>
-															<reference key="NSAttributes" ref="962989100"/>
+															<reference key="NSAttributes" ref="517789538"/>
 														</object>
 														<string key="decimalSeparator">.</string>
 														<integer value="1000" key="formatterBehavior"/>
@@ -563,7 +564,7 @@
 														<integer value="1" key="allowsFloats"/>
 														<object class="NSAttributedString" key="attributedStringForZero" id="283566184">
 															<string key="NSString">0</string>
-															<reference key="NSAttributes" ref="962989100"/>
+															<reference key="NSAttributes" ref="517789538"/>
 														</object>
 														<string key="decimalSeparator">,</string>
 														<integer value="1000" key="formatterBehavior"/>
@@ -598,7 +599,7 @@
 													</object>
 													<object class="NSAttributedString" key="NS.nan">
 														<string key="NSString">NaN</string>
-														<reference key="NSAttributes" ref="962989100"/>
+														<reference key="NSAttributes" ref="517789538"/>
 													</object>
 													<reference key="NS.min" ref="493408160"/>
 													<reference key="NS.max" ref="676142428"/>
@@ -684,7 +685,6 @@
 											<int key="NSvFlags">256</int>
 											<string key="NSFrame">{{174, 92}, {178, 18}}</string>
 											<reference key="NSSuperview" ref="143595230"/>
-											<reference key="NSNextKeyView" ref="181254614"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="847040069">
 												<int key="NSCellFlags">67108864</int>
@@ -763,11 +763,11 @@
 														</object>
 														<object class="NSAttributedString" key="attributedStringForNotANumber" id="872796587">
 															<string key="NSString">NaN</string>
-															<reference key="NSAttributes" ref="962989100"/>
+															<reference key="NSAttributes" ref="517789538"/>
 														</object>
 														<object class="NSAttributedString" key="attributedStringForZero" id="87018956">
 															<string key="NSString">0</string>
-															<reference key="NSAttributes" ref="962989100"/>
+															<reference key="NSAttributes" ref="517789538"/>
 														</object>
 														<string key="decimalSeparator">.</string>
 														<integer value="1000" key="formatterBehavior"/>
@@ -874,11 +874,11 @@
 														</object>
 														<object class="NSAttributedString" key="attributedStringForNotANumber" id="529466897">
 															<string key="NSString">NaN</string>
-															<reference key="NSAttributes" ref="962989100"/>
+															<reference key="NSAttributes" ref="517789538"/>
 														</object>
 														<object class="NSAttributedString" key="attributedStringForZero" id="616541654">
 															<string key="NSString">0</string>
-															<reference key="NSAttributes" ref="962989100"/>
+															<reference key="NSAttributes" ref="517789538"/>
 														</object>
 														<string key="decimalSeparator">.</string>
 														<integer value="1000" key="formatterBehavior"/>
@@ -995,6 +995,7 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{600, 338}</string>
+				<reference key="NSNextKeyView" ref="181254614"/>
 				<object class="NSMutableString" key="NSClassName">
 					<characters key="NS.bytes">NSView</characters>
 				</object>
