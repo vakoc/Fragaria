@@ -61,7 +61,6 @@
 		AB69B6DA118B7F2A00903D1D /* SMLLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */; };
 		AB69B754118B830700903D1D /* MGSFragaria.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B753118B830700903D1D /* MGSFragaria.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB6C86C4160FA2B500488AF2 /* MGSGlyphGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6C86C2160FA2B500488AF2 /* MGSGlyphGenerator.m */; };
-		AB6C87631610EAC800488AF2 /* General.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6C87621610EAC800488AF2 /* General.png */; };
 		AB8386D91719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */; };
 		AB8386DA1719E3D3004408F4 /* MGSPreferencesTextEditing.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */; };
 		AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = AB8387A9171B4505004408F4 /* SMLSyntaxColouringDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -200,7 +199,6 @@
 		AB472C871299C34500202CB5 /* SMLEntab.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLEntab.xib; sourceTree = "<group>"; };
 		AB5E6A4911B65AC20026B4B9 /* SMLGutterTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLGutterTextView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB648E2A11FB385700AEF7BD /* Fragaria Doc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fragaria Doc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB648E2C11FB385700AEF7BD /* Fragaria Document Based App-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Fragaria Document Based App-Info.plist"; sourceTree = "<group>"; };
 		AB648E3E11FB38E700AEF7BD /* MyDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
 		AB648E3F11FB38E700AEF7BD /* MyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
 		AB648E4211FB395100AEF7BD /* Fragaria_Document-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Fragaria_Document-Info.plist"; sourceTree = "<group>"; };
@@ -362,9 +360,7 @@
 				AB8387CC171D7F1D004408F4 /* TODO.md */,
 				AB92A4151192B66A0055A3E7 /* Application */,
 				AB69B752118B82DF00903D1D /* Framework */,
-				AB3972FC118C2A5D00AEF388 /* Resources */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -385,12 +381,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AB472C861299C34500202CB5 /* SMLDetab.xib */,
-				AB472C871299C34500202CB5 /* SMLEntab.xib */,
-				AB472C841299C33100202CB5 /* SMLGoToLine.xib */,
-				AB472C821299C31F00202CB5 /* SMLOpenPanelAccessoryView.xib */,
-				AB472C801299C30F00202CB5 /* SMLRegularExpressionHelp.xib */,
-				AB472C7A1299C2F500202CB5 /* SMLCommandResult.xib */,
 				AB648E4A11FB3A5200AEF7BD /* MainMenu-Document.xib */,
 				AB648E4C11FB3A5200AEF7BD /* MyDocument.xib */,
 				AB648E4211FB395100AEF7BD /* Fragaria_Document-Info.plist */,
@@ -414,9 +404,6 @@
 		AB3972FC118C2A5D00AEF388 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */,
-				AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */,
-				E38654AC1717652000A345B9 /* ErrorPopoverView.xib */,
 				E3C184FF1717597200801FE5 /* editor-warning.png */,
 				E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */,
 				E3BBA50916E52FE600D89923 /* editor-breakpoint-1.png */,
@@ -424,7 +411,6 @@
 				E3AA871A16E1817800585940 /* editor-breakpoint.png */,
 				ABA812DB11B6855200A29990 /* LICENSE-2.0.txt */,
 				AB69B62C118B745700903D1D /* MGSFragaria-Info.plist */,
-				AB648E2C11FB385700AEF7BD /* Fragaria Document Based App-Info.plist */,
 				AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */,
 				AB397291118C28E700AEF388 /* Syntax Definitions */,
 			);
@@ -474,6 +460,7 @@
 				E3D4B2761714D89700BB2CC6 /* SMLSyntaxError.m */,
 				E3C1850117175ED900801FE5 /* SMLErrorPopOver.h */,
 				E3C1850217175ED900801FE5 /* SMLErrorPopOver.m */,
+				E38654AC1717652000A345B9 /* ErrorPopoverView.xib */,
 			);
 			name = Smultron;
 			sourceTree = "<group>";
@@ -486,6 +473,7 @@
 				ABDED9B6128AB144002EE039 /* Fragaria */,
 				ABDED9A9128AAEB6002EE039 /* ICU */,
 				AB69B659118B75E100903D1D /* Smultron */,
+				AB3972FC118C2A5D00AEF388 /* Resources */,
 			);
 			name = Framework;
 			sourceTree = "<group>";
@@ -509,6 +497,7 @@
 				AB69B80A118B8D0400903D1D /* MGSPreferencesController.m */,
 				AB648E2311FB37D200AEF7BD /* NSDocument based */,
 				AB648E2211FB37AF00AEF7BD /* Simple */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -541,16 +530,24 @@
 				AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */,
 				AB472BF51299BBBA00202CB5 /* MGSExtraInterfaceController.h */,
 				AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */,
+				AB472C861299C34500202CB5 /* SMLDetab.xib */,
+				AB472C871299C34500202CB5 /* SMLEntab.xib */,
+				AB472C841299C33100202CB5 /* SMLGoToLine.xib */,
+				AB472C821299C31F00202CB5 /* SMLOpenPanelAccessoryView.xib */,
+				AB472C801299C30F00202CB5 /* SMLRegularExpressionHelp.xib */,
+				AB472C7A1299C2F500202CB5 /* SMLCommandResult.xib */,
 				AB472B7B1299732F00202CB5 /* MGSTextMenuController.h */,
 				AB472B6E129972E400202CB5 /* MGSTextMenuController.m */,
 				ABD0FE581193543600E6AFE6 /* MGSFragariaPreferences.h */,
 				ABC578D2160350240040B3FB /* MGSFragariaPreferences.m */,
-				ABC578E71603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h */,
-				ABC578E81603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.m */,
 				AB6C86C1160FA2B500488AF2 /* MGSGlyphGenerator.h */,
 				AB6C86C2160FA2B500488AF2 /* MGSGlyphGenerator.m */,
+				ABC578E71603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h */,
+				ABC578E81603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.m */,
+				AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */,
 				ABE25D081635CA7C00F23718 /* MGSFragariaPrefsViewController.h */,
 				ABE25D091635CA7C00F23718 /* MGSFragariaPrefsViewController.m */,
+				AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */,
 			);
 			name = Fragaria;
 			sourceTree = "<group>";
@@ -695,7 +692,6 @@
 				AB648E4E11FB3A5300AEF7BD /* MainMenu-Document.xib in Resources */,
 				AB648E4F11FB3A5300AEF7BD /* MyDocument.xib in Resources */,
 				ABC1D5DB160B0C51008769EB /* Preferences.xib in Resources */,
-				AB6C87631610EAC800488AF2 /* General.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -890,7 +886,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "Fragaria Document Based App-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Fragaria_Document-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -956,7 +952,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "Fragaria Document Based App-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Fragaria_Document-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -977,7 +973,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
-				INFOPLIST_FILE = "Fragaria Document Based App-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Fragaria_Document-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
