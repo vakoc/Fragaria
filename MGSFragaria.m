@@ -17,6 +17,8 @@
 NSString * const MGSFOIsSyntaxColoured = @"isSyntaxColoured";
 NSString * const MGSFOShowLineNumberGutter = @"showLineNumberGutter";
 NSString * const MGSFOIsEdited = @"isEdited";
+NSString * const MGSFOHasVerticalScroller = @"hasVerticalScroller";
+NSString * const MGSFODisableScrollElasticity = @"disableScrollElasticity";
 
 // string
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
@@ -56,12 +58,12 @@ char kcLineWrapPrefChanged;
 
 // class extension
 @interface MGSFragaria()
-@property (nonatomic, readwrite, assign) MGSExtraInterfaceController *extraInterfaceController;
+@property (nonatomic, readwrite) MGSExtraInterfaceController *extraInterfaceController;
 
 - (void)updateGutterView;
 
-@property (nonatomic,retain) NSSet* objectGetterKeys;
-@property (nonatomic,retain) NSSet* objectSetterKeys;
+@property (nonatomic,strong) NSSet* objectGetterKeys;
+@property (nonatomic,strong) NSSet* objectSetterKeys;
 
 @end
 
@@ -136,10 +138,12 @@ char kcLineWrapPrefChanged;
     
     // initialise document spec from user defaults
 	return [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			[defaults objectForKey:MGSFragariaPrefsSyntaxColourNewDocuments], MGSFOIsSyntaxColoured,
+            [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
+            [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
+            @"Standard", MGSFOSyntaxDefinitionName,
+            [defaults objectForKey:MGSFragariaPrefsSyntaxColourNewDocuments], MGSFOIsSyntaxColoured,
             [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
             [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
-			@"Standard", MGSFOSyntaxDefinitionName,
 			nil];
 }
 
@@ -250,8 +254,10 @@ char kcLineWrapPrefChanged;
 			self.docSpec = [[self class] createDocSpec];
 		}
         
+        _startingLineNumber = 0;
+        
         // register the font transformer
-        FRAFontTransformer *fontTransformer = [[[FRAFontTransformer alloc] init] autorelease];
+        FRAFontTransformer *fontTransformer = [[FRAFontTransformer alloc] init];
         [NSValueTransformer setValueTransformer:fontTransformer forName:@"FontTransformer"];
         
         // observe defaults that affect rendering
@@ -266,6 +272,7 @@ char kcLineWrapPrefChanged;
         
         // Define read/write keys
         self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOIsEdited,
+                            MGSFOHasVerticalScroller, MGSFODisableScrollElasticity, MGSFODocumentName,
                             MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate, MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate,
                             nil];
         
@@ -312,38 +319,57 @@ char kcLineWrapPrefChanged;
     Class syntaxColouringClass = [SMLSyntaxColouring class];
     
 	// create text scrollview
-	NSScrollView *textScrollView = [[[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)] autorelease];
+	NSScrollView *textScrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
 	NSSize contentSize = [textScrollView contentSize];
 	[textScrollView setBorderType:NSNoBorder];
-	[textScrollView setHasVerticalScroller:YES];
-	[textScrollView setAutohidesScrollers:YES];
+    if (self.hasVerticalScroller) {
+        [textScrollView setHasVerticalScroller:YES];
+        [textScrollView setAutohidesScrollers:YES];
+	} else {
+        [textScrollView setHasVerticalScroller:NO];
+        [textScrollView setAutohidesScrollers:NO];
+    }
+    if (self.isScrollElasticityDisabled) {
+        [textScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+    } else {
+        [textScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+    }
 	[textScrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[[textScrollView contentView] setAutoresizesSubviews:YES];
 	[textScrollView setPostsFrameChangedNotifications:YES];
 		
 	// create textview
-	SMLTextView *textView = [[[editorTextViewClass alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)] autorelease];
+	SMLTextView *textView = [[editorTextViewClass alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
     [textView setFragaria:self];
 	[textScrollView setDocumentView:textView];
 
     // create line numbers
-	SMLLineNumbers *lineNumbers = [[[lineNumberClass alloc] initWithDocument:self.docSpec] autorelease];
+	SMLLineNumbers *lineNumbers = [[lineNumberClass alloc] initWithDocument:self.docSpec];
+    [lineNumbers setStartingLineNumber: _startingLineNumber];
 	[self.docSpec setValue:lineNumbers forKey:ro_MGSFOLineNumbers];
 
     // SMLLineNumbers will be notified of changes to the text scroll view content view due to scrolling
     [[NSNotificationCenter defaultCenter] addObserver:lineNumbers selector:@selector(viewBoundsDidChange:) name:NSViewBoundsDidChangeNotification object:[textScrollView contentView]];
 	[[NSNotificationCenter defaultCenter] addObserver:lineNumbers selector:@selector(viewBoundsDidChange:) name:NSViewFrameDidChangeNotification object:[textScrollView contentView]];
+    
+    //// Will be unregistered in SMLLineNumbers dealloc
+    
 
 	// create gutter scrollview
-	NSScrollView *gutterScrollView = [[[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, gutterWidth, contentSize.height)] autorelease];
+	NSScrollView *gutterScrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, gutterWidth, contentSize.height)];
 	[gutterScrollView setBorderType:NSNoBorder];
 	[gutterScrollView setHasVerticalScroller:NO];
 	[gutterScrollView setHasHorizontalScroller:NO];
+    if (self.isScrollElasticityDisabled) {
+        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+    } else {
+        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+    }
 	[gutterScrollView setAutoresizingMask:NSViewHeightSizable];
 	[[gutterScrollView contentView] setAutoresizesSubviews:YES];
 	
 	// create gutter textview
-	SMLGutterTextView *gutterTextView = [[[gutterTextViewClass alloc] initWithFrame:NSMakeRect(0, 0, gutterWidth, contentSize.height - 50)] autorelease];
+	SMLGutterTextView *gutterTextView = [[gutterTextViewClass alloc] initWithFrame:NSMakeRect(0, 0, gutterWidth, contentSize.height - 50)];
 	[gutterScrollView setDocumentView:gutterTextView];
 	
 	// update the docSpec
@@ -352,7 +378,7 @@ char kcLineWrapPrefChanged;
 	[self.docSpec setValue:gutterScrollView forKey:ro_MGSFOGutterScrollView];
 	
 	// add syntax colouring
-	SMLSyntaxColouring *syntaxColouring = [[[syntaxColouringClass alloc] initWithDocument:self.docSpec] autorelease];
+	SMLSyntaxColouring *syntaxColouring = [[syntaxColouringClass alloc] initWithDocument:self.docSpec];
 	[self.docSpec setValue:syntaxColouring forKey:ro_MGSFOSyntaxColouring];
 	[self.docSpec setValue:syntaxColouring forKey:MGSFOAutoCompleteDelegate];
     
@@ -370,6 +396,84 @@ char kcLineWrapPrefChanged;
     [textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
 
 }
+
+
+/*
+ 
+ - goToLine:centered:
+ 
+ */
+- (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight
+{
+	NSInteger lineNumber;
+	NSInteger idx;
+	NSString *completeString = self.textView.string;
+	NSInteger completeStringLength = [completeString length];
+	NSInteger numberOfLinesInDocument;
+	for (idx = 0, numberOfLinesInDocument = 1; idx < completeStringLength; numberOfLinesInDocument++) {
+		idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
+	}
+	if (lineToGoTo > numberOfLinesInDocument) {
+		NSBeep();
+		return;
+	}
+	
+	for (idx = 0, lineNumber = 1; lineNumber < lineToGoTo; lineNumber++) {
+		idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
+	}
+    
+	NSInteger idxStart = 0;
+	NSInteger idxEnd = 0;
+    if (centered) {
+        // get the number of visible lines, since we always show line numbers, just re-use that calculations
+        id document = self.docSpec;
+        SMLLineNumbers *lineNumbers = (SMLLineNumbers *)[document valueForKey:ro_MGSFOLineNumbers];
+        
+        NSInteger numberOfVisibleLines = [lineNumbers numberOfVisibleLines];
+        
+        if (numberOfVisibleLines > 0) {
+            NSInteger startLine = 0;
+            NSInteger endLine = 0;
+            NSInteger visibleLinesByHalf = 0;
+            if (numberOfVisibleLines > 1) {
+                visibleLinesByHalf = (numberOfVisibleLines-1) / 2;
+            }
+            
+            if (lineToGoTo > visibleLinesByHalf) {
+                startLine = lineToGoTo - visibleLinesByHalf;
+            } else {
+                startLine = 0;
+            }
+            
+            endLine = startLine + numberOfVisibleLines;
+            if (endLine > numberOfLinesInDocument) {
+                endLine = numberOfLinesInDocument;
+                startLine = numberOfLinesInDocument - numberOfVisibleLines;
+                if (startLine < 0)
+                    startLine = 0;
+            }
+
+            for (idxStart = 0, lineNumber = 1; lineNumber < startLine; lineNumber++) {
+                idxStart = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idxStart, 0)]);
+            }
+            
+            for (idxEnd = idxStart, lineNumber = startLine; lineNumber < endLine; lineNumber++) {
+                idxEnd = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idxEnd, 0)]);
+            }
+            idxEnd -= idxStart;
+        } else {
+            idxStart = idx;
+        }
+    } else {
+        idxStart = idx;
+    }
+    
+    if (highlight) {
+        [self.textView setSelectedRange:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
+    }
+	[self.textView scrollRangeToVisible:[completeString lineRangeForRange:NSMakeRange(idxStart, idxEnd)]];
+}
+
 
 #pragma mark -
 #pragma mark Document specification
@@ -483,6 +587,106 @@ char kcLineWrapPrefChanged;
 - (NSTextView *)textView
 {
 	return [self objectForKey:ro_MGSFOTextView];
+}
+
+/*
+ 
+ - setSyntaxDefinitionName:
+ 
+ */
+- (void)setSyntaxDefinitionName:(NSString *)value
+{
+    [self setObject:value forKey:MGSFOSyntaxDefinitionName];
+}
+/*
+ 
+ - syntaxDefinitionName
+ 
+ */
+- (NSString *)syntaxDefinitionName
+{
+    return [self objectForKey:MGSFOSyntaxDefinitionName];
+}
+
+/*
+ 
+ - setDocumentName:
+ 
+ */
+- (void)setDocumentName:(NSString *)value
+{
+    [self setObject:value forKey:MGSFODocumentName];
+}
+/*
+ 
+ - documentName
+ 
+ */
+- (NSString *)documentName
+{
+    return [self objectForKey:MGSFODocumentName];
+}
+
+/*
+ 
+ - setStartingLineNumber:
+ 
+ */
+- (void)setStartingLineNumber:(NSUInteger)value
+{
+    _startingLineNumber = value;
+    [self updateGutterView];
+}
+/*
+ 
+ - startingLineNumber
+ 
+ */
+- (NSUInteger)startingLineNumber
+{
+    return _startingLineNumber;
+}
+
+/*
+ 
+ - setDisableScrollElasticity:
+ 
+ */
+- (void)setDisableScrollElasticity:(BOOL)value
+{
+    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFODisableScrollElasticity];
+    [self updateGutterView];
+}
+/*
+ 
+ - isScrollElasticityDisabled
+ 
+ */
+- (BOOL)isScrollElasticityDisabled
+{
+    NSNumber *value = [self objectForKey:MGSFODisableScrollElasticity];
+    return [value boolValue];
+}
+
+/*
+ 
+ - setHasVerticalScroller:
+ 
+ */
+- (void)setHasVerticalScroller:(BOOL)value
+{
+  [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOHasVerticalScroller];
+  [self updateGutterView];
+}
+/*
+ 
+ - hasVerticalScroller
+ 
+ */
+- (BOOL)hasVerticalScroller
+{
+  NSNumber *value = [self objectForKey:MGSFOHasVerticalScroller];
+  return [value boolValue];
 }
 
 /*
@@ -650,7 +854,10 @@ char kcLineWrapPrefChanged;
  */
 - (void) updateGutterView {
     id document = self.docSpec;
-    
+
+    BOOL hasVerticalScroller = [[self.docSpec valueForKey:MGSFOHasVerticalScroller] boolValue];
+    BOOL isScrollElasticityDisabled = [[self.docSpec valueForKey:MGSFODisableScrollElasticity] boolValue];
+
     BOOL showGutter = [[self.docSpec valueForKey:MGSFOShowLineNumberGutter] boolValue];
 	NSUInteger gutterWidth = [[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] integerValue];
     NSUInteger gutterOffset = (showGutter ? gutterWidth : 0);
@@ -663,6 +870,26 @@ char kcLineWrapPrefChanged;
     NSScrollView *textScrollView = (NSScrollView *)[document valueForKey:ro_MGSFOScrollView];
     NSScrollView *gutterScrollView = (NSScrollView *) [document valueForKey:ro_MGSFOGutterScrollView];
     NSTextView *textView = (NSTextView *)[document valueForKey:ro_MGSFOTextView];
+    
+    // update scroller
+    if (hasVerticalScroller) {
+        [textScrollView setHasVerticalScroller:YES];
+        [textScrollView setAutohidesScrollers:YES];
+    } else {
+        [textScrollView setHasVerticalScroller:NO];
+        [textScrollView setAutohidesScrollers:NO];
+    }
+    if (isScrollElasticityDisabled) {
+        [textScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+    } else {
+        [textScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+    }
+    
+    // get line numbers
+    SMLLineNumbers *lineNumbers = (SMLLineNumbers *)[document valueForKey:ro_MGSFOLineNumbers];
+    [lineNumbers setStartingLineNumber: _startingLineNumber];
     
     // get content view
     NSView *contentView = [textScrollView superview];
@@ -711,8 +938,8 @@ char kcLineWrapPrefChanged;
     NSBundle* bundle = [NSBundle bundleForClass:[self class]];
     
     NSString *path = [bundle pathForImageResource:name];
-    return path != nil ? [[[NSImage alloc]
-                           initWithContentsOfFile:path] autorelease] : nil;
+    return path != nil ? [[NSImage alloc]
+                           initWithContentsOfFile:path] : nil;
 }
 
 @end

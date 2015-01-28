@@ -75,30 +75,31 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 
 @property (copy) NSString *functionDefinition;
 @property (copy) NSString *removeFromFunction;
-@property (retain) NSString *secondString;
-@property (retain) NSString *firstString;
-@property (retain) NSString *beginCommand;
-@property (retain) NSString *endCommand;
-@property (retain) NSSet *keywords;
-@property (retain) NSSet *autocompleteWords;
-@property (retain) NSString *beginInstruction;
-@property (retain) NSString *endInstruction;
-@property (retain) NSCharacterSet *beginVariableCharacterSet;
-@property (retain) NSCharacterSet *endVariableCharacterSet;
-@property (retain) NSString *firstSingleLineComment;
-@property (retain) NSString *secondSingleLineComment;
-@property (retain) NSMutableArray *singleLineComments;
-@property (retain) NSMutableArray *multiLineComments;
-@property (retain) NSString *beginFirstMultiLineComment;
-@property (retain) NSString*endFirstMultiLineComment;
-@property (retain) NSString*beginSecondMultiLineComment;
-@property (retain) NSString*endSecondMultiLineComment;
-@property (retain) NSCharacterSet *keywordStartCharacterSet;
-@property (retain) NSCharacterSet *keywordEndCharacterSet;
-@property (retain) NSCharacterSet *attributesCharacterSet;
-@property (retain) NSCharacterSet *letterCharacterSet;
-@property (retain) NSCharacterSet *numberCharacterSet;
-@property (retain) NSCharacterSet *nameCharacterSet;
+@property (strong) NSString *secondString;
+@property (strong) NSString *firstString;
+@property (strong) NSString *beginCommand;
+@property (strong) NSString *endCommand;
+@property (strong) NSSet *keywords;
+@property (strong) NSSet *autocompleteWords;
+@property (strong) NSArray *keywordsAndAutocompleteWords;
+@property (strong) NSString *beginInstruction;
+@property (strong) NSString *endInstruction;
+@property (strong) NSCharacterSet *beginVariableCharacterSet;
+@property (strong) NSCharacterSet *endVariableCharacterSet;
+@property (strong) NSString *firstSingleLineComment;
+@property (strong) NSString *secondSingleLineComment;
+@property (strong) NSMutableArray *singleLineComments;
+@property (strong) NSMutableArray *multiLineComments;
+@property (strong) NSString *beginFirstMultiLineComment;
+@property (strong) NSString*endFirstMultiLineComment;
+@property (strong) NSString*beginSecondMultiLineComment;
+@property (strong) NSString*endSecondMultiLineComment;
+@property (strong) NSCharacterSet *keywordStartCharacterSet;
+@property (strong) NSCharacterSet *keywordEndCharacterSet;
+@property (strong) NSCharacterSet *attributesCharacterSet;
+@property (strong) NSCharacterSet *letterCharacterSet;
+@property (strong) NSCharacterSet *numberCharacterSet;
+@property (strong) NSCharacterSet *nameCharacterSet;
 @property (assign) BOOL syntaxDefinitionAllowsColouring;
 
 @property unichar decimalPointCharacter;
@@ -153,9 +154,9 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		NSAssert(theDocument, @"bad document");
 		
 		// retain the document
-		document = [theDocument retain];
+		document = theDocument;
 		
-		self.undoManager = [[[NSUndoManager alloc] init] autorelease];
+		self.undoManager = [[NSUndoManager alloc] init];
 
 		// configure the document text view
 		NSTextView *textView = [document valueForKey:ro_MGSFOTextView];
@@ -178,31 +179,31 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		self.letterCharacterSet = [NSCharacterSet letterCharacterSet];
 
         // name character set
-		NSMutableCharacterSet *temporaryCharacterSet = [[[NSCharacterSet letterCharacterSet] mutableCopy] autorelease];
+		NSMutableCharacterSet *temporaryCharacterSet = [[NSCharacterSet letterCharacterSet] mutableCopy];
 		[temporaryCharacterSet addCharactersInString:@"_"];
-		self.nameCharacterSet = [[temporaryCharacterSet copy] autorelease];
+		self.nameCharacterSet = [temporaryCharacterSet copy];
 
 		// keyword start character set
-		temporaryCharacterSet = [[[NSCharacterSet letterCharacterSet] mutableCopy] autorelease];
+		temporaryCharacterSet = [[NSCharacterSet letterCharacterSet] mutableCopy];
 		[temporaryCharacterSet addCharactersInString:@"_:@#"];
-		self.keywordStartCharacterSet = [[temporaryCharacterSet copy] autorelease];
+		self.keywordStartCharacterSet = [temporaryCharacterSet copy];
 		
 		// keyword end character set
         // see http://www.fileformat.info/info/unicode/category/index.htm for categories that make up the sets
-		temporaryCharacterSet = [[[NSCharacterSet whitespaceAndNewlineCharacterSet] mutableCopy] autorelease];
+		temporaryCharacterSet = [[NSCharacterSet whitespaceAndNewlineCharacterSet] mutableCopy];
 		[temporaryCharacterSet formUnionWithCharacterSet:[NSCharacterSet symbolCharacterSet]];
 		[temporaryCharacterSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
 		[temporaryCharacterSet removeCharactersInString:@"._-"]; // common separators in variable names
-		self.keywordEndCharacterSet = [[temporaryCharacterSet copy] autorelease];
+		self.keywordEndCharacterSet = [temporaryCharacterSet copy];
 		
         // number character set
         self.numberCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789."];
         self.decimalPointCharacter = [@"." characterAtIndex:0];
         
 		// attributes character set
-		temporaryCharacterSet = [[[NSCharacterSet alphanumericCharacterSet] mutableCopy] autorelease];
+		temporaryCharacterSet = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
 		[temporaryCharacterSet addCharactersInString:@" -"]; // If there are two spaces before an attribute
-		self.attributesCharacterSet = [[temporaryCharacterSet copy] autorelease];
+		self.attributesCharacterSet = [temporaryCharacterSet copy];
 		
 		// configure syntax definition
 		[self applySyntaxDefinition];
@@ -254,10 +255,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  - dealloc
  
  */
-- (void) dealloc {
-	[document release];
-	[super dealloc];
-}
 #pragma mark -
 #pragma mark KVO
 /*
@@ -267,7 +264,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(NSString *)context isEqualToString:@"ColoursChanged"]) {
+	if ([(__bridge NSString *)context isEqualToString:@"ColoursChanged"]) {
 		[self applyColourDefaults];
 		[self pageRecolour];
 		if ([[SMLDefaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue] == YES) {
@@ -277,10 +274,10 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		} else {
 			[self highlightLineRange:NSMakeRange(0, 0)];
 		}
-	} else if ([(NSString *)context isEqualToString:@"MultiLineChanged"]) {
+	} else if ([(__bridge NSString *)context isEqualToString:@"MultiLineChanged"]) {
 		[self prepareRegularExpressions];
 		[self pageRecolour];
-	} else if ([(NSString *)context isEqualToString:@"syntaxDefinition"]) {
+	} else if ([(__bridge NSString *)context isEqualToString:@"syntaxDefinition"]) {
 		[self applySyntaxDefinition];
 		[self removeAllColours];
 		[self pageRecolour];
@@ -288,6 +285,13 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 	
+}
+
+
+-(void)dealloc
+{
+    [document removeObserver:self forKeyPath:@"syntaxDefinition"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self ];
 }
 
 
@@ -314,7 +318,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	NSString *definitionName = [document valueForKey:MGSFOSyntaxDefinitionName];
 	
 	// if document has no syntax definition name then assign one
-	if (!definitionName) {
+	if (!definitionName || [definitionName length] == 0) {
 		definitionName = [self assignSyntaxDefinition];
 	}
 	
@@ -332,7 +336,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 - (NSString *)assignSyntaxDefinition
 {
 	NSString *definitionName = [document valueForKey:MGSFOSyntaxDefinitionName];
-	if (definitionName) return definitionName;
+	if (definitionName && [definitionName length] > 0) return definitionName;
 
 	NSString *documentExtension = [[document valueForKey:MGSFODocumentName] pathExtension];
 	
@@ -354,7 +358,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
         definitionName = [[MGSSyntaxController sharedInstance] syntaxDefinitionNameWithExtension:lowercaseExtension];
     }
 	
-	if (!definitionName) {
+	if (!definitionName || [definitionName length] == 0) {
 		definitionName = [MGSSyntaxController standardSyntaxDefinitionName];
 	}
 	
@@ -390,7 +394,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionKeywords];
 	if (value) {
         NSAssert([value isKindOfClass:[NSArray class]], @"NSArray expected");
-		self.keywords = [[[NSSet alloc] initWithArray:value] autorelease];
+		self.keywords = [[NSSet alloc] initWithArray:value];
 		[keywordsAndAutocompleteWordsTemporary addObjectsFromArray:value];
 	}
 	
@@ -398,7 +402,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionAutocompleteWords];
 	if (value) {
         NSAssert([value isKindOfClass:[NSArray class]], @"NSArray expected");
-		self.autocompleteWords = [[[NSSet alloc] initWithArray:value] autorelease];
+		self.autocompleteWords = [[NSSet alloc] initWithArray:value];
 		[keywordsAndAutocompleteWordsTemporary addObjectsFromArray:value];
 	}
 	
@@ -425,12 +429,12 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	}
 	
 	if (keywordsCaseSensitive == NO) {
-		NSMutableArray *lowerCaseKeywords = [[[NSMutableArray alloc] init] autorelease];
+		NSMutableArray *lowerCaseKeywords = [[NSMutableArray alloc] init];
 		for (id item in keywords) {
 			[lowerCaseKeywords addObject:[item lowercaseString]];
 		}
 		
-		NSSet *lowerCaseKeywordsSet = [[[NSSet alloc] initWithArray:lowerCaseKeywords] autorelease];
+		NSSet *lowerCaseKeywordsSet = [[NSSet alloc] initWithArray:lowerCaseKeywords];
 		self.keywords = lowerCaseKeywordsSet;
 	}
 	
@@ -596,36 +600,36 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionExcludeFromKeywordStartCharacterSet];
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		NSMutableCharacterSet *temporaryCharacterSet = [[keywordStartCharacterSet mutableCopy] autorelease];
+		NSMutableCharacterSet *temporaryCharacterSet = [keywordStartCharacterSet mutableCopy];
 		[temporaryCharacterSet removeCharactersInString:value];
-		self.keywordStartCharacterSet = [[temporaryCharacterSet copy] autorelease];
+		self.keywordStartCharacterSet = [temporaryCharacterSet copy];
 	}
 	
     // exclude characters from keyword end character set
 	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionExcludeFromKeywordEndCharacterSet];
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		NSMutableCharacterSet *temporaryCharacterSet = [[keywordEndCharacterSet mutableCopy] autorelease];
+		NSMutableCharacterSet *temporaryCharacterSet = [keywordEndCharacterSet mutableCopy];
 		[temporaryCharacterSet removeCharactersInString:value];
-		self.keywordEndCharacterSet = [[temporaryCharacterSet copy] autorelease];
+		self.keywordEndCharacterSet = [temporaryCharacterSet copy];
 	}
 	
     // include characters in keyword start character set
 	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionIncludeInKeywordStartCharacterSet];
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		NSMutableCharacterSet *temporaryCharacterSet = [[keywordStartCharacterSet mutableCopy] autorelease];
+		NSMutableCharacterSet *temporaryCharacterSet = [keywordStartCharacterSet mutableCopy];
 		[temporaryCharacterSet addCharactersInString:value];
-		self.keywordStartCharacterSet = [[temporaryCharacterSet copy] autorelease];
+		self.keywordStartCharacterSet = [temporaryCharacterSet copy];
 	}
 	
     // include characters in keyword end character set
 	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet];
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		NSMutableCharacterSet *temporaryCharacterSet = [[keywordEndCharacterSet mutableCopy] autorelease];
+		NSMutableCharacterSet *temporaryCharacterSet = [keywordEndCharacterSet mutableCopy];
 		[temporaryCharacterSet addCharactersInString:value];
-		self.keywordEndCharacterSet = [[temporaryCharacterSet copy] autorelease];
+		self.keywordEndCharacterSet = [temporaryCharacterSet copy];
 	}
 
 	[self prepareRegularExpressions];
@@ -841,11 +845,11 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	}
     
     // allocate the range scanner
-	NSScanner *rangeScanner = [[[NSScanner alloc] initWithString:rangeString] autorelease];
+	NSScanner *rangeScanner = [[NSScanner alloc] initWithString:rangeString];
 	[rangeScanner setCharactersToBeSkipped:nil];
     
     // allocate the document scanner
-	NSScanner *documentScanner = [[[NSScanner alloc] initWithString:documentString] autorelease];
+	NSScanner *documentScanner = [[NSScanner alloc] initWithString:documentString];
 	[documentScanner setCharactersToBeSkipped:nil];
 	
     // uncolour the range
@@ -1830,29 +1834,36 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
             [highlightedRows addObject:[NSNumber numberWithInt:err.line]];
             
             // Add highlight for background
-            [firstLayoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1] forCharacterRange:lineRange];
+            if (!err.customBackgroundColor) {
+                [firstLayoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1] forCharacterRange:lineRange];
+            } else {
+                [firstLayoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.customBackgroundColor forCharacterRange:lineRange];
+            }
             
-            [firstLayoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
+            if ([err.description length] > 0)
+                [firstLayoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
             
-            NSInteger glyphIndex = [firstLayoutManager glyphIndexForCharacterAtIndex:lineRange.location];
-            
-            NSRect linePos = [firstLayoutManager boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1) inTextContainer:[textView textContainer]];
-            
-            // Add button
-            float scrollOffset = textView.superview.bounds.origin.x - 0; 
-            
-            NSButton* warningButton = [[[NSButton alloc] initWithFrame:NSMakeRect(textView.superview.frame.size.width - 32 + scrollOffset, linePos.origin.y-2, 16, 16)] autorelease];
-            
-            [warningButton setButtonType:NSMomentaryChangeButton];
-            [warningButton setBezelStyle:NSRegularSquareBezelStyle];
-            [warningButton setBordered:NO];
-            [warningButton setImagePosition:NSImageOnly];
-            [warningButton setImage:[MGSFragaria imageNamed:@"editor-warning.png"]];
-            [warningButton setTag:err.line];
-            [warningButton setTarget:self];
-            [warningButton setAction:@selector(pressedWarningBtn:)];
-            
-            [textView addSubview:warningButton];
+            if (!err.hideWarning) {
+                NSInteger glyphIndex = [firstLayoutManager glyphIndexForCharacterAtIndex:lineRange.location];
+                
+                NSRect linePos = [firstLayoutManager boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1) inTextContainer:[textView textContainer]];
+                
+                // Add button
+                float scrollOffset = textView.superview.bounds.origin.x - 0;
+                
+                NSButton* warningButton = [[NSButton alloc] initWithFrame:NSMakeRect(textView.superview.frame.size.width - 32 + scrollOffset, linePos.origin.y-2, 16, 16)];
+                
+                [warningButton setButtonType:NSMomentaryChangeButton];
+                [warningButton setBezelStyle:NSRegularSquareBezelStyle];
+                [warningButton setBordered:NO];
+                [warningButton setImagePosition:NSImageOnly];
+                [warningButton setImage:[MGSFragaria imageNamed:@"editor-warning.png"]];
+                [warningButton setTag:err.line];
+                [warningButton setTarget:self];
+                [warningButton setAction:@selector(pressedWarningBtn:)];
+                
+                [textView addSubview:warningButton];
+            }
         }
     }
 }
@@ -1864,7 +1875,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  */
 - (CGFloat) widthOfString:(NSString *)string withFont:(NSFont *)font {
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
-    return [[[[NSAttributedString alloc] initWithString:string attributes:attributes] autorelease] size].width;
+    return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
 }
 
 #pragma mark -
@@ -1906,7 +1917,10 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 {
 	id delegate = [document valueForKey:MGSFODelegate]; 
 	if (delegate && [delegate respondsToSelector:selector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
 		[delegate performSelector:selector withObject:object];
+#pragma clang diagnostic pop
 	}
 }
 

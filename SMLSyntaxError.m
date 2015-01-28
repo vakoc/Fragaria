@@ -10,13 +10,7 @@
 
 @implementation SMLSyntaxError
 
-@synthesize line, character, code, length, description;
+@synthesize line, character, code, length, description, hideWarning, customBackgroundColor;
 
-- (void) dealloc
-{
-    self.description = NULL;
-    self.code = NULL;
-    [super dealloc];
-}
 
 @end

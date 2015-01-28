@@ -191,7 +191,7 @@ static id sharedInstance = nil;
 + (id)allocWithZone:(NSZone *)zone
 {
 #pragma unused(zone)
-	return [[self sharedInstance] retain];
+	return [self sharedInstance];
 }
 
 #pragma mark -

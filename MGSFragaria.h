@@ -15,6 +15,8 @@
 extern NSString * const MGSFOIsSyntaxColoured;
 extern NSString * const MGSFOShowLineNumberGutter;
 extern NSString * const MGSFOIsEdited;
+extern NSString * const MGSFOHasVerticalScroller;
+extern NSString * const MGSFODisableScrollElasticity;
 
 // string
 extern NSString * const MGSFOSyntaxDefinitionName;
@@ -57,10 +59,12 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
     id docSpec;
     NSSet* objectGetterKeys;
     NSSet* objectSetterKeys;
+  
+    NSUInteger _startingLineNumber;
 }
 
-@property (nonatomic, readonly, assign) MGSExtraInterfaceController *extraInterfaceController;
-@property (nonatomic, retain) id docSpec;
+@property (nonatomic, readonly) MGSExtraInterfaceController *extraInterfaceController;
+@property (nonatomic, strong) id docSpec;
 
 // class methods
 + (id)currentInstance;
@@ -80,6 +84,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (void)setObject:(id)object forKey:(id)key;
 - (id)objectForKey:(id)key;
 - (void)embedInView:(NSView *)view;
+- (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight;
 - (void)setString:(NSString *)aString;
 - (void)setString:(NSString *)aString options:(NSDictionary *)options;
 - (void)setAttributedString:(NSAttributedString *)aString;
@@ -95,6 +100,17 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (BOOL)showsLineNumbers;
 - (void)reloadString;
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options;
+- (void)setHasVerticalScroller:(BOOL)value;
+- (BOOL)hasVerticalScroller;
+- (void)setDisableScrollElasticity:(BOOL)value;
+- (BOOL)isScrollElasticityDisabled;
+- (void)setStartingLineNumber:(NSUInteger)value;
+- (NSUInteger)startingLineNumber;
+- (void)setDocumentName:(NSString *)value;
+- (NSString *)documentName;
+- (void)setSyntaxDefinitionName:(NSString *)value;
+- (NSString *)syntaxDefinitionName;
+
 - (void)setSyntaxErrors:(NSArray *)errors;
 - (NSArray *)syntaxErrors;
 + (NSImage *)imageNamed:(NSString *)name;

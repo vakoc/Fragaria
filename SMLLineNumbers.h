@@ -26,11 +26,17 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	NSClipView *updatingLineNumbersForClipView;
     NSDictionary *attributes;
     id document;
+  
+    NSUInteger _startingLineNumber;
+    NSUInteger _numberOfVisibleLines;
 }
 
 - (id)initWithDocument:(id)theDocument;
 - (void)viewBoundsDidChange:(NSNotification *)notification;
 - (void)updateLineNumbersCheckWidth:(BOOL)checkWidth recolour:(BOOL)recolour;
 - (void)updateLineNumbersForClipView:(NSClipView *)clipView checkWidth:(BOOL)checkWidth recolour:(BOOL)recolour;
+- (void)setStartingLineNumber:(NSUInteger)value;
+- (NSUInteger)startingLineNumber;
+- (NSUInteger)numberOfVisibleLines;
 
 @end

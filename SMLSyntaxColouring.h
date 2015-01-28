@@ -86,10 +86,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 }
 
 @property BOOL reactToChanges;
-@property (retain) NSUndoManager *undoManager;
-@property (nonatomic, retain) NSArray* syntaxErrors;
-
-@property (retain) NSArray *keywordsAndAutocompleteWords;
+@property (strong) NSUndoManager *undoManager;
+@property (nonatomic, strong) NSArray* syntaxErrors;
 
 - (id)initWithDocument:(id)document;
 - (void)pageRecolourTextView:(SMLTextView *)textView;

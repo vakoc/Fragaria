@@ -15,6 +15,8 @@
     int character;
     NSString* code;
     int length;
+    BOOL hideWarning;
+  NSColor *customBackgroundColor;
 }
 
 @property (nonatomic,copy) NSString* description;
@@ -22,5 +24,7 @@
 @property (nonatomic,assign) int character;
 @property (nonatomic,copy) NSString* code;
 @property (nonatomic,assign) int length;
+@property (nonatomic,assign) BOOL hideWarning;
+@property (nonatomic,copy) NSColor *customBackgroundColor;
 
 @end
