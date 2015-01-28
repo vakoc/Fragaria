@@ -50,11 +50,12 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{13, 10}, {574, 381}}</string>
 						<reference key="NSSuperview" ref="287433492"/>
+						<reference key="NSNextKeyView" ref="920959633"/>
 						<array class="NSMutableArray" key="NSTabViewItems">
 							<object class="NSTabViewItem" id="792101346">
 								<object class="NSView" key="NSView" id="920959633">
-									<nil key="NSNextResponder"/>
-									<int key="NSvFlags">256</int>
+									<reference key="NSNextResponder" ref="455141392"/>
+									<int key="NSvFlags">274</int>
 									<array class="NSMutableArray" key="NSSubviews">
 										<object class="NSTextField" id="827893609">
 											<reference key="NSNextResponder" ref="920959633"/>
@@ -321,6 +322,7 @@
 										</object>
 									</array>
 									<string key="NSFrame">{{10, 33}, {554, 335}}</string>
+									<reference key="NSSuperview" ref="455141392"/>
 									<reference key="NSNextKeyView" ref="1035822890"/>
 								</object>
 								<string key="NSLabel">Editor</string>
@@ -329,7 +331,7 @@
 							</object>
 							<object class="NSTabViewItem" id="320501727">
 								<object class="NSView" key="NSView" id="674356383">
-									<reference key="NSNextResponder" ref="455141392"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">274</int>
 									<array class="NSMutableArray" key="NSSubviews">
 										<object class="NSColorWell" id="1005498932">
@@ -699,7 +701,7 @@
 												<string key="NSContents">Box</string>
 												<reference key="NSSupport" ref="153691136"/>
 												<reference key="NSBackgroundColor" ref="891104474"/>
-												<object class="NSColor" key="NSTextColor" id="198850338">
+												<object class="NSColor" key="NSTextColor" id="764032644">
 													<int key="NSColorSpace">6</int>
 													<string key="NSCatalogName">System</string>
 													<string key="NSColorName">labelColor</string>
@@ -762,7 +764,7 @@
 												<string key="NSContents">Box</string>
 												<reference key="NSSupport" ref="153691136"/>
 												<reference key="NSBackgroundColor" ref="891104474"/>
-												<reference key="NSTextColor" ref="198850338"/>
+												<reference key="NSTextColor" ref="764032644"/>
 											</object>
 											<int key="NSBorderType">3</int>
 											<int key="NSBoxType">2</int>
@@ -1065,7 +1067,7 @@
 												<string key="NSContents">Box</string>
 												<reference key="NSSupport" ref="153691136"/>
 												<reference key="NSBackgroundColor" ref="891104474"/>
-												<reference key="NSTextColor" ref="198850338"/>
+												<reference key="NSTextColor" ref="764032644"/>
 											</object>
 											<int key="NSBorderType">3</int>
 											<int key="NSBoxType">2</int>
@@ -1101,7 +1103,6 @@
 										</object>
 									</array>
 									<string key="NSFrame">{{10, 33}, {554, 335}}</string>
-									<reference key="NSSuperview" ref="455141392"/>
 									<reference key="NSNextKeyView" ref="499636110"/>
 								</object>
 								<string key="NSLabel">Syntax Colours</string>
@@ -1109,7 +1110,7 @@
 								<reference key="NSTabView" ref="455141392"/>
 							</object>
 						</array>
-						<reference key="NSSelectedTabViewItem" ref="320501727"/>
+						<reference key="NSSelectedTabViewItem" ref="792101346"/>
 						<object class="NSFont" key="NSFont">
 							<bool key="IBIsSystemFont">YES</bool>
 							<double key="NSSize">13</double>
@@ -1119,7 +1120,7 @@
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<array class="NSMutableArray" key="NSSubviews">
-							<reference ref="674356383"/>
+							<reference ref="920959633"/>
 						</array>
 					</object>
 				</array>

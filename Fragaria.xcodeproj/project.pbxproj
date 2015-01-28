@@ -339,14 +339,7 @@
 				ABC578D2160350240040B3FB /* MGSFragariaPreferences.m */,
 				AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */,
 				AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */,
-				ABE25D081635CA7C00F23718 /* MGSFragariaPrefsViewController.h */,
-				ABE25D091635CA7C00F23718 /* MGSFragariaPrefsViewController.m */,
-				ABC578E71603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h */,
-				ABC578E81603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.m */,
-				AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */,
-				ABC578EB1603D7EB0040B3FB /* MGSFragariaTextEditingPrefsViewController.h */,
-				ABC578EC1603D7EC0040B3FB /* MGSFragariaTextEditingPrefsViewController.m */,
-				AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */,
+				01BB1BEF1A7966E7006C0056 /* Standard UI */,
 			);
 			name = Preferences;
 			sourceTree = "<group>";
@@ -405,6 +398,23 @@
 				AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */,
 			);
 			name = "Gutter Text View";
+			sourceTree = "<group>";
+		};
+		01BB1BEF1A7966E7006C0056 /* Standard UI */ = {
+			isa = PBXGroup;
+			children = (
+				ABE25D081635CA7C00F23718 /* MGSFragariaPrefsViewController.h */,
+				ABE25D091635CA7C00F23718 /* MGSFragariaPrefsViewController.m */,
+				ABC5799516047B4E0040B3FB /* FRAFontTransformer.h */,
+				ABC5799616047B4E0040B3FB /* FRAFontTransformer.m */,
+				ABC578E71603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h */,
+				ABC578E81603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.m */,
+				AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */,
+				ABC578EB1603D7EB0040B3FB /* MGSFragariaTextEditingPrefsViewController.h */,
+				ABC578EC1603D7EC0040B3FB /* MGSFragariaTextEditingPrefsViewController.m */,
+				AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */,
+			);
+			name = "Standard UI";
 			sourceTree = "<group>";
 		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
@@ -529,8 +539,6 @@
 		AB69B752118B82DF00903D1D /* Framework */ = {
 			isa = PBXGroup;
 			children = (
-				ABC5799516047B4E0040B3FB /* FRAFontTransformer.h */,
-				ABC5799616047B4E0040B3FB /* FRAFontTransformer.m */,
 				ABDED9B6128AB144002EE039 /* Fragaria */,
 				ABDED9A9128AAEB6002EE039 /* ICU */,
 				AB3972FC118C2A5D00AEF388 /* Resources */,
