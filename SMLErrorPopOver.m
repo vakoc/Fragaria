@@ -8,52 +8,59 @@
 
 #import "SMLErrorPopOver.h"
 
-#define kSMLErrorPopOverErrorSpacing 16
+#define kSMLErrorPopOverMargin       4
+#define kSMLErrorPopOverErrorSpacing 2.0
 
 @implementation SMLErrorPopOver
 
-+ (CGFloat) widthOfString:(NSString *)string withFont:(NSFont *)font {
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
-    return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
-}
 
 + (void) showErrorDescriptions:(NSArray*)errors relativeToView:(NSView*) view
 {
-    // Add labels for each error
-    int errNo = 0;
-    int maxWidth = 0;
-    int numErrors = (int)errors.count;
-    int viewHeight = kSMLErrorPopOverErrorSpacing * numErrors;
+    NSFont* font = [NSFont systemFontOfSize:10];
+    NSMutableAttributedString *errorsString;
+    NSMutableParagraphStyle *parStyle;
+    NSTextField *textField;
+    NSSize balloonSize;
+    int i;
     
-    if (!numErrors) return;
+    if (!errors.count) return;
     
     // Create view controller
     NSViewController* vc = [[NSViewController alloc] initWithNibName:@"ErrorPopoverView" bundle:[NSBundle bundleForClass:[self class]]];
     
-    // Create labels and add them to the view
-    for (NSString* err in errors)
-    {
-        NSTextField *textField;
+    errorsString = [[NSMutableAttributedString alloc] init];
+    i = 0;
+    for (NSString* err in errors) {
+        NSMutableString *muts;
         
-        NSFont* font = [NSFont systemFontOfSize:10];
-        
-        int width = [self widthOfString:err withFont:font];
-        if (width > maxWidth) maxWidth = width;
-        
-        textField = [[NSTextField alloc] initWithFrame:NSMakeRect(0, viewHeight - (kSMLErrorPopOverErrorSpacing * (errNo + 1)), 1024, kSMLErrorPopOverErrorSpacing)];
-        [textField setStringValue:err.description];
-        [textField setBezeled:NO];
-        [textField setDrawsBackground:NO];
-        [textField setEditable:NO];
-        [textField setSelectable:NO];
-        [textField setFont:font];
-        
-        [vc.view addSubview:textField];
-        
-        errNo++;
+        muts = [err mutableCopy];
+        [muts replaceOccurrencesOfString:@"\n" withString:@"\u2028" options:0 range:NSMakeRange(0, [muts length])];
+        if (i != 0)
+            [[errorsString mutableString] appendString:@"\n"];
+        [[errorsString mutableString] appendString:muts];
+        i++;
     }
     
-    [vc.view setFrameSize:NSMakeSize(maxWidth, viewHeight)];
+    parStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [parStyle setParagraphSpacing:kSMLErrorPopOverErrorSpacing];
+    [errorsString setAttributes:
+      @{NSParagraphStyleAttributeName: parStyle, NSFontAttributeName: font}
+      range:NSMakeRange(0, [errorsString length])];
+    
+    textField = [[NSTextField alloc] initWithFrame:NSZeroRect];
+    [textField setAttributedStringValue:errorsString];
+    [textField setBezeled:NO];
+    [textField setDrawsBackground:NO];
+    [textField setEditable:NO];
+    [textField setSelectable:NO];
+    [textField sizeToFit];
+    [textField setFrameOrigin:NSMakePoint(kSMLErrorPopOverMargin, kSMLErrorPopOverMargin)];
+    
+    [vc.view addSubview:textField];
+    balloonSize = [textField frame].size;
+    balloonSize.width += 2 * kSMLErrorPopOverMargin;
+    balloonSize.height += 2 * kSMLErrorPopOverMargin;
+    [vc.view setFrameSize:balloonSize];
     
     // Open the popover
     NSPopover* popover = [[NSPopover alloc] init];
