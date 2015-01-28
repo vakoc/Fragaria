@@ -332,6 +332,81 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		01BB1BEA1A795EFD006C0056 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				ABD0FE581193543600E6AFE6 /* MGSFragariaPreferences.h */,
+				ABC578D2160350240040B3FB /* MGSFragariaPreferences.m */,
+				AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */,
+				AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */,
+				ABE25D081635CA7C00F23718 /* MGSFragariaPrefsViewController.h */,
+				ABE25D091635CA7C00F23718 /* MGSFragariaPrefsViewController.m */,
+				ABC578E71603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h */,
+				ABC578E81603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.m */,
+				AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */,
+				ABC578EB1603D7EB0040B3FB /* MGSFragariaTextEditingPrefsViewController.h */,
+				ABC578EC1603D7EC0040B3FB /* MGSFragariaTextEditingPrefsViewController.m */,
+				AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */,
+			);
+			name = Preferences;
+			sourceTree = "<group>";
+		};
+		01BB1BEB1A79620E006C0056 /* Text Editing UI */ = {
+			isa = PBXGroup;
+			children = (
+				AB472B7B1299732F00202CB5 /* MGSTextMenuController.h */,
+				AB472B6E129972E400202CB5 /* MGSTextMenuController.m */,
+				AB472BF51299BBBA00202CB5 /* MGSExtraInterfaceController.h */,
+				AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */,
+				AB472C861299C34500202CB5 /* SMLDetab.xib */,
+				AB472C871299C34500202CB5 /* SMLEntab.xib */,
+				AB472C841299C33100202CB5 /* SMLGoToLine.xib */,
+				AB472C821299C31F00202CB5 /* SMLOpenPanelAccessoryView.xib */,
+				AB472C801299C30F00202CB5 /* SMLRegularExpressionHelp.xib */,
+				AB472C7A1299C2F500202CB5 /* SMLCommandResult.xib */,
+			);
+			name = "Text Editing UI";
+			sourceTree = "<group>";
+		};
+		01BB1BEC1A7962C7006C0056 /* Text View Components */ = {
+			isa = PBXGroup;
+			children = (
+				AB69B666118B768000903D1D /* SMLTextView.h */,
+				AB69B68E118B78D400903D1D /* SMLTextView.m */,
+				AB69B678118B76E700903D1D /* SMLLayoutManager.h */,
+				AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */,
+				AB69B664118B766300903D1D /* SMLSyntaxColouring.h */,
+				AB69B65A118B75FB00903D1D /* SMLSyntaxColouring.m */,
+				AB6C86C1160FA2B500488AF2 /* MGSGlyphGenerator.h */,
+				AB6C86C2160FA2B500488AF2 /* MGSGlyphGenerator.m */,
+				01BB1BEE1A7964DC006C0056 /* Gutter Text View */,
+				AB69B659118B75E100903D1D /* Error Popover */,
+			);
+			name = "Text View Components";
+			sourceTree = "<group>";
+		};
+		01BB1BED1A7963B2006C0056 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AB472B9F12997B3300202CB5 /* SMLBasicPerformer.h */,
+				AB472B9D12997B1F00202CB5 /* SMLBasicPerformer.m */,
+				AB472BEA1299AF5100202CB5 /* SMLTextPerformer.h */,
+				AB472BE81299AF3800202CB5 /* SMLTextPerformer.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		01BB1BEE1A7964DC006C0056 /* Gutter Text View */ = {
+			isa = PBXGroup;
+			children = (
+				AB41C12E11920514004F0CB5 /* SMLGutterTextView.h */,
+				AB5E6A4911B65AC20026B4B9 /* SMLGutterTextView.m */,
+				AB41C1261192049F004F0CB5 /* SMLLineNumbers.h */,
+				AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */,
+			);
+			name = "Gutter Text View";
+			sourceTree = "<group>";
+		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -441,34 +516,14 @@
 			name = "NSDocument based";
 			sourceTree = "<group>";
 		};
-		AB69B659118B75E100903D1D /* Smultron */ = {
+		AB69B659118B75E100903D1D /* Error Popover */ = {
 			isa = PBXGroup;
 			children = (
-				AB8387C4171D6115004408F4 /* SMLSyntaxDefinition.h */,
-				AB8387A9171B4505004408F4 /* SMLSyntaxColouringDelegate.h */,
-				E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */,
-				AB69B662118B763A00903D1D /* SMLStandardHeader.h */,
-				AB41C12E11920514004F0CB5 /* SMLGutterTextView.h */,
-				AB5E6A4911B65AC20026B4B9 /* SMLGutterTextView.m */,
-				AB41C1261192049F004F0CB5 /* SMLLineNumbers.h */,
-				AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */,
-				AB69B666118B768000903D1D /* SMLTextView.h */,
-				AB69B68E118B78D400903D1D /* SMLTextView.m */,
-				AB69B678118B76E700903D1D /* SMLLayoutManager.h */,
-				AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */,
-				AB472B9F12997B3300202CB5 /* SMLBasicPerformer.h */,
-				AB472B9D12997B1F00202CB5 /* SMLBasicPerformer.m */,
-				AB69B664118B766300903D1D /* SMLSyntaxColouring.h */,
-				AB69B65A118B75FB00903D1D /* SMLSyntaxColouring.m */,
-				AB472BEA1299AF5100202CB5 /* SMLTextPerformer.h */,
-				AB472BE81299AF3800202CB5 /* SMLTextPerformer.m */,
-				E3D4B2751714D89700BB2CC6 /* SMLSyntaxError.h */,
-				E3D4B2761714D89700BB2CC6 /* SMLSyntaxError.m */,
 				E3C1850117175ED900801FE5 /* SMLErrorPopOver.h */,
 				E3C1850217175ED900801FE5 /* SMLErrorPopOver.m */,
 				E38654AC1717652000A345B9 /* ErrorPopoverView.xib */,
 			);
-			name = Smultron;
+			name = "Error Popover";
 			sourceTree = "<group>";
 		};
 		AB69B752118B82DF00903D1D /* Framework */ = {
@@ -478,7 +533,6 @@
 				ABC5799616047B4E0040B3FB /* FRAFontTransformer.m */,
 				ABDED9B6128AB144002EE039 /* Fragaria */,
 				ABDED9A9128AAEB6002EE039 /* ICU */,
-				AB69B659118B75E100903D1D /* Smultron */,
 				AB3972FC118C2A5D00AEF388 /* Resources */,
 			);
 			name = Framework;
@@ -524,35 +578,21 @@
 		ABDED9B6128AB144002EE039 /* Fragaria */ = {
 			isa = PBXGroup;
 			children = (
-				AB83887D171E94C5004408F4 /* NS Categories */,
 				ABD0FD7F119326FE00E6AFE6 /* MGSFragariaFramework.h */,
+				AB69B662118B763A00903D1D /* SMLStandardHeader.h */,
 				E3CF4B7816E6927300C27B5C /* MGSBreakpointDelegate.h */,
-				AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */,
-				AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */,
-				ABC578EB1603D7EB0040B3FB /* MGSFragariaTextEditingPrefsViewController.h */,
-				ABC578EC1603D7EC0040B3FB /* MGSFragariaTextEditingPrefsViewController.m */,
+				AB8387C4171D6115004408F4 /* SMLSyntaxDefinition.h */,
+				AB8387A9171B4505004408F4 /* SMLSyntaxColouringDelegate.h */,
+				E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */,
 				AB69B753118B830700903D1D /* MGSFragaria.h */,
 				AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */,
-				AB472BF51299BBBA00202CB5 /* MGSExtraInterfaceController.h */,
-				AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */,
-				AB472C861299C34500202CB5 /* SMLDetab.xib */,
-				AB472C871299C34500202CB5 /* SMLEntab.xib */,
-				AB472C841299C33100202CB5 /* SMLGoToLine.xib */,
-				AB472C821299C31F00202CB5 /* SMLOpenPanelAccessoryView.xib */,
-				AB472C801299C30F00202CB5 /* SMLRegularExpressionHelp.xib */,
-				AB472C7A1299C2F500202CB5 /* SMLCommandResult.xib */,
-				AB472B7B1299732F00202CB5 /* MGSTextMenuController.h */,
-				AB472B6E129972E400202CB5 /* MGSTextMenuController.m */,
-				ABD0FE581193543600E6AFE6 /* MGSFragariaPreferences.h */,
-				ABC578D2160350240040B3FB /* MGSFragariaPreferences.m */,
-				AB6C86C1160FA2B500488AF2 /* MGSGlyphGenerator.h */,
-				AB6C86C2160FA2B500488AF2 /* MGSGlyphGenerator.m */,
-				ABC578E71603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h */,
-				ABC578E81603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.m */,
-				AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */,
-				ABE25D081635CA7C00F23718 /* MGSFragariaPrefsViewController.h */,
-				ABE25D091635CA7C00F23718 /* MGSFragariaPrefsViewController.m */,
-				AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */,
+				E3D4B2751714D89700BB2CC6 /* SMLSyntaxError.h */,
+				E3D4B2761714D89700BB2CC6 /* SMLSyntaxError.m */,
+				AB83887D171E94C5004408F4 /* NS Categories */,
+				01BB1BED1A7963B2006C0056 /* Utilities */,
+				01BB1BEC1A7962C7006C0056 /* Text View Components */,
+				01BB1BEB1A79620E006C0056 /* Text Editing UI */,
+				01BB1BEA1A795EFD006C0056 /* Preferences */,
 			);
 			name = Fragaria;
 			sourceTree = "<group>";
