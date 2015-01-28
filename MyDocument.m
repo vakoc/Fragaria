@@ -88,9 +88,8 @@
 
 	// access the NSTextView
 	NSTextView *textView = [fragaria objectForKey:ro_MGSFOTextView];
-	
-#pragma unused(textView)
-	
+    // Set the undo manager. This is fundamental and allows NSDocument to perform its magic.
+    [self setUndoManager:[textView undoManager]];
 }
 
 #pragma mark -
@@ -163,66 +162,5 @@
 	
 }
 
-#pragma mark -
-#pragma mark NSTextDelegate
-/*
- 
- - textDidChange:
- 
- fragaria delegate method
- 
- */
-- (void)textDidChange:(NSNotification *)notification
-{
-	#pragma unused(notification)
-	
-	NSWindow *window = [[self windowControllers] objectAtIndex:0];
-	
-	[window setDocumentEdited:YES];
-}
-
-/*
- 
- - textDidBeginEditing:
- 
- */
-- (void)textDidBeginEditing:(NSNotification *)aNotification
-{
-	NSLog(@"notification : %@", [aNotification name]);
-}
-
-/*
- 
- - textDidEndEditing:
- 
- */
-- (void)textDidEndEditing:(NSNotification *)aNotification
-{
-	NSLog(@"notification : %@", [aNotification name]);
-}
-
-/*
- 
- - textShouldBeginEditing:
- 
- */
-- (BOOL)textShouldBeginEditing:(NSText *)aTextObject
-{
-#pragma unused(aTextObject)
-	
-	return YES;
-}
-
-/*
- 
- - textShouldEndEditing:
- 
- */
-- (BOOL)textShouldEndEditing:(NSText *)aTextObject
-{
-	#pragma unused(aTextObject)
-	
-	return YES;
-}
 
 @end
