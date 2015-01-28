@@ -76,7 +76,6 @@
 		ABC578ED1603D7ED0040B3FB /* MGSFragariaTextEditingPrefsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = ABC578EB1603D7EB0040B3FB /* MGSFragariaTextEditingPrefsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABC578EE1603D7ED0040B3FB /* MGSFragariaTextEditingPrefsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC578EC1603D7EC0040B3FB /* MGSFragariaTextEditingPrefsViewController.m */; };
 		ABC5799816047B4E0040B3FB /* FRAFontTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = ABC5799616047B4E0040B3FB /* FRAFontTransformer.m */; };
-		ABCA4D9C16137FC000E4849B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		ABCA4D9D16137FC000E4849B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1DDD58140DA1D0A300B32029 /* MainMenu.xib */; };
 		ABCA4D9E16137FC000E4849B /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = ABC1D5DA160B0C51008769EB /* Preferences.xib */; };
 		ABCA4D9F16137FC000E4849B /* General.png in Resources */ = {isa = PBXBuildFile; fileRef = AB6C87621610EAC800488AF2 /* General.png */; };
@@ -165,7 +164,6 @@
 		01BB1BD41A7959D4006C0056 /* utf_old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf_old.h; sourceTree = "<group>"; };
 		01BB1BD51A7959D4006C0056 /* utypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utypes.h; sourceTree = "<group>"; };
 		01BB1BD61A7959D4006C0056 /* uversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uversion.h; sourceTree = "<group>"; };
-		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		256AC3D80F4B6AC300CF3369 /* FragariaAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FragariaAppDelegate.h; sourceTree = "<group>"; };
@@ -326,6 +324,14 @@
 			path = unicode;
 			sourceTree = "<group>";
 		};
+		01BB1BE81A795E58006C0056 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				AB648E4211FB395100AEF7BD /* Fragaria_Document-Info.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -381,12 +387,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				AB648E4A11FB3A5200AEF7BD /* MainMenu-Document.xib */,
-				AB648E4C11FB3A5200AEF7BD /* MyDocument.xib */,
-				AB648E4211FB395100AEF7BD /* Fragaria_Document-Info.plist */,
 				8D1107310486CEB800E47090 /* Fragaria-Info.plist */,
-				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
-				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -422,6 +423,8 @@
 			children = (
 				256AC3D80F4B6AC300CF3369 /* FragariaAppDelegate.h */,
 				256AC3D90F4B6AC300CF3369 /* FragariaAppDelegate.m */,
+				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
 			);
 			name = Simple;
 			sourceTree = "<group>";
@@ -431,6 +434,9 @@
 			children = (
 				AB648E3E11FB38E700AEF7BD /* MyDocument.h */,
 				AB648E3F11FB38E700AEF7BD /* MyDocument.m */,
+				AB648E4A11FB3A5200AEF7BD /* MainMenu-Document.xib */,
+				AB648E4C11FB3A5200AEF7BD /* MyDocument.xib */,
+				01BB1BE81A795E58006C0056 /* Resources */,
 			);
 			name = "NSDocument based";
 			sourceTree = "<group>";
@@ -497,7 +503,6 @@
 				AB69B80A118B8D0400903D1D /* MGSPreferencesController.m */,
 				AB648E2311FB37D200AEF7BD /* NSDocument based */,
 				AB648E2211FB37AF00AEF7BD /* Simple */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -725,7 +730,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABCA4D9C16137FC000E4849B /* InfoPlist.strings in Resources */,
 				ABCA4D9D16137FC000E4849B /* MainMenu.xib in Resources */,
 				ABCA4D9E16137FC000E4849B /* Preferences.xib in Resources */,
 				ABCA4D9F16137FC000E4849B /* General.png in Resources */,
@@ -803,14 +807,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		089C165CFE840E0CC02AAC07 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				089C165DFE840E0CC02AAC07 /* English */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		1DDD58140DA1D0A300B32029 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
