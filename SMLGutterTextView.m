@@ -39,11 +39,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	if ((self = [super initWithFrame:frame])) {
         
         imgBreakpoint0 = [MGSFragaria imageNamed:@"editor-breakpoint-0.png"];
-        [imgBreakpoint0 setFlipped:YES];
         imgBreakpoint1 = [MGSFragaria imageNamed:@"editor-breakpoint-1.png"];
-        [imgBreakpoint1 setFlipped:YES];
         imgBreakpoint2 = [MGSFragaria imageNamed:@"editor-breakpoint-2.png"];
-        [imgBreakpoint2 setFlipped:YES];
 
 		[self setContinuousSpellCheckingEnabled:NO];
 		[self setAllowsUndo:NO];
@@ -142,7 +139,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
         for (NSNumber* lineNumber in self.breakpointLines)
         {
             int line = [lineNumber intValue];
-            NSDrawThreePartImage(NSMakeRect(2, line * 13 - 12, bounds.size.width -4, 12), imgBreakpoint0, imgBreakpoint1, imgBreakpoint2, NO, NSCompositeSourceOver, 1, NO);
+            NSDrawThreePartImage(NSMakeRect(2, line * 13 - 12, bounds.size.width -4, 12), imgBreakpoint0, imgBreakpoint1, imgBreakpoint2, NO, NSCompositeSourceOver, 1, YES);
         }
     }
 }
