@@ -28,7 +28,8 @@ extern NSString * const MGSFOGutterWidth;
 // NSView *
 extern NSString * const ro_MGSFOTextView; // readonly
 extern NSString * const ro_MGSFOScrollView; // readonly
-extern NSString * const ro_MGSFOGutterScrollView; // readonly
+extern NSString * const ro_MGSFOGutterScrollView; // readonly, deprecated
+extern NSString * const ro_MGSFOGutterView; // readonly, new
 
 // NSObject
 extern NSString * const MGSFODelegate;

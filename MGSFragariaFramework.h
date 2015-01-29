@@ -12,6 +12,7 @@
 #import "SMLLayoutManager.h"
 #import "SMLLineNumbers.h"
 #import "SMLGutterTextView.h"
+#import "MGSLineNumberView.h"
 #import "SMLTextPerformer.h"
 #import "MGSExtraInterfaceController.h"
 #import "SMLBasicPerformer.h"

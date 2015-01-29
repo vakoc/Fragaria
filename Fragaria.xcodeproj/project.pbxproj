@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 017FD5861A7A992700B305FB /* MGSLineNumberView.h */; };
+		017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FD5871A7A992700B305FB /* MGSLineNumberView.m */; };
+		017FD58E1A7AA10A00B305FB /* MGSLineNumberMarker.h in Headers */ = {isa = PBXBuildFile; fileRef = 017FD58C1A7AA10A00B305FB /* MGSLineNumberMarker.h */; };
+		017FD58F1A7AA10A00B305FB /* MGSLineNumberMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FD58D1A7AA10A00B305FB /* MGSLineNumberMarker.m */; };
 		01BB1BD71A7959D4006C0056 /* LICENSE.html in Resources */ = {isa = PBXBuildFile; fileRef = 01BB1BC51A7959D4006C0056 /* LICENSE.html */; };
 		01BB1BD81A7959D4006C0056 /* parseerr.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BC71A7959D4006C0056 /* parseerr.h */; };
 		01BB1BD91A7959D4006C0056 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BC81A7959D4006C0056 /* platform.h */; };
@@ -147,6 +151,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		017FD5861A7A992700B305FB /* MGSLineNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberView.h; sourceTree = "<group>"; };
+		017FD5871A7A992700B305FB /* MGSLineNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLineNumberView.m; sourceTree = "<group>"; };
+		017FD58C1A7AA10A00B305FB /* MGSLineNumberMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberMarker.h; sourceTree = "<group>"; };
+		017FD58D1A7AA10A00B305FB /* MGSLineNumberMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLineNumberMarker.m; sourceTree = "<group>"; };
 		01BB1BC51A7959D4006C0056 /* LICENSE.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = LICENSE.html; sourceTree = "<group>"; };
 		01BB1BC71A7959D4006C0056 /* parseerr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseerr.h; sourceTree = "<group>"; };
 		01BB1BC81A7959D4006C0056 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
@@ -396,6 +404,10 @@
 				AB5E6A4911B65AC20026B4B9 /* SMLGutterTextView.m */,
 				AB41C1261192049F004F0CB5 /* SMLLineNumbers.h */,
 				AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */,
+				017FD5861A7A992700B305FB /* MGSLineNumberView.h */,
+				017FD5871A7A992700B305FB /* MGSLineNumberView.m */,
+				017FD58C1A7AA10A00B305FB /* MGSLineNumberMarker.h */,
+				017FD58D1A7AA10A00B305FB /* MGSLineNumberMarker.m */,
 			);
 			name = "Gutter Text View";
 			sourceTree = "<group>";
@@ -626,6 +638,7 @@
 				AB257FE4129B1CE300A3FF76 /* MGSTextMenuController.h in Headers */,
 				AB257FE5129B1CE300A3FF76 /* MGSExtraInterfaceController.h in Headers */,
 				01BB1BD91A7959D4006C0056 /* platform.h in Headers */,
+				017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */,
 				AB69B754118B830700903D1D /* MGSFragaria.h in Headers */,
 				01BB1BD81A7959D4006C0056 /* parseerr.h in Headers */,
 				AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */,
@@ -636,6 +649,7 @@
 				E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */,
 				ABC578E91603D6000040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h in Headers */,
 				01BB1BE21A7959D4006C0056 /* utf.h in Headers */,
+				017FD58E1A7AA10A00B305FB /* MGSLineNumberMarker.h in Headers */,
 				E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
 				AB8387C5171D6115004408F4 /* SMLSyntaxDefinition.h in Headers */,
@@ -806,6 +820,8 @@
 				AB69B65C118B75FB00903D1D /* SMLSyntaxColouring.m in Sources */,
 				AB69B671118B76AE00903D1D /* ICUMatcher.m in Sources */,
 				AB69B673118B76AE00903D1D /* ICUPattern.m in Sources */,
+				017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */,
+				017FD58F1A7AA10A00B305FB /* MGSLineNumberMarker.m in Sources */,
 				AB69B675118B76AE00903D1D /* NSStringICUAdditions.m in Sources */,
 				AB69B68F118B78D400903D1D /* SMLTextView.m in Sources */,
 				AB69B6DA118B7F2A00903D1D /* SMLLayoutManager.m in Sources */,
