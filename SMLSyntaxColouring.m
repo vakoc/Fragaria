@@ -114,7 +114,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 - (NSString *)completeString;
 - (void)prepareRegularExpressions;
 - (void)applyColourDefaults;
-- (void)recolourRange:(NSRange)range;
+- (NSRange)recolourRange:(NSRange)range;
 - (void)removeAllColours;
 - (void)removeColoursFromRange:(NSRange)range;
 - (NSString *)guessSyntaxDefinitionExtensionFromFirstLine:(NSString *)firstLine;
@@ -763,10 +763,12 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	if (!self.isSyntaxColouringRequired) {
 		return;
 	}
-	
 	if (textView == nil) {
 		return;
 	}
+    
+    BOOL colouringIsNotLineBased = (![[SMLDefaults valueForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine] boolValue]) | [[SMLDefaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue];
+    
 	NSRect visibleRect = [[[textView enclosingScrollView] contentView] documentVisibleRect];
 	NSRange visibleRange = [[textView layoutManager] glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
 	NSInteger beginningOfFirstVisibleLine = [[textView string] lineRangeForRange:NSMakeRange(visibleRange.location, 0)].location;
@@ -774,7 +776,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	
     NSRange pageRange = NSMakeRange(beginningOfFirstVisibleLine, endOfLastVisibleLine - beginningOfFirstVisibleLine);
     NSRange newCleanRange = NSUnionRange(pageRange, syntaxColouringCleanRange);
-    
+    NSRange effectiveRange = NSMakeRange(0,0);
     if (!tdc) {
         NSRange colourRange = newCleanRange;
         colourRange.length -= syntaxColouringCleanRange.length;
@@ -782,13 +784,16 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
             colourRange.location += syntaxColouringCleanRange.length;
         if (colourRange.length) {
             //NSLog(@"Recolouring range: %@", NSStringFromRange(colourRange));
-            [self recolourRange:colourRange];
+            effectiveRange = [self recolourRange:colourRange];
         }
     } else {
         //NSLog(@"Recolouring page");
-        [self recolourRange:pageRange];
+        effectiveRange = [self recolourRange:pageRange];
+        if (colouringIsNotLineBased) {
+            newCleanRange.length = NSMaxRange(pageRange) - newCleanRange.location;
+        }
     }
-    syntaxColouringCleanRange = newCleanRange;
+    syntaxColouringCleanRange = NSUnionRange(newCleanRange, effectiveRange);
 }
 
 /*
@@ -825,10 +830,10 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  - recolourRange:
  
  */
-- (void)recolourRange:(NSRange)rangeToRecolour
+- (NSRange)recolourRange:(NSRange)rangeToRecolour
 {
 	if (reactToChanges == NO) {
-		return;
+		return rangeToRecolour;
 	}
 
     // establish behavior
@@ -860,9 +865,11 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     // or we need to scan forwards to find where a multiline string which wraps off
     // the range ends.
     //
-	if (shouldColourMultiLineStrings) { 
+    // This is not always correct but it's better than nothing.
+    //
+	if (shouldColourMultiLineStrings) {
 		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:self.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
-		if (beginFirstStringInMultiLine != NSNotFound && [[firstLayoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
+        if (beginFirstStringInMultiLine != NSNotFound && [[firstLayoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
 			NSInteger startOfLine = [documentString lineRangeForRange:NSMakeRange(beginFirstStringInMultiLine, 0)].location;
 			effectiveRange = NSMakeRange(startOfLine, rangeToRecolour.length + (rangeToRecolour.location - startOfLine));
 		}
@@ -888,7 +895,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	NSString *rangeString = [documentString substringWithRange:effectiveRange];
 	NSUInteger rangeStringLength = [rangeString length];
 	if (rangeStringLength == 0) {
-		return;
+		return effectiveRange;
 	}
     
     // allocate the range scanner
@@ -1337,7 +1344,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                     secondStringMatcher = [[ICUMatcher alloc] initWithPattern:secondStringPattern overString:rangeString];
                 }
                 @catch (NSException *exception) {
-                    return;
+                    return effectiveRange;
                 }
 
                 while ([secondStringMatcher findNext]) {
@@ -1375,7 +1382,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                     firstStringMatcher = [[ICUMatcher alloc] initWithPattern:firstStringPattern overString:rangeString];
                 }
                 @catch (NSException *exception) {
-                    return;
+                    return effectiveRange;
                 }
                 
                 while ([firstStringMatcher findNext]) {
@@ -1682,7 +1689,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                     [secondStringMatcher reset];
                 }
                 @catch (NSException *exception) {
-                    return;
+                    return effectiveRange;
                 }
                 
                 while ([secondStringMatcher findNext]) {
@@ -1727,7 +1734,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	@catch (NSException *exception) {
 		NSLog(@"Error highlighting exception: %@", exception);
 	}
-	
+    return effectiveRange;
 }
 
 /*

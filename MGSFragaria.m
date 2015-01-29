@@ -9,7 +9,7 @@
 #import "MGSFragariaFramework.h"
 #import "FRAFontTransformer.h"
 
-#define DISABLE_OLD_GUTTER
+//#define DISABLE_OLD_GUTTER
 
 // valid keys for 
 // - (void)setObject:(id)object forKey:(id)key;
