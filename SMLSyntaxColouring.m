@@ -1,5 +1,7 @@
 // SMLTextView delegate
 
+/* This class syntax-colours and line-highlights. */
+
 /*
 
  MGSFragaria
@@ -168,6 +170,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		lastCursorLocation = 0;
 		lastLineHighlightRange = NSMakeRange(0, 0);
 		reactToChanges = YES;
+        syntaxColouringCleanRange = NSMakeRange(0, 0);
 		
 		// configure layout managers
 		firstLayoutManager = (SMLLayoutManager *)[textView layoutManager];
@@ -276,6 +279,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		}
 	} else if ([(__bridge NSString *)context isEqualToString:@"MultiLineChanged"]) {
 		[self prepareRegularExpressions];
+        [self removeAllColours];
 		[self pageRecolour];
 	} else if ([(__bridge NSString *)context isEqualToString:@"syntaxDefinition"]) {
 		[self applySyntaxDefinition];
@@ -717,6 +721,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 {
 	NSRange wholeRange = NSMakeRange(0, [[self completeString] length]);
 	[firstLayoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:wholeRange];
+    syntaxColouringCleanRange = NSMakeRange(0, 0);
 }
 
 /*
@@ -727,6 +732,8 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 - (void)removeColoursFromRange:(NSRange)range
 {
 	[firstLayoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:range];
+    /* We could make more complex computations but this method is not called often enough to warrant them. This is easier and always correct, though slower. */
+    syntaxColouringCleanRange = NSMakeRange(0, 0);
 }
 
 /*
@@ -739,12 +746,19 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	[self pageRecolourTextView:[document valueForKey:ro_MGSFOTextView]];
 }
 
+
 /*
  
  - pageRecolourTextView:
  
  */
 - (void)pageRecolourTextView:(SMLTextView *)textView
+{
+    [self pageRecolourTextView:textView textDidChange:NO];
+}
+
+
+- (void)pageRecolourTextView:(SMLTextView *)textView textDidChange:(BOOL)tdc
 {
 	if (!self.isSyntaxColouringRequired) {
 		return;
@@ -758,7 +772,23 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	NSInteger beginningOfFirstVisibleLine = [[textView string] lineRangeForRange:NSMakeRange(visibleRange.location, 0)].location;
 	NSInteger endOfLastVisibleLine = NSMaxRange([[self completeString] lineRangeForRange:NSMakeRange(NSMaxRange(visibleRange), 0)]);
 	
-	[self recolourRange:NSMakeRange(beginningOfFirstVisibleLine, endOfLastVisibleLine - beginningOfFirstVisibleLine)];
+    NSRange pageRange = NSMakeRange(beginningOfFirstVisibleLine, endOfLastVisibleLine - beginningOfFirstVisibleLine);
+    NSRange newCleanRange = NSUnionRange(pageRange, syntaxColouringCleanRange);
+    
+    if (!tdc) {
+        NSRange colourRange = newCleanRange;
+        colourRange.length -= syntaxColouringCleanRange.length;
+        if (colourRange.location >= syntaxColouringCleanRange.location)
+            colourRange.location += syntaxColouringCleanRange.length;
+        if (colourRange.length) {
+            //NSLog(@"Recolouring range: %@", NSStringFromRange(colourRange));
+            [self recolourRange:colourRange];
+        }
+    } else {
+        //NSLog(@"Recolouring page");
+        [self recolourRange:pageRange];
+    }
+    syntaxColouringCleanRange = newCleanRange;
 }
 
 /*
@@ -779,12 +809,15 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	// colourAll option
 	NSNumber *colourAll = [options objectForKey:@"colourAll"];
 	if (!colourAll || ![colourAll boolValue]) {
-		[self pageRecolourTextView:textView];
-		return;
-	}
-	
-	
-	[self recolourRange:NSMakeRange(0, [[textView string] length])];
+        NSNumber *visibleTextDidChange = [options objectForKey:@"visibleTextDidChange"];
+        if (visibleTextDidChange && [visibleTextDidChange boolValue]) {
+            [self pageRecolourTextView:textView textDidChange:YES];
+        } else
+            [self pageRecolourTextView:textView];
+    } else {
+        syntaxColouringCleanRange = NSMakeRange(0,0);
+        [self recolourRange:NSMakeRange(0, [[textView string] length])];
+    }
 }
 
 /*
@@ -823,7 +856,9 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     // adjust effective range
     //
     // When multiline strings are coloured we need to scan backwards to
-    // find where the string might have started if it's "above" the top of the screen.
+    // find where the string might have started if it's "above" the top of the screen,
+    // or we need to scan forwards to find where a multiline string which wraps off
+    // the range ends.
     //
 	if (shouldColourMultiLineStrings) { 
 		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:self.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
@@ -831,6 +866,18 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 			NSInteger startOfLine = [documentString lineRangeForRange:NSMakeRange(beginFirstStringInMultiLine, 0)].location;
 			effectiveRange = NSMakeRange(startOfLine, rangeToRecolour.length + (rangeToRecolour.location - startOfLine));
 		}
+        
+        
+        NSInteger lastStringBegin = [documentString rangeOfString:self.firstString options:NSBackwardsSearch range:rangeToRecolour].location;
+        if (lastStringBegin != NSNotFound) {
+            NSRange restOfString = NSMakeRange(NSMaxRange(rangeToRecolour), 0);
+            restOfString.length = [documentString length] - restOfString.location;
+            NSInteger lastStringEnd = [documentString rangeOfString:self.firstString options:0 range:restOfString].location;
+            if (lastStringEnd != NSNotFound) {
+                NSInteger endOfLine = NSMaxRange([documentString lineRangeForRange:NSMakeRange(lastStringEnd, 0)]);
+                effectiveRange = NSUnionRange(effectiveRange, NSMakeRange(lastStringBegin, endOfLine-lastStringBegin));
+            }
+        }
 	}
 	
     // setup working locations based on the effective range
@@ -1956,7 +2003,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	if ([[SMLDefaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue] == YES) {
 		[self highlightLineRange:[completeString lineRangeForRange:[textView selectedRange]]];
 	} else if ([self isSyntaxColouringRequired]) {
-		[self pageRecolourTextView:textView];
+		[self pageRecolourTextView:textView textDidChange:YES];
 	}
 	
 	if (autocompleteWordsTimer != nil) {
