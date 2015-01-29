@@ -68,11 +68,11 @@
     textIdentifier = NSLocalizedString(@"Text Editing", @"Preferences tab name");
     fontIdentifier = NSLocalizedString(@"Fonts & Colours", @"Preferences tab name");
     
-	[self addView:generalView label:generalIdentifier];
+	[self addView:generalView label:generalIdentifier image:[NSImage imageNamed:NSImageNamePreferencesGeneral]];
 
-	[self addView:textEditingPrefsViewController.view label:textIdentifier image:[NSImage imageNamed:@"General.png"]];
+    [self addView:textEditingPrefsViewController.view label:textIdentifier image:[NSImage imageNamed:NSImageNamePreferencesGeneral]];
     
-    [self addView:fontsAndColoursPrefsViewController.view label:fontIdentifier image:[NSImage imageNamed:@"General.png"]];
+    [self addView:fontsAndColoursPrefsViewController.view label:fontIdentifier image:[NSImage imageNamed:NSImageNamePreferencesGeneral]];
 		
 }
 
