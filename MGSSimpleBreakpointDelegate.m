@@ -35,10 +35,6 @@
 }
 
 
-- (void)dealloc {
-    [breakpoints release];
-    [super dealloc];
-}
 
 
 @end

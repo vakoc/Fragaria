@@ -13,7 +13,7 @@
 @class MGSSimpleBreakpointDelegate;
 
 @interface FragariaAppDelegate : NSObject <NSApplicationDelegate> {
-    NSWindow *window;
+    NSWindow *__weak window;
 	IBOutlet NSView *editView;
 	MGSFragaria *fragaria;
 	BOOL isEdited;
@@ -23,7 +23,7 @@
 - (IBAction)showPreferencesWindow:(id)sender;
 - (IBAction)copyToPasteBoard:(id)sender;
 - (IBAction)reloadString:(id)sender;
-@property (assign) IBOutlet NSWindow *window;
+@property (weak) IBOutlet NSWindow *window;
 
 - (void)setSyntaxDefinition:(NSString *)name;
 - (NSString *)syntaxDefinition;

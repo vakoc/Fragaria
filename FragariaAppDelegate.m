@@ -65,7 +65,7 @@
 	NSTextView *textView = [fragaria objectForKey:ro_MGSFOTextView];
 	
     // define a syntax error
-    SMLSyntaxError *syntaxError = [[SMLSyntaxError new] autorelease];
+    SMLSyntaxError *syntaxError = [SMLSyntaxError new];
     syntaxError.description = @"Syntax errors can be defined";
     syntaxError.line = 1;
     syntaxError.character = 1;
