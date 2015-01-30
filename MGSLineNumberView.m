@@ -431,7 +431,7 @@
                     wholeLineRect.size.height = rects[0].size.height;
                     wholeLineRect.origin.x = 0;
                     wholeLineRect.origin.y = ypos;
-                    [self drawMarkerInRect:wholeLineRect ofLine:lineNum inFile:nil];
+                    [self drawMarkerInRect:wholeLineRect ofLine:lineNum];
                     currentTextAttributes = [self markerTextAttributes];
                 } else {
                     currentTextAttributes = textAttributes;
@@ -505,7 +505,7 @@
 }
 
 
-- (void)drawMarkerInRect:(NSRect)rect ofLine:(NSNumber*)line inFile:(NSString*)file
+- (void)drawMarkerInRect:(NSRect)rect ofLine:(NSNumber*)line
 {
     NSRect centeredRect, alignedRect;
     CGFloat height;
