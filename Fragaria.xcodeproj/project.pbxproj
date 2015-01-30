@@ -960,7 +960,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Fragaria_Prefix.pch;
-				INFOPLIST_FILE = "Fragaria copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Fragaria-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Fragaria;
 			};
@@ -1106,7 +1106,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Fragaria_Prefix.pch;
-				INFOPLIST_FILE = "Fragaria copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Fragaria-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Fragaria;
 			};
@@ -1121,7 +1121,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Fragaria_Prefix.pch;
-				INFOPLIST_FILE = "Fragaria copy-Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Fragaria-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Fragaria;
 			};
