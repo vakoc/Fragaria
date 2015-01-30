@@ -144,14 +144,9 @@ Unless required by applicable law or agreed to in writing, software distributed 
     NSInteger idx = 0;
 	NSInteger lineNumber = 0;
 	NSRange range = NSMakeRange(0, 0);
-	
-	CGFloat addToScrollPoint;
   
 	SMLTextView *textView = [clipView documentView];
-	
-	
 	NSScrollView *scrollView = (NSScrollView *)[clipView superview];
-	addToScrollPoint = 0;
 	
 	NSLayoutManager *layoutManager = [textView layoutManager];
 	NSRect visibleRect = [[scrollView contentView] documentVisibleRect];
@@ -164,9 +159,11 @@ Unless required by applicable law or agreed to in writing, software distributed 
     
     if (visibleRange.location == NSNotFound)
     {
-        NSLog(@"visibleRange.location still == NSNotFound after second attempte");
+        NSLog(@"visibleRange.location still == NSNotFound after second attempt");
         return;
     }
+    
+    visibleRange = [layoutManager characterRangeForGlyphRange:visibleRange actualGlyphRange:NULL];
     
 	NSString *searchString = [textString substringWithRange:NSMakeRange(0,visibleRange.location)];
 	
@@ -175,12 +172,13 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	}
 	
 	NSInteger indexNonWrap = [searchString lineRangeForRange:NSMakeRange(idx, 0)].location;
-	NSInteger maxRangeVisibleRange = NSMaxRange([textString lineRangeForRange:NSMakeRange(NSMaxRange(visibleRange), 0)]); // Set it to just after the last glyph on the last visible line
-	NSInteger numberOfGlyphsInTextString = [layoutManager numberOfGlyphs];
+    // Set it to just after the last character on the last visible line
+	NSInteger maxRangeVisibleRange = NSMaxRange([textString lineRangeForRange:NSMakeRange(NSMaxRange(visibleRange), 0)]);
+	NSInteger numberOfCharsInTextString = [[layoutManager textStorage] length];
 	BOOL oneMoreTime = NO;
-	if (numberOfGlyphsInTextString != 0) {
-		unichar lastGlyph = [textString characterAtIndex:numberOfGlyphsInTextString - 1];
-		if (lastGlyph == '\n' || lastGlyph == '\r') {
+	if (numberOfCharsInTextString != 0) {
+		unichar lastChar = [textString characterAtIndex:numberOfCharsInTextString - 1];
+		if (![[NSCharacterSet newlineCharacterSet] characterIsMember:lastChar]) {
 			oneMoreTime = YES; // Continue one more time through the loop if the last glyph isn't newline
 		}
 	}
@@ -198,7 +196,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		}
 		
 		if (idx < maxRangeVisibleRange) {
-			[layoutManager lineFragmentRectForGlyphAtIndex:idx effectiveRange:&range];
+            NSUInteger glyph = [layoutManager glyphIndexForCharacterAtIndex:idx];
+			[layoutManager lineFragmentRectForGlyphAtIndex:glyph effectiveRange:&range];
 			idx = NSMaxRange(range);
 			indexNonWrap = NSMaxRange([textString lineRangeForRange:NSMakeRange(indexNonWrap, 0)]);
 		} else {
@@ -206,17 +205,14 @@ Unless required by applicable law or agreed to in writing, software distributed 
 			indexNonWrap ++;
 		}
 		
-		if (idx == numberOfGlyphsInTextString && !oneMoreTime) {
+		if (idx == numberOfCharsInTextString && !oneMoreTime) {
 			break;
 		}
 	}
 	
-	
 	if (recolour == YES) {
 		[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolourTextView:textView];
 	}
-	
-    
 }
 
 /*
