@@ -244,6 +244,7 @@
     }
 }
 
+
 - (NSUInteger)lineNumberForCharacterIndex:(NSUInteger)charIndex inText:(NSString *)text
 {
     NSUInteger			left, right, mid, lineStart;

@@ -28,7 +28,6 @@
 		01BB1BE71A7959D4006C0056 /* uversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BD61A7959D4006C0056 /* uversion.h */; };
 		01BB1BF31A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */; };
 		01BB1BF41A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */; };
-		1E878C4119C0D6E6006D7DD2 /* SMLGutterTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = AB41C12E11920514004F0CB5 /* SMLGutterTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B666118B768000903D1D /* SMLTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB257FE2129B1CE300A3FF76 /* MGSFragariaPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = ABD0FE581193543600E6AFE6 /* MGSFragariaPreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -49,7 +48,6 @@
 		AB472C851299C33100202CB5 /* SMLGoToLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C841299C33100202CB5 /* SMLGoToLine.xib */; };
 		AB472C881299C34500202CB5 /* SMLDetab.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C861299C34500202CB5 /* SMLDetab.xib */; };
 		AB472C891299C34500202CB5 /* SMLEntab.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C871299C34500202CB5 /* SMLEntab.xib */; };
-		AB5E6A4A11B65AC20026B4B9 /* SMLGutterTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB5E6A4911B65AC20026B4B9 /* SMLGutterTextView.m */; };
 		AB648E3311FB386E00AEF7BD /* MGSFragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* MGSFragaria.framework */; };
 		AB648E4011FB38E700AEF7BD /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = AB648E3F11FB38E700AEF7BD /* MyDocument.m */; };
 		AB648E4111FB390300AEF7BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -186,7 +184,6 @@
 		AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLLineNumbers.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragaria.m; sourceTree = "<group>"; tabWidth = 4; };
 		AB41C1261192049F004F0CB5 /* SMLLineNumbers.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = SMLLineNumbers.h; sourceTree = "<group>"; tabWidth = 4; };
-		AB41C12E11920514004F0CB5 /* SMLGutterTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLGutterTextView.h; sourceTree = "<group>"; };
 		AB472B6E129972E400202CB5 /* MGSTextMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MGSTextMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB472B7B1299732F00202CB5 /* MGSTextMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTextMenuController.h; sourceTree = "<group>"; };
 		AB472B9D12997B1F00202CB5 /* SMLBasicPerformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLBasicPerformer.m; sourceTree = "<group>"; };
@@ -201,7 +198,6 @@
 		AB472C841299C33100202CB5 /* SMLGoToLine.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLGoToLine.xib; sourceTree = "<group>"; };
 		AB472C861299C34500202CB5 /* SMLDetab.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLDetab.xib; sourceTree = "<group>"; };
 		AB472C871299C34500202CB5 /* SMLEntab.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLEntab.xib; sourceTree = "<group>"; };
-		AB5E6A4911B65AC20026B4B9 /* SMLGutterTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLGutterTextView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB648E2A11FB385700AEF7BD /* Fragaria Doc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fragaria Doc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB648E3E11FB38E700AEF7BD /* MyDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyDocument.h; sourceTree = "<group>"; };
 		AB648E3F11FB38E700AEF7BD /* MyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyDocument.m; sourceTree = "<group>"; };
@@ -396,8 +392,6 @@
 		01BB1BEE1A7964DC006C0056 /* Gutter Text View */ = {
 			isa = PBXGroup;
 			children = (
-				AB41C12E11920514004F0CB5 /* SMLGutterTextView.h */,
-				AB5E6A4911B65AC20026B4B9 /* SMLGutterTextView.m */,
 				AB41C1261192049F004F0CB5 /* SMLLineNumbers.h */,
 				AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */,
 				017FD5861A7A992700B305FB /* MGSLineNumberView.h */,
@@ -636,7 +630,6 @@
 				AB69B754118B830700903D1D /* MGSFragaria.h in Headers */,
 				01BB1BD81A7959D4006C0056 /* parseerr.h in Headers */,
 				AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */,
-				1E878C4119C0D6E6006D7DD2 /* SMLGutterTextView.h in Headers */,
 				01BB1BE71A7959D4006C0056 /* uversion.h in Headers */,
 				E3D4B2771714D89700BB2CC6 /* SMLSyntaxError.h in Headers */,
 				01BB1BE31A7959D4006C0056 /* utf16.h in Headers */,
@@ -820,7 +813,6 @@
 				AB3971CB118C1F8A00AEF388 /* MGSSyntaxController.m in Sources */,
 				AB41C1011191FDFE004F0CB5 /* SMLLineNumbers.m in Sources */,
 				AB41C1051191FFCB004F0CB5 /* MGSFragaria.m in Sources */,
-				AB5E6A4A11B65AC20026B4B9 /* SMLGutterTextView.m in Sources */,
 				AB472B6F129972E400202CB5 /* MGSTextMenuController.m in Sources */,
 				AB472B9E12997B1F00202CB5 /* SMLBasicPerformer.m in Sources */,
 				AB472BE91299AF3800202CB5 /* SMLTextPerformer.m in Sources */,

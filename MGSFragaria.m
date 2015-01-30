@@ -9,7 +9,6 @@
 #import "MGSFragariaFramework.h"
 #import "FRAFontTransformer.h"
 
-//#define DISABLE_OLD_GUTTER
 
 // valid keys for 
 // - (void)setObject:(id)object forKey:(id)key;
@@ -318,7 +317,6 @@ char kcLineWrapPrefChanged;
     // the relevant clas headers to exposure sufficient information to make subclassing feasible.
     Class editorTextViewClass = [SMLTextView class];
     Class lineNumberClass = [SMLLineNumbers class];
-    Class gutterTextViewClass = [SMLGutterTextView class];
     Class syntaxColouringClass = [SMLSyntaxColouring class];
     
 	// create text scrollview
@@ -348,49 +346,23 @@ char kcLineWrapPrefChanged;
 
     // create line numbers
 	SMLLineNumbers *lineNumbers = [[lineNumberClass alloc] initWithDocument:self.docSpec];
-    [lineNumbers setStartingLineNumber: _startingLineNumber];
 	[self.docSpec setValue:lineNumbers forKey:ro_MGSFOLineNumbers];
-
+    
     // SMLLineNumbers will be notified of changes to the text scroll view content view due to scrolling
     [[NSNotificationCenter defaultCenter] addObserver:lineNumbers selector:@selector(viewBoundsDidChange:) name:NSViewBoundsDidChangeNotification object:[textScrollView contentView]];
-	[[NSNotificationCenter defaultCenter] addObserver:lineNumbers selector:@selector(viewBoundsDidChange:) name:NSViewFrameDidChangeNotification object:[textScrollView contentView]];
+    [[NSNotificationCenter defaultCenter] addObserver:lineNumbers selector:@selector(viewBoundsDidChange:) name:NSViewFrameDidChangeNotification object:[textScrollView contentView]];
 
-#ifndef DISABLE_OLD_GUTTER
-	// create gutter scrollview
-	NSScrollView *gutterScrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, gutterWidth, contentSize.height)];
-	[gutterScrollView setBorderType:NSNoBorder];
-	[gutterScrollView setHasVerticalScroller:NO];
-	[gutterScrollView setHasHorizontalScroller:NO];
-    if (self.isScrollElasticityDisabled) {
-        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
-    } else {
-        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
-    }
-	[gutterScrollView setAutoresizingMask:NSViewHeightSizable];
-	[[gutterScrollView contentView] setAutoresizesSubviews:YES];
-	
-	// create gutter textview
-	SMLGutterTextView *gutterTextView = [[gutterTextViewClass alloc] initWithFrame:NSMakeRect(0, 0, gutterWidth, contentSize.height - 50)];
-	[gutterScrollView setDocumentView:gutterTextView];
-#endif
-#ifndef DISABLE_NEW_GUTTER
     MGSLineNumberView *lineNumberView;
     lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView];
     [lineNumberView setFragaria:self];
     [textScrollView setVerticalRulerView:lineNumberView];
     [textScrollView setHasVerticalRuler:YES];
     [textScrollView setHasHorizontalRuler:NO];
-#endif
 	
 	// update the docSpec
 	[self.docSpec setValue:textView forKey:ro_MGSFOTextView];
 	[self.docSpec setValue:textScrollView forKey:ro_MGSFOScrollView];
-#ifndef DISABLE_OLD_GUTTER
-	[self.docSpec setValue:gutterScrollView forKey:ro_MGSFOGutterScrollView];
-#endif
-#ifndef DISABLE_NEW_GUTTER
     [self.docSpec setValue:lineNumberView forKey:ro_MGSFOGutterView];
-#endif
 	
 	// add syntax colouring
 	SMLSyntaxColouring *syntaxColouring = [[syntaxColouringClass alloc] initWithDocument:self.docSpec];
@@ -400,10 +372,6 @@ char kcLineWrapPrefChanged;
 	// add scroll view to content view
 	[contentView addSubview:[self.docSpec valueForKey:ro_MGSFOScrollView]];
 	
-#ifndef DISABLE_OLD_GUTTER
-	// update line numbers
-	[[self.docSpec valueForKey:ro_MGSFOLineNumbers] updateLineNumbersForClipView:[[self.docSpec valueForKey:ro_MGSFOScrollView] contentView] checkWidth:NO recolour:YES];
-#endif
     // update the gutter view
     [self updateGutterView];
 
