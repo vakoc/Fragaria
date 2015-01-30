@@ -364,7 +364,7 @@
     NSTextContainer			*container;
     NSRange					range, glyphRange, nullRange;
     NSString				*text, *labelText;
-    NSUInteger				rectCount, index, line, count;
+    NSUInteger				rectCount, index, line, count, startingLine;
     NSRectArray				rects;
     CGFloat					ypos, yinset;
     NSDictionary			*textAttributes, *currentTextAttributes;
@@ -394,6 +394,7 @@
     
     lines = [self lineIndices];
     linesWithBreakpoints = [[_fragaria objectForKey:MGSFOBreakpointDelegate] breakpointsForFile:nil];
+    startingLine = [_fragaria startingLineNumber] + 1;
 
     // Find the characters that are currently visible
     glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:container];
@@ -437,7 +438,7 @@
                 }
                 
                 // Line numbers are internally stored starting at 0
-                labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + 1];
+                labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine];
                 
                 [drawingTextStorage beginEditing];
                 [[drawingTextStorage mutableString] setString:labelText];

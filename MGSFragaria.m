@@ -652,9 +652,7 @@ char kcLineWrapPrefChanged;
 - (void)setStartingLineNumber:(NSUInteger)value
 {
     _startingLineNumber = value;
-#ifndef DISABLE_OLD_GUTTER
     [self updateGutterView];
-#endif
 }
 /*
  
