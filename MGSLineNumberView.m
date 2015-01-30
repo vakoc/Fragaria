@@ -76,7 +76,6 @@
         imgBreakpoint2 = [MGSFragaria imageNamed:@"editor-breakpoint-2.png"];
         
         _lineIndices = [[NSMutableArray alloc] init];
-		_linesToMarkers = [[NSMutableDictionary alloc] init];
         [self setClientView:[aScrollView documentView]];
     }
     return self;
@@ -91,18 +90,36 @@
 
 - (NSFont *)defaultFont
 {
-    return [NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]];
+    return [NSFont controlContentFontOfSize:0];
 }
+
 
 - (NSColor *)defaultTextColor
 {
-    return [NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]];
+    return [NSColor blackColor];
 }
 
 
 - (NSColor *)defaultAlternateTextColor
 {
     return [NSColor whiteColor];
+}
+
+
+- (NSColor *)defaultBackgroundColor
+{
+    return [NSColor controlBackgroundColor];
+}
+
+
+- (CGFloat)minimumWidth {
+    return _minimumWidth;
+}
+
+
+- (void)setMinimumWidth:(CGFloat)minimumWidth {
+    _minimumWidth = minimumWidth;
+    [self setRuleThickness:[self requiredThickness]];
 }
 
 
@@ -316,7 +333,6 @@
     NSUInteger			lineCount, digits, i;
     NSMutableString     *sampleString;
     NSSize              stringSize;
-    CGFloat             defaultThickness;
     
     lineCount = [[self lineIndices] count];
     digits = 1;
@@ -337,8 +353,7 @@
 
 	// Round up the value. There is a bug on 10.4 where the display gets all
     // wonky when scrolling if you don't return an integral value here.
-    defaultThickness = [[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] doubleValue];
-    return ceil(MAX(defaultThickness, stringSize.width + RULER_MARGIN * 2));
+    return ceil(MAX(_minimumWidth, stringSize.width + RULER_MARGIN * 2));
 }
 
 
@@ -355,7 +370,7 @@
 	if (_backgroundColor != nil) {
 		[_backgroundColor set];
     } else {
-        [[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f] set];
+        [[self defaultBackgroundColor] set];
     }
     NSRectFill(bounds);
     

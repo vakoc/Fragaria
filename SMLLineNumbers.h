@@ -38,5 +38,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (void)setStartingLineNumber:(NSUInteger)value;
 - (NSUInteger)startingLineNumber;
 - (NSUInteger)numberOfVisibleLines;
+- (void) updateGutterView;
 
 @end

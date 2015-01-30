@@ -86,6 +86,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 {
 	if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
 		self.attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
+        [self updateGutterView];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
@@ -93,6 +94,105 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 #pragma mark -
 #pragma mark View updating
+
+
+- (void) updateGutterView {
+    BOOL showGutter;
+    
+    // get editor views
+    NSScrollView *textScrollView = (NSScrollView *)[document valueForKey:ro_MGSFOScrollView];
+    
+#ifndef DISABLE_OLD_GUTTER
+    BOOL hasVerticalScroller = [[document valueForKey:MGSFOHasVerticalScroller] boolValue];
+    BOOL isScrollElasticityDisabled = [[document valueForKey:MGSFODisableScrollElasticity] boolValue];
+    
+    showGutter = [[document valueForKey:MGSFOShowLineNumberGutter] boolValue];
+    NSUInteger gutterWidth = [[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] integerValue];
+    NSUInteger gutterOffset = (showGutter ? gutterWidth : 0);
+    NSRect frame, newFrame;
+    
+    // Update document value first.
+    [document setValue:[NSNumber numberWithUnsignedInteger:gutterWidth] forKey:MGSFOGutterWidth];
+    
+    // get editor views
+    NSScrollView *gutterScrollView = (NSScrollView *) [document valueForKey:ro_MGSFOGutterScrollView];
+    NSTextView *textView = (NSTextView *)[document valueForKey:ro_MGSFOTextView];
+    
+    // update scroller
+    if (hasVerticalScroller) {
+        [textScrollView setHasVerticalScroller:YES];
+        [textScrollView setAutohidesScrollers:YES];
+    } else {
+        [textScrollView setHasVerticalScroller:NO];
+        [textScrollView setAutohidesScrollers:NO];
+    }
+    if (isScrollElasticityDisabled) {
+        [textScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+    } else {
+        [textScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+        [gutterScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+    }
+    
+    // get line numbers
+    SMLLineNumbers *lineNumbers = (SMLLineNumbers *)[document valueForKey:ro_MGSFOLineNumbers];
+    [lineNumbers setStartingLineNumber: _startingLineNumber];
+    
+    // get content view
+    NSView *contentView = [textScrollView superview];
+    CGFloat contentWidth = [contentView bounds].size.width;
+    
+    // Text Scroll View
+    if (textScrollView != nil) {
+        frame = [textScrollView frame];
+        newFrame = NSMakeRect(gutterOffset, frame.origin.y, contentWidth - gutterOffset, frame.size.height);
+        [textScrollView setFrame:newFrame];
+        [textScrollView setNeedsDisplay:YES];
+    }
+    
+    // Text View
+    else if (textView != nil) {
+        frame = [textScrollView frame];
+        newFrame = NSMakeRect(gutterOffset, frame.origin.y, contentWidth - gutterOffset, frame.size.height);
+        [textView setFrame:newFrame];
+        [textView setNeedsDisplay:YES];
+    }
+    
+    // Gutter Scroll View
+    if (gutterScrollView != nil) {
+        frame = [gutterScrollView frame];
+        newFrame = NSMakeRect(frame.origin.x, frame.origin.y, gutterWidth, frame.size.height);
+        [gutterScrollView setFrame:newFrame];
+        
+        // add or remove the gutter sub view
+        if (showGutter) {
+            [contentView addSubview:gutterScrollView];
+            [gutterScrollView setNeedsDisplay:YES];
+        } else {
+            [gutterScrollView removeFromSuperview];
+        }
+    }
+    
+    // update the line numbers
+    [[document valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:YES recolour:YES];
+#endif
+#ifndef DISABLE_NEW_GUTTER
+    MGSLineNumberView *ruler;
+    
+    showGutter = [[document valueForKey:MGSFOShowLineNumberGutter] boolValue];
+    ruler = [document valueForKey:ro_MGSFOGutterView];
+    if (showGutter) {
+        [ruler setBackgroundColor:[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f]];
+        [ruler setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]]];
+        [ruler setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+        [ruler setMinimumWidth:[[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] doubleValue]];
+        [ruler setNeedsDisplay:YES];
+    }
+    [textScrollView setRulersVisible:showGutter];
+#endif
+}
+
+
 /*
  
  - viewBoundsDidChange:

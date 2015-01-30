@@ -53,13 +53,11 @@
     // and need to be recalculated.
     NSUInteger          _invalidCharacterIndex;
     
-	// Maps line numbers to markers
-	NSMutableDictionary	*_linesToMarkers;
-    
 	NSFont              *_font;
 	NSColor				*_textColor;
 	NSColor				*_alternateTextColor;
 	NSColor				*_backgroundColor;
+    CGFloat             _minimumWidth;
     MGSFragaria         *_fragaria;
     
     NSImage* imgBreakpoint0;
@@ -71,6 +69,7 @@
 @property (readwrite, strong) NSColor     *textColor;
 @property (readwrite, strong) NSColor     *alternateTextColor;
 @property (readwrite, strong) NSColor     *backgroundColor;
+@property (readwrite)         CGFloat     minimumWidth;
 @property (readwrite, strong) MGSFragaria *fragaria;
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView;
