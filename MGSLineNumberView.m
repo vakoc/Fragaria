@@ -28,7 +28,6 @@
 //
 
 #import "MGSLineNumberView.h"
-#import "MGSLineNumberMarker.h"
 #import "MGSFragariaFramework.h"
 #import <tgmath.h>
 
@@ -58,15 +57,19 @@
 @synthesize textColor = _textColor;
 @synthesize alternateTextColor = _alternateTextColor;
 @synthesize backgroundColor = _backgroundColor;
+@synthesize fragaria = _fragaria;
 
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView
 {
     if ((self = [super initWithScrollView:aScrollView orientation:NSVerticalRuler]) != nil)
     {
+        imgBreakpoint0 = [MGSFragaria imageNamed:@"editor-breakpoint-0.png"];
+        imgBreakpoint1 = [MGSFragaria imageNamed:@"editor-breakpoint-1.png"];
+        imgBreakpoint2 = [MGSFragaria imageNamed:@"editor-breakpoint-2.png"];
+        
         _lineIndices = [[NSMutableArray alloc] init];
 		_linesToMarkers = [[NSMutableDictionary alloc] init];
-		
         [self setClientView:[aScrollView documentView]];
     }
     return self;
@@ -223,8 +226,8 @@
 
     if (_invalidCharacterIndex < NSUIntegerMax)
     {
-        // We do not want to risk calculating the indices again since we are probably doing it right now, thus
-        // possibly causing an infinite loop.
+        // We do not want to risk calculating the indices again since we are
+        // probably doing it right now, thus possibly causing an infinite loop.
         lines = _lineIndices;
     }
     else
@@ -360,21 +363,18 @@
     {
         NSLayoutManager			*layoutManager;
         NSTextContainer			*container;
-        NSRect					markerRect;
         NSRange					range, glyphRange, nullRange;
         NSString				*text, *labelText;
         NSUInteger				rectCount, index, line, count;
         NSRectArray				rects;
         CGFloat					ypos, yinset;
-        NSDictionary			*textAttributes;
-        NSMutableDictionary     *currentTextAttributes;
-        NSSize					stringSize, markerSize;
-		MGSLineNumberMarker     *marker;
-		NSImage					*markerImage;
+        NSDictionary			*textAttributes, *currentTextAttributes;
+        NSSize					stringSize;
 		NSMutableArray			*lines;
         NSTextContainer         *drawingTextContainer;
         NSTextStorage           *drawingTextStorage;
         NSLayoutManager         *drawingLayoutManager;
+        NSSet                   *linesWithBreakpoints;
 
         layoutManager = [view layoutManager];
         container = [view textContainer];
@@ -394,6 +394,7 @@
         textAttributes = [self textAttributes];
 		
 		lines = [self lineIndices];
+        linesWithBreakpoints = [[_fragaria objectForKey:MGSFOBreakpointDelegate] breakpointsForFile:nil];
 
         // Find the characters that are currently visible
         glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:container];
@@ -422,32 +423,22 @@
                     // portion. Need to compensate for the clipview's coordinates.
                     ypos = yinset + NSMinY(rects[0]) - NSMinY(visibleRect);
 					
-					marker = [_linesToMarkers objectForKey:[NSNumber numberWithUnsignedInteger:line]];
-					
-					if (marker != nil)
-					{
-						markerImage = [marker image];
-						markerSize = [markerImage size];
-						markerRect = NSMakeRect(0.0, 0.0, markerSize.width, markerSize.height);
-
-						// Marker is flush right and centered vertically within the line.
-						markerRect.origin.x = NSWidth(bounds) - [markerImage size].width - 1.0;
-						markerRect.origin.y = ypos + NSHeight(rects[0]) / 2.0 - [marker imageOrigin].y;
-
-						[markerImage drawInRect:markerRect fromRect:NSMakeRect(0, 0, markerSize.width, markerSize.height) operation:NSCompositeSourceOver fraction:1.0];
-					}
+                    NSNumber *lineNum = [NSNumber numberWithInteger:line+1];
+                    if ([linesWithBreakpoints containsObject:lineNum]) {
+                        NSRect wholeLineRect;
+                        
+                        wholeLineRect.size.width = bounds.size.width;
+                        wholeLineRect.size.height = rects[0].size.height;
+                        wholeLineRect.origin.x = 0;
+                        wholeLineRect.origin.y = ypos;
+                        [self drawMarkerInRect:wholeLineRect ofLine:lineNum inFile:nil];
+                        currentTextAttributes = [self markerTextAttributes];
+                    } else {
+                        currentTextAttributes = textAttributes;
+                    }
                     
                     // Line numbers are internally stored starting at 0
                     labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + 1];
-                    
-                    if (marker == nil)
-                    {
-                        currentTextAttributes = [textAttributes mutableCopy];
-                    }
-                    else
-                    {
-                        currentTextAttributes = [[self markerTextAttributes] mutableCopy];
-                    }
                     
                     [drawingTextStorage beginEditing];
                     [[drawingTextStorage mutableString] setString:labelText];
@@ -509,7 +500,7 @@
 			{
 				if ((location >= NSMinY(rects[i])) && (location < NSMaxY(rects[i])))
 				{
-					return line + 1;
+					return line;
 				}
 			}
 		}	
@@ -517,49 +508,42 @@
 	return NSNotFound;
 }
 
-- (MGSLineNumberMarker *)markerAtLine:(NSUInteger)line
+
+- (void)drawMarkerInRect:(NSRect)rect ofLine:(NSNumber*)line inFile:(NSString*)file
 {
-	return [_linesToMarkers objectForKey:[NSNumber numberWithUnsignedInteger:line - 1]];
+    NSRect centeredRect, alignedRect;
+    CGFloat height;
+    
+    height = [imgBreakpoint0 size].height;
+    centeredRect = rect;
+    centeredRect.origin.y += (rect.size.height - height) / 2.0;
+    centeredRect.origin.x += RULER_MARGIN;
+    centeredRect.size.height = height;
+    centeredRect.size.width -= RULER_MARGIN;
+    
+    alignedRect = [self backingAlignedRect:centeredRect options:NSAlignAllEdgesOutward];
+    
+    NSDrawThreePartImage(alignedRect, imgBreakpoint0, imgBreakpoint1, imgBreakpoint2, NO, NSCompositeSourceOver, 1, YES);
 }
 
-- (void)setMarkers:(NSArray *)markers
-{
-	NSEnumerator		*enumerator;
-	NSRulerMarker		*marker;
-	
-	[_linesToMarkers removeAllObjects];
-	[super setMarkers:nil];
 
-	enumerator = [markers objectEnumerator];
-	while ((marker = [enumerator nextObject]) != nil)
-	{
-		[self addMarker:marker];
-	}
-}
-
-- (void)addMarker:(NSRulerMarker *)aMarker
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	if ([aMarker isKindOfClass:[MGSLineNumberMarker class]])
-	{
-		[_linesToMarkers setObject:aMarker
-							forKey:[NSNumber numberWithUnsignedInteger:[(MGSLineNumberMarker *)aMarker lineNumber] - 1]];
-	}
-	else
-	{
-		[super addMarker:aMarker];
-	}
-}
-
-- (void)removeMarker:(NSRulerMarker *)aMarker
-{
-	if ([aMarker isKindOfClass:[MGSLineNumberMarker class]])
-	{
-		[_linesToMarkers removeObjectForKey:[NSNumber numberWithUnsignedInteger:[(MGSLineNumberMarker *)aMarker lineNumber] - 1]];
-	}
-	else
-	{
-		[super removeMarker:aMarker];
-	}
+    NSPoint					location;
+    NSUInteger				line;
+    id breakptsDelegate;
+    
+    breakptsDelegate = [_fragaria objectForKey:MGSFOBreakpointDelegate];
+    if (!breakptsDelegate) return;
+    
+    location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    line = [self lineNumberForLocation:location.y];
+    
+    if (line != NSNotFound)
+    {
+        [breakptsDelegate toggleBreakpointForFile:nil onLine:(int)line+1];
+        [self setNeedsDisplay:YES];
+    }
 }
 
 

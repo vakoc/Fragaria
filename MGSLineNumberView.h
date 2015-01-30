@@ -35,7 +35,8 @@
  For more details, see the related blog post at:  http://www.noodlesoft.com/blog/2008/10/05/displaying-line-numbers-with-nstextview/
  */
 
-@class MGSLineNumberMarker;
+@class MGSFragaria;
+
 
 @interface MGSLineNumberView : NSRulerView
 {
@@ -52,16 +53,20 @@
 	NSColor				*_textColor;
 	NSColor				*_alternateTextColor;
 	NSColor				*_backgroundColor;
+    MGSFragaria         *_fragaria;
+    
+    NSImage* imgBreakpoint0;
+    NSImage* imgBreakpoint1;
+    NSImage* imgBreakpoint2;
 }
 
-@property (readwrite, strong) NSFont    *font;
-@property (readwrite, strong) NSColor   *textColor;
-@property (readwrite, strong) NSColor   *alternateTextColor;
-@property (readwrite, strong) NSColor   *backgroundColor;
+@property (readwrite, strong) NSFont      *font;
+@property (readwrite, strong) NSColor     *textColor;
+@property (readwrite, strong) NSColor     *alternateTextColor;
+@property (readwrite, strong) NSColor     *backgroundColor;
+@property (readwrite, strong) MGSFragaria *fragaria;
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView;
-
-- (NSUInteger)lineNumberForLocation:(CGFloat)location;
-- (MGSLineNumberMarker *)markerAtLine:(NSUInteger)line;
+- (NSUInteger)lineNumberForLocation:(CGFloat)location;;
 
 @end

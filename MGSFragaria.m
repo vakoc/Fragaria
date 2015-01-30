@@ -376,6 +376,7 @@ char kcLineWrapPrefChanged;
 #ifndef DISABLE_NEW_GUTTER
     MGSLineNumberView *lineNumberView;
     lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView];
+    [lineNumberView setFragaria:self];
     [textScrollView setVerticalRulerView:lineNumberView];
     [textScrollView setHasVerticalRuler:YES];
     [textScrollView setHasHorizontalRuler:NO];
