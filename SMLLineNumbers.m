@@ -141,87 +141,11 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)updateLineNumbersForClipView:(NSClipView *)clipView checkWidth:(BOOL)checkWidth recolour:(BOOL)recolour
 {
-    NSInteger idx = 0;
-	NSInteger lineNumber = 0;
-	NSRange range = NSMakeRange(0, 0);
-  
-	SMLTextView *textView = [clipView documentView];
-	NSScrollView *scrollView = (NSScrollView *)[clipView superview];
-	
-	NSLayoutManager *layoutManager = [textView layoutManager];
-	NSRect visibleRect = [[scrollView contentView] documentVisibleRect];
-	NSRange visibleRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
-	NSString *textString = [textView string];
-    
-    // wat? Sometimes glyphRangeForBoundingRect: returns NSNotFound, but then in debugger returns a valid range? Let's see if this works around it:
-    if (visibleRange.location == NSNotFound)
-        visibleRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
-    
-    if (visibleRange.location == NSNotFound)
-    {
-        NSLog(@"visibleRange.location still == NSNotFound after second attempt");
-        return;
-    }
-    
-    visibleRange = [layoutManager characterRangeForGlyphRange:visibleRange actualGlyphRange:NULL];
-    
-	NSString *searchString = [textString substringWithRange:NSMakeRange(0,visibleRange.location)];
-	
-	for (idx = 0, lineNumber = 0; idx < (NSInteger)visibleRange.location; lineNumber++) {
-		idx = NSMaxRange([searchString lineRangeForRange:NSMakeRange(idx, 0)]);
-	}
-	
-	NSInteger indexNonWrap = [searchString lineRangeForRange:NSMakeRange(idx, 0)].location;
-    // Set it to just after the last character on the last visible line
-	NSInteger maxRangeVisibleRange = NSMaxRange([textString lineRangeForRange:NSMakeRange(NSMaxRange(visibleRange), 0)]);
-	NSInteger numberOfCharsInTextString = [[layoutManager textStorage] length];
-	BOOL oneMoreTime = NO;
-	if (numberOfCharsInTextString != 0) {
-		unichar lastChar = [textString characterAtIndex:numberOfCharsInTextString - 1];
-		if (![[NSCharacterSet newlineCharacterSet] characterIsMember:lastChar]) {
-			oneMoreTime = YES; // Continue one more time through the loop if the last glyph isn't newline
-		}
-	}
-    
-    // generate line number string
-	while (indexNonWrap <= maxRangeVisibleRange) {
-        
-        // wrap or not
-		if (idx == indexNonWrap) {
-			lineNumber++;
-			_numberOfVisibleLines++;
-            
-		} else {
-			indexNonWrap = idx;
-		}
-		
-		if (idx < maxRangeVisibleRange) {
-            NSUInteger glyph = [layoutManager glyphIndexForCharacterAtIndex:idx];
-			[layoutManager lineFragmentRectForGlyphAtIndex:glyph effectiveRange:&range];
-			idx = NSMaxRange(range);
-			indexNonWrap = NSMaxRange([textString lineRangeForRange:NSMakeRange(indexNonWrap, 0)]);
-		} else {
-			idx++;
-			indexNonWrap ++;
-		}
-		
-		if (idx == numberOfCharsInTextString && !oneMoreTime) {
-			break;
-		}
-	}
-	
 	if (recolour == YES) {
+        SMLTextView *textView = [document objectForKey:ro_MGSFOTextView];
 		[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolourTextView:textView];
 	}
 }
 
-/*
- 
- - numberOfVisibleLines:
- 
- */
-- (NSUInteger)numberOfVisibleLines {
-  return _numberOfVisibleLines;
-}
 
 @end
