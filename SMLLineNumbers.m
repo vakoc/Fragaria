@@ -62,12 +62,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	if ((self = [super init])) {
 		
 		self.document = theDocument;
-		zeroPoint = NSMakePoint(0, 0);
-    _startingLineNumber = 0;
     _numberOfVisibleLines = 0;
-		_shouldHandleBoundsChange = YES;
     
-		self.attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
 	}
@@ -85,7 +81,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
-		self.attributes = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
         [self updateGutterView];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
@@ -146,57 +141,17 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)updateLineNumbersForClipView:(NSClipView *)clipView checkWidth:(BOOL)checkWidth recolour:(BOOL)recolour
 {
-  if (!self.shouldHandleBoundsChange)
-    return;
-  
-  self.shouldHandleBoundsChange = NO;
-  
-	NSScrollView *gutterScrollView = nil;
-	NSInteger idx = 0;
+    NSInteger idx = 0;
 	NSInteger lineNumber = 0;
 	NSRange range = NSMakeRange(0, 0);
-	NSInteger gutterWidth = 0;
-	NSRect currentViewBounds = NSZeroRect;
-	
-	NSInteger currentLineHeight;
 	
 	CGFloat addToScrollPoint;
-	
-	if (self.updatingLineNumbersForClipView == clipView) {
-    self.shouldHandleBoundsChange = YES;
-		return;
-	}
-	self.updatingLineNumbersForClipView = clipView;
-	_numberOfVisibleLines = 0;
   
 	SMLTextView *textView = [clipView documentView];
 	
-	if ([[document valueForKey:MGSFOShowLineNumberGutter] boolValue] == NO || textView == nil) {
-		if (checkWidth == YES && recolour == YES) {
-			[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolourTextView:textView];
-		}
-    self.updatingLineNumbersForClipView = nil;
-    self.shouldHandleBoundsChange = YES;
-    return;
-	}
 	
 	NSScrollView *scrollView = (NSScrollView *)[clipView superview];
-	addToScrollPoint = 0;	
-	if (scrollView == [document valueForKey:ro_MGSFOScrollView]) {
-		gutterScrollView = [document valueForKey:ro_MGSFOGutterScrollView];
-	} else {
-    self.updatingLineNumbersForClipView = nil;
-    self.shouldHandleBoundsChange = YES;
-    return;
-	}
-    
-    // get break points from delegate
-    NSSet* breakpoints = NULL;
-    id breakpointDelegate = [[MGSFragaria currentInstance] objectForKey:MGSFOBreakpointDelegate];
-    if (breakpointDelegate && [breakpointDelegate respondsToSelector:@selector(breakpointsForFile:)])
-    {
-        breakpoints = [breakpointDelegate breakpointsForFile:[gutterScrollView.documentView fileName]];
-    }
+	addToScrollPoint = 0;
 	
 	NSLayoutManager *layoutManager = [textView layoutManager];
 	NSRect visibleRect = [[scrollView contentView] documentVisibleRect];
@@ -229,10 +184,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 			oneMoreTime = YES; // Continue one more time through the loop if the last glyph isn't newline
 		}
 	}
-	NSMutableString *lineNumbersString = [[NSMutableString alloc] init];
-	
-    int textLine = 0;
-    NSMutableArray* textLineBreakpoints = [NSMutableArray array];
     
     // generate line number string
 	while (indexNonWrap <= maxRangeVisibleRange) {
@@ -241,19 +192,9 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		if (idx == indexNonWrap) {
 			lineNumber++;
 			_numberOfVisibleLines++;
-      
-			[lineNumbersString appendFormat:@"%li\n", (long)(lineNumber + _startingLineNumber)];
-            textLine++;
             
-            // flag breakpoints
-            if ([breakpoints containsObject:[NSNumber numberWithInt:(int)lineNumber]])
-            {
-                [textLineBreakpoints addObject:[NSNumber numberWithInt:textLine]];
-            }
 		} else {
-			[lineNumbersString appendFormat:@"%C\n", (unsigned short)0x00B7];
 			indexNonWrap = idx;
-            textLine++;
 		}
 		
 		if (idx < maxRangeVisibleRange) {
@@ -270,50 +211,12 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		}
 	}
 	
-    // check width is okay
-	if (checkWidth == YES) {
-		NSInteger widthOfStringInGutter = [lineNumbersString sizeWithAttributes:self.attributes].width;
-		
-		if (widthOfStringInGutter > ([[document valueForKey:MGSFOGutterWidth] integerValue] - 14)) { // Check if the gutterTextView has to be resized
-			[document setValue:[NSNumber numberWithInteger:widthOfStringInGutter + 20] forKey:MGSFOGutterWidth]; // Make it bigger than need be so it doesn't have to resized soon again
-			if ([[document valueForKey:MGSFOShowLineNumberGutter] boolValue] == YES) {
-				gutterWidth = [[document valueForKey:MGSFOGutterWidth] integerValue];
-			} else {
-				gutterWidth = 0;
-			}
-			currentViewBounds = [[gutterScrollView superview] bounds];
-			[scrollView setFrame:NSMakeRect(gutterWidth, 0, currentViewBounds.size.width - gutterWidth, currentViewBounds.size.height)];
-			
-			[gutterScrollView setFrame:NSMakeRect(0, 0, [[document valueForKey:MGSFOGutterWidth] integerValue], currentViewBounds.size.height)];
-		}
-	}
 	
 	if (recolour == YES) {
 		[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolourTextView:textView];
 	}
 	
-	// Fix flickering while rubber banding: Only change the text, if NOT rubber banding.
-	if (visibleRect.origin.y >= 0.0f && visibleRect.origin.y <= textView.frame.size.height - visibleRect.size.height) {
-		[[gutterScrollView documentView] setString:lineNumbersString];
-    }
     
-	   
-	[[gutterScrollView contentView] setBoundsOrigin:zeroPoint]; // To avert an occasional bug which makes the line numbers disappear
-	currentLineHeight = (NSInteger)[textView lineHeight];
-	if ((NSInteger)visibleRect.origin.y != 0 && currentLineHeight != 0) {
-		CGFloat y = ((NSInteger)visibleRect.origin.y % currentLineHeight) + addToScrollPoint;  // Align the line numbers with the text.
-		
-		// Don't align, but directly calculate the offset, when rubber banding.
-		if (visibleRect.origin.y < 0.0f)
-			y = visibleRect.origin.y;
-		else if (visibleRect.origin.y > textView.frame.size.height - visibleRect.size.height)
-			y = visibleRect.origin.y - (textView.frame.size.height - visibleRect.size.height);
-		
-		[[gutterScrollView contentView] scrollToPoint:NSMakePoint(0, y)];
-	}
-	
-	self.updatingLineNumbersForClipView = nil;
-  self.shouldHandleBoundsChange = YES;
 }
 
 /*

@@ -22,12 +22,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 @class SMLTextView;
 
 @interface SMLLineNumbers : NSObject {
-	NSPoint zeroPoint;
-	NSClipView *updatingLineNumbersForClipView;
-    NSDictionary *attributes;
     id document;
   
-    NSUInteger _startingLineNumber;
     NSUInteger _numberOfVisibleLines;
 }
 
