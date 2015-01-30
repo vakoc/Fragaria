@@ -32,8 +32,9 @@
 #import "MGSFragariaFramework.h"
 #import <tgmath.h>
 
-#define DEFAULT_THICKNESS	22.0
+
 #define RULER_MARGIN		5.0
+
 
 @interface MGSLineNumberView (Private)
 
@@ -49,12 +50,15 @@
 
 @end
 
+
 @implementation MGSLineNumberView
+
 
 @synthesize font = _font;
 @synthesize textColor = _textColor;
 @synthesize alternateTextColor = _alternateTextColor;
 @synthesize backgroundColor = _backgroundColor;
+
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView
 {
@@ -68,19 +72,12 @@
     return self;
 }
 
-- (void)awakeFromNib
-{
-    _lineIndices = [[NSMutableArray alloc] init];
-	_linesToMarkers = [[NSMutableDictionary alloc] init];
-	[self setClientView:[[self scrollView] documentView]];
-}
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    
 }
+
 
 - (NSFont *)defaultFont
 {
@@ -91,6 +88,7 @@
 {
     return [NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]];
 }
+
 
 - (NSColor *)defaultAlternateTextColor
 {
@@ -260,6 +258,7 @@
     return left;
 }
 
+
 - (NSDictionary *)textAttributes
 {
     NSFont  *font;
@@ -279,6 +278,7 @@
     
     return [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, nil];
 }
+
 
 - (NSDictionary *)markerTextAttributes
 {
@@ -300,11 +300,13 @@
     return [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, nil];
 }
 
+
 - (CGFloat)requiredThickness
 {
     NSUInteger			lineCount, digits, i;
     NSMutableString     *sampleString;
     NSSize              stringSize;
+    CGFloat             defaultThickness;
     
     lineCount = [[self lineIndices] count];
     digits = 1;
@@ -323,10 +325,12 @@
     
     stringSize = [sampleString sizeWithAttributes:[self textAttributes]];
 
-	// Round up the value. There is a bug on 10.4 where the display gets all wonky when scrolling if you don't
-	// return an integral value here.
-    return ceil(MAX(DEFAULT_THICKNESS, stringSize.width + RULER_MARGIN * 2));
+	// Round up the value. There is a bug on 10.4 where the display gets all
+    // wonky when scrolling if you don't return an integral value here.
+    defaultThickness = [[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] doubleValue];
+    return ceil(MAX(defaultThickness, stringSize.width + RULER_MARGIN * 2));
 }
+
 
 - (void)drawHashMarksAndLabelsInRect:(NSRect)aRect
 {

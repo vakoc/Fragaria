@@ -957,6 +957,7 @@ char kcLineWrapPrefChanged;
 #ifndef DISABLE_NEW_GUTTER
     showGutter = [[self.docSpec valueForKey:MGSFOShowLineNumberGutter] boolValue];
     [textScrollView setRulersVisible:showGutter];
+    [[textScrollView verticalRulerView] setNeedsDisplay:YES];
 #endif
 }
 
