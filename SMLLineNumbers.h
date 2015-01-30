@@ -35,8 +35,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (void)viewBoundsDidChange:(NSNotification *)notification;
 - (void)updateLineNumbersCheckWidth:(BOOL)checkWidth recolour:(BOOL)recolour;
 - (void)updateLineNumbersForClipView:(NSClipView *)clipView checkWidth:(BOOL)checkWidth recolour:(BOOL)recolour;
-- (void)setStartingLineNumber:(NSUInteger)value;
-- (NSUInteger)startingLineNumber;
 - (NSUInteger)numberOfVisibleLines;
 - (void) updateGutterView;
 

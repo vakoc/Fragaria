@@ -318,25 +318,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 /*
  
- - setStartingLineNumber:
- 
- */
-- (void)setStartingLineNumber:(NSUInteger)value {
-  _startingLineNumber = value;
-  [self updateLineNumbersForClipView:[[document valueForKey:ro_MGSFOScrollView] contentView] checkWidth:YES recolour:YES];
-}
-
-/*
- 
- - startingLineNumber:
- 
- */
-- (NSUInteger)startingLineNumber {
-  return _startingLineNumber;
-}
-
-/*
- 
  - numberOfVisibleLines:
  
  */
