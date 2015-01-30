@@ -311,8 +311,6 @@ char kcLineWrapPrefChanged;
 {
     NSAssert(contentView != nil, @"A content view must be provided.");
     
-	NSInteger gutterWidth = [[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] integerValue];
-    
     // TODO: allow user to pass in custom class name in doc spec. This will likely entail refactoring
     // the relevant clas headers to exposure sufficient information to make subclassing feasible.
     Class editorTextViewClass = [SMLTextView class];

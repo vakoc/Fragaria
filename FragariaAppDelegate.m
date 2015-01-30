@@ -284,7 +284,6 @@
     NSString *group = [info objectForKey:SMLSyntaxGroup];
     NSInteger groupID = [[info objectForKey:SMLSyntaxGroupID] integerValue];
     BOOL willColour = [[info objectForKey:SMLSyntaxWillColour] boolValue];
-    NSDictionary *attributes = [info objectForKey:SMLSyntaxAttributes];
     
     // for key values see SMLSyntaxDefinition.h
     NSDictionary *syntaxInfo = [info objectForKey:SMLSyntaxInfo];
@@ -302,15 +301,13 @@
     // group
     switch (groupID) {
         case kSMLSyntaxGroupNumber:
-            
             // we can call colourWithBlock to perform initial group colouration
-            if (NO) {
-                
+#if 0
                 // colour the whole string with the number group colour
                 colourWithBlock(attributes, range);
                 
                 fragariaShouldColour = NO;
-            }
+#endif
             break;
             
         case kSMLSyntaxGroupCommand:
