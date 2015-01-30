@@ -29,6 +29,7 @@
 
 #import "MGSLineNumberView.h"
 #import "MGSLineNumberMarker.h"
+#import "MGSFragariaFramework.h"
 #import <tgmath.h>
 
 #define DEFAULT_THICKNESS	22.0
@@ -83,18 +84,19 @@
 
 - (NSFont *)defaultFont
 {
-    return [NSFont labelFontOfSize:[NSFont systemFontSizeForControlSize:NSMiniControlSize]];
+    return [NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]];
 }
 
 - (NSColor *)defaultTextColor
 {
-    return [NSColor colorWithCalibratedWhite:0.42 alpha:1.0];
+    return [NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]];
 }
 
 - (NSColor *)defaultAlternateTextColor
 {
     return [NSColor whiteColor];
 }
+
 
 - (void)setClientView:(NSView *)aView
 {
@@ -330,43 +332,61 @@
 {
     id			view;
 	NSRect		bounds;
+    NSRect visibleRect;
 
 	bounds = [self bounds];
-
-	if (_backgroundColor != nil)
-	{
-		[_backgroundColor set];
-		NSRectFill(bounds);
-		
-		[[NSColor colorWithCalibratedWhite:0.58 alpha:1.0] set];
-		[NSBezierPath strokeLineFromPoint:NSMakePoint(NSMaxX(bounds) - 0/5, NSMinY(bounds)) toPoint:NSMakePoint(NSMaxX(bounds) - 0.5, NSMaxY(bounds))];
-	}
-	
     view = [self clientView];
+    visibleRect = [[[self scrollView] contentView] bounds];
+
+	if (_backgroundColor != nil) {
+		[_backgroundColor set];
+    } else {
+        [[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f] set];
+    }
+    NSRectFill(bounds);
+    
+    [[NSColor lightGrayColor] set];
+    NSBezierPath *dottedLine = [NSBezierPath bezierPathWithRect:NSMakeRect(bounds.size.width, 0, 0, bounds.size.height)];
+    CGFloat dash[2];
+    dash[0] = 1.0f;
+    dash[1] = 2.0f;
+    [dottedLine setLineDash:dash count:2 phase:visibleRect.origin.y];
+    [dottedLine stroke];
 	
     if ([view isKindOfClass:[NSTextView class]])
     {
         NSLayoutManager			*layoutManager;
         NSTextContainer			*container;
-        NSRect					visibleRect, markerRect;
+        NSRect					markerRect;
         NSRange					range, glyphRange, nullRange;
         NSString				*text, *labelText;
         NSUInteger				rectCount, index, line, count;
         NSRectArray				rects;
         CGFloat					ypos, yinset;
-        NSDictionary			*textAttributes, *currentTextAttributes;
+        NSDictionary			*textAttributes;
+        NSMutableDictionary     *currentTextAttributes;
         NSSize					stringSize, markerSize;
-		MGSLineNumberMarker	*marker;
+		MGSLineNumberMarker     *marker;
 		NSImage					*markerImage;
 		NSMutableArray			*lines;
+        NSTextContainer         *drawingTextContainer;
+        NSTextStorage           *drawingTextStorage;
+        NSLayoutManager         *drawingLayoutManager;
 
         layoutManager = [view layoutManager];
         container = [view textContainer];
         text = [view string];
         nullRange = NSMakeRange(NSNotFound, 0);
 		
-		yinset = [view textContainerInset].height;        
-        visibleRect = [[[self scrollView] contentView] bounds];
+		yinset = [view textContainerInset].height;
+
+        drawingTextStorage = [[NSTextStorage alloc] init];
+        drawingLayoutManager = [[NSLayoutManager alloc] init];
+        [layoutManager setTypesetterBehavior:NSTypesetterLatestBehavior];
+        drawingTextContainer = [[NSTextContainer alloc] initWithContainerSize:bounds.size];
+        [drawingLayoutManager addTextContainer:drawingTextContainer];
+        [drawingTextStorage addLayoutManager:drawingLayoutManager];
+        [drawingTextContainer setLineFragmentPadding:0.0];
 
         textAttributes = [self textAttributes];
 		
@@ -392,7 +412,7 @@
                                      withinSelectedCharacterRange:nullRange
                                                   inTextContainer:container
                                                         rectCount:&rectCount];
-				
+
                 if (rectCount > 0)
                 {
                     // Note that the ruler view is only as tall as the visible
@@ -417,23 +437,26 @@
                     // Line numbers are internally stored starting at 0
                     labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + 1];
                     
-                    stringSize = [labelText sizeWithAttributes:textAttributes];
-
-					if (marker == nil)
-					{
-						currentTextAttributes = textAttributes;
-					}
-					else
-					{
-						currentTextAttributes = [self markerTextAttributes];
-					}
-					
+                    if (marker == nil)
+                    {
+                        currentTextAttributes = [textAttributes mutableCopy];
+                    }
+                    else
+                    {
+                        currentTextAttributes = [[self markerTextAttributes] mutableCopy];
+                    }
+                    
+                    [drawingTextStorage beginEditing];
+                    [[drawingTextStorage mutableString] setString:labelText];
+                    [drawingTextStorage setAttributes:currentTextAttributes range:NSMakeRange(0, [labelText length])];
+                    [drawingTextStorage endEditing];
+                    
+                    NSRange glyphRange = [drawingLayoutManager glyphRangeForTextContainer:drawingTextContainer];
+                    stringSize = [drawingLayoutManager usedRectForTextContainer:drawingTextContainer].size;
+                    
+                    NSPoint drawOrigin = NSMakePoint(NSWidth(bounds) - stringSize.width - RULER_MARGIN, ypos + (NSHeight(rects[0]) - stringSize.height) / 2.0);
                     // Draw string flush right, centered vertically within the line
-                    [labelText drawInRect:
-                       NSMakeRect(NSWidth(bounds) - stringSize.width - RULER_MARGIN,
-                                  ypos + (NSHeight(rects[0]) - stringSize.height) / 2.0,
-                                  NSWidth(bounds) - RULER_MARGIN * 2.0, NSHeight(rects[0]))
-                           withAttributes:currentTextAttributes];
+                    [drawingLayoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawOrigin];
                 }
             }
 			if (index > NSMaxRange(range))
