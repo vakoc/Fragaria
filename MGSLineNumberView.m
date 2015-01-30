@@ -103,14 +103,18 @@
 {
 	id		oldClientView;
 	
+    if (aView && ![aView isKindOfClass:[NSTextView class]])
+        [NSException raise:@"MGSLineNumberViewNotTextViewClient"
+                    format:@"MGSLineNumberView's client view must be a NSTextView."];
+    
 	oldClientView = [self clientView];
 	
-    if ((oldClientView != aView) && [oldClientView isKindOfClass:[NSTextView class]])
+    if (oldClientView && (oldClientView != aView))
     {
 		[[NSNotificationCenter defaultCenter] removeObserver:self name:NSTextStorageDidProcessEditingNotification object:[(NSTextView *)oldClientView textStorage]];
     }
     [super setClientView:aView];
-    if ((aView != nil) && [aView isKindOfClass:[NSTextView class]])
+    if (aView)
     {
 		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textStorageDidProcessEditing:) name:NSTextStorageDidProcessEditingNotification object:[(NSTextView *)aView textStorage]];
 
@@ -159,64 +163,61 @@
 
     view = [self clientView];
     
-    if ([view isKindOfClass:[NSTextView class]])
-    {
-        NSUInteger      charIndex, stringLength, lineEnd, contentEnd, count, lineIndex;
-        NSString        *text;
-        CGFloat         oldThickness, newThickness;
-        
-        text = [view string];
-        stringLength = [text length];
-        count = [_lineIndices count];
+    NSUInteger      charIndex, stringLength, lineEnd, contentEnd, count, lineIndex;
+    NSString        *text;
+    CGFloat         oldThickness, newThickness;
+    
+    text = [view string];
+    stringLength = [text length];
+    count = [_lineIndices count];
 
-        charIndex = 0;
-        lineIndex = [self lineNumberForCharacterIndex:_invalidCharacterIndex inText:text];
-        if (count > 0)
-        {
-            charIndex = [[_lineIndices objectAtIndex:lineIndex] unsignedIntegerValue];
-        }
-        
-        do
-        {
-            if (lineIndex < count)
-            {
-                [_lineIndices replaceObjectAtIndex:lineIndex withObject:[NSNumber numberWithUnsignedInteger:charIndex]];
-            }
-            else
-            {
-                [_lineIndices addObject:[NSNumber numberWithUnsignedInteger:charIndex]];
-            }
-            
-            charIndex = NSMaxRange([text lineRangeForRange:NSMakeRange(charIndex, 0)]);
-            lineIndex++;
-        }
-        while (charIndex < stringLength);
-        
+    charIndex = 0;
+    lineIndex = [self lineNumberForCharacterIndex:_invalidCharacterIndex inText:text];
+    if (count > 0)
+    {
+        charIndex = [[_lineIndices objectAtIndex:lineIndex] unsignedIntegerValue];
+    }
+    
+    do
+    {
         if (lineIndex < count)
         {
-            [_lineIndices removeObjectsInRange:NSMakeRange(lineIndex, count - lineIndex)];
+            [_lineIndices replaceObjectAtIndex:lineIndex withObject:[NSNumber numberWithUnsignedInteger:charIndex]];
         }
-        _invalidCharacterIndex = NSUIntegerMax;
-
-        // Check if text ends with a new line.
-        [text getLineStart:NULL end:&lineEnd contentsEnd:&contentEnd forRange:NSMakeRange([[_lineIndices lastObject] unsignedIntegerValue], 0)];
-        if (contentEnd < lineEnd)
+        else
         {
             [_lineIndices addObject:[NSNumber numberWithUnsignedInteger:charIndex]];
         }
+        
+        charIndex = NSMaxRange([text lineRangeForRange:NSMakeRange(charIndex, 0)]);
+        lineIndex++;
+    }
+    while (charIndex < stringLength);
+    
+    if (lineIndex < count)
+    {
+        [_lineIndices removeObjectsInRange:NSMakeRange(lineIndex, count - lineIndex)];
+    }
+    _invalidCharacterIndex = NSUIntegerMax;
 
-        // See if we need to adjust the width of the view
-        oldThickness = [self ruleThickness];
-        newThickness = [self requiredThickness];
-        if (fabs(oldThickness - newThickness) > 1)
-        {
-            // Not a good idea to resize the view during calculations (which
-            // can happen during display). Do a delayed perform.
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self setRuleThickness:newThickness];
-            });
-        }
-	}
+    // Check if text ends with a new line.
+    [text getLineStart:NULL end:&lineEnd contentsEnd:&contentEnd forRange:NSMakeRange([[_lineIndices lastObject] unsignedIntegerValue], 0)];
+    if (contentEnd < lineEnd)
+    {
+        [_lineIndices addObject:[NSNumber numberWithUnsignedInteger:charIndex]];
+    }
+
+    // See if we need to adjust the width of the view
+    oldThickness = [self ruleThickness];
+    newThickness = [self requiredThickness];
+    if (fabs(oldThickness - newThickness) > 1)
+    {
+        // Not a good idea to resize the view during calculations (which
+        // can happen during display). Do a delayed perform.
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self setRuleThickness:newThickness];
+        });
+    }
 }
 
 - (NSUInteger)lineNumberForCharacterIndex:(NSUInteger)charIndex inText:(NSString *)text
@@ -359,104 +360,101 @@
     [dottedLine setLineDash:dash count:2 phase:visibleRect.origin.y];
     [dottedLine stroke];
 	
-    if ([view isKindOfClass:[NSTextView class]])
+    NSLayoutManager			*layoutManager;
+    NSTextContainer			*container;
+    NSRange					range, glyphRange, nullRange;
+    NSString				*text, *labelText;
+    NSUInteger				rectCount, index, line, count;
+    NSRectArray				rects;
+    CGFloat					ypos, yinset;
+    NSDictionary			*textAttributes, *currentTextAttributes;
+    NSSize					stringSize;
+    NSMutableArray			*lines;
+    NSTextContainer         *drawingTextContainer;
+    NSTextStorage           *drawingTextStorage;
+    NSLayoutManager         *drawingLayoutManager;
+    NSSet                   *linesWithBreakpoints;
+
+    layoutManager = [view layoutManager];
+    container = [view textContainer];
+    text = [view string];
+    nullRange = NSMakeRange(NSNotFound, 0);
+    
+    yinset = [view textContainerInset].height;
+
+    drawingTextStorage = [[NSTextStorage alloc] init];
+    drawingLayoutManager = [[NSLayoutManager alloc] init];
+    [layoutManager setTypesetterBehavior:NSTypesetterLatestBehavior];
+    drawingTextContainer = [[NSTextContainer alloc] initWithContainerSize:bounds.size];
+    [drawingLayoutManager addTextContainer:drawingTextContainer];
+    [drawingTextStorage addLayoutManager:drawingLayoutManager];
+    [drawingTextContainer setLineFragmentPadding:0.0];
+
+    textAttributes = [self textAttributes];
+    
+    lines = [self lineIndices];
+    linesWithBreakpoints = [[_fragaria objectForKey:MGSFOBreakpointDelegate] breakpointsForFile:nil];
+
+    // Find the characters that are currently visible
+    glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:container];
+    range = [layoutManager characterRangeForGlyphRange:glyphRange actualGlyphRange:NULL];
+    
+    // Fudge the range a tad in case there is an extra new line at end.
+    // It doesn't show up in the glyphs so would not be accounted for.
+    range.length++;
+    
+    count = [lines count];
+    
+    for (line = [self lineNumberForCharacterIndex:range.location inText:text]; line < count; line++)
     {
-        NSLayoutManager			*layoutManager;
-        NSTextContainer			*container;
-        NSRange					range, glyphRange, nullRange;
-        NSString				*text, *labelText;
-        NSUInteger				rectCount, index, line, count;
-        NSRectArray				rects;
-        CGFloat					ypos, yinset;
-        NSDictionary			*textAttributes, *currentTextAttributes;
-        NSSize					stringSize;
-		NSMutableArray			*lines;
-        NSTextContainer         *drawingTextContainer;
-        NSTextStorage           *drawingTextStorage;
-        NSLayoutManager         *drawingLayoutManager;
-        NSSet                   *linesWithBreakpoints;
-
-        layoutManager = [view layoutManager];
-        container = [view textContainer];
-        text = [view string];
-        nullRange = NSMakeRange(NSNotFound, 0);
-		
-		yinset = [view textContainerInset].height;
-
-        drawingTextStorage = [[NSTextStorage alloc] init];
-        drawingLayoutManager = [[NSLayoutManager alloc] init];
-        [layoutManager setTypesetterBehavior:NSTypesetterLatestBehavior];
-        drawingTextContainer = [[NSTextContainer alloc] initWithContainerSize:bounds.size];
-        [drawingLayoutManager addTextContainer:drawingTextContainer];
-        [drawingTextStorage addLayoutManager:drawingLayoutManager];
-        [drawingTextContainer setLineFragmentPadding:0.0];
-
-        textAttributes = [self textAttributes];
-		
-		lines = [self lineIndices];
-        linesWithBreakpoints = [[_fragaria objectForKey:MGSFOBreakpointDelegate] breakpointsForFile:nil];
-
-        // Find the characters that are currently visible
-        glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:container];
-        range = [layoutManager characterRangeForGlyphRange:glyphRange actualGlyphRange:NULL];
+        index = [[lines objectAtIndex:line] unsignedIntegerValue];
         
-        // Fudge the range a tad in case there is an extra new line at end.
-        // It doesn't show up in the glyphs so would not be accounted for.
-        range.length++;
-        
-        count = [lines count];
-        
-        for (line = [self lineNumberForCharacterIndex:range.location inText:text]; line < count; line++)
+        if (NSLocationInRange(index, range))
         {
-            index = [[lines objectAtIndex:line] unsignedIntegerValue];
-            
-            if (NSLocationInRange(index, range))
-            {
-                rects = [layoutManager rectArrayForCharacterRange:NSMakeRange(index, 0)
-                                     withinSelectedCharacterRange:nullRange
-                                                  inTextContainer:container
-                                                        rectCount:&rectCount];
+            rects = [layoutManager rectArrayForCharacterRange:NSMakeRange(index, 0)
+                                 withinSelectedCharacterRange:nullRange
+                                              inTextContainer:container
+                                                    rectCount:&rectCount];
 
-                if (rectCount > 0)
-                {
-                    // Note that the ruler view is only as tall as the visible
-                    // portion. Need to compensate for the clipview's coordinates.
-                    ypos = yinset + NSMinY(rects[0]) - NSMinY(visibleRect);
-					
-                    NSNumber *lineNum = [NSNumber numberWithInteger:line+1];
-                    if ([linesWithBreakpoints containsObject:lineNum]) {
-                        NSRect wholeLineRect;
-                        
-                        wholeLineRect.size.width = bounds.size.width;
-                        wholeLineRect.size.height = rects[0].size.height;
-                        wholeLineRect.origin.x = 0;
-                        wholeLineRect.origin.y = ypos;
-                        [self drawMarkerInRect:wholeLineRect ofLine:lineNum inFile:nil];
-                        currentTextAttributes = [self markerTextAttributes];
-                    } else {
-                        currentTextAttributes = textAttributes;
-                    }
+            if (rectCount > 0)
+            {
+                // Note that the ruler view is only as tall as the visible
+                // portion. Need to compensate for the clipview's coordinates.
+                ypos = yinset + NSMinY(rects[0]) - NSMinY(visibleRect);
+                
+                NSNumber *lineNum = [NSNumber numberWithInteger:line+1];
+                if ([linesWithBreakpoints containsObject:lineNum]) {
+                    NSRect wholeLineRect;
                     
-                    // Line numbers are internally stored starting at 0
-                    labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + 1];
-                    
-                    [drawingTextStorage beginEditing];
-                    [[drawingTextStorage mutableString] setString:labelText];
-                    [drawingTextStorage setAttributes:currentTextAttributes range:NSMakeRange(0, [labelText length])];
-                    [drawingTextStorage endEditing];
-                    
-                    NSRange glyphRange = [drawingLayoutManager glyphRangeForTextContainer:drawingTextContainer];
-                    stringSize = [drawingLayoutManager usedRectForTextContainer:drawingTextContainer].size;
-                    
-                    NSPoint drawOrigin = NSMakePoint(NSWidth(bounds) - stringSize.width - RULER_MARGIN, ypos + (NSHeight(rects[0]) - stringSize.height) / 2.0);
-                    // Draw string flush right, centered vertically within the line
-                    [drawingLayoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawOrigin];
+                    wholeLineRect.size.width = bounds.size.width;
+                    wholeLineRect.size.height = rects[0].size.height;
+                    wholeLineRect.origin.x = 0;
+                    wholeLineRect.origin.y = ypos;
+                    [self drawMarkerInRect:wholeLineRect ofLine:lineNum inFile:nil];
+                    currentTextAttributes = [self markerTextAttributes];
+                } else {
+                    currentTextAttributes = textAttributes;
                 }
+                
+                // Line numbers are internally stored starting at 0
+                labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + 1];
+                
+                [drawingTextStorage beginEditing];
+                [[drawingTextStorage mutableString] setString:labelText];
+                [drawingTextStorage setAttributes:currentTextAttributes range:NSMakeRange(0, [labelText length])];
+                [drawingTextStorage endEditing];
+                
+                NSRange glyphRange = [drawingLayoutManager glyphRangeForTextContainer:drawingTextContainer];
+                stringSize = [drawingLayoutManager usedRectForTextContainer:drawingTextContainer].size;
+                
+                NSPoint drawOrigin = NSMakePoint(NSWidth(bounds) - stringSize.width - RULER_MARGIN, ypos + (NSHeight(rects[0]) - stringSize.height) / 2.0);
+                // Draw string flush right, centered vertically within the line
+                [drawingLayoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawOrigin];
             }
-			if (index > NSMaxRange(range))
-			{
-				break;
-			}
+        }
+        if (index > NSMaxRange(range))
+        {
+            break;
         }
     }
 }
@@ -480,31 +478,28 @@
     
 	location += NSMinY(visibleRect);
 	
-	if ([view isKindOfClass:[NSTextView class]])
-	{
-		nullRange = NSMakeRange(NSNotFound, 0);
-		layoutManager = [view layoutManager];
-		container = [view textContainer];
-		count = [lines count];
-		
-		for (line = 0; line < count; line++)
-		{
-			index = [[lines objectAtIndex:line] unsignedIntegerValue];
-			
-			rects = [layoutManager rectArrayForCharacterRange:NSMakeRange(index, 0)
-								 withinSelectedCharacterRange:nullRange
-											  inTextContainer:container
-													rectCount:&rectCount];
-			
-			for (i = 0; i < rectCount; i++)
-			{
-				if ((location >= NSMinY(rects[i])) && (location < NSMaxY(rects[i])))
-				{
-					return line;
-				}
-			}
-		}	
-	}
+    nullRange = NSMakeRange(NSNotFound, 0);
+    layoutManager = [view layoutManager];
+    container = [view textContainer];
+    count = [lines count];
+    
+    for (line = 0; line < count; line++)
+    {
+        index = [[lines objectAtIndex:line] unsignedIntegerValue];
+        
+        rects = [layoutManager rectArrayForCharacterRange:NSMakeRange(index, 0)
+                             withinSelectedCharacterRange:nullRange
+                                          inTextContainer:container
+                                                rectCount:&rectCount];
+        
+        for (i = 0; i < rectCount; i++)
+        {
+            if ((location >= NSMinY(rects[i])) && (location < NSMaxY(rects[i])))
+            {
+                return line;
+            }
+        }
+    }
 	return NSNotFound;
 }
 
