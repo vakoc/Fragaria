@@ -115,6 +115,7 @@
     }
 }
 
+
 - (NSMutableArray *)lineIndices
 {
 	if (_invalidCharacterIndex < NSUIntegerMax)
@@ -124,11 +125,13 @@
 	return _lineIndices;
 }
 
+
 // Forces recalculation of line indicies starting from the given index
 - (void)invalidateLineIndicesFromCharacterIndex:(NSUInteger)charIndex
 {
     _invalidCharacterIndex = MIN(charIndex, _invalidCharacterIndex);
 }
+
 
 - (void)textStorageDidProcessEditing:(NSNotification *)notification
 {
@@ -145,6 +148,7 @@
         [self setNeedsDisplay:YES];
     }
 }
+
 
 - (void)calculateLines
 {
@@ -203,16 +207,11 @@
         newThickness = [self requiredThickness];
         if (fabs(oldThickness - newThickness) > 1)
         {
-			NSInvocation			*invocation;
-			
-			// Not a good idea to resize the view during calculations (which can happen during
-			// display). Do a delayed perform (using NSInvocation since arg is a float).
-			invocation = [NSInvocation invocationWithMethodSignature:[self methodSignatureForSelector:@selector(setRuleThickness:)]];
-			[invocation setSelector:@selector(setRuleThickness:)];
-			[invocation setTarget:self];
-			[invocation setArgument:&newThickness atIndex:2];
-			
-			[invocation performSelector:@selector(invoke) withObject:nil afterDelay:0.0];
+            // Not a good idea to resize the view during calculations (which
+            // can happen during display). Do a delayed perform.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self setRuleThickness:newThickness];
+            });
         }
 	}
 }
