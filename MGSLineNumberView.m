@@ -1,4 +1,11 @@
 //
+//  MGSLineNumberView.m
+//  MGSFragaria
+//
+//  Copyright (c) 2015 Daniele Cattaneo
+//
+
+//
 //  NoodleLineNumberView.m
 //  NoodleKit
 //
