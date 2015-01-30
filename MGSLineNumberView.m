@@ -559,55 +559,5 @@
 	}
 }
 
-#pragma mark NSCoding methods
-
-#define NOODLE_FONT_CODING_KEY				@"font"
-#define NOODLE_TEXT_COLOR_CODING_KEY		@"textColor"
-#define NOODLE_ALT_TEXT_COLOR_CODING_KEY	@"alternateTextColor"
-#define NOODLE_BACKGROUND_COLOR_CODING_KEY	@"backgroundColor"
-
-- (id)initWithCoder:(NSCoder *)decoder
-{
-	if ((self = [super initWithCoder:decoder]) != nil)
-	{
-		if ([decoder allowsKeyedCoding])
-		{
-			_font = [decoder decodeObjectForKey:NOODLE_FONT_CODING_KEY];
-			_textColor = [decoder decodeObjectForKey:NOODLE_TEXT_COLOR_CODING_KEY];
-			_alternateTextColor = [decoder decodeObjectForKey:NOODLE_ALT_TEXT_COLOR_CODING_KEY];
-			_backgroundColor = [decoder decodeObjectForKey:NOODLE_BACKGROUND_COLOR_CODING_KEY];
-		}
-		else
-		{
-			_font = [decoder decodeObject];
-			_textColor = [decoder decodeObject];
-			_alternateTextColor = [decoder decodeObject];
-			_backgroundColor = [decoder decodeObject];
-		}
-		
-		_linesToMarkers = [[NSMutableDictionary alloc] init];
-	}
-	return self;
-}
-
-- (void)encodeWithCoder:(NSCoder *)encoder
-{
-	[super encodeWithCoder:encoder];
-	
-	if ([encoder allowsKeyedCoding])
-	{
-		[encoder encodeObject:_font forKey:NOODLE_FONT_CODING_KEY];
-		[encoder encodeObject:_textColor forKey:NOODLE_TEXT_COLOR_CODING_KEY];
-		[encoder encodeObject:_alternateTextColor forKey:NOODLE_ALT_TEXT_COLOR_CODING_KEY];
-		[encoder encodeObject:_backgroundColor forKey:NOODLE_BACKGROUND_COLOR_CODING_KEY];
-	}
-	else
-	{
-		[encoder encodeObject:_font];
-		[encoder encodeObject:_textColor];
-		[encoder encodeObject:_alternateTextColor];
-		[encoder encodeObject:_backgroundColor];
-	}
-}
 
 @end
