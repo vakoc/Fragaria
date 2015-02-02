@@ -46,21 +46,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	if ((self = [super initWithFrame:frame])) {
 		SMLLayoutManager *layoutManager = [[SMLLayoutManager alloc] init];
 		[[self textContainer] replaceLayoutManager:layoutManager];
-        
-        /* More often than not, this text view will be attached to a ruler,
-         * which can't draw concurrently because drawing concurrency is
-         * difficult and the ruler does a lot of things.
-         * 
-         * When responsive scrolling is performed, the two views may complete
-         * drawing in different (animation) frames, and the ruler will drag
-         * behind the text view. This setting forces the text view to draw
-         * alongside the ruler on the same thread, and thus their drawing
-         * will be committed to the screen at the same time during a scroll
-         * operation. Performance suffers a bit but not too much.
-         *
-         * Tearing may still occur when highligthing is in progress because
-         * cocoa auto-commits to the screen anyway if drawing takes too long. */
-        [self setCanDrawConcurrently:NO];
 		
 		[self setDefaults];
         
