@@ -358,7 +358,7 @@
 }
 
 
-- (void)drawHashMarksAndLabelsInRect:(NSRect)aRect
+- (void)drawRect:(NSRect)dirtyRect
 {
     id			view;
 	NSRect		bounds;
