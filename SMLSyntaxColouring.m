@@ -1903,9 +1903,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 NSRect linePos = [firstLayoutManager boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1) inTextContainer:[textView textContainer]];
                 
                 // Add button
-                float scrollOffset = textView.superview.bounds.origin.x - 0;
-                
-                NSButton* warningButton = [[NSButton alloc] initWithFrame:NSMakeRect(textView.superview.frame.size.width - 32 + scrollOffset, linePos.origin.y-2, 16, 16)];
+                NSButton* warningButton = [[NSButton alloc] init];
                 
                 [warningButton setButtonType:NSMomentaryChangeButton];
                 [warningButton setBezelStyle:NSRegularSquareBezelStyle];
@@ -1915,8 +1913,11 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 [warningButton setTag:err.line];
                 [warningButton setTarget:self];
                 [warningButton setAction:@selector(pressedWarningBtn:)];
-                
+                [warningButton setTranslatesAutoresizingMaskIntoConstraints:NO];
                 [textView addSubview:warningButton];
+                
+                [textView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[warningButton]-16-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningButton)]];
+                [textView addConstraint:[NSLayoutConstraint constraintWithItem:warningButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:linePos.origin.y-2]];
             }
         }
     }
