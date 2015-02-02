@@ -385,10 +385,10 @@
 	
     NSLayoutManager			*layoutManager;
     NSTextContainer			*container;
-    NSRange					range, glyphRange, nullRange;
+    NSRange					range, glyphRange;
     NSString				*text, *labelText;
-    NSUInteger				rectCount, index, line, count, startingLine;
-    NSRectArray				rects;
+    NSUInteger				index, line, count, startingLine, stringLength;
+    NSRect                  rect;
     CGFloat					ypos, yinset;
     NSDictionary			*textAttributes, *currentTextAttributes;
     NSSize					stringSize;
@@ -401,7 +401,7 @@
     layoutManager = [view layoutManager];
     container = [view textContainer];
     text = [view string];
-    nullRange = NSMakeRange(NSNotFound, 0);
+    stringLength = [text length];
     
     yinset = [view textContainerInset].height;
 
@@ -435,46 +435,44 @@
         
         if (NSLocationInRange(index, range))
         {
-            rects = [layoutManager rectArrayForCharacterRange:NSMakeRange(index, 0)
-                                 withinSelectedCharacterRange:nullRange
-                                              inTextContainer:container
-                                                    rectCount:&rectCount];
+            NSUInteger glyphIdx = [layoutManager glyphIndexForCharacterAtIndex:index];
+            if (index < stringLength)
+                rect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIdx effectiveRange:NULL];
+            else
+                rect = [layoutManager boundingRectForGlyphRange:NSMakeRange(glyphIdx, 0) inTextContainer:container];
 
-            if (rectCount > 0)
-            {
-                // Note that the ruler view is only as tall as the visible
-                // portion. Need to compensate for the clipview's coordinates.
-                ypos = yinset + NSMinY(rects[0]) - NSMinY(visibleRect);
+            // Note that the ruler view is only as tall as the visible
+            // portion. Need to compensate for the clipview's coordinates.
+            ypos = yinset + NSMinY(rect) - NSMinY(visibleRect);
+            
+            NSNumber *lineNum = [NSNumber numberWithInteger:line+1];
+            if ([linesWithBreakpoints containsObject:lineNum]) {
+                NSRect wholeLineRect;
                 
-                NSNumber *lineNum = [NSNumber numberWithInteger:line+1];
-                if ([linesWithBreakpoints containsObject:lineNum]) {
-                    NSRect wholeLineRect;
-                    
-                    wholeLineRect.size.width = bounds.size.width;
-                    wholeLineRect.size.height = rects[0].size.height;
-                    wholeLineRect.origin.x = 0;
-                    wholeLineRect.origin.y = ypos;
-                    [self drawMarkerInRect:wholeLineRect ofLine:lineNum];
-                    currentTextAttributes = [self markerTextAttributes];
-                } else {
-                    currentTextAttributes = textAttributes;
-                }
-                
-                // Line numbers are internally stored starting at 0
-                labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine];
-                
-                [drawingTextStorage beginEditing];
-                [[drawingTextStorage mutableString] setString:labelText];
-                [drawingTextStorage setAttributes:currentTextAttributes range:NSMakeRange(0, [labelText length])];
-                [drawingTextStorage endEditing];
-                
-                NSRange glyphRange = [drawingLayoutManager glyphRangeForTextContainer:drawingTextContainer];
-                stringSize = [drawingLayoutManager usedRectForTextContainer:drawingTextContainer].size;
-                
-                NSPoint drawOrigin = NSMakePoint(NSWidth(bounds) - stringSize.width - RULER_MARGIN, ypos + (NSHeight(rects[0]) - stringSize.height) / 2.0);
-                // Draw string flush right, centered vertically within the line
-                [drawingLayoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawOrigin];
+                wholeLineRect.size.width = bounds.size.width;
+                wholeLineRect.size.height = rect.size.height;
+                wholeLineRect.origin.x = 0;
+                wholeLineRect.origin.y = ypos;
+                [self drawMarkerInRect:wholeLineRect ofLine:lineNum];
+                currentTextAttributes = [self markerTextAttributes];
+            } else {
+                currentTextAttributes = textAttributes;
             }
+            
+            // Line numbers are internally stored starting at 0
+            labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine];
+            
+            [drawingTextStorage beginEditing];
+            [[drawingTextStorage mutableString] setString:labelText];
+            [drawingTextStorage setAttributes:currentTextAttributes range:NSMakeRange(0, [labelText length])];
+            [drawingTextStorage endEditing];
+            
+            NSRange glyphRange = [drawingLayoutManager glyphRangeForTextContainer:drawingTextContainer];
+            stringSize = [drawingLayoutManager usedRectForTextContainer:drawingTextContainer].size;
+            
+            NSPoint drawOrigin = NSMakePoint(NSWidth(bounds) - stringSize.width - RULER_MARGIN, ypos + (NSHeight(rect) - stringSize.height) / 2.0);
+            // Draw string flush right, centered vertically within the line
+            [drawingLayoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawOrigin];
         }
         if (index > NSMaxRange(range))
         {
