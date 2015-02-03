@@ -421,6 +421,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	[style setDefaultTabInterval:sizeOfTab];
 	NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:style, NSParagraphStyleAttributeName, nil];
 	[self setTypingAttributes:attributes];
+    [[self textStorage] addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0,[[self textStorage] length])];
 }
 
 /*
