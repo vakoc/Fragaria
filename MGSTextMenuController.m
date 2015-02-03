@@ -366,14 +366,13 @@ static id sharedInstance = nil;
 	}
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
-	
 	if (sumOfAllCharactersRemoved == 0) {
 		NSBeep();
 	}
 	
 	if ([updatedSelectionsArray count] > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
+        [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 	}
 }
 
@@ -463,10 +462,9 @@ static id sharedInstance = nil;
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
-	
 	if ([updatedSelectionsArray count] > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
+        [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 	}
 }
 
@@ -559,7 +557,6 @@ static id sharedInstance = nil;
 	}
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
 	
 	if (sumOfAllCharactersRemoved == 0) {
 		NSBeep();
@@ -567,6 +564,7 @@ static id sharedInstance = nil;
 	
 	if ([updatedSelectionsArray count] > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
+        [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 	}
 }
 
@@ -688,10 +686,9 @@ static id sharedInstance = nil;
 	}
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
-	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
 
 	[textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
+    [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 }
 
 /*
@@ -728,8 +725,8 @@ static id sharedInstance = nil;
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
 	[textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
+    [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 }
 
 /*
@@ -1050,10 +1047,10 @@ static id sharedInstance = nil;
 	}
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
 	
 	if (selectedRange.length > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
+        [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 	}
 
 }
@@ -1092,10 +1089,10 @@ static id sharedInstance = nil;
 	}
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
-    [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
 	
 	if ([updatedSelectionsArray count] > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
+        [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 	}
 }
 
@@ -1120,7 +1117,7 @@ static id sharedInstance = nil;
 	[textView replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
 	[textView setSelectedRange:selectedRange];
 	
-	[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
+	[[document valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 }
 
 /*
@@ -1144,7 +1141,7 @@ static id sharedInstance = nil;
 	[textView replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
 	[textView setSelectedRange:selectedRange];
 	
-	[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
+	[[document valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 }
 
 
@@ -1161,10 +1158,7 @@ static id sharedInstance = nil;
 	id document = SMLCurrentDocument;
 	[document setValue:[sender title] forKey:MGSFOSyntaxDefinitionName];
 	[document setValue:[NSNumber numberWithBool:YES] forKey:@"hasManuallyChangedSyntaxDefinition"];
-	[[document valueForKey:ro_MGSFOSyntaxColouring] applySyntaxDefinition];
-	
-	[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MGSFragariaSyntaxDefinitionChanged" object:[MGSFragaria currentInstance] userInfo:nil];
-
 }
+
+
 @end

@@ -54,7 +54,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (void)autocompleteWordsTimerSelector:(NSTimer *)theTimer;
 - (NSString *)completeString;
 - (void)applyColourDefaults;
-- (NSRange)recolourRange:(NSRange)range;
 - (void)removeAllColours;
 - (void)removeColoursFromRange:(NSRange)range;
 - (void)pageRecolour;
@@ -191,7 +190,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		[self pageRecolour];
 	} else if ([(__bridge NSString *)context isEqualToString:@"syntaxDefinition"]) {
 		[self applySyntaxDefinition];
-		[self removeAllColours];
 		[self pageRecolour];
 	} else if ([(__bridge NSString*)context isEqualToString:@"LineWrapChanged"]) {
         [self pageRecolour];
@@ -225,6 +223,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 {			
 	// parse
     syntaxDefinition = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:self.syntaxDictionary];
+    [self removeAllColours];
 }
 
 /*
@@ -335,29 +334,40 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (void)pageRecolour
 {
-	[self pageRecolourTextView:[document valueForKey:ro_MGSFOTextView]];
+    [self recolourPageWithChanges:NO];
+}
+
+
+/* 
+ 
+ - recolourSelection
+ 
+*/
+- (void)recolourSelection
+{
+    NSTextView *textView;
+    NSValue *range;
+    
+    textView = [document valueForKey:ro_MGSFOTextView];
+    for (range in [textView selectedRanges]) {
+        [self recolourChangedRange:[range rangeValue]];
+    }
 }
 
 
 /*
  
- - pageRecolourTextView:
+ - recolourPageWithChanges:
  
  */
-- (void)pageRecolourTextView:(SMLTextView *)textView
+- (void)recolourPageWithChanges:(BOOL)tdc
 {
-    [self pageRecolourTextView:textView textDidChange:NO];
-}
-
-
-- (void)pageRecolourTextView:(SMLTextView *)textView textDidChange:(BOOL)tdc
-{
+    NSTextView *textView;
+    
 	if (!self.isSyntaxColouringRequired) {
 		return;
 	}
-	if (textView == nil) {
-		return;
-	}
+    textView = [document valueForKey:ro_MGSFOTextView];
     
     BOOL colouringIsNotLineBased = (![[SMLDefaults valueForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine] boolValue]) | [[SMLDefaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue];
     
@@ -376,11 +386,11 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             colourRange.location += syntaxColouringCleanRange.length;
         if (colourRange.length) {
             //NSLog(@"Recolouring range: %@", NSStringFromRange(colourRange));
-            effectiveRange = [self recolourRange:colourRange];
+            effectiveRange = [self recolourChangedRange:colourRange];
         }
     } else {
         //NSLog(@"Recolouring page");
-        effectiveRange = [self recolourRange:pageRange];
+        effectiveRange = [self recolourChangedRange:pageRange];
         if (colouringIsNotLineBased) {
             newCleanRange.length = NSMaxRange(pageRange) - newCleanRange.location;
         }
@@ -407,13 +417,10 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	NSNumber *colourAll = [options objectForKey:@"colourAll"];
 	if (!colourAll || ![colourAll boolValue]) {
         NSNumber *visibleTextDidChange = [options objectForKey:@"visibleTextDidChange"];
-        if (visibleTextDidChange && [visibleTextDidChange boolValue]) {
-            [self pageRecolourTextView:textView textDidChange:YES];
-        } else
-            [self pageRecolourTextView:textView];
+        [self recolourPageWithChanges:(visibleTextDidChange && [visibleTextDidChange boolValue])];
     } else {
         syntaxColouringCleanRange = NSMakeRange(0,0);
-        [self recolourRange:NSMakeRange(0, [[textView string] length])];
+        [self recolourChangedRange:NSMakeRange(0, [[textView string] length])];
     }
 }
 
@@ -422,7 +429,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  - recolourRange:
  
  */
-- (NSRange)recolourRange:(NSRange)rangeToRecolour
+- (NSRange)recolourChangedRange:(NSRange)rangeToRecolour
 {
 	if (reactToChanges == NO) {
 		return NSMakeRange(0,0);
@@ -435,7 +442,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     // setup
     NSString *documentString = [self completeString];
     NSUInteger documentStringLength = [documentString length];
-	NSRange effectiveRange = rangeToRecolour;
+	NSRange effectiveRange = [documentString lineRangeForRange:rangeToRecolour];
 	NSRange rangeOfLine = NSMakeRange(0, 0);
 	NSRange foundRange = NSMakeRange(0, 0);
 	NSRange searchRange = NSMakeRange(0, 0);
@@ -1378,6 +1385,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 	numbersColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsNumbersColourWell]], NSForegroundColorAttributeName, nil];
 
+    [self removeAllColours];
 }
 
 /*
@@ -1589,7 +1597,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	if ([[SMLDefaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue] == YES) {
 		[self highlightLineRange:[completeString lineRangeForRange:[textView selectedRange]]];
 	} else if ([self isSyntaxColouringRequired]) {
-		[self pageRecolourTextView:textView textDidChange:YES];
+		[self recolourPageWithChanges:YES];
 	}
 	
 	if (autocompleteWordsTimer != nil) {

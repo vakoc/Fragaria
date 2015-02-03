@@ -66,10 +66,12 @@ Unless required by applicable law or agreed to in writing, software distributed 
 @property (strong) MGSSyntaxDefinition *syntaxDefinition;
 
 - (id)initWithDocument:(id)document;
-- (void)pageRecolourTextView:(SMLTextView *)textView;
 - (void)pageRecolour;
+- (void)recolourPageWithChanges:(BOOL)tdc;
+- (void)recolourSelection;
 - (void)applySyntaxDefinition;
 - (void)pageRecolourTextView:(SMLTextView *)textView options:(NSDictionary *)options;
+- (NSRange)recolourChangedRange:(NSRange)rangeToRecolour;
 - (void)highlightErrors;
 
 @end
