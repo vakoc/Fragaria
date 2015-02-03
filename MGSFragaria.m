@@ -337,10 +337,6 @@ char kcLineWrapPrefChanged;
     // create line numbers
 	SMLLineNumbers *lineNumbers = [[lineNumberClass alloc] initWithDocument:self.docSpec];
 	[self.docSpec setValue:lineNumbers forKey:ro_MGSFOLineNumbers];
-    
-    // SMLLineNumbers will be notified of changes to the text scroll view content view due to scrolling
-    [[NSNotificationCenter defaultCenter] addObserver:lineNumbers selector:@selector(viewBoundsDidChange:) name:NSViewBoundsDidChangeNotification object:[textScrollView contentView]];
-    [[NSNotificationCenter defaultCenter] addObserver:lineNumbers selector:@selector(viewBoundsDidChange:) name:NSViewFrameDidChangeNotification object:[textScrollView contentView]];
 
     MGSLineNumberView *lineNumberView;
     lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView];
@@ -777,7 +773,7 @@ char kcLineWrapPrefChanged;
         
         boolValue = [defaults boolForKey:MGSFragariaPrefsLineWrapNewDocuments];
         [(SMLTextView *)[self textView] setLineWrap:boolValue];
-        [[self.docSpec valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:YES recolour:YES];
+        
     } else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}

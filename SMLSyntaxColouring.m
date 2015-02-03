@@ -69,7 +69,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 @implementation SMLSyntaxColouring
 
 
-@synthesize reactToChanges, undoManager, syntaxErrors;
+@synthesize reactToChanges, undoManager, syntaxErrors, syntaxDefinition;
 
 
 #pragma mark -
@@ -104,6 +104,9 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		NSTextView *textView = [document valueForKey:ro_MGSFOTextView];
 		NSAssert([textView isKindOfClass:[NSTextView class]], @"bad textview");
         self.undoManager = [textView undoManager];
+        
+        NSScrollView *scrollView = [document valueForKey:ro_MGSFOScrollView];
+        [[scrollView contentView] setPostsBoundsChangedNotifications:YES];
 
 		// configure ivars
 		lastCursorLocation = 0;
@@ -126,6 +129,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         // add text view notification observers
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:textView];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeSelection:) name:NSTextViewDidChangeSelectionNotification object:textView];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pageRecolour) name:NSViewBoundsDidChangeNotification object:[scrollView contentView]];
 		
 		// add NSUserDefaultsController KVO observers
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
@@ -155,6 +159,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
+        
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:@"LineWrapChanged"];
 	}
 	
     return self;
@@ -187,7 +193,9 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		[self applySyntaxDefinition];
 		[self removeAllColours];
 		[self pageRecolour];
-	} else {
+	} else if ([(__bridge NSString*)context isEqualToString:@"LineWrapChanged"]) {
+        [self pageRecolour];
+    } else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 	
@@ -1589,9 +1597,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	} else if ([[SMLDefaults valueForKey:MGSFragariaPrefsAutocompleteSuggestAutomatically] boolValue] == YES) {
 		autocompleteWordsTimer = [NSTimer scheduledTimerWithTimeInterval:[[SMLDefaults valueForKey:MGSFragariaPrefsAutocompleteAfterDelay] floatValue] target:self selector:@selector(autocompleteWordsTimerSelector:) userInfo:textView repeats:NO];
 	}
-	
-	[[document valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:NO recolour:NO];
-	
 }
 
 /*

@@ -110,40 +110,4 @@ Unless required by applicable law or agreed to in writing, software distributed 
 }
 
 
-/*
- 
- - viewBoundsDidChange:
- 
- */
-- (void)viewBoundsDidChange:(NSNotification *)notification
-{
-	if (notification != nil && [notification object] != nil && [[notification object] isKindOfClass:[NSClipView class]]) {
-		[self updateLineNumbersForClipView:[notification object] checkWidth:YES recolour:YES];
-	}
-}
-
-/*
- 
- - updateLineNumbersCheckWidth:recolour:
- 
- */
-- (void)updateLineNumbersCheckWidth:(BOOL)checkWidth recolour:(BOOL)recolour
-{
-	[self updateLineNumbersForClipView:[[document valueForKey:ro_MGSFOScrollView] contentView] checkWidth:checkWidth recolour:recolour];
-}
-
-/*
- 
- - updateLineNumbersForClipView:checkWidth:recolour:
- 
- */
-- (void)updateLineNumbersForClipView:(NSClipView *)clipView checkWidth:(BOOL)checkWidth recolour:(BOOL)recolour
-{
-	if (recolour == YES) {
-        SMLTextView *textView = [document objectForKey:ro_MGSFOTextView];
-		[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolourTextView:textView];
-	}
-}
-
-
 @end

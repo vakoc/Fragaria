@@ -145,17 +145,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	[self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
 }
 
-/*
- 
- - setFrame:
- 
- */
-- (void)setFrame:(NSRect)rect
-{
-	[super setFrame:rect];
-	[[fragaria objectForKey:ro_MGSFOLineNumbers] updateLineNumbersForClipView:[[self enclosingScrollView] contentView] checkWidth:NO recolour:YES];
-	
-}
 
 #pragma mark -
 #pragma mark Copy and paste
@@ -196,7 +185,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
 		[self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
 		lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-		[[fragaria objectForKey:ro_MGSFOLineNumbers] updateLineNumbersForClipView:[[self enclosingScrollView] contentView] checkWidth:NO recolour:YES];
 		[self setPageGuideValues];
 	} else if ([(__bridge NSString *)context isEqualToString:@"TextColourChanged"]) {
 		[self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
@@ -600,7 +588,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (void)setString:(NSString *)aString
 {
 	[super setString:aString];
-	[[fragaria objectForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:YES recolour:YES];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification object:self];
 }
 
 /*
@@ -663,7 +651,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 {
     NSTextStorage *textStorage = [self textStorage];
     [textStorage setAttributedString:text];
-    [[fragaria objectForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:YES recolour:YES];
 }
 
 /*
@@ -1200,9 +1187,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
     
     // invalidate the glyph layout
 	[[self layoutManager] textContainerChangedGeometry:textContainer];
-
-    // redraw the line numbers
-    [[fragaria objectForKey:ro_MGSFOLineNumbers] updateLineNumbersForClipView:[[self enclosingScrollView] contentView] checkWidth:NO recolour:YES];
 
     // redraw the display and reposition scrollers
     NSDisableScreenUpdates();

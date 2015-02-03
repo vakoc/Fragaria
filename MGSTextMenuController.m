@@ -191,7 +191,7 @@ static id sharedInstance = nil;
     }
     // Comment Or Uncomment
     else if (action == @selector(commentOrUncommentAction:) ) {
-		if ([[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] valueForKey:@"firstSingleLineComment"] isEqualToString:@""]) {
+		if ([[[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
 			enableMenuItem = NO;
 		}
 	} 
@@ -370,8 +370,6 @@ static id sharedInstance = nil;
 	
 	if (sumOfAllCharactersRemoved == 0) {
 		NSBeep();
-	} else {
-		[[SMLCurrentDocument valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:NO recolour:NO];
 	}
 	
 	if ([updatedSelectionsArray count] > 0) {
@@ -466,8 +464,6 @@ static id sharedInstance = nil;
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
-	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:NO recolour:NO];
 	
 	if ([updatedSelectionsArray count] > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
@@ -567,8 +563,6 @@ static id sharedInstance = nil;
 	
 	if (sumOfAllCharactersRemoved == 0) {
 		NSBeep();
-	} else {
-		[[SMLCurrentDocument valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:NO recolour:NO];
 	}
 	
 	if ([updatedSelectionsArray count] > 0) {
@@ -976,7 +970,7 @@ static id sharedInstance = nil;
 	
 	NSTextView *textView = SMLCurrentTextView;
 	NSString *completeString = [textView string];
-	NSString *commentString = [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] valueForKey:@"firstSingleLineComment"];
+	NSString *commentString = [[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment];
 	NSUInteger commentStringLength = [commentString length];
 	if ([commentString isEqualToString:@""] || [completeString length] < commentStringLength) {
 		NSBeep();
@@ -1056,10 +1050,7 @@ static id sharedInstance = nil;
 	}
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
-	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
-	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:NO recolour:NO];
 	
 	if (selectedRange.length > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
@@ -1101,8 +1092,7 @@ static id sharedInstance = nil;
 	}
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
-	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:YES recolour:YES];
+    [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
 	
 	if ([updatedSelectionsArray count] > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];

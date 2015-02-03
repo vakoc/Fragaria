@@ -63,6 +63,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 @property BOOL reactToChanges;
 @property (strong) NSUndoManager *undoManager;
 @property (nonatomic, strong) NSArray* syntaxErrors;
+@property (strong) MGSSyntaxDefinition *syntaxDefinition;
 
 - (id)initWithDocument:(id)document;
 - (void)pageRecolourTextView:(SMLTextView *)textView;
