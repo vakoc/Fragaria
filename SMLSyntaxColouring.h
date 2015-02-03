@@ -98,5 +98,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (void)pageRecolour;
 - (void)applySyntaxDefinition;
 - (void)pageRecolourTextView:(SMLTextView *)textView options:(NSDictionary *)options;
+- (void)highlightErrors;
 
 @end

@@ -1844,7 +1844,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  - highlightErrors
  
  */
-- (void) highlightErrors
+- (void)highlightErrors
 {
     SMLTextView* textView = [document valueForKey:ro_MGSFOTextView];
     NSString* text = [self completeString];

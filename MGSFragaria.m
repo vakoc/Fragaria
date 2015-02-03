@@ -692,7 +692,7 @@ char kcLineWrapPrefChanged;
 {
     SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
     syntaxColouring.syntaxErrors = errors;
-    [syntaxColouring pageRecolour];
+    [syntaxColouring highlightErrors];
 }
 
 /*
