@@ -373,11 +373,12 @@ char kcLineWrapPrefChanged;
     // update the gutter view
     [self updateGutterView];
 
-    
     // apply default line wrapping
     [textView updateLineWrap];
     [textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
 
+    if ([docSpec objectForKey:MGSFODelegate])
+        [[self textView] setDelegate:[docSpec objectForKey:MGSFODelegate]];
 }
 
 
@@ -430,6 +431,9 @@ char kcLineWrapPrefChanged;
 	if ([self.objectSetterKeys containsObject:key]) {
 		[(id)self.docSpec setValue:object forKey:key];
 	}
+    if ([key isEqual:MGSFODelegate]) {
+        [[self textView] setDelegate:object];
+    }
 }
 
 /*

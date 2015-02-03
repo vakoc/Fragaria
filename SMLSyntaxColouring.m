@@ -1,4 +1,4 @@
-// SMLTextView delegate
+
 
 /* This class syntax-colours and line-highlights. */
 
@@ -109,7 +109,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 - (void)parseSyntaxDictionary:(NSDictionary *)syntaxDictionary;
 - (void)applySyntaxDefinition;
 - (NSString *)assignSyntaxDefinition;
-- (void)performDocumentDelegateSelector:(SEL)selector withObject:(id)object;
 - (void)autocompleteWordsTimerSelector:(NSTimer *)theTimer;
 - (NSString *)completeString;
 - (void)prepareRegularExpressions;
@@ -163,8 +162,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		// configure the document text view
 		NSTextView *textView = [document valueForKey:ro_MGSFOTextView];
 		NSAssert([textView isKindOfClass:[NSTextView class]], @"bad textview");
-		[textView setDelegate:self];
-		[[textView textStorage] setDelegate:self];
 
 		// configure ivars
 		lastCursorLocation = 0;
@@ -219,6 +216,10 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		
 		// add document KVO observers
 		[document addObserver:self forKeyPath:@"syntaxDefinition" options:NSKeyValueObservingOptionNew context:@"syntaxDefinition"];
+        
+        // add text view notification observers
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:textView];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeSelection:) name:NSTextViewDidChangeSelectionNotification object:textView];
 		
 		// add NSUserDefaultsController KVO observers
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
@@ -1960,28 +1961,9 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     [SMLErrorPopOver showErrorDescriptions:errorsOnLine relativeToView:sender];
 }
 
-#pragma mark -
-#pragma mark Document delegate support
-
-/*
- 
- - performDocumentDelegateSelector:withObject:
- 
- */
-- (void)performDocumentDelegateSelector:(SEL)selector withObject:(id)object
-{
-	id delegate = [document valueForKey:MGSFODelegate]; 
-	if (delegate && [delegate respondsToSelector:selector]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-		[delegate performSelector:selector withObject:object];
-#pragma clang diagnostic pop
-	}
-}
-
 
 #pragma mark -
-#pragma mark NSTextDelegate
+#pragma mark Text change observation
 
 /*
  
@@ -1990,8 +1972,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  */
 - (void)textDidChange:(NSNotification *)notification
 {
-	// send out document delegate notifications
-	[self performDocumentDelegateSelector:_cmd withObject:notification];
 
 	if (reactToChanges == NO) {
 		return;
@@ -2023,79 +2003,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	[[document valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:NO recolour:NO];
 	
 }
-/*
- 
- - textDidBeginEditing:
- 
- */
-- (void)textDidBeginEditing:(NSNotification *)aNotification
-{
-	// send out document delegate notifications
-	[self performDocumentDelegateSelector:_cmd withObject:aNotification];
-}
-
-/*
- 
- - textDidEndEditing:
- 
- */
-- (void)textDidEndEditing:(NSNotification *)aNotification
-{
-	// send out document delegate notifications
-	[self performDocumentDelegateSelector:_cmd withObject:aNotification];
-}
-
-/*
- 
- - textShouldBeginEditing:
- 
- */
-- (BOOL)textShouldBeginEditing:(NSText *)aTextObject
-{
-	id delegate = [document valueForKey:MGSFODelegate]; 
-	if (delegate && [delegate respondsToSelector:@selector(textShouldBeginEditing:)]) {
-		return [delegate textShouldBeginEditing:aTextObject];
-	}
-	
-	return YES;
-}
-
-/*
- 
- - textShouldEndEditing:
- 
- */
-- (BOOL)textShouldEndEditing:(NSText *)aTextObject
-{
-	id delegate = [document valueForKey:MGSFODelegate]; 
-	if (delegate && [delegate respondsToSelector:@selector(textShouldEndEditing:)]) {
-		return [delegate textShouldEndEditing:aTextObject];
-	}
-	
-	return YES;
-}
-
-#pragma mark -
-#pragma mark NSTextViewDelegate
-
-/*
- 
- It would cumbersome to route all NSTextViewDelegate messages to our delegate.
- 
- A better solution would be to permit subclasses of this class to be made the text view delegate.
- 
- */
-/*
- 
- - textViewDidChangeTypingAttributes:
- 
- */
-- (void)textViewDidChangeTypingAttributes:(NSNotification *)aNotification
-{
-	// send out document delegate notifications
-	[self performDocumentDelegateSelector:_cmd withObject:aNotification];
-
-}
 
 /*
  
@@ -2104,10 +2011,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  */
 - (void)textViewDidChangeSelection:(NSNotification *)aNotification
 {
-	// send out document delegate notifications
-	[self performDocumentDelegateSelector:_cmd withObject:aNotification];
-
-	if (reactToChanges == NO) {
+    if (reactToChanges == NO) {
 		return;
 	}
 	
@@ -2209,8 +2113,11 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 			}
 		}
 	}
-	
 }
+
+#pragma mark -
+#pragma mark Undo handling
+
 
 /*
  
@@ -2223,21 +2130,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	return undoManager;
 }
 
-#pragma mark -
-#pragma mark MGSFragariaTextViewDelegate
-
-/*
- 
- - mgsTextDidPaste:
- 
- */
-- (void)mgsTextDidPaste:(NSNotification *)aNotification
-{        
-    // send out document delegate notifications
-	[self performDocumentDelegateSelector:_cmd withObject:aNotification];
-}
-#pragma mark -
-#pragma mark Undo handling
 
 /*
  

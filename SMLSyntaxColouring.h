@@ -26,7 +26,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 @class ICUPattern;
 @class ICUMatcher;
 
-@interface SMLSyntaxColouring : NSObject <NSTextStorageDelegate, NSTextViewDelegate, MGSFragariaTextViewDelegate, SMLAutoCompleteDelegate> {
+@interface SMLSyntaxColouring : NSObject <SMLAutoCompleteDelegate> {
 	
 	id document;
 	
