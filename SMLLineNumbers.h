@@ -23,8 +23,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 @interface SMLLineNumbers : NSObject {
     id document;
-  
-    NSUInteger _numberOfVisibleLines;
 }
 
 - (id)initWithDocument:(id)theDocument;

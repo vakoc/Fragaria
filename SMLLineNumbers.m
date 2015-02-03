@@ -20,17 +20,17 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import "MGSFragaria.h"
 #import "MGSFragariaFramework.h"
 
+
 @interface SMLLineNumbers()
-@property (strong) NSDictionary *attributes;
+
 @property (strong) id document;
-@property (strong) NSClipView *updatingLineNumbersForClipView;
-@property BOOL shouldHandleBoundsChange;
 
 @end
 
+
 @implementation SMLLineNumbers
 
-@synthesize attributes, document, updatingLineNumbersForClipView;
+@synthesize document;
 
 #pragma mark -
 #pragma mark Instance methods
@@ -62,7 +62,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	if ((self = [super init])) {
 		
 		self.document = theDocument;
-    _numberOfVisibleLines = 0;
     
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
