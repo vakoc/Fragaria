@@ -170,6 +170,40 @@ static id sharedInstance = nil;
 
 /*
  
+ - guessSyntaxDefinitionExtensionFromFirstLine:
+ 
+ */
+- (NSString *)guessSyntaxDefinitionExtensionFromFirstLine:(NSString *)firstLine
+{
+    NSString *returnString = nil;
+    NSRange firstLineRange = NSMakeRange(0, [firstLine length]);
+    if ([firstLine rangeOfString:@"perl" options:NSCaseInsensitiveSearch range:firstLineRange].location != NSNotFound) {
+        returnString = @"pl";
+    } else if ([firstLine rangeOfString:@"wish" options:NSCaseInsensitiveSearch range:firstLineRange].location != NSNotFound) {
+        returnString = @"tcl";
+    } else if ([firstLine rangeOfString:@"sh" options:NSCaseInsensitiveSearch range:firstLineRange].location != NSNotFound) {
+        returnString = @"sh";
+    } else if ([firstLine rangeOfString:@"php" options:NSCaseInsensitiveSearch range:firstLineRange].location != NSNotFound) {
+        returnString = @"php";
+    } else if ([firstLine rangeOfString:@"python" options:NSCaseInsensitiveSearch range:firstLineRange].location != NSNotFound) {
+        returnString = @"py";
+    } else if ([firstLine rangeOfString:@"awk" options:NSCaseInsensitiveSearch range:firstLineRange].location != NSNotFound) {
+        returnString = @"awk";
+    } else if ([firstLine rangeOfString:@"xml" options:NSCaseInsensitiveSearch range:firstLineRange].location != NSNotFound) {
+        returnString = @"xml";
+    } else if ([firstLine rangeOfString:@"ruby" options:NSCaseInsensitiveSearch range:firstLineRange].location != NSNotFound) {
+        returnString = @"rb";
+    } else if ([firstLine rangeOfString:@"%!ps" options:NSCaseInsensitiveSearch range:firstLineRange].location != NSNotFound) {
+        returnString = @"ps";
+    } else if ([firstLine rangeOfString:@"%pdf" options:NSCaseInsensitiveSearch range:firstLineRange].location != NSNotFound) {
+        returnString = @"pdf";
+    }
+    
+    return returnString;
+}
+
+/*
+ 
  - insertSyntaxDefinitions
  
  */

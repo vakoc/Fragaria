@@ -22,6 +22,7 @@
 - (NSDictionary *)syntaxDictionaryWithName:(NSString *)name;
 - (NSDictionary *)syntaxDefinitionWithExtension:(NSString *)extension;
 - (NSString *)syntaxDefinitionNameWithExtension:(NSString *)extension;
+- (NSString *)guessSyntaxDefinitionExtensionFromFirstLine:(NSString *)firstLine;
 
 @property (strong, nonatomic,readonly) NSArray *syntaxDefinitionNames;
 
