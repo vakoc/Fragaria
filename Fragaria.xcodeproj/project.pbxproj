@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */; };
 		017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 017FD5861A7A992700B305FB /* MGSLineNumberView.h */; };
 		017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FD5871A7A992700B305FB /* MGSLineNumberView.m */; };
 		01BB1BD71A7959D4006C0056 /* LICENSE.html in Resources */ = {isa = PBXBuildFile; fileRef = 01BB1BC51A7959D4006C0056 /* LICENSE.html */; };
@@ -145,6 +146,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		013278661A81614500D2DCA5 /* MGSSyntaxDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSyntaxDefinition.h; sourceTree = "<group>"; };
+		013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxDefinition.m; sourceTree = "<group>"; };
 		017FD5861A7A992700B305FB /* MGSLineNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberView.h; sourceTree = "<group>"; };
 		017FD5871A7A992700B305FB /* MGSLineNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLineNumberView.m; sourceTree = "<group>"; };
 		01BB1BC51A7959D4006C0056 /* LICENSE.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = LICENSE.html; sourceTree = "<group>"; };
@@ -290,6 +293,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		013278651A81610E00D2DCA5 /* Syntax Definition Manager */ = {
+			isa = PBXGroup;
+			children = (
+				AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */,
+				AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */,
+				013278661A81614500D2DCA5 /* MGSSyntaxDefinition.h */,
+				013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */,
+			);
+			name = "Syntax Definition Manager";
+			sourceTree = "<group>";
+		};
 		01BB1BC41A7959D4006C0056 /* icu */ = {
 			isa = PBXGroup;
 			children = (
@@ -335,8 +349,6 @@
 			children = (
 				ABD0FE581193543600E6AFE6 /* MGSFragariaPreferences.h */,
 				ABC578D2160350240040B3FB /* MGSFragariaPreferences.m */,
-				AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */,
-				AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */,
 				01BB1BEF1A7966E7006C0056 /* Standard UI */,
 			);
 			name = Preferences;
@@ -370,6 +382,7 @@
 				AB69B65A118B75FB00903D1D /* SMLSyntaxColouring.m */,
 				AB6C86C1160FA2B500488AF2 /* MGSGlyphGenerator.h */,
 				AB6C86C2160FA2B500488AF2 /* MGSGlyphGenerator.m */,
+				013278651A81610E00D2DCA5 /* Syntax Definition Manager */,
 				01BB1BEE1A7964DC006C0056 /* Gutter Text View */,
 				AB69B659118B75E100903D1D /* Error Popover */,
 			);
@@ -824,6 +837,7 @@
 				ABE25D0B1635CA7C00F23718 /* MGSFragariaPrefsViewController.m in Sources */,
 				E3D4B2781714D89700BB2CC6 /* SMLSyntaxError.m in Sources */,
 				E3C1850417175ED900801FE5 /* SMLErrorPopOver.m in Sources */,
+				0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

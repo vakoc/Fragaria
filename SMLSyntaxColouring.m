@@ -23,6 +23,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import "MGSFragaria.h"
 #import "MGSFragariaFramework.h"
 
+
 // syntax colouring information dictionary keys
 NSString *SMLSyntaxGroup = @"group";
 NSString *SMLSyntaxGroupID = @"groupID";
@@ -44,74 +45,14 @@ NSString *SMLSyntaxGroupSingleLineComment = @"singleLineComment";
 NSString *SMLSyntaxGroupMultiLineComment = @"multiLineComment";
 NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
-// syntax definition dictionary keys
-
-NSString *SMLSyntaxDefinitionAllowSyntaxColouring = @"allowSyntaxColouring";
-NSString *SMLSyntaxDefinitionKeywords = @"keywords";
-NSString *SMLSyntaxDefinitionAutocompleteWords = @"autocompleteWords";
-NSString *SMLSyntaxDefinitionRecolourKeywordIfAlreadyColoured = @"recolourKeywordIfAlreadyColoured";
-NSString *SMLSyntaxDefinitionKeywordsCaseSensitive = @"keywordsCaseSensitive";
-NSString *SMLSyntaxDefinitionBeginCommand = @"beginCommand";
-NSString *SMLSyntaxDefinitionEndCommand = @"endCommand";
-NSString *SMLSyntaxDefinitionBeginInstruction = @"beginInstruction";
-NSString *SMLSyntaxDefinitionEndInstruction = @"endInstruction";
-NSString *SMLSyntaxDefinitionBeginVariable = @"beginVariable";
-NSString *SMLSyntaxDefinitionEndVariable = @"endVariable";
-NSString *SMLSyntaxDefinitionFirstString = @"firstString";
-NSString *SMLSyntaxDefinitionSecondString = @"secondString";
-NSString *SMLSyntaxDefinitionFirstSingleLineComment = @"firstSingleLineComment";
-NSString *SMLSyntaxDefinitionSecondSingleLineComment = @"secondSingleLineComment";
-NSString *SMLSyntaxDefinitionBeginFirstMultiLineComment = @"beginFirstMultiLineComment";
-NSString *SMLSyntaxDefinitionEndFirstMultiLineComment = @"endFirstMultiLineComment";
-NSString *SMLSyntaxDefinitionBeginSecondMultiLineComment = @"beginSecondMultiLineComment";
-NSString *SMLSyntaxDefinitionEndSecondMultiLineComment = @"endSecondMultiLineComment";
-NSString *SMLSyntaxDefinitionFunctionDefinition = @"functionDefinition";
-NSString *SMLSyntaxDefinitionRemoveFromFunction = @"removeFromFunction";
-NSString *SMLSyntaxDefinitionExcludeFromKeywordStartCharacterSet = @"excludeFromKeywordStartCharacterSet";
-NSString *SMLSyntaxDefinitionExcludeFromKeywordEndCharacterSet = @"excludeFromKeywordEndCharacterSet";
-NSString *SMLSyntaxDefinitionIncludeInKeywordStartCharacterSet = @"includeInKeywordStartCharacterSet";
-NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywordEndCharacterSet";
 
 // class extension
 @interface SMLSyntaxColouring()
 
-@property (copy) NSString *functionDefinition;
-@property (copy) NSString *removeFromFunction;
-@property (strong) NSString *secondString;
-@property (strong) NSString *firstString;
-@property (strong) NSString *beginCommand;
-@property (strong) NSString *endCommand;
-@property (strong) NSSet *keywords;
-@property (strong) NSSet *autocompleteWords;
-@property (strong) NSArray *keywordsAndAutocompleteWords;
-@property (strong) NSString *beginInstruction;
-@property (strong) NSString *endInstruction;
-@property (strong) NSCharacterSet *beginVariableCharacterSet;
-@property (strong) NSCharacterSet *endVariableCharacterSet;
-@property (strong) NSString *firstSingleLineComment;
-@property (strong) NSString *secondSingleLineComment;
-@property (strong) NSMutableArray *singleLineComments;
-@property (strong) NSMutableArray *multiLineComments;
-@property (strong) NSString *beginFirstMultiLineComment;
-@property (strong) NSString*endFirstMultiLineComment;
-@property (strong) NSString*beginSecondMultiLineComment;
-@property (strong) NSString*endSecondMultiLineComment;
-@property (strong) NSCharacterSet *keywordStartCharacterSet;
-@property (strong) NSCharacterSet *keywordEndCharacterSet;
-@property (strong) NSCharacterSet *attributesCharacterSet;
-@property (strong) NSCharacterSet *letterCharacterSet;
-@property (strong) NSCharacterSet *numberCharacterSet;
-@property (strong) NSCharacterSet *nameCharacterSet;
-@property (assign) BOOL syntaxDefinitionAllowsColouring;
-
-@property unichar decimalPointCharacter;
-
-- (void)parseSyntaxDictionary:(NSDictionary *)syntaxDictionary;
 - (void)applySyntaxDefinition;
 - (NSString *)assignSyntaxDefinition;
 - (void)autocompleteWordsTimerSelector:(NSTimer *)theTimer;
 - (NSString *)completeString;
-- (void)prepareRegularExpressions;
 - (void)applyColourDefaults;
 - (NSRange)recolourRange:(NSRange)range;
 - (void)removeAllColours;
@@ -122,11 +63,15 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 - (void)highlightLineRange:(NSRange)lineRange;
 - (BOOL)isSyntaxColouringRequired;
 - (NSDictionary *)syntaxDictionary;
+
 @end
+
 
 @implementation SMLSyntaxColouring
 
-@synthesize reactToChanges, functionDefinition, removeFromFunction, undoManager, secondString, firstString, keywords, autocompleteWords, keywordsAndAutocompleteWords, beginCommand, endCommand, beginInstruction, endInstruction, beginVariableCharacterSet, endVariableCharacterSet, firstSingleLineComment, secondSingleLineComment, singleLineComments, multiLineComments, beginFirstMultiLineComment, endFirstMultiLineComment, beginSecondMultiLineComment, endSecondMultiLineComment, keywordStartCharacterSet, keywordEndCharacterSet, attributesCharacterSet, letterCharacterSet, numberCharacterSet, decimalPointCharacter, syntaxErrors, syntaxDefinitionAllowsColouring, nameCharacterSet;
+
+@synthesize reactToChanges, undoManager, syntaxErrors;
+
 
 #pragma mark -
 #pragma mark Instance methods
@@ -172,36 +117,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		
 		// configure colouring
 		[self applyColourDefaults];
-
-		// letter character set
-		self.letterCharacterSet = [NSCharacterSet letterCharacterSet];
-
-        // name character set
-		NSMutableCharacterSet *temporaryCharacterSet = [[NSCharacterSet letterCharacterSet] mutableCopy];
-		[temporaryCharacterSet addCharactersInString:@"_"];
-		self.nameCharacterSet = [temporaryCharacterSet copy];
-
-		// keyword start character set
-		temporaryCharacterSet = [[NSCharacterSet letterCharacterSet] mutableCopy];
-		[temporaryCharacterSet addCharactersInString:@"_:@#"];
-		self.keywordStartCharacterSet = [temporaryCharacterSet copy];
-		
-		// keyword end character set
-        // see http://www.fileformat.info/info/unicode/category/index.htm for categories that make up the sets
-		temporaryCharacterSet = [[NSCharacterSet whitespaceAndNewlineCharacterSet] mutableCopy];
-		[temporaryCharacterSet formUnionWithCharacterSet:[NSCharacterSet symbolCharacterSet]];
-		[temporaryCharacterSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
-		[temporaryCharacterSet removeCharactersInString:@"._-"]; // common separators in variable names
-		self.keywordEndCharacterSet = [temporaryCharacterSet copy];
-		
-        // number character set
-        self.numberCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@"0123456789."];
-        self.decimalPointCharacter = [@"." characterAtIndex:0];
-        
-		// attributes character set
-		temporaryCharacterSet = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
-		[temporaryCharacterSet addCharactersInString:@" -"]; // If there are two spaces before an attribute
-		self.attributesCharacterSet = [temporaryCharacterSet copy];
 		
 		// configure syntax definition
 		[self applySyntaxDefinition];
@@ -246,11 +161,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     return self;
 }
 
-/*
- 
- - dealloc
- 
- */
+
 #pragma mark -
 #pragma mark KVO
 /*
@@ -271,7 +182,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 			[self highlightLineRange:NSMakeRange(0, 0)];
 		}
 	} else if ([(__bridge NSString *)context isEqualToString:@"MultiLineChanged"]) {
-		[self prepareRegularExpressions];
         [self removeAllColours];
 		[self pageRecolour];
 	} else if ([(__bridge NSString *)context isEqualToString:@"syntaxDefinition"]) {
@@ -285,6 +195,11 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 }
 
 
+/*
+ 
+ - dealloc
+ 
+ */
 -(void)dealloc
 {
     [document removeObserver:self forKeyPath:@"syntaxDefinition"];
@@ -302,7 +217,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 - (void)applySyntaxDefinition
 {			
 	// parse
-	[self parseSyntaxDictionary:self.syntaxDictionary];
+    syntaxDefinition = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:self.syntaxDictionary];
 }
 
 /*
@@ -367,267 +282,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 
 /*
  
- - parseSyntaxDictionary
- 
- */
-- (void)parseSyntaxDictionary:(NSDictionary *)syntaxDictionary
-{
-	
-	NSMutableArray *keywordsAndAutocompleteWordsTemporary = [NSMutableArray array];
-	
-	// If the plist file is malformed be sure to set the values to something
-    
-    // syntax colouring
-    id value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionAllowSyntaxColouring];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSNumber class]], @"NSNumber expected");
-        self.syntaxDefinitionAllowsColouring = [value boolValue];
-    } else {
-        // default to YES
-        self.syntaxDefinitionAllowsColouring = YES;
-    }
-    
-    // keywords
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionKeywords];
-	if (value) {
-        NSAssert([value isKindOfClass:[NSArray class]], @"NSArray expected");
-		self.keywords = [[NSSet alloc] initWithArray:value];
-		[keywordsAndAutocompleteWordsTemporary addObjectsFromArray:value];
-	}
-	
-    // autocomplete words
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionAutocompleteWords];
-	if (value) {
-        NSAssert([value isKindOfClass:[NSArray class]], @"NSArray expected");
-		self.autocompleteWords = [[NSSet alloc] initWithArray:value];
-		[keywordsAndAutocompleteWordsTemporary addObjectsFromArray:value];
-	}
-	
-    // colour autocomplete words is a preference
-	if ([[SMLDefaults valueForKey:MGSFragariaPrefsColourAutocomplete] boolValue] == YES) {
-		self.keywords = [NSSet setWithArray:keywordsAndAutocompleteWordsTemporary];
-	}
-	
-    // keywords and autocomplete words
-	self.keywordsAndAutocompleteWords = [keywordsAndAutocompleteWordsTemporary sortedArrayUsingSelector:@selector(compare:)];
-	
-    // recolour keywords
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionRecolourKeywordIfAlreadyColoured];
-	if (value) {
-        NSAssert([value isKindOfClass:[NSNumber class]], @"NSNumber expected");
-		recolourKeywordIfAlreadyColoured = [value boolValue];
-	}
-	
-    // keywords case sensitive
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionKeywordsCaseSensitive];
-	if (value) {
-        NSAssert([value isKindOfClass:[NSNumber class]], @"NSNumber expected");
-		keywordsCaseSensitive = [value boolValue];
-	}
-	
-	if (keywordsCaseSensitive == NO) {
-		NSMutableArray *lowerCaseKeywords = [[NSMutableArray alloc] init];
-		for (id item in keywords) {
-			[lowerCaseKeywords addObject:[item lowercaseString]];
-		}
-		
-		NSSet *lowerCaseKeywordsSet = [[NSSet alloc] initWithArray:lowerCaseKeywords];
-		self.keywords = lowerCaseKeywordsSet;
-	}
-	
-    // begin command
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginCommand];
-	if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.beginCommand = value;
-	} else { 
-		self.beginCommand = @"";
-	}
-    
-    // end command
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndCommand];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.endCommand = value;
-	} else { 
-		self.endCommand = @"";
-	}
-    
-    // begin instruction
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginInstruction];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.beginInstruction = value;
-	} else {
-		self.beginInstruction = @"";
-	}
-
-    // end instruction
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndInstruction];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.endInstruction = value;
-	} else {
-		self.endInstruction = @"";
-	}
-	
-    // begin variable
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginVariable];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.beginVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:value];
-	} else {
-        self.beginVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@""];
-    }
-	
-    // end variable
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndVariable];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.endVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:value];
-	} else {
-		self.endVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@""];
-	}
-
-    // first string
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionFirstString];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.firstString = value;
-	} else {
-		self.firstString = @"";
-	}
-	
-    // second string
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionSecondString];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.secondString = value;
-	} else { 
-		self.secondString = @"";
-	}
-	
-    // first single line comment
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionFirstSingleLineComment];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.firstSingleLineComment = value;
-	} else {
-		self.firstSingleLineComment = @"";
-	}
-    
-    self.singleLineComments = [NSMutableArray arrayWithCapacity:2];
-    [self.singleLineComments addObject:firstSingleLineComment];
-	
-    // second single line comment
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionSecondSingleLineComment];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.secondSingleLineComment = value;
-	} else {
-		self.secondSingleLineComment = @"";
-	}
-    [self.singleLineComments addObject:secondSingleLineComment];
-	
-    // begin first multi line comment
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginFirstMultiLineComment];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.beginFirstMultiLineComment = value;
-	} else {
-		self.beginFirstMultiLineComment = @"";
-	}
-	
-    // end first multi line comment
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndFirstMultiLineComment];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.endFirstMultiLineComment = value;
-	} else {
-		self.endFirstMultiLineComment = @"";
-	}
-
-    self.multiLineComments = [NSMutableArray arrayWithCapacity:2];
-	[self.multiLineComments addObject:[NSArray arrayWithObjects:self.beginFirstMultiLineComment, self.endFirstMultiLineComment, nil]];
-	
-    // begin second multi line comment
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginSecondMultiLineComment];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.beginSecondMultiLineComment = value;
-	} else {
-		self.beginSecondMultiLineComment = @"";
-	}
-     
-    // end second multi line comment
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndSecondMultiLineComment];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.endSecondMultiLineComment = value;
-	} else {
-		self.endSecondMultiLineComment = @"";
-	}
-	[self.multiLineComments addObject:[NSArray arrayWithObjects:self.beginSecondMultiLineComment, self.endSecondMultiLineComment, nil]];
-
-	// function definition
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionFunctionDefinition];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.functionDefinition = value;
-	} else {
-		self.functionDefinition = @"";
-	}
-	
-    // remove from function
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionRemoveFromFunction];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		self.removeFromFunction = value;
-	} else {
-		self.removeFromFunction = @"";
-	}
-	
-    // exclude characters from keyword start character set
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionExcludeFromKeywordStartCharacterSet];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		NSMutableCharacterSet *temporaryCharacterSet = [keywordStartCharacterSet mutableCopy];
-		[temporaryCharacterSet removeCharactersInString:value];
-		self.keywordStartCharacterSet = [temporaryCharacterSet copy];
-	}
-	
-    // exclude characters from keyword end character set
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionExcludeFromKeywordEndCharacterSet];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		NSMutableCharacterSet *temporaryCharacterSet = [keywordEndCharacterSet mutableCopy];
-		[temporaryCharacterSet removeCharactersInString:value];
-		self.keywordEndCharacterSet = [temporaryCharacterSet copy];
-	}
-	
-    // include characters in keyword start character set
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionIncludeInKeywordStartCharacterSet];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		NSMutableCharacterSet *temporaryCharacterSet = [keywordStartCharacterSet mutableCopy];
-		[temporaryCharacterSet addCharactersInString:value];
-		self.keywordStartCharacterSet = [temporaryCharacterSet copy];
-	}
-	
-    // include characters in keyword end character set
-	value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-		NSMutableCharacterSet *temporaryCharacterSet = [keywordEndCharacterSet mutableCopy];
-		[temporaryCharacterSet addCharactersInString:value];
-		self.keywordEndCharacterSet = [temporaryCharacterSet copy];
-	}
-
-	[self prepareRegularExpressions];
-}
-
-/*
- 
  - guessSyntaxDefinitionExtensionFromFirstLine:
  
  */
@@ -658,28 +312,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	}
 	
 	return returnString;
-}
-
-
-#pragma mark -
-#pragma mark Regex handling
-/*
- 
- - prepareRegularExpressions
- 
- */
-- (void)prepareRegularExpressions
-{
-	if ([[SMLDefaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue] == NO) {
-		firstStringPattern = [[ICUPattern alloc] initWithString:[NSString stringWithFormat:@"\\W%@[^%@\\\\\\r\\n]*+(?:\\\\(?:.|$)[^%@\\\\\\r\\n]*+)*+%@", self.firstString, self.firstString, self.firstString, self.firstString]];
-		
-		secondStringPattern = [[ICUPattern alloc] initWithString:[NSString stringWithFormat:@"\\W%@[^%@\\\\\\r\\n]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", self.secondString, self.secondString, self.secondString, self.secondString]];
-
-	} else {
-		firstStringPattern = [[ICUPattern alloc] initWithString:[NSString stringWithFormat:@"\\W%@[^%@\\\\]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", self.firstString, self.firstString, self.firstString, self.firstString]];
-		
-		secondStringPattern = [[ICUPattern alloc] initWithString:[NSString stringWithFormat:@"\\W%@[^%@\\\\]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", self.secondString, self.secondString, self.secondString, self.secondString]];
-	}
 }
 
 
@@ -855,18 +487,18 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     // This is not always correct but it's better than nothing.
     //
 	if (shouldColourMultiLineStrings) {
-		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:self.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
+		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:syntaxDefinition.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
         if (beginFirstStringInMultiLine != NSNotFound && [[layoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
 			NSInteger startOfLine = [documentString lineRangeForRange:NSMakeRange(beginFirstStringInMultiLine, 0)].location;
 			effectiveRange = NSMakeRange(startOfLine, rangeToRecolour.length + (rangeToRecolour.location - startOfLine));
 		}
         
         
-        NSInteger lastStringBegin = [documentString rangeOfString:self.firstString options:NSBackwardsSearch range:rangeToRecolour].location;
+        NSInteger lastStringBegin = [documentString rangeOfString:syntaxDefinition.firstString options:NSBackwardsSearch range:rangeToRecolour].location;
         if (lastStringBegin != NSNotFound) {
             NSRange restOfString = NSMakeRange(NSMaxRange(rangeToRecolour), 0);
             restOfString.length = [documentString length] - restOfString.location;
-            NSInteger lastStringEnd = [documentString rangeOfString:self.firstString options:0 range:restOfString].location;
+            NSInteger lastStringEnd = [documentString rangeOfString:syntaxDefinition.firstString options:0 range:restOfString].location;
             if (lastStringEnd != NSNotFound) {
                 NSInteger endOfLine = NSMaxRange([documentString lineRangeForRange:NSMakeRange(lastStringEnd, 0)]);
                 effectiveRange = NSUnionRange(effectiveRange, NSMakeRange(lastStringBegin, endOfLine-lastStringBegin));
@@ -954,11 +586,11 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 while (![rangeScanner isAtEnd]) {
                     
                     // scan up to a number character
-                    [rangeScanner scanUpToCharactersFromSet:self.numberCharacterSet intoString:NULL];
+                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.numberCharacterSet intoString:NULL];
                     colourStartLocation = [rangeScanner scanLocation];
                     
                     // scan to number end
-                    [rangeScanner scanCharactersFromSet:self.numberCharacterSet intoString:NULL];
+                    [rangeScanner scanCharactersFromSet:syntaxDefinition.numberCharacterSet intoString:NULL];
                     colourEndLocation = [rangeScanner scanLocation];
                     
                     if (colourStartLocation == colourEndLocation) {
@@ -973,7 +605,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                         
                         // numbers can occur in variable, class and function names
                         // eg: var_1 should not be coloured as a number
-                        if ([self.nameCharacterSet characterIsMember:testCharacter]) {
+                        if ([syntaxDefinition.nameCharacterSet characterIsMember:testCharacter]) {
                             continue;
                         }
                     }
@@ -984,7 +616,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                     if (colourEndLocation > 0) {
                         queryLocation = colourEndLocation - 1;
                         testCharacter = [rangeString characterAtIndex:queryLocation];
-                        if (testCharacter == self.decimalPointCharacter) {
+                        if (testCharacter == syntaxDefinition.decimalPointCharacter) {
                             colourEndLocation--;
                         }
                     }
@@ -1015,20 +647,20 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 
             } 
 
-            if (doColouring && ![self.beginCommand isEqualToString:@""]) {
-                searchSyntaxLength = [self.endCommand length];
-                unichar beginCommandCharacter = [self.beginCommand characterAtIndex:0];
-                unichar endCommandCharacter = [self.endCommand characterAtIndex:0];
+            if (doColouring && ![syntaxDefinition.beginCommand isEqualToString:@""]) {
+                searchSyntaxLength = [syntaxDefinition.endCommand length];
+                unichar beginCommandCharacter = [syntaxDefinition.beginCommand characterAtIndex:0];
+                unichar endCommandCharacter = [syntaxDefinition.endCommand characterAtIndex:0];
                 
                 // reset scanner
                 [rangeScanner mgs_setScanLocation:0];
 
                 // scan range to end
                 while (![rangeScanner isAtEnd]) {
-                    [rangeScanner scanUpToString:self.beginCommand intoString:nil];
+                    [rangeScanner scanUpToString:syntaxDefinition.beginCommand intoString:nil];
                     colourStartLocation = [rangeScanner scanLocation];
                     endOfLine = NSMaxRange([rangeString lineRangeForRange:NSMakeRange(colourStartLocation, 0)]);
-                    if (![rangeScanner scanUpToString:self.endCommand intoString:nil] || [rangeScanner scanLocation] >= endOfLine) {
+                    if (![rangeScanner scanUpToString:syntaxDefinition.endCommand intoString:nil] || [rangeScanner scanLocation] >= endOfLine) {
                         [rangeScanner mgs_setScanLocation:endOfLine];
                         continue; // Don't colour it if it hasn't got a closing tag
                     } else {
@@ -1085,16 +717,16 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 
             }
 
-            if (doColouring && ![self.beginInstruction isEqualToString:@""]) {
+            if (doColouring && ![syntaxDefinition.beginInstruction isEqualToString:@""]) {
                 // It takes too long to scan the whole document if it's large, so for instructions, first multi-line comment and second multi-line comment search backwards and begin at the start of the first beginInstruction etc. that it finds from the present position and, below, break the loop if it has passed the scanned range (i.e. after the end instruction)
                 
-                beginLocationInMultiLine = [documentString rangeOfString:self.beginInstruction options:NSBackwardsSearch range:NSMakeRange(0, rangeLocation)].location;
-                endLocationInMultiLine = [documentString rangeOfString:self.endInstruction options:NSBackwardsSearch range:NSMakeRange(0, rangeLocation)].location;
+                beginLocationInMultiLine = [documentString rangeOfString:syntaxDefinition.beginInstruction options:NSBackwardsSearch range:NSMakeRange(0, rangeLocation)].location;
+                endLocationInMultiLine = [documentString rangeOfString:syntaxDefinition.endInstruction options:NSBackwardsSearch range:NSMakeRange(0, rangeLocation)].location;
                 if (beginLocationInMultiLine == NSNotFound || (endLocationInMultiLine != NSNotFound && beginLocationInMultiLine < endLocationInMultiLine)) {
                     beginLocationInMultiLine = rangeLocation;
                 }			
 
-                searchSyntaxLength = [self.endInstruction length];
+                searchSyntaxLength = [syntaxDefinition.endInstruction length];
 
                 // reset scanner
                 [documentScanner mgs_setScanLocation:0];
@@ -1106,12 +738,12 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                         searchRange = NSMakeRange(beginLocationInMultiLine, documentStringLength - beginLocationInMultiLine);
                     }
                     
-                    colourStartLocation = [documentString rangeOfString:self.beginInstruction options:NSLiteralSearch range:searchRange].location;
+                    colourStartLocation = [documentString rangeOfString:syntaxDefinition.beginInstruction options:NSLiteralSearch range:searchRange].location;
                     if (colourStartLocation == NSNotFound) {
                         break;
                     }
                     [documentScanner mgs_setScanLocation:colourStartLocation];
-                    if (![documentScanner scanUpToString:self.endInstruction intoString:nil] || [documentScanner scanLocation] >= documentStringLength) {
+                    if (![documentScanner scanUpToString:syntaxDefinition.endInstruction intoString:nil] || [documentScanner scanLocation] >= documentStringLength) {
                         if (shouldOnlyColourTillTheEndOfLine) {
                             [documentScanner mgs_setScanLocation:NSMaxRange([documentString lineRangeForRange:NSMakeRange(colourStartLocation, 0)])];
                         } else {
@@ -1153,19 +785,19 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 
             }
             
-            if (doColouring && [keywords count] > 0) {
+            if (doColouring && [syntaxDefinition.keywords count] > 0) {
                 
                 // reset scanner
                 [rangeScanner mgs_setScanLocation:0];
                 
                 // scan range to end
                 while (![rangeScanner isAtEnd]) {
-                    [rangeScanner scanUpToCharactersFromSet:self.keywordStartCharacterSet intoString:nil];
+                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.keywordStartCharacterSet intoString:nil];
                     colourStartLocation = [rangeScanner scanLocation];
                     if ((colourStartLocation + 1) < rangeStringLength) {
                         [rangeScanner mgs_setScanLocation:(colourStartLocation + 1)];
                     }
-                    [rangeScanner scanUpToCharactersFromSet:self.keywordEndCharacterSet intoString:nil];
+                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.keywordEndCharacterSet intoString:nil];
                     
                     colourEndLocation = [rangeScanner scanLocation];
                     if (colourEndLocation > rangeStringLength || colourStartLocation == colourEndLocation) {
@@ -1173,13 +805,13 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                     }
                     
                     NSString *keywordTestString = nil;
-                    if (!keywordsCaseSensitive) {
+                    if (!syntaxDefinition.keywordsCaseSensitive) {
                         keywordTestString = [[documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)] lowercaseString];
                     } else {
                         keywordTestString = [documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)];
                     }
-                    if ([keywords containsObject:keywordTestString]) {
-                        if (!recolourKeywordIfAlreadyColoured) {
+                    if ([syntaxDefinition.keywords containsObject:keywordTestString]) {
+                        if (!syntaxDefinition.recolourKeywordIfAlreadyColoured) {
                             if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
                                 continue;
                             }
@@ -1211,19 +843,19 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 
             }
             
-            if (doColouring && [self.autocompleteWords count] > 0) {
+            if (doColouring && [syntaxDefinition.autocompleteWords count] > 0) {
                 
                 // reset scanner
                 [rangeScanner mgs_setScanLocation:0];
                 
                 // scan range to end
                 while (![rangeScanner isAtEnd]) {
-                    [rangeScanner scanUpToCharactersFromSet:self.keywordStartCharacterSet intoString:nil];
+                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.keywordStartCharacterSet intoString:nil];
                     colourStartLocation = [rangeScanner scanLocation];
                     if ((colourStartLocation + 1) < rangeStringLength) {
                         [rangeScanner mgs_setScanLocation:(colourStartLocation + 1)];
                     }
-                    [rangeScanner scanUpToCharactersFromSet:self.keywordEndCharacterSet intoString:nil];
+                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.keywordEndCharacterSet intoString:nil];
                     
                     colourEndLocation = [rangeScanner scanLocation];
                     if (colourEndLocation > rangeStringLength || colourStartLocation == colourEndLocation) {
@@ -1231,13 +863,13 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                     }
                     
                     NSString *autocompleteTestString = nil;
-                    if (!keywordsCaseSensitive) {
+                    if (!syntaxDefinition.keywordsCaseSensitive) {
                         autocompleteTestString = [[documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)] lowercaseString];
                     } else {
                         autocompleteTestString = [documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)];
                     }
-                    if ([self.autocompleteWords containsObject:autocompleteTestString]) {
-                        if (!recolourKeywordIfAlreadyColoured) {
+                    if ([syntaxDefinition.autocompleteWords containsObject:autocompleteTestString]) {
+                        if (!syntaxDefinition.recolourKeywordIfAlreadyColoured) {
                             if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
                                 continue;
                             }
@@ -1270,17 +902,17 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 
             }
             
-            if (doColouring && self.beginVariableCharacterSet != nil) {
+            if (doColouring && syntaxDefinition.beginVariableCharacterSet != nil) {
                 
                 // reset scanner
                 [rangeScanner mgs_setScanLocation:0];
                 
                 // scan range to end
                 while (![rangeScanner isAtEnd]) {
-                    [rangeScanner scanUpToCharactersFromSet:self.beginVariableCharacterSet intoString:nil];
+                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.beginVariableCharacterSet intoString:nil];
                     colourStartLocation = [rangeScanner scanLocation];
                     if (colourStartLocation + 1 < rangeStringLength) {
-                        if ([self.firstSingleLineComment isEqualToString:@"%"] && [rangeString characterAtIndex:colourStartLocation + 1] == '%') { // To avoid a problem in LaTex with \%
+                        if ([syntaxDefinition.firstSingleLineComment isEqualToString:@"%"] && [rangeString characterAtIndex:colourStartLocation + 1] == '%') { // To avoid a problem in LaTex with \%
                             if ([rangeScanner scanLocation] < rangeStringLength) {
                                 [rangeScanner mgs_setScanLocation:colourStartLocation + 1];
                             }
@@ -1288,7 +920,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                         }
                     }
                     endOfLine = NSMaxRange([rangeString lineRangeForRange:NSMakeRange(colourStartLocation, 0)]);
-                    if (![rangeScanner scanUpToCharactersFromSet:self.endVariableCharacterSet intoString:nil] || [rangeScanner scanLocation] >= endOfLine) {
+                    if (![rangeScanner scanUpToCharactersFromSet:syntaxDefinition.endVariableCharacterSet intoString:nil] || [rangeScanner scanLocation] >= endOfLine) {
                         [rangeScanner mgs_setScanLocation:endOfLine];
                         colourLength = [rangeScanner scanLocation] - colourStartLocation;
                     } else {
@@ -1325,10 +957,16 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 
             } 
 
-            if (doColouring && ![self.secondString isEqualToString:@""]) {
+            if (doColouring && ![syntaxDefinition.secondString isEqualToString:@""]) {
+                ICUPattern *stringPattern;
+                
+                if (!shouldColourMultiLineStrings)
+                    stringPattern = [syntaxDefinition secondStringPattern];
+                else
+                    stringPattern = [syntaxDefinition secondMultilineStringPattern];
                 
                 @try {
-                    secondStringMatcher = [[ICUMatcher alloc] initWithPattern:secondStringPattern overString:rangeString];
+                    secondStringMatcher = [[ICUMatcher alloc] initWithPattern:stringPattern overString:rangeString];
                 }
                 @catch (NSException *exception) {
                     return effectiveRange;
@@ -1363,10 +1001,16 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 
             }
         
-            if (doColouring && ![self.firstString isEqualToString:@""]) {
+            if (doColouring && ![syntaxDefinition.firstString isEqualToString:@""]) {
+                ICUPattern *stringPattern;
+                
+                if (!shouldColourMultiLineStrings)
+                    stringPattern = [syntaxDefinition firstStringPattern];
+                else
+                    stringPattern = [syntaxDefinition firstMultilineStringPattern];
                 
                 @try {
-                    firstStringMatcher = [[ICUMatcher alloc] initWithPattern:firstStringPattern overString:rangeString];
+                    firstStringMatcher = [[ICUMatcher alloc] initWithPattern:stringPattern overString:rangeString];
                 }
                 @catch (NSException *exception) {
                     return effectiveRange;
@@ -1422,7 +1066,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                         continue;
                     }
                     
-                    [rangeScanner scanCharactersFromSet:self.attributesCharacterSet intoString:nil];
+                    [rangeScanner scanCharactersFromSet:syntaxDefinition.attributesCharacterSet intoString:nil];
                     colourEndLocation = [rangeScanner scanLocation];
                     
                     if (colourEndLocation + 1 < rangeStringLength) {
@@ -1459,7 +1103,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
             } 
 
             if (doColouring) {
-                for (NSString *singleLineComment in self.singleLineComments) {
+                for (NSString *singleLineComment in syntaxDefinition.singleLineComments) {
                     if (![singleLineComment isEqualToString:@""]) {
                         
                         // reset scanner
@@ -1544,7 +1188,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
             }
         
             if (doColouring) {
-                for (NSArray *multiLineComment in self.multiLineComments) {
+                for (NSArray *multiLineComment in syntaxDefinition.multiLineComments) {
                     
                     // Get strings
                     NSString *beginMultiLineComment = [multiLineComment objectAtIndex:0];
@@ -1622,7 +1266,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                                 
                                 // HTML specific
                                 if ([endMultiLineComment isEqualToString:@"-->"]) {
-                                    [documentScanner scanUpToCharactersFromSet:self.letterCharacterSet intoString:nil]; // Search for the first letter after -->
+                                    [documentScanner scanUpToCharactersFromSet:syntaxDefinition.letterCharacterSet intoString:nil]; // Search for the first letter after -->
                                     if ([documentScanner scanLocation] + 6 < documentStringLength) {// Check if there's actually room for a </script>
                                         if ([documentString rangeOfString:@"</script>" options:NSCaseInsensitiveSearch range:NSMakeRange([documentScanner scanLocation] - 2, 9)].location != NSNotFound || [documentString rangeOfString:@"</style>" options:NSCaseInsensitiveSearch range:NSMakeRange([documentScanner scanLocation] - 2, 8)].location != NSNotFound) {
                                             beginLocationInMultiLine = [documentScanner scanLocation];
@@ -1670,7 +1314,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 
             }
         
-            if (doColouring && ![self.secondString isEqualToString:@""]) {
+            if (doColouring && ![syntaxDefinition.secondString isEqualToString:@""]) {
                 
                 @try {
                     [secondStringMatcher reset];
@@ -1770,7 +1414,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  */
 - (BOOL)isSyntaxColouringRequired
 {
-    return ([[document valueForKey:MGSFOIsSyntaxColoured] boolValue] && self.syntaxDefinitionAllowsColouring ? YES : NO);
+    return ([[document valueForKey:MGSFOIsSyntaxColoured] boolValue] && syntaxDefinition.syntaxDefinitionAllowsColouring ? YES : NO);
 }
 /*
  
@@ -2139,6 +1783,8 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  */
 - (NSArray*) completions
 {
-    return self.keywordsAndAutocompleteWords;
+    return syntaxDefinition.keywordsAndAutocompleteWords;
 }
+
+
 @end

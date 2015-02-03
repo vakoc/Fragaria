@@ -21,6 +21,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import "MGSFragaria.h"
 #import "SMLTextView.h"
 #import "SMLAutoCompleteDelegate.h"
+#import "MGSSyntaxDefinition.h"
 
 @class SMLLayoutManager;
 @class ICUPattern;
@@ -36,41 +37,14 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	
 	NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
 					*stringsColour, *variablesColour, *attributesColour, *lineHighlightColour,  *numbersColour;
-	
-	NSSet *keywords;
-	NSSet *autocompleteWords;
-	NSArray *keywordsAndAutocompleteWords;
-
-	NSString *beginCommand;
-	NSString *endCommand;
-	NSString *beginInstruction;
-	NSString *endInstruction;
-	NSString *firstString;
-	NSString *secondString;
-	NSString *firstSingleLineComment, *secondSingleLineComment;
-    NSString *beginFirstMultiLineComment, *endFirstMultiLineComment, *beginSecondMultiLineComment, *endSecondMultiLineComment;
-    NSString *functionDefinition, *removeFromFunction;
-
-    NSMutableArray *singleLineComments;
-    NSMutableArray *multiLineComments;
 
 	BOOL reactToChanges;
-	BOOL keywordsCaseSensitive;
-	BOOL recolourKeywordIfAlreadyColoured;
 	BOOL syntaxErrorsAreDirty;
-	BOOL syntaxDefinitionAllowsColouring;
     
-	NSCharacterSet *attributesCharacterSet;
-	NSCharacterSet *beginVariableCharacterSet;
-	NSCharacterSet *endVariableCharacterSet;
-	NSCharacterSet *letterCharacterSet, *keywordStartCharacterSet, *keywordEndCharacterSet;
-	NSCharacterSet *numberCharacterSet;
-    NSCharacterSet *nameCharacterSet;
-    unichar decimalPointCharacter;
     NSArray *syntaxErrors;
     
-	ICUPattern *firstStringPattern;
-	ICUPattern *secondStringPattern;	
+    MGSSyntaxDefinition *syntaxDefinition;
+    
 	ICUMatcher *firstStringMatcher;
 	ICUMatcher *secondStringMatcher;
 	NSUndoManager *undoManager;
