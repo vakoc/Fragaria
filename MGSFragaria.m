@@ -638,9 +638,6 @@ char kcLineWrapPrefChanged;
 {
     [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowLineNumberGutter];
     [self updateGutterView];
-#ifndef DISABLE_NEW_GUTTER
-    [[docSpec objectForKey:ro_MGSFOScrollView] setHasVerticalRuler:value];
-#endif
 }
 /*
  
