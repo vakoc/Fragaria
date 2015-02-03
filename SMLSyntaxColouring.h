@@ -53,9 +53,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
     NSMutableArray *singleLineComments;
     NSMutableArray *multiLineComments;
-    
-	unichar firstStringUnichar;
-	unichar secondStringUnichar;
 
 	BOOL reactToChanges;
 	BOOL keywordsCaseSensitive;

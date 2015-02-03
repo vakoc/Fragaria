@@ -494,9 +494,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
 		self.firstString = value;
-		if (![value isEqualToString:@""]) {
-			firstStringUnichar = [value characterAtIndex:0];
-		}
 	} else {
 		self.firstString = @"";
 	}
@@ -506,9 +503,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
 		self.secondString = value;
-		if (![value isEqualToString:@""]) {
-			secondStringUnichar = [value characterAtIndex:0];
-		}
 	} else { 
 		self.secondString = @"";
 	}
