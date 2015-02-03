@@ -255,8 +255,6 @@ char kcLineWrapPrefChanged;
 			self.docSpec = [[self class] createDocSpec];
 		}
         
-        _startingLineNumber = 0;
-        
         // register the font transformer
         FRAFontTransformer *fontTransformer = [[FRAFontTransformer alloc] init];
         [NSValueTransformer setValueTransformer:fontTransformer forName:@"FontTransformer"];
@@ -275,7 +273,7 @@ char kcLineWrapPrefChanged;
         self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOHasVerticalScroller, MGSFODisableScrollElasticity, MGSFODocumentName, MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate, MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate, nil];
         
         // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOGutterScrollView, ro_MGSFOLineNumbers, ro_MGSFOSyntaxColouring, nil];
+        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOLineNumbers, ro_MGSFOSyntaxColouring, nil];
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
@@ -346,7 +344,6 @@ char kcLineWrapPrefChanged;
 
     MGSLineNumberView *lineNumberView;
     lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView];
-    [lineNumberView setFragaria:self];
     [textScrollView setVerticalRulerView:lineNumberView];
     [textScrollView setHasVerticalRuler:YES];
     [textScrollView setHasHorizontalRuler:NO];
@@ -373,6 +370,9 @@ char kcLineWrapPrefChanged;
 
     if ([docSpec objectForKey:MGSFODelegate])
         [[self textView] setDelegate:[docSpec objectForKey:MGSFODelegate]];
+    
+    if ([docSpec objectForKey:MGSFOBreakpointDelegate])
+        [lineNumberView setBreakpointDelegate:[docSpec objectForKey:MGSFOBreakpointDelegate]];
 }
 
 
@@ -427,6 +427,8 @@ char kcLineWrapPrefChanged;
 	}
     if ([key isEqual:MGSFODelegate]) {
         [[self textView] setDelegate:object];
+    } else if ([key isEqual:MGSFOBreakpointDelegate]) {
+        [[docSpec objectForKey:ro_MGSFOGutterView] setBreakpointDelegate:object];
     }
 }
 
@@ -572,8 +574,7 @@ char kcLineWrapPrefChanged;
  */
 - (void)setStartingLineNumber:(NSUInteger)value
 {
-    _startingLineNumber = value;
-    [self updateGutterView];
+    [[self objectForKey:ro_MGSFOGutterView] setStartingLineNumber:value];
 }
 /*
  
@@ -582,7 +583,7 @@ char kcLineWrapPrefChanged;
  */
 - (NSUInteger)startingLineNumber
 {
-    return _startingLineNumber;
+    return [[self objectForKey:ro_MGSFOGutterView] startingLineNumber];
 }
 
 /*

@@ -106,7 +106,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
         [ruler setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]]];
         [ruler setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
         [ruler setMinimumWidth:[[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] doubleValue]];
-        [ruler setNeedsDisplay:YES];
     }
     [textScrollView setRulersVisible:showGutter];
 }

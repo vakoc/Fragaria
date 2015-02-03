@@ -43,6 +43,7 @@
  */
 
 @class MGSFragaria;
+@protocol MGSBreakpointDelegate;
 
 
 @interface MGSLineNumberView : NSRulerView
@@ -53,26 +54,21 @@
     // and need to be recalculated.
     NSUInteger          _invalidCharacterIndex;
     
-	NSFont              *_font;
-	NSColor				*_textColor;
-	NSColor				*_alternateTextColor;
-	NSColor				*_backgroundColor;
-    CGFloat             _minimumWidth;
-    MGSFragaria         *_fragaria;
-    
     NSImage* imgBreakpoint0;
     NSImage* imgBreakpoint1;
     NSImage* imgBreakpoint2;
 }
 
-@property (readwrite, strong) NSFont      *font;
-@property (readwrite, strong) NSColor     *textColor;
-@property (readwrite, strong) NSColor     *alternateTextColor;
-@property (readwrite, strong) NSColor     *backgroundColor;
-@property (readwrite)         CGFloat     minimumWidth;
-@property (readwrite, strong) MGSFragaria *fragaria;
+@property (nonatomic) id <MGSBreakpointDelegate> breakpointDelegate;
+
+@property (nonatomic) NSFont *font;
+@property (nonatomic) NSColor *textColor;
+@property (nonatomic) NSColor *alternateTextColor;
+@property (nonatomic) NSColor *backgroundColor;
+@property (nonatomic) CGFloat minimumWidth;
+@property (nonatomic) NSUInteger startingLineNumber;
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView;
-- (NSUInteger)lineNumberForLocation:(CGFloat)location;;
+- (NSUInteger)lineNumberForLocation:(CGFloat)location;
 
 @end

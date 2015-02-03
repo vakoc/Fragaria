@@ -60,13 +60,6 @@
 @implementation MGSLineNumberView
 
 
-@synthesize font = _font;
-@synthesize textColor = _textColor;
-@synthesize alternateTextColor = _alternateTextColor;
-@synthesize backgroundColor = _backgroundColor;
-@synthesize fragaria = _fragaria;
-
-
 - (id)initWithScrollView:(NSScrollView *)aScrollView
 {
     if ((self = [super initWithScrollView:aScrollView orientation:NSVerticalRuler]) != nil)
@@ -76,6 +69,7 @@
         imgBreakpoint2 = [MGSFragaria imageNamed:@"editor-breakpoint-2.png"];
         
         _lineIndices = [[NSMutableArray alloc] init];
+        _startingLineNumber = 0;
         [self setClientView:[aScrollView documentView]];
     }
     return self;
@@ -112,14 +106,39 @@
 }
 
 
-- (CGFloat)minimumWidth {
-    return _minimumWidth;
-}
-
-
 - (void)setMinimumWidth:(CGFloat)minimumWidth {
     _minimumWidth = minimumWidth;
     [self setRuleThickness:[self requiredThickness]];
+}
+
+
+- (void)setStartingLineNumber:(NSUInteger)startingLineNumber {
+    _startingLineNumber = startingLineNumber;
+    [self setNeedsDisplay:YES];
+}
+
+
+- (void)setFont:(NSFont *)font {
+    _font = font;
+    [self setNeedsDisplay:YES];
+}
+
+
+- (void)setTextColor:(NSColor *)textColor {
+    _textColor = textColor;
+    [self setNeedsDisplay:YES];
+}
+
+
+- (void)setAlternateTextColor:(NSColor *)alternateTextColor {
+    _alternateTextColor = alternateTextColor;
+    [self setNeedsDisplay:YES];
+}
+
+
+- (void)setBackgroundColor:(NSColor *)backgroundColor {
+    _backgroundColor = backgroundColor;
+    [self setNeedsDisplay:YES];
 }
 
 
@@ -416,8 +435,8 @@
     textAttributes = [self textAttributes];
     
     lines = [self lineIndices];
-    linesWithBreakpoints = [[_fragaria objectForKey:MGSFOBreakpointDelegate] breakpointsForFile:nil];
-    startingLine = [_fragaria startingLineNumber] + 1;
+    linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
+    startingLine = _startingLineNumber + 1;
 
     // Find the characters that are currently visible
     glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:container];
@@ -548,17 +567,15 @@
 {
     NSPoint					location;
     NSUInteger				line;
-    id breakptsDelegate;
     
-    breakptsDelegate = [_fragaria objectForKey:MGSFOBreakpointDelegate];
-    if (!breakptsDelegate) return;
+    if (!_breakpointDelegate) return;
     
     location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     line = [self lineNumberForLocation:location.y];
     
     if (line != NSNotFound)
     {
-        [breakptsDelegate toggleBreakpointForFile:nil onLine:(int)line+1];
+        [_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)line+1];
         [self setNeedsDisplay:YES];
     }
 }
