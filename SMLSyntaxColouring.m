@@ -168,7 +168,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
         syntaxColouringCleanRange = NSMakeRange(0, 0);
 		
 		// configure layout managers
-		firstLayoutManager = (SMLLayoutManager *)[textView layoutManager];
+		layoutManager = (SMLLayoutManager *)[textView layoutManager];
 		
 		// configure colouring
 		[self applyColourDefaults];
@@ -713,7 +713,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 - (void)removeAllColours
 {
 	NSRange wholeRange = NSMakeRange(0, [[self completeString] length]);
-	[firstLayoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:wholeRange];
+	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:wholeRange];
     syntaxColouringCleanRange = NSMakeRange(0, 0);
 }
 
@@ -724,7 +724,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  */
 - (void)removeColoursFromRange:(NSRange)range
 {
-	[firstLayoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:range];
+	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:range];
     /* We could make more complex computations but this method is not called often enough to warrant them. This is easier and always correct, though slower. */
     syntaxColouringCleanRange = NSMakeRange(0, 0);
 }
@@ -862,7 +862,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     //
 	if (shouldColourMultiLineStrings) {
 		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:self.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
-        if (beginFirstStringInMultiLine != NSNotFound && [[firstLayoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
+        if (beginFirstStringInMultiLine != NSNotFound && [[layoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
 			NSInteger startOfLine = [documentString lineRangeForRange:NSMakeRange(beginFirstStringInMultiLine, 0)].location;
 			effectiveRange = NSMakeRange(startOfLine, rangeToRecolour.length + (rangeToRecolour.location - startOfLine));
 		}
@@ -1186,7 +1186,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                     }
                     if ([keywords containsObject:keywordTestString]) {
                         if (!recolourKeywordIfAlreadyColoured) {
-                            if ([[firstLayoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
+                            if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
                                 continue;
                             }
                         }	
@@ -1244,7 +1244,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                     }
                     if ([self.autocompleteWords containsObject:autocompleteTestString]) {
                         if (!recolourKeywordIfAlreadyColoured) {
-                            if ([[firstLayoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
+                            if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
                                 continue;
                             }
                         }	
@@ -1380,7 +1380,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 
                 while ([firstStringMatcher findNext]) {
                     foundRange = [firstStringMatcher rangeOfMatch];
-                    if ([[firstLayoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
+                    if ([[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
                         continue;
                     }
                     [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
@@ -1424,7 +1424,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                     } else {
                         break;
                     }
-                    if (![[firstLayoutManager temporaryAttributesAtCharacterIndex:(colourStartLocation + rangeLocation) effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
+                    if (![[layoutManager temporaryAttributesAtCharacterIndex:(colourStartLocation + rangeLocation) effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
                         continue;
                     }
                     
@@ -1510,7 +1510,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                             
                             // If the comment is within an already coloured string then disregard it
                             if (colourStartLocation + rangeLocation + searchSyntaxLength < documentStringLength) {
-                                if ([[firstLayoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
+                                if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
                                     [rangeScanner mgs_setScanLocation:colourStartLocation + 1];
                                     continue; 
                                 }
@@ -1598,7 +1598,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                                 [documentScanner mgs_setScanLocation:colourStartLocation + 1];
                                 
                                 // If the comment is within a string disregard it
-                                if ([[firstLayoutManager temporaryAttributesAtCharacterIndex:colourStartLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
+                                if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
                                     beginLocationInMultiLine++;
                                     continue; 
                                 }
@@ -1687,7 +1687,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
                 
                 while ([secondStringMatcher findNext]) {
                     foundRange = [secondStringMatcher rangeOfMatch];
-                    if ([[firstLayoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour] || [[firstLayoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:commentsColour]) {
+                    if ([[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour] || [[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:commentsColour]) {
                         continue;
                     }
                     [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
@@ -1737,7 +1737,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  */
 - (void)setColour:(NSDictionary *)colourDictionary range:(NSRange)range
 {
-	[firstLayoutManager setTemporaryAttributes:colourDictionary forCharacterRange:range];
+	[layoutManager setTemporaryAttributes:colourDictionary forCharacterRange:range];
 }
 
 /*
@@ -1789,11 +1789,11 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		return;
 	}
 	
-	[firstLayoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:lastLineHighlightRange];
+	[layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:lastLineHighlightRange];
 		
 	[self pageRecolour];
 	
-	[firstLayoutManager addTemporaryAttributes:lineHighlightColour forCharacterRange:lineRange];
+	[layoutManager addTemporaryAttributes:lineHighlightColour forCharacterRange:lineRange];
 	
 	lastLineHighlightRange = lineRange;
 }
@@ -1843,7 +1843,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     NSString* text = [self completeString];
     
     // Clear all highlights
-    [firstLayoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:NSMakeRange(0, text.length)];
+    [layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:NSMakeRange(0, text.length)];
     
     // Clear all buttons
     NSMutableArray* buttons = [NSMutableArray array];
@@ -1882,18 +1882,18 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
             
             // Add highlight for background
             if (!err.customBackgroundColor) {
-                [firstLayoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1] forCharacterRange:lineRange];
+                [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1] forCharacterRange:lineRange];
             } else {
-                [firstLayoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.customBackgroundColor forCharacterRange:lineRange];
+                [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.customBackgroundColor forCharacterRange:lineRange];
             }
             
             if ([err.description length] > 0)
-                [firstLayoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
+                [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
             
             if (!err.hideWarning) {
-                NSInteger glyphIndex = [firstLayoutManager glyphIndexForCharacterAtIndex:lineRange.location];
+                NSInteger glyphIndex = [layoutManager glyphIndexForCharacterAtIndex:lineRange.location];
                 
-                NSRect linePos = [firstLayoutManager boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1) inTextContainer:[textView textContainer]];
+                NSRect linePos = [layoutManager boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1) inTextContainer:[textView textContainer]];
                 
                 // Add button
                 NSButton* warningButton = [[NSButton alloc] init];
