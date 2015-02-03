@@ -14,7 +14,6 @@
 // BOOL
 extern NSString * const MGSFOIsSyntaxColoured;
 extern NSString * const MGSFOShowLineNumberGutter;
-extern NSString * const MGSFOIsEdited;
 extern NSString * const MGSFOHasVerticalScroller;
 extern NSString * const MGSFODisableScrollElasticity;
 

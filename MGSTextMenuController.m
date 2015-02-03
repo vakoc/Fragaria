@@ -22,7 +22,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 // class extension
 @interface MGSTextMenuController()
-- (void)setEdited:(BOOL)aBool;
 - (void)reloadText:(id)sender;
 - (void)performUndoChangeEncoding:(id)sender;
 - (void)performUndoChangeLineEndings:(id)sender;
@@ -78,17 +77,7 @@ static id sharedInstance = nil;
     return sharedInstance;
 }
 
-/*
- 
- - setEdited:
- 
- */
-- (void)setEdited:(BOOL)aBool
-{
-	if ([[SMLCurrentDocument valueForKey:MGSFOIsEdited] boolValue] != aBool) {			
-		[[MGSFragaria currentInstance] setObject:[NSNumber numberWithBool:aBool] forKey:MGSFOIsEdited];
-	}
-}
+
 
 #pragma mark -
 #pragma mark NSCopying
@@ -223,7 +212,7 @@ static id sharedInstance = nil;
 
 
 #pragma mark -
-#pragma mark Endcoding
+#pragma mark Encoding
 
 /*
  
@@ -382,9 +371,6 @@ static id sharedInstance = nil;
 	if (sumOfAllCharactersRemoved == 0) {
 		NSBeep();
 	} else {
-		if ([[SMLCurrentDocument valueForKey:MGSFOIsEdited] boolValue] == NO) {
-			[self setEdited: YES];
-		}
 		[[SMLCurrentDocument valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:NO recolour:NO];
 	}
 	
@@ -480,8 +466,6 @@ static id sharedInstance = nil;
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
-	
-	[self setEdited:YES];
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:NO recolour:NO];
 	
@@ -584,7 +568,6 @@ static id sharedInstance = nil;
 	if (sumOfAllCharactersRemoved == 0) {
 		NSBeep();
 	} else {
-		[self setEdited:YES];
 		[[SMLCurrentDocument valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:NO recolour:NO];
 	}
 	
@@ -712,8 +695,6 @@ static id sharedInstance = nil;
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
-	[self setEdited:YES];
-	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
 
 	[textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
@@ -752,8 +733,6 @@ static id sharedInstance = nil;
 	}
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
-	
-	[self setEdited:YES];
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
 	[textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
@@ -1080,8 +1059,6 @@ static id sharedInstance = nil;
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
 	
-	[self setEdited:YES];
-	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:NO recolour:NO];
 	
 	if (selectedRange.length > 0) {
@@ -1125,7 +1102,6 @@ static id sharedInstance = nil;
 	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
-	[self setEdited:YES];	
 	[[SMLCurrentDocument valueForKey:ro_MGSFOLineNumbers] updateLineNumbersCheckWidth:YES recolour:YES];
 	
 	if ([updatedSelectionsArray count] > 0) {
@@ -1155,8 +1131,6 @@ static id sharedInstance = nil;
 	[textView setSelectedRange:selectedRange];
 	
 	[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
-	
-	[self setEdited:YES];
 }
 
 /*
@@ -1181,9 +1155,8 @@ static id sharedInstance = nil;
 	[textView setSelectedRange:selectedRange];
 	
 	[[document valueForKey:ro_MGSFOSyntaxColouring] pageRecolour];
-	
-	[self setEdited:YES];
 }
+
 
 #pragma mark -
 #pragma mark Syntax definition handling

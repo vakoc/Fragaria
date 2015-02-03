@@ -120,7 +120,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 - (void)pageRecolour;
 - (void)setColour:(NSDictionary *)colour range:(NSRange)range;
 - (void)highlightLineRange:(NSRange)lineRange;
-- (void)undoManagerDidUndo:(NSNotification *)aNote;
 - (BOOL)isSyntaxColouringRequired;
 - (NSDictionary *)syntaxDictionary;
 @end
@@ -156,12 +155,11 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		
 		// retain the document
 		document = theDocument;
-		
-		self.undoManager = [[NSUndoManager alloc] init];
 
 		// configure the document text view
 		NSTextView *textView = [document valueForKey:ro_MGSFOTextView];
 		NSAssert([textView isKindOfClass:[NSTextView class]], @"bad textview");
+        self.undoManager = [textView undoManager];
 
 		// configure ivars
 		lastCursorLocation = 0;
@@ -207,12 +205,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 		
 		// configure syntax definition
 		[self applySyntaxDefinition];
-		
-		// add undo notification observers
-		[[NSNotificationCenter defaultCenter] addObserver:self 
-												 selector:@selector(undoManagerDidUndo:) 
-													 name:@"NSUndoManagerDidUndoChangeNotification" 
-												   object:undoManager];
 		
 		// add document KVO observers
 		[document addObserver:self forKeyPath:@"syntaxDefinition" options:NSKeyValueObservingOptionNew context:@"syntaxDefinition"];
@@ -834,7 +826,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 - (NSRange)recolourRange:(NSRange)rangeToRecolour
 {
 	if (reactToChanges == NO) {
-		return rangeToRecolour;
+		return NSMakeRange(0,0);
 	}
 
     // establish behavior
@@ -1972,7 +1964,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
  */
 - (void)textDidChange:(NSNotification *)notification
 {
-
 	if (reactToChanges == NO) {
 		return;
 	}
@@ -1983,10 +1974,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 	}
 	
 	SMLTextView *textView = (SMLTextView *)[notification object];
-	
-	if ([[document valueForKey:MGSFOIsEdited] boolValue] == NO) {
-		[document setValue:[NSNumber numberWithBool:YES] forKey:MGSFOIsEdited];
-	}
 	
 	if ([[SMLDefaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue] == YES) {
 		[self highlightLineRange:[completeString lineRangeForRange:[textView selectedRange]]];
@@ -2112,42 +2099,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 				skipMatchingBrace++;
 			}
 		}
-	}
-}
-
-#pragma mark -
-#pragma mark Undo handling
-
-
-/*
- 
- - undoManagerForTextView:
- 
- */
-- (NSUndoManager *)undoManagerForTextView:(NSTextView *)aTextView
-{
-#pragma unused(aTextView)
-	return undoManager;
-}
-
-
-/*
- 
- - undoManagerDidUndo:
- 
- */
-- (void)undoManagerDidUndo:(NSNotification *)aNote
-{
-	NSUndoManager *theUndoManager = [aNote object];
-	
-	NSAssert([theUndoManager isKindOfClass:[NSUndoManager class]], @"bad notification object");
-	
-	if (![theUndoManager canUndo]) {
-		
-		// we can undo no more so we must be restored to unedited state
-		[document setValue:[NSNumber numberWithBool:NO] forKey:MGSFOIsEdited];
-		
-		//should data be reloaded?
 	}
 }
 

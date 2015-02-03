@@ -17,7 +17,6 @@
 // BOOL
 NSString * const MGSFOIsSyntaxColoured = @"isSyntaxColoured";
 NSString * const MGSFOShowLineNumberGutter = @"showLineNumberGutter";
-NSString * const MGSFOIsEdited = @"isEdited";
 NSString * const MGSFOHasVerticalScroller = @"hasVerticalScroller";
 NSString * const MGSFODisableScrollElasticity = @"disableScrollElasticity";
 
@@ -273,15 +272,10 @@ char kcLineWrapPrefChanged;
         // Create the Sets containing the valid setter/getter combinations for the Docspec
         
         // Define read/write keys
-        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOIsEdited,
-                            MGSFOHasVerticalScroller, MGSFODisableScrollElasticity, MGSFODocumentName,
-                            MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate, MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate,
-                            nil];
+        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOHasVerticalScroller, MGSFODisableScrollElasticity, MGSFODocumentName, MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate, MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate, nil];
         
         // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOGutterScrollView,
-                            ro_MGSFOLineNumbers, ro_MGSFOSyntaxColouring,
-                            nil];
+        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOGutterScrollView, ro_MGSFOLineNumbers, ro_MGSFOSyntaxColouring, nil];
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
