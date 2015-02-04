@@ -35,6 +35,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	
 	MGSFragaria *fragaria;
     BOOL lineWrap;
+    
+    BOOL isDragging;
 }
 
 @property (strong) NSCursor *colouredIBeamCursor;

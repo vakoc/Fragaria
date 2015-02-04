@@ -51,6 +51,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
         
         // set initial line wrapping
         lineWrap = YES;
+        isDragging = NO;
         [self updateLineWrap];
 	}
 	return self;
@@ -59,7 +60,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 -(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self ];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -237,6 +238,22 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 #pragma mark -
 #pragma mark Mouse event handling
+
+
+- (void)flagsChanged:(NSEvent *)theEvent
+{
+    [super flagsChanged:theEvent];
+    
+    if (([theEvent modifierFlags] & NSAlternateKeyMask) && ([theEvent modifierFlags] & NSCommandKeyMask)) {
+        isDragging = YES;
+        [[NSCursor openHandCursor] set];
+    } else {
+        isDragging = NO;
+        [[NSCursor IBeamCursor] set];
+    }
+}
+
+
 /*
  
  - mouseDown:
@@ -247,7 +264,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	if (([theEvent modifierFlags] & NSAlternateKeyMask) && ([theEvent modifierFlags] & NSCommandKeyMask)) { // If the option and command keys are pressed, change the cursor to grab-cursor
 		startPoint = [theEvent locationInWindow];
 		startOrigin = [[[self enclosingScrollView] contentView] documentVisibleRect].origin;
-		[[self enclosingScrollView] setDocumentCursor:[NSCursor openHandCursor]];
+        isDragging = YES;
 	} else {
 		[super mouseDown:theEvent];
 	}
@@ -261,7 +278,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    if ([[NSCursor currentCursor] isEqual:[NSCursor openHandCursor]]) {
+    if (isDragging) {
 		[self scrollPoint:NSMakePoint(startOrigin.x - ([theEvent locationInWindow].x - startPoint.x) * 3, startOrigin.y + ([theEvent locationInWindow].y - startPoint.y) * 3)];
 	} else {
 		[super mouseDragged:theEvent];
@@ -286,10 +303,9 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-#pragma unused(theEvent)
-	if ([NSCursor currentCursor] == [NSCursor IBeamCursor]) {
-		[colouredIBeamCursor set];
-	}
+    [super mouseMoved:theEvent];
+    if (isDragging)
+        [[NSCursor openHandCursor] set];
 }
 
 /*
@@ -941,10 +957,13 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)cursorUpdate:(NSEvent *)event
 {
-#pragma unused(event)
-	[colouredIBeamCursor set];
+    if (isDragging)
+        [[NSCursor openHandCursor] set];
+    else
+        [colouredIBeamCursor set];
 }
-	
+
+
 #pragma mark -
 #pragma mark Auto Completion
 
