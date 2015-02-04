@@ -911,19 +911,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 
 #pragma mark -
-#pragma mark Persistence
-/*
- 
- - save:
- 
- */
-- (IBAction)save:(id)sender
-{
-#pragma unused(sender)
-	// no implicit save functionality
-}
-
-#pragma mark -
 #pragma mark Cursor handling
 /*
  
@@ -958,18 +945,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	[colouredIBeamCursor set];
 }
 	
-#pragma mark -
-#pragma mark Find
-/*
- 
- - performFindPanelAction:
- 
- */
-- (void)performFindPanelAction:(id)sender
-{
-	[super performFindPanelAction:sender];
-}
-
 #pragma mark -
 #pragma mark Auto Completion
 
@@ -1068,16 +1043,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 /*
  
- - viewWillMoveToWindow:
- 
- */
-- (void)viewWillMoveToWindow:(NSWindow *)newWindow
-{
-	[super viewWillMoveToWindow:newWindow];
-}
-
-/*
- 
  - viewDidMoveToWindow
  
  */
@@ -1113,8 +1078,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)windowDidBecomeMainOrKey:(NSNotification *)note
 {
-	#pragma unused(note)
-	
 	[MGSFragaria setCurrentInstance:self.fragaria];
 }
 
