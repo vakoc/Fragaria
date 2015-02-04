@@ -52,7 +52,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (void)setTabWidth;
 
 - (void)setPageGuideValues;
-- (void)updateIBeamCursor;
 
 - (void)setString:(NSString *)text options:(NSDictionary *)options;
 - (void)setAttributedString:(NSAttributedString *)text;

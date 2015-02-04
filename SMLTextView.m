@@ -116,7 +116,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	
 	[self setPageGuideValues];
 	
-	[self updateIBeamCursor];	
 	NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveWhenFirstResponder) owner:self userInfo:nil];
 	[self addTrackingArea:trackingArea];
   
@@ -191,7 +190,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		[self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
 		[self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
 		[self setPageGuideValues];
-		[self updateIBeamCursor];
 	} else if ([(__bridge NSString *)context isEqualToString:@"BackgroundColourChanged"]) {
 		[self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
 	} else if ([(__bridge NSString *)context isEqualToString:@"SmartInsertDeleteChanged"]) {
@@ -283,17 +281,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	} else {
 		[super mouseDragged:theEvent];
 	}
-}
-
-/*
- 
- - mouseUp:
- 
- */
-- (void)mouseUp:(NSEvent *)theEvent
-{
-#pragma unused(theEvent)
-	[[self enclosingScrollView] setDocumentCursor:[NSCursor IBeamCursor]];
 }
 
 /*
@@ -923,44 +910,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 			return [super selectionRangeForProposedRange:proposedSelRange granularity:granularity];
 		}
 	}
-}
-
-
-#pragma mark -
-#pragma mark Cursor handling
-/*
- 
- - updateIBeamCursor:
- 
- */
-- (void)updateIBeamCursor
-{
-	NSColor *textColour = [[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]] colorUsingColorSpaceName:NSCalibratedWhiteColorSpace];
-	
-	if (textColour != nil && [textColour whiteComponent] < 0.01 && [textColour alphaComponent] > 0.990) { // Keep the original cursor if it's black
-		[self setColouredIBeamCursor:[NSCursor IBeamCursor]];
-	} else {
-		NSImage *cursorImage = [[NSCursor IBeamCursor] image];
-		[cursorImage lockFocus];
-		[(NSColor *)[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]] set];
-		NSRectFillUsingOperation(NSMakeRect(0, 0, [cursorImage size].width, [cursorImage size].height), NSCompositeSourceAtop);
-		[cursorImage unlockFocus];
-        NSCursor *cursor = [[NSCursor alloc] initWithImage:cursorImage hotSpot:[[NSCursor IBeamCursor] hotSpot]];
-		[self setColouredIBeamCursor:cursor];
-	}
-}
-
-/*
- 
- - cursorUpdate:
- 
- */
-- (void)cursorUpdate:(NSEvent *)event
-{
-    if (isDragging)
-        [[NSCursor openHandCursor] set];
-    else
-        [colouredIBeamCursor set];
 }
 
 
