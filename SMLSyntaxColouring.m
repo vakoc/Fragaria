@@ -196,7 +196,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     } else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
-	
 }
 
 
@@ -1535,15 +1534,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     }
 }
 
-/*
- 
- - widthOfString:withFont:
- 
- */
-- (CGFloat) widthOfString:(NSString *)string withFont:(NSFont *)font {
-    NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, nil];
-    return [[[NSAttributedString alloc] initWithString:string attributes:attributes] size].width;
-}
 
 #pragma mark -
 #pragma mark Actions
@@ -1587,10 +1577,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		return;
 	}
 	NSString *completeString = [self completeString];
-	
-	if ([completeString length] < 2) {
-		// MGS[SMLInterface updateStatusBar]; // One needs to call this from here as well because otherwise it won't update the status bar if one writes one character and deletes it in an empty document, because the textViewDidChangeSelection delegate method won't be called.
-	}
 	
 	SMLTextView *textView = (SMLTextView *)[notification object];
 	
