@@ -67,6 +67,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 - (id)initWithDocument:(id)document;
 - (void)pageRecolour;
+- (void)invalidateAllColouring;
 - (void)recolourPageWithChanges:(BOOL)tdc;
 - (void)recolourSelection;
 - (void)applySyntaxDefinition;

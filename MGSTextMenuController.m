@@ -721,7 +721,7 @@ static id sharedInstance = nil;
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 
 	[textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
-    [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
+    [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] invalidateAllColouring];
 }
 
 /*
@@ -777,7 +777,7 @@ static id sharedInstance = nil;
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
 	[textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
-    [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
+    [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] invalidateAllColouring];
 }
 
 /*

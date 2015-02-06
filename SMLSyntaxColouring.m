@@ -326,6 +326,19 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     syntaxColouringCleanRange = NSMakeRange(0, 0);
 }
 
+
+/*
+ 
+ - invalidateAllColouring
+ 
+*/
+- (void)invalidateAllColouring
+{
+    [self removeAllColours];
+    [self pageRecolour];
+}
+
+
 /*
  
  - pageRecolour
