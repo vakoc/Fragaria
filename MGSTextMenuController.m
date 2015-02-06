@@ -659,24 +659,57 @@ static id sharedInstance = nil;
  
  */
 - (void)performEntab
-{	
+{
 	NSTextView *textView = SMLCurrentTextView;
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:NO];
 	NSRange selectedRange;
 	NSRange savedRange = [textView selectedRange];
 	
 	NSArray *array = [SMLCurrentTextView selectedRanges];
-	NSMutableString *searchString = [NSMutableString string];
 	NSInteger numberOfSpaces = [[SMLDefaults valueForKey:MGSFragariaPrefsSpacesPerTabEntabDetab] integerValue];
-	while (numberOfSpaces--) {
-		[searchString appendString:@" "];
-	}
 	NSMutableString *completeString = [NSMutableString stringWithString:[textView string]];
 	NSInteger sumOfRemovedCharacters = 0;
 	for (id item in array) {
 		selectedRange = NSMakeRange([item rangeValue].location - sumOfRemovedCharacters, [item rangeValue].length);
 	
-		sumOfRemovedCharacters = sumOfRemovedCharacters + ([completeString replaceOccurrencesOfString:searchString withString:@"\t" options:NSLiteralSearch range:selectedRange] * ([searchString length] - 1));
+        NSInteger removedCharsInLine;
+        NSRange thisSpace, prevSpaces, thisLine, range;
+        prevSpaces = NSMakeRange(NSNotFound, 0);
+        thisLine = NSMakeRange(NSNotFound, 0);
+        range = selectedRange;
+        thisSpace = [completeString rangeOfString:@" " options:NSLiteralSearch range:range];
+        while (thisSpace.length) {
+            NSInteger phase, temp;
+            
+            if (!NSLocationInRange(thisSpace.location, thisLine)) {
+                thisLine = [completeString lineRangeForRange:thisSpace];
+                removedCharsInLine = 0;
+            }
+            
+            if (NSMaxRange(prevSpaces) == thisSpace.location)
+                prevSpaces.length++;
+            else
+                prevSpaces = thisSpace;
+            
+            phase = (removedCharsInLine + NSMaxRange(prevSpaces) - thisLine.location) % numberOfSpaces;
+            if (phase == 0) {
+                if (prevSpaces.length > 1) {
+                    [completeString replaceCharactersInRange:prevSpaces withString:@"\t"];
+                    removedCharsInLine += prevSpaces.length - 1;
+                    temp = NSMaxRange(range) - (prevSpaces.length - 1);
+                    range.location = prevSpaces.location;
+                    range.length = temp - range.location;
+                    thisSpace.location = prevSpaces.location;
+                    thisLine.length -= prevSpaces.length - 1;
+                }
+                prevSpaces = NSMakeRange(NSNotFound, 0);
+            }
+            
+            range.length -= NSMaxRange(thisSpace) - range.location;
+            range.location = NSMaxRange(thisSpace);
+            
+            thisSpace = [completeString rangeOfString:@" " options:NSLiteralSearch range:range];
+        }
 		
 		if ([textView shouldChangeTextInRange:NSMakeRange(0, [[textView string] length]) replacementString:completeString]) { // Do it this way to mark it as an Undo
 			[textView replaceCharactersInRange:NSMakeRange(0, [[textView string] length]) withString:completeString];
@@ -697,24 +730,42 @@ static id sharedInstance = nil;
  
  */
 - (void)performDetab
-{	
+{
+    NSInteger i;
 	NSTextView *textView = SMLCurrentTextView;
 	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:NO];
 	NSRange selectedRange;
 	NSRange savedRange = [textView selectedRange];
 	
 	NSArray *array = [SMLCurrentTextView selectedRanges];
-	NSMutableString *replacementString = [NSMutableString string];
+	NSMutableString *spaces = [NSMutableString string];
 	NSInteger numberOfSpaces = [[SMLDefaults valueForKey:MGSFragariaPrefsSpacesPerTabEntabDetab] integerValue];
-	while (numberOfSpaces--) {
-		[replacementString appendString:@" "];
+    for (i=0; i<numberOfSpaces; i++) {
+		[spaces appendString:@" "];
 	}
 	NSMutableString *completeString = [NSMutableString stringWithString:[textView string]];
 	NSInteger sumOfInsertedCharacters = 0;
 	for (id item in array) {
 		selectedRange = NSMakeRange([item rangeValue].location + sumOfInsertedCharacters, [item rangeValue].length);
 		
-		sumOfInsertedCharacters = sumOfInsertedCharacters + ([completeString replaceOccurrencesOfString:@"\t" withString:replacementString options:NSLiteralSearch range:selectedRange] * ([replacementString length] - 1));
+        NSRange tempRange;
+        tempRange = [completeString rangeOfString:@"\t" options:NSLiteralSearch range:selectedRange];
+        while (tempRange.length) {
+            NSRange lineRange;
+            NSInteger phase;
+            NSString *replStr;
+            
+            lineRange = [completeString lineRangeForRange:tempRange];
+            phase = (tempRange.location - lineRange.location) % numberOfSpaces;
+            replStr = [spaces substringFromIndex:phase];
+            [completeString replaceCharactersInRange:tempRange withString:replStr];
+            
+            selectedRange.length += [replStr length] - 1;
+            selectedRange.length -= NSMaxRange(tempRange) - selectedRange.location;
+            selectedRange.location = NSMaxRange(tempRange);
+            
+            tempRange = [completeString rangeOfString:@"\t" options:NSLiteralSearch range:selectedRange];
+        }
 		
 		if ([textView shouldChangeTextInRange:NSMakeRange(0, [[textView string] length]) replacementString:completeString]) { // Do it this way to mark it as an Undo
 			[textView replaceCharactersInRange:NSMakeRange(0, [[textView string] length]) withString:completeString];
