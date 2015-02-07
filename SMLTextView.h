@@ -24,6 +24,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 @interface SMLTextView : NSTextView {
 	@private
 	NSInteger lineHeight;
+    BOOL isDragging;
 	NSPoint startPoint;
     NSPoint startOrigin;
 	CGFloat pageGuideX;
@@ -35,13 +36,12 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	
 	MGSFragaria *fragaria;
     BOOL lineWrap;
-    
-    BOOL isDragging;
 }
 
 @property (strong) NSCursor *colouredIBeamCursor;
 @property (strong) MGSFragaria *fragaria;
 @property (nonatomic) BOOL lineWrap;
+@property (readonly) NSMutableIndexSet *inspectedCharacterIndexes;
 
 - (void)setDefaults;
 
