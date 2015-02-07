@@ -480,10 +480,13 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     //
 	if (shouldColourMultiLineStrings) {
 		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:syntaxDefinition.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
-        if (beginFirstStringInMultiLine != NSNotFound && [[layoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
+        if (beginFirstStringInMultiLine != NSNotFound) {
+            NSDictionary *ta = [layoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL];
+            if ([[ta objectForKey:NSForegroundColorAttributeName] isEqual:[stringsColour objectForKey:NSForegroundColorAttributeName]]) {
 			NSInteger startOfLine = [documentString lineRangeForRange:NSMakeRange(beginFirstStringInMultiLine, 0)].location;
 			effectiveRange = NSMakeRange(startOfLine, rangeToRecolour.length + (rangeToRecolour.location - startOfLine));
 		}
+        }
         
         
         NSInteger lastStringBegin = [documentString rangeOfString:syntaxDefinition.firstString options:NSBackwardsSearch range:rangeToRecolour].location;
