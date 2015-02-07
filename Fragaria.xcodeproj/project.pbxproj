@@ -40,7 +40,6 @@
 		AB69B65C118B75FB00903D1D /* SMLSyntaxColouring.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B65A118B75FB00903D1D /* SMLSyntaxColouring.m */; };
 		AB69B68F118B78D400903D1D /* SMLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B68E118B78D400903D1D /* SMLTextView.m */; };
 		AB69B6CA118B7D2100903D1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		AB69B6CC118B7D3E00903D1D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B6CB118B7D3E00903D1D /* libicucore.dylib */; };
 		AB69B6DA118B7F2A00903D1D /* SMLLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */; };
 		AB69B754118B830700903D1D /* MGSFragaria.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B753118B830700903D1D /* MGSFragaria.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB6C86C4160FA2B500488AF2 /* MGSGlyphGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6C86C2160FA2B500488AF2 /* MGSGlyphGenerator.m */; };
@@ -176,7 +175,6 @@
 		AB69B666118B768000903D1D /* SMLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLTextView.h; sourceTree = "<group>"; };
 		AB69B678118B76E700903D1D /* SMLLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLLayoutManager.h; sourceTree = "<group>"; };
 		AB69B68E118B78D400903D1D /* SMLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLTextView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AB69B6CB118B7D3E00903D1D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
 		AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLLayoutManager.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB69B753118B830700903D1D /* MGSFragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragaria.h; sourceTree = "<group>"; tabWidth = 4; };
 		AB69B809118B8D0400903D1D /* MGSPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPreferencesController.h; sourceTree = "<group>"; };
@@ -234,7 +232,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB69B6CA118B7D2100903D1D /* Cocoa.framework in Frameworks */,
-				AB69B6CC118B7D3E00903D1D /* libicucore.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,7 +414,6 @@
 			isa = PBXGroup;
 			children = (
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
-				AB69B6CB118B7D3E00903D1D /* libicucore.dylib */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
 			name = Frameworks;
