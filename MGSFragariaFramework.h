@@ -14,7 +14,6 @@
 #import "MGSLineNumberView.h"
 #import "SMLTextPerformer.h"
 #import "MGSExtraInterfaceController.h"
-#import "SMLBasicPerformer.h"
 #import "MGSTextMenuController.h"
 #import "MGSPreferencesController.h"
 #import "MGSSyntaxController.h"
