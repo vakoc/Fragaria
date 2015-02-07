@@ -48,7 +48,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	NSTimer *autocompleteWordsTimer;
 
 	NSRange lastLineHighlightRange;
-    id docSpec;
     
     /* The character range already fully syntax-coloured.
      * It is dangerous to have a range which does not span an integer number
