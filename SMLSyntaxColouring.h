@@ -24,8 +24,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import "MGSSyntaxDefinition.h"
 
 @class SMLLayoutManager;
-@class ICUPattern;
-@class ICUMatcher;
 
 @interface SMLSyntaxColouring : NSObject <SMLAutoCompleteDelegate> {
 	
@@ -45,8 +43,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
     
     MGSSyntaxDefinition *syntaxDefinition;
     
-	ICUMatcher *firstStringMatcher;
-	ICUMatcher *secondStringMatcher;
 	NSUndoManager *undoManager;
     
 	NSTimer *autocompleteWordsTimer;

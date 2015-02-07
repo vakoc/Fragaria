@@ -10,23 +10,6 @@
 		0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */; };
 		017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 017FD5861A7A992700B305FB /* MGSLineNumberView.h */; };
 		017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FD5871A7A992700B305FB /* MGSLineNumberView.m */; };
-		01BB1BD71A7959D4006C0056 /* LICENSE.html in Resources */ = {isa = PBXBuildFile; fileRef = 01BB1BC51A7959D4006C0056 /* LICENSE.html */; };
-		01BB1BD81A7959D4006C0056 /* parseerr.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BC71A7959D4006C0056 /* parseerr.h */; };
-		01BB1BD91A7959D4006C0056 /* platform.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BC81A7959D4006C0056 /* platform.h */; };
-		01BB1BDA1A7959D4006C0056 /* putil.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BC91A7959D4006C0056 /* putil.h */; };
-		01BB1BDB1A7959D4006C0056 /* uconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BCA1A7959D4006C0056 /* uconfig.h */; };
-		01BB1BDC1A7959D4006C0056 /* udraft.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BCB1A7959D4006C0056 /* udraft.h */; };
-		01BB1BDD1A7959D4006C0056 /* uiter.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BCC1A7959D4006C0056 /* uiter.h */; };
-		01BB1BDE1A7959D4006C0056 /* umachine.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BCD1A7959D4006C0056 /* umachine.h */; };
-		01BB1BDF1A7959D4006C0056 /* uregex.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BCE1A7959D4006C0056 /* uregex.h */; };
-		01BB1BE01A7959D4006C0056 /* urename.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BCF1A7959D4006C0056 /* urename.h */; };
-		01BB1BE11A7959D4006C0056 /* ustring.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BD01A7959D4006C0056 /* ustring.h */; };
-		01BB1BE21A7959D4006C0056 /* utf.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BD11A7959D4006C0056 /* utf.h */; };
-		01BB1BE31A7959D4006C0056 /* utf16.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BD21A7959D4006C0056 /* utf16.h */; };
-		01BB1BE41A7959D4006C0056 /* utf8.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BD31A7959D4006C0056 /* utf8.h */; };
-		01BB1BE51A7959D4006C0056 /* utf_old.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BD41A7959D4006C0056 /* utf_old.h */; };
-		01BB1BE61A7959D4006C0056 /* utypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BD51A7959D4006C0056 /* utypes.h */; };
-		01BB1BE71A7959D4006C0056 /* uversion.h in Headers */ = {isa = PBXBuildFile; fileRef = 01BB1BD61A7959D4006C0056 /* uversion.h */; };
 		01BB1BF31A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */; };
 		01BB1BF41A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */; };
 		AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B666118B768000903D1D /* SMLTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -55,9 +38,6 @@
 		AB648E4E11FB3A5300AEF7BD /* MainMenu-Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB648E4A11FB3A5200AEF7BD /* MainMenu-Document.xib */; };
 		AB648E4F11FB3A5300AEF7BD /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB648E4C11FB3A5200AEF7BD /* MyDocument.xib */; };
 		AB69B65C118B75FB00903D1D /* SMLSyntaxColouring.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B65A118B75FB00903D1D /* SMLSyntaxColouring.m */; };
-		AB69B671118B76AE00903D1D /* ICUMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B66B118B76AE00903D1D /* ICUMatcher.m */; };
-		AB69B673118B76AE00903D1D /* ICUPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B66D118B76AE00903D1D /* ICUPattern.m */; };
-		AB69B675118B76AE00903D1D /* NSStringICUAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B66F118B76AE00903D1D /* NSStringICUAdditions.m */; };
 		AB69B68F118B78D400903D1D /* SMLTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B68E118B78D400903D1D /* SMLTextView.m */; };
 		AB69B6CA118B7D2100903D1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AB69B6CC118B7D3E00903D1D /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B6CB118B7D3E00903D1D /* libicucore.dylib */; };
@@ -150,23 +130,6 @@
 		013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxDefinition.m; sourceTree = "<group>"; };
 		017FD5861A7A992700B305FB /* MGSLineNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberView.h; sourceTree = "<group>"; };
 		017FD5871A7A992700B305FB /* MGSLineNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLineNumberView.m; sourceTree = "<group>"; };
-		01BB1BC51A7959D4006C0056 /* LICENSE.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = LICENSE.html; sourceTree = "<group>"; };
-		01BB1BC71A7959D4006C0056 /* parseerr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = parseerr.h; sourceTree = "<group>"; };
-		01BB1BC81A7959D4006C0056 /* platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
-		01BB1BC91A7959D4006C0056 /* putil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = putil.h; sourceTree = "<group>"; };
-		01BB1BCA1A7959D4006C0056 /* uconfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uconfig.h; sourceTree = "<group>"; };
-		01BB1BCB1A7959D4006C0056 /* udraft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = udraft.h; sourceTree = "<group>"; };
-		01BB1BCC1A7959D4006C0056 /* uiter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uiter.h; sourceTree = "<group>"; };
-		01BB1BCD1A7959D4006C0056 /* umachine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = umachine.h; sourceTree = "<group>"; };
-		01BB1BCE1A7959D4006C0056 /* uregex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uregex.h; sourceTree = "<group>"; };
-		01BB1BCF1A7959D4006C0056 /* urename.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = urename.h; sourceTree = "<group>"; };
-		01BB1BD01A7959D4006C0056 /* ustring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ustring.h; sourceTree = "<group>"; };
-		01BB1BD11A7959D4006C0056 /* utf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf.h; sourceTree = "<group>"; };
-		01BB1BD21A7959D4006C0056 /* utf16.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf16.h; sourceTree = "<group>"; };
-		01BB1BD31A7959D4006C0056 /* utf8.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf8.h; sourceTree = "<group>"; };
-		01BB1BD41A7959D4006C0056 /* utf_old.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utf_old.h; sourceTree = "<group>"; };
-		01BB1BD51A7959D4006C0056 /* utypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utypes.h; sourceTree = "<group>"; };
-		01BB1BD61A7959D4006C0056 /* uversion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uversion.h; sourceTree = "<group>"; };
 		01BB1BF11A79AA15006C0056 /* MGSSimpleBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSimpleBreakpointDelegate.h; sourceTree = "<group>"; };
 		01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSimpleBreakpointDelegate.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -211,12 +174,6 @@
 		AB69B662118B763A00903D1D /* SMLStandardHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLStandardHeader.h; sourceTree = "<group>"; };
 		AB69B664118B766300903D1D /* SMLSyntaxColouring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLSyntaxColouring.h; sourceTree = "<group>"; };
 		AB69B666118B768000903D1D /* SMLTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLTextView.h; sourceTree = "<group>"; };
-		AB69B66A118B76AE00903D1D /* ICUMatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICUMatcher.h; sourceTree = "<group>"; };
-		AB69B66B118B76AE00903D1D /* ICUMatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICUMatcher.m; sourceTree = "<group>"; };
-		AB69B66C118B76AE00903D1D /* ICUPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICUPattern.h; sourceTree = "<group>"; };
-		AB69B66D118B76AE00903D1D /* ICUPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICUPattern.m; sourceTree = "<group>"; };
-		AB69B66E118B76AE00903D1D /* NSStringICUAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStringICUAdditions.h; sourceTree = "<group>"; };
-		AB69B66F118B76AE00903D1D /* NSStringICUAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStringICUAdditions.m; sourceTree = "<group>"; };
 		AB69B678118B76E700903D1D /* SMLLayoutManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLLayoutManager.h; sourceTree = "<group>"; };
 		AB69B68E118B78D400903D1D /* SMLTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLTextView.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB69B6CB118B7D3E00903D1D /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = /usr/lib/libicucore.dylib; sourceTree = "<absolute>"; };
@@ -302,38 +259,6 @@
 				013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */,
 			);
 			name = "Syntax Definition Manager";
-			sourceTree = "<group>";
-		};
-		01BB1BC41A7959D4006C0056 /* icu */ = {
-			isa = PBXGroup;
-			children = (
-				01BB1BC51A7959D4006C0056 /* LICENSE.html */,
-				01BB1BC61A7959D4006C0056 /* unicode */,
-			);
-			path = icu;
-			sourceTree = "<group>";
-		};
-		01BB1BC61A7959D4006C0056 /* unicode */ = {
-			isa = PBXGroup;
-			children = (
-				01BB1BC71A7959D4006C0056 /* parseerr.h */,
-				01BB1BC81A7959D4006C0056 /* platform.h */,
-				01BB1BC91A7959D4006C0056 /* putil.h */,
-				01BB1BCA1A7959D4006C0056 /* uconfig.h */,
-				01BB1BCB1A7959D4006C0056 /* udraft.h */,
-				01BB1BCC1A7959D4006C0056 /* uiter.h */,
-				01BB1BCD1A7959D4006C0056 /* umachine.h */,
-				01BB1BCE1A7959D4006C0056 /* uregex.h */,
-				01BB1BCF1A7959D4006C0056 /* urename.h */,
-				01BB1BD01A7959D4006C0056 /* ustring.h */,
-				01BB1BD11A7959D4006C0056 /* utf.h */,
-				01BB1BD21A7959D4006C0056 /* utf16.h */,
-				01BB1BD31A7959D4006C0056 /* utf8.h */,
-				01BB1BD41A7959D4006C0056 /* utf_old.h */,
-				01BB1BD51A7959D4006C0056 /* utypes.h */,
-				01BB1BD61A7959D4006C0056 /* uversion.h */,
-			);
-			path = unicode;
 			sourceTree = "<group>";
 		};
 		01BB1BE81A795E58006C0056 /* Resources */ = {
@@ -550,7 +475,6 @@
 			isa = PBXGroup;
 			children = (
 				ABDED9B6128AB144002EE039 /* Fragaria */,
-				ABDED9A9128AAEB6002EE039 /* ICU */,
 				AB3972FC118C2A5D00AEF388 /* Resources */,
 			);
 			name = Framework;
@@ -579,20 +503,6 @@
 				AB648E2211FB37AF00AEF7BD /* Simple */,
 			);
 			name = Application;
-			sourceTree = "<group>";
-		};
-		ABDED9A9128AAEB6002EE039 /* ICU */ = {
-			isa = PBXGroup;
-			children = (
-				01BB1BC41A7959D4006C0056 /* icu */,
-				AB69B66A118B76AE00903D1D /* ICUMatcher.h */,
-				AB69B66B118B76AE00903D1D /* ICUMatcher.m */,
-				AB69B66C118B76AE00903D1D /* ICUPattern.h */,
-				AB69B66D118B76AE00903D1D /* ICUPattern.m */,
-				AB69B66E118B76AE00903D1D /* NSStringICUAdditions.h */,
-				AB69B66F118B76AE00903D1D /* NSStringICUAdditions.m */,
-			);
-			name = ICU;
 			sourceTree = "<group>";
 		};
 		ABDED9B6128AB144002EE039 /* Fragaria */ = {
@@ -624,39 +534,23 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01BB1BE51A7959D4006C0056 /* utf_old.h in Headers */,
 				ABE25D0A1635CA7C00F23718 /* MGSFragariaPrefsViewController.h in Headers */,
 				AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */,
-				01BB1BE01A7959D4006C0056 /* urename.h in Headers */,
-				01BB1BDE1A7959D4006C0056 /* umachine.h in Headers */,
 				AB257FE2129B1CE300A3FF76 /* MGSFragariaPreferences.h in Headers */,
-				01BB1BDD1A7959D4006C0056 /* uiter.h in Headers */,
-				01BB1BDB1A7959D4006C0056 /* uconfig.h in Headers */,
-				01BB1BE61A7959D4006C0056 /* utypes.h in Headers */,
-				01BB1BDF1A7959D4006C0056 /* uregex.h in Headers */,
 				AB257FE4129B1CE300A3FF76 /* MGSTextMenuController.h in Headers */,
 				AB257FE5129B1CE300A3FF76 /* MGSExtraInterfaceController.h in Headers */,
-				01BB1BD91A7959D4006C0056 /* platform.h in Headers */,
 				017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */,
 				AB69B754118B830700903D1D /* MGSFragaria.h in Headers */,
-				01BB1BD81A7959D4006C0056 /* parseerr.h in Headers */,
 				AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */,
-				01BB1BE71A7959D4006C0056 /* uversion.h in Headers */,
 				E3D4B2771714D89700BB2CC6 /* SMLSyntaxError.h in Headers */,
-				01BB1BE31A7959D4006C0056 /* utf16.h in Headers */,
 				E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */,
 				ABC578E91603D6000040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h in Headers */,
-				01BB1BE21A7959D4006C0056 /* utf.h in Headers */,
 				E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
 				AB8387C5171D6115004408F4 /* SMLSyntaxDefinition.h in Headers */,
 				ABC578ED1603D7ED0040B3FB /* MGSFragariaTextEditingPrefsViewController.h in Headers */,
-				01BB1BDC1A7959D4006C0056 /* udraft.h in Headers */,
-				01BB1BE41A7959D4006C0056 /* utf8.h in Headers */,
 				ABF28AF114C075D400ECAD48 /* NSScanner+Fragaria.h in Headers */,
-				01BB1BE11A7959D4006C0056 /* ustring.h in Headers */,
 				E3C1850317175ED900801FE5 /* SMLErrorPopOver.h in Headers */,
-				01BB1BDA1A7959D4006C0056 /* putil.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -781,7 +675,6 @@
 				E3BBA50D16E52FE600D89923 /* editor-breakpoint-2.png in Resources */,
 				E3C185001717597200801FE5 /* editor-warning.png in Resources */,
 				AB8386D91719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib in Resources */,
-				01BB1BD71A7959D4006C0056 /* LICENSE.html in Resources */,
 				AB8386DA1719E3D3004408F4 /* MGSPreferencesTextEditing.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -815,10 +708,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB69B65C118B75FB00903D1D /* SMLSyntaxColouring.m in Sources */,
-				AB69B671118B76AE00903D1D /* ICUMatcher.m in Sources */,
-				AB69B673118B76AE00903D1D /* ICUPattern.m in Sources */,
 				017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */,
-				AB69B675118B76AE00903D1D /* NSStringICUAdditions.m in Sources */,
 				AB69B68F118B78D400903D1D /* SMLTextView.m in Sources */,
 				AB69B6DA118B7F2A00903D1D /* SMLLayoutManager.m in Sources */,
 				AB3971CB118C1F8A00AEF388 /* MGSSyntaxController.m in Sources */,

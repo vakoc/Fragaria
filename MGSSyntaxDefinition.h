@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ICUPattern.h"
 
 
 @interface MGSSyntaxDefinition : NSObject
@@ -42,10 +41,10 @@
 @property (readonly) BOOL syntaxDefinitionAllowsColouring;
 @property (readonly) BOOL recolourKeywordIfAlreadyColoured;
 @property (readonly) BOOL keywordsCaseSensitive;
-@property (readonly) ICUPattern *firstStringPattern;
-@property (readonly) ICUPattern *secondStringPattern;
-@property (readonly) ICUPattern *firstMultilineStringPattern;
-@property (readonly) ICUPattern *secondMultilineStringPattern;
+@property (readonly) NSString *firstStringPattern;
+@property (readonly) NSString *secondStringPattern;
+@property (readonly) NSString *firstMultilineStringPattern;
+@property (readonly) NSString *secondMultilineStringPattern;
 @property (readonly) unichar decimalPointCharacter;
 
 - (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary;
