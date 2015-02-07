@@ -23,7 +23,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 // class extension
 @interface MGSTextMenuController()
 - (void)reloadText:(id)sender;
-- (void)performUndoChangeEncoding:(id)sender;
 - (void)performUndoChangeLineEndings:(id)sender;
 @end
 
@@ -100,63 +99,6 @@ static id sharedInstance = nil;
 
 /*
  
- - buildEncodingsMenus
- 
- */
-- (void)buildEncodingsMenus
-{
-	[SMLBasic removeAllItemsFromMenu:textEncodingMenu];
-	[SMLBasic removeAllItemsFromMenu:reloadTextWithEncodingMenu];
-	
-	NSArray *encodingsArray = [SMLBasic fetchAll:@"EncodingSortKeyName"];
-	NSEnumerator *enumerator = [encodingsArray reverseObjectEnumerator];
-	id item;
-	NSMenuItem *menuItem;
-	for (item in enumerator) {
-		if ([[item valueForKey:@"active"] boolValue] == YES) {
-			NSUInteger encoding = [[item valueForKey:@"encoding"] unsignedIntegerValue];
-			menuItem = [[NSMenuItem alloc] initWithTitle:[NSString localizedNameOfStringEncoding:encoding] action:@selector(changeEncodingAction:) keyEquivalent:@""];
-			[menuItem setTag:encoding];
-			[menuItem setTarget:self];
-			[textEncodingMenu insertItem:menuItem atIndex:0];
-		}
-	}
-	
-	enumerator = [encodingsArray reverseObjectEnumerator];
-	for (item in enumerator) {
-		if ([[item valueForKey:@"active"] boolValue] == YES) {
-			NSUInteger encoding = [[item valueForKey:@"encoding"] unsignedIntegerValue];
-			menuItem = [[NSMenuItem alloc] initWithTitle:[NSString localizedNameOfStringEncoding:encoding] action:@selector(reloadText:) keyEquivalent:@""];
-			[menuItem setTag:encoding];
-			[menuItem setTarget:self];
-			[reloadTextWithEncodingMenu insertItem:menuItem atIndex:0];
-		}
-	}
-}
-
-/*
- 
- - buildSyntaxDefinitionsMenu
- 
- */
-- (void)buildSyntaxDefinitionsMenu
-{
-	NSArray *syntaxDefinitions = [SMLBasic fetchAll:@"SyntaxDefinitionSortKeySortOrder"];
-	NSEnumerator *enumerator = [syntaxDefinitions reverseObjectEnumerator];
-	NSMenuItem *menuItem;
-	NSInteger tag = [syntaxDefinitions count] - 1;
-	for (id item in enumerator) {
-		menuItem = [[NSMenuItem alloc] initWithTitle:[item valueForKey:@"name"] action:@selector(changeSyntaxDefinitionAction:) keyEquivalent:@""];
-		[menuItem setTag:tag];
-		[menuItem setTarget:self];
-		[syntaxDefinitionMenu insertItem:menuItem atIndex:0];
-		tag--;
-	}
-	
-}
-
-/*
- 
  - validateMenuItem:
  
  */
@@ -183,12 +125,6 @@ static id sharedInstance = nil;
 			enableMenuItem = NO;
 		}
 	}
-    // Items which should be active if nothing is selected
-    else if (action == @selector(toggleBreakpointAction:)) {
-        if ([SMLCurrentTextView selectedRange].length > 0) {
-            enableMenuItem = NO;
-        }
-    }
     // Comment Or Uncomment
     else if (action == @selector(commentOrUncommentAction:) ) {
 		if ([[[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
@@ -210,48 +146,6 @@ static id sharedInstance = nil;
 #pragma unused(sender)
 }
 
-
-#pragma mark -
-#pragma mark Encoding
-
-/*
- 
- - changeEncodingAction:
- 
- */
-- (void)changeEncodingAction:(id)sender
-{	
-	NSUInteger encoding = [sender tag];
-	
-	id document = SMLCurrentDocument;
-	
-	[[[document valueForKey:ro_MGSFOSyntaxColouring] undoManager] registerUndoWithTarget:self selector:@selector(performUndoChangeEncoding:) object:[NSArray arrayWithObject:[document valueForKey:@"encoding"]]];
-	[[[document valueForKey:ro_MGSFOSyntaxColouring] undoManager] setActionName:NAME_FOR_UNDO_CHANGE_ENCODING];
-	
-	[document setValue:[NSNumber numberWithInteger:encoding] forKey:@"encoding"];
-	[document setValue:[NSString localizedNameOfStringEncoding:encoding] forKey:@"encodingName"];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MGSFragariaTextEncodingChanged" object:[MGSFragaria currentInstance] userInfo:nil];
-}
-
-/*
- 
- - performUndoChangeEncoding:
- 
- */
--(void)performUndoChangeEncoding:(id)sender
-{
-	id document = SMLCurrentDocument;
-	
-	[[[document valueForKey:ro_MGSFOSyntaxColouring] undoManager] registerUndoWithTarget:self selector:@selector(performUndoChangeEncoding:) object:[NSArray arrayWithObject:[document valueForKey:@"encoding"]]];
-	[[[document valueForKey:ro_MGSFOSyntaxColouring] undoManager] setActionName:NAME_FOR_UNDO_CHANGE_ENCODING];
-	
-	[document setValue:[sender objectAtIndex:0] forKey:@"encoding"];
-	[document setValue:[NSString localizedNameOfStringEncoding:[[sender objectAtIndex:0] unsignedIntegerValue]] forKey:@"encodingName"];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:@"MGSFragariaTextEncodingChanged" object:[MGSFragaria currentInstance] userInfo:nil];
-
-}
 
 #pragma mark -
 #pragma mark Text shifting
@@ -975,15 +869,6 @@ static id sharedInstance = nil;
 }
 
 #pragma mark -
-#pragma mark Breakpoints
-
-- (IBAction)toggleBreakpointAction:(id)sender
-{
-    #pragma unused(sender)
-    NSLog(@"toggleBreakpointAction");
-}
-
-#pragma mark -
 #pragma mark Comment handling
 
 /*
@@ -1159,22 +1044,6 @@ static id sharedInstance = nil;
 	NSString *convertedString = [SMLText convertLineEndings:text inDocument:document];
 	[textView replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
 	[textView setSelectedRange:selectedRange];
-}
-
-
-#pragma mark -
-#pragma mark Syntax definition handling
-
-/*
- 
- - changeSyntaxDefinitionAction:
- 
- */
-- (IBAction)changeSyntaxDefinitionAction:(id)sender
-{
-	id document = SMLCurrentDocument;
-	[document setValue:[sender title] forKey:MGSFOSyntaxDefinitionName];
-	[document setValue:[NSNumber numberWithBool:YES] forKey:@"hasManuallyChangedSyntaxDefinition"];
 }
 
 
