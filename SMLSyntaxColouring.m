@@ -318,7 +318,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (void)removeColoursFromRange:(NSRange)range
 {
 	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:range];
-    /* We could make more complex computations but this method is not called often enough to warrant them. This is easier and always correct, though slower. */
     [[[document objectForKey:ro_MGSFOTextView] inspectedCharacterIndexes] removeIndexesInRange:range];
 }
 
