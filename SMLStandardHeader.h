@@ -45,15 +45,12 @@ typedef enum {
 #import <sys/xattr.h>
 
 
-#define NAME_FOR_UNDO_CHANGE_ENCODING NSLocalizedString(@"Change Encoding", @"Name for undo Change Encoding")
 #define NAME_FOR_UNDO_CHANGE_LINE_ENDINGS NSLocalizedString(@"Change Line Endings", @"Name for undo Change Line Endings")
 
 #define COMMAND_RESULT_WINDOW_TITLE NSLocalizedStringFromTable(@"Command Result - Smultron", @"Localizable3", @"Command Result - Smultron")
 
 
-#define SMLBasic [SMLBasicPerformer sharedInstance]
 #define SMLText [SMLTextPerformer sharedInstance]
-#define SMLVarious [SMLVariousPerformer sharedInstance]
 #define SMLDefaults [[NSUserDefaultsController sharedUserDefaultsController] values]
 
 /*
