@@ -429,7 +429,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSUInteger documentStringLength = [documentString length];
 	NSRange effectiveRange = [documentString lineRangeForRange:rangeToRecolour];
 	NSRange rangeOfLine = NSMakeRange(0, 0);
-	NSRange foundRange = NSMakeRange(0, 0);
 	NSRange searchRange = NSMakeRange(0, 0);
 	NSUInteger searchSyntaxLength = 0;
 	NSUInteger colourStartLocation = 0, colourEndLocation = 0, endOfLine = 0;
@@ -438,10 +437,10 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	NSUInteger beginLocationInMultiLine = 0;
 	NSUInteger queryLocation = 0;
     unichar testCharacter = 0;
-    
+
     // trace
     //NSLog(@"rangeToRecolor location %i length %i", rangeToRecolour.location, rangeToRecolour.length);
-    
+
     // adjust effective range
     //
     // When multiline strings are coloured we need to scan backwards to
@@ -475,7 +474,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	}
 	
     // setup working locations based on the effective range
-	NSUInteger rangeLocation = effectiveRange.location;
+	__block NSUInteger rangeLocation = effectiveRange.location;
 	NSUInteger maxRangeLocation = NSMaxRange(effectiveRange);
     
     // assign range string
@@ -509,6 +508,33 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         // at the moment we always succeed
         return YES;
     };
+
+    // string matching setup
+    NSString *stringPattern;
+    NSError *error;
+    NSRegularExpression *regex;
+
+    // string matching setup - define a block to color strings.
+    void (^stringHiglighter)(NSTextCheckingResult *, NSMatchingFlags, BOOL *) = ^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+        #pragma unused(flags)
+        #pragma unused(stop)
+        // While we should only receive one match with the original regex, let's
+        // protect for the possibility that the regex changes in the future,
+        // and handle all matches.
+        for (NSUInteger i = 0; i < [match numberOfRanges]; i++) {
+            NSRange foundRange = [match rangeAtIndex:i];
+            [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
+        }
+    };
+
+    float (^oneFrom)(float);
+
+    oneFrom = ^(float aFloat) {
+        float result = aFloat - 1.0;
+        return result;
+    };
+
+
     
     @try {
 		
@@ -926,24 +952,22 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             } 
 
             if (doColouring && ![syntaxDefinition.secondString isEqualToString:@""]) {
-                ICUPattern *stringPattern;
-                
+
                 if (!shouldColourMultiLineStrings)
                     stringPattern = [syntaxDefinition secondStringPattern];
                 else
                     stringPattern = [syntaxDefinition secondMultilineStringPattern];
-                
-                @try {
-                    secondStringMatcher = [[ICUMatcher alloc] initWithPattern:stringPattern overString:rangeString];
-                }
-                @catch (NSException *exception) {
+
+                regex = [NSRegularExpression regularExpressionWithPattern:stringPattern options:0 error:&error];
+
+                if (error) {
                     return effectiveRange;
                 }
 
-                while ([secondStringMatcher findNext]) {
-                    foundRange = [secondStringMatcher rangeOfMatch];
-                    [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
-                }
+                [regex enumerateMatchesInString:rangeString
+                                        options:0
+                                          range:NSMakeRange(0, [rangeString length])
+                                     usingBlock:stringHiglighter];
 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
@@ -970,27 +994,22 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             }
         
             if (doColouring && ![syntaxDefinition.firstString isEqualToString:@""]) {
-                ICUPattern *stringPattern;
-                
+
                 if (!shouldColourMultiLineStrings)
                     stringPattern = [syntaxDefinition firstStringPattern];
                 else
                     stringPattern = [syntaxDefinition firstMultilineStringPattern];
                 
-                @try {
-                    firstStringMatcher = [[ICUMatcher alloc] initWithPattern:stringPattern overString:rangeString];
-                }
-                @catch (NSException *exception) {
+                regex = [NSRegularExpression regularExpressionWithPattern:stringPattern options:0 error:&error];
+
+                if (error) {
                     return effectiveRange;
                 }
-                
-                while ([firstStringMatcher findNext]) {
-                    foundRange = [firstStringMatcher rangeOfMatch];
-                    if ([[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
-                        continue;
-                    }
-                    [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
-                }
+
+                [regex enumerateMatchesInString:rangeString
+                                        options:0
+                                          range:NSMakeRange(0, [rangeString length])
+                                     usingBlock:stringHiglighter];
 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
@@ -1284,21 +1303,23 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         
             if (doColouring && ![syntaxDefinition.secondString isEqualToString:@""]) {
                 
-                @try {
-                    [secondStringMatcher reset];
-                }
-                @catch (NSException *exception) {
+                if (!shouldColourMultiLineStrings)
+                    stringPattern = [syntaxDefinition secondStringPattern];
+                else
+                    stringPattern = [syntaxDefinition secondMultilineStringPattern];
+
+                regex = [NSRegularExpression regularExpressionWithPattern:stringPattern options:0 error:&error];
+
+                if (error) {
                     return effectiveRange;
                 }
-                
-                while ([secondStringMatcher findNext]) {
-                    foundRange = [secondStringMatcher rangeOfMatch];
-                    if ([[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour] || [[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:commentsColour]) {
-                        continue;
-                    }
-                    [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
-                }
-                
+
+                [regex enumerateMatchesInString:rangeString
+                                        options:0
+                                          range:NSMakeRange(0, [rangeString length])
+                                     usingBlock:stringHiglighter];
+
+
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
                     [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
