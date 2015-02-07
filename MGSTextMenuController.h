@@ -20,20 +20,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import <Cocoa/Cocoa.h>
 
 @interface MGSTextMenuController : NSObject
-{
-	//NSArray *availableEncodingsArray;
-	
-	IBOutlet NSMenu *textEncodingMenu;
-	IBOutlet NSMenu *reloadTextWithEncodingMenu;	
-	IBOutlet NSMenu *syntaxDefinitionMenu;
-}
 
 + (MGSTextMenuController *)sharedInstance;
-
-- (void)buildEncodingsMenus;
-- (void)buildSyntaxDefinitionsMenu;
-
-- (void)changeEncodingAction:(id)sender;
 
 - (IBAction)removeNeedlessWhitespaceAction:(id)sender;
 - (IBAction)detabAction:(id)sender;
@@ -48,7 +36,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (IBAction)goToLineAction:(id)sender;
 - (void)performGoToLine:(NSInteger)lineToGoTo;
 - (IBAction)closeTagAction:(id)sender;
-- (IBAction)toggleBreakpointAction:(id)sender;
 - (IBAction)commentOrUncommentAction:(id)sender;
 - (IBAction)emptyDummyAction:(id)sender;
 - (IBAction)removeLineEndingsAction:(id)sender;
@@ -56,5 +43,4 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (IBAction)interchangeAdjacentCharactersAction:(id)sender;
 - (IBAction)prepareForXMLAction:(id)sender;
 
-- (IBAction)changeSyntaxDefinitionAction:(id)sender;
 @end
