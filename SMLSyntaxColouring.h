@@ -48,11 +48,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	NSTimer *autocompleteWordsTimer;
 
 	NSRange lastLineHighlightRange;
-    
-    /* The character range already fully syntax-coloured.
-     * It is dangerous to have a range which does not span an integer number
-     * of lines. */
-    NSRange syntaxColouringCleanRange;
 }
 
 @property BOOL reactToChanges;
@@ -61,10 +56,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 @property (strong) MGSSyntaxDefinition *syntaxDefinition;
 
 - (id)initWithDocument:(id)document;
-- (void)pageRecolour;
+- (void)recolourExposedRange;
 - (void)invalidateAllColouring;
-- (void)recolourPageWithChanges:(BOOL)tdc;
-- (void)recolourSelection;
 - (void)applySyntaxDefinition;
 - (void)pageRecolourTextView:(SMLTextView *)textView options:(NSDictionary *)options;
 - (NSRange)recolourChangedRange:(NSRange)rangeToRecolour;

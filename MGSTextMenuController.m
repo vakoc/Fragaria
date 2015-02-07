@@ -271,7 +271,6 @@ static id sharedInstance = nil;
 	if ([completeString length] < 1) {
 		return;
 	}
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:NO];
 	NSRange selectedRange;
 	
 	NSArray *array = [SMLCurrentTextView selectedRanges];
@@ -320,7 +319,6 @@ static id sharedInstance = nil;
 					if (characterToTest == ' ' || characterToTest == '\t') {
 						if ([textView shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 1) replacementString:@""]) { // Do it this way to mark it as an Undo
 							[textView replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 1) withString:@""];
-							[textView didChangeText];
 						}
 						charactersRemoved++;
 						if (rangeOfLine.location >= selectedRange.location && rangeOfLine.location < maxSelectedRange) {
@@ -336,7 +334,6 @@ static id sharedInstance = nil;
 				if ((characterToTest == ' ' || characterToTest == '\t') && rangeOfLine.length > 0) {
 					if ([textView shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 1) replacementString:@""]) { // Do it this way to mark it as an Undo
 						[textView replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 1) withString:@""];
-						[textView didChangeText];
 					}			
 					charactersRemoved++;
 					if (rangeOfLine.location >= selectedRange.location && rangeOfLine.location < maxSelectedRange) {
@@ -363,8 +360,8 @@ static id sharedInstance = nil;
 			[updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(updatedLocation, selectedRange.length - charactersRemovedInSelection)]];
 		}
 		sumOfAllCharactersRemoved = sumOfAllCharactersRemoved + charactersRemoved;
+        [textView didChangeText];
 	}
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
 	if (sumOfAllCharactersRemoved == 0) {
 		NSBeep();
@@ -372,7 +369,6 @@ static id sharedInstance = nil;
 	
 	if ([updatedSelectionsArray count] > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
-        [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 	}
 }
 
@@ -390,7 +386,6 @@ static id sharedInstance = nil;
 	if ([completeString length] < 1) {
 		return;
 	}
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:NO];
 	NSRange selectedRange;
 	
 	NSMutableString *replacementString;
@@ -437,7 +432,6 @@ static id sharedInstance = nil;
 			rangeOfLine = [completeString lineRangeForRange:NSMakeRange(temporaryLocation, 0)];
 			if ([textView shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 0) replacementString:replacementString]) { // Do it this way to mark it as an Undo
 				[textView replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 0) withString:replacementString];
-				[textView didChangeText];
 			}			
 			charactersInserted = charactersInserted + replacementStringLength;
 			if (rangeOfLine.location >= selectedRange.location && rangeOfLine.location < maxSelectedRange + charactersInserted) {
@@ -457,14 +451,11 @@ static id sharedInstance = nil;
 			[updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(updatedLocation, selectedRange.length + charactersInsertedInSelection)]];
 		}
 		sumOfAllCharactersInserted = sumOfAllCharactersInserted + charactersInserted;
-
+        [textView didChangeText];
 	}
-	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
 	if ([updatedSelectionsArray count] > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
-        [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 	}
 }
 
@@ -500,7 +491,6 @@ static id sharedInstance = nil;
 	if ([completeString length] < 1) {
 		return;
 	}
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:NO];
 	NSRange selectedRange;
 	
 	NSArray *array = [SMLCurrentTextView selectedRanges];
@@ -533,7 +523,6 @@ static id sharedInstance = nil;
 			while (endOfContentsLocation != 0 && ([completeString characterAtIndex:endOfContentsLocation - 1] == ' ' || [completeString characterAtIndex:endOfContentsLocation - 1] == '\t')) {
 				if ([textView shouldChangeTextInRange:NSMakeRange(endOfContentsLocation - 1, 1) replacementString:@""]) { // Do it this way to mark it as an Undo
 					[textView replaceCharactersInRange:NSMakeRange(endOfContentsLocation - 1, 1) withString:@""];
-					[textView didChangeText];
 				}
 				endOfContentsLocation--;
 				charactersRemoved++;
@@ -554,9 +543,8 @@ static id sharedInstance = nil;
 			[updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(updatedLocation, selectedRange.length - charactersRemoved)]];
 		}
 		sumOfAllCharactersRemoved = sumOfAllCharactersRemoved + charactersRemoved;
+        [textView didChangeText];
 	}
-	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
 	if (sumOfAllCharactersRemoved == 0) {
 		NSBeep();
@@ -564,7 +552,6 @@ static id sharedInstance = nil;
 	
 	if ([updatedSelectionsArray count] > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
-        [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 	}
 }
 
@@ -661,7 +648,6 @@ static id sharedInstance = nil;
 - (void)performEntab
 {
 	NSTextView *textView = SMLCurrentTextView;
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:NO];
 	NSRange selectedRange;
 	NSRange savedRange = [textView selectedRange];
 	
@@ -717,11 +703,8 @@ static id sharedInstance = nil;
 		}
 
 	}
-	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 
 	[textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
-    [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] invalidateAllColouring];
 }
 
 /*
@@ -733,7 +716,6 @@ static id sharedInstance = nil;
 {
     NSInteger i;
 	NSTextView *textView = SMLCurrentTextView;
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:NO];
 	NSRange selectedRange;
 	NSRange savedRange = [textView selectedRange];
 	
@@ -774,10 +756,7 @@ static id sharedInstance = nil;
 		
 	}
 	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
-	
 	[textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
-    [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] invalidateAllColouring];
 }
 
 /*
@@ -1024,7 +1003,6 @@ static id sharedInstance = nil;
 		NSBeep();
 		return;
 	}
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:NO];
 	
 	NSArray *array = [textView selectedRanges];
 	NSRange selectedRange = NSMakeRange(0, 0);
@@ -1075,7 +1053,6 @@ static id sharedInstance = nil;
 			if (shouldUncomment == NO) {
 				if ([textView shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 0) replacementString:commentString]) { // Do it this way to mark it as an Undo
 					[textView replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 0) withString:commentString];
-					[textView didChangeText];
 				}			
 				charactersInserted = charactersInserted + commentStringLength;
 			} else {
@@ -1086,7 +1063,6 @@ static id sharedInstance = nil;
 				if ([completeString rangeOfString:commentString options:NSCaseInsensitiveSearch range:NSMakeRange(firstCharacterOfLine, [commentString length])].location != NSNotFound) {
 					if ([textView shouldChangeTextInRange:NSMakeRange(firstCharacterOfLine, commentStringLength) replacementString:@""]) { // Do it this way to mark it as an Undo
 						[textView replaceCharactersInRange:NSMakeRange(firstCharacterOfLine, commentStringLength) withString:@""];
-						[textView didChangeText];
 					}		
 					charactersInserted = charactersInserted - commentStringLength;
 				}
@@ -1095,13 +1071,11 @@ static id sharedInstance = nil;
 		}
 		sumOfChangedCharacters = sumOfChangedCharacters + charactersInserted;
 		[updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(locationOfFirstLine, locationOfLastLine - locationOfFirstLine + charactersInserted)]];
+        [textView didChangeText];
 	}
-	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
 	
 	if (selectedRange.length > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
-        [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 	}
 
 }
@@ -1120,7 +1094,6 @@ static id sharedInstance = nil;
 	
 	NSTextView *textView = SMLCurrentTextView;
 	NSString *text = [textView string];
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:NO];
 	NSArray *array = [textView selectedRanges];
 	NSInteger sumOfDeletedLineEndings = 0;
 	NSMutableArray *updatedSelectionsArray = [NSMutableArray array];
@@ -1139,11 +1112,8 @@ static id sharedInstance = nil;
 		[updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(selectedRange.location, newLength)]];
 	}
 	
-	[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] setReactToChanges:YES];
-	
 	if ([updatedSelectionsArray count] > 0) {
 		[textView setSelectedRanges:updatedSelectionsArray];
-        [[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 	}
 }
 
@@ -1167,8 +1137,6 @@ static id sharedInstance = nil;
 	NSString *convertedString = [SMLText convertLineEndings:text inDocument:document];
 	[textView replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
 	[textView setSelectedRange:selectedRange];
-	
-	[[document valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 }
 
 /*
@@ -1191,8 +1159,6 @@ static id sharedInstance = nil;
 	NSString *convertedString = [SMLText convertLineEndings:text inDocument:document];
 	[textView replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
 	[textView setSelectedRange:selectedRange];
-	
-	[[document valueForKey:ro_MGSFOSyntaxColouring] recolourSelection];
 }
 
 

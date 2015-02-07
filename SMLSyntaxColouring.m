@@ -56,7 +56,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (void)applyColourDefaults;
 - (void)removeAllColours;
 - (void)removeColoursFromRange:(NSRange)range;
-- (void)pageRecolour;
 - (void)setColour:(NSDictionary *)colour range:(NSRange)range;
 - (void)highlightLineRange:(NSRange)lineRange;
 - (BOOL)isSyntaxColouringRequired;
@@ -111,7 +110,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		lastCursorLocation = 0;
 		lastLineHighlightRange = NSMakeRange(0, 0);
 		reactToChanges = YES;
-        syntaxColouringCleanRange = NSMakeRange(0, 0);
 		
 		// configure layout managers
 		layoutManager = (SMLLayoutManager *)[textView layoutManager];
@@ -128,7 +126,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         // add text view notification observers
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:textView];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeSelection:) name:NSTextViewDidChangeSelectionNotification object:textView];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(pageRecolour) name:NSViewBoundsDidChangeNotification object:[scrollView contentView]];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recolourExposedRange) name:NSViewBoundsDidChangeNotification object:[scrollView contentView]];
 		
 		// add NSUserDefaultsController KVO observers
 		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
@@ -153,11 +151,10 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourAttributes" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourNumbers" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
         
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaOnlyColourTillTheEndOfLine" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
+		[defaultsController addObserver:self forKeyPath:@"values.FragariaOnlyColourTillTheEndOfLine" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
         
         [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:@"LineWrapChanged"];
 	}
@@ -177,7 +174,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 {
 	if ([(__bridge NSString *)context isEqualToString:@"ColoursChanged"]) {
 		[self applyColourDefaults];
-		[self pageRecolour];
+		[self recolourExposedRange];
 		if ([[SMLDefaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue] == YES) {
 			NSRange range = [[self completeString] lineRangeForRange:[[document valueForKey:ro_MGSFOTextView] selectedRange]];
 			[self highlightLineRange:range];
@@ -186,13 +183,12 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 			[self highlightLineRange:NSMakeRange(0, 0)];
 		}
 	} else if ([(__bridge NSString *)context isEqualToString:@"MultiLineChanged"]) {
-        [self removeAllColours];
-		[self pageRecolour];
+        [self invalidateAllColouring];
 	} else if ([(__bridge NSString *)context isEqualToString:@"syntaxDefinition"]) {
 		[self applySyntaxDefinition];
-		[self pageRecolour];
+        [self invalidateAllColouring];
 	} else if ([(__bridge NSString*)context isEqualToString:@"LineWrapChanged"]) {
-        [self pageRecolour];
+        [self recolourExposedRange];
     } else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
@@ -311,7 +307,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 {
 	NSRange wholeRange = NSMakeRange(0, [[self completeString] length]);
 	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:wholeRange];
-    syntaxColouringCleanRange = NSMakeRange(0, 0);
+    [[[document objectForKey:ro_MGSFOTextView] inspectedCharacterIndexes] removeAllIndexes];
 }
 
 /*
@@ -323,7 +319,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 {
 	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:range];
     /* We could make more complex computations but this method is not called often enough to warrant them. This is easier and always correct, though slower. */
-    syntaxColouringCleanRange = NSMakeRange(0, 0);
+    [[[document objectForKey:ro_MGSFOTextView] inspectedCharacterIndexes] removeIndexesInRange:range];
 }
 
 
@@ -335,7 +331,26 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (void)invalidateAllColouring
 {
     [self removeAllColours];
-    [self pageRecolour];
+    [self recolourExposedRange];
+}
+
+
+/*
+ 
+ - recolourVisible
+ 
+*/
+- (void)invalidateVisibleRange
+{
+    SMLTextView *textView;
+    NSMutableIndexSet *validRanges;
+    
+    textView = [document valueForKey:ro_MGSFOTextView];
+    validRanges = [textView inspectedCharacterIndexes];
+    NSRect visibleRect = [[[textView enclosingScrollView] contentView] documentVisibleRect];
+    NSRange visibleRange = [[textView layoutManager] glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
+    [validRanges removeIndexesInRange:visibleRange];
+    [self recolourExposedRange];
 }
 
 
@@ -344,70 +359,29 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  - pageRecolour
  
  */
-- (void)pageRecolour
+- (void)recolourExposedRange
 {
-    [self recolourPageWithChanges:NO];
-}
-
-
-/* 
- 
- - recolourSelection
- 
-*/
-- (void)recolourSelection
-{
-    NSTextView *textView;
-    NSValue *range;
-    
-    textView = [document valueForKey:ro_MGSFOTextView];
-    for (range in [textView selectedRanges]) {
-        [self recolourChangedRange:[range rangeValue]];
-    }
-}
-
-
-/*
- 
- - recolourPageWithChanges:
- 
- */
-- (void)recolourPageWithChanges:(BOOL)tdc
-{
-    NSTextView *textView;
+    SMLTextView *textView;
+    NSMutableIndexSet __block *validRanges;
+    NSMutableIndexSet *invalidRanges;
     
 	if (!self.isSyntaxColouringRequired) {
 		return;
 	}
     textView = [document valueForKey:ro_MGSFOTextView];
+    validRanges = [textView inspectedCharacterIndexes];
     
-    BOOL colouringIsNotLineBased = (![[SMLDefaults valueForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine] boolValue]) | [[SMLDefaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue];
-    
-	NSRect visibleRect = [[[textView enclosingScrollView] contentView] documentVisibleRect];
-	NSRange visibleRange = [[textView layoutManager] glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
-	NSInteger beginningOfFirstVisibleLine = [[textView string] lineRangeForRange:NSMakeRange(visibleRange.location, 0)].location;
-	NSInteger endOfLastVisibleLine = NSMaxRange([[self completeString] lineRangeForRange:NSMakeRange(NSMaxRange(visibleRange), 0)]);
-	
-    NSRange pageRange = NSMakeRange(beginningOfFirstVisibleLine, endOfLastVisibleLine - beginningOfFirstVisibleLine);
-    NSRange newCleanRange = NSUnionRange(pageRange, syntaxColouringCleanRange);
-    NSRange effectiveRange = NSMakeRange(0,0);
-    if (!tdc) {
-        NSRange colourRange = newCleanRange;
-        colourRange.length -= syntaxColouringCleanRange.length;
-        if (colourRange.location >= syntaxColouringCleanRange.location)
-            colourRange.location += syntaxColouringCleanRange.length;
-        if (colourRange.length) {
-            //NSLog(@"Recolouring range: %@", NSStringFromRange(colourRange));
-            effectiveRange = [self recolourChangedRange:colourRange];
+    NSRect visibleRect = [[[textView enclosingScrollView] contentView] documentVisibleRect];
+    NSRange visibleRange = [[textView layoutManager] glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
+
+    invalidRanges = [NSMutableIndexSet indexSetWithIndexesInRange:visibleRange];
+    [invalidRanges removeIndexes:validRanges];
+    [invalidRanges enumerateRangesUsingBlock:^(NSRange range, BOOL *stop){
+        if (![validRanges containsIndexesInRange:range]) {
+            NSRange nowValid = [self recolourChangedRange:range];
+            [validRanges addIndexesInRange:nowValid];
         }
-    } else {
-        //NSLog(@"Recolouring page");
-        effectiveRange = [self recolourChangedRange:pageRange];
-        if (colouringIsNotLineBased) {
-            newCleanRange.length = NSMaxRange(pageRange) - newCleanRange.location;
-        }
-    }
-    syntaxColouringCleanRange = NSUnionRange(newCleanRange, effectiveRange);
+    }];
 }
 
 /*
@@ -428,11 +402,10 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	// colourAll option
 	NSNumber *colourAll = [options objectForKey:@"colourAll"];
 	if (!colourAll || ![colourAll boolValue]) {
-        NSNumber *visibleTextDidChange = [options objectForKey:@"visibleTextDidChange"];
-        [self recolourPageWithChanges:(visibleTextDidChange && [visibleTextDidChange boolValue])];
+        [self recolourExposedRange];
     } else {
-        syntaxColouringCleanRange = NSMakeRange(0,0);
-        [self recolourChangedRange:NSMakeRange(0, [[textView string] length])];
+        [self removeAllColours];
+        [self recolourExposedRange];
     }
 }
 
@@ -482,9 +455,9 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         if (beginFirstStringInMultiLine != NSNotFound) {
             NSDictionary *ta = [layoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL];
             if ([[ta objectForKey:NSForegroundColorAttributeName] isEqual:[stringsColour objectForKey:NSForegroundColorAttributeName]]) {
-			NSInteger startOfLine = [documentString lineRangeForRange:NSMakeRange(beginFirstStringInMultiLine, 0)].location;
-			effectiveRange = NSMakeRange(startOfLine, rangeToRecolour.length + (rangeToRecolour.location - startOfLine));
-		}
+                NSInteger startOfLine = [documentString lineRangeForRange:NSMakeRange(beginFirstStringInMultiLine, 0)].location;
+                effectiveRange = NSMakeRange(startOfLine, rangeToRecolour.length + (rangeToRecolour.location - startOfLine));
+            }
         }
         
         
@@ -1446,7 +1419,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	
 	[layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:lastLineHighlightRange];
 		
-	[self pageRecolour];
+	[self recolourExposedRange];
 	
 	[layoutManager addTemporaryAttributes:lineHighlightColour forCharacterRange:lineRange];
 	
@@ -1580,7 +1553,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  - pressedWarningBtn
  
  */
-- (void) pressedWarningBtn:(id) sender
+- (void)pressedWarningBtn:(id) sender
 {
     int line = (int)[sender tag];
     
@@ -1619,8 +1592,11 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	
 	if ([[SMLDefaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue] == YES) {
 		[self highlightLineRange:[completeString lineRangeForRange:[textView selectedRange]]];
-	} else if ([self isSyntaxColouringRequired]) {
-		[self recolourPageWithChanges:YES];
+	}
+    if ([self isSyntaxColouringRequired]) {
+        /* We could call pageRecolour, but invalidating the entire page makes 
+         * our bugs less visible */
+		[self invalidateVisibleRange];
 	}
 	
 	if (autocompleteWordsTimer != nil) {
