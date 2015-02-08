@@ -10,7 +10,27 @@
 
 @implementation SMLSyntaxError
 
-@synthesize line, character, code, length, description, hideWarning, customBackgroundColor;
+@synthesize line, character, code, length, description, hideWarning, customBackgroundColor, warningStyle;
 
+
+#pragma mark - Class Methods
+
++ (NSImage *)imageForWarningStyle:(MGSErrorType)style
+{
+    // Note these are in order by MGSErrorType.
+    NSArray *imageNames = @[@"editor-warning", @"messagesAccess", @"messagesConfig", @"messagesDocument", @"messagesInfo", @"messagesWarning",@"messagesError", @"messagesPanic"];
+    NSString *resourceType = style == kMGSErrorDefault ? @"png" : @"icns";
+    NSImage *warningImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:imageNames[style] ofType:resourceType]];
+    [warningImage setSize:NSMakeSize(16.0, 16.0)];
+    return warningImage;
+}
+
+
+#pragma mark - Property Accessors
+
+- (NSImage *)warningImage
+{
+    return [[self class] imageForWarningStyle:self.warningStyle];
+}
 
 @end

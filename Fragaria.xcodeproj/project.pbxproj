@@ -71,6 +71,23 @@
 		ABE25D0B1635CA7C00F23718 /* MGSFragariaPrefsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE25D091635CA7C00F23718 /* MGSFragariaPrefsViewController.m */; };
 		ABF28AF014C075D400ECAD48 /* NSScanner+Fragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */; };
 		ABF28AF114C075D400ECAD48 /* NSScanner+Fragaria.h in Headers */ = {isa = PBXBuildFile; fileRef = ABF28AEF14C075D400ECAD48 /* NSScanner+Fragaria.h */; };
+		D0C145C71A85F2C900DDE90A /* SMLTextView+JSDExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C145C31A85E1FD00DDE90A /* SMLTextView+JSDExtension.m */; };
+		D0C145C81A85F2F200DDE90A /* SMLTextView+JSDExtension.h in Headers */ = {isa = PBXBuildFile; fileRef = D0C145C21A85E1FD00DDE90A /* SMLTextView+JSDExtension.h */; };
+		D0C146521A87196200DDE90A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C146511A87196200DDE90A /* AppDelegate.m */; };
+		D0C146541A87196200DDE90A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C146531A87196200DDE90A /* main.m */; };
+		D0C146591A87196200DDE90A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0C146571A87196200DDE90A /* MainMenu.xib */; };
+		D0C1466E1A87198E00DDE90A /* MGSFragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* MGSFragaria.framework */; };
+		D0C1466F1A87198E00DDE90A /* MGSFragaria.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* MGSFragaria.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D0C146751A871A0B00DDE90A /* MGSFragariaView.h in Headers */ = {isa = PBXBuildFile; fileRef = D0C146731A871A0B00DDE90A /* MGSFragariaView.h */; };
+		D0C146761A871A0B00DDE90A /* MGSFragariaView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C146741A871A0B00DDE90A /* MGSFragariaView.m */; };
+		D0C146791A871AF300DDE90A /* Lorem.html in Resources */ = {isa = PBXBuildFile; fileRef = D0C146771A871AF300DDE90A /* Lorem.html */; };
+		D0C1467D1A87627300DDE90A /* messagesWarning.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C1467C1A87627300DDE90A /* messagesWarning.icns */; };
+		D0C146841A8769C100DDE90A /* messagesAccess.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C1467E1A8769C100DDE90A /* messagesAccess.icns */; };
+		D0C146851A8769C100DDE90A /* messagesConfig.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C1467F1A8769C100DDE90A /* messagesConfig.icns */; };
+		D0C146861A8769C100DDE90A /* messagesDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C146801A8769C100DDE90A /* messagesDocument.icns */; };
+		D0C146871A8769C100DDE90A /* messagesError.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C146811A8769C100DDE90A /* messagesError.icns */; };
+		D0C146881A8769C100DDE90A /* messagesInfo.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C146821A8769C100DDE90A /* messagesInfo.icns */; };
+		D0C146891A8769C100DDE90A /* messagesPanic.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C146831A8769C100DDE90A /* messagesPanic.icns */; };
 		E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E3AA871B16E1817800585940 /* editor-breakpoint.png in Resources */ = {isa = PBXBuildFile; fileRef = E3AA871A16E1817800585940 /* editor-breakpoint.png */; };
 		E3BBA50B16E52FE600D89923 /* editor-breakpoint-0.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */; };
@@ -99,6 +116,13 @@
 			remoteGlobalIDString = AB69B62A118B745700903D1D;
 			remoteInfo = MGSKosmicEditor;
 		};
+		D0C146701A87198E00DDE90A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AB69B62A118B745700903D1D;
+			remoteInfo = MGSFragaria;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -111,6 +135,17 @@
 				ABCA4DAB16137FC000E4849B /* MGSFragaria.framework in Frameworks */,
 			);
 			name = Frameworks;
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0C146721A87198F00DDE90A /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D0C1466F1A87198E00DDE90A /* MGSFragaria.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -195,6 +230,24 @@
 		ABE25D091635CA7C00F23718 /* MGSFragariaPrefsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragariaPrefsViewController.m; sourceTree = "<group>"; };
 		ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSScanner+Fragaria.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		ABF28AEF14C075D400ECAD48 /* NSScanner+Fragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScanner+Fragaria.h"; sourceTree = "<group>"; };
+		D0C145C21A85E1FD00DDE90A /* SMLTextView+JSDExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMLTextView+JSDExtension.h"; sourceTree = "<group>"; };
+		D0C145C31A85E1FD00DDE90A /* SMLTextView+JSDExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMLTextView+JSDExtension.m"; sourceTree = "<group>"; };
+		D0C1464C1A87196200DDE90A /* MGSFragariaView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MGSFragariaView.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D0C1464F1A87196200DDE90A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0C146501A87196200DDE90A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D0C146511A87196200DDE90A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D0C146531A87196200DDE90A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D0C146581A87196200DDE90A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D0C146731A871A0B00DDE90A /* MGSFragariaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaView.h; sourceTree = "<group>"; };
+		D0C146741A871A0B00DDE90A /* MGSFragariaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragariaView.m; sourceTree = "<group>"; };
+		D0C146781A871AF300DDE90A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Lorem.html; sourceTree = "<group>"; };
+		D0C1467C1A87627300DDE90A /* messagesWarning.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesWarning.icns; sourceTree = "<group>"; };
+		D0C1467E1A8769C100DDE90A /* messagesAccess.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesAccess.icns; sourceTree = "<group>"; };
+		D0C1467F1A8769C100DDE90A /* messagesConfig.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesConfig.icns; sourceTree = "<group>"; };
+		D0C146801A8769C100DDE90A /* messagesDocument.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesDocument.icns; sourceTree = "<group>"; };
+		D0C146811A8769C100DDE90A /* messagesError.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesError.icns; sourceTree = "<group>"; };
+		D0C146821A8769C100DDE90A /* messagesInfo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesInfo.icns; sourceTree = "<group>"; };
+		D0C146831A8769C100DDE90A /* messagesPanic.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesPanic.icns; sourceTree = "<group>"; };
 		E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLAutoCompleteDelegate.h; sourceTree = "<group>"; };
 		E3AA871A16E1817800585940 /* editor-breakpoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint.png"; sourceTree = "<group>"; };
 		E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint-0.png"; sourceTree = "<group>"; };
@@ -231,6 +284,14 @@
 			files = (
 				ABCA4DA816137FC000E4849B /* Cocoa.framework in Frameworks */,
 				ABCA4DA916137FC000E4849B /* MGSFragaria.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0C146491A87196200DDE90A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0C1466E1A87198E00DDE90A /* MGSFragaria.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +347,8 @@
 		01BB1BEC1A7962C7006C0056 /* Text View Components */ = {
 			isa = PBXGroup;
 			children = (
+				D0C146731A871A0B00DDE90A /* MGSFragariaView.h */,
+				D0C146741A871A0B00DDE90A /* MGSFragariaView.m */,
 				AB69B666118B768000903D1D /* SMLTextView.h */,
 				AB69B68E118B78D400903D1D /* SMLTextView.m */,
 				AB69B678118B76E700903D1D /* SMLLayoutManager.h */,
@@ -361,6 +424,7 @@
 				AB69B62B118B745700903D1D /* MGSFragaria.framework */,
 				AB648E2A11FB385700AEF7BD /* Fragaria Doc.app */,
 				ABCA4DAF16137FC000E4849B /* Fragaria.app */,
+				D0C1464C1A87196200DDE90A /* MGSFragariaView.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -411,6 +475,13 @@
 		AB3972FC118C2A5D00AEF388 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D0C1467E1A8769C100DDE90A /* messagesAccess.icns */,
+				D0C1467F1A8769C100DDE90A /* messagesConfig.icns */,
+				D0C146801A8769C100DDE90A /* messagesDocument.icns */,
+				D0C146811A8769C100DDE90A /* messagesError.icns */,
+				D0C146821A8769C100DDE90A /* messagesInfo.icns */,
+				D0C146831A8769C100DDE90A /* messagesPanic.icns */,
+				D0C1467C1A87627300DDE90A /* messagesWarning.icns */,
 				E3C184FF1717597200801FE5 /* editor-warning.png */,
 				E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */,
 				E3BBA50916E52FE600D89923 /* editor-breakpoint-1.png */,
@@ -470,6 +541,8 @@
 			children = (
 				ABF28AEF14C075D400ECAD48 /* NSScanner+Fragaria.h */,
 				ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */,
+				D0C145C21A85E1FD00DDE90A /* SMLTextView+JSDExtension.h */,
+				D0C145C31A85E1FD00DDE90A /* SMLTextView+JSDExtension.m */,
 			);
 			name = "NS Categories";
 			sourceTree = "<group>";
@@ -486,6 +559,7 @@
 				01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */,
 				AB648E2311FB37D200AEF7BD /* NSDocument based */,
 				AB648E2211FB37AF00AEF7BD /* Simple */,
+				D0C1464D1A87196200DDE90A /* MGSFragariaView */,
 			);
 			name = Application;
 			sourceTree = "<group>";
@@ -512,6 +586,27 @@
 			name = Fragaria;
 			sourceTree = "<group>";
 		};
+		D0C1464D1A87196200DDE90A /* MGSFragariaView */ = {
+			isa = PBXGroup;
+			children = (
+				D0C146501A87196200DDE90A /* AppDelegate.h */,
+				D0C146511A87196200DDE90A /* AppDelegate.m */,
+				D0C146571A87196200DDE90A /* MainMenu.xib */,
+				D0C146771A871AF300DDE90A /* Lorem.html */,
+				D0C1464E1A87196200DDE90A /* Supporting Files */,
+			);
+			path = MGSFragariaView;
+			sourceTree = "<group>";
+		};
+		D0C1464E1A87196200DDE90A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D0C1464F1A87196200DDE90A /* Info.plist */,
+				D0C146531A87196200DDE90A /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -520,8 +615,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABE25D0A1635CA7C00F23718 /* MGSFragariaPrefsViewController.h in Headers */,
+				D0C146751A871A0B00DDE90A /* MGSFragariaView.h in Headers */,
 				AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */,
 				AB257FE2129B1CE300A3FF76 /* MGSFragariaPreferences.h in Headers */,
+				D0C145C81A85F2F200DDE90A /* SMLTextView+JSDExtension.h in Headers */,
 				AB257FE4129B1CE300A3FF76 /* MGSTextMenuController.h in Headers */,
 				AB257FE5129B1CE300A3FF76 /* MGSExtraInterfaceController.h in Headers */,
 				017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */,
@@ -598,6 +695,25 @@
 			productReference = ABCA4DAF16137FC000E4849B /* Fragaria.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D0C1464B1A87196200DDE90A /* MGSFragariaView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0C1466C1A87196200DDE90A /* Build configuration list for PBXNativeTarget "MGSFragariaView" */;
+			buildPhases = (
+				D0C146481A87196200DDE90A /* Sources */,
+				D0C146491A87196200DDE90A /* Frameworks */,
+				D0C1464A1A87196200DDE90A /* Resources */,
+				D0C146721A87198F00DDE90A /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D0C146711A87198E00DDE90A /* PBXTargetDependency */,
+			);
+			name = MGSFragariaView;
+			productName = MGSFragariaView;
+			productReference = D0C1464C1A87196200DDE90A /* MGSFragariaView.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -606,6 +722,11 @@
 			attributes = {
 				CLASSPREFIX = MGS;
 				LastUpgradeCheck = 0610;
+				TargetAttributes = {
+					D0C1464B1A87196200DDE90A = {
+						CreatedOnToolsVersion = 6.1.1;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Fragaria" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -616,6 +737,7 @@
 				Japanese,
 				French,
 				German,
+				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* KosmicEditor */;
 			projectDirPath = "";
@@ -623,6 +745,7 @@
 			targets = (
 				AB648E2911FB385700AEF7BD /* Fragaria Doc */,
 				ABCA4D9816137FC000E4849B /* Fragaria */,
+				D0C1464B1A87196200DDE90A /* MGSFragariaView */,
 				AB69B62A118B745700903D1D /* MGSFragaria */,
 			);
 		};
@@ -645,12 +768,19 @@
 			files = (
 				AB39723A118C27E700AEF388 /* SyntaxDefinitions.plist in Resources */,
 				AB3972E5118C28E700AEF388 /* Syntax Definitions in Resources */,
+				D0C146841A8769C100DDE90A /* messagesAccess.icns in Resources */,
+				ABA1C12316144EFD00C8723F /* README.md in Resources */,
+				D0C146861A8769C100DDE90A /* messagesDocument.icns in Resources */,
+				D0C146881A8769C100DDE90A /* messagesInfo.icns in Resources */,
+				D0C146871A8769C100DDE90A /* messagesError.icns in Resources */,
+				D0C146851A8769C100DDE90A /* messagesConfig.icns in Resources */,
+				D0C146891A8769C100DDE90A /* messagesPanic.icns in Resources */,
 				ABA812DC11B6855200A29990 /* LICENSE-2.0.txt in Resources */,
+				D0C1467D1A87627300DDE90A /* messagesWarning.icns in Resources */,
 				AB472C7B1299C2F500202CB5 /* SMLCommandResult.xib in Resources */,
 				AB472C811299C30F00202CB5 /* SMLRegularExpressionHelp.xib in Resources */,
 				AB472C831299C31F00202CB5 /* SMLOpenPanelAccessoryView.xib in Resources */,
 				AB472C851299C33100202CB5 /* SMLGoToLine.xib in Resources */,
-				ABA1C12316144EFD00C8723F /* README.md in Resources */,
 				AB472C881299C34500202CB5 /* SMLDetab.xib in Resources */,
 				AB472C891299C34500202CB5 /* SMLEntab.xib in Resources */,
 				E3AA871B16E1817800585940 /* editor-breakpoint.png in Resources */,
@@ -670,6 +800,15 @@
 				0105F3E31A8681430045BDD3 /* SMLSyntaxColouring.m in Resources */,
 				ABCA4D9D16137FC000E4849B /* MainMenu.xib in Resources */,
 				ABCA4D9E16137FC000E4849B /* Preferences.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0C1464A1A87196200DDE90A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0C146791A871AF300DDE90A /* Lorem.html in Resources */,
+				D0C146591A87196200DDE90A /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -698,6 +837,7 @@
 				AB69B6DA118B7F2A00903D1D /* SMLLayoutManager.m in Sources */,
 				AB3971CB118C1F8A00AEF388 /* MGSSyntaxController.m in Sources */,
 				AB41C1011191FDFE004F0CB5 /* SMLLineNumbers.m in Sources */,
+				D0C145C71A85F2C900DDE90A /* SMLTextView+JSDExtension.m in Sources */,
 				AB41C1051191FFCB004F0CB5 /* MGSFragaria.m in Sources */,
 				AB472B6F129972E400202CB5 /* MGSTextMenuController.m in Sources */,
 				AB472BE91299AF3800202CB5 /* SMLTextPerformer.m in Sources */,
@@ -706,6 +846,7 @@
 				ABC578D3160350240040B3FB /* MGSFragariaPreferences.m in Sources */,
 				ABC578EA1603D6000040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.m in Sources */,
 				ABC578EE1603D7ED0040B3FB /* MGSFragariaTextEditingPrefsViewController.m in Sources */,
+				D0C146761A871A0B00DDE90A /* MGSFragariaView.m in Sources */,
 				ABC5799816047B4E0040B3FB /* FRAFontTransformer.m in Sources */,
 				AB6C86C4160FA2B500488AF2 /* MGSGlyphGenerator.m in Sources */,
 				ABE25D0B1635CA7C00F23718 /* MGSFragariaPrefsViewController.m in Sources */,
@@ -727,6 +868,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D0C146481A87196200DDE90A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0C146541A87196200DDE90A /* main.m in Sources */,
+				D0C146521A87196200DDE90A /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -739,6 +889,11 @@
 			isa = PBXTargetDependency;
 			target = AB69B62A118B745700903D1D /* MGSFragaria */;
 			targetProxy = ABCA4D9A16137FC000E4849B /* PBXContainerItemProxy */;
+		};
+		D0C146711A87198E00DDE90A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AB69B62A118B745700903D1D /* MGSFragaria */;
+			targetProxy = D0C146701A87198E00DDE90A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -765,6 +920,22 @@
 				AB648E4D11FB3A5200AEF7BD /* English */,
 			);
 			name = MyDocument.xib;
+			sourceTree = "<group>";
+		};
+		D0C146571A87196200DDE90A /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0C146581A87196200DDE90A /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		D0C146771A871AF300DDE90A /* Lorem.html */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D0C146781A871AF300DDE90A /* Base */,
+			);
+			name = Lorem.html;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -842,7 +1013,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				COMBINE_HIDPI_IMAGES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = NO;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -915,7 +1087,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				COMBINE_HIDPI_IMAGES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = NO;
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -944,7 +1117,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				COMBINE_HIDPI_IMAGES = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1053,6 +1227,103 @@
 			};
 			name = Release;
 		};
+		D0C146661A87196200DDE90A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = MGSFragariaView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D0C146671A87196200DDE90A /* Testing */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = MGSFragariaView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Testing;
+		};
+		D0C146681A87196200DDE90A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				INFOPLIST_FILE = MGSFragariaView/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1092,6 +1363,16 @@
 				C01FCF4F08A954540054247B /* Debug */,
 				5FFCC83C1902861000A595F2 /* Testing */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D0C1466C1A87196200DDE90A /* Build configuration list for PBXNativeTarget "MGSFragariaView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0C146661A87196200DDE90A /* Debug */,
+				D0C146671A87196200DDE90A /* Testing */,
+				D0C146681A87196200DDE90A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
