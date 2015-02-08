@@ -47,6 +47,7 @@
 - (NSFont *)defaultFont;
 - (NSColor *)defaultTextColor;
 - (NSColor *)defaultAlternateTextColor;
+- (NSColor *)defaultErrorTextColor;
 - (NSMutableArray *)lineIndices;
 - (void)invalidateLineIndicesFromCharacterIndex:(NSUInteger)charIndex;
 - (void)calculateLines;
@@ -100,6 +101,12 @@
 }
 
 
+- (NSColor *)defaultErrorTextColor
+{
+    return [NSColor blackColor];
+}
+
+
 - (NSColor *)defaultBackgroundColor
 {
     return [NSColor controlBackgroundColor];
@@ -132,6 +139,12 @@
 
 - (void)setAlternateTextColor:(NSColor *)alternateTextColor {
     _alternateTextColor = alternateTextColor;
+    [self setNeedsDisplay:YES];
+}
+
+
+- (void)setErrorTextColor:(NSColor *)errorTextColor {
+    _errorTextColor = errorTextColor;
     [self setNeedsDisplay:YES];
 }
 
@@ -348,6 +361,27 @@
 }
 
 
+- (NSDictionary *)errorTextAttributes
+{
+    NSFont  *font;
+    NSColor *color;
+
+    font = [self font];
+    if (font == nil)
+    {
+        font = [self defaultFont];
+    }
+
+    color = [self errorTextColor];
+    if (color == nil)
+    {
+        color = [self defaultErrorTextColor];
+    }
+
+    return [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, nil];
+}
+
+
 - (CGFloat)requiredThickness
 {
     NSUInteger			lineCount, digits, i;
@@ -416,6 +450,7 @@
     NSTextStorage           *drawingTextStorage;
     NSLayoutManager         *drawingLayoutManager;
     NSSet                   *linesWithBreakpoints;
+    NSArray                 *linesWithErrors;
 
     layoutManager = [view layoutManager];
     container = [view textContainer];
@@ -436,7 +471,24 @@
     
     lines = [self lineIndices];
     linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
+
+    linesWithErrors = [[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hideWarning == %@", @(NO)]] valueForKeyPath:@"@distinctUnionOfObjects.line"];
     startingLine = _startingLineNumber + 1;
+
+    // Clear all buttons
+    NSMutableArray* buttons = [NSMutableArray array];
+    for (NSView* subview in [self subviews])
+    {
+        if ([subview isKindOfClass:[NSButton class]])
+        {
+            [buttons addObject:subview];
+        }
+    }
+    for (NSButton* button in buttons)
+    {
+        [button removeFromSuperview];
+    }
+
 
     // Find the characters that are currently visible
     glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:container];
@@ -463,7 +515,9 @@
             // Note that the ruler view is only as tall as the visible
             // portion. Need to compensate for the clipview's coordinates.
             ypos = yinset + NSMinY(rect) - NSMinY(visibleRect);
-            
+
+            currentTextAttributes = textAttributes;
+
             NSNumber *lineNum = [NSNumber numberWithInteger:line+1];
             if ([linesWithBreakpoints containsObject:lineNum]) {
                 NSRect wholeLineRect;
@@ -474,10 +528,19 @@
                 wholeLineRect.origin.y = ypos;
                 [self drawMarkerInRect:wholeLineRect ofLine:lineNum];
                 currentTextAttributes = [self markerTextAttributes];
-            } else {
-                currentTextAttributes = textAttributes;
             }
-            
+
+            if (self.showsWarnings && [linesWithErrors containsObject:@(line+1)]) {
+                NSRect wholeLineRect;
+
+                wholeLineRect.size.width = bounds.size.width;
+                wholeLineRect.size.height = rect.size.height;
+                wholeLineRect.origin.x = 0;
+                wholeLineRect.origin.y = ypos;
+                [self drawErrorsInRect:wholeLineRect ofLine:lineNum];
+                currentTextAttributes = [self errorTextAttributes];
+            }
+
             // Line numbers are internally stored starting at 0
             labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine];
             
@@ -562,14 +625,62 @@
     NSDrawThreePartImage(alignedRect, imgBreakpoint0, imgBreakpoint1, imgBreakpoint2, NO, NSCompositeSourceOver, 1, YES);
 }
 
+/*
+    @todo: this is not very DRY -- it repeats almost exactly the existing function in
+    `SMLSyntaxColoring.m`, which has to be left in place to display errors if the
+    line number view isn't being used.
+ */
+- (void)drawErrorsInRect:(NSRect)rect ofLine:(NSNumber*)line
+{
+    // Add a button
+    NSButton* warningButton = [[NSButton alloc] init];
+
+    [warningButton setButtonType:NSMomentaryChangeButton];
+    [warningButton setBezelStyle:NSRegularSquareBezelStyle];
+    [warningButton setBordered:NO];
+    [warningButton setImagePosition:NSImageOnly];
+    [warningButton setTag:[line integerValue]];
+    [warningButton setTarget:self];
+    [warningButton setAction:@selector(pressedWarningBtn:)];
+    [warningButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+    // There may be multiple errors for this line, so find the one with the highest warningStyle.
+    MGSErrorType style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", line, @(NO)]] valueForKeyPath:@"@max.warningStyle"] integerValue];
+    [warningButton setImage:[SMLSyntaxError imageForWarningStyle:style]];
+
+    [self addSubview:warningButton];
+    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-4-[warningButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningButton)]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:warningButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:rect.origin.y-3]];
+}
+
+- (void)pressedWarningBtn:(id) sender
+{
+    int line = (int)[sender tag];
+
+    // Fetch errors to display
+    NSMutableArray* errorsOnLine = [NSMutableArray array];
+    for (SMLSyntaxError* err in self.syntaxErrors)
+    {
+        if (err.line == line)
+        {
+            [errorsOnLine addObject:err.description];
+        }
+    }
+
+    if (errorsOnLine.count == 0) return;
+
+    [SMLErrorPopOver showErrorDescriptions:errorsOnLine relativeToView:sender];
+}
+
+
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
     NSPoint					location;
     NSUInteger				line;
-    
+
     if (!_breakpointDelegate) return;
-    
+
     location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     line = [self lineNumberForLocation:location.y];
     

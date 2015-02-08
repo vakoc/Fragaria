@@ -64,9 +64,12 @@
 @property (nonatomic) NSFont *font;
 @property (nonatomic) NSColor *textColor;
 @property (nonatomic) NSColor *alternateTextColor;
+@property (nonatomic) NSColor *errorTextColor;
 @property (nonatomic) NSColor *backgroundColor;
 @property (nonatomic) CGFloat minimumWidth;
 @property (nonatomic) NSUInteger startingLineNumber;
+@property (nonatomic) NSArray *syntaxErrors;
+@property (nonatomic) BOOL *showsWarnings;
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView;
 - (NSUInteger)lineNumberForLocation:(CGFloat)location;

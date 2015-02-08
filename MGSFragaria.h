@@ -16,6 +16,9 @@ extern NSString * const MGSFOIsSyntaxColoured;
 extern NSString * const MGSFOShowLineNumberGutter;
 extern NSString * const MGSFOHasVerticalScroller;
 extern NSString * const MGSFODisableScrollElasticity;
+extern NSString * const MGSFOLineWrap;
+extern NSString * const MGSFOShowsWarningsInGutter;
+extern NSString * const MGSFOShowsWarningsInEditor; // keep in case gutter is turned off.
 
 // string
 extern NSString * const MGSFOSyntaxDefinitionName;
@@ -96,6 +99,12 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (BOOL)isSyntaxColoured;
 - (void)setShowsLineNumbers:(BOOL)value;
 - (BOOL)showsLineNumbers;
+- (void)setLineWrap:(BOOL)value;
+- (BOOL)lineWrap;
+- (void)setShowsWarningsInGutter:(BOOL)value;
+- (BOOL)showsWarningsInGutter;
+- (void)setShowsWarningsInEditor:(BOOL)value;
+- (BOOL)showsWarningsInEditor;
 - (void)reloadString;
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options;
 - (void)setHasVerticalScroller:(BOOL)value;

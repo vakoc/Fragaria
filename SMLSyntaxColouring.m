@@ -336,7 +336,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 /*
  
- - recolourVisible
+ - invalidateVisibleRange
  
 */
 - (void)invalidateVisibleRange
@@ -1466,7 +1466,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     
     // Clear all highlights
     [layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:NSMakeRange(0, text.length)];
-    
+
     // Clear all buttons
     NSMutableArray* buttons = [NSMutableArray array];
     for (NSView* subview in [textView subviews])
@@ -1511,28 +1511,45 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             
             if ([err.description length] > 0)
                 [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
-            
-            if (!err.hideWarning) {
-                NSInteger glyphIndex = [layoutManager glyphIndexForCharacterAtIndex:lineRange.location];
-                
-                NSRect linePos = [layoutManager boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1) inTextContainer:[textView textContainer]];
-                
-                // Add button
-                NSButton* warningButton = [[NSButton alloc] init];
-                
-                [warningButton setButtonType:NSMomentaryChangeButton];
-                [warningButton setBezelStyle:NSRegularSquareBezelStyle];
-                [warningButton setBordered:NO];
-                [warningButton setImagePosition:NSImageOnly];
-                [warningButton setImage:[MGSFragaria imageNamed:@"editor-warning.png"]];
-                [warningButton setTag:err.line];
-                [warningButton setTarget:self];
-                [warningButton setAction:@selector(pressedWarningBtn:)];
-                [warningButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-                [textView addSubview:warningButton];
-                
-                [textView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[warningButton]-16-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningButton)]];
-                [textView addConstraint:[NSLayoutConstraint constraintWithItem:warningButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:linePos.origin.y-2]];
+
+            if ([[document valueForKey:MGSFOShowsWarningsInEditor] boolValue]) {
+
+                // err.hideWarning is per-error, and there may be multiple errors per line. We only
+                // arrive here once per line, so we have to check whether there are _any_ errors on
+                // this line, not just the current err.
+                NSInteger countOfNonHiddenWarnings = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", @(err.line), @(NO)]] valueForKeyPath:@"@count"] integerValue];
+
+                if (countOfNonHiddenWarnings) {
+                    NSInteger glyphIndex = [layoutManager glyphIndexForCharacterAtIndex:lineRange.location];
+                    
+                    NSRect linePos = [layoutManager boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1) inTextContainer:[textView textContainer]];
+                    
+                    // Add button
+                    NSButton* warningButton = [[NSButton alloc] init];
+                    
+                    [warningButton setButtonType:NSMomentaryChangeButton];
+                    [warningButton setBezelStyle:NSRegularSquareBezelStyle];
+                    [warningButton setBordered:NO];
+                    [warningButton setImagePosition:NSImageOnly];
+                    [warningButton setTag:err.line];
+                    [warningButton setTarget:self];
+                    [warningButton setAction:@selector(pressedWarningBtn:)];
+                    [warningButton setTranslatesAutoresizingMaskIntoConstraints:NO];
+
+                    // Note that's only highlighting this row once, so there's only one opportunity
+                    // to set an error image. Let's choose the highest level of error if there are
+                    // multiple errors for this line.
+                    MGSErrorType style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", @(err.line), @(NO)]] valueForKeyPath:@"@max.warningStyle"] integerValue];
+                    [warningButton setImage:[SMLSyntaxError imageForWarningStyle:style]];
+                    [textView addSubview:warningButton];
+
+                    // Use left- or right-alignment so that if line wrapping is OFF, error will appear in LEFT
+                    // of the textView instead of at the end of the longest line of text.
+                    // @todo: maybe this should be controlled by a preference if such behavior is desired.
+                    NSString *HConstraint = textView.lineWrap ? @"[warningButton]-16-|" : @"|-4-[warningButton]";
+                    [textView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:HConstraint options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningButton)]];
+                    [textView addConstraint:[NSLayoutConstraint constraintWithItem:warningButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:linePos.origin.y-2]];
+                }
             }
         }
     }

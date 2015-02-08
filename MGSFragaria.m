@@ -19,6 +19,9 @@ NSString * const MGSFOIsSyntaxColoured = @"isSyntaxColoured";
 NSString * const MGSFOShowLineNumberGutter = @"showLineNumberGutter";
 NSString * const MGSFOHasVerticalScroller = @"hasVerticalScroller";
 NSString * const MGSFODisableScrollElasticity = @"disableScrollElasticity";
+NSString * const MGSFOLineWrap = @"lineWrap";
+NSString * const MGSFOShowsWarningsInGutter = @"showsWarningsInGutter";
+NSString * const MGSFOShowsWarningsInEditor = @"showsWarningsInEditor";
 
 // string
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
@@ -145,6 +148,9 @@ char kcLineWrapPrefChanged;
             [defaults objectForKey:MGSFragariaPrefsSyntaxColourNewDocuments], MGSFOIsSyntaxColoured,
             [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
             [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
+            [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
+            @(YES), MGSFOShowsWarningsInEditor,
+            @(NO), MGSFOShowsWarningsInGutter,
 			nil];
 }
 
@@ -270,7 +276,12 @@ char kcLineWrapPrefChanged;
         // Create the Sets containing the valid setter/getter combinations for the Docspec
         
         // Define read/write keys
-        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter, MGSFOHasVerticalScroller, MGSFODisableScrollElasticity, MGSFODocumentName, MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate, MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate, nil];
+        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter,
+                                 MGSFOHasVerticalScroller, MGSFODisableScrollElasticity, MGSFODocumentName,
+                                 MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate,
+                                 MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate, MGSFOLineWrap,
+                                 MGSFOShowsWarningsInEditor, MGSFOShowsWarningsInGutter,
+                                 nil];
         
         // Define read only keys
         self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOLineNumbers, ro_MGSFOSyntaxColouring, nil];
@@ -643,6 +654,29 @@ char kcLineWrapPrefChanged;
     NSNumber *value = [self objectForKey:MGSFOShowLineNumberGutter];
     return [value boolValue];
 }
+
+/*
+
+ - setLineWrap:
+
+ */
+- (void)setLineWrap:(BOOL)value
+{
+    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOLineWrap];
+    [(SMLTextView *)self.textView setLineWrap:value];
+    [self updateGutterView];
+    [self updateErrorHighlighting];
+}
+/*
+
+ - lineWrap
+
+ */
+- (BOOL)lineWrap
+{
+    return [(SMLTextView *)self.textView lineWrap];
+}
+
 /*
  
  - setSyntaxColoured
@@ -652,7 +686,11 @@ char kcLineWrapPrefChanged;
 {
     [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOIsSyntaxColoured]; 
     [self reloadString];
+    // @todo: there's a bug somewhere in the interaction. In the demo app if I
+    // turn ON line wrapping then turn OFF highlighting, then the ruler view
+    // corrupts its display. Turning on highlighting also doesn't affect the text.
 }
+
 /*
  
  - isSyntaxColoured
@@ -665,13 +703,61 @@ char kcLineWrapPrefChanged;
 }
 
 /*
- 
+
  - reloadString
- 
+
  */
 - (void)reloadString
 {
     [self setString:[self string]];
+}
+
+
+/*
+ 
+ - setShowsWarningsInGutter
+ 
+ */
+- (void)setShowsWarningsInGutter:(BOOL)value
+{
+    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowsWarningsInGutter];
+
+    MGSLineNumberView * lineNumberView = [self.docSpec valueForKey:ro_MGSFOGutterView];
+    lineNumberView.showsWarnings = value;
+    [self updateGutterView];
+}
+
+/*
+ 
+ - showsWarningsInGutter
+ 
+ */
+- (BOOL)showsWarningsInGutter
+{
+    NSNumber *value = [self objectForKey:MGSFOShowsWarningsInGutter];
+    return [value boolValue];
+}
+
+/*
+
+ - setShowsWarningsInEditor
+
+ */
+- (void)setShowsWarningsInEditor:(BOOL)value
+{
+    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowsWarningsInEditor];
+    [self updateErrorHighlighting];
+}
+
+/*
+
+ - showsWarningsInEditor
+
+ */
+- (BOOL)showsWarningsInEditor
+{
+    NSNumber *value = [self objectForKey:MGSFOShowsWarningsInEditor];
+    return [value boolValue];
 }
 
 /*
@@ -684,6 +770,10 @@ char kcLineWrapPrefChanged;
     SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
     syntaxColouring.syntaxErrors = errors;
     [syntaxColouring highlightErrors];
+
+    MGSLineNumberView *lineNumberView = [docSpec valueForKey:ro_MGSFOGutterView];
+    lineNumberView.syntaxErrors = errors;
+    [lineNumberView setNeedsDisplay:YES];
 }
 
 /*
@@ -791,6 +881,17 @@ char kcLineWrapPrefChanged;
     
     [[document objectForKey:ro_MGSFOLineNumbers] updateGutterView];
 }
+
+/*
+
+ - updateErrorHighlighting
+
+ */
+- (void) updateErrorHighlighting {
+    SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
+    [syntaxColouring highlightErrors];
+}
+
 
 
 #pragma mark -
