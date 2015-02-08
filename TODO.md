@@ -9,9 +9,6 @@
    the keyword list. Perhaps the name of this group is what has confused people in the past (it has certainly confused
    me). Another name? Perhaps ?. In my option true keywords should not autocomplete.
 
-1. Scrolling causes a lot of recolouring. Something seems amiss here. Surely we should be able to cache our coloured
-   range and only recolour when required. This seems like a fairly fundamental requirement.
-
 1. Unit tests. Define strings. Colour them and validate the colouring.
 
 1. Define source files in the bundle for each supported language type. These can be loaded in the example app to
