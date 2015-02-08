@@ -361,7 +361,6 @@ char kcLineWrapPrefChanged;
     [self updateGutterView];
 
     // apply default line wrapping
-    [textView updateLineWrap];
     [textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
 
     if ([docSpec objectForKey:MGSFODelegate])
