@@ -1099,7 +1099,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)setLineWrap:(BOOL)value
 {
-    if (value == lineWrap) return;
     lineWrap = value;
     [self updateLineWrap];
 }
@@ -1113,13 +1112,19 @@ Unless required by applicable law or agreed to in writing, software distributed 
  The readme file in the above example has very good info on how to configure NSTextView instances.
  */
 - (void)updateLineWrap {
-        
+    NSSize contentSize;
+    
     // get control properties
 	NSScrollView *textScrollView = [self enclosingScrollView];
 	NSTextContainer *textContainer = [self textContainer];
     
-    // content view is clipview
-	NSSize contentSize = [textScrollView contentSize];
+    if (textScrollView) {
+        // content view is clipview
+        contentSize = [textScrollView contentSize];
+    } else {
+        /* scroll view may not be already there */
+        contentSize = [self frame].size;
+    }
     
     if (self.lineWrap) {
         
