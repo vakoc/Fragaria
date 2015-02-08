@@ -10,10 +10,11 @@
 //
 
 #import <objc/runtime.h>
-#import "SMLTextView+JSDExtension.h"
+#import "SMLTextView+MGSDragging.h"
+#import "MGSDragOperationDelegate.h"
 
 
-@implementation SMLTextView (JSDExtension)
+@implementation SMLTextView (MGSDragging)
 
 
 #pragma mark - <NSDraggingDestination> adherence for SMLTextView
