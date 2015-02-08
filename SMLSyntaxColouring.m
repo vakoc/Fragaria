@@ -512,28 +512,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSString *stringPattern;
     NSError *error;
     NSRegularExpression *regex;
-
-    // string matching setup - define a block to color strings.
-    void (^stringHiglighter)(NSTextCheckingResult *, NSMatchingFlags, BOOL *) = ^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
-        #pragma unused(flags)
-        #pragma unused(stop)
-        // While we should only receive one match with the original regex, let's
-        // protect for the possibility that the regex changes in the future,
-        // and handle all matches.
-        for (NSUInteger i = 0; i < [match numberOfRanges]; i++) {
-            NSRange foundRange = [match rangeAtIndex:i];
-            [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
-        }
-    };
-
-    float (^oneFrom)(float);
-
-    oneFrom = ^(float aFloat) {
-        float result = aFloat - 1.0;
-        return result;
-    };
-
-
     
     @try {
 		
@@ -963,10 +941,17 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     return effectiveRange;
                 }
 
-                [regex enumerateMatchesInString:rangeString
-                                        options:0
-                                          range:NSMakeRange(0, [rangeString length])
-                                     usingBlock:stringHiglighter];
+                [regex enumerateMatchesInString:rangeString options:0
+                   range:NSMakeRange(0, [rangeString length])
+                   usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+                        // While we should only receive one match with the original regex, let's
+                        // protect for the possibility that the regex changes in the future,
+                        // and handle all matches.
+                        for (NSUInteger i = 0; i < [match numberOfRanges]; i++) {
+                            NSRange foundRange = [match rangeAtIndex:i];
+                            [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
+                        }
+                    }];
 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
@@ -1005,10 +990,15 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     return effectiveRange;
                 }
 
-                [regex enumerateMatchesInString:rangeString
-                                        options:0
-                                          range:NSMakeRange(0, [rangeString length])
-                                     usingBlock:stringHiglighter];
+                [regex enumerateMatchesInString:rangeString options:0
+                   range:NSMakeRange(0, [rangeString length])
+                   usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+                       for (NSUInteger i = 0; i < [match numberOfRanges]; i++) {
+                           NSRange foundRange = [match rangeAtIndex:i];
+                           if ([[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) continue;
+                           [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
+                       }
+                   }];
 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
@@ -1313,10 +1303,15 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     return effectiveRange;
                 }
 
-                [regex enumerateMatchesInString:rangeString
-                                        options:0
-                                          range:NSMakeRange(0, [rangeString length])
-                                     usingBlock:stringHiglighter];
+                [regex enumerateMatchesInString:rangeString options:0
+                   range:NSMakeRange(0, [rangeString length])
+                   usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+                       for (NSUInteger i = 0; i < [match numberOfRanges]; i++) {
+                           NSRange foundRange = [match rangeAtIndex:i];
+                           if ([[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour] || [[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:commentsColour]) continue;
+                           [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
+                       }
+                    }];
 
 
                 // inform delegate that colouring is done
