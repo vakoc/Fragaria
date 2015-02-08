@@ -63,35 +63,21 @@
 
     /* Make the upper view interesting. */
     self.viewTop.string = fileContent;
-	self.viewTop.startingLineNumber = 2025;
+    //self.viewTop.startingLineNumber = 2025;
 	self.viewTop.showsLineNumbers = YES;
     self.viewTop.lineWrap = NO;
 
     /* Make the lower view interesting. */
-	[self.viewBottom bind:@"string" toObject:self.viewTop withKeyPath:@"string" options:nil];
+    self.self.viewBottom.string = fileContent;
+    //[self.viewBottom bind:@"string" toObject:self.viewTop withKeyPath:@"string" options:nil];
 	self.viewBottom.showsLineNumbers = YES;
-    self.viewTop.lineWrap = NO;
+    self.viewBottom.lineWrap = NO;
 
 
-//	// define syntax errors
-//	SMLSyntaxError *syntaxError = [SMLSyntaxError new];
-//	syntaxError.description = @"Syntax errors can be defined";
-//	syntaxError.line = 4;
-//	syntaxError.character = 3;
-//	syntaxError.length = 5;
-//	syntaxError.hideWarning = YES;
-//	syntaxError.customBackgroundColor = [NSColor magentaColor];
-//
-//	SMLSyntaxError *syntaxError2 = [SMLSyntaxError new];
-//	syntaxError2.description = @"Multiple syntax errors can be defined for the same line, too.";
-//	syntaxError2.line = 4;
-//	syntaxError2.character = 12;
-//	syntaxError2.length = 7;
-//	syntaxError2.hideWarning = NO;
-//	syntaxError2.customBackgroundColor = syntaxError.customBackgroundColor; // messy coloring if you use different colors on the same line!
-//
-//    //self.viewTop.showsErrorsInGutter = YES;
-//	self.viewTop.fragaria.syntaxErrors = @[syntaxError, syntaxError2];
+	/* Sample Syntax Error Definitions */
+    //self.viewTop.syntaxErrors = [self makeSyntaxErrors];
+
+
 
 }
 
@@ -120,7 +106,8 @@
 {
 	#pragma unused(file)
 	NSLog(@"%@", @"I'm the breakpoints delegate.");
-	return [NSSet setWithArray:@[@(6)]];
+    //return [NSSet setWithArray:@[@(6)]];
+    return nil;
 }
 
 
@@ -171,12 +158,70 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleToggleErrorPosition:
+	handleToggleGutterWarnings:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)handleToggleErrorPosition:(id)sender
+- (IBAction)handleToggleGutterWarnings:(id)sender
 {
     #pragma unused(sender)
-    //self.viewTop.fragaria.showsErrorsInGutter = !self.viewTop.fragaria.showsErrorsInGutter;
+    self.viewTop.showsWarningsInGutter = !self.viewTop.showsWarningsInGutter;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	handleToggleEditorWarnings:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (IBAction)handleToggleEditorWarnings:(id)sender
+{
+    #pragma unused(sender)
+    BOOL current = self.viewTop.showsWarningsInEditor;
+    self.viewTop.showsWarningsInEditor = !current;
+}
+
+
+#pragma marks - Private
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	makeSyntaxErrors
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSArray *)makeSyntaxErrors
+{
+    SMLSyntaxError *syntaxError = [SMLSyntaxError new];
+    syntaxError.description = @"Syntax errors can be defined";
+    syntaxError.line = 4;
+    syntaxError.character = 3;
+    syntaxError.length = 5;
+    syntaxError.hideWarning = YES;
+    syntaxError.warningStyle = kMGSErrorError;
+    //syntaxError.customBackgroundColor = [NSColor magentaColor];
+
+    SMLSyntaxError *syntaxError2 = [SMLSyntaxError new];
+    syntaxError2.description = @"Multiple syntax errors can be defined for the same line, too.";
+    syntaxError2.line = 4;
+    syntaxError2.character = 12;
+    syntaxError2.length = 7;
+    syntaxError2.hideWarning = NO;
+    syntaxError2.warningStyle = kMGSErrorAccess;
+    //syntaxError2.customBackgroundColor = syntaxError.customBackgroundColor; // messy coloring if you use different colors on the same line!
+
+    SMLSyntaxError *syntaxError3 = [SMLSyntaxError new];
+    syntaxError3.description = @"This error will appear on top of a line break.";
+    syntaxError3.line = 6;
+    syntaxError3.character = 1;
+    syntaxError3.length = 2;
+    syntaxError3.hideWarning = NO;
+    syntaxError3.warningStyle = kMGSErrorConfig;
+    //syntaxError2.customBackgroundColor = syntaxError.customBackgroundColor; // messy coloring if you use different colors on the same line!
+
+    SMLSyntaxError *syntaxError4 = [SMLSyntaxError new];
+    syntaxError4.description = @"This error will be hidden.";
+    syntaxError4.line = 10;
+    syntaxError4.character = 12;
+    syntaxError4.length = 7;
+    syntaxError4.hideWarning = NO;
+    //syntaxError2.customBackgroundColor = syntaxError.customBackgroundColor; // messy coloring if you use different colors on the same line!
+
+    return @[syntaxError, syntaxError2, syntaxError3, syntaxError4];
 }
 
 @end
