@@ -1141,10 +1141,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
     } else {
 
         // setup text container
-        [textContainer setContainerSize:NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX)];
         [textContainer setWidthTracksTextView:NO];
         [textContainer setHeightTracksTextView:NO];
-        
+        [textContainer setContainerSize:NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX)];
+
         // setup text view
         [self setFrameSize:contentSize];
         [self setHorizontallyResizable: YES];
