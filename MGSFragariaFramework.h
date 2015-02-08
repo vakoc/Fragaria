@@ -23,3 +23,4 @@
 #import "MGSFragariaPreferences.h"
 #import "SMLErrorPopOver.h"
 #import "SMLAutoCompleteDelegate.h"
+#import "MGSFragariaView.h"
