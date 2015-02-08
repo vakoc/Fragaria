@@ -190,12 +190,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setLineWrap:(BOOL)lineWrap
 {
-    [(SMLTextView *)self.textView setLineWrap:lineWrap];
+    [self.fragaria setLineWrap:lineWrap];
 }
 
 - (BOOL)lineWrap
 {
-    return [(SMLTextView *)self.textView lineWrap];
+    return [self.fragaria lineWrap];
 }
 
 
@@ -284,17 +284,31 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	showsErrorsInGutter
+	showsWarningsInGutter
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-//- (void)setShowsErrorsInGutter:(BOOL)showsErrorsInGutter
-//{
-//    //	[self.fragaria setShowsErrorsInGutter:showsErrorsInGutter];
-//}
-//
-//- (BOOL)showsErrorsInGutter
-//{
-//    return NO; //[self.fragaria showsErrorsInGutter];
-//}
+- (void)setShowsWarningsInGutter:(BOOL)showsWarningsInGutter
+{
+    [self.fragaria setShowsWarningsInGutter:showsWarningsInGutter];
+}
+
+- (BOOL)showsWarningsInGutter
+{
+    return [self.fragaria showsWarningsInGutter];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	showsWarningsInEditor
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setShowsWarningsInEditor:(BOOL)showsWarningsInEditor
+{
+    [self.fragaria setShowsWarningsInEditor:showsWarningsInEditor];
+}
+
+- (BOOL)showsWarningsInEditor
+{
+    return [self.fragaria showsWarningsInEditor];
+}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
