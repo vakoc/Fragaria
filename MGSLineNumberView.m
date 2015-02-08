@@ -657,6 +657,7 @@
 {
     int line = (int)[sender tag];
 
+    // @todo: currently shows hidden errors. Should prevent that.
     // Fetch errors to display
     NSMutableArray* errorsOnLine = [NSMutableArray array];
     for (SMLSyntaxError* err in self.syntaxErrors)
