@@ -377,7 +377,8 @@
  */
 - (IBAction)entab:(id)sender
 {
-    [SMLCurrentExtraInterfaceController displayEntab];
+    [[fragaria extraInterfaceController] setCompletionTarget:self];
+    [[fragaria extraInterfaceController] displayEntab];
 }
 
 /*
@@ -387,7 +388,8 @@
  */
 - (IBAction)detab:(id)sender
 {
-    [SMLCurrentExtraInterfaceController displayDetab];
+    [[fragaria extraInterfaceController] setCompletionTarget:self];
+    [[fragaria extraInterfaceController] displayDetab];
 }
 
 
@@ -527,9 +529,8 @@
  */
 - (IBAction)goToLine:(id)sender
 {
-#pragma unused(sender)
-    
-    [SMLCurrentExtraInterfaceController displayGoToLine];
+    [[fragaria extraInterfaceController] setCompletionTarget:self];
+    [[fragaria extraInterfaceController] displayGoToLine];
 }
 
 

@@ -18,10 +18,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
 */
 
 #import <Cocoa/Cocoa.h>
+#import "SMLTextView+MGSTextActions.h"
 
 
 @interface MGSExtraInterfaceController : NSObject {
-
 	IBOutlet NSTextField *spacesTextFieldEntabWindow;
 	IBOutlet NSTextField *spacesTextFieldDetabWindow;
 	IBOutlet NSTextField *lineTextFieldGoToLineWindow;
@@ -40,7 +40,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	IBOutlet NSPanel *regularExpressionsHelpPanel;
 }
 
-
+@property SMLTextView *completionTarget;
 @property (readonly) IBOutlet NSView *openPanelAccessoryView;
 @property (readonly) IBOutlet NSPopUpButton *openPanelEncodingsPopUp;
 @property (readonly) IBOutlet NSWindow *commandResultWindow;

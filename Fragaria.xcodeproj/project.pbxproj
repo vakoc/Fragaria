@@ -15,13 +15,13 @@
 		0191FA811A8829930099B50D /* SMLTextView+MGSTextActions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0191FA7F1A8829930099B50D /* SMLTextView+MGSTextActions.h */; };
 		0191FA821A8829930099B50D /* SMLTextView+MGSTextActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0191FA801A8829930099B50D /* SMLTextView+MGSTextActions.m */; };
 		0191FA841A882B290099B50D /* NSScanner+Fragaria.h in Headers */ = {isa = PBXBuildFile; fileRef = ABF28AEF14C075D400ECAD48 /* NSScanner+Fragaria.h */; };
+		0191FA851A884CC20099B50D /* MGSExtraInterfaceController.h in Headers */ = {isa = PBXBuildFile; fileRef = AB472BF51299BBBA00202CB5 /* MGSExtraInterfaceController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01BB1BF31A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */; };
 		01BB1BF41A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */; };
 		AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B666118B768000903D1D /* SMLTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB257FE2129B1CE300A3FF76 /* MGSFragariaPreferences.h in Headers */ = {isa = PBXBuildFile; fileRef = ABD0FE581193543600E6AFE6 /* MGSFragariaPreferences.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB257FE4129B1CE300A3FF76 /* MGSTextMenuController.h in Headers */ = {isa = PBXBuildFile; fileRef = AB472B7B1299732F00202CB5 /* MGSTextMenuController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AB257FE5129B1CE300A3FF76 /* MGSExtraInterfaceController.h in Headers */ = {isa = PBXBuildFile; fileRef = AB472BF51299BBBA00202CB5 /* MGSExtraInterfaceController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB3971CB118C1F8A00AEF388 /* MGSSyntaxController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */; };
 		AB39723A118C27E700AEF388 /* SyntaxDefinitions.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */; };
 		AB3972E5118C28E700AEF388 /* Syntax Definitions in Resources */ = {isa = PBXBuildFile; fileRef = AB397291118C28E700AEF388 /* Syntax Definitions */; };
@@ -624,7 +624,7 @@
 				AB257FE2129B1CE300A3FF76 /* MGSFragariaPreferences.h in Headers */,
 				0191FA841A882B290099B50D /* NSScanner+Fragaria.h in Headers */,
 				AB257FE4129B1CE300A3FF76 /* MGSTextMenuController.h in Headers */,
-				AB257FE5129B1CE300A3FF76 /* MGSExtraInterfaceController.h in Headers */,
+				0191FA851A884CC20099B50D /* MGSExtraInterfaceController.h in Headers */,
 				017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */,
 				AB69B754118B830700903D1D /* MGSFragaria.h in Headers */,
 				0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */,

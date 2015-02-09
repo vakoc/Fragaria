@@ -90,7 +90,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	[NSApp endSheet:[SMLCurrentWindow attachedSheet]]; 
 	[[SMLCurrentWindow attachedSheet] close];
 	
-    [[MGSTextMenuController sharedInstance] performEntab];
+    [_completionTarget performEntab];
 }
 
 /*
@@ -105,7 +105,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	[NSApp endSheet:[SMLCurrentWindow attachedSheet]]; 
 	[[SMLCurrentWindow attachedSheet] close];
 	
-	[[MGSTextMenuController sharedInstance] performDetab];
+	[_completionTarget performDetab];
 }
 
 #pragma mark -
@@ -147,12 +147,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (IBAction)goButtonGoToLineWindowAction:(id)sender
 {
-	#pragma unused(sender)
-	
-	[NSApp endSheet:[SMLCurrentWindow attachedSheet]]; 
+	[NSApp endSheet:[SMLCurrentWindow attachedSheet]];
 	[[SMLCurrentWindow attachedSheet] close];
 	
-	[[MGSTextMenuController sharedInstance] performGoToLine:[lineTextFieldGoToLineWindow integerValue]];
+	[_completionTarget performGoToLine:[lineTextFieldGoToLineWindow integerValue]];
 }
 
 #pragma mark -

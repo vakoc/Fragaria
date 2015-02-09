@@ -6,7 +6,7 @@
 //
 //
 
-#import <SMLTextView.h>
+#import "SMLTextView.h"
 
 
 /* This category implements the editing options added by Fragaria to
