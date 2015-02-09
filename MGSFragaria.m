@@ -808,10 +808,15 @@ char kcLineWrapPrefChanged;
  - textMenuController
  
  */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 - (MGSTextMenuController *)textMenuController
 {
 	return [MGSTextMenuController sharedInstance];
 }
+
+#pragma clang diagnostic pop
 
 /*
  

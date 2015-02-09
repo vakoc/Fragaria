@@ -140,7 +140,6 @@ static id sharedInstance = nil;
 - (IBAction)emptyDummyAction:(id)sender
 {
 	// An easy way to enable menu items with submenus without setting an action which actually does something
-#pragma unused(sender)
 }
 
 
@@ -154,8 +153,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)shiftLeftAction:(id)sender
 {	
-    SMLTextView *textView = SMLCurrentTextView;
-    [textView shiftLeft:sender];
+    [NSApp sendAction:@selector(shiftLeft:) to:nil from:sender];
 }
 
 /*
@@ -165,8 +163,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)shiftRightAction:(id)sender
 {
-	SMLTextView *textView = SMLCurrentTextView;
-    [textView shiftRight:sender];
+	[NSApp sendAction:@selector(shiftRight:) to:nil from:sender];
 }
 
 #pragma mark -
@@ -179,8 +176,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)interchangeAdjacentCharactersAction:(id)sender
 {
-    SMLTextView *textView = SMLCurrentTextView;
-	[textView transpose:nil];
+    [NSApp sendAction:@selector(transpose:) to:nil from:sender];
 }
 
 /*
@@ -190,8 +186,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)removeNeedlessWhitespaceAction:(id)sender
 {
-	SMLTextView *textView = SMLCurrentTextView;
-    [textView removeNeedlessWhitespace:sender];
+	[NSApp sendAction:@selector(removeNeedlessWhitespace:) to:nil from:sender];
 }
 
 /*
@@ -201,8 +196,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)toLowercaseAction:(id)sender
 {
-	SMLTextView *textView = SMLCurrentTextView;
-    [textView lowercaseCharacters:sender];
+	[NSApp sendAction:@selector(lowercaseCharacters:) to:nil from:sender];
 }
 
 /*
@@ -212,8 +206,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)toUppercaseAction:(id)sender
 {
-	SMLTextView *textView = SMLCurrentTextView;
-    [textView uppercaseCharacters:sender];
+	[NSApp sendAction:@selector(uppercaseCharacters:) to:nil from:sender];
 }
 
 /*
@@ -223,8 +216,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)capitaliseAction:(id)sender
 {
-	SMLTextView *textView = SMLCurrentTextView;
-    [textView capitalizeWord:sender];
+	[NSApp sendAction:@selector(capitalizeWord:) to:nil from:sender];
 }
 
 /*
@@ -234,8 +226,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)entabAction:(id)sender
 {
-	SMLTextView *textView = SMLCurrentTextView;
-    [textView entab:sender];
+	[NSApp sendAction:@selector(entab:) to:nil from:sender];
 }
 
 /*
@@ -245,22 +236,19 @@ static id sharedInstance = nil;
  */
 - (IBAction)detabAction:(id)sender
 {
-    SMLTextView *textView = SMLCurrentTextView;
-    [textView detab:sender];
+    [NSApp sendAction:@selector(detab:) to:nil from:sender];
 }
 
 
 - (void)performDetab
 {
-    SMLTextView *textView = SMLCurrentTextView;
-    [textView performDetab];
+    NSLog(@"MGSTextMenuController is deprecated. Please send this message directly to the text view instead of using MGSTextMenuController.");
 }
 
 
 - (void)performEntab
 {
-    SMLTextView *textView = SMLCurrentTextView;
-    [textView performEntab];
+    NSLog(@"MGSTextMenuController is deprecated. Please send this message directly to the text view instead of using MGSTextMenuController.");
 }
 
 
@@ -274,15 +262,13 @@ static id sharedInstance = nil;
  */
 - (IBAction)goToLineAction:(id)sender
 {
-	SMLTextView *textView = SMLCurrentTextView;
-    [textView goToLine:sender];
+	[NSApp sendAction:@selector(goToLine:) to:nil from:sender];
 }
 
 
 - (void)performGoToLine:(NSInteger)lineToGoTo
 {
-    SMLTextView *textView = SMLCurrentTextView;
-    [textView performGoToLine:lineToGoTo];
+    NSLog(@"MGSTextMenuController is deprecated. Please send this message directly to the text view instead of using MGSTextMenuController.");
 }
 
 
@@ -297,8 +283,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)closeTagAction:(id)sender
 {
-	SMLTextView *textView = SMLCurrentTextView;
-    [textView closeTag:sender];
+	[NSApp sendAction:@selector(closeTag:) to:nil from:sender];
 }
 
 /*
@@ -308,8 +293,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)prepareForXMLAction:(id)sender
 {
-    SMLTextView *textView = SMLCurrentTextView;
-    [textView prepareForXML:sender];
+    [NSApp sendAction:@selector(prepareForXML:) to:nil from:sender];
 }
 
 #pragma mark -
@@ -322,8 +306,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)commentOrUncommentAction:(id)sender
 {
-	SMLTextView *textView = SMLCurrentTextView;
-    [textView commentOrUncomment:sender];
+	[NSApp sendAction:@selector(commentOrUncomment:) to:nil from:sender];
 }
 
 #pragma mark -
@@ -336,8 +319,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)removeLineEndingsAction:(id)sender
 {
-	SMLTextView *textView = SMLCurrentTextView;
-    [textView removeLineEndings:sender];
+	[NSApp sendAction:@selector(removeLineEndings:) to:nil from:sender];
 }
 
 /*
@@ -347,8 +329,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)changeLineEndingsAction:(id)sender
 {
-    SMLTextView *textView = SMLCurrentTextView;
-    [textView changeLineEndings:sender];
+    [NSApp sendAction:@selector(changeLineEndings:) to:nil from:sender];
 }
 
 

@@ -19,6 +19,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 #import <Cocoa/Cocoa.h>
 
+
+DEPRECATED_MSG_ATTRIBUTE("Please send your messages to first responder or to "
+                         "Fragaria's text view instead.")
+
 @interface MGSTextMenuController : NSObject
 
 + (MGSTextMenuController *)sharedInstance;
