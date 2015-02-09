@@ -821,7 +821,7 @@
         NSRange selectedRange = NSMakeRange([item rangeValue].location - sumOfDeletedLineEndings, [item rangeValue].length);
         NSString *stringToRemoveLineEndingsFrom = [text substringWithRange:selectedRange];
         NSInteger originalLength = [stringToRemoveLineEndingsFrom length];
-        NSString *stringWithNoLineEndings = [SMLText removeAllLineEndingsInString:stringToRemoveLineEndingsFrom];
+        NSString *stringWithNoLineEndings = [self removeAllLineEndingsFromString:stringToRemoveLineEndingsFrom];
         NSInteger newLength = [stringWithNoLineEndings length];
         if ([self shouldChangeTextInRange:NSMakeRange(selectedRange.location, originalLength) replacementString:stringWithNoLineEndings]) { // Do it this way to mark it as an Undo
             [self replaceCharactersInRange:NSMakeRange(selectedRange.location, originalLength) withString:stringWithNoLineEndings];
@@ -836,6 +836,21 @@
         [self setSelectedRanges:updatedSelectionsArray];
     }
 }
+
+
+- (NSString *)removeAllLineEndingsFromString:(NSString*)orig
+{
+    NSMutableString *string = [orig mutableCopy];
+    NSCharacterSet *newlines = [NSCharacterSet newlineCharacterSet];
+    NSRange range;
+    
+    while ((range = [string rangeOfCharacterFromSet:newlines]).length) {
+        [string replaceCharactersInRange:range withString:@""];
+    }
+    return string;
+}
+
+
 
 /*
  
@@ -853,7 +868,7 @@
     
     NSRange selectedRange = [self selectedRange];
     NSString *text = [self string];
-    NSString *convertedString = [SMLText convertLineEndings:text inDocument:document];
+    NSString *convertedString = [self convertLineEndings:text];
     [self replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
     [self setSelectedRange:selectedRange];
 }
@@ -874,9 +889,52 @@
     
     NSRange selectedRange = [self selectedRange];
     NSString *text = [self string];
-    NSString *convertedString = [SMLText convertLineEndings:text inDocument:document];
+    NSString *convertedString = [self convertLineEndings:text];
     [self replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
     [self setSelectedRange:selectedRange];
+}
+
+
+/*
+ 
+ - convertLineEndings:inDocument:
+ 
+ */
+- (NSString *)convertLineEndings:(NSString *)stringToConvert
+{
+    NSInteger lineEndings;
+    NSString *newLineEnding;
+    id document = [fragaria docSpec];
+    
+    if ([[document valueForKey:@"lineEndings"] integerValue] == 0) { // It hasn't been changed by the user so use the one from the defaults
+        lineEndings = [[SMLDefaults valueForKey:@"LineEndingsPopUp"] integerValue] + 1;
+    } else {
+        lineEndings = [[document valueForKey:@"lineEndings"] integerValue];
+    }
+    
+    if (lineEndings == SMLLeaveLineEndingsUnchanged) {
+        return stringToConvert;
+    }
+    
+    NSMutableString *returnString = [NSMutableString stringWithString:stringToConvert];
+    
+    
+    if (lineEndings == SMLDarkSideLineEndings) { // CRLF
+        newLineEnding = @"\r\n";
+    } else if (lineEndings == SMLMacLineEndings) { // CR
+        newLineEnding = @"\r";
+    } else { // LF
+        newLineEnding = @"\n";
+    }
+    
+    NSRange range;
+    NSCharacterSet *newlines = [NSCharacterSet newlineCharacterSet];
+    
+    while ((range = [returnString rangeOfCharacterFromSet:newlines]).length) {
+        [returnString replaceCharactersInRange:range withString:newLineEnding];
+    }
+    
+    return returnString;
 }
 
 
