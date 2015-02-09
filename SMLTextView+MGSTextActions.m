@@ -36,7 +36,7 @@
             enableItem = NO;
         }
     } else if (action == @selector(commentOrUncomment:) ) {
-    // Comment Or Uncomment
+        // Comment Or Uncomment
         if ([[[[fragaria objectForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
             enableItem = NO;
         }
@@ -58,11 +58,7 @@
  */
 - (IBAction)shiftLeft:(id)sender
 {
-#pragma unused(sender)
-    
-    NSTextView *textView = self;
-    
-    NSString *completeString = [textView string];
+    NSString *completeString = [self string];
     if ([completeString length] < 1) {
         return;
     }
@@ -112,8 +108,8 @@
                 while (numberOfSpacesToDelete--) {
                     characterToTest = [completeString characterAtIndex:rangeOfLine.location];
                     if (characterToTest == ' ' || characterToTest == '\t') {
-                        if ([textView shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 1) replacementString:@""]) { // Do it this way to mark it as an Undo
-                            [textView replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 1) withString:@""];
+                        if ([self shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 1) replacementString:@""]) { // Do it this way to mark it as an Undo
+                            [self replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 1) withString:@""];
                         }
                         charactersRemoved++;
                         if (rangeOfLine.location >= selectedRange.location && rangeOfLine.location < maxSelectedRange) {
@@ -127,8 +123,8 @@
             } else {
                 characterToTest = [completeString characterAtIndex:rangeOfLine.location];
                 if ((characterToTest == ' ' || characterToTest == '\t') && rangeOfLine.length > 0) {
-                    if ([textView shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 1) replacementString:@""]) { // Do it this way to mark it as an Undo
-                        [textView replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 1) withString:@""];
+                    if ([self shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 1) replacementString:@""]) { // Do it this way to mark it as an Undo
+                        [self replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 1) withString:@""];
                     }
                     charactersRemoved++;
                     if (rangeOfLine.location >= selectedRange.location && rangeOfLine.location < maxSelectedRange) {
@@ -136,7 +132,7 @@
                     }
                 }
             }
-            if (temporaryLocation < [[textView string] length]) {
+            if (temporaryLocation < [[self string] length]) {
                 temporaryLocation = NSMaxRange([completeString lineRangeForRange:NSMakeRange(temporaryLocation, 0)]);
             }
         }
@@ -155,7 +151,7 @@
             [updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(updatedLocation, selectedRange.length - charactersRemovedInSelection)]];
         }
         sumOfAllCharactersRemoved = sumOfAllCharactersRemoved + charactersRemoved;
-        [textView didChangeText];
+        [self didChangeText];
     }
     
     if (sumOfAllCharactersRemoved == 0) {
@@ -163,7 +159,7 @@
     }
     
     if ([updatedSelectionsArray count] > 0) {
-        [textView setSelectedRanges:updatedSelectionsArray];
+        [self setSelectedRanges:updatedSelectionsArray];
     }
 }
 
@@ -174,10 +170,7 @@
  */
 - (IBAction)shiftRight:(id)sender
 {
-#pragma unused(sender)
-    
-    NSTextView *textView = self;
-    NSString *completeString = [textView string];
+    NSString *completeString = [self string];
     if ([completeString length] < 1) {
         return;
     }
@@ -188,7 +181,7 @@
         replacementString = [NSMutableString string];
         NSInteger numberOfSpacesPerTab = [[SMLDefaults valueForKey:MGSFragariaPrefsIndentWidth] integerValue];
         if ([[SMLDefaults valueForKey:MGSFragariaPrefsUseTabStops] boolValue] == YES) {
-            NSInteger locationOnLine = [textView selectedRange].location - [[textView string] lineRangeForRange:NSMakeRange([textView selectedRange].location, 0)].location;
+            NSInteger locationOnLine = [self selectedRange].location - [[self string] lineRangeForRange:NSMakeRange([self selectedRange].location, 0)].location;
             if (numberOfSpacesPerTab != 0) {
                 NSInteger numberOfSpacesLess = locationOnLine % numberOfSpacesPerTab;
                 numberOfSpacesPerTab = numberOfSpacesPerTab - numberOfSpacesLess;
@@ -225,20 +218,20 @@
         NSRange rangeOfLine;
         for (idx = 0; idx < numberOfLines; idx++) {
             rangeOfLine = [completeString lineRangeForRange:NSMakeRange(temporaryLocation, 0)];
-            if ([textView shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 0) replacementString:replacementString]) { // Do it this way to mark it as an Undo
-                [textView replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 0) withString:replacementString];
+            if ([self shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 0) replacementString:replacementString]) { // Do it this way to mark it as an Undo
+                [self replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 0) withString:replacementString];
             }
             charactersInserted = charactersInserted + replacementStringLength;
             if (rangeOfLine.location >= selectedRange.location && rangeOfLine.location < maxSelectedRange + charactersInserted) {
                 charactersInsertedInSelection = charactersInsertedInSelection + replacementStringLength;
             }
-            if (temporaryLocation < [[textView string] length]) {
+            if (temporaryLocation < [[self string] length]) {
                 temporaryLocation = NSMaxRange([completeString lineRangeForRange:NSMakeRange(temporaryLocation, 0)]);
             }
         }
         
         if (selectedRange.length > 0) {
-            if (selectedRange.location + replacementStringLength >= [[textView string] length]) {
+            if (selectedRange.location + replacementStringLength >= [[self string] length]) {
                 updatedLocation = locationOfFirstLine;
             } else {
                 updatedLocation = selectedRange.location;
@@ -246,11 +239,11 @@
             [updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(updatedLocation, selectedRange.length + charactersInsertedInSelection)]];
         }
         sumOfAllCharactersInserted = sumOfAllCharactersInserted + charactersInserted;
-        [textView didChangeText];
+        [self didChangeText];
     }
     
     if ([updatedSelectionsArray count] > 0) {
-        [textView setSelectedRanges:updatedSelectionsArray];
+        [self setSelectedRanges:updatedSelectionsArray];
     }
 }
 
@@ -264,12 +257,9 @@
  */
 - (IBAction)removeNeedlessWhitespace:(id)sender
 {
-#pragma unused(sender)
-    
     // First count the number of lines in which to perform the action, as the original range changes when you insert characters, and then perform the action line after line, by removing tabs and spaces after the last non-whitespace characters in every line
     
-    NSTextView *textView = self;
-    NSString *completeString = [textView string];
+    NSString *completeString = [self string];
     if ([completeString length] < 1) {
         return;
     }
@@ -303,8 +293,8 @@
             [completeString getLineStart:NULL end:NULL contentsEnd:&endOfContentsLocation forRange:rangeOfLine];
             
             while (endOfContentsLocation != 0 && ([completeString characterAtIndex:endOfContentsLocation - 1] == ' ' || [completeString characterAtIndex:endOfContentsLocation - 1] == '\t')) {
-                if ([textView shouldChangeTextInRange:NSMakeRange(endOfContentsLocation - 1, 1) replacementString:@""]) { // Do it this way to mark it as an Undo
-                    [textView replaceCharactersInRange:NSMakeRange(endOfContentsLocation - 1, 1) withString:@""];
+                if ([self shouldChangeTextInRange:NSMakeRange(endOfContentsLocation - 1, 1) replacementString:@""]) { // Do it this way to mark it as an Undo
+                    [self replaceCharactersInRange:NSMakeRange(endOfContentsLocation - 1, 1) withString:@""];
                 }
                 endOfContentsLocation--;
                 charactersRemoved++;
@@ -325,7 +315,7 @@
             [updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(updatedLocation, selectedRange.length - charactersRemoved)]];
         }
         sumOfAllCharactersRemoved = sumOfAllCharactersRemoved + charactersRemoved;
-        [textView didChangeText];
+        [self didChangeText];
     }
     
     if (sumOfAllCharactersRemoved == 0) {
@@ -333,7 +323,7 @@
     }
     
     if ([updatedSelectionsArray count] > 0) {
-        [textView setSelectedRanges:updatedSelectionsArray];
+        [self setSelectedRanges:updatedSelectionsArray];
     }
 }
 
@@ -344,16 +334,13 @@
  */
 - (IBAction)lowercaseCharacters:(id)sender
 {
-#pragma unused(sender)
-    
-    NSTextView *textView = self;
-    NSArray *array = [textView selectedRanges];
+    NSArray *array = [self selectedRanges];
     for (id item in array) {
         NSRange selectedRange = [item rangeValue];
         NSString *originalString = [SMLCurrentText substringWithRange:selectedRange];
         NSString *newString = [NSString stringWithString:[originalString lowercaseString]];
-        [textView setSelectedRange:selectedRange];
-        [textView insertText:newString];
+        [self setSelectedRange:selectedRange];
+        [self insertText:newString];
     }
 }
 
@@ -364,16 +351,13 @@
  */
 - (IBAction)uppercaseCharacters:(id)sender
 {
-#pragma unused(sender)
-    
-    NSTextView *textView = self;
-    NSArray *array = [textView selectedRanges];
+    NSArray *array = [self selectedRanges];
     for (id item in array) {
         NSRange selectedRange = [item rangeValue];
         NSString *originalString = [SMLCurrentText substringWithRange:selectedRange];
         NSString *newString = [NSString stringWithString:[originalString uppercaseString]];
-        [textView setSelectedRange:selectedRange];
-        [textView insertText:newString];
+        [self setSelectedRange:selectedRange];
+        [self insertText:newString];
     }
 }
 
@@ -393,8 +377,6 @@
  */
 - (IBAction)entab:(id)sender
 {
-#pragma unused(sender)
-    
     [SMLCurrentExtraInterfaceController displayEntab];
 }
 
@@ -405,8 +387,6 @@
  */
 - (IBAction)detab:(id)sender
 {
-#pragma unused(sender)
-    
     [SMLCurrentExtraInterfaceController displayDetab];
 }
 
@@ -418,13 +398,12 @@
  */
 - (void)performEntab
 {
-    NSTextView *textView = self;
     NSRange selectedRange;
-    NSRange savedRange = [textView selectedRange];
+    NSRange savedRange = [self selectedRange];
     
     NSArray *array = [self selectedRanges];
     NSInteger numberOfSpaces = [[SMLDefaults valueForKey:MGSFragariaPrefsSpacesPerTabEntabDetab] integerValue];
-    NSMutableString *completeString = [NSMutableString stringWithString:[textView string]];
+    NSMutableString *completeString = [NSMutableString stringWithString:[self string]];
     NSInteger sumOfRemovedCharacters = 0;
     for (id item in array) {
         selectedRange = NSMakeRange([item rangeValue].location - sumOfRemovedCharacters, [item rangeValue].length);
@@ -468,14 +447,14 @@
             thisSpace = [completeString rangeOfString:@" " options:NSLiteralSearch range:range];
         }
         
-        if ([textView shouldChangeTextInRange:NSMakeRange(0, [[textView string] length]) replacementString:completeString]) { // Do it this way to mark it as an Undo
-            [textView replaceCharactersInRange:NSMakeRange(0, [[textView string] length]) withString:completeString];
-            [textView didChangeText];
+        if ([self shouldChangeTextInRange:NSMakeRange(0, [[self string] length]) replacementString:completeString]) { // Do it this way to mark it as an Undo
+            [self replaceCharactersInRange:NSMakeRange(0, [[self string] length]) withString:completeString];
+            [self didChangeText];
         }
         
     }
     
-    [textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
+    [self setSelectedRange:NSMakeRange(savedRange.location, 0)];
 }
 
 /*
@@ -486,9 +465,8 @@
 - (void)performDetab
 {
     NSInteger i;
-    NSTextView *textView = self;
     NSRange selectedRange;
-    NSRange savedRange = [textView selectedRange];
+    NSRange savedRange = [self selectedRange];
     
     NSArray *array = [self selectedRanges];
     NSMutableString *spaces = [NSMutableString string];
@@ -496,7 +474,7 @@
     for (i=0; i<numberOfSpaces; i++) {
         [spaces appendString:@" "];
     }
-    NSMutableString *completeString = [NSMutableString stringWithString:[textView string]];
+    NSMutableString *completeString = [NSMutableString stringWithString:[self string]];
     NSInteger sumOfInsertedCharacters = 0;
     for (id item in array) {
         selectedRange = NSMakeRange([item rangeValue].location + sumOfInsertedCharacters, [item rangeValue].length);
@@ -520,14 +498,14 @@
             tempRange = [completeString rangeOfString:@"\t" options:NSLiteralSearch range:selectedRange];
         }
         
-        if ([textView shouldChangeTextInRange:NSMakeRange(0, [[textView string] length]) replacementString:completeString]) { // Do it this way to mark it as an Undo
-            [textView replaceCharactersInRange:NSMakeRange(0, [[textView string] length]) withString:completeString];
-            [textView didChangeText];
+        if ([self shouldChangeTextInRange:NSMakeRange(0, [[self string] length]) replacementString:completeString]) { // Do it this way to mark it as an Undo
+            [self replaceCharactersInRange:NSMakeRange(0, [[self string] length]) withString:completeString];
+            [self didChangeText];
         }
         
     }
     
-    [textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
+    [self setSelectedRange:NSMakeRange(savedRange.location, 0)];
 }
 
 
@@ -576,18 +554,14 @@
  */
 - (IBAction)closeTag:(id)sender
 {
-#pragma unused(sender)
-    
-    NSTextView *textView = self;
-    
-    NSRange selectedRange = [textView selectedRange];
+    NSRange selectedRange = [self selectedRange];
     if (selectedRange.length > 0) {
         NSBeep();
         return;
     }
     
     NSUInteger location = selectedRange.location;
-    NSString *completeString = [textView string];
+    NSString *completeString = [self string];
     BOOL foundClosingBrace = NO;
     BOOL foundOpeningBrace = NO;
     
@@ -710,9 +684,9 @@
     [tagString insertString:@"/" atIndex:1];
     [tagString insertString:@">" atIndex:tagStringLength + 1];
     
-    if ([textView shouldChangeTextInRange:selectedRange replacementString:tagString]) { // Do it this way to mark it as an Undo
-        [textView replaceCharactersInRange:selectedRange withString:tagString];
-        [textView didChangeText];
+    if ([self shouldChangeTextInRange:selectedRange replacementString:tagString]) { // Do it this way to mark it as an Undo
+        [self replaceCharactersInRange:selectedRange withString:tagString];
+        [self didChangeText];
     }
 }
 
@@ -723,18 +697,15 @@
  */
 - (IBAction)prepareForXML:(id)sender
 {
-#pragma unused(sender)
-    
-    NSTextView *textView = self;
-    NSRange selectedRange = [textView selectedRange];
-    NSMutableString *stringToConvert = [NSMutableString stringWithString:[[textView string] substringWithRange:selectedRange]];
+    NSRange selectedRange = [self selectedRange];
+    NSMutableString *stringToConvert = [NSMutableString stringWithString:[[self string] substringWithRange:selectedRange]];
     [stringToConvert replaceOccurrencesOfString:@"&amp;" withString:@"&" options:NSLiteralSearch range:NSMakeRange(0, [stringToConvert length])];
     [stringToConvert replaceOccurrencesOfString:@"&" withString:@"&amp;" options:NSLiteralSearch range:NSMakeRange(0, [stringToConvert length])];
     [stringToConvert replaceOccurrencesOfString:@"<" withString:@"&lt;" options:NSLiteralSearch range:NSMakeRange(0, [stringToConvert length])];
     [stringToConvert replaceOccurrencesOfString:@">" withString:@"&gt;" options:NSLiteralSearch range:NSMakeRange(0, [stringToConvert length])];
-    if ([textView shouldChangeTextInRange:selectedRange replacementString:stringToConvert]) { // Do it this way to mark it as an Undo
-        [textView replaceCharactersInRange:selectedRange withString:stringToConvert];
-        [textView didChangeText];
+    if ([self shouldChangeTextInRange:selectedRange replacementString:stringToConvert]) { // Do it this way to mark it as an Undo
+        [self replaceCharactersInRange:selectedRange withString:stringToConvert];
+        [self didChangeText];
     }
 }
 
@@ -748,10 +719,7 @@
  */
 - (IBAction)commentOrUncomment:(id)sender
 {
-#pragma unused(sender)
-    
-    NSTextView *textView = self;
-    NSString *completeString = [textView string];
+    NSString *completeString = [self string];
     NSString *commentString = [[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment];
     NSUInteger commentStringLength = [commentString length];
     if ([commentString isEqualToString:@""] || [completeString length] < commentStringLength) {
@@ -759,7 +727,7 @@
         return;
     }
     
-    NSArray *array = [textView selectedRanges];
+    NSArray *array = [self selectedRanges];
     NSRange selectedRange = NSMakeRange(0, 0);
     NSInteger sumOfChangedCharacters = 0;
     NSMutableArray *updatedSelectionsArray = [NSMutableArray array];
@@ -806,8 +774,8 @@
         for (idx = 0; idx < numberOfLines; idx++) {
             rangeOfLine = [completeString lineRangeForRange:NSMakeRange(tempLocation, 0)];
             if (shouldUncomment == NO) {
-                if ([textView shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 0) replacementString:commentString]) { // Do it this way to mark it as an Undo
-                    [textView replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 0) withString:commentString];
+                if ([self shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 0) replacementString:commentString]) { // Do it this way to mark it as an Undo
+                    [self replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 0) withString:commentString];
                 }
                 charactersInserted = charactersInserted + commentStringLength;
             } else {
@@ -816,8 +784,8 @@
                     firstCharacterOfLine++;
                 }
                 if ([completeString rangeOfString:commentString options:NSCaseInsensitiveSearch range:NSMakeRange(firstCharacterOfLine, [commentString length])].location != NSNotFound) {
-                    if ([textView shouldChangeTextInRange:NSMakeRange(firstCharacterOfLine, commentStringLength) replacementString:@""]) { // Do it this way to mark it as an Undo
-                        [textView replaceCharactersInRange:NSMakeRange(firstCharacterOfLine, commentStringLength) withString:@""];
+                    if ([self shouldChangeTextInRange:NSMakeRange(firstCharacterOfLine, commentStringLength) replacementString:@""]) { // Do it this way to mark it as an Undo
+                        [self replaceCharactersInRange:NSMakeRange(firstCharacterOfLine, commentStringLength) withString:@""];
                     }		
                     charactersInserted = charactersInserted - commentStringLength;
                 }
@@ -826,11 +794,11 @@
         }
         sumOfChangedCharacters = sumOfChangedCharacters + charactersInserted;
         [updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(locationOfFirstLine, locationOfLastLine - locationOfFirstLine + charactersInserted)]];
-        [textView didChangeText];
+        [self didChangeText];
     }
     
     if (selectedRange.length > 0) {
-        [textView setSelectedRanges:updatedSelectionsArray];
+        [self setSelectedRanges:updatedSelectionsArray];
     }
     
 }
@@ -845,11 +813,8 @@
  */
 - (IBAction)removeLineEndings:(id)sender
 {
-#pragma unused(sender)
-    
-    NSTextView *textView = self;
-    NSString *text = [textView string];
-    NSArray *array = [textView selectedRanges];
+    NSString *text = [self string];
+    NSArray *array = [self selectedRanges];
     NSInteger sumOfDeletedLineEndings = 0;
     NSMutableArray *updatedSelectionsArray = [NSMutableArray array];
     for (id item in array) {
@@ -858,9 +823,9 @@
         NSInteger originalLength = [stringToRemoveLineEndingsFrom length];
         NSString *stringWithNoLineEndings = [SMLText removeAllLineEndingsInString:stringToRemoveLineEndingsFrom];
         NSInteger newLength = [stringWithNoLineEndings length];
-        if ([textView shouldChangeTextInRange:NSMakeRange(selectedRange.location, originalLength) replacementString:stringWithNoLineEndings]) { // Do it this way to mark it as an Undo
-            [textView replaceCharactersInRange:NSMakeRange(selectedRange.location, originalLength) withString:stringWithNoLineEndings];
-            [textView didChangeText];
+        if ([self shouldChangeTextInRange:NSMakeRange(selectedRange.location, originalLength) replacementString:stringWithNoLineEndings]) { // Do it this way to mark it as an Undo
+            [self replaceCharactersInRange:NSMakeRange(selectedRange.location, originalLength) withString:stringWithNoLineEndings];
+            [self didChangeText];
         }			
         sumOfDeletedLineEndings = sumOfDeletedLineEndings + (originalLength - newLength);
         
@@ -868,7 +833,7 @@
     }
     
     if ([updatedSelectionsArray count] > 0) {
-        [textView setSelectedRanges:updatedSelectionsArray];
+        [self setSelectedRanges:updatedSelectionsArray];
     }
 }
 
@@ -886,12 +851,11 @@
     
     [document setValue:[NSNumber numberWithInteger:[sender tag] - 150] forKey:@"lineEndings"];
     
-    NSTextView *textView = self;
-    NSRange selectedRange = [textView selectedRange];
-    NSString *text = [textView string];
+    NSRange selectedRange = [self selectedRange];
+    NSString *text = [self string];
     NSString *convertedString = [SMLText convertLineEndings:text inDocument:document];
-    [textView replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
-    [textView setSelectedRange:selectedRange];
+    [self replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
+    [self setSelectedRange:selectedRange];
 }
 
 /*
@@ -908,12 +872,11 @@
     
     [document setValue:[sender objectAtIndex:0] forKey:@"lineEndings"];
     
-    NSTextView *textView = self;
-    NSRange selectedRange = [textView selectedRange];
-    NSString *text = [textView string];
+    NSRange selectedRange = [self selectedRange];
+    NSString *text = [self string];
     NSString *convertedString = [SMLText convertLineEndings:text inDocument:document];
-    [textView replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
-    [textView setSelectedRange:selectedRange];
+    [self replaceCharactersInRange:NSMakeRange(0, [text length]) withString:convertedString];
+    [self setSelectedRange:selectedRange];
 }
 
 
