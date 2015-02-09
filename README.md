@@ -65,38 +65,36 @@ The best way to learn how to use the framework is to look at the sample apps.
 A Fragaria view is embedded in a content view.
 
 
-~~~~ objective-c
-#import "MGSFragaria/MGSFragaria.h"
-
-// we need a container view to host Fragaria in
-NSView *containerView = nil; // loaded from nib or otherwise created
-
-// create our instance
-MGSFragaria *fragaria = [[MGSFragaria alloc] init];
-
-// we want to be the delegate
-[fragaria setObject:self forKey:MGSFODelegate];
-
-// Objective-C is the place to be
-[self setSyntaxDefinition:@"Objective-C"];
-
-// embed in our container - exception thrown if containerView is nil
-[fragaria embedInView:containerView];
-
-// set initial text
-[fragaria setString:@"// We don't need the future."];
-~~~~
+    #import "MGSFragaria/MGSFragaria.h"
+    
+    // we need a container view to host Fragaria in
+    NSView *containerView = nil; // loaded from nib or otherwise created
+    
+    // create our instance
+    MGSFragaria *fragaria = [[MGSFragaria alloc] init];
+    
+    // we want to be the delegate
+    [fragaria setObject:self forKey:MGSFODelegate];
+    
+    // Objective-C is the place to be
+    [self setSyntaxDefinition:@"Objective-C"];
+    
+    // embed in our container - exception thrown if containerView is nil
+    [fragaria embedInView:containerView];
+    
+    // set initial text
+    [fragaria setString:@"// We don't need the future."];
 
 
 The initial appearance of a Fragaria view is determined by the framework preferences controller. The MGSFragaria
 framework supplies two preference view controllers whose views can be embedded in your preference panel.
 
 
-~~~~ objective-c
-MGSFragariaTextEditingPrefsViewController * textEditingPrefsViewController = [MGSFragariaPreferences sharedInstance].textEditingPrefsViewController;
 
-MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewController = [MGSFragariaPreferences sharedInstance].fontsAndColoursPrefsViewController;
-~~~~
+    MGSFragariaTextEditingPrefsViewController * textEditingPrefsViewController = [MGSFragariaPreferences sharedInstance].textEditingPrefsViewController;
+    
+    MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewController = [MGSFragariaPreferences sharedInstance].fontsAndColoursPrefsViewController;
+
 
 
 ### Setting preferences
@@ -104,10 +102,9 @@ MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewControlle
 Preference strings are defined in MGSFragaria/MGSFragariaPreferences.h. Each preference name is prefixed with Fragaria
 for easy identification within the application preferences file.
 
-~~~~ objective-c
-// default to line wrap off
-[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:MGSFragariaPrefsLineWrapNewDocuments];
-~~~~
+
+    // default to line wrap off
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:MGSFragariaPrefsLineWrapNewDocuments];
 
 
 All preferences are observed and instances of Fragaria views update immediately to reflect the new preference.
@@ -118,9 +115,9 @@ All preferences are observed and instances of Fragaria views update immediately 
 Use the `MGSFOBreakpointDelegate` key to define a breakpoint delegate that responds to conforms to
 `MGSBreakpointDelegate`
 
-~~~~ objective-c
-[fragaria setObject:self forKey:MGSFODelegate];
-~~~~
+
+    [fragaria setObject:self forKey:MGSFODelegate];
+
 
 The breakpoint delegate returns an `NSSet` of breakpoint line numbers. The implementation of this feature is at an early
 stage. Feel free to improve it.
@@ -129,16 +126,14 @@ stage. Feel free to improve it.
 
 To add clickable syntax error highlights define an `NSArray` of SMLSyntaxErrors.
 
-~~~~ objective-c
-// define a syntax error
-SMLSyntaxError *syntaxError = [[SMLSyntaxError new] autorelease];
-syntaxError.description = @"Syntax errors can be defined";
-syntaxError.line = 1;
-syntaxError.character = 1;
-syntaxError.length = 10;
-
-fragaria.syntaxErrors = @[syntaxError];
-~~~~
+    // define a syntax error
+    SMLSyntaxError *syntaxError = [[SMLSyntaxError new] autorelease];
+    syntaxError.description = @"Syntax errors can be defined";
+    syntaxError.line = 1;
+    syntaxError.character = 1;
+    syntaxError.length = 10;
+    
+    fragaria.syntaxErrors = @[syntaxError];
 
 The implementation of this feature is at an early stage. Feel free to improve it.
 
@@ -149,34 +144,34 @@ syntactical groups such as numbers, attributes, comments or keywords.
 
 Pseudo code for the protocol method flow looks something like:
 
-// query delegate if should colour this document
-doColouring = fragariaDocument:shouldColourWithBlock:string:range:info
-if !doColouring quit colouring
-
-// send *ColourGroupWithBlock methods for each group defined by SMLSyntaxGroupInteger
-foreach group
-
-// query delegate if should colour this group
-doColouring = fragariaDocument:shouldColourGroupWithBlock:string:range:info
-
-if doColouring
-
-colour the group
-
-// inform delegate group was coloured
-fragariaDocument:didColourGroupWithBlock:string:range:info
-
-end if
-end
-
-// inform delegate document was coloured
-fragariaDocument:willDidWithBlock:string:range:info
+    // query delegate if should colour this document
+    doColouring = fragariaDocument:shouldColourWithBlock:string:range:info
+    if !doColouring quit colouring
+    
+    // send *ColourGroupWithBlock methods for each group defined by SMLSyntaxGroupInteger
+    foreach group
+    
+    // query delegate if should colour this group
+    doColouring = fragariaDocument:shouldColourGroupWithBlock:string:range:info
+    
+    if doColouring
+    
+    colour the group
+    
+    // inform delegate group was coloured
+    fragariaDocument:didColourGroupWithBlock:string:range:info
+    
+    end if
+    end
+    
+    // inform delegate document was coloured
+    fragariaDocument:willDidWithBlock:string:range:info
 
 The delegate can completely override the colouring for a given group or provide additional colouring support (you will have
 to provide you own scanning logic). Document level delegate messages provide an opportunity to provide colouring for
 custom group configurations. 
 
-For more details see [SMLSyntaxColouringDelegate.h](SMLSyntaxColouringDelegate.h) and  the example code in
+For more details see [SMLSyntaxColouringDelegate.h](SMLSyntaxColouringDelegate.h) and the example code in
 [FragariaAppDelegate.m](FragariaAppDelegate.m).
 
 
