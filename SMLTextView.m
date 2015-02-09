@@ -21,6 +21,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import "MGSFragaria.h"
 #import "MGSFragariaFramework.h"
 #import "SMLAutoCompleteDelegate.h"
+#import "SMLTextView+MGSTextActions.h"
 
 // class extension
 @interface SMLTextView()
@@ -378,7 +379,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	}
 	
 	if (shouldShiftText) {
-		[[MGSTextMenuController sharedInstance] shiftRightAction:nil];
+		[self shiftRight:nil];
 	} else if ([[SMLDefaults valueForKey:MGSFragariaPrefsIndentWithSpaces] boolValue] == YES) {
 		NSMutableString *spacesString = [NSMutableString string];
 		NSInteger numberOfSpacesPerTab = [[SMLDefaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
