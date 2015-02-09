@@ -21,12 +21,9 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import "MGSFragariaFramework.h"
 #import "SMLTextView+MGSTextActions.h"
 
-// class extension
-@interface MGSTextMenuController()
-- (void)reloadText:(id)sender;
-@end
 
 @implementation MGSTextMenuController
+
 
 static id sharedInstance = nil;
 
@@ -158,7 +155,7 @@ static id sharedInstance = nil;
 - (IBAction)shiftLeftAction:(id)sender
 {	
     SMLTextView *textView = SMLCurrentTextView;
-    [textView shiftLeftAction:sender];
+    [textView shiftLeft:sender];
 }
 
 /*
@@ -169,7 +166,7 @@ static id sharedInstance = nil;
 - (IBAction)shiftRightAction:(id)sender
 {
 	SMLTextView *textView = SMLCurrentTextView;
-    [textView shiftRightAction:sender];
+    [textView shiftRight:sender];
 }
 
 #pragma mark -
@@ -194,7 +191,7 @@ static id sharedInstance = nil;
 - (IBAction)removeNeedlessWhitespaceAction:(id)sender
 {
 	SMLTextView *textView = SMLCurrentTextView;
-    [textView removeNeedlessWhitespaceAction:sender];
+    [textView removeNeedlessWhitespace:sender];
 }
 
 /*
@@ -205,7 +202,7 @@ static id sharedInstance = nil;
 - (IBAction)toLowercaseAction:(id)sender
 {
 	SMLTextView *textView = SMLCurrentTextView;
-    [textView toLowercaseAction:sender];
+    [textView lowercaseCharacters:sender];
 }
 
 /*
@@ -216,7 +213,7 @@ static id sharedInstance = nil;
 - (IBAction)toUppercaseAction:(id)sender
 {
 	SMLTextView *textView = SMLCurrentTextView;
-    [textView toUppercaseAction:sender];
+    [textView uppercaseCharacters:sender];
 }
 
 /*
@@ -227,7 +224,7 @@ static id sharedInstance = nil;
 - (IBAction)capitaliseAction:(id)sender
 {
 	SMLTextView *textView = SMLCurrentTextView;
-    [textView capitaliseAction:sender];
+    [textView capitalizeWord:sender];
 }
 
 /*
@@ -238,7 +235,7 @@ static id sharedInstance = nil;
 - (IBAction)entabAction:(id)sender
 {
 	SMLTextView *textView = SMLCurrentTextView;
-    [textView entabAction:sender];
+    [textView entab:sender];
 }
 
 /*
@@ -249,7 +246,7 @@ static id sharedInstance = nil;
 - (IBAction)detabAction:(id)sender
 {
     SMLTextView *textView = SMLCurrentTextView;
-    [textView detabAction:sender];
+    [textView detab:sender];
 }
 
 
@@ -267,18 +264,6 @@ static id sharedInstance = nil;
 }
 
 
-/*
- 
- - reloadText:
- 
- */
-- (void)reloadText:(id)sender
-{
-    SMLTextView *textView = SMLCurrentTextView;
-    [textView reloadText:sender];
-}
-
-
 #pragma mark -
 #pragma mark Goto
 
@@ -290,7 +275,7 @@ static id sharedInstance = nil;
 - (IBAction)goToLineAction:(id)sender
 {
 	SMLTextView *textView = SMLCurrentTextView;
-    [textView goToLineAction:sender];
+    [textView goToLine:sender];
 }
 
 
@@ -313,7 +298,7 @@ static id sharedInstance = nil;
 - (IBAction)closeTagAction:(id)sender
 {
 	SMLTextView *textView = SMLCurrentTextView;
-    [textView closeTagAction:sender];
+    [textView closeTag:sender];
 }
 
 /*
@@ -324,7 +309,7 @@ static id sharedInstance = nil;
 - (IBAction)prepareForXMLAction:(id)sender
 {
     SMLTextView *textView = SMLCurrentTextView;
-    [textView prepareForXMLAction:sender];
+    [textView prepareForXML:sender];
 }
 
 #pragma mark -
@@ -338,7 +323,7 @@ static id sharedInstance = nil;
 - (IBAction)commentOrUncommentAction:(id)sender
 {
 	SMLTextView *textView = SMLCurrentTextView;
-    [textView commentOrUncommentAction:sender];
+    [textView commentOrUncomment:sender];
 }
 
 #pragma mark -
@@ -352,7 +337,7 @@ static id sharedInstance = nil;
 - (IBAction)removeLineEndingsAction:(id)sender
 {
 	SMLTextView *textView = SMLCurrentTextView;
-    [textView removeLineEndingsAction:sender];
+    [textView removeLineEndings:sender];
 }
 
 /*
@@ -363,7 +348,7 @@ static id sharedInstance = nil;
 - (IBAction)changeLineEndingsAction:(id)sender
 {
     SMLTextView *textView = SMLCurrentTextView;
-    [textView changeLineEndingsAction:sender];
+    [textView changeLineEndings:sender];
 }
 
 

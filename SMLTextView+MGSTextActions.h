@@ -14,25 +14,21 @@
 
 @interface SMLTextView (MGSTextActions)
 
-- (IBAction)removeNeedlessWhitespaceAction:(id)sender;
-- (IBAction)detabAction:(id)sender;
-- (IBAction)entabAction:(id)sender;
+- (IBAction)removeNeedlessWhitespace:(id)sender;
+- (IBAction)detab:(id)sender;
+- (IBAction)entab:(id)sender;
 - (void)performEntab;
 - (void)performDetab;
-- (IBAction)shiftLeftAction:(id)sender;
-- (IBAction)shiftRightAction:(id)sender;
-- (IBAction)toLowercaseAction:(id)sender;
-- (IBAction)toUppercaseAction:(id)sender;
-- (IBAction)capitaliseAction:(id)sender;
-- (IBAction)goToLineAction:(id)sender;
+- (IBAction)shiftLeft:(id)sender;
+- (IBAction)shiftRight:(id)sender;
+- (IBAction)lowercaseCharacters:(id)sender;
+- (IBAction)uppercaseCharacters:(id)sender;
+- (IBAction)goToLine:(id)sender;
 - (void)performGoToLine:(NSInteger)lineToGoTo;
-- (IBAction)closeTagAction:(id)sender;
-- (IBAction)commentOrUncommentAction:(id)sender;
-- (IBAction)emptyDummyAction:(id)sender;
-- (IBAction)removeLineEndingsAction:(id)sender;
-- (IBAction)changeLineEndingsAction:(id)sender;
-- (IBAction)interchangeAdjacentCharactersAction:(id)sender;
-- (IBAction)prepareForXMLAction:(id)sender;
-- (IBAction)reloadText:(id)sender;
+- (IBAction)closeTag:(id)sender;
+- (IBAction)commentOrUncomment:(id)sender;
+- (IBAction)removeLineEndings:(id)sender;
+- (IBAction)changeLineEndings:(id)sender;
+- (IBAction)prepareForXML:(id)sender;
 
 @end

@@ -46,17 +46,6 @@
     return enableMenuItem;
 }
 
-/*
- 
- - emptyDummyAction:
- 
- */
-- (IBAction)emptyDummyAction:(id)sender
-{
-    // An easy way to enable menu items with submenus without setting an action which actually does something
-#pragma unused(sender)
-}
-
 
 #pragma mark -
 #pragma mark Text shifting
@@ -66,7 +55,7 @@
  - shiftLeftAction:
  
  */
-- (IBAction)shiftLeftAction:(id)sender
+- (IBAction)shiftLeft:(id)sender
 {
 #pragma unused(sender)
     
@@ -182,7 +171,7 @@
  - shiftRightAction:
  
  */
-- (IBAction)shiftRightAction:(id)sender
+- (IBAction)shiftRight:(id)sender
 {
 #pragma unused(sender)
     
@@ -269,23 +258,10 @@
 
 /*
  
- - interchangeAdjacentCharactersAction:
- 
- */
-- (IBAction)interchangeAdjacentCharactersAction:(id)sender
-{
-#pragma unused(sender)
-    
-    NSTextView *textView = self;
-    [textView transpose:nil];
-}
-
-/*
- 
  - removeNeedlessWhitespaceAction:
  
  */
-- (IBAction)removeNeedlessWhitespaceAction:(id)sender
+- (IBAction)removeNeedlessWhitespace:(id)sender
 {
 #pragma unused(sender)
     
@@ -365,7 +341,7 @@
  - toLowercaseAction:
  
  */
-- (IBAction)toLowercaseAction:(id)sender
+- (IBAction)lowercaseCharacters:(id)sender
 {
 #pragma unused(sender)
     
@@ -385,7 +361,7 @@
  - toUppercaseAction:
  
  */
-- (IBAction)toUppercaseAction:(id)sender
+- (IBAction)uppercaseCharacters:(id)sender
 {
 #pragma unused(sender)
     
@@ -402,30 +378,10 @@
 
 /*
  
- - capitaliseAction:
- 
- */
-- (IBAction)capitaliseAction:(id)sender
-{
-#pragma unused(sender)
-    
-    NSTextView *textView = self;
-    NSArray *array = [textView selectedRanges];
-    for (id item in array) {
-        NSRange selectedRange = [item rangeValue];
-        NSString *originalString = [SMLCurrentText substringWithRange:selectedRange];
-        NSString *newString = [NSString stringWithString:[originalString capitalizedString]];
-        [textView setSelectedRange:selectedRange];
-        [textView insertText:newString];
-    }
-}
-
-/*
- 
  - entabAction:
  
  */
-- (IBAction)entabAction:(id)sender
+- (IBAction)entab:(id)sender
 {
 #pragma unused(sender)
     
@@ -437,7 +393,7 @@
  - detabAction
  
  */
-- (IBAction)detabAction:(id)sender
+- (IBAction)detab:(id)sender
 {
 #pragma unused(sender)
     
@@ -564,21 +520,6 @@
     [textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
 }
 
-/*
- 
- - reloadText:
- 
- */
-- (void)reloadText:(id)sender
-{
-#pragma unused(sender)
-    
-    id document = SMLCurrentDocument;
-    [document setValue:[NSNumber numberWithUnsignedInteger:[sender tag]] forKey:@"encoding"];
-    [document setValue:[NSString localizedNameOfStringEncoding:[sender tag]] forKey:@"encodingName"];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"MGSFragariaReloadText" object:[MGSFragaria currentInstance] userInfo:nil];
-}
 
 #pragma mark -
 #pragma mark Goto
@@ -588,7 +529,7 @@
  - goToLineAction:
  
  */
-- (IBAction)goToLineAction:(id)sender
+- (IBAction)goToLine:(id)sender
 {
 #pragma unused(sender)
     
@@ -615,7 +556,7 @@
  - closeTagAction:
  
  */
-- (IBAction)closeTagAction:(id)sender
+- (IBAction)closeTag:(id)sender
 {
 #pragma unused(sender)
     
@@ -762,7 +703,7 @@
  - prepareForXMLAction:
  
  */
-- (IBAction)prepareForXMLAction:(id)sender
+- (IBAction)prepareForXML:(id)sender
 {
 #pragma unused(sender)
     
@@ -787,7 +728,7 @@
  - commentOrUncommentAction:
  
  */
-- (IBAction)commentOrUncommentAction:(id)sender
+- (IBAction)commentOrUncomment:(id)sender
 {
 #pragma unused(sender)
     
@@ -884,7 +825,7 @@
  - removeLineEndingsAction:
  
  */
-- (IBAction)removeLineEndingsAction:(id)sender
+- (IBAction)removeLineEndings:(id)sender
 {
 #pragma unused(sender)
     
@@ -918,7 +859,7 @@
  - changeLineEndingsAction:
  
  */
-- (IBAction)changeLineEndingsAction:(id)sender
+- (IBAction)changeLineEndings:(id)sender
 {
     id document = SMLCurrentDocument;
     
