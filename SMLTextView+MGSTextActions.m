@@ -376,6 +376,15 @@
     }
 }
 
+
+- (IBAction)capitalizeWord:(id)sender
+{
+    /* This is because NSResponder does not tag this action as an IBAction,
+     * thus it does not appear in IB for linking. */
+    [super capitalizeWord:sender];
+}
+
+
 /*
  
  - entabAction:
@@ -518,6 +527,14 @@
     }
     
     [textView setSelectedRange:NSMakeRange(savedRange.location, 0)];
+}
+
+
+- (IBAction)transpose:(id)sender
+{
+    /* This is because NSResponder does not tag this action as an IBAction,
+     * thus it does not appear in IB for linking. */
+    [super transpose:sender];
 }
 
 

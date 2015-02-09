@@ -318,10 +318,10 @@
                                                 <action selector="lowercaseWord:" target="-1" id="iUZ-b5-hil"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Capitalize" id="UEZ-Bs-lqG">
+                                        <menuItem title="Capitalize" id="Tvn-pC-2DQ">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <connections>
-                                                <action selector="capitalizeWord:" target="-1" id="26H-TL-nsh"/>
+                                                <action selector="capitalizeWord:" target="-1" id="Xkw-vz-b03"/>
                                             </connections>
                                         </menuItem>
                                     </items>
@@ -611,6 +611,89 @@
                         </items>
                     </menu>
                 </menuItem>
+                <menuItem title="Item" id="79m-bG-Kal">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <menu key="submenu" title="Text" id="yXT-SU-31E">
+                        <items>
+                            <menuItem title="Shift Left" keyEquivalent="[" id="Baw-Ay-P4P">
+                                <connections>
+                                    <action selector="shiftLeft:" target="-1" id="Jhf-iV-hYI"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Shift Right" keyEquivalent="]" id="1Ub-KN-s5d">
+                                <connections>
+                                    <action selector="shiftRight:" target="-1" id="9z7-pd-fhf"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Comment Or Uncomment" tag="103" keyEquivalent="/" id="xJ9-M3-wWK">
+                                <connections>
+                                    <action selector="commentOrUncomment:" target="-1" id="oGO-aH-pVk"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Remove Needless Whitespace" tag="102" keyEquivalent="k" id="gj1-Qp-1mH">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="removeNeedlessWhitespace:" target="-1" id="7gV-Xa-EYC"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Remove Line Endings" tag="102" keyEquivalent="E" id="Zxv-Me-S6r">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="removeLineEndings:" target="-1" id="Dn5-ke-lJt"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="t9a-YS-mTy">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Entab… (Spaces To Tabs)" tag="102" keyEquivalent="t" id="peo-P3-T5A">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="entab:" target="-1" id="sNn-9j-7hc"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Detab… (Tabs To Spaces)" tag="102" keyEquivalent="T" id="Jeo-my-OSq">
+                                <connections>
+                                    <action selector="detab:" target="-1" id="dpK-1j-UDt"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="Pli-Tc-ssg">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Capitalise First Letter Of Every Word" tag="102" keyEquivalent="c" id="H9Q-k8-B5y">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="capitalizeWord:" target="-1" id="9Q4-fa-5ME"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="To UPPERCASE" tag="102" keyEquivalent="C" id="zO2-3P-Gsc">
+                                <connections>
+                                    <action selector="uppercaseCharacters:" target="-1" id="zUW-oy-b0j"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="To lowercase" tag="102" keyEquivalent="C" id="LJZ-AX-ISM">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="lowercaseCharacters:" target="-1" id="vTp-B9-zTq"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem title="Switch Characters" keyEquivalent="t" id="EfK-v6-sg4">
+                                <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                                <connections>
+                                    <action selector="transpose:" target="-1" id="Kzk-Eh-y6F"/>
+                                </connections>
+                            </menuItem>
+                            <menuItem isSeparatorItem="YES" id="3NJ-hQ-vyo">
+                                <modifierMask key="keyEquivalentModifierMask" command="YES"/>
+                            </menuItem>
+                            <menuItem title="Go To Line…" keyEquivalent="g" id="NAk-0G-uh7">
+                                <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                <connections>
+                                    <action selector="goToLine:" target="-1" id="hW9-wU-Hbm"/>
+                                </connections>
+                            </menuItem>
+                        </items>
+                    </menu>
+                </menuItem>
                 <menuItem title="View" id="H8h-7b-M4v">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" title="View" id="HyV-fh-RgO">
@@ -665,7 +748,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
