@@ -60,7 +60,7 @@ typedef enum {
  */
 #define SMLCurrentExtraInterfaceController [[MGSFragaria currentInstance] extraInterfaceController]
 #define SMLCurrentDocument [[MGSFragaria currentInstance] docSpec]
-#define SMLCurrentTextView [[MGSFragaria currentInstance] textView]
+#define SMLCurrentTextView ((SMLTextView*)[[MGSFragaria currentInstance] textView])
 #define SMLCurrentText [[[MGSFragaria currentInstance] textView] string]
 #define SMLCurrentWindow [[[MGSFragaria currentInstance] textView] window]
 

@@ -26,8 +26,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (IBAction)removeNeedlessWhitespaceAction:(id)sender;
 - (IBAction)detabAction:(id)sender;
 - (IBAction)entabAction:(id)sender;
-- (void)performEntab;
 - (void)performDetab;
+- (void)performEntab;
 - (IBAction)shiftLeftAction:(id)sender;
 - (IBAction)shiftRightAction:(id)sender;
 - (IBAction)toLowercaseAction:(id)sender;

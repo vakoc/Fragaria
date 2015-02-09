@@ -19,6 +19,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 #import "MGSFragaria.h"
 #import "MGSFragariaFramework.h"
+#import "SMLTextView+MGSTextActions.h"
 
 // class extension
 @interface MGSExtraInterfaceController()
@@ -89,7 +90,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	[NSApp endSheet:[SMLCurrentWindow attachedSheet]]; 
 	[[SMLCurrentWindow attachedSheet] close];
 	
-	[[MGSTextMenuController sharedInstance] performEntab];
+    [[MGSTextMenuController sharedInstance] performEntab];
 }
 
 /*
