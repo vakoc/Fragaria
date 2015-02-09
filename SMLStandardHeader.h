@@ -50,7 +50,6 @@ typedef enum {
 #define COMMAND_RESULT_WINDOW_TITLE NSLocalizedStringFromTable(@"Command Result - Smultron", @"Localizable3", @"Command Result - Smultron")
 
 
-#define SMLText [SMLTextPerformer sharedInstance]
 #define SMLDefaults [[NSUserDefaultsController sharedUserDefaultsController] values]
 
 /*
@@ -59,9 +58,7 @@ typedef enum {
  
  */
 #define SMLCurrentExtraInterfaceController [[MGSFragaria currentInstance] extraInterfaceController]
-#define SMLCurrentDocument [[MGSFragaria currentInstance] docSpec]
 #define SMLCurrentTextView ((SMLTextView*)[[MGSFragaria currentInstance] textView])
-#define SMLCurrentText [[[MGSFragaria currentInstance] textView] string]
 #define SMLCurrentWindow [[[MGSFragaria currentInstance] textView] window]
 
 

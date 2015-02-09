@@ -118,13 +118,13 @@ static id sharedInstance = nil;
 		   action == @selector(toUppercaseAction:) ||
 		   action == @selector(toLowercaseAction:)
 		   ) { 
-		if ([SMLCurrentTextView selectedRange].length < 1) {
+		if ([responder selectedRange].length < 1) {
 			enableMenuItem = NO;
 		}
 	}
     // Comment Or Uncomment
     else if (action == @selector(commentOrUncommentAction:) ) {
-		if ([[[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
+		if ([[[[[responder fragaria] objectForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
 			enableMenuItem = NO;
 		}
 	} 

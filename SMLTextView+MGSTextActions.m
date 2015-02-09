@@ -337,7 +337,7 @@
     NSArray *array = [self selectedRanges];
     for (id item in array) {
         NSRange selectedRange = [item rangeValue];
-        NSString *originalString = [SMLCurrentText substringWithRange:selectedRange];
+        NSString *originalString = [[self string] substringWithRange:selectedRange];
         NSString *newString = [NSString stringWithString:[originalString lowercaseString]];
         [self setSelectedRange:selectedRange];
         [self insertText:newString];
@@ -354,7 +354,7 @@
     NSArray *array = [self selectedRanges];
     for (id item in array) {
         NSRange selectedRange = [item rangeValue];
-        NSString *originalString = [SMLCurrentText substringWithRange:selectedRange];
+        NSString *originalString = [[self string] substringWithRange:selectedRange];
         NSString *newString = [NSString stringWithString:[originalString uppercaseString]];
         [self setSelectedRange:selectedRange];
         [self insertText:newString];
@@ -720,7 +720,7 @@
 - (IBAction)commentOrUncomment:(id)sender
 {
     NSString *completeString = [self string];
-    NSString *commentString = [[[SMLCurrentDocument valueForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment];
+    NSString *commentString = [[[fragaria objectForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment];
     NSUInteger commentStringLength = [commentString length];
     if ([commentString isEqualToString:@""] || [completeString length] < commentStringLength) {
         NSBeep();
@@ -859,7 +859,7 @@
  */
 - (IBAction)changeLineEndings:(id)sender
 {
-    id document = SMLCurrentDocument;
+    id document = [fragaria docSpec];
     
     [[[document valueForKey:ro_MGSFOSyntaxColouring] undoManager] registerUndoWithTarget:self selector:@selector(performUndoChangeLineEndings:) object:[NSArray arrayWithObject:[document valueForKey:@"lineEndings"]]];
     [[[document valueForKey:ro_MGSFOSyntaxColouring] undoManager] setActionName:NAME_FOR_UNDO_CHANGE_LINE_ENDINGS];
@@ -880,7 +880,7 @@
  */
 - (void)performUndoChangeLineEndings:(id)sender
 {
-    id document = SMLCurrentDocument;
+    id document = [fragaria docSpec];
     
     [[[document valueForKey:ro_MGSFOSyntaxColouring] undoManager] registerUndoWithTarget:self selector:@selector(performUndoChangeLineEndings:) object:[NSArray arrayWithObject:[document valueForKey:@"lineEndings"]]];
     [[[document valueForKey:ro_MGSFOSyntaxColouring] undoManager] setActionName:NAME_FOR_UNDO_CHANGE_LINE_ENDINGS];
