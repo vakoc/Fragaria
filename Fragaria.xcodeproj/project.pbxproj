@@ -28,7 +28,6 @@
 		AB41C1011191FDFE004F0CB5 /* SMLLineNumbers.m in Sources */ = {isa = PBXBuildFile; fileRef = AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */; };
 		AB41C1051191FFCB004F0CB5 /* MGSFragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */; };
 		AB472B6F129972E400202CB5 /* MGSTextMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB472B6E129972E400202CB5 /* MGSTextMenuController.m */; };
-		AB472BE91299AF3800202CB5 /* SMLTextPerformer.m in Sources */ = {isa = PBXBuildFile; fileRef = AB472BE81299AF3800202CB5 /* SMLTextPerformer.m */; };
 		AB472BF41299BBB100202CB5 /* MGSExtraInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */; };
 		AB472C7B1299C2F500202CB5 /* SMLCommandResult.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C7A1299C2F500202CB5 /* SMLCommandResult.xib */; };
 		AB472C811299C30F00202CB5 /* SMLRegularExpressionHelp.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C801299C30F00202CB5 /* SMLRegularExpressionHelp.xib */; };
@@ -181,8 +180,6 @@
 		AB41C1261192049F004F0CB5 /* SMLLineNumbers.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = SMLLineNumbers.h; sourceTree = "<group>"; tabWidth = 4; };
 		AB472B6E129972E400202CB5 /* MGSTextMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MGSTextMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB472B7B1299732F00202CB5 /* MGSTextMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTextMenuController.h; sourceTree = "<group>"; };
-		AB472BE81299AF3800202CB5 /* SMLTextPerformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLTextPerformer.m; sourceTree = "<group>"; };
-		AB472BEA1299AF5100202CB5 /* SMLTextPerformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLTextPerformer.h; sourceTree = "<group>"; };
 		AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSExtraInterfaceController.m; sourceTree = "<group>"; };
 		AB472BF51299BBBA00202CB5 /* MGSExtraInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSExtraInterfaceController.h; sourceTree = "<group>"; };
 		AB472C7A1299C2F500202CB5 /* SMLCommandResult.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLCommandResult.xib; sourceTree = "<group>"; };
@@ -378,15 +375,6 @@
 				AB69B659118B75E100903D1D /* Error Popover */,
 			);
 			name = "Text View Components";
-			sourceTree = "<group>";
-		};
-		01BB1BED1A7963B2006C0056 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				AB472BEA1299AF5100202CB5 /* SMLTextPerformer.h */,
-				AB472BE81299AF3800202CB5 /* SMLTextPerformer.m */,
-			);
-			name = Utilities;
 			sourceTree = "<group>";
 		};
 		01BB1BEE1A7964DC006C0056 /* Gutter Text View */ = {
@@ -594,7 +582,6 @@
 				E3D4B2761714D89700BB2CC6 /* SMLSyntaxError.m */,
 				0191FA831A882B0F0099B50D /* Global Private Headers */,
 				AB83887D171E94C5004408F4 /* NS Categories */,
-				01BB1BED1A7963B2006C0056 /* Utilities */,
 				01BB1BEC1A7962C7006C0056 /* Text View Components */,
 				01BB1BEB1A79620E006C0056 /* Text Editing UI */,
 				01BB1BEA1A795EFD006C0056 /* Preferences */,
@@ -857,7 +844,6 @@
 				D0C145C71A85F2C900DDE90A /* SMLTextView+MGSDragging.m in Sources */,
 				AB41C1051191FFCB004F0CB5 /* MGSFragaria.m in Sources */,
 				AB472B6F129972E400202CB5 /* MGSTextMenuController.m in Sources */,
-				AB472BE91299AF3800202CB5 /* SMLTextPerformer.m in Sources */,
 				AB472BF41299BBB100202CB5 /* MGSExtraInterfaceController.m in Sources */,
 				ABF28AF014C075D400ECAD48 /* NSScanner+Fragaria.m in Sources */,
 				ABC578D3160350240040B3FB /* MGSFragariaPreferences.m in Sources */,
