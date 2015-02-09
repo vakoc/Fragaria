@@ -18,32 +18,33 @@
  - validateMenuItem:
  
  */
-- (BOOL)validateMenuItem:(NSMenuItem *)anItem
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
 {
-    BOOL enableMenuItem = YES;
+    BOOL enableItem = YES;
     SEL action = [anItem action];
     
     // All items who should only be active if something is selected
-    if (action == @selector(removeNeedlessWhitespaceAction:) ||
-        action == @selector(removeLineEndingsAction:) ||
-        action == @selector(entabAction:) ||
-        action == @selector(detabAction:) ||
-        action == @selector(capitaliseAction:) ||
-        action == @selector(toUppercaseAction:) ||
-        action == @selector(toLowercaseAction:)
+    if (action == @selector(removeNeedlessWhitespace:) ||
+        action == @selector(removeLineEndings:) ||
+        action == @selector(entab:) ||
+        action == @selector(detab:) ||
+        action == @selector(capitalizeWord:) ||
+        action == @selector(uppercaseCharacters:) ||
+        action == @selector(lowercaseCharacters:)
         ) {
         if ([self selectedRange].length < 1) {
-            enableMenuItem = NO;
+            enableItem = NO;
         }
-    }
+    } else if (action == @selector(commentOrUncomment:) ) {
     // Comment Or Uncomment
-    else if (action == @selector(commentOrUncommentAction:) ) {
         if ([[[[fragaria objectForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
-            enableMenuItem = NO;
+            enableItem = NO;
         }
+    } else {
+        enableItem = [super validateUserInterfaceItem:anItem];
     }
     
-    return enableMenuItem;
+    return enableItem;
 }
 
 
