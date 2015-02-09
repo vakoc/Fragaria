@@ -21,7 +21,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import "MGSFragariaFramework.h"
 #import "SMLLayoutManager.h"
 
-typedef enum {
+typedef enum : NSUInteger
+{
     kTabLine = 0,
     kSpaceLine = 1,
     kNewLineLine = 2

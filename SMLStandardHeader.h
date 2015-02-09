@@ -18,7 +18,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 */
 
 
-typedef enum {
+typedef enum : NSUInteger
+{
 	SMLDefaultsLineEndings = 0,
 	SMLUnixLineEndings = 1,
 	SMLMacLineEndings = 2,
