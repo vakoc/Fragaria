@@ -40,9 +40,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 - (id)init 
 {
 	self = [super init];
-	if (self) {
-	}
-	
 	return self;
 }
 
@@ -56,11 +53,14 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 - (void)displayEntab
 {
+    NSWindow *wnd;
+    
 	if (entabWindow == nil) {
 		[NSBundle loadNibNamed:@"SMLEntab.nib" owner:self];
 	}
 	
-	[NSApp beginSheet:entabWindow modalForWindow:SMLCurrentWindow modalDelegate:self didEndSelector:nil contextInfo:nil];
+    wnd = [_completionTarget window];
+	[NSApp beginSheet:entabWindow modalForWindow:wnd modalDelegate:self didEndSelector:nil contextInfo:nil];
 }
 
 /*
@@ -70,11 +70,14 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)displayDetab
 {
+    NSWindow *wnd;
+    
 	if (detabWindow == nil) {
 		[NSBundle loadNibNamed:@"SMLDetab.nib" owner:self];
 	}
 	
-	[NSApp beginSheet:detabWindow modalForWindow:SMLCurrentWindow modalDelegate:self didEndSelector:nil contextInfo:nil];
+    wnd = [_completionTarget window];
+	[NSApp beginSheet:detabWindow modalForWindow:wnd modalDelegate:self didEndSelector:nil contextInfo:nil];
 }
 
 
@@ -85,10 +88,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (IBAction)entabButtonEntabWindowAction:(id)sender
 {
-	#pragma unused(sender)
+	NSWindow *wnd = [_completionTarget window];
 	
-	[NSApp endSheet:[SMLCurrentWindow attachedSheet]]; 
-	[[SMLCurrentWindow attachedSheet] close];
+	[NSApp endSheet:[wnd attachedSheet]];
+	[[wnd attachedSheet] close];
 	
     [_completionTarget performEntab];
 }
@@ -100,10 +103,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (IBAction)detabButtonDetabWindowAction:(id)sender
 {
-	#pragma unused(sender)
-	
-	[NSApp endSheet:[SMLCurrentWindow attachedSheet]]; 
-	[[SMLCurrentWindow attachedSheet] close];
+    NSWindow *wnd = [_completionTarget window];
+    
+    [NSApp endSheet:[wnd attachedSheet]];
+    [[wnd attachedSheet] close];
 	
 	[_completionTarget performDetab];
 }
@@ -118,11 +121,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (IBAction)cancelButtonEntabDetabGoToLineWindowsAction:(id)sender
 {
-	#pragma unused(sender)
-	
-	NSWindow *window = SMLCurrentWindow;
-	[NSApp endSheet:[window attachedSheet]]; 
-	[[SMLCurrentWindow attachedSheet] close];
+    NSWindow *wnd = [_completionTarget window];
+    
+    [NSApp endSheet:[wnd attachedSheet]];
+    [[wnd attachedSheet] close];
 }
 
 
@@ -133,11 +135,13 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)displayGoToLine
 {
+    NSWindow *wnd = [_completionTarget window];
+    
 	if (goToLineWindow == nil) {
 		[NSBundle loadNibNamed:@"SMLGoToLine.nib" owner:self];
 	}
 	
-	[NSApp beginSheet:goToLineWindow modalForWindow:SMLCurrentWindow modalDelegate:self didEndSelector:nil contextInfo:nil];
+	[NSApp beginSheet:goToLineWindow modalForWindow:wnd modalDelegate:self didEndSelector:nil contextInfo:nil];
 }
 
 /*
@@ -147,8 +151,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (IBAction)goButtonGoToLineWindowAction:(id)sender
 {
-	[NSApp endSheet:[SMLCurrentWindow attachedSheet]];
-	[[SMLCurrentWindow attachedSheet] close];
+    NSWindow *wnd = [_completionTarget window];
+    
+    [NSApp endSheet:[wnd attachedSheet]];
+    [[wnd attachedSheet] close];
 	
 	[_completionTarget performGoToLine:[lineTextFieldGoToLineWindow integerValue]];
 }
