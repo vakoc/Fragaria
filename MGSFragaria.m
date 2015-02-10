@@ -8,6 +8,7 @@
 #import "MGSFragaria.h"
 #import "MGSFragariaFramework.h"
 #import "FRAFontTransformer.h"
+#import "SMLTextView+MGSTextActions.h"
 
 
 // valid keys for 
@@ -389,30 +390,9 @@ char kcLineWrapPrefChanged;
  */
 - (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight
 {
-	NSInteger lineNumber;
-	NSInteger idx;
-	NSString *completeString = self.textView.string;
-	NSInteger completeStringLength = [completeString length];
-	NSInteger numberOfLinesInDocument;
-	for (idx = 0, numberOfLinesInDocument = 1; idx < completeStringLength; numberOfLinesInDocument++) {
-		idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
-	}
-	if (lineToGoTo > numberOfLinesInDocument) {
-		NSBeep();
-		return;
-	}
-	
-	for (idx = 0, lineNumber = 1; lineNumber < lineToGoTo; lineNumber++) {
-		idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
-	}
-    
     if (centered)
         NSLog(@"Warning: centered option is ignored.");
-    
-    if (highlight) {
-        [self.textView setSelectedRange:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
-    }
-	[self.textView scrollRangeToVisible:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
+    [[self objectForKey:ro_MGSFOTextView] performGoToLine:lineToGoTo setSelected:highlight];
 }
 
 

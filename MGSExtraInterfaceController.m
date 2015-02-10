@@ -156,7 +156,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
     [NSApp endSheet:[wnd attachedSheet]];
     [[wnd attachedSheet] close];
 	
-	[_completionTarget performGoToLine:[lineTextFieldGoToLineWindow integerValue]];
+	[_completionTarget performGoToLine:[lineTextFieldGoToLineWindow integerValue] setSelected:YES];
 }
 
 #pragma mark -

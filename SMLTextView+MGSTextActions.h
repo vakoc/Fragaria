@@ -25,7 +25,7 @@
 - (IBAction)uppercaseCharacters:(id)sender;
 - (IBAction)capitalizeWord:(id)sender;
 - (IBAction)goToLine:(id)sender;
-- (void)performGoToLine:(NSInteger)lineToGoTo;
+- (void)performGoToLine:(NSInteger)lineToGoTo setSelected:(BOOL)highlight;
 - (IBAction)closeTag:(id)sender;
 - (IBAction)commentOrUncomment:(id)sender;
 - (IBAction)removeLineEndings:(id)sender;

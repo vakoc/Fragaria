@@ -539,10 +539,31 @@
  - performGoToLine:
  
  */
-- (void)performGoToLine:(NSInteger)lineToGoTo
+- (void)performGoToLine:(NSInteger)lineToGoTo setSelected:(BOOL)highlight
 {
-    [[MGSFragaria currentInstance] goToLine:lineToGoTo centered:NO highlight:YES];
+    NSInteger lineNumber;
+    NSInteger idx;
+    NSString *completeString = self.string;
+    NSInteger completeStringLength = [completeString length];
+    NSInteger numberOfLinesInDocument;
+    for (idx = 0, numberOfLinesInDocument = 1; idx < completeStringLength; numberOfLinesInDocument++) {
+        idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
+    }
+    if (lineToGoTo > numberOfLinesInDocument) {
+        NSBeep();
+        return;
+    }
+    
+    for (idx = 0, lineNumber = 1; lineNumber < lineToGoTo; lineNumber++) {
+        idx = NSMaxRange([completeString lineRangeForRange:NSMakeRange(idx, 0)]);
+    }
+    
+    if (highlight) {
+        [self setSelectedRange:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
+    }
+    [self scrollRangeToVisible:[completeString lineRangeForRange:NSMakeRange(idx, 0)]];
 }
+
 
 #pragma mark -
 #pragma mark Tag manipulation
