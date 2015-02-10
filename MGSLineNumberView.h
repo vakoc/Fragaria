@@ -42,7 +42,6 @@
  For more details, see the related blog post at:  http://www.noodlesoft.com/blog/2008/10/05/displaying-line-numbers-with-nstextview/
  */
 
-@class MGSFragaria;
 @protocol MGSBreakpointDelegate;
 
 
