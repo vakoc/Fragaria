@@ -866,13 +866,14 @@
     NSCharacterSet *newlines = [NSCharacterSet newlineCharacterSet];
     NSRange range;
     
-    while ((range = [string rangeOfCharacterFromSet:newlines]).length) {
+    range = [string rangeOfCharacterFromSet:newlines];
+    while (range.length) {
         [string replaceCharactersInRange:range withString:@""];
+        range.length = [string length] - range.location;
+        range = [string rangeOfCharacterFromSet:newlines options:0 range:range];
     }
     return string;
 }
-
-
 
 /*
  
