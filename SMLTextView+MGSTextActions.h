@@ -29,7 +29,6 @@
 - (IBAction)closeTag:(id)sender;
 - (IBAction)commentOrUncomment:(id)sender;
 - (IBAction)removeLineEndings:(id)sender;
-- (IBAction)changeLineEndings:(id)sender;
 - (IBAction)prepareForXML:(id)sender;
 - (IBAction)transpose:(id)sender;
 

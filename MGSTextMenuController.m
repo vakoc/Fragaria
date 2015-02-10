@@ -329,7 +329,7 @@ static id sharedInstance = nil;
  */
 - (IBAction)changeLineEndingsAction:(id)sender
 {
-    [NSApp sendAction:@selector(changeLineEndings:) to:nil from:sender];
+    NSLog(@"This action is deprecated and has no effect.");
 }
 
 
