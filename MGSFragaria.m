@@ -52,8 +52,6 @@ NSString * const MGSFOSyntaxColouringDelegate = @"syntaxColouringDelegate";
 NSString * const ro_MGSFOLineNumbers = @"lineNumbers"; // readonly
 NSString * const ro_MGSFOSyntaxColouring = @"syntaxColouring"; // readonly
 
-static MGSFragaria *_currentInstance;
-
 // KVO context constants
 char kcGutterWidthPrefChanged;
 char kcSyntaxColourPrefChanged;
@@ -89,15 +87,10 @@ char kcLineWrapPrefChanged;
  */
 + (id)currentInstance
 {
-	/*
-	 
-	 We need to have access to the current instance.
-	 This is used by the various singleton controllers to provide a target for their actions.
-	 
-	 The instance in the key window will automatically be assigned as the current instance.
-	 
-	 */
-	return _currentInstance;
+    NSLog(@"This method is deprecated and has no effect. Send action messages "
+       "using -[NSApp sendAction:to:from], and retrieve Fragaria's "
+       "properties by using the appropriate MGSFragaria instance directly.");
+    return nil;
 }
 
 /*
@@ -107,8 +100,9 @@ char kcLineWrapPrefChanged;
  */
 + (void)setCurrentInstance:(MGSFragaria *)anInstance
 {
-	NSAssert([anInstance isKindOfClass:[self class]], @"bad class");
-	_currentInstance = anInstance;
+    NSLog(@"This method is deprecated and has no effect. Send action messages "
+        "using -[NSApp sendAction:to:from], and retrieve Fragaria's "
+        "properties by using the appropriate MGSFragaria instance directly.");
 }
 
 
@@ -253,9 +247,7 @@ char kcLineWrapPrefChanged;
 - (id)initWithObject:(id)object
 {
 	if ((self = [super init])) {
-		_currentInstance = self;
-		
-        // a doc spec is mandatory
+		// a doc spec is mandatory
 		if (object) {
 			self.docSpec = object;
 		} else {

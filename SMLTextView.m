@@ -23,13 +23,14 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import "SMLAutoCompleteDelegate.h"
 #import "SMLTextView+MGSTextActions.h"
 
+
 // class extension
 @interface SMLTextView()
-- (void)windowDidBecomeMainOrKey:(NSNotification *)note;
 
 @property (strong) NSColor *pageGuideColour;
 
 @end
+
 
 @implementation SMLTextView
 
@@ -58,12 +59,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
         [self updateLineWrap];
 	}
 	return self;
-}
-
-
--(void)dealloc
-{
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -1049,47 +1044,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 
 #pragma mark -
-#pragma mark NSView
-
-/*
- 
- - viewDidMoveToWindow
- 
- */
-- (void)viewDidMoveToWindow
-{
-	if ([self window]) {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidBecomeMainOrKey:) name:NSWindowDidBecomeKeyNotification object:[self window]];
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(windowDidBecomeMainOrKey:) name:NSWindowDidBecomeMainNotification object:[self window]];
-	}
-	
-	[super viewDidMoveToWindow];
-}
-
-/*
- 
- - becomeFirstResponder
- 
- */
-- (BOOL)becomeFirstResponder
-{
-	[MGSFragaria setCurrentInstance:self.fragaria];
-	
-	return [super becomeFirstResponder];
-}
-
-#pragma mark -
-#pragma mark Notification methods
-
-/*
- 
- - windowDidBecomeMainOrKey:
- 
- */
-- (void)windowDidBecomeMainOrKey:(NSNotification *)note
-{
-	[MGSFragaria setCurrentInstance:self.fragaria];
-}
+#pragma mark Line Wrap
 
 /*
  

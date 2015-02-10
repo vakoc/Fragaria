@@ -69,8 +69,8 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 @property (nonatomic, strong) id docSpec;
 
 // class methods
-+ (id)currentInstance;
-+ (void)setCurrentInstance:(MGSFragaria *)anInstance;
++ (id)currentInstance DEPRECATED_ATTRIBUTE;
++ (void)setCurrentInstance:(MGSFragaria *)anInstance DEPRECATED_ATTRIBUTE;
 + (void)initializeFramework;
 + (id)createDocSpec;
 + (void)docSpec:(id)docSpec setString:(NSString *)string;
