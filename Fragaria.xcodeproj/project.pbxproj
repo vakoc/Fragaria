@@ -110,7 +110,6 @@
 		E3BBA50B16E52FE600D89923 /* editor-breakpoint-0.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */; };
 		E3BBA50C16E52FE600D89923 /* editor-breakpoint-1.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA50916E52FE600D89923 /* editor-breakpoint-1.png */; };
 		E3BBA50D16E52FE600D89923 /* editor-breakpoint-2.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA50A16E52FE600D89923 /* editor-breakpoint-2.png */; };
-		E3C185001717597200801FE5 /* editor-warning.png in Resources */ = {isa = PBXBuildFile; fileRef = E3C184FF1717597200801FE5 /* editor-warning.png */; };
 		E3C1850317175ED900801FE5 /* SMLErrorPopOver.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C1850117175ED900801FE5 /* SMLErrorPopOver.h */; };
 		E3C1850417175ED900801FE5 /* SMLErrorPopOver.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C1850217175ED900801FE5 /* SMLErrorPopOver.m */; };
 		E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CF4B7816E6927300C27B5C /* MGSBreakpointDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -273,7 +272,6 @@
 		E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint-0.png"; sourceTree = "<group>"; };
 		E3BBA50916E52FE600D89923 /* editor-breakpoint-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint-1.png"; sourceTree = "<group>"; };
 		E3BBA50A16E52FE600D89923 /* editor-breakpoint-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint-2.png"; sourceTree = "<group>"; };
-		E3C184FF1717597200801FE5 /* editor-warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-warning.png"; sourceTree = "<group>"; };
 		E3C1850117175ED900801FE5 /* SMLErrorPopOver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLErrorPopOver.h; sourceTree = "<group>"; };
 		E3C1850217175ED900801FE5 /* SMLErrorPopOver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLErrorPopOver.m; sourceTree = "<group>"; };
 		E3CF4B7816E6927300C27B5C /* MGSBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBreakpointDelegate.h; sourceTree = "<group>"; };
@@ -506,7 +504,6 @@
 				D0C146821A8769C100DDE90A /* messagesInfo.icns */,
 				D0C146831A8769C100DDE90A /* messagesPanic.icns */,
 				D0C1467C1A87627300DDE90A /* messagesWarning.icns */,
-				E3C184FF1717597200801FE5 /* editor-warning.png */,
 				E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */,
 				E3BBA50916E52FE600D89923 /* editor-breakpoint-1.png */,
 				E3BBA50A16E52FE600D89923 /* editor-breakpoint-2.png */,
@@ -816,7 +813,6 @@
 				E3BBA50B16E52FE600D89923 /* editor-breakpoint-0.png in Resources */,
 				E3BBA50C16E52FE600D89923 /* editor-breakpoint-1.png in Resources */,
 				E3BBA50D16E52FE600D89923 /* editor-breakpoint-2.png in Resources */,
-				E3C185001717597200801FE5 /* editor-warning.png in Resources */,
 				AB8386D91719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib in Resources */,
 				AB8386DA1719E3D3004408F4 /* MGSPreferencesTextEditing.xib in Resources */,
 			);
@@ -1457,6 +1453,7 @@
 				D0E520F01A88DC73005CB80B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

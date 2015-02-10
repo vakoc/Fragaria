@@ -18,9 +18,8 @@
 + (NSImage *)imageForWarningStyle:(MGSErrorType)style
 {
     // Note these are in order by MGSErrorType.
-    NSArray *imageNames = @[@"editor-warning", @"messagesAccess", @"messagesConfig", @"messagesDocument", @"messagesInfo", @"messagesWarning",@"messagesError", @"messagesPanic"];
-    NSString *resourceType = style == kMGSErrorDefault ? @"png" : @"icns";
-    NSImage *warningImage = [[NSImage alloc] initWithContentsOfFile:[[NSBundle bundleForClass:[self class]] pathForResource:imageNames[style] ofType:resourceType]];
+    NSArray *imageNames = @[@"messagesWarning", @"messagesAccess", @"messagesConfig", @"messagesDocument", @"messagesInfo", @"messagesWarning",@"messagesError", @"messagesPanic"];
+    NSImage *warningImage = [[NSBundle bundleForClass:[self class]] imageForResource:imageNames[style]];
     [warningImage setSize:NSMakeSize(16.0, 16.0)];
     return warningImage;
 }
