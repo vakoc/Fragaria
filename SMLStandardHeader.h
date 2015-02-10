@@ -53,11 +53,4 @@ typedef enum : NSUInteger
 
 #define SMLDefaults [[NSUserDefaultsController sharedUserDefaultsController] values]
 
-/*
- 
- Target the current instance
- 
- */
-#define SMLCurrentWindow [[[MGSFragaria currentInstance] textView] window]
-
 
