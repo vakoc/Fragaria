@@ -410,7 +410,7 @@
     for (id item in array) {
         selectedRange = NSMakeRange([item rangeValue].location - sumOfRemovedCharacters, [item rangeValue].length);
         
-        NSInteger removedCharsInLine;
+        NSInteger removedCharsInLine = 0;
         NSRange thisSpace, prevSpaces, thisLine, range;
         prevSpaces = NSMakeRange(NSNotFound, 0);
         thisLine = NSMakeRange(NSNotFound, 0);
