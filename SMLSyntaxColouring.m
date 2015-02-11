@@ -1541,11 +1541,13 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     // to set an error image. Let's choose the highest level of error if there are
                     // multiple errors for this line.
                     MGSErrorType style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", @(err.line), @(NO)]] valueForKeyPath:@"@max.warningStyle"] integerValue];
-                    [warningButton setImage:[SMLSyntaxError imageForWarningStyle:style]];
+                    NSImage *warnImg = [SMLSyntaxError imageForWarningStyle:style];
+                    [warnImg setSize:NSMakeSize(linePos.size.height,linePos.size.height)];
+                    [warningButton setImage:warnImg];
                     [textView addSubview:warningButton];
 
                     [textView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[warningButton]-16-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningButton)]];
-                    [textView addConstraint:[NSLayoutConstraint constraintWithItem:warningButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:linePos.origin.y-2]];
+                    [textView addConstraint:[NSLayoutConstraint constraintWithItem:warningButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:linePos.origin.y]];
                 }
             }
         }
