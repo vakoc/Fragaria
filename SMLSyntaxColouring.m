@@ -1544,11 +1544,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     [warningButton setImage:[SMLSyntaxError imageForWarningStyle:style]];
                     [textView addSubview:warningButton];
 
-                    // Use left- or right-alignment so that if line wrapping is OFF, error will appear in LEFT
-                    // of the textView instead of at the end of the longest line of text.
-                    // @todo: maybe this should be controlled by a preference if such behavior is desired.
-                    NSString *HConstraint = textView.lineWrap ? @"[warningButton]-16-|" : @"|-4-[warningButton]";
-                    [textView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:HConstraint options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningButton)]];
+                    [textView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"[warningButton]-16-|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningButton)]];
                     [textView addConstraint:[NSLayoutConstraint constraintWithItem:warningButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:textView attribute:NSLayoutAttributeTop multiplier:1.0 constant:linePos.origin.y-2]];
                 }
             }
