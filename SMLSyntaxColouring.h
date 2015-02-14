@@ -35,9 +35,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	
 	NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
 					*stringsColour, *variablesColour, *attributesColour,  *numbersColour;
-
-	BOOL reactToChanges;
-	BOOL syntaxErrorsAreDirty;
     
     NSArray *syntaxErrors;
     
@@ -48,7 +45,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	NSTimer *autocompleteWordsTimer;
 }
 
-@property BOOL reactToChanges;
 @property (strong) NSUndoManager *undoManager;
 @property (nonatomic, strong) NSArray* syntaxErrors;
 @property (strong) MGSSyntaxDefinition *syntaxDefinition;

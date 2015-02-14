@@ -66,7 +66,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 @implementation SMLSyntaxColouring
 
 
-@synthesize reactToChanges, undoManager, syntaxErrors, syntaxDefinition;
+@synthesize undoManager, syntaxErrors, syntaxDefinition;
 
 
 #pragma mark -
@@ -107,7 +107,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 		// configure ivars
 		lastCursorLocation = 0;
-		reactToChanges = YES;
 		
 		// configure layout managers
 		layoutManager = (SMLLayoutManager *)[textView layoutManager];
@@ -405,10 +404,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (NSRange)recolourChangedRange:(NSRange)rangeToRecolour
 {
-	if (reactToChanges == NO) {
-		return NSMakeRange(0,0);
-	}
-
     // establish behavior
 	BOOL shouldOnlyColourTillTheEndOfLine = [[SMLDefaults valueForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine] boolValue];
 	BOOL shouldColourMultiLineStrings = [[SMLDefaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue];
@@ -1562,10 +1557,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (void)textDidChange:(NSNotification *)notification
 {
-	if (reactToChanges == NO) {
-		return;
-	}
-	
 	SMLTextView *textView = (SMLTextView *)[notification object];
 	
     if ([self isSyntaxColouringRequired]) {
@@ -1588,11 +1579,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (void)textViewDidChangeSelection:(NSNotification *)aNotification
 {
-    if (reactToChanges == NO) {
-		return;
-	}
-	
-	NSString *completeString = [self completeString];
+    NSString *completeString = [self completeString];
 
 	NSUInteger completeStringLength = [completeString length];
 	if (completeStringLength == 0) {
