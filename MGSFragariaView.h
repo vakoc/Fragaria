@@ -50,7 +50,7 @@
 
 @property (assign) NSString *documentName;
 
-@property (assign) id <MGSSyntaxErrors> syntaxErrors;
+@property (assign) NSArray *syntaxErrors;
 
 @property (assign) BOOL showsWarningsInGutter;
 

@@ -1482,12 +1482,12 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         [button removeFromSuperview];
     }
     
-    if (!syntaxErrors.syntaxErrors) return;
+    if (!syntaxErrors) return;
     
     // Highlight all errors and add buttons
     NSMutableSet* highlightedRows = [NSMutableSet set];
 
-    for (id <MGSSyntaxError> err in syntaxErrors.syntaxErrors)
+    for (SMLSyntaxError* err in syntaxErrors)
     {
         // Highlight an erronous line
         NSInteger location = [self characterIndexFromLine:err.line character:err.character inString:text];
@@ -1503,22 +1503,28 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             // Remember that we are highlighting this row
             [highlightedRows addObject:[NSNumber numberWithInt:err.line]];
             
-            // Add syntax error highlight for background
-            [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
+            // Add highlight for background
+            if (!err.customBackgroundColor) {
+                [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1] forCharacterRange:lineRange];
+            } else {
+                [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.customBackgroundColor forCharacterRange:lineRange];
+            }
             
             if ([err.description length] > 0)
                 [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
 
             if ([[document valueForKey:MGSFOShowsWarningsInEditor] boolValue]) {
 
-                // err.hidden is per-error, and there may be multiple errors per line. We only arrive here once per
-                // line, so we have to check whether there are _any_ errors on this line, not just the current err.
-                if ([syntaxErrors errorCountForLine:err.line] > 0) {
+                // err.hideWarning is per-error, and there may be multiple errors per line. We only
+                // arrive here once per line, so we have to check whether there are _any_ errors on
+                // this line, not just the current err.
+                NSInteger countOfNonHiddenWarnings = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", @(err.line), @(NO)]] valueForKeyPath:@"@count"] integerValue];
+
+                if (countOfNonHiddenWarnings) {
                     NSInteger glyphIndex = [layoutManager glyphIndexForCharacterAtIndex:lineRange.location];
                     
                     NSRect linePos = [layoutManager boundingRectForGlyphRange:NSMakeRange(glyphIndex, 1) inTextContainer:[textView textContainer]];
-
-                    // @todo: migrate all of this into the error provider.
+                    
                     // Add button
                     NSButton* warningButton = [[NSButton alloc] init];
                     
@@ -1531,9 +1537,11 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     [warningButton setAction:@selector(pressedWarningBtn:)];
                     [warningButton setTranslatesAutoresizingMaskIntoConstraints:NO];
 
-                    // We only arrive here once per line, so let's choose the highest level of error if
-                    // there are multiple errors for this line.
-                    NSImage *warnImg = [[syntaxErrors errorForLine:err.line] warningImage];
+                    // Note that's only highlighting this row once, so there's only one opportunity
+                    // to set an error image. Let's choose the highest level of error if there are
+                    // multiple errors for this line.
+                    MGSErrorType style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", @(err.line), @(NO)]] valueForKeyPath:@"@max.warningStyle"] integerValue];
+                    NSImage *warnImg = [SMLSyntaxError imageForWarningStyle:style];
                     [warnImg setSize:NSMakeSize(linePos.size.height,linePos.size.height)];
                     [warningButton setImage:warnImg];
                     [textView addSubview:warningButton];
@@ -1562,7 +1570,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     // @todo: currently shows hidden errors. Should prevent that.
     // Fetch errors to display
     NSMutableArray* errorsOnLine = [NSMutableArray array];
-    for (id <MGSSyntaxError> err in self.syntaxErrors.syntaxErrors)
+    for (SMLSyntaxError* err in syntaxErrors)
     {
         if (err.line == line)
         {

@@ -7,35 +7,41 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MGSSyntaxErrorProtocols.h"
 
-/**
- *  SMLSyntax error implements the <MGSSyntaxError> protocol for Fragaria.
- *  Refer to the protocol header or documentation for a description of the
- *  methods and properties implemented here.
- **/
-@interface SMLSyntaxError : NSObject <MGSSyntaxError>
+typedef enum : NSInteger
+{
+    kMGSErrorDefault  = 0,
+    kMGSErrorAccess   = 1,
+    kMGSErrorConfig   = 2,
+    kMGSErrorDocument = 3,
+    kMGSErrorInfo     = 4,
+    kMGSErrorWarning  = 5,
+    kMGSErrorError    = 6,
+    kMGSErrorPanic    = 7
+} MGSErrorType;
 
-/// @name Methods to implement for <MGSSyntaxError>
+@interface SMLSyntaxError : NSObject
+{
+    NSString* description;
+    int line;
+    int character;
+    NSString* code;
+    int length;
+    BOOL hideWarning;
+    NSColor *customBackgroundColor;
+    MGSErrorType warningStyle;
+}
 
-+ (instancetype) errorWithDictionary:(NSDictionary *)dictionary;
++ (NSImage *)imageForWarningStyle:(MGSErrorType)style;
 
-+ (NSImage *)imageForWarningStyle:(MGSSyntaxErrorType)style;
-
-- (instancetype)initWithDictionary:(NSDictionary *)errorDict;
-
-/// @name Properties for <MGSSyntaxError>
-
+@property (nonatomic,copy) NSString* description;
 @property (nonatomic,assign) int line;
 @property (nonatomic,assign) int character;
-@property (nonatomic,assign) int length;
-@property (nonatomic,copy) NSString* description;
 @property (nonatomic,copy) NSString* code;
-@property (nonatomic,assign) BOOL hidden;
-@property (nonatomic,copy) NSColor *errorLineHighlightColor;
-@property (nonatomic,copy) NSColor *errorBackgroundHighlightColor;
-@property (nonatomic,copy) NSColor *errorForegroundHilightColor;
-@property (nonatomic,assign) MGSSyntaxErrorType warningStyle;
+@property (nonatomic,assign) int length;
+@property (nonatomic,assign) BOOL hideWarning;
+@property (nonatomic,copy) NSColor *customBackgroundColor;
+@property (nonatomic,assign) MGSErrorType warningStyle;
 @property (nonatomic,readonly) NSImage *warningImage;
 
 @end

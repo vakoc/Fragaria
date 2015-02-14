@@ -272,12 +272,12 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	syntaxErrors
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setSyntaxErrors:(id <MGSSyntaxErrors>)syntaxErrors
+- (void)setSyntaxErrors:(NSArray *)syntaxErrors
 {
 	self.fragaria.syntaxErrors = syntaxErrors;
 }
 
-- (id <MGSSyntaxErrors>)syntaxErrors
+- (NSArray *)syntaxErrors
 {
 	return self.fragaria.syntaxErrors;
 }
