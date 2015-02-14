@@ -43,6 +43,7 @@
  */
 
 @protocol MGSBreakpointDelegate;
+@protocol MGSSyntaxErrors;
 
 
 @interface MGSLineNumberView : NSRulerView
@@ -67,7 +68,7 @@
 @property (nonatomic) NSColor *backgroundColor;
 @property (nonatomic) CGFloat minimumWidth;
 @property (nonatomic) NSUInteger startingLineNumber;
-@property (nonatomic) NSArray *syntaxErrors;
+@property (nonatomic) id <MGSSyntaxErrors> syntaxErrors;
 @property (nonatomic) BOOL *showsWarnings;
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView;

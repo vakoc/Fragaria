@@ -39,7 +39,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	BOOL reactToChanges;
 	BOOL syntaxErrorsAreDirty;
     
-    NSArray *syntaxErrors;
+    //id <MGSSyntaxErrors> syntaxErrors; // This is synthesized and there's a property.
     
     MGSSyntaxDefinition *syntaxDefinition;
     
@@ -52,7 +52,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 @property BOOL reactToChanges;
 @property (strong) NSUndoManager *undoManager;
-@property (nonatomic, strong) NSArray* syntaxErrors;
+@property (nonatomic, strong) id <MGSSyntaxErrors> syntaxErrors;
 @property (strong) MGSSyntaxDefinition *syntaxDefinition;
 
 - (id)initWithDocument:(id)document;
