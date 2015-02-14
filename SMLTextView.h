@@ -33,6 +33,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	BOOL showPageGuide;
 	
 	NSCursor *colouredIBeamCursor;
+    
+    NSRect currentLineRect;
 	
 	MGSFragaria *fragaria;
     BOOL lineWrap;
@@ -42,6 +44,9 @@ Unless required by applicable law or agreed to in writing, software distributed 
 @property (strong) MGSFragaria *fragaria;
 @property (nonatomic) BOOL lineWrap;
 @property (readonly) NSMutableIndexSet *inspectedCharacterIndexes;
+
+@property (nonatomic) BOOL highlightCurrentLine;
+@property NSColor *currentLineHighlightColor;
 
 - (void)setDefaults;
 

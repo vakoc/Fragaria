@@ -32,6 +32,9 @@ Unless required by applicable law or agreed to in writing, software distributed 
 @end
 
 
+static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
+
+
 @implementation SMLTextView
 
 @synthesize colouredIBeamCursor, fragaria, pageGuideColour, lineWrap;
@@ -126,6 +129,8 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	[defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuide" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
 	[defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuideAtColumn" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
 	[defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:0 context:LineHighlightingPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionInitial context:LineHighlightingPrefChanged];
 	
 	lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
 }
@@ -180,7 +185,16 @@ Unless required by applicable law or agreed to in writing, software distributed 
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
+    BOOL boolValue = NO;
+    NSColor *colorVal;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    
+    if (context == LineHighlightingPrefChanged) {
+        boolValue = [defaults boolForKey:MGSFragariaPrefsHighlightCurrentLine];
+        [self setHighlightCurrentLine:boolValue];
+        colorVal = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsHighlightLineColourWell]];
+        [self setCurrentLineHighlightColor:colorVal];
+    } else if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
 		[self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
 		lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
 		[self setPageGuideValues];
@@ -196,7 +210,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		[self setTabWidth];
 	} else if ([(__bridge NSString *)context isEqualToString:@"PageGuideChanged"]) {
 		[self setPageGuideValues];
-	} else {
+    } else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 }
@@ -231,6 +245,88 @@ Unless required by applicable law or agreed to in writing, software distributed 
 		}
 	}
 }
+
+
+#pragma mark - Line Highlighting
+
+
+- (void)setHighlightCurrentLine:(BOOL)highlightCurrentLine
+{
+    [self setNeedsDisplayInRect:currentLineRect];
+    _highlightCurrentLine = highlightCurrentLine;
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
+
+
+- (void)drawViewBackgroundInRect:(NSRect)rect
+{
+    [super drawViewBackgroundInRect:rect];
+    if ([self needsToDrawRect:currentLineRect]) {
+        [_currentLineHighlightColor set];
+        [NSBezierPath fillRect:currentLineRect];
+    }
+}
+
+
+- (NSRect)lineHighlightingRect
+{
+    NSMutableString *ms;
+    NSRange selRange, lineRange, multipleLineRange;
+    NSRect lineRect;
+    
+    if (!_highlightCurrentLine) return NSZeroRect;
+    
+    selRange = [self selectedRange];
+    ms = [[self textStorage] mutableString];
+    multipleLineRange = [ms lineRangeForRange:selRange];
+    lineRange = [ms lineRangeForRange:NSMakeRange(selRange.location, 0)];
+    if (NSEqualRanges(lineRange, multipleLineRange)) {
+        lineRange = [[self layoutManager] glyphRangeForCharacterRange:lineRange actualCharacterRange:NULL];
+        lineRect = [[self layoutManager] boundingRectForGlyphRange:lineRange inTextContainer:[self textContainer]];
+        lineRect.origin.x = 0;
+        lineRect.size.width = [self bounds].size.width;
+        return lineRect;
+    }
+    return NSZeroRect;
+}
+
+
+- (void)setSelectedRanges:(NSArray *)selectedRanges
+{
+    [self setNeedsDisplayInRect:currentLineRect];
+    [super setSelectedRanges:selectedRanges];
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
+
+
+- (void)setSelectedRange:(NSRange)selectedRange
+{
+    [self setNeedsDisplayInRect:currentLineRect];
+    [super setSelectedRange:selectedRange];
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
+
+
+- (void)setSelectedRange:(NSRange)charRange affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag
+{
+    [self setNeedsDisplayInRect:currentLineRect];
+    [super setSelectedRange:charRange affinity:affinity stillSelecting:stillSelectingFlag];
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
+
+
+- (void)setSelectedRanges:(NSArray *)ranges affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag
+{
+    [self setNeedsDisplayInRect:currentLineRect];
+    [super setSelectedRanges:ranges affinity:affinity stillSelecting:stillSelectingFlag];
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
+
 
 #pragma mark -
 #pragma mark Mouse event handling

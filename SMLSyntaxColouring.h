@@ -34,7 +34,7 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	NSInteger lastCursorLocation;
 	
 	NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
-					*stringsColour, *variablesColour, *attributesColour, *lineHighlightColour,  *numbersColour;
+					*stringsColour, *variablesColour, *attributesColour,  *numbersColour;
 
 	BOOL reactToChanges;
 	BOOL syntaxErrorsAreDirty;
@@ -46,8 +46,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	NSUndoManager *undoManager;
     
 	NSTimer *autocompleteWordsTimer;
-
-	NSRange lastLineHighlightRange;
 }
 
 @property BOOL reactToChanges;

@@ -57,7 +57,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (void)removeAllColours;
 - (void)removeColoursFromRange:(NSRange)range;
 - (void)setColour:(NSDictionary *)colour range:(NSRange)range;
-- (void)highlightLineRange:(NSRange)lineRange;
 - (BOOL)isSyntaxColouringRequired;
 - (NSDictionary *)syntaxDictionary;
 
@@ -108,7 +107,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 		// configure ivars
 		lastCursorLocation = 0;
-		lastLineHighlightRange = NSMakeRange(0, 0);
 		reactToChanges = YES;
 		
 		// configure layout managers
@@ -152,8 +150,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourAttributes" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourNumbers" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
         
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
 		[defaultsController addObserver:self forKeyPath:@"values.FragariaOnlyColourTillTheEndOfLine" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
         
@@ -176,13 +172,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	if ([(__bridge NSString *)context isEqualToString:@"ColoursChanged"]) {
 		[self applyColourDefaults];
 		[self recolourExposedRange];
-		if ([[SMLDefaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue] == YES) {
-			NSRange range = [[self completeString] lineRangeForRange:[[document valueForKey:ro_MGSFOTextView] selectedRange]];
-			[self highlightLineRange:range];
-			lastLineHighlightRange = range;
-		} else {
-			[self highlightLineRange:NSMakeRange(0, 0)];
-		}
 	} else if ([(__bridge NSString *)context isEqualToString:@"MultiLineChanged"]) {
         [self invalidateAllColouring];
 	} else if ([(__bridge NSString *)context isEqualToString:@"syntaxDefinition"]) {
@@ -1384,8 +1373,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	variablesColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsVariablesColourWell]], NSForegroundColorAttributeName, nil];
 	
 	attributesColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsAttributesColourWell]], NSForegroundColorAttributeName, nil];
-	
-	lineHighlightColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsHighlightLineColourWell]], NSBackgroundColorAttributeName, nil];
 
 	numbersColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsNumbersColourWell]], NSForegroundColorAttributeName, nil];
 
@@ -1400,25 +1387,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (BOOL)isSyntaxColouringRequired
 {
     return ([[document valueForKey:MGSFOIsSyntaxColoured] boolValue] && syntaxDefinition.syntaxDefinitionAllowsColouring ? YES : NO);
-}
-/*
- 
- - highlightLineRange:
- 
- */
-- (void)highlightLineRange:(NSRange)lineRange
-{
-	if (lineRange.location == lastLineHighlightRange.location && lineRange.length == lastLineHighlightRange.length) {
-		return;
-	}
-	
-	[layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:lastLineHighlightRange];
-		
-	[self recolourExposedRange];
-	
-	[layoutManager addTemporaryAttributes:lineHighlightColour forCharacterRange:lineRange];
-	
-	lastLineHighlightRange = lineRange;
 }
 
 /*
@@ -1597,13 +1565,9 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	if (reactToChanges == NO) {
 		return;
 	}
-	NSString *completeString = [self completeString];
 	
 	SMLTextView *textView = (SMLTextView *)[notification object];
 	
-	if ([[SMLDefaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue] == YES) {
-		[self highlightLineRange:[completeString lineRangeForRange:[textView selectedRange]]];
-	}
     if ([self isSyntaxColouringRequired]) {
         /* We could call pageRecolour, but invalidating the entire page makes 
          * our bugs less visible */
@@ -1638,10 +1602,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	SMLTextView *textView = [aNotification object];
 		
 	NSRange editedRange = [textView selectedRange];
-	
-	if ([[SMLDefaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue] == YES) {
-		[self highlightLineRange:[completeString lineRangeForRange:editedRange]];
-	}
 	
 	if ([[SMLDefaults valueForKey:MGSFragariaPrefsShowMatchingBraces] boolValue] == NO) {
 		return;
