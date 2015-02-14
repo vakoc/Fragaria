@@ -48,6 +48,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 #import "MGSBreakpointDelegate.h"
 #import "MGSDragOperationDelegate.h"
 #import "SMLSyntaxError.h"
+#import "MGSSyntaxErrors.h"
 #import "SMLSyntaxColouringDelegate.h"
 #import "SMLSyntaxDefinition.h"
 
@@ -119,8 +120,8 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (void)setSyntaxDefinitionName:(NSString *)value;
 - (NSString *)syntaxDefinitionName;
 
-- (void)setSyntaxErrors:(NSArray *)errors;
-- (NSArray *)syntaxErrors;
+- (void)setSyntaxErrors:(id <MGSSyntaxErrors>)errors;
+- (id <MGSSyntaxErrors>)syntaxErrors;
 + (NSImage *)imageNamed:(NSString *)name;
 
 @end

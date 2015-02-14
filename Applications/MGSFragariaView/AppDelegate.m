@@ -75,10 +75,7 @@
 
 
 	/* Sample Syntax Error Definitions */
-    //self.viewTop.syntaxErrors = [self makeSyntaxErrors];
-
-
-
+    self.viewTop.syntaxErrors = [self makeSyntaxErrors];
 }
 
 
@@ -184,44 +181,47 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	makeSyntaxErrors
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSArray *)makeSyntaxErrors
+- (MGSSyntaxErrors *)makeSyntaxErrors
 {
-    SMLSyntaxError *syntaxError = [SMLSyntaxError new];
-    syntaxError.description = @"Syntax errors can be defined";
-    syntaxError.line = 4;
-    syntaxError.character = 3;
-    syntaxError.length = 5;
-    syntaxError.hideWarning = YES;
-    syntaxError.warningStyle = kMGSErrorError;
-    //syntaxError.customBackgroundColor = [NSColor magentaColor];
+    MGSSyntaxErrors *error = [[MGSSyntaxErrors alloc] init];
 
-    SMLSyntaxError *syntaxError2 = [SMLSyntaxError new];
-    syntaxError2.description = @"Multiple syntax errors can be defined for the same line, too.";
-    syntaxError2.line = 4;
-    syntaxError2.character = 12;
-    syntaxError2.length = 7;
-    syntaxError2.hideWarning = NO;
-    syntaxError2.warningStyle = kMGSErrorAccess;
-    //syntaxError2.customBackgroundColor = syntaxError.customBackgroundColor; // messy coloring if you use different colors on the same line!
+    [error addErrorFromDictionary:@{
+                                   @"description"  : @"Syntax errors can be defined.",
+                                   @"line"         : @(4),
+                                   @"character"    : @(3),
+                                   @"length"       : @(5),
+                                   @"hidden"       : @(YES),
+                                   @"warningStyle" : @(kMGSErrorError),
+                                   }];
 
-    SMLSyntaxError *syntaxError3 = [SMLSyntaxError new];
-    syntaxError3.description = @"This error will appear on top of a line break.";
-    syntaxError3.line = 6;
-    syntaxError3.character = 1;
-    syntaxError3.length = 2;
-    syntaxError3.hideWarning = NO;
-    syntaxError3.warningStyle = kMGSErrorConfig;
-    //syntaxError2.customBackgroundColor = syntaxError.customBackgroundColor; // messy coloring if you use different colors on the same line!
+    [error addErrorFromDictionary:@{
+                                    @"description"  : @"Multiple syntax errors can be defined for the same line, too.",
+                                    @"line"         : @(4),
+                                    @"character"    : @(12),
+                                    @"length"       : @(7),
+                                    @"hidden"       : @(NO),
+                                    @"warningStyle" : @(kMGSErrorAccess),
+                                    }];
 
-    SMLSyntaxError *syntaxError4 = [SMLSyntaxError new];
-    syntaxError4.description = @"This error will be hidden.";
-    syntaxError4.line = 10;
-    syntaxError4.character = 12;
-    syntaxError4.length = 7;
-    syntaxError4.hideWarning = NO;
-    //syntaxError2.customBackgroundColor = syntaxError.customBackgroundColor; // messy coloring if you use different colors on the same line!
+    [error addErrorFromDictionary:@{
+                                    @"description"  : @"This error will appear on top of a line break.",
+                                    @"line"         : @(6),
+                                    @"character"    : @(1),
+                                    @"length"       : @(2),
+                                    @"hidden"       : @(NO),
+                                    @"warningStyle" : @(kMGSErrorConfig),
+                                    }];
 
-    return @[syntaxError, syntaxError2, syntaxError3, syntaxError4];
+    [error addErrorFromDictionary:@{
+                                    @"description"  : @"This error will be hidden.",
+                                    @"line"         : @(10),
+                                    @"character"    : @(12),
+                                    @"length"       : @(7),
+                                    @"hidden"       : @(YES),
+                                    @"warningStyle" : @(kMGSErrorError),
+                                    }];
+
+    return error;
 }
 
 @end

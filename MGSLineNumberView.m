@@ -450,7 +450,6 @@
     NSTextStorage           *drawingTextStorage;
     NSLayoutManager         *drawingLayoutManager;
     NSSet                   *linesWithBreakpoints;
-    NSArray                 *linesWithErrors;
 
     layoutManager = [view layoutManager];
     container = [view textContainer];
@@ -472,7 +471,6 @@
     lines = [self lineIndices];
     linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
 
-    linesWithErrors = [[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hideWarning == %@", @(NO)]] valueForKeyPath:@"@distinctUnionOfObjects.line"];
     startingLine = _startingLineNumber + 1;
 
     // Clear all buttons
@@ -530,7 +528,7 @@
                 currentTextAttributes = [self markerTextAttributes];
             }
 
-            if (self.showsWarnings && [linesWithErrors containsObject:@(line+1)]) {
+            if (self.showsWarnings && [[self.syntaxErrors linesWithErrors] containsObject:@(line+1)]) {
                 NSRect wholeLineRect;
 
                 wholeLineRect.size.width = bounds.size.width;
@@ -645,8 +643,7 @@
     [warningButton setTranslatesAutoresizingMaskIntoConstraints:NO];
 
     // There may be multiple errors for this line, so find the one with the highest warningStyle.
-    MGSErrorType style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", line, @(NO)]] valueForKeyPath:@"@max.warningStyle"] integerValue];
-    [warningButton setImage:[SMLSyntaxError imageForWarningStyle:style]];
+    [warningButton setImage:[self.syntaxErrors errorForLine:[line longValue]].warningImage];
 
     [self addSubview:warningButton];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-4-[warningButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningButton)]];
@@ -660,7 +657,7 @@
     // @todo: currently shows hidden errors. Should prevent that.
     // Fetch errors to display
     NSMutableArray* errorsOnLine = [NSMutableArray array];
-    for (SMLSyntaxError* err in self.syntaxErrors)
+    for (id <MGSSyntaxError> err in self.syntaxErrors.syntaxErrors)
     {
         if (err.line == line)
         {
