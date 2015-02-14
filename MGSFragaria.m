@@ -737,7 +737,7 @@ char kcLineWrapPrefChanged;
  - setSyntaxErrors:
  
  */
-- (void)setSyntaxErrors:(id <MGSSyntaxErrors>)errors
+- (void)setSyntaxErrors:(NSArray *)errors
 {
     SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
     syntaxColouring.syntaxErrors = errors;
@@ -753,9 +753,8 @@ char kcLineWrapPrefChanged;
  - syntaxErrors
  
  */
-- (id <MGSSyntaxErrors>)syntaxErrors
+- (NSArray *)syntaxErrors
 {
-    // @todo: part of @7, why is SMLSyntaxColouring the owner of this?
     SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
     return syntaxColouring.syntaxErrors;
 }
