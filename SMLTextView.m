@@ -589,63 +589,58 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)insertText:(NSString *)aString
 {
-	if ([aString isEqualToString:@"}"] && [[SMLDefaults valueForKey:MGSFragariaPrefsIndentNewLinesAutomatically] boolValue] == YES && [[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticallyIndentBraces] boolValue] == YES) {
-		unichar characterToCheck;
-		NSInteger location = [self selectedRange].location;
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
+	if ([aString isEqualToString:@"}"] && [ud boolForKey:MGSFragariaPrefsIndentNewLinesAutomatically] && [ud boolForKey:MGSFragariaPrefsAutomaticallyIndentBraces]) {
+        [self shiftBackToLastOpenBrace];
+	}
+    
+    [super insertText:aString];
+    
+    if ([aString isEqualToString:@"("] && [ud boolForKey:MGSFragariaPrefsAutoInsertAClosingParenthesis]) {
+		[self insertStringAfterInsertionPoint:@")"];
+	} else if ([aString isEqualToString:@"{"] && [ud boolForKey:MGSFragariaPrefsAutoInsertAClosingBrace]) {
+        [self insertStringAfterInsertionPoint:@"}"];
+	}
+}
+
+
+- (void)insertStringAfterInsertionPoint:(NSString*)string
+{
+    NSRange selectedRange = [self selectedRange];
+    if ([self shouldChangeTextInRange:selectedRange replacementString:string]) {
+        [self replaceCharactersInRange:selectedRange withString:string];
+        [self didChangeText];
+        [self setSelectedRange:NSMakeRange(selectedRange.location, 0)];
+    }
+}
+
+
+- (void)shiftBackToLastOpenBrace
+{
 		NSString *completeString = [self string];
+    NSInteger lineLocation = [self selectedRange].location;
 		NSCharacterSet *whitespaceCharacterSet = [NSCharacterSet whitespaceCharacterSet];
-		NSRange currentLineRange = [completeString lineRangeForRange:NSMakeRange([self selectedRange].location, 0)];
-		NSInteger lineLocation = location;
+    NSRange currentLineRange = [completeString lineRangeForRange:NSMakeRange(lineLocation, 0)];
 		NSInteger lineStart = currentLineRange.location;
-		while (--lineLocation >= lineStart) { // If there are any characters before } on the line skip indenting
-			if ([whitespaceCharacterSet characterIsMember:[completeString characterAtIndex:lineLocation]]) {
-				continue;
-			}
-			[super insertText:aString];
+    
+    // If there are any characters before } on the line, don't indent
+    NSInteger i = lineLocation;
+    while (--i >= lineStart) {
+        if (![whitespaceCharacterSet characterIsMember:[completeString characterAtIndex:i]])
 			return;
 		}
 		
-		BOOL hasInsertedBrace = NO;
+    // Find the matching closing brace
+    BOOL foundOpeningBrace = NO;
 		NSUInteger skipMatchingBrace = 0;
+    unichar characterToCheck;
+    NSInteger location = lineLocation;
 		while (location--) {
 			characterToCheck = [completeString characterAtIndex:location];
 			if (characterToCheck == '{') {
-				if (skipMatchingBrace == 0) { // If we have found the opening brace check first how much space is in front of that line so the same amount can be inserted in front of the new line
-					NSString *openingBraceLineWhitespaceString;
-					NSScanner *openingLineScanner = [[NSScanner alloc] initWithString:[completeString substringWithRange:[completeString lineRangeForRange:NSMakeRange(location, 0)]]];
-					[openingLineScanner setCharactersToBeSkipped:nil];
-					BOOL foundOpeningBraceWhitespace = [openingLineScanner scanCharactersFromSet:whitespaceCharacterSet intoString:&openingBraceLineWhitespaceString];
-					
-					if (foundOpeningBraceWhitespace == YES) {
-						NSMutableString *newLineString = [NSMutableString stringWithString:openingBraceLineWhitespaceString];
-						[newLineString appendString:@"}"];
-						[newLineString appendString:[completeString substringWithRange:NSMakeRange([self selectedRange].location, NSMaxRange(currentLineRange) - [self selectedRange].location)]];
-						if ([self shouldChangeTextInRange:currentLineRange replacementString:newLineString]) {
-							[self replaceCharactersInRange:currentLineRange withString:newLineString];
-							[self didChangeText];
-						}
-						hasInsertedBrace = YES;
-						[self setSelectedRange:NSMakeRange(currentLineRange.location + [openingBraceLineWhitespaceString length] + 1, 0)]; // +1 because we have inserted a character
-					} else {
-						NSString *restOfLineString = [completeString substringWithRange:NSMakeRange([self selectedRange].location, NSMaxRange(currentLineRange) - [self selectedRange].location)];
-						if ([restOfLineString length] != 0) { // To fix a bug where text after the } can be deleted
-							NSMutableString *replaceString = [NSMutableString stringWithString:@"}"];
-							[replaceString appendString:restOfLineString];
-							hasInsertedBrace = YES;
-							NSInteger lengthOfWhiteSpace = 0;
-							if (foundOpeningBraceWhitespace == YES) {
-								lengthOfWhiteSpace = [openingBraceLineWhitespaceString length];
-							}
-							if ([self shouldChangeTextInRange:currentLineRange replacementString:replaceString]) {
-								[self replaceCharactersInRange:[completeString lineRangeForRange:currentLineRange] withString:replaceString];
-								[self didChangeText];
-							}
-							[self setSelectedRange:NSMakeRange(currentLineRange.location + lengthOfWhiteSpace + 1, 0)]; // +1 because we have inserted a character
-						} else {
-							[self replaceCharactersInRange:[completeString lineRangeForRange:currentLineRange] withString:@""]; // Remove whitespace before }
-						}
-				
-					}
+            if (skipMatchingBrace == 0) {
+                foundOpeningBrace = YES;
 					break;
 				} else {
 					skipMatchingBrace--;
@@ -654,29 +649,34 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 				skipMatchingBrace++;
 			}
 		}
-		if (hasInsertedBrace == NO) {
-			[super insertText:aString];
+    if (!foundOpeningBrace) return;
+    
+    // If we have found the opening brace check first how much
+    // space is in front of that line so the same amount can be
+    // inserted in front of the new line.
+    // If we found that space, replace the indenting of our line with the indenting from the opening brace line.
+    // Otherwise just remove all the whitespace before the closing brace.
+    NSString *openingBraceLineWhitespaceString;
+    NSRange openingBraceLineRange = [completeString lineRangeForRange:NSMakeRange(location, 0)];
+    NSString *openingBraceLine = [completeString substringWithRange:openingBraceLineRange];
+    NSScanner *openingLineScanner = [[NSScanner alloc] initWithString:openingBraceLine];
+    [openingLineScanner setCharactersToBeSkipped:nil];
+    
+    BOOL found = [openingLineScanner scanCharactersFromSet:whitespaceCharacterSet intoString:&openingBraceLineWhitespaceString];
+    if (!found) {
+        openingBraceLineWhitespaceString = @"";
 		}
-	} else if ([aString isEqualToString:@"("] && [[SMLDefaults valueForKey:MGSFragariaPrefsAutoInsertAClosingParenthesis] boolValue] == YES) {
-		[super insertText:aString];
-		NSRange selectedRange = [self selectedRange];
-		if ([self shouldChangeTextInRange:selectedRange replacementString:@")"]) {
-			[self replaceCharactersInRange:selectedRange withString:@")"];
+    
+    // Replace the beginning of the line with the new indenting
+    NSRange startInsertLineRange;
+    startInsertLineRange = NSMakeRange(currentLineRange.location, lineLocation - currentLineRange.location);
+    if ([self shouldChangeTextInRange:startInsertLineRange replacementString:openingBraceLineWhitespaceString]) {
+        [self replaceCharactersInRange:startInsertLineRange withString:openingBraceLineWhitespaceString];
 			[self didChangeText];
-			[self setSelectedRange:NSMakeRange(selectedRange.location - 0, 0)];
-		}
-	} else if ([aString isEqualToString:@"{"] && [[SMLDefaults valueForKey:MGSFragariaPrefsAutoInsertAClosingBrace] boolValue] == YES) {
-		[super insertText:aString];
-		NSRange selectedRange = [self selectedRange];
-		if ([self shouldChangeTextInRange:selectedRange replacementString:@"}"]) {
-			[self replaceCharactersInRange:selectedRange withString:@"}"];
-			[self didChangeText];
-			[self setSelectedRange:NSMakeRange(selectedRange.location - 0, 0)];
-		}
-	} else {
-		[super insertText:aString];
+        [self setSelectedRange:NSMakeRange(currentLineRange.location + [openingBraceLineWhitespaceString length], 0)];
 	}
 }
+
 
 /*
  
