@@ -122,7 +122,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         
         // add text view notification observers
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:textView];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textViewDidChangeSelection:) name:NSTextViewDidChangeSelectionNotification object:textView];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recolourExposedRange) name:NSViewBoundsDidChangeNotification object:[scrollView contentView]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recolourExposedRange) name:NSViewFrameDidChangeNotification object:textView];
 		
@@ -1569,109 +1568,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		[autocompleteWordsTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:[[SMLDefaults valueForKey:MGSFragariaPrefsAutocompleteAfterDelay] floatValue]]];
 	} else if ([[SMLDefaults valueForKey:MGSFragariaPrefsAutocompleteSuggestAutomatically] boolValue] == YES) {
 		autocompleteWordsTimer = [NSTimer scheduledTimerWithTimeInterval:[[SMLDefaults valueForKey:MGSFragariaPrefsAutocompleteAfterDelay] floatValue] target:self selector:@selector(autocompleteWordsTimerSelector:) userInfo:textView repeats:NO];
-	}
-}
-
-/*
- 
- - textViewDidChangeSelection:
- 
- */
-- (void)textViewDidChangeSelection:(NSNotification *)aNotification
-{
-    NSString *completeString = [self completeString];
-
-	NSUInteger completeStringLength = [completeString length];
-	if (completeStringLength == 0) {
-		return;
-	}
-	
-	SMLTextView *textView = [aNotification object];
-		
-	NSRange editedRange = [textView selectedRange];
-	
-	if ([[SMLDefaults valueForKey:MGSFragariaPrefsShowMatchingBraces] boolValue] == NO) {
-		return;
-	}
-
-	
-	NSUInteger cursorLocation = editedRange.location;
-	NSInteger differenceBetweenLastAndPresent = cursorLocation - lastCursorLocation;
-	lastCursorLocation = cursorLocation;
-	if (differenceBetweenLastAndPresent != 1 && differenceBetweenLastAndPresent != -1) {
-		return; // If the difference is more than one, they've moved the cursor with the mouse or it has been moved by resetSelectedRange below and we shouldn't check for matching braces then
-	}
-	
-	if (differenceBetweenLastAndPresent == 1) { // Check if the cursor has moved forward
-		cursorLocation--;
-	}
-	
-	if (cursorLocation == completeStringLength) {
-		return;
-	}
-	
-	unichar characterToCheck = [completeString characterAtIndex:cursorLocation];
-	NSInteger skipMatchingBrace = 0;
-	
-	if (characterToCheck == ')') {
-		while (cursorLocation--) {
-			characterToCheck = [completeString characterAtIndex:cursorLocation];
-			if (characterToCheck == '(') {
-				if (!skipMatchingBrace) {
-					[textView showFindIndicatorForRange:NSMakeRange(cursorLocation, 1)];
-					return;
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == ')') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	} else if (characterToCheck == ']') {
-		while (cursorLocation--) {
-			characterToCheck = [completeString characterAtIndex:cursorLocation];
-			if (characterToCheck == '[') {
-				if (!skipMatchingBrace) {
-					[textView showFindIndicatorForRange:NSMakeRange(cursorLocation, 1)];
-					return;
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == ']') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	} else if (characterToCheck == '}') {
-		while (cursorLocation--) {
-			characterToCheck = [completeString characterAtIndex:cursorLocation];
-			if (characterToCheck == '{') {
-				if (!skipMatchingBrace) {
-					[textView showFindIndicatorForRange:NSMakeRange(cursorLocation, 1)];
-					return;
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == '}') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	} else if (characterToCheck == '>') {
-		while (cursorLocation--) {
-			characterToCheck = [completeString characterAtIndex:cursorLocation];
-			if (characterToCheck == '<') {
-				if (!skipMatchingBrace) {
-					[textView showFindIndicatorForRange:NSMakeRange(cursorLocation, 1)];
-					return;
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == '>') {
-				skipMatchingBrace++;
-			}
-		}
 	}
 }
 
