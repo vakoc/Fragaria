@@ -24,6 +24,44 @@ Unless required by applicable law or agreed to in writing, software distributed 
 #import "SMLTextView+MGSTextActions.h"
 
 
+static BOOL CharacterIsBrace(unichar c)
+{
+    NSCharacterSet *braces = [NSCharacterSet characterSetWithCharactersInString:@"()[]{}<>"];
+    return [braces characterIsMember:c];
+}
+
+
+static BOOL CharacterIsClosingBrace(unichar c)
+{
+    NSCharacterSet *braces = [NSCharacterSet characterSetWithCharactersInString:@")]}>"];
+    return [braces characterIsMember:c];
+}
+
+
+static unichar OpeningBraceForClosingBrace(unichar c)
+{
+    switch (c) {
+        case ')': return '(';
+        case ']': return '[';
+        case '}': return '{';
+        case '>': return '<';
+    }
+    return 0;
+}
+
+
+static unichar ClosingBraceForOpeningBrace(unichar c)
+{
+    switch (c) {
+        case '(': return ')';
+        case '[': return ']';
+        case '{': return '}';
+        case '<': return '>';
+    }
+    return 0;
+}
+
+
 // class extension
 @interface SMLTextView()
 
@@ -613,8 +651,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	}
     
     if ([aString length] == 1 && [ud boolForKey:MGSFragariaPrefsShowMatchingBraces]) {
-        NSCharacterSet *braces = [NSCharacterSet characterSetWithCharactersInString:@")]}>"];
-        if ([braces characterIsMember:[aString characterAtIndex:0]]) {
+        if (CharacterIsClosingBrace([aString characterAtIndex:0])) {
             [self showBraceMatchingBrace:[aString characterAtIndex:0]];
         }
     }
@@ -632,39 +669,67 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-- (void)showBraceMatchingBrace:(unichar)characterToCheck;
+- (NSInteger)findBeginningOfNestedBlock:(NSInteger)charIdx openedByCharacter:(unichar)open closedByCharacter:(unichar)close
 {
-    NSInteger cursorLocation;
-    NSString *completeString;
-    unichar matchingBrace;
-    
-    switch (characterToCheck) {
-        case ')': matchingBrace = '('; break;
-        case ']': matchingBrace = '['; break;
-        case '}': matchingBrace = '{'; break;
-        case '>': matchingBrace = '<'; break;
-    }
-    
-    completeString = [self string];
-    cursorLocation = [self selectedRange].location - 1;
-    if (cursorLocation < 0) return;
-    
     NSInteger skipMatchingBrace = 0;
+    NSString *completeString = [self string];
+    unichar characterToCheck;
     
-    while (cursorLocation--) {
-        characterToCheck = [completeString characterAtIndex:cursorLocation];
-        if (characterToCheck == matchingBrace) {
+    while (charIdx--) {
+        characterToCheck = [completeString characterAtIndex:charIdx];
+        if (characterToCheck == open) {
             if (!skipMatchingBrace) {
-                [self showFindIndicatorForRange:NSMakeRange(cursorLocation, 1)];
-                return;
+                return charIdx;
             } else {
                 skipMatchingBrace--;
             }
-        } else if (characterToCheck == matchingBrace) {
+        } else if (characterToCheck == close) {
             skipMatchingBrace++;
         }
     }
-    NSBeep();
+    return NSNotFound;
+}
+
+
+- (NSInteger)findEndOfNestedBlock:(NSInteger)charIdx openedByCharacter:(unichar)open closedByCharacter:(unichar)close
+{
+    NSInteger skipMatchingBrace = 0;
+    NSString *completeString = [self string];
+    NSInteger lengthOfString = [completeString length];
+    unichar characterToCheck;
+    
+    while (++charIdx < lengthOfString) {
+        characterToCheck = [completeString characterAtIndex:charIdx];
+        if (characterToCheck == close) {
+            if (!skipMatchingBrace) {
+                return charIdx;
+            } else {
+                skipMatchingBrace--;
+            }
+        } else if (characterToCheck == open) {
+            skipMatchingBrace++;
+        }
+    }
+    return NSNotFound;
+}
+
+
+- (void)showBraceMatchingBrace:(unichar)characterToCheck;
+{
+    NSInteger cursorLocation;
+    unichar matchingBrace;
+    
+    matchingBrace = OpeningBraceForClosingBrace(characterToCheck);
+    
+    cursorLocation = [self selectedRange].location - 1;
+    if (cursorLocation < 0) return;
+    
+    cursorLocation = [self findBeginningOfNestedBlock:cursorLocation
+      openedByCharacter:matchingBrace closedByCharacter:characterToCheck];
+    if (cursorLocation != NSNotFound)
+        [self showFindIndicatorForRange:NSMakeRange(cursorLocation, 1)];
+    else
+        NSBeep();
 }
 
 
@@ -684,24 +749,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     }
     
     // Find the matching closing brace
-    BOOL foundOpeningBrace = NO;
-    NSUInteger skipMatchingBrace = 0;
-    unichar characterToCheck;
-    NSInteger location = lineLocation;
-    while (location--) {
-        characterToCheck = [completeString characterAtIndex:location];
-        if (characterToCheck == '{') {
-            if (skipMatchingBrace == 0) {
-                foundOpeningBrace = YES;
-                break;
-            } else {
-                skipMatchingBrace--;
-            }
-        } else if (characterToCheck == '}') {
-            skipMatchingBrace++;
-        }
-    }
-    if (!foundOpeningBrace) return;
+    NSInteger location;
+    location = [self findBeginningOfNestedBlock:lineLocation openedByCharacter:'{' closedByCharacter:'}'];
+    if (location == NSNotFound) return;
     
     // If we have found the opening brace check first how much
     // space is in front of that line so the same amount can be
@@ -930,135 +980,31 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	
 	NSString *completeString = [self string];
 	unichar characterToCheck = [completeString characterAtIndex:location];
-	NSInteger skipMatchingBrace = 0;
 	NSUInteger lengthOfString = [completeString length];
 	if (lengthOfString == proposedSelRange.location) { // To avoid crash if a double-click occurs after any text
 		return [super selectionRangeForProposedRange:proposedSelRange granularity:granularity];
 	}
 	
+    
 	BOOL triedToMatchBrace = NO;
-	
-	if (characterToCheck == ')') {
-		triedToMatchBrace = YES;
-		while (location--) {
-			characterToCheck = [completeString characterAtIndex:location];
-			if (characterToCheck == '(') {
-				if (!skipMatchingBrace) {
-					return NSMakeRange(location, originalLocation - location + 1);
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == ')') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	} else if (characterToCheck == '}') {
-		triedToMatchBrace = YES;
-		while (location--) {
-			characterToCheck = [completeString characterAtIndex:location];
-			if (characterToCheck == '{') {
-				if (!skipMatchingBrace) {
-					return NSMakeRange(location, originalLocation - location + 1);
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == '}') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	} else if (characterToCheck == ']') {
-		triedToMatchBrace = YES;
-		while (location--) {
-			characterToCheck = [completeString characterAtIndex:location];
-			if (characterToCheck == '[') {
-				if (!skipMatchingBrace) {
-					return NSMakeRange(location, originalLocation - location + 1);
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == ']') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	} else if (characterToCheck == '>') {
-		triedToMatchBrace = YES;
-		while (location--) {
-			characterToCheck = [completeString characterAtIndex:location];
-			if (characterToCheck == '<') {
-				if (!skipMatchingBrace) {
-					return NSMakeRange(location, originalLocation - location + 1);
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == '>') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	} else if (characterToCheck == '(') {
-		triedToMatchBrace = YES;
-		while (++location < lengthOfString) {
-			characterToCheck = [completeString characterAtIndex:location];
-			if (characterToCheck == ')') {
-				if (!skipMatchingBrace) {
-					return NSMakeRange(originalLocation, location - originalLocation + 1);
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == '(') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	} else if (characterToCheck == '{') {
-		triedToMatchBrace = YES;
-		while (++location < lengthOfString) {
-			characterToCheck = [completeString characterAtIndex:location];
-			if (characterToCheck == '}') {
-				if (!skipMatchingBrace) {
-					return NSMakeRange(originalLocation, location - originalLocation + 1);
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == '{') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	} else if (characterToCheck == '[') {
-		triedToMatchBrace = YES;
-		while (++location < lengthOfString) {
-			characterToCheck = [completeString characterAtIndex:location];
-			if (characterToCheck == ']') {
-				if (!skipMatchingBrace) {
-					return NSMakeRange(originalLocation, location - originalLocation + 1);
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == '[') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	} else if (characterToCheck == '<') {
-		triedToMatchBrace = YES;
-		while (++location < lengthOfString) {
-			characterToCheck = [completeString characterAtIndex:location];
-			if (characterToCheck == '>') {
-				if (!skipMatchingBrace) {
-					return NSMakeRange(originalLocation, location - originalLocation + 1);
-				} else {
-					skipMatchingBrace--;
-				}
-			} else if (characterToCheck == '<') {
-				skipMatchingBrace++;
-			}
-		}
-		NSBeep();
-	}
+    unichar matchingBrace;
+    
+    if (CharacterIsBrace(characterToCheck)) {
+        triedToMatchBrace = YES;
+        if (CharacterIsClosingBrace(characterToCheck)) {
+            matchingBrace = OpeningBraceForClosingBrace(characterToCheck);
+            location = [self findBeginningOfNestedBlock:location openedByCharacter:matchingBrace closedByCharacter:characterToCheck];
+            if (location != NSNotFound)
+                return NSMakeRange(location, originalLocation - location + 1);
+            NSBeep();
+        } else {
+            matchingBrace = ClosingBraceForOpeningBrace(characterToCheck);
+            location = [self findEndOfNestedBlock:location openedByCharacter:characterToCheck closedByCharacter:matchingBrace];
+            if (location != NSNotFound)
+                return NSMakeRange(originalLocation, location - originalLocation + 1);
+            NSBeep();
+        }
+    }
 	
 	// If it has a found a "starting" brace but not found a match, a double-click should only select the "starting" brace and not what it usually would select at a double-click
 	if (triedToMatchBrace) {
