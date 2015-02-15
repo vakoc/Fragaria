@@ -49,6 +49,24 @@ typedef NS_ENUM(NSInteger, MGSErrorType)
 
 
 /**
+ *  This class method is a convenience for creating new SMLSyntaxError instances.
+ *  @param dictionary indicates a dictionary where each key is the property name.
+ **/
++ (instancetype)errorWithDictionary:(NSDictionary *)dictionary;
+
+
+/// @name Instance Methods
+
+/**
+ *  This initializer receives a dictionary of keys and values, where the dictionary
+ *  keys correspond to property names of this class.
+ *  @param dictionary indicates the dictionary from which to initialize this class.
+ **/
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary;
+
+/// @name Deprecated Class Methods
+
+/**
  *  This class method is a synonym for imageForWarningLevel.
  *  @deprecated Use defaultImageForWarningLevel: instead.
  *  @param style indicates the level of this error.
@@ -89,7 +107,7 @@ typedef NS_ENUM(NSInteger, MGSErrorType)
 @property (nonatomic,copy) NSString* code __deprecated_msg("This property is not used.");
 
 /// @deprecated Use the warningLevel property instead.
-@property (nonatomic,assign) MGSErrorType warningStyle;// __deprecated_msg("Use the warningLevel property instead.");
+@property (nonatomic,assign) MGSErrorType warningStyle __deprecated_msg("Use the warningLevel property instead.");
 
 /// @deprecated Use the hidden property instead.
 @property (nonatomic,assign) BOOL hideWarning __deprecated_msg("Use the hidden property instead.");

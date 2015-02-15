@@ -32,6 +32,26 @@
     return warningImage;
 }
 
++ (instancetype) errorWithDictionary:(NSDictionary *)dictionary
+{
+    return [[[self class] alloc] initWithDictionary:dictionary];
+}
+
+
+#pragma mark - Instance Methods
+
+- (instancetype)initWithDictionary:(NSDictionary *)dictionary
+{
+    if ((self = [super init]))
+    {
+        [self setValuesForKeysWithDictionary:dictionary];
+    }
+    return self;
+}
+
+
+#pragma mark - Deprecated Class Methods
+
 
 + (NSImage *)imageForWarningStyle:(MGSErrorType)style
 {
@@ -98,7 +118,7 @@
 {
     if (!_warningImage)
     {
-        _warningImage = [[self class] defaultImageForWarningLevel:self.warningStyle];
+        _warningImage = [[self class] defaultImageForWarningLevel:self.warningLevel];
     }
 
     return _warningImage;
@@ -132,12 +152,12 @@
 
 -(void)setCustomBackgroundColor:(NSColor *)customBackgroundColor
 {
-    self.errorBackgroundHighlightColor = customBackgroundColor;
+    self.errorLineHighlightColor = customBackgroundColor;
 }
 
 - (NSColor *)customBackgroundColor
 {
-    return self.errorBackgroundHighlightColor;
+    return self.errorLineHighlightColor;
 }
 
 @end
