@@ -589,10 +589,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)insertText:(NSString *)aString
 {
-	if ([aString isKindOfClass:[NSAttributedString class]]){
-		aString = [(NSAttributedString *)aString string];
-	}
-	
 	if ([aString isEqualToString:@"}"] && [[SMLDefaults valueForKey:MGSFragariaPrefsIndentNewLinesAutomatically] boolValue] == YES && [[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticallyIndentBraces] boolValue] == YES) {
 		unichar characterToCheck;
 		NSInteger location = [self selectedRange].location;
