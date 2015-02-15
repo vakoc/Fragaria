@@ -390,7 +390,6 @@
 				AB6C86C2160FA2B500488AF2 /* MGSGlyphGenerator.m */,
 				013278651A81610E00D2DCA5 /* Syntax Definition Manager */,
 				01BB1BEE1A7964DC006C0056 /* Gutter Text View */,
-				AB69B659118B75E100903D1D /* Error Popover */,
 			);
 			name = "Text View Components";
 			sourceTree = "<group>";
@@ -539,15 +538,6 @@
 			name = "NSDocument based";
 			sourceTree = "<group>";
 		};
-		AB69B659118B75E100903D1D /* Error Popover */ = {
-			isa = PBXGroup;
-			children = (
-				E3C1850117175ED900801FE5 /* SMLErrorPopOver.h */,
-				E3C1850217175ED900801FE5 /* SMLErrorPopOver.m */,
-			);
-			name = "Error Popover";
-			sourceTree = "<group>";
-		};
 		AB69B752118B82DF00903D1D /* Framework */ = {
 			isa = PBXGroup;
 			children = (
@@ -595,10 +585,9 @@
 				D0C146741A871A0B00DDE90A /* MGSFragariaView.m */,
 				AB69B753118B830700903D1D /* MGSFragaria.h */,
 				AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */,
-				E3D4B2751714D89700BB2CC6 /* SMLSyntaxError.h */,
-				E3D4B2761714D89700BB2CC6 /* SMLSyntaxError.m */,
 				0191FA831A882B0F0099B50D /* Global Private Headers */,
 				AB83887D171E94C5004408F4 /* NS Categories */,
+				D0E521021A90BAC1005CB80B /* Syntax Error Components */,
 				01BB1BEC1A7962C7006C0056 /* Text View Components */,
 				01BB1BEB1A79620E006C0056 /* Text Editing UI */,
 				01BB1BEA1A795EFD006C0056 /* Preferences */,
@@ -625,6 +614,17 @@
 				D0C146531A87196200DDE90A /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D0E521021A90BAC1005CB80B /* Syntax Error Components */ = {
+			isa = PBXGroup;
+			children = (
+				E3D4B2751714D89700BB2CC6 /* SMLSyntaxError.h */,
+				E3D4B2761714D89700BB2CC6 /* SMLSyntaxError.m */,
+				E3C1850117175ED900801FE5 /* SMLErrorPopOver.h */,
+				E3C1850217175ED900801FE5 /* SMLErrorPopOver.m */,
+			);
+			name = "Syntax Error Components";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
