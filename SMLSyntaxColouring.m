@@ -1466,11 +1466,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             [highlightedRows addObject:[NSNumber numberWithInt:err.line]];
             
             // Add highlight for background
-            if (!err.customBackgroundColor) {
-                [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:[NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1] forCharacterRange:lineRange];
-            } else {
-                [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.customBackgroundColor forCharacterRange:lineRange];
-            }
+            [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
             
             if ([err.description length] > 0)
                 [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];

@@ -75,7 +75,7 @@
 
 
 	/* Sample Syntax Error Definitions */
-    //self.viewTop.syntaxErrors = [self makeSyntaxErrors];
+    self.viewTop.syntaxErrors = [self makeSyntaxErrors];
 
 
 
@@ -186,42 +186,40 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSArray *)makeSyntaxErrors
 {
-    SMLSyntaxError *syntaxError = [SMLSyntaxError new];
-    syntaxError.description = @"Syntax errors can be defined";
-    syntaxError.line = 4;
-    syntaxError.character = 3;
-    syntaxError.length = 5;
-    syntaxError.hideWarning = YES;
-    syntaxError.warningStyle = kMGSErrorError;
-    //syntaxError.customBackgroundColor = [NSColor magentaColor];
+    SMLSyntaxError *error1 = [SMLSyntaxError errorWithDictionary:@{
+                                                                   @"description" : @"Syntax errors can be defined",
+                                                                   @"line" : @(4),
+                                                                   @"character" : @(3),
+                                                                   @"length" : @(5),
+                                                                   @"hidden" : @(YES),
+                                                                   @"warningLevel" : @(kMGSErrorError)
+                                                                   }];
 
-    SMLSyntaxError *syntaxError2 = [SMLSyntaxError new];
-    syntaxError2.description = @"Multiple syntax errors can be defined for the same line, too.";
-    syntaxError2.line = 4;
-    syntaxError2.character = 12;
-    syntaxError2.length = 7;
-    syntaxError2.hideWarning = NO;
-    syntaxError2.warningStyle = kMGSErrorAccess;
-    //syntaxError2.customBackgroundColor = syntaxError.customBackgroundColor; // messy coloring if you use different colors on the same line!
+    SMLSyntaxError *error2 = [[SMLSyntaxError alloc] initWithDictionary:@{
+                                                                          @"description" : @"Multiple syntax errors can be defined for the same line, too.",
+                                                                          @"line" : @(4),
+                                                                          @"character" : @(12),
+                                                                          @"length" : @(7),
+                                                                          @"hidden" : @(NO),
+                                                                          @"warningLevel" : @(kMGSErrorAccess)
+                                                                          }];
 
-    SMLSyntaxError *syntaxError3 = [SMLSyntaxError new];
-    syntaxError3.description = @"This error will appear on top of a line break.";
-    syntaxError3.line = 6;
-    syntaxError3.character = 1;
-    syntaxError3.length = 2;
-    syntaxError3.hideWarning = NO;
-    syntaxError3.warningStyle = kMGSErrorConfig;
-    //syntaxError2.customBackgroundColor = syntaxError.customBackgroundColor; // messy coloring if you use different colors on the same line!
+    SMLSyntaxError *error3 = [[SMLSyntaxError alloc] init];
+    error3.description = @"This error will appear on top of a line break.";
+    error3.line = 6;
+    error3.character = 1;
+    error3.length = 2;
+    error3.hideWarning = NO;
+    error3.warningStyle = kMGSErrorConfig;
 
-    SMLSyntaxError *syntaxError4 = [SMLSyntaxError new];
-    syntaxError4.description = @"This error will be hidden.";
-    syntaxError4.line = 10;
-    syntaxError4.character = 12;
-    syntaxError4.length = 7;
-    syntaxError4.hideWarning = NO;
-    //syntaxError2.customBackgroundColor = syntaxError.customBackgroundColor; // messy coloring if you use different colors on the same line!
+    SMLSyntaxError *error4 = [SMLSyntaxError new];
+    error4.description = @"This error will be hidden.";
+    error4.line = 10;
+    error4.character = 12;
+    error4.length = 7;
+    error4.hideWarning = NO;
 
-    return @[syntaxError, syntaxError2, syntaxError3, syntaxError4];
+    return @[error1, error2, error3, error4];
 }
 
 @end
