@@ -592,6 +592,14 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     
+    /* AppKit Bug: when inserting an emoji (for example by double-clicking it
+     * in the character set panel) an NSMutableAttributedString is passed to
+     * insertText instead of an NSString. This works around this by making the
+     * attributed string an NSString again. */
+    if ([aString isKindOfClass:[NSAttributedString class]]){
+        aString = [(NSAttributedString *)aString string];
+    }
+    
 	if ([aString isEqualToString:@"}"] && [ud boolForKey:MGSFragariaPrefsIndentNewLinesAutomatically] && [ud boolForKey:MGSFragariaPrefsAutomaticallyIndentBraces]) {
         [self shiftBackToLastOpenBrace];
 	}
