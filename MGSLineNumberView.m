@@ -647,6 +647,8 @@
     // There may be multiple errors for this line, so find the one with the highest warningStyle.
     MGSErrorType style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", line, @(NO)]] valueForKeyPath:@"@max.warningStyle"] integerValue];
     [warningButton setImage:[SMLSyntaxError imageForWarningStyle:style]];
+    [[warningButton image] setSize:NSMakeSize(16.0, 16.0)];
+
 
     [self addSubview:warningButton];
     [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-4-[warningButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningButton)]];
