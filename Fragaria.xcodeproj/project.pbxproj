@@ -249,10 +249,10 @@
 		D0C145C21A85E1FD00DDE90A /* SMLTextView+MGSDragging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMLTextView+MGSDragging.h"; sourceTree = "<group>"; };
 		D0C145C31A85E1FD00DDE90A /* SMLTextView+MGSDragging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMLTextView+MGSDragging.m"; sourceTree = "<group>"; };
 		D0C1464C1A87196200DDE90A /* MGSFragariaView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MGSFragariaView.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D0C1464F1A87196200DDE90A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Applications/MGSFragariaView/Info.plist; sourceTree = "<group>"; };
-		D0C146501A87196200DDE90A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../Applications/MGSFragariaView/AppDelegate.h; sourceTree = "<group>"; };
-		D0C146511A87196200DDE90A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ../Applications/MGSFragariaView/AppDelegate.m; sourceTree = "<group>"; };
-		D0C146531A87196200DDE90A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = ../Applications/MGSFragariaView/main.m; sourceTree = "<group>"; };
+		D0C1464F1A87196200DDE90A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Applications/MGSFragariaView/Info.plist; sourceTree = "<group>"; };
+		D0C146501A87196200DDE90A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Applications/MGSFragariaView/AppDelegate.h; sourceTree = "<group>"; };
+		D0C146511A87196200DDE90A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Applications/MGSFragariaView/AppDelegate.m; sourceTree = "<group>"; };
+		D0C146531A87196200DDE90A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Applications/MGSFragariaView/main.m; sourceTree = "<group>"; };
 		D0C146581A87196200DDE90A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		D0C146731A871A0B00DDE90A /* MGSFragariaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaView.h; sourceTree = "<group>"; };
 		D0C146741A871A0B00DDE90A /* MGSFragariaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragariaView.m; sourceTree = "<group>"; };
@@ -578,7 +578,7 @@
 				01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */,
 				AB648E2311FB37D200AEF7BD /* NSDocument based */,
 				AB648E2211FB37AF00AEF7BD /* Simple */,
-				D0C1464D1A87196200DDE90A /* MGSFragariaView */,
+				D0E521001A90B899005CB80B /* MGSFragariaView */,
 			);
 			name = Applications;
 			sourceTree = "<group>";
@@ -606,19 +606,19 @@
 			name = Fragaria;
 			sourceTree = "<group>";
 		};
-		D0C1464D1A87196200DDE90A /* MGSFragariaView */ = {
+		D0E521001A90B899005CB80B /* MGSFragariaView */ = {
 			isa = PBXGroup;
 			children = (
 				D0C146501A87196200DDE90A /* AppDelegate.h */,
 				D0C146511A87196200DDE90A /* AppDelegate.m */,
 				D0C146571A87196200DDE90A /* MainMenu.xib */,
 				D0C146771A871AF300DDE90A /* Lorem.html */,
-				D0C1464E1A87196200DDE90A /* Supporting Files */,
+				D0E521011A90B8B7005CB80B /* Supporting Files */,
 			);
-			path = MGSFragariaView;
+			name = MGSFragariaView;
 			sourceTree = "<group>";
 		};
-		D0C1464E1A87196200DDE90A /* Supporting Files */ = {
+		D0E521011A90B8B7005CB80B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
 				D0C1464F1A87196200DDE90A /* Info.plist */,
@@ -973,7 +973,7 @@
 				D0C146581A87196200DDE90A /* Base */,
 			);
 			name = MainMenu.xib;
-			path = ../Applications/MGSFragariaView;
+			path = Applications/MGSFragariaView;
 			sourceTree = "<group>";
 		};
 		D0C146771A871AF300DDE90A /* Lorem.html */ = {
@@ -982,7 +982,7 @@
 				D0C146781A871AF300DDE90A /* Base */,
 			);
 			name = Lorem.html;
-			path = ../Applications/MGSFragariaView;
+			path = Applications/MGSFragariaView;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
