@@ -465,8 +465,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	
     // colouring delegate
     id colouringDelegate = [document valueForKey:MGSFOSyntaxColouringDelegate];
-    BOOL delegateRespondsToShouldColourGroup = [colouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourGroupWithBlock:string:range:info:)];
-    BOOL delegateRespondsToDidColourGroup = [colouringDelegate respondsToSelector:@selector(fragariaDocument:didColourGroupWithBlock:string:range:info:)];
     NSDictionary *delegateInfo =  nil;
 	
     // define a block that the colour delegate can use to effect colouring
@@ -495,361 +493,11 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         }
         
         if (doColouring) {
-            //
-            // Numbers
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourNumbers] boolValue];
-           
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupNumber, SMLSyntaxGroupID : @(kSMLSyntaxGroupNumber), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : numbersColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            } 
             
-            // do colouring
-            if (doColouring) {
-                
-                // reset scanner
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourNumbersInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-                
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                } 
+            for (NSInteger i = 0; i < kSMLCountOfSyntaxGroups; i++) {
+                /* Colour all syntax groups */
+                [self colourGroupWithIdentifier:i inRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner queryingDelegate:colouringDelegate colouringBlock:colourRangeBlock];
             }
-
-
-            //
-            // Commands
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourCommands] boolValue];
-            
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupCommand, SMLSyntaxGroupID : @(kSMLSyntaxGroupCommand), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : commandsColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            } 
-
-            if (doColouring && ![syntaxDefinition.beginCommand isEqualToString:@""]) {
-                
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourCommandsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-                
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-            }
-            
-
-
-            //
-            // Instructions
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourInstructions] boolValue];
-            
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupInstruction, SMLSyntaxGroupID : @(kSMLSyntaxGroupInstruction), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : instructionsColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            }
-
-            if (doColouring && ![syntaxDefinition.beginInstruction isEqualToString:@""]) {
-                
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourInstructionsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-                
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-            }
-
-
-            //
-            // Keywords
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourKeywords] boolValue];
-            
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupKeyword, SMLSyntaxGroupID : @(kSMLSyntaxGroupKeyword), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : keywordsColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            }
-            
-            if (doColouring && [syntaxDefinition.keywords count] > 0) {
-                
-                // reset scanner
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourKeywordsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-                
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-            }
-
-
-            //
-            // Autocomplete
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourAutocomplete] boolValue];
-            
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupAutoComplete, SMLSyntaxGroupID : @(kSMLSyntaxGroupAutoComplete), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : autocompleteWordsColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            }
-            
-            if (doColouring && [syntaxDefinition.autocompleteWords count] > 0) {
-                
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourAutocompleteInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-                
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-            }
-            
-
-            //
-            // Variables
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourVariables] boolValue];
-            
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupVariable, SMLSyntaxGroupID : @(kSMLSyntaxGroupVariable), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : variablesColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            }
-            
-            if (doColouring && syntaxDefinition.beginVariableCharacterSet != nil) {
-                
-                // reset scanner
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourVariablesInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-                
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-            }
-
-
-            //
-            // Second string, first pass
-            //
-
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourStrings] boolValue];
-            
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupSecondString, SMLSyntaxGroupID : @(kSMLSyntaxGroupSecondString), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : stringsColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            } 
-
-            if (doColouring && ![syntaxDefinition.secondString isEqualToString:@""]) {
-
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourSecondStrings1InRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-                
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-            }
-
-
-            //
-            // First string
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourStrings] boolValue];
-            
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupFirstString, SMLSyntaxGroupID : @(kSMLSyntaxGroupFirstString), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : stringsColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            }
-        
-            if (doColouring && ![syntaxDefinition.firstString isEqualToString:@""]) {
-
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourFirstStringsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-            }
-
-
-            //
-            // Attributes
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourAttributes] boolValue];
-            
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupAttribute, SMLSyntaxGroupID : @(kSMLSyntaxGroupAttribute), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : attributesColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            } 
-
-            if (doColouring) {
-                
-                // reset scanner
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourAttributesInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-
-            }
-            
-
-            //
-            // Colour single-line comments
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourComments] boolValue];
-            
-            // initial delegate group colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupSingleLineComment, SMLSyntaxGroupID : @(kSMLSyntaxGroupSingleLineComment), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : commentsColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            } 
-
-            if (doColouring) {
-                
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourSingleLineCommentsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-                
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-            }
-            
-
-            //
-            // Multi-line comments
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourComments] boolValue];
-            
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupMultiLineComment, SMLSyntaxGroupID : @(kSMLSyntaxGroupMultiLineComment), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : commentsColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            }
-        
-            if (doColouring) {
-                
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourMultiLineCommentsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-                
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-                
-           }
-        
-            //
-            // Second string, second pass
-            //
-            doColouring = [[SMLDefaults valueForKey:MGSFragariaPrefsColourStrings] boolValue];
-            
-            // query delegate about colouring
-            if (delegateRespondsToShouldColourGroup) {
-                
-                // build delegate info dictionary
-                delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupSecondStringPass2, SMLSyntaxGroupID : @(kSMLSyntaxGroupSecondStringPass2), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : stringsColour, SMLSyntaxInfo : self.syntaxDictionary};
-                
-                // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
-                
-            }
-        
-            if (doColouring && ![syntaxDefinition.secondString isEqualToString:@""]) {
-                
-                [rangeScanner mgs_setScanLocation:0];
-                [documentScanner mgs_setScanLocation:0];
-                [self colourSecondStrings2InRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
-
-                // inform delegate that colouring is done
-                if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
-                }
-            }
-
 
             //
             // tell delegate we are did colour the document
@@ -879,6 +527,147 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		NSLog(@"Error highlighting exception: %@", exception);
 	}
     return effectiveRange;
+}
+
+
+- (void)colourGroupWithIdentifier:(NSInteger)group inRange:(NSRange)effectiveRange withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner queryingDelegate:(id)colouringDelegate colouringBlock:(BOOL(^)(NSDictionary *, NSRange))colourRangeBlock
+{
+    NSString *prefKey;
+    NSString *groupName;
+    BOOL doColouring = YES;
+    NSDictionary *delegateInfo;
+    NSString *documentString = [documentScanner string];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSDictionary *attributes;
+    
+    switch (group) {
+        case kSMLSyntaxGroupNumber:
+            groupName = SMLSyntaxGroupNumber;
+            prefKey = MGSFragariaPrefsColourNumbers;
+            attributes = numbersColour;
+            break;
+        case kSMLSyntaxGroupCommand:
+            groupName = SMLSyntaxGroupCommand;
+            prefKey = MGSFragariaPrefsColourCommands;
+            doColouring = ![syntaxDefinition.beginCommand isEqual:@""];
+            attributes = commandsColour;
+            break;
+        case kSMLSyntaxGroupInstruction:
+            groupName = SMLSyntaxGroupInstruction;
+            prefKey = MGSFragariaPrefsColourInstructions;
+            doColouring = ![syntaxDefinition.beginInstruction isEqual:@""];
+            attributes = instructionsColour;
+            break;
+        case kSMLSyntaxGroupKeyword:
+            groupName = SMLSyntaxGroupKeyword;
+            prefKey = MGSFragariaPrefsColourKeywords;
+            doColouring = [syntaxDefinition.keywords count] > 0;
+            attributes = keywordsColour;
+            break;
+        case kSMLSyntaxGroupAutoComplete:
+            groupName = SMLSyntaxGroupAutoComplete;
+            prefKey = MGSFragariaPrefsColourAutocomplete;
+            doColouring = [syntaxDefinition.autocompleteWords count] > 0;
+            attributes = autocompleteWordsColour;
+            break;
+        case kSMLSyntaxGroupVariable:
+            groupName = SMLSyntaxGroupVariable;
+            prefKey = MGSFragariaPrefsColourVariables;
+            doColouring = (syntaxDefinition.beginVariableCharacterSet != nil);
+            attributes = variablesColour;
+            break;
+        case kSMLSyntaxGroupSecondString:
+            groupName = SMLSyntaxGroupSecondString;
+            prefKey = MGSFragariaPrefsColourStrings;
+            doColouring = ![syntaxDefinition.secondString isEqual:@""];
+            attributes = stringsColour;
+            break;
+        case kSMLSyntaxGroupFirstString:
+            groupName = SMLSyntaxGroupFirstString;
+            prefKey = MGSFragariaPrefsColourStrings;
+            doColouring = ![syntaxDefinition.firstString isEqual:@""];
+            attributes = stringsColour;
+            break;
+        case kSMLSyntaxGroupAttribute:
+            groupName = SMLSyntaxGroupAttribute;
+            prefKey = MGSFragariaPrefsColourAttributes;
+            attributes = attributesColour;
+            break;
+        case kSMLSyntaxGroupSingleLineComment:
+            groupName = SMLSyntaxGroupSingleLineComment;
+            prefKey = MGSFragariaPrefsColourComments;
+            attributes = commentsColour;
+            break;
+        case kSMLSyntaxGroupMultiLineComment:
+            groupName = SMLSyntaxGroupMultiLineComment;
+            prefKey = MGSFragariaPrefsColourComments;
+            attributes = commentsColour;
+            break;
+        case kSMLSyntaxGroupSecondStringPass2:
+            groupName = SMLSyntaxGroupSecondStringPass2;
+            prefKey = MGSFragariaPrefsColourStrings;
+            doColouring = ![syntaxDefinition.secondString isEqual:@""];
+            attributes = stringsColour;
+    }
+    
+    doColouring = doColouring && [ud boolForKey:prefKey];
+    
+    if ([colouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourGroupWithBlock:string:range:info:)]) {
+        // build delegate info dictionary
+        delegateInfo = @{SMLSyntaxGroup : groupName, SMLSyntaxGroupID : @(group), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : attributes, SMLSyntaxInfo : self.syntaxDictionary};
+        
+        // call the delegate
+        doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:effectiveRange info:delegateInfo];
+    }
+    
+    if (!doColouring) return;
+        
+    // reset scanner
+    [rangeScanner mgs_setScanLocation:0];
+    [documentScanner mgs_setScanLocation:0];
+    
+    switch (group) {
+        case kSMLSyntaxGroupNumber:
+            [self colourNumbersInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupCommand:
+            [self colourCommandsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupInstruction:
+            [self colourInstructionsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupKeyword:
+            [self colourKeywordsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupAutoComplete:
+            [self colourAutocompleteInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupVariable:
+            [self colourVariablesInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupSecondString:
+            [self colourSecondStrings1InRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupFirstString:
+            [self colourFirstStringsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupAttribute:
+            [self colourAttributesInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupSingleLineComment:
+            [self colourSingleLineCommentsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupMultiLineComment:
+            [self colourMultiLineCommentsInRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+            break;
+        case kSMLSyntaxGroupSecondStringPass2:
+            [self colourSecondStrings2InRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner];
+    }
+    
+    // inform delegate that colouring is done
+    if ([colouringDelegate respondsToSelector:@selector(fragariaDocument:didColourGroupWithBlock:string:range:info:)]) {
+        [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:effectiveRange info:delegateInfo];
+    }
 }
 
 

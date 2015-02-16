@@ -42,7 +42,8 @@ enum {
     kSMLSyntaxGroupAttribute = 8,
     kSMLSyntaxGroupSingleLineComment = 9,
     kSMLSyntaxGroupMultiLineComment = 10,
-    kSMLSyntaxGroupSecondStringPass2 = 11
+    kSMLSyntaxGroupSecondStringPass2 = 11,
+    kSMLCountOfSyntaxGroups = 12
 };
 typedef NSInteger SMLSyntaxGroupInteger;
 
