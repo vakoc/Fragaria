@@ -10,7 +10,11 @@
 
 @protocol MGSBreakpointDelegate <NSObject>
 
-- (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line;
+
+@optional
+
 - (NSSet*) breakpointsForFile:(NSString*)file;
+
+- (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line;
 
 @end

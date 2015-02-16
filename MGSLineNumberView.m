@@ -470,7 +470,10 @@
     textAttributes = [self textAttributes];
     
     lines = [self lineIndices];
-    linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
+	
+	if (_breakpointDelegate && [_breakpointDelegate respondsToSelector:@selector(breakpointsForFile:)]) {
+		linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
+	}
 
     linesWithErrors = [[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hideWarning == %@", @(NO)]] valueForKeyPath:@"@distinctUnionOfObjects.line"];
     startingLine = _startingLineNumber + 1;
@@ -681,17 +684,18 @@
 {
     NSPoint					location;
     NSUInteger				line;
+	
+	if (_breakpointDelegate && [_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)]) {
 
-    if (!_breakpointDelegate) return;
-
-    location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-    line = [self lineNumberForLocation:location.y];
-    
-    if (line != NSNotFound)
-    {
-        [_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)line+1];
-        [self setNeedsDisplay:YES];
-    }
+		location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+		line = [self lineNumberForLocation:location.y];
+		
+		if (line != NSNotFound)
+		{
+			[_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)line+1];
+			[self setNeedsDisplay:YES];
+		}
+	}
 }
 
 
