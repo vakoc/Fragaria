@@ -656,7 +656,7 @@
     [warningButton setTranslatesAutoresizingMaskIntoConstraints:NO];
 
     // There may be multiple errors for this line, so find the one with the highest warningStyle.
-    MGSErrorType style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", line, @(NO)]] valueForKeyPath:@"@max.warningStyle"] integerValue];
+    float style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", line, @(NO)]] valueForKeyPath:@"@max.warningStyle"] floatValue];
     [warningButton setImage:[SMLSyntaxError imageForWarningStyle:style]];
     [[warningButton image] setSize:NSMakeSize(16.0, 16.0)];
 
