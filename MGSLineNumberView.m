@@ -471,8 +471,16 @@
     
     lines = [self lineIndices];
 	
-	if (_breakpointDelegate && [_breakpointDelegate respondsToSelector:@selector(breakpointsForFile:)]) {
-		linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
+	if (_breakpointDelegate) {
+		
+		if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForView:)]) {
+			linesWithBreakpoints = [_breakpointDelegate breakpointsForView:self.userData];
+		} else if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFile:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+			linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
+#pragma cland diagnostic pop
+		}
 	}
 
     linesWithErrors = [[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hideWarning == %@", @(NO)]] valueForKeyPath:@"@distinctUnionOfObjects.line"];
@@ -685,16 +693,26 @@
     NSPoint					location;
     NSUInteger				line;
 	
-	if (_breakpointDelegate && [_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)]) {
-
-		location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-		line = [self lineNumberForLocation:location.y];
+	if (!_breakpointDelegate) return;
 		
-		if (line != NSNotFound)
+	location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+	line = [self lineNumberForLocation:location.y];
+	
+	if (line != NSNotFound)
+	{
+		if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForView:onLine:)])
 		{
-			[_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)line+1];
-			[self setNeedsDisplay:YES];
+			[_breakpointDelegate toggleBreakpointForView:self.userData onLine:(int)line+1];
 		}
+		else if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)])
+		{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+			[_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)line+1];
+#pragma cland diagnostic pop
+		}
+
+		[self setNeedsDisplay:YES];
 	}
 }
 
