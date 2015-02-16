@@ -29,7 +29,7 @@
 + (SMLSyntaxError *)errorForLine:(NSInteger)line inArray:(NSArray *)errorArray
 {
     errorArray = [[self class] sanitizedErrorsInArray:errorArray];
-    MGSErrorType highestErrorLevel = [[[[self class] errorsForLine:line inArray:errorArray] valueForKeyPath:@"@max.warningStyle"] integerValue];
+    float highestErrorLevel = [[[[self class] errorsForLine:line inArray:errorArray] valueForKeyPath:@"@max.warningStyle"] floatValue];
     NSArray* errors = [[self errorsForLine:line inArray:errorArray] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"warningStyle = %@", @(highestErrorLevel)]];
 
     return errors.firstObject;
