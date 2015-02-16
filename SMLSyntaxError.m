@@ -67,6 +67,7 @@ float const kMGSErrorCategoryDefault = 500;
 	}
 
     NSImage *warningImage = [[NSBundle bundleForClass:[self class]] imageForResource:imageName];
+	[warningImage setName:imageName]; // better for unit testing, name is otherwise nil.
     return warningImage;
 }
 
