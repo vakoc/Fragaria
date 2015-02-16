@@ -832,6 +832,18 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 - (void)colourKeywordsInRange:(NSRange)rangeToRecolour withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner
 {
+    [self colourKeywordsFromSet:syntaxDefinition.keywords withAttributes:keywordsColour inRange:rangeToRecolour withRangeScanner:rangeScanner documentScanner:documentScanner];
+}
+
+
+- (void)colourAutocompleteInRange:(NSRange)rangeToRecolour withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner
+{
+    [self colourKeywordsFromSet:syntaxDefinition.autocompleteWords withAttributes:autocompleteWordsColour inRange:rangeToRecolour withRangeScanner:rangeScanner documentScanner:documentScanner];
+}
+
+
+- (void)colourKeywordsFromSet:(NSSet*)keywords withAttributes:(NSDictionary*)attributes inRange:(NSRange)rangeToRecolour withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner
+{
     NSUInteger colourStartLocation, colourEndLocation;
     NSInteger rangeLocation = rangeToRecolour.location;
     NSString *documentString = [documentScanner string];
@@ -858,54 +870,13 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         } else {
             keywordTestString = [documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)];
         }
-        if ([syntaxDefinition.keywords containsObject:keywordTestString]) {
+        if ([keywords containsObject:keywordTestString]) {
             if (!syntaxDefinition.recolourKeywordIfAlreadyColoured) {
                 if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
                     continue;
                 }
             }
-            [self setColour:keywordsColour range:NSMakeRange(colourStartLocation + rangeLocation, [rangeScanner scanLocation] - colourStartLocation)];
-        }
-    }
-}
-
-
-- (void)colourAutocompleteInRange:(NSRange)rangeToRecolour withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner
-{
-    NSUInteger colourStartLocation, colourEndLocation;
-    NSInteger rangeLocation = rangeToRecolour.location;
-    NSString *documentString = [documentScanner string];
-    NSString *rangeString = [rangeScanner string];
-    NSUInteger rangeStringLength = [rangeString length];
-    
-    // scan range to end
-    while (![rangeScanner isAtEnd]) {
-        [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.keywordStartCharacterSet intoString:nil];
-        colourStartLocation = [rangeScanner scanLocation];
-        if ((colourStartLocation + 1) < rangeStringLength) {
-            [rangeScanner mgs_setScanLocation:(colourStartLocation + 1)];
-        }
-        [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.keywordEndCharacterSet intoString:nil];
-        
-        colourEndLocation = [rangeScanner scanLocation];
-        if (colourEndLocation > rangeStringLength || colourStartLocation == colourEndLocation) {
-            break;
-        }
-        
-        NSString *autocompleteTestString = nil;
-        if (!syntaxDefinition.keywordsCaseSensitive) {
-            autocompleteTestString = [[documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)] lowercaseString];
-        } else {
-            autocompleteTestString = [documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)];
-        }
-        if ([syntaxDefinition.autocompleteWords containsObject:autocompleteTestString]) {
-            if (!syntaxDefinition.recolourKeywordIfAlreadyColoured) {
-                if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
-                    continue;
-                }
-            }
-            
-            [self setColour:autocompleteWordsColour range:NSMakeRange(colourStartLocation + rangeLocation, [rangeScanner scanLocation] - colourStartLocation)];
+            [self setColour:attributes range:NSMakeRange(colourStartLocation + rangeLocation, [rangeScanner scanLocation] - colourStartLocation)];
         }
     }
 }
