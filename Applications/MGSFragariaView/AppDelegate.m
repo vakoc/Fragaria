@@ -102,21 +102,20 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	breakpointsForFile:
+	breakpointsForView:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSSet*) breakpointsForFile:(NSString*)file
+- (NSSet*) breakpointsForView:(id)sender
 {
-	#pragma unused(file)
+	#pragma unused(sender)
     return [NSSet setWithArray:_breakPoints];
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	toggleBreakpointForFile:onLine
+	toggleBreakpointForView:onLine
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)toggleBreakpointForFile:(NSString*)file onLine:(int)line;
-
+- (void)toggleBreakpointForView:(id)sender onLine:(int)line;
 {
-	#pragma unused(file)
+	#pragma unused(sender)
 	if ([_breakPoints containsObject:@(line)])
 	{
 		_breakPoints = [_breakPoints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
