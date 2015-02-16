@@ -1633,7 +1633,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     // Note that's only highlighting this row once, so there's only one opportunity
                     // to set an error image. Let's choose the highest level of error if there are
                     // multiple errors for this line.
-                    MGSErrorType style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", @(err.line), @(NO)]] valueForKeyPath:@"@max.warningStyle"] integerValue];
+                    float style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", @(err.line), @(NO)]] valueForKeyPath:@"@max.warningStyle"] floatValue];
                     NSImage *warnImg = [SMLSyntaxError imageForWarningStyle:style];
                     [warnImg setSize:NSMakeSize(linePos.size.height,linePos.size.height)];
                     [warningButton setImage:warnImg];

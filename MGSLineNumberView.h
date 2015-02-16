@@ -59,6 +59,7 @@
 }
 
 @property (nonatomic) id <MGSBreakpointDelegate> breakpointDelegate;
+@property (nonatomic,assign) id userData;
 
 @property (nonatomic) NSFont *font;
 @property (nonatomic) NSColor *textColor;

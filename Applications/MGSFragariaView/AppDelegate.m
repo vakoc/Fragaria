@@ -35,7 +35,9 @@
 #pragma mark - IMPLEMENTATION
 
 
-@implementation AppDelegate
+@implementation AppDelegate {
+	NSArray *_breakPoints;
+}
 
 
 #pragma mark - Initialization and Setup
@@ -100,14 +102,38 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	breakpointsForFile:
+	breakpointsForView:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSSet*) breakpointsForFile:(NSString*)file
+- (NSSet*) breakpointsForView:(id)sender
 {
-	#pragma unused(file)
-	NSLog(@"%@", @"I'm the breakpoints delegate.");
-    //return [NSSet setWithArray:@[@(6)]];
-    return nil;
+	#pragma unused(sender)
+    return [NSSet setWithArray:_breakPoints];
+}
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	toggleBreakpointForView:onLine
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)toggleBreakpointForView:(id)sender onLine:(int)line;
+{
+	#pragma unused(sender)
+	if ([_breakPoints containsObject:@(line)])
+	{
+		_breakPoints = [_breakPoints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+			return ![evaluatedObject isEqualToValue:@(line)];
+		}]];
+	}
+	else
+	{
+		if (_breakPoints)
+		{
+			_breakPoints = [_breakPoints arrayByAddingObject:@(line)];
+		}
+		else
+		{
+			_breakPoints = @[@(line)];
+		}
+	}
+	
 }
 
 
@@ -192,7 +218,7 @@
                                                                    @"character" : @(3),
                                                                    @"length" : @(5),
                                                                    @"hidden" : @(YES),
-                                                                   @"warningLevel" : @(kMGSErrorError)
+                                                                   @"warningLevel" : @(kMGSErrorCategoryError)
                                                                    }];
 
     SMLSyntaxError *error2 = [[SMLSyntaxError alloc] initWithDictionary:@{
@@ -201,7 +227,7 @@
                                                                           @"character" : @(12),
                                                                           @"length" : @(7),
                                                                           @"hidden" : @(NO),
-                                                                          @"warningLevel" : @(kMGSErrorAccess)
+                                                                          @"warningLevel" : @(kMGSErrorCategoryAccess)
                                                                           }];
 
     SMLSyntaxError *error3 = [[SMLSyntaxError alloc] init];
@@ -210,10 +236,10 @@
     error3.character = 1;
     error3.length = 2;
     error3.hideWarning = NO;
-    error3.warningStyle = kMGSErrorConfig;
+    error3.warningStyle = kMGSErrorCategoryConfig;
 
     SMLSyntaxError *error4 = [SMLSyntaxError new];
-    error4.description = @"This error will be hidden.";
+    error4.description = @"This error will not be hidden.";
     error4.line = 10;
     error4.character = 12;
     error4.length = 7;
