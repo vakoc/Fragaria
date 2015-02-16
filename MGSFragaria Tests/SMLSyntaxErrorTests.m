@@ -46,12 +46,11 @@
 																@"hidden" : @(NO),
 																@"warningLevel" : @(kMGSErrorCategoryDocument)
 																}],
-						  [NSString stringWithFormat:@"%@", @"I don't belong here."],
 						  [SMLSyntaxError errorWithDictionary:@{
 																@"description" : @"Sample error 5.",
 																@"line" : @(189),
 																@"hidden" : @(NO),
-																@"warningLevel" : @(kMGSErrorCategoryError)
+																@"warningLevel" : @(522.2)
 																}],
 						  [SMLSyntaxError errorWithDictionary:@{
 																@"description" : @"Sample error 6.",
@@ -67,11 +66,33 @@
 
 - (void)test_defaultImageForWarningLevel
 {
-	SMLSyntaxError *test1 = self.syntaxErrors[1]; // sample error 2, panic.
-	NSString *result1 = [SMLSyntaxError defaultImageForWarningLevel:test1.warningLevel].name;
-	NSString *expect1 = @"messagesPanic";
+	SMLSyntaxError *test;
+	NSImage *result;
+	NSImage *expect;
 	
-	XCTAssert([result1 isEqualToString:expect1]);
+	// Tests values over 600
+	test = self.syntaxErrors[1];
+	result = [SMLSyntaxError defaultImageForWarningLevel:test.warningLevel];
+	expect = [[NSBundle bundleForClass:[SMLSyntaxError class]] imageForResource:@"messagesPanic"];
+	XCTAssert([[result TIFFRepresentation] isEqualToData:[expect TIFFRepresentation]]);
+
+	// Tests the default case where the value is 0.
+	test = self.syntaxErrors[5];
+	result = [SMLSyntaxError defaultImageForWarningLevel:test.warningLevel];
+	expect = [[NSBundle bundleForClass:[SMLSyntaxError class]] imageForResource:@"messagesWarning"];
+	XCTAssert([[result TIFFRepresentation] isEqualToData:[expect TIFFRepresentation]]);
+	
+	// Tests a standard case where the value is not exact.
+	test = self.syntaxErrors[4];
+	result = [SMLSyntaxError defaultImageForWarningLevel:test.warningLevel];
+	expect = [[NSBundle bundleForClass:[SMLSyntaxError class]] imageForResource:@"messagesError"];
+	XCTAssert([[result TIFFRepresentation] isEqualToData:[expect TIFFRepresentation]]);
+
+	// Tests the default case where the value is exact.
+	test = self.syntaxErrors[3];
+	result = [SMLSyntaxError defaultImageForWarningLevel:test.warningLevel];
+	expect = [[NSBundle bundleForClass:[SMLSyntaxError class]] imageForResource:@"messagesDocument"];
+	XCTAssert([[result TIFFRepresentation] isEqualToData:[expect TIFFRepresentation]]);
 }
 
 
