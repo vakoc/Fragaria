@@ -35,7 +35,9 @@
 #pragma mark - IMPLEMENTATION
 
 
-@implementation AppDelegate
+@implementation AppDelegate {
+	NSArray *_breakPoints;
+}
 
 
 #pragma mark - Initialization and Setup
@@ -105,9 +107,34 @@
 - (NSSet*) breakpointsForFile:(NSString*)file
 {
 	#pragma unused(file)
-	NSLog(@"%@", @"I'm the breakpoints delegate.");
-    //return [NSSet setWithArray:@[@(6)]];
-    return nil;
+    return [NSSet setWithArray:_breakPoints];
+}
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	toggleBreakpointForFile:onLine
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)toggleBreakpointForFile:(NSString*)file onLine:(int)line;
+
+{
+	#pragma unused(file)
+	if ([_breakPoints containsObject:@(line)])
+	{
+		_breakPoints = [_breakPoints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+			return ![evaluatedObject isEqualToValue:@(line)];
+		}]];
+	}
+	else
+	{
+		if (_breakPoints)
+		{
+			_breakPoints = [_breakPoints arrayByAddingObject:@(line)];
+		}
+		else
+		{
+			_breakPoints = @[@(line)];
+		}
+	}
+	
 }
 
 
