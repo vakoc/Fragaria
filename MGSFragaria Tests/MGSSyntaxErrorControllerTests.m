@@ -29,39 +29,39 @@
                                                                 @"description" : @"Sample error 1.",
                                                                 @"line" : @(4),
                                                                 @"hidden" : @(NO),
-                                                                @"warningLevel" : @(kMGSErrorAccess)
+                                                                @"warningLevel" : @(kMGSErrorCategoryAccess)
                                                                 }],
 
                           [SMLSyntaxError errorWithDictionary:@{
                                                                 @"description" : @"Sample error 2.",
                                                                 @"line" : @(4),
                                                                 @"hidden" : @(YES),
-                                                                @"warningLevel" : @(kMGSErrorPanic)
+                                                                @"warningLevel" : @(kMGSErrorCategoryPanic)
                                                                 }],
                           [SMLSyntaxError errorWithDictionary:@{
                                                                 @"description" : @"Sample error 3.",
                                                                 @"line" : @(37),
                                                                 @"hidden" : @(NO),
-                                                                @"warningLevel" : @(kMGSErrorDocument)
+                                                                @"warningLevel" : @(kMGSErrorCategoryDocument)
                                                                 }],
                           [SMLSyntaxError errorWithDictionary:@{
                                                                 @"description" : @"Sample error 4.",
                                                                 @"line" : @(37),
                                                                 @"hidden" : @(NO),
-                                                                @"warningLevel" : @(kMGSErrorDocument)
+                                                                @"warningLevel" : @(kMGSErrorCategoryDocument)
                                                                 }],
                           [NSString stringWithFormat:@"%@", @"I don't belong here."],
                           [SMLSyntaxError errorWithDictionary:@{
                                                                 @"description" : @"Sample error 5.",
                                                                 @"line" : @(189),
                                                                 @"hidden" : @(NO),
-                                                                @"warningLevel" : @(kMGSErrorError)
+                                                                @"warningLevel" : @(kMGSErrorCategoryError)
                                                                 }],
                           [SMLSyntaxError errorWithDictionary:@{
                                                                 @"description" : @"Sample error 6.",
                                                                 @"line" : @(212),
                                                                 @"hidden" : @(YES),
-                                                                @"warningLevel" : @(kMGSErrorPanic)
+                                                                @"warningLevel" : @(kMGSErrorCategoryPanic)
                                                                 }],
                           ];
 }
@@ -71,7 +71,7 @@
     [super tearDown];
 }
 
-- (void)testLinesWithErrorsInArray
+- (void)test_linesWithErrorsInArray
 {
     NSArray *result = [[MGSSyntaxErrorController linesWithErrorsInArray:self.syntaxErrors] sortedArrayUsingSelector:@selector(compare:)];
     NSArray *expects = @[@(4), @(37), @(189)];
@@ -81,7 +81,7 @@
 
 
 
-- (void)testErrorCountForLine
+- (void)test_errorCountForLine
 {
     NSInteger result4 = [MGSSyntaxErrorController errorCountForLine:4 inArray:self.syntaxErrors];
     NSInteger result37 = [MGSSyntaxErrorController errorCountForLine:37 inArray:self.syntaxErrors];
@@ -92,20 +92,20 @@
 }
 
 
-- (void)testErrorForLine
+- (void)test_errorForLine
 {
     // We should get kMGSErrorAccess, because the other error is hidden.
-    MGSErrorType result4 = [[MGSSyntaxErrorController errorForLine:4 inArray:self.syntaxErrors] warningLevel];
+    float result4 = [[MGSSyntaxErrorController errorForLine:4 inArray:self.syntaxErrors] warningLevel];
 
     // We should get @"Sample error 3." because error level is the same, and this is the first one.
     NSString *result37 = [[MGSSyntaxErrorController errorForLine:37 inArray:self.syntaxErrors] description];
 
-    XCTAssert(result4 == kMGSErrorAccess && [result37 isEqualToString:@"Sample error 3."]);
+    XCTAssert(result4 == kMGSErrorCategoryAccess && [result37 isEqualToString:@"Sample error 3."]);
 
 }
 
 
-- (void)testErrorsForLine
+- (void)test_errorsForLine
 {
     SMLSyntaxError *testContent = [[MGSSyntaxErrorController errorsForLine:4 inArray:self.syntaxErrors] objectAtIndex:0];
     NSInteger testQuantity = [[MGSSyntaxErrorController errorsForLine:37 inArray:self.syntaxErrors] count];
@@ -114,7 +114,7 @@
 }
 
 
-- (void)testNonHiddenErrorsInArray
+- (void)test_nonHiddenErrorsInArray
 {
     NSInteger testQuantity = [[MGSSyntaxErrorController nonHiddenErrorsInArray:self.syntaxErrors] count];
 
@@ -122,7 +122,7 @@
 }
 
 
-- (void)testSanitizedErrorsInArray
+- (void)test_sanitizedErrorsInArray
 {
     BOOL pass = YES;
     for (id object in [MGSSyntaxErrorController sanitizedErrorsInArray:self.syntaxErrors])
@@ -137,7 +137,7 @@
 }
 
 
-- (void)testErrorDecorationsInArray
+- (void)test_errorDecorationsInArray
 {
     NSDictionary *resultDict = [MGSSyntaxErrorController errorDecorationsInArray:self.syntaxErrors];
     NSImage *image = [resultDict objectForKey:@(189)];
@@ -150,7 +150,7 @@
 }
 
 
-- (void)testErrorDecorationsInArraySize
+- (void)test_errorDecorationsInArraySize
 {
     NSDictionary *resultDict = [MGSSyntaxErrorController errorDecorationsInArray:self.syntaxErrors size:NSMakeSize(123.0, 119.4)];
     NSImage *image = [resultDict objectForKey:@(4)];

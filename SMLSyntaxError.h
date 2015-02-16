@@ -10,29 +10,31 @@
 #import <Foundation/Foundation.h>
 
 /**
- *  MGSErrorType describes the warning level for an error, ranging from least severe to most severe.
- *  This can be used to automatically provide an appropriate image for error displays.
+ *  MGSErrorType describes the warningLevel for an error, ranging from least severe to most severe.
+ *  This can be used to automatically provide an appropriate image for error displays. The constants
+ *  below can serve as as a convenience for setting warningLevel, and as long as the warningLevel is
+ *  within the ranges described below the default warningImage can be used. This allows you to implement
+ *  varying warningLevels within a "category."
+ *
+ **/
+
+extern float const kMGSErrorCategoryAccess;   ///< warningLevel > 0.0, <= 100.0
+extern float const kMGSErrorCategoryConfig;   ///< warningLevel > 100.0, <= 200.0
+extern float const kMGSErrorCategoryDocument; ///< warningLevel > 200.0, <= 300.0
+extern float const kMGSErrorCategoryInfo;     ///< warningLevel > 300.0, <= 400.0
+extern float const kMGSErrorCategoryWarning;  ///< warningLevel > 400.0, <= 500.0
+extern float const kMGSErrorCategoryError;    ///< warningLevel > 500.0, <= 600.0
+extern float const kMGSErrorCategoryPanic;    ///< warningLevel > 600.0
+extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCategoryWarning
+
+
+/**
+ *  SMLSyntaxError describes a class that stores syntaxErrors to be handled by Fragaria.
  *
  *  @discussion Components using this class are not currently KVO compliant and do not observe changes
  *  to instances of this class. They expect an NSArray of this class for which they will respond to
  *  changes. Do not modify instances of this class once assigned to your instance of Fragaria; instead
  *  assign a new copy of your syntaxErrors array.
- **/
-typedef NS_ENUM(NSInteger, MGSErrorType)
-{
-    kMGSErrorDefault  = 0,
-    kMGSErrorAccess   = 1,
-    kMGSErrorConfig   = 2,
-    kMGSErrorDocument = 3,
-    kMGSErrorInfo     = 4,
-    kMGSErrorWarning  = 5,
-    kMGSErrorError    = 6,
-    kMGSErrorPanic    = 7
-};
-
-
-/**
- *  SMLSyntaxError describes a class that stores syntaxErrors to be handled by Fragaria.
  **/
 
 @interface SMLSyntaxError : NSObject
@@ -43,9 +45,9 @@ typedef NS_ENUM(NSInteger, MGSErrorType)
 /**
  *  This class method will return an image that represents the property `warningLevel`.
  *  The default images are stored in and loaded from the framework bundle automatically.
- *  @param level indicates the level of this error.
+ *  @param level indicates the level (severity) of this error.
  **/
-+ (NSImage *)defaultImageForWarningLevel:(MGSErrorType)level;
++ (NSImage *)defaultImageForWarningLevel:(float)level;
 
 
 /**
@@ -71,7 +73,7 @@ typedef NS_ENUM(NSInteger, MGSErrorType)
  *  @deprecated Use defaultImageForWarningLevel: instead.
  *  @param style indicates the level of this error.
  **/
-+ (NSImage *)imageForWarningStyle:(MGSErrorType)style __deprecated_msg("Use defaultImageForWarningLevel: instead.");
++ (NSImage *)imageForWarningStyle:(float)style __deprecated_msg("Use defaultImageForWarningLevel: instead.");
 
 
 /// @name Properties
@@ -85,7 +87,7 @@ typedef NS_ENUM(NSInteger, MGSErrorType)
 @property (nonatomic,copy) NSColor *errorLineHighlightColor;       ///< The color to use to highlight lines that have syntax errors.
 @property (nonatomic,copy) NSColor *errorBackgroundHighlightColor; ///< The color to use to highlight the background of specific errors.
 @property (nonatomic,copy) NSColor *errorForegroundHilightColor;   ///< The color to use to highlight the foreground of specific errors.
-@property (nonatomic,assign) MGSErrorType warningLevel;            ///< The warning level or severity of this syntax error.
+@property (nonatomic,assign) float warningLevel;                   ///< The warning level or severity of this syntax error.
 
 /**
  *  Specifies an image that should be associated with this syntax error.
@@ -107,7 +109,7 @@ typedef NS_ENUM(NSInteger, MGSErrorType)
 @property (nonatomic,copy) NSString* code __deprecated_msg("This property is not used.");
 
 /// @deprecated Use the warningLevel property instead.
-@property (nonatomic,assign) MGSErrorType warningStyle __deprecated_msg("Use the warningLevel property instead.");
+@property (nonatomic,assign) float warningStyle __deprecated_msg("Use the warningLevel property instead.");
 
 /// @deprecated Use the hidden property instead.
 @property (nonatomic,assign) BOOL hideWarning __deprecated_msg("Use the hidden property instead.");

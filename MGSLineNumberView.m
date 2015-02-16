@@ -470,7 +470,18 @@
     textAttributes = [self textAttributes];
     
     lines = [self lineIndices];
-    linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
+	
+	if (_breakpointDelegate) {
+		
+		if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForView:)]) {
+			linesWithBreakpoints = [_breakpointDelegate breakpointsForView:self.userData];
+		} else if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFile:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+			linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
+#pragma cland diagnostic pop
+		}
+	}
 
     linesWithErrors = [[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hideWarning == %@", @(NO)]] valueForKeyPath:@"@distinctUnionOfObjects.line"];
     startingLine = _startingLineNumber + 1;
@@ -645,7 +656,7 @@
     [warningButton setTranslatesAutoresizingMaskIntoConstraints:NO];
 
     // There may be multiple errors for this line, so find the one with the highest warningStyle.
-    MGSErrorType style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", line, @(NO)]] valueForKeyPath:@"@max.warningStyle"] integerValue];
+    float style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", line, @(NO)]] valueForKeyPath:@"@max.warningStyle"] floatValue];
     [warningButton setImage:[SMLSyntaxError imageForWarningStyle:style]];
     [[warningButton image] setSize:NSMakeSize(16.0, 16.0)];
 
@@ -681,17 +692,28 @@
 {
     NSPoint					location;
     NSUInteger				line;
+	
+	if (!_breakpointDelegate) return;
+		
+	location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+	line = [self lineNumberForLocation:location.y];
+	
+	if (line != NSNotFound)
+	{
+		if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForView:onLine:)])
+		{
+			[_breakpointDelegate toggleBreakpointForView:self.userData onLine:(int)line+1];
+		}
+		else if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)])
+		{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+			[_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)line+1];
+#pragma cland diagnostic pop
+		}
 
-    if (!_breakpointDelegate) return;
-
-    location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-    line = [self lineNumberForLocation:location.y];
-    
-    if (line != NSNotFound)
-    {
-        [_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)line+1];
-        [self setNeedsDisplay:YES];
-    }
+		[self setNeedsDisplay:YES];
+	}
 }
 
 
