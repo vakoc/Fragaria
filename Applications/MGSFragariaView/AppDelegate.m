@@ -218,7 +218,7 @@
                                                                    @"character" : @(3),
                                                                    @"length" : @(5),
                                                                    @"hidden" : @(YES),
-                                                                   @"warningLevel" : @(kMGSErrorError)
+                                                                   @"warningLevel" : @(kMGSErrorCategoryError)
                                                                    }];
 
     SMLSyntaxError *error2 = [[SMLSyntaxError alloc] initWithDictionary:@{
@@ -227,7 +227,7 @@
                                                                           @"character" : @(12),
                                                                           @"length" : @(7),
                                                                           @"hidden" : @(NO),
-                                                                          @"warningLevel" : @(kMGSErrorAccess)
+                                                                          @"warningLevel" : @(kMGSErrorCategoryAccess)
                                                                           }];
 
     SMLSyntaxError *error3 = [[SMLSyntaxError alloc] init];
@@ -236,10 +236,10 @@
     error3.character = 1;
     error3.length = 2;
     error3.hideWarning = NO;
-    error3.warningStyle = kMGSErrorConfig;
+    error3.warningStyle = kMGSErrorCategoryConfig;
 
     SMLSyntaxError *error4 = [SMLSyntaxError new];
-    error4.description = @"This error will be hidden.";
+    error4.description = @"This error will not be hidden.";
     error4.line = 10;
     error4.character = 12;
     error4.length = 7;
