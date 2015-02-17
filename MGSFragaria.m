@@ -145,7 +145,7 @@ char kcLineWrapPrefChanged;
             [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
             [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
             [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
-            @(NO), MGSFOShowsWarningsInGutter,
+            @(YES), MGSFOShowsWarningsInGutter,
 			nil];
 }
 
@@ -370,6 +370,8 @@ char kcLineWrapPrefChanged;
 
     // apply default line wrapping
     [textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
+    
+    [self setShowsWarningsInGutter:YES];
 
     if ([docSpec objectForKey:MGSFODelegate])
         [[self textView] setDelegate:[docSpec objectForKey:MGSFODelegate]];
@@ -404,6 +406,13 @@ char kcLineWrapPrefChanged;
  */
 - (void)setObject:(id)object forKey:(id)key
 {
+    if ([key isEqual:MGSFOShowsWarningsInGutter]) {
+        NSLog(@"Using setObject:forKey: with the MGSFOShowsWarningsInGutter "
+          "property is not supported and has no effect. Please use "
+          "setShowsWarningsInGutter:");
+        return;
+    }
+    
 	if ([self.objectSetterKeys containsObject:key]) {
 		[(id)self.docSpec setValue:object forKey:key];
 	}
@@ -696,7 +705,7 @@ char kcLineWrapPrefChanged;
  */
 - (void)setShowsWarningsInGutter:(BOOL)value
 {
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowsWarningsInGutter];
+    [docSpec setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowsWarningsInGutter];
 
     MGSLineNumberView * lineNumberView = [self.docSpec valueForKey:ro_MGSFOGutterView];
     lineNumberView.showsWarnings = value;
