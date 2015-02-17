@@ -65,7 +65,7 @@
 
     /* Make the upper view interesting. */
     self.viewTop.string = fileContent;
-    //self.viewTop.startingLineNumber = 2025;
+    self.viewTop.startingLineNumber = 2025;
 	self.viewTop.showsLineNumbers = YES;
     self.viewTop.lineWrap = NO;
 
@@ -193,17 +193,6 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleToggleEditorWarnings:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)handleToggleEditorWarnings:(id)sender
-{
-    #pragma unused(sender)
-    BOOL current = self.viewTop.showsWarningsInEditor;
-    self.viewTop.showsWarningsInEditor = !current;
-}
-
-
 #pragma marks - Private
 
 
@@ -217,7 +206,7 @@
                                                                    @"line" : @(4),
                                                                    @"character" : @(3),
                                                                    @"length" : @(5),
-                                                                   @"hidden" : @(YES),
+                                                                   @"hidden" : @(NO),
                                                                    @"warningLevel" : @(kMGSErrorCategoryError)
                                                                    }];
 
@@ -235,15 +224,15 @@
     error3.line = 6;
     error3.character = 1;
     error3.length = 2;
-    error3.hideWarning = NO;
-    error3.warningStyle = kMGSErrorCategoryConfig;
+    error3.hidden = NO;
+    error3.warningLevel = kMGSErrorCategoryConfig;
 
     SMLSyntaxError *error4 = [SMLSyntaxError new];
     error4.description = @"This error will not be hidden.";
     error4.line = 10;
     error4.character = 12;
     error4.length = 7;
-    error4.hideWarning = NO;
+    error4.hidden = NO;
 
     return @[error1, error2, error3, error4];
 }

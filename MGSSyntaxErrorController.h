@@ -10,25 +10,37 @@
 #import "SMLSyntaxError.h"
 
 /**
- *  MGSSyntaxErrorController consists primarily of convenience methods and
- *  properties for internal use by Fragaria to handle matters related to
- *  the Fragaria.syntaxErrors array.
- *
- *  All of this class's methods are implemented as class methods, and as such
- *  there is no requirement to implement singleton instances or to maintain
- *  any type of object ownership.
+ *  MGSSyntaxErrorController provides internal services and methods to Fragaria
+ *  for managing syntax errors.
  **/
 
 @interface MGSSyntaxErrorController : NSObject
 
-/// @name Class Methods
 
-/** 
+/// @name Properties
+
+/**
+ *  MGSSyntaxErrorController will maintain an owned copy of the array of
+ *  SMLSyntaxError objects.
+ **/
+@property (nonatomic, strong) NSArray *syntaxErrors;
+
+
+/// @name Instance Methods
+
+/**
+ *  Initializes the instance with an NSArray of SMLSyntaxError instances.
+ *  @param errorArray is the array of SMLSyntaxError objects to check.
+ **/
+- (instancetype)initWithArray:(NSArray *)array;
+
+
+/**
  *  Returns an array of NSNumber indicating unique line numbers that are assigned errors.
  *  Syntax errors that have hidden == true will not be counted.
  *  @param errorArray is the array of SMLSyntaxError objects to check.
  **/
-+ (NSArray *)linesWithErrorsInArray:(NSArray *)errorArray;
+- (NSArray *)linesWithErrors;
 
 
 /**
@@ -37,7 +49,7 @@
  *  @param line is the line number to check.
  *  @param errorArray is the array of SMLSyntaxError objects to check.
  **/
-+ (NSUInteger)errorCountForLine:(NSInteger)line inArray:(NSArray *)errorArray;
+- (NSUInteger)errorCountForLine:(NSInteger)line;
 
 
 /**
@@ -46,7 +58,7 @@
  *  @param line is the line number to check.
  *  @param errorArray is the array of SMLSyntaxError objects to check.
  **/
-+ (SMLSyntaxError *)errorForLine:(NSInteger)line inArray:(NSArray *)errorArray;
+- (SMLSyntaxError *)errorForLine:(NSInteger)line;
 
 
 /**
@@ -55,7 +67,7 @@
  *  @param line is the line number to check.
  *  @param errorArray is the array of SMLSyntaxError objects to check.
  **/
-+ (NSArray*)errorsForLine:(NSInteger)line inArray:(NSArray *)errorArray;
+- (NSArray*)errorsForLine:(NSInteger)line;
 
 
 /**
@@ -63,15 +75,7 @@
  *  Syntax errors that have hidden == true will not be returned.
  *  @param errorArray is the array of SMLSyntaxError objects to check.
  **/
-+ (NSArray *)nonHiddenErrorsInArray:(NSArray*)errorArray;
-
-
-/**
- *  Returns an array ensuring that all objects in `errorArray` are
- *  of type SMLSyntaxError.
- *  @param errorArray is the array of SMLSyntaxError objects to check.
- **/
-+ (NSArray *)sanitizedErrorsInArray:(NSArray*)errorArray;
+- (NSArray *)nonHiddenErrors;
 
 
 /**
@@ -83,7 +87,7 @@
  *  highest warningLevel for that line.
  *  @param errorArray is the array of SMLSyntaxError objects to check.
  **/
-+ (NSDictionary *)errorDecorationsInArray:(NSArray *)errorArray;
+- (NSDictionary *)errorDecorations;
 
 
 /**
@@ -96,7 +100,15 @@
  *  @param errorArray is the array of SMLSyntaxError objects to check.
  *  @param size indicates the size of the image in the dictionary.
  **/
-+ (NSDictionary *)errorDecorationsInArray:(NSArray *)errorArray size:(NSSize)size;
+- (NSDictionary *)errorDecorationsHavingSize:(NSSize)size;
+
+
+/**
+ *  Displays an NSPopover indicating the error(s).
+ *  @param line indicates the line number from which errors should be shown.
+ *  @param rect indicates the relative location to display the popover.
+ **/
+- (void)showErrorsForLine:(NSUInteger)line relativeToRect:(NSRect)rect ofView:(NSView*)view;
 
 
 @end

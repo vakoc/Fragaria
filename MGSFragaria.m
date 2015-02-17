@@ -22,7 +22,6 @@ NSString * const MGSFOHasVerticalScroller = @"hasVerticalScroller";
 NSString * const MGSFODisableScrollElasticity = @"disableScrollElasticity";
 NSString * const MGSFOLineWrap = @"lineWrap";
 NSString * const MGSFOShowsWarningsInGutter = @"showsWarningsInGutter";
-NSString * const MGSFOShowsWarningsInEditor = @"showsWarningsInEditor";
 
 // string
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
@@ -62,6 +61,8 @@ char kcLineWrapPrefChanged;
 // class extension
 @interface MGSFragaria()
 @property (nonatomic, readwrite) MGSExtraInterfaceController *extraInterfaceController;
+@property (nonatomic, strong, readwrite) MGSSyntaxErrorController *syntaxErrorController;
+
 
 - (void)updateGutterView;
 
@@ -144,7 +145,6 @@ char kcLineWrapPrefChanged;
             [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
             [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
             [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
-            @(YES), MGSFOShowsWarningsInEditor,
             @(NO), MGSFOShowsWarningsInGutter,
 			nil];
 }
@@ -273,14 +273,17 @@ char kcLineWrapPrefChanged;
                                  MGSFOHasVerticalScroller, MGSFODisableScrollElasticity, MGSFODocumentName,
                                  MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate,
                                  MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate, MGSFOLineWrap,
-                                 MGSFOShowsWarningsInEditor, MGSFOShowsWarningsInGutter,
+                                 MGSFOShowsWarningsInGutter,
                                  nil];
         
         // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOLineNumbers, ro_MGSFOSyntaxColouring, nil];
+        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOLineNumbers, ro_MGSFOSyntaxColouring, ro_MGSFOGutterView, nil];
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
+
+        // Create the syntaxErrorController
+        _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
 	}
 
 	return self;
@@ -344,7 +347,7 @@ char kcLineWrapPrefChanged;
 
     MGSLineNumberView *lineNumberView;
     lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView];
-	lineNumberView.userData = self;
+	lineNumberView.fragaria = self;
     [textScrollView setVerticalRulerView:lineNumberView];
     [textScrollView setHasVerticalRuler:YES];
     [textScrollView setHasHorizontalRuler:NO];
@@ -659,7 +662,7 @@ char kcLineWrapPrefChanged;
 {
     [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOIsSyntaxColoured]; 
     [self reloadString];
-    // @todo: there's a bug somewhere in the interaction. In the demo app if I
+    // @todo: (jsd) there's a bug somewhere in the interaction. In the demo app if I
     // turn ON line wrapping then turn OFF highlighting, then the ruler view
     // corrupts its display. Turning on highlighting also doesn't affect the text.
 }
@@ -712,40 +715,20 @@ char kcLineWrapPrefChanged;
 }
 
 /*
-
- - setShowsWarningsInEditor
-
- */
-- (void)setShowsWarningsInEditor:(BOOL)value
-{
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowsWarningsInEditor];
-    [self updateErrorHighlighting];
-}
-
-/*
-
- - showsWarningsInEditor
-
- */
-- (BOOL)showsWarningsInEditor
-{
-    NSNumber *value = [self objectForKey:MGSFOShowsWarningsInEditor];
-    return [value boolValue];
-}
-
-/*
  
  - setSyntaxErrors:
  
  */
 - (void)setSyntaxErrors:(NSArray *)errors
 {
+    self.syntaxErrorController.syntaxErrors = errors;
+
+    /// @todo: (jsd) This is still keeping its own copy.
     SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
     syntaxColouring.syntaxErrors = errors;
     [syntaxColouring highlightErrors];
 
     MGSLineNumberView *lineNumberView = [docSpec valueForKey:ro_MGSFOGutterView];
-    lineNumberView.syntaxErrors = errors;
     [lineNumberView setNeedsDisplay:YES];
 }
 
@@ -756,8 +739,7 @@ char kcLineWrapPrefChanged;
  */
 - (NSArray *)syntaxErrors
 {
-    SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
-    return syntaxColouring.syntaxErrors;
+    return self.syntaxErrorController.syntaxErrors;
 }
 
 #pragma mark -

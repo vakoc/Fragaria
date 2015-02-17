@@ -35,6 +35,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MGSFragaria.h"
 
 /*
  Displays line numbers for an NSTextView.
@@ -59,7 +60,7 @@
 }
 
 @property (nonatomic) id <MGSBreakpointDelegate> breakpointDelegate;
-@property (nonatomic,assign) id userData;
+@property (nonatomic,weak) MGSFragaria *fragaria;
 
 @property (nonatomic) NSFont *font;
 @property (nonatomic) NSColor *textColor;
@@ -68,7 +69,6 @@
 @property (nonatomic) NSColor *backgroundColor;
 @property (nonatomic) CGFloat minimumWidth;
 @property (nonatomic) NSUInteger startingLineNumber;
-@property (nonatomic) NSArray *syntaxErrors;
 @property (nonatomic) BOOL *showsWarnings;
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView;

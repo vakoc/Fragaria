@@ -37,6 +37,7 @@
 #import "MGSLineNumberView.h"
 #import "MGSFragariaFramework.h"
 #import <tgmath.h>
+#import "MGSSyntaxErrorController.h"
 
 
 #define RULER_MARGIN		5.0
@@ -58,7 +59,10 @@
 @end
 
 
-@implementation MGSLineNumberView
+@implementation MGSLineNumberView {
+    NSUInteger _mouseDownLineTracking;
+    NSRect     _mouseDownRectTracking;
+}
 
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView
@@ -437,11 +441,10 @@
     [dottedLine stroke];
 	
     NSLayoutManager			*layoutManager;
-    NSTextContainer			*container;
     NSRange					range, glyphRange;
-    NSString				*text, *labelText;
-    NSUInteger				index, line, count, startingLine, stringLength;
-    NSRect                  rect;
+    NSString				*labelText;
+    NSUInteger				index, line, startingLine;
+    NSRect                  wholeLineRect;
     CGFloat					ypos, yinset;
     NSDictionary			*textAttributes, *currentTextAttributes;
     NSSize					stringSize;
@@ -450,13 +453,10 @@
     NSTextStorage           *drawingTextStorage;
     NSLayoutManager         *drawingLayoutManager;
     NSSet                   *linesWithBreakpoints;
-    NSArray                 *linesWithErrors;
+    BOOL                    willDrawErrors;
 
     layoutManager = [view layoutManager];
-    container = [view textContainer];
-    text = [view string];
-    stringLength = [text length];
-    
+
     yinset = [view textContainerInset].height;
 
     drawingTextStorage = [[NSTextStorage alloc] init];
@@ -474,7 +474,7 @@
 	if (_breakpointDelegate) {
 		
 		if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForView:)]) {
-			linesWithBreakpoints = [_breakpointDelegate breakpointsForView:self.userData];
+			linesWithBreakpoints = [_breakpointDelegate breakpointsForView:self.fragaria];
 		} else if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFile:)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -483,89 +483,57 @@
 		}
 	}
 
-    linesWithErrors = [[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"hideWarning == %@", @(NO)]] valueForKeyPath:@"@distinctUnionOfObjects.line"];
     startingLine = _startingLineNumber + 1;
 
-    // Clear all buttons
-    NSMutableArray* buttons = [NSMutableArray array];
-    for (NSView* subview in [self subviews])
-    {
-        if ([subview isKindOfClass:[NSButton class]])
-        {
-            [buttons addObject:subview];
-        }
-    }
-    for (NSButton* button in buttons)
-    {
-        [button removeFromSuperview];
-    }
-
-
-    // Find the characters that are currently visible
-    glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:container];
+    // Find the characters that are currently visible, make a range,  then fudge the range a tad in case
+    // there is an extra new line at end. It doesn't show up in the glyphs so would not be accounted for.
+    glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:[view textContainer]];
     range = [layoutManager characterRangeForGlyphRange:glyphRange actualGlyphRange:NULL];
-    
-    // Fudge the range a tad in case there is an extra new line at end.
-    // It doesn't show up in the glyphs so would not be accounted for.
     range.length++;
     
-    count = [lines count];
-    
-    for (line = [self lineNumberForCharacterIndex:range.location inText:text]; line < count; line++)
+    for (line = [self lineNumberForCharacterIndex:range.location inText:[view string]]; line < [lines count]; line++)
     {
         index = [[lines objectAtIndex:line] unsignedIntegerValue];
         
         if (NSLocationInRange(index, range))
         {
-            NSUInteger glyphIdx = [layoutManager glyphIndexForCharacterAtIndex:index];
-            if (index < stringLength)
-                rect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIdx effectiveRange:NULL];
-            else
-                rect = [layoutManager boundingRectForGlyphRange:NSMakeRange(glyphIdx, 0) inTextContainer:container];
+            NSNumber *lineNum = [NSNumber numberWithInteger:line];    // zero-based line number, Fragaria's count.
+            wholeLineRect = [self wholeLineRectForLine:lineNum];
 
             // Note that the ruler view is only as tall as the visible
             // portion. Need to compensate for the clipview's coordinates.
-            ypos = yinset + NSMinY(rect) - NSMinY(visibleRect);
+            ypos = wholeLineRect.origin.y;
 
             currentTextAttributes = textAttributes;
 
-            NSNumber *lineNum = [NSNumber numberWithInteger:line+1];
-            if ([linesWithBreakpoints containsObject:lineNum]) {
-                NSRect wholeLineRect;
-                
-                wholeLineRect.size.width = bounds.size.width;
-                wholeLineRect.size.height = rect.size.height;
-                wholeLineRect.origin.x = 0;
-                wholeLineRect.origin.y = ypos;
+            if ([linesWithBreakpoints containsObject:@(line + 1)]) {
                 [self drawMarkerInRect:wholeLineRect ofLine:lineNum];
                 currentTextAttributes = [self markerTextAttributes];
             }
 
-            if (self.showsWarnings && [linesWithErrors containsObject:@(line+1)]) {
-                NSRect wholeLineRect;
-
-                wholeLineRect.size.width = bounds.size.width;
-                wholeLineRect.size.height = rect.size.height;
-                wholeLineRect.origin.x = 0;
-                wholeLineRect.origin.y = ypos;
-                [self drawErrorsInRect:wholeLineRect ofLine:lineNum];
+            if ((willDrawErrors = self.showsWarnings && [self.fragaria.syntaxErrorController.linesWithErrors containsObject:@(line + 1)])) {
                 currentTextAttributes = [self errorTextAttributes];
             }
 
+            // Draw line numbers first so that error images won't be buried underneath long line numbers.
             // Line numbers are internally stored starting at 0
             labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine];
-            
             [drawingTextStorage beginEditing];
             [[drawingTextStorage mutableString] setString:labelText];
             [drawingTextStorage setAttributes:currentTextAttributes range:NSMakeRange(0, [labelText length])];
             [drawingTextStorage endEditing];
-            
-            NSRange glyphRange = [drawingLayoutManager glyphRangeForTextContainer:drawingTextContainer];
+
+            glyphRange = [drawingLayoutManager glyphRangeForTextContainer:drawingTextContainer];
             stringSize = [drawingLayoutManager usedRectForTextContainer:drawingTextContainer].size;
-            
-            NSPoint drawOrigin = NSMakePoint(NSWidth(bounds) - stringSize.width - RULER_MARGIN, ypos + (NSHeight(rect) - stringSize.height) / 2.0);
+
+            NSPoint drawOrigin = NSMakePoint(NSWidth(bounds) - stringSize.width - RULER_MARGIN, ypos + (NSHeight(wholeLineRect) - stringSize.height) / 2.0);
             // Draw string flush right, centered vertically within the line
             [drawingLayoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawOrigin];
+
+            if (willDrawErrors)
+            {
+                [self drawErrorsInRect:wholeLineRect ofLine:lineNum];
+            }
         }
         if (index > NSMaxRange(range))
         {
@@ -574,7 +542,61 @@
     }
 }
 
+/// @param line uses zero-based indexing.
+- (NSRect)wholeLineRectForLine:(NSNumber*)line
+{
+    id			      view;
+    NSRect            visibleRect;
+    NSLayoutManager	  *layoutManager;
+    NSTextContainer	  *container;
+    NSRange           range, glyphRange;
+    NSUInteger        index, stringLength;
+    NSRect            rect;
+    NSMutableArray    *lines;
+    NSRect            wholeLineRect = NSMakeRect(0.0,0.0,0.0,0.0);
 
+    view = [self clientView];
+    layoutManager = [view layoutManager];
+    container = [view textContainer];
+
+    visibleRect = [[[self scrollView] contentView] bounds];
+    stringLength = [[view string] length];
+
+    [layoutManager setTypesetterBehavior:NSTypesetterLatestBehavior];
+    lines = [self lineIndices];
+
+    // Find the characters that are currently visible
+    glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:container];
+    range = [layoutManager characterRangeForGlyphRange:glyphRange actualGlyphRange:NULL];
+
+    // Fudge the range a tad in case there is an extra new line at end.
+    // It doesn't show up in the glyphs so would not be accounted for.
+    range.length++;
+
+    index = [[lines objectAtIndex:[line unsignedIntegerValue]] unsignedIntegerValue];
+
+    if (NSLocationInRange(index, range))
+    {
+        NSUInteger glyphIdx = [layoutManager glyphIndexForCharacterAtIndex:index];
+        if (index < stringLength)
+            rect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIdx effectiveRange:NULL];
+        else
+            rect = [layoutManager boundingRectForGlyphRange:NSMakeRange(glyphIdx, 0) inTextContainer:container];
+
+        // Note that the ruler view is only as tall as the visible
+        // portion. Need to compensate for the clipview's coordinates.
+        CGFloat ypos = [view textContainerInset].height + NSMinY(rect) - NSMinY(visibleRect);
+
+        wholeLineRect.size.width = self.bounds.size.width;
+        wholeLineRect.size.height = rect.size.height;
+        wholeLineRect.origin.x = 0;
+        wholeLineRect.origin.y = ypos;
+    }
+    return wholeLineRect;
+}
+
+
+/// @returns zero-based indexing.
 - (NSUInteger)lineNumberForLocation:(CGFloat)location
 {
 	NSUInteger		line, count, index, rectCount, i;
@@ -619,6 +641,7 @@
 }
 
 
+/// @param line uses zero-based indexing.
 - (void)drawMarkerInRect:(NSRect)rect ofLine:(NSNumber*)line
 {
     NSRect centeredRect, alignedRect;
@@ -636,84 +659,106 @@
     NSDrawThreePartImage(alignedRect, imgBreakpoint0, imgBreakpoint1, imgBreakpoint2, NO, NSCompositeSourceOver, 1, YES);
 }
 
-/*
-    @todo: this is not very DRY -- it repeats almost exactly the existing function in
-    `SMLSyntaxColoring.m`, which has to be left in place to display errors if the
-    line number view isn't being used.
- */
+
+/// @param line uses zero-based indexing.
 - (void)drawErrorsInRect:(NSRect)rect ofLine:(NSNumber*)line
 {
-    // Add a button
-    NSButton* warningButton = [[NSButton alloc] init];
+    SMLSyntaxError *error = [self.fragaria.syntaxErrorController errorForLine:[line integerValue] + 1]; // errors are one-based indexes.
 
-    [warningButton setButtonType:NSMomentaryChangeButton];
-    [warningButton setBezelStyle:NSRegularSquareBezelStyle];
-    [warningButton setBordered:NO];
-    [warningButton setImagePosition:NSImageOnly];
-    [warningButton setTag:[line integerValue]];
-    [warningButton setTarget:self];
-    [warningButton setAction:@selector(pressedWarningBtn:)];
-    [warningButton setTranslatesAutoresizingMaskIntoConstraints:NO];
-
-    // There may be multiple errors for this line, so find the one with the highest warningStyle.
-    float style = [[[self.syntaxErrors filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(line == %@) AND (hideWarning == %@)", line, @(NO)]] valueForKeyPath:@"@max.warningStyle"] floatValue];
-    [warningButton setImage:[SMLSyntaxError imageForWarningStyle:style]];
-    [[warningButton image] setSize:NSMakeSize(16.0, 16.0)];
-
-
-    [self addSubview:warningButton];
-    [self addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"|-4-[warningButton]" options:0 metrics:nil views:NSDictionaryOfVariableBindings(warningButton)]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:warningButton attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self attribute:NSLayoutAttributeTop multiplier:1.0 constant:rect.origin.y-3]];
+    [error.warningImage drawInRect:[self errorImageRectOfRect:rect ofLine:line] fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0];
 }
 
-- (void)pressedWarningBtn:(id) sender
+
+/// @param line uses zero-based indexing.
+- (NSRect)errorImageRectOfRect:(NSRect)rect ofLine:(NSNumber*)line
 {
-    int line = (int)[sender tag];
+    NSRect centeredRect;
+    CGFloat height;
 
-    // @todo: currently shows hidden errors. Should prevent that.
-    // Fetch errors to display
-    NSMutableArray* errorsOnLine = [NSMutableArray array];
-    for (SMLSyntaxError* err in self.syntaxErrors)
-    {
-        if (err.line == line)
-        {
-            [errorsOnLine addObject:err.description];
-        }
-    }
+    SMLSyntaxError *error = [self.fragaria.syntaxErrorController errorForLine:[line integerValue] + 1]; // errors are one-based indexes.
+    NSImage *sourceImage = error.warningImage;
 
-    if (errorsOnLine.count == 0) return;
+    height = rect.size.height;
+    centeredRect = rect;
+    centeredRect.origin.y += (rect.size.height - height) / 2.0;
+    centeredRect.origin.x += RULER_MARGIN;
+    centeredRect.size.height = height;
+    centeredRect.size.width = sourceImage.size.width / (sourceImage.size.height / height);
 
-    [SMLErrorPopOver showErrorDescriptions:errorsOnLine relativeToView:sender];
+    return [self backingAlignedRect:centeredRect options:NSAlignAllEdgesOutward];
 }
-
 
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    NSPoint					location;
-    NSUInteger				line;
-	
-	if (!_breakpointDelegate) return;
-		
-	location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-	line = [self lineNumberForLocation:location.y];
-	
-	if (line != NSNotFound)
-	{
-		if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForView:onLine:)])
-		{
-			[_breakpointDelegate toggleBreakpointForView:self.userData onLine:(int)line+1];
-		}
-		else if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)])
-		{
+    NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSUInteger line = [self lineNumberForLocation:location.y];
+    NSRect imageRect;
+    BOOL errorHit = NO;
+
+    if (line != NSNotFound)
+    {
+        _mouseDownLineTracking = line + 1; // now has 1-based index.
+        _mouseDownRectTracking = NSMakeRect(0.0, 0.0, 0.0, 0.0);
+
+        if (self.showsWarnings && [self.fragaria.syntaxErrorController.linesWithErrors containsObject:@(_mouseDownLineTracking)])
+        {
+            imageRect = [self errorImageRectOfRect:[self wholeLineRectForLine:@(line)] ofLine:@(line)];
+
+            if (CGRectContainsPoint(imageRect, location))//(location.x <= imageRect.origin.x + imageRect.size.width)
+            {
+                errorHit = YES;
+            }
+        }
+
+        if (errorHit)
+        {
+            _mouseDownRectTracking = imageRect;
+        }
+        else
+        {
+            [self handleBreakpoint];
+        }
+    }
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSUInteger line = [self lineNumberForLocation:location.y]; // method returns 0-based index.
+
+    if ( (line != _mouseDownLineTracking -1) || (location.x > self.frame.size.width) )
+    {
+        [self handleBreakpoint];
+    }
+    else
+    {
+        if (self.showsWarnings && [self.fragaria.syntaxErrorController.linesWithErrors containsObject:@(_mouseDownLineTracking)])
+        {
+            if (CGRectContainsPoint(_mouseDownRectTracking, location))
+            {
+                [self.fragaria.syntaxErrorController showErrorsForLine:_mouseDownLineTracking relativeToRect:_mouseDownRectTracking ofView:self];
+            }
+        }
+    }
+}
+
+- (void)handleBreakpoint
+{
+    if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForView:onLine:)])
+    {
+        [_breakpointDelegate toggleBreakpointForView:self.fragaria onLine:(int)_mouseDownLineTracking];
+    }
+    else if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)])
+    {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-			[_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)line+1];
-#pragma cland diagnostic pop
-		}
+        [_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)_mouseDownLineTracking];
+#pragma clang diagnostic pop
+    }
 
-		[self setNeedsDisplay:YES];
-	}
+    [self setNeedsDisplay:YES];
+
 }
 
 

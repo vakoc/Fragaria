@@ -298,20 +298,6 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	showsWarningsInEditor
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setShowsWarningsInEditor:(BOOL)showsWarningsInEditor
-{
-    [self.fragaria setShowsWarningsInEditor:showsWarningsInEditor];
-}
-
-- (BOOL)showsWarningsInEditor
-{
-    return [self.fragaria showsWarningsInEditor];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	goToLine
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 #pragma mark - KEY FRAGARIA METHOD PROMOTIONS

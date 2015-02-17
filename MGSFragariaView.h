@@ -54,8 +54,6 @@
 
 @property (assign) BOOL showsWarningsInGutter;
 
-@property (assign) BOOL showsWarningsInEditor;
-
 
 #pragma mark - KEY FRAGARIA METHOD PROMOTIONS
 

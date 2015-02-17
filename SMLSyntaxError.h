@@ -78,7 +78,12 @@ extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCateg
 
 /// @name Properties
 
-@property (nonatomic,assign) int line;                             ///< The line at which this error occurrs.
+/**
+ * The line at which this error occurrs.
+ * @discussion the line number is always one-based. Although Fragaria can display
+ * line numbers starting with any value, but errors are always on lines 1...n.
+ **/
+@property (nonatomic,assign) int line;
 @property (nonatomic,assign) int character;                        ///< The character position at which this error begins.
 @property (nonatomic,assign) int length;                           ///< The character length of this error.
 @property (nonatomic,copy) NSString* description;                  ///< A description of this error.
@@ -102,7 +107,7 @@ extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCateg
 
 /**
  * @name Deprecated Properties
- * @todo AppleDoc currently chokes on these; it doesn't like the attributes.
+ * @todo: (jsd) AppleDoc currently chokes on these; it doesn't like the attributes.
  **/
 
 /// @deprecated This property is not used.

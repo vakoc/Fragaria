@@ -18,7 +18,6 @@ extern NSString * const MGSFOHasVerticalScroller;
 extern NSString * const MGSFODisableScrollElasticity;
 extern NSString * const MGSFOLineWrap;
 extern NSString * const MGSFOShowsWarningsInGutter;
-extern NSString * const MGSFOShowsWarningsInEditor; // keep in case gutter is turned off.
 
 // string
 extern NSString * const MGSFOSyntaxDefinitionName;
@@ -50,6 +49,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 #import "SMLSyntaxError.h"
 #import "SMLSyntaxColouringDelegate.h"
 #import "SMLSyntaxDefinition.h"
+#import "MGSSyntaxErrorController.h"
 
 @protocol MGSFragariaTextViewDelegate <NSObject>
 @optional
@@ -65,10 +65,28 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
     NSSet* objectSetterKeys;
 }
 
+/// @name Properties
+
 @property (nonatomic, readonly) MGSExtraInterfaceController *extraInterfaceController;
 @property (nonatomic, strong) id docSpec;
 
-// class methods
+@property (nonatomic, assign) NSArray *syntaxErrors;
+
+
+/// @name Private Properties (although exposed these are for internal use)
+
+/**
+ *  SyntaxErrorController provides access to Fragaria's internal syntax
+ *  error controller. Although it is exposed you should not use this property.
+ *  @todo: (jsd) We could add this into a protocol in a private header, instead.
+ *  This might be the best course of action to eliminate a lot of the components
+ *  from being exposed while eliminating the docSpec.
+ **/
+@property (nonatomic, strong, readonly) MGSSyntaxErrorController *syntaxErrorController;
+
+
+/// @name Class Methods
+
 + (id)currentInstance DEPRECATED_ATTRIBUTE;
 + (void)setCurrentInstance:(MGSFragaria *)anInstance DEPRECATED_ATTRIBUTE;
 + (void)initializeFramework;
@@ -81,7 +99,9 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 + (NSAttributedString *)attributedStringForDocSpec:(id)docSpec;
 + (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec;
 
-// instance methods
+
+/// @name Instance Methods
+
 - (id)initWithObject:(id)object;
 - (void)setObject:(id)object forKey:(id)key;
 - (id)objectForKey:(id)key;
@@ -104,8 +124,6 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (BOOL)lineWrap;
 - (void)setShowsWarningsInGutter:(BOOL)value;
 - (BOOL)showsWarningsInGutter;
-- (void)setShowsWarningsInEditor:(BOOL)value;
-- (BOOL)showsWarningsInEditor;
 - (void)reloadString;
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options;
 - (void)setHasVerticalScroller:(BOOL)value;
@@ -119,8 +137,12 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (void)setSyntaxDefinitionName:(NSString *)value;
 - (NSString *)syntaxDefinitionName;
 
++ (NSImage *)imageNamed:(NSString *)name;
+
+
+/// @name Instance Methods that are synonyms of properties
+
 - (void)setSyntaxErrors:(NSArray *)errors;
 - (NSArray *)syntaxErrors;
-+ (NSImage *)imageNamed:(NSString *)name;
 
 @end

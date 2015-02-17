@@ -38,9 +38,8 @@ float const kMGSErrorCategoryDefault = 500;
 + (NSImage *)defaultImageForWarningLevel:(float)level
 {
 	NSString *imageName;
-	int result = (int)ceil(level/100.0);
-	NSLog(@"%f, %d", level, result);
-	switch ((int)ceil(level/100.0))
+
+    switch ((int)ceil(level/100.0))
 	{
 		case 1:
 			imageName  = @"messagesAccess";
