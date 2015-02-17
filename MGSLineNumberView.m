@@ -447,11 +447,9 @@
     NSRect                  wholeLineRect;
     CGFloat					ypos, yinset;
     NSDictionary			*textAttributes, *currentTextAttributes;
-    NSSize					stringSize;
     NSMutableArray			*lines;
-    NSTextContainer         *drawingTextContainer;
-    NSTextStorage           *drawingTextStorage;
-    NSLayoutManager         *drawingLayoutManager;
+    NSAttributedString      *drawingAttributedString;
+    CGContextRef            drawingContext;
     NSSet                   *linesWithBreakpoints;
     BOOL                    willDrawErrors;
 
@@ -459,15 +457,10 @@
 
     yinset = [view textContainerInset].height;
 
-    drawingTextStorage = [[NSTextStorage alloc] init];
-    drawingLayoutManager = [[NSLayoutManager alloc] init];
-    [layoutManager setTypesetterBehavior:NSTypesetterLatestBehavior];
-    drawingTextContainer = [[NSTextContainer alloc] initWithContainerSize:bounds.size];
-    [drawingLayoutManager addTextContainer:drawingTextContainer];
-    [drawingTextStorage addLayoutManager:drawingLayoutManager];
-    [drawingTextContainer setLineFragmentPadding:0.0];
-
     textAttributes = [self textAttributes];
+    drawingContext = [[NSGraphicsContext currentContext] graphicsPort];
+    CGAffineTransform flipTransform = {1, 0, 0, -1, 0, 0};
+    CGContextSetTextMatrix(drawingContext, flipTransform);
     
     lines = [self lineIndices];
 	
@@ -518,17 +511,17 @@
             // Draw line numbers first so that error images won't be buried underneath long line numbers.
             // Line numbers are internally stored starting at 0
             labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine];
-            [drawingTextStorage beginEditing];
-            [[drawingTextStorage mutableString] setString:labelText];
-            [drawingTextStorage setAttributes:currentTextAttributes range:NSMakeRange(0, [labelText length])];
-            [drawingTextStorage endEditing];
+            drawingAttributedString = [[NSAttributedString alloc] initWithString:labelText attributes:currentTextAttributes];
 
-            glyphRange = [drawingLayoutManager glyphRangeForTextContainer:drawingTextContainer];
-            stringSize = [drawingLayoutManager usedRectForTextContainer:drawingTextContainer].size;
-
-            NSPoint drawOrigin = NSMakePoint(NSWidth(bounds) - stringSize.width - RULER_MARGIN, ypos + (NSHeight(wholeLineRect) - stringSize.height) / 2.0);
-            // Draw string flush right, centered vertically within the line
-            [drawingLayoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawOrigin];
+            CGFloat descent, leading;
+            CTLineRef line;
+            line = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)drawingAttributedString);
+            CGFloat width = CTLineGetTypographicBounds(line, NULL, &descent, &leading);
+            
+            CGFloat xpos = NSWidth(bounds) - width - RULER_MARGIN;
+            CGFloat baselinepos = ypos + NSHeight(wholeLineRect) - floor(descent + 0.5) - floor(leading+0.5);
+            CGContextSetTextPosition(drawingContext, xpos, baselinepos);
+            CTLineDraw(line, drawingContext);
 
             if (willDrawErrors)
             {
@@ -562,7 +555,6 @@
     visibleRect = [[[self scrollView] contentView] bounds];
     stringLength = [[view string] length];
 
-    [layoutManager setTypesetterBehavior:NSTypesetterLatestBehavior];
     lines = [self lineIndices];
 
     // Find the characters that are currently visible
