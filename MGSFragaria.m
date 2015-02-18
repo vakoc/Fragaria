@@ -102,7 +102,7 @@ char kcLineWrapPrefChanged;
 
 
 /*
- * @property setAttributedString:
+ * @property attributedString:
  */
 - (void)setAttributedString:(NSAttributedString *)aString
 {
@@ -126,7 +126,7 @@ char kcLineWrapPrefChanged;
 #pragma mark - Properties - Appearance and Display
 
 /*
- * @property setDocumentName:
+ * @property documentName:
  */
 - (void)setDocumentName:(NSString *)value
 {
@@ -140,7 +140,7 @@ char kcLineWrapPrefChanged;
 
 
 /*
- * @property setHasVerticalScroller:
+ * @property hasVerticalScroller:
  */
 - (void)setHasVerticalScroller:(BOOL)value
 {
@@ -156,7 +156,7 @@ char kcLineWrapPrefChanged;
 
 
 /*
- * @property setLineWrap:
+ * @property lineWrap:
  */
 - (void)setLineWrap:(BOOL)value
 {
@@ -189,7 +189,7 @@ char kcLineWrapPrefChanged;
 
 
 /*
- * @property setShowsLineNumbers:
+ * @property showsLineNumbers:
  */
 - (void)setShowsLineNumbers:(BOOL)value
 {
@@ -205,7 +205,7 @@ char kcLineWrapPrefChanged;
 
 
 /*
- * @property setShowsWarningsInGutter
+ * @property showsWarningsInGutter
  */
 - (void)setShowsWarningsInGutter:(BOOL)value
 {
@@ -224,7 +224,7 @@ char kcLineWrapPrefChanged;
 
 
 /*
- * @property setStartingLineNumber:
+ * @property startingLineNumber:
  */
 - (void)setStartingLineNumber:(NSUInteger)value
 {
@@ -238,9 +238,9 @@ char kcLineWrapPrefChanged;
 
 
 /*
- * @property setSyntaxColoured
+ * @property isSyntaxColoured
  */
-- (void)setSyntaxColoured:(BOOL)value
+- (void)setIsSyntaxColoured:(BOOL)value
 {
     [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOIsSyntaxColoured];
     [self reloadString];
@@ -249,7 +249,7 @@ char kcLineWrapPrefChanged;
     // corrupts its display. Turning on highlighting also doesn't affect the text.
 }
 
-- (BOOL)syntaxColoured
+- (BOOL)isSyntaxColoured
 {
     NSNumber *value = [self objectForKey:MGSFOIsSyntaxColoured];
     return [value boolValue];
@@ -257,7 +257,7 @@ char kcLineWrapPrefChanged;
 
 
 /*
- * @property setSyntaxDefinitionName:
+ * @property syntaxDefinitionName:
  */
 - (void)setSyntaxDefinitionName:(NSString *)value
 {
@@ -317,7 +317,7 @@ char kcLineWrapPrefChanged;
 
 
 /*
- * - textView
+ * @property textView
  */
 - (NSTextView *)textView
 {
@@ -741,7 +741,7 @@ char kcLineWrapPrefChanged;
     } else if (context == &kcSyntaxColourPrefChanged) {
         
         boolValue = [defaults boolForKey:MGSFragariaPrefsSyntaxColourNewDocuments];
-        [self setSyntaxColoured:boolValue];
+        [self setIsSyntaxColoured:boolValue];
         
     } else if (context == &kcSpellCheckPrefChanged) {
         
