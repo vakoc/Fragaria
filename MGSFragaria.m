@@ -277,9 +277,7 @@ char kcLineWrapPrefChanged;
 {
     self.syntaxErrorController.syntaxErrors = errors;
 
-    /// @todo: (jsd) This is still keeping its own copy.
     SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
-    syntaxColouring.syntaxErrors = errors;
     [syntaxColouring highlightErrors];
 
     MGSLineNumberView *lineNumberView = [docSpec valueForKey:ro_MGSFOGutterView];
@@ -585,13 +583,7 @@ char kcLineWrapPrefChanged;
 {
     NSAssert(contentView != nil, @"A content view must be provided.");
     
-    // TODO: allow user to pass in custom class name in doc spec. This will likely entail refactoring
-    // the relevant class headers to expose sufficient information to make subclassing feasible.
-    Class editorTextViewClass = [SMLTextView class];
-    Class lineNumberClass = [SMLLineNumbers class];
-    Class syntaxColouringClass = [SMLSyntaxColouring class];
-    
-	// create text scrollview
+    // create text scrollview
 	NSScrollView *textScrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
 	NSSize contentSize = [textScrollView contentSize];
 	[textScrollView setBorderType:NSNoBorder];
@@ -612,12 +604,12 @@ char kcLineWrapPrefChanged;
 	[textScrollView setPostsFrameChangedNotifications:YES];
 		
 	// create textview
-	SMLTextView *textView = [[editorTextViewClass alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
+	SMLTextView *textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
     [textView setFragaria:self];
 	[textScrollView setDocumentView:textView];
 
     // create line numbers
-	SMLLineNumbers *lineNumbers = [[lineNumberClass alloc] initWithDocument:self.docSpec];
+	SMLLineNumbers *lineNumbers = [[SMLLineNumbers alloc] initWithDocument:self.docSpec];
 	[self.docSpec setValue:lineNumbers forKey:ro_MGSFOLineNumbers];
 
     MGSLineNumberView *lineNumberView;
@@ -633,7 +625,8 @@ char kcLineWrapPrefChanged;
     [self.docSpec setValue:lineNumberView forKey:ro_MGSFOGutterView];
 	
 	// add syntax colouring
-	SMLSyntaxColouring *syntaxColouring = [[syntaxColouringClass alloc] initWithDocument:self.docSpec];
+	SMLSyntaxColouring *syntaxColouring = [[SMLSyntaxColouring alloc] initWithDocument:self.docSpec];
+    syntaxColouring.fragaria = self;
 	[self.docSpec setValue:syntaxColouring forKey:ro_MGSFOSyntaxColouring];
 	[self.docSpec setValue:syntaxColouring forKey:MGSFOAutoCompleteDelegate];
     
