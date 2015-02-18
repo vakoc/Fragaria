@@ -37,10 +37,8 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSFragaria.h"
 
-/*
- Displays line numbers for an NSTextView.
- 
- For more details, see the related blog post at:  http://www.noodlesoft.com/blog/2008/10/05/displaying-line-numbers-with-nstextview/
+/**
+ *  Displays line numbers for an NSTextView.
  */
 
 @protocol MGSBreakpointDelegate;
@@ -53,11 +51,10 @@
     // When text is edited, this is the start of the editing region. All line calculations after this point are invalid
     // and need to be recalculated.
     NSUInteger          _invalidCharacterIndex;
-    
-    NSImage* imgBreakpoint0;
-    NSImage* imgBreakpoint1;
-    NSImage* imgBreakpoint2;
 }
+
+
+/// @name Properties
 
 @property (nonatomic) id <MGSBreakpointDelegate> breakpointDelegate;
 @property (nonatomic,weak) MGSFragaria *fragaria;
@@ -70,6 +67,15 @@
 @property (nonatomic) CGFloat minimumWidth;
 @property (nonatomic) NSUInteger startingLineNumber;
 @property (nonatomic) BOOL *showsWarnings;
+
+/**
+ *   Indicates the default color to be used for breakpoint markers when
+ *   not specified by the delegate.
+ **/
+@property (nonatomic) NSColor *markerColor;
+
+
+/// @name Instance Methods
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView;
 - (NSUInteger)lineNumberForLocation:(CGFloat)location;

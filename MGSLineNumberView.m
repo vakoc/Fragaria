@@ -62,17 +62,16 @@
 @implementation MGSLineNumberView {
     NSUInteger _mouseDownLineTracking;
     NSRect     _mouseDownRectTracking;
+    NSMutableDictionary *_markerImages;
 }
+
+@synthesize markerColor = _markerColor;
 
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView
 {
     if ((self = [super initWithScrollView:aScrollView orientation:NSVerticalRuler]) != nil)
     {
-        imgBreakpoint0 = [MGSFragaria imageNamed:@"editor-breakpoint-0.png"];
-        imgBreakpoint1 = [MGSFragaria imageNamed:@"editor-breakpoint-1.png"];
-        imgBreakpoint2 = [MGSFragaria imageNamed:@"editor-breakpoint-2.png"];
-        
         _lineIndices = [[NSMutableArray alloc] init];
         _startingLineNumber = 0;
         [self setClientView:[aScrollView documentView]];
@@ -108,6 +107,12 @@
 - (NSColor *)defaultErrorTextColor
 {
     return [NSColor blackColor];
+}
+
+
+- (NSColor *)defaultMarkerColor
+{
+    return [NSColor colorWithCalibratedRed:254.0/255.0 green:199.0/255.0 blue:249.0/255.0 alpha:1];
 }
 
 
@@ -150,6 +155,17 @@
 - (void)setErrorTextColor:(NSColor *)errorTextColor {
     _errorTextColor = errorTextColor;
     [self setNeedsDisplay:YES];
+}
+
+
+- (void)setMarkerColor:(NSColor *)markerColor {
+    _markerColor = markerColor;
+    [self setNeedsDisplay:YES];
+}
+
+- (NSColor *)markerColor
+{
+    return _markerColor ? _markerColor : [self defaultMarkerColor];
 }
 
 
@@ -639,7 +655,7 @@
     NSRect centeredRect, alignedRect;
     CGFloat height;
     
-    height = [imgBreakpoint0 size].height;
+    height = rect.size.height;
     centeredRect = rect;
     centeredRect.origin.y += (rect.size.height - height) / 2.0;
     centeredRect.origin.x += RULER_MARGIN;
@@ -648,7 +664,10 @@
     
     alignedRect = [self backingAlignedRect:centeredRect options:NSAlignAllEdgesOutward];
     
-    NSDrawThreePartImage(alignedRect, imgBreakpoint0, imgBreakpoint1, imgBreakpoint2, NO, NSCompositeSourceOver, 1, YES);
+    alignedRect = [self backingAlignedRect:centeredRect options:NSAlignAllEdgesOutward];
+
+    NSImage *defaultImage = [self defaultMarkerImageWithSize:centeredRect.size color:self.markerColor];
+    [defaultImage drawInRect:alignedRect fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:YES hints:nil];
 }
 
 
@@ -750,7 +769,56 @@
     }
 
     [self setNeedsDisplay:YES];
+}
 
+
+/* Adapted from Noodlekit (github.com/MrNoodle/NoodleKit) by Paul Kim. */
+- (NSImage*) defaultMarkerImageWithSize:(NSSize)size color:(NSColor*)colorBase  {
+
+    NSImage *markerImage = _markerImages[[colorBase description]];
+    if (markerImage)
+    {
+        return markerImage;
+    }
+
+    float cornerRadius = 0.5;
+
+    markerImage = [NSImage.alloc initWithSize:size];
+    NSCustomImageRep *rep = [NSCustomImageRep.alloc initWithSize:size
+                                                         flipped:NO
+                                                  drawingHandler:^BOOL(NSRect dstRect) {
+
+                                                      //NSRect rect = NSMakeRect(1.0, 2.0, dstRect.size.width - 2.0, dstRect.size.height - 3.0);
+                                                      NSRect rect = NSMakeRect(0.0, 0.0, dstRect.size.width, dstRect.size.height);
+                                                      NSBezierPath * path = NSBezierPath.bezierPath;
+                                                      [path moveToPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + NSHeight(rect)/2)];
+                                                      [path lineToPoint:NSMakePoint(NSMaxX(rect) - 5.0, NSMaxY(rect))];
+                                                      [path appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect) + cornerRadius, NSMaxY(rect) - cornerRadius) radius:cornerRadius startAngle:90 endAngle:180];
+                                                      [path appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect) + cornerRadius, NSMinY(rect) + cornerRadius) radius:cornerRadius startAngle:180 endAngle:270];
+                                                      [path lineToPoint:NSMakePoint(NSMaxX(rect) - 5.0, NSMinY(rect))];
+                                                      [path closePath];
+
+                                                      NSColor *colorFill1 = [colorBase colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+                                                      CGFloat gradientTo = colorFill1.brightnessComponent - 0.1;
+                                                      NSColor *colorFill2 = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:gradientTo alpha:1];
+
+                                                      CGFloat strokeTo = colorFill2.brightnessComponent - 0.5;
+                                                      NSColor *colorStroke = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:strokeTo alpha:1];
+
+                                                      NSGradient *fill = [[NSGradient alloc] initWithColors:@[colorFill1, colorFill2]];
+                                                      [fill drawInBezierPath:path angle:-90.0];
+
+                                                      [colorStroke set];
+                                                      [path setLineWidth:0.5];
+                                                      [path stroke];
+                                                      return YES;
+                                                  }];
+    
+    [rep setSize:size];
+    [markerImage addRepresentation:rep];
+    [markerImage setName:[colorBase description]];
+    [_markerImages = _markerImages ?: NSMutableDictionary.new setValue:markerImage forKey:[colorBase description]];
+    return markerImage;
 }
 
 
