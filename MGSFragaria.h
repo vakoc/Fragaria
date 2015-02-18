@@ -98,7 +98,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 /// @name Properties - Appearance and Display
 #pragma mark - Properties - Appearance and Display
 
-@property (nonatomic, strong) NSString *documentName; // @todo fix strong, currently being retained elsewhere
+@property (nonatomic, assign) NSString *documentName; // @todo fix strong, currently being retained elsewhere
 @property (nonatomic, assign) BOOL hasVerticalScroller;
 @property (nonatomic, assign) BOOL lineWrap;
 @property (nonatomic, assign) BOOL scrollElasticityDisabled;
@@ -106,7 +106,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 @property (nonatomic, assign) BOOL showsWarningsInGutter;
 @property (nonatomic, assign) NSUInteger startingLineNumber;
 @property (nonatomic, assign) BOOL isSyntaxColoured;
-@property (nonatomic, strong) NSString *syntaxDefinitionName; // @todo fix strong, currently duplicate retain
+@property (nonatomic, assign) NSString *syntaxDefinitionName; // @todo fix strong, currently duplicate retain
 
 /**
  *  When set to an array containing SMLSyntaxError instances, Fragaria
