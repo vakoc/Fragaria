@@ -5,15 +5,11 @@
 //  Created by Jonathan on 05/05/2010.
 //  Copyright 2010 mugginsoft.com. All rights reserved.
 //
+
 #import "MGSFragaria.h"
 #import "MGSFragariaFramework.h"
 #import "FRAFontTransformer.h"
-#import "SMLTextView+MGSTextActions.h"
 
-
-// valid keys for 
-// - (void)setObject:(id)object forKey:(id)key;
-// - (id)objectForKey:(id)key;
 
 // BOOL
 NSString * const MGSFOIsSyntaxColoured = @"isSyntaxColoured";
@@ -51,6 +47,7 @@ NSString * const MGSFOSyntaxColouringDelegate = @"syntaxColouringDelegate";
 NSString * const ro_MGSFOLineNumbers = @"lineNumbers"; // readonly
 NSString * const ro_MGSFOSyntaxColouring = @"syntaxColouring"; // readonly
 
+
 // KVO context constants
 char kcGutterWidthPrefChanged;
 char kcSyntaxColourPrefChanged;
@@ -58,28 +55,390 @@ char kcSpellCheckPrefChanged;
 char kcLineNumberPrefChanged;
 char kcLineWrapPrefChanged;
 
+
+#pragma mark - Class Extension
+
 // class extension
+// @todo: (jsd) To add to the eventual private header.
 @interface MGSFragaria()
+
 @property (nonatomic, readwrite) MGSExtraInterfaceController *extraInterfaceController;
 @property (nonatomic, strong, readwrite) MGSSyntaxErrorController *syntaxErrorController;
-
-
-- (void)updateGutterView;
 
 @property (nonatomic,strong) NSSet* objectGetterKeys;
 @property (nonatomic,strong) NSSet* objectSetterKeys;
 
+- (void)updateGutterView;
+
 @end
+
+
+#pragma mark - Implementation
 
 @implementation MGSFragaria
 
-@synthesize extraInterfaceController;
+@synthesize extraInterfaceController = _extraInterfaceController;
+@synthesize syntaxErrorController = _syntaxErrorController;
+
 @synthesize docSpec;
 @synthesize objectSetterKeys;
 @synthesize objectGetterKeys;
 
-#pragma mark -
-#pragma mark Class methods
+
+#pragma mark - Properties - Content Strings
+
+/*
+ * @property string:
+ */
+- (void)setString:(NSString *)aString
+{
+    [[self class] docSpec:self.docSpec setString:aString];
+}
+
+- (NSString *)string
+{
+    return [[self class] stringForDocSpec:self.docSpec];
+}
+
+
+/*
+ * @property setAttributedString:
+ */
+- (void)setAttributedString:(NSAttributedString *)aString
+{
+    [[self class] docSpec:self.docSpec setAttributedString:aString];
+}
+
+- (NSAttributedString *)attributedString
+{
+    return [[self class] attributedStringForDocSpec:self.docSpec];
+}
+
+/*
+ * @property attributedStringWithTemporaryAttributesApplied
+ */
+- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
+{
+    return [[self class] attributedStringWithTemporaryAttributesAppliedForDocSpec:self.docSpec];
+}
+
+
+#pragma mark - Properties - Appearance and Display
+
+/*
+ * @property setDocumentName:
+ */
+- (void)setDocumentName:(NSString *)value
+{
+    [self setObject:value forKey:MGSFODocumentName];
+}
+
+- (NSString *)documentName
+{
+    return [self objectForKey:MGSFODocumentName];
+}
+
+
+/*
+ * @property setHasVerticalScroller:
+ */
+- (void)setHasVerticalScroller:(BOOL)value
+{
+    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOHasVerticalScroller];
+    [self updateGutterView];
+}
+
+- (BOOL)hasVerticalScroller
+{
+    NSNumber *value = [self objectForKey:MGSFOHasVerticalScroller];
+    return [value boolValue];
+}
+
+
+/*
+ * @property setLineWrap:
+ */
+- (void)setLineWrap:(BOOL)value
+{
+    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOLineWrap];
+    [(SMLTextView *)self.textView setLineWrap:value];
+    [self updateGutterView];
+    [self updateErrorHighlighting];
+}
+
+- (BOOL)lineWrap
+{
+    return [(SMLTextView *)self.textView lineWrap];
+}
+
+
+/*
+ * @property scrollElasticityDisabled:
+ */
+- (void)setScrollElasticityDisabled:(BOOL)value
+{
+    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFODisableScrollElasticity];
+    [self updateGutterView];
+}
+
+- (BOOL)scrollElasticityDisabled
+{
+    NSNumber *value = [self objectForKey:MGSFODisableScrollElasticity];
+    return [value boolValue];
+}
+
+
+/*
+ * @property setShowsLineNumbers:
+ */
+- (void)setShowsLineNumbers:(BOOL)value
+{
+    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowLineNumberGutter];
+    [self updateGutterView];
+}
+
+- (BOOL)showsLineNumbers
+{
+    NSNumber *value = [self objectForKey:MGSFOShowLineNumberGutter];
+    return [value boolValue];
+}
+
+
+/*
+ * @property setShowsWarningsInGutter
+ */
+- (void)setShowsWarningsInGutter:(BOOL)value
+{
+    [docSpec setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowsWarningsInGutter];
+
+    MGSLineNumberView * lineNumberView = [self.docSpec valueForKey:ro_MGSFOGutterView];
+    lineNumberView.showsWarnings = value;
+    [self updateGutterView];
+}
+
+- (BOOL)showsWarningsInGutter
+{
+    NSNumber *value = [self objectForKey:MGSFOShowsWarningsInGutter];
+    return [value boolValue];
+}
+
+
+/*
+ * @property setStartingLineNumber:
+ */
+- (void)setStartingLineNumber:(NSUInteger)value
+{
+    [[self objectForKey:ro_MGSFOGutterView] setStartingLineNumber:value];
+}
+
+- (NSUInteger)startingLineNumber
+{
+    return [[self objectForKey:ro_MGSFOGutterView] startingLineNumber];
+}
+
+
+/*
+ * @property setSyntaxColoured
+ */
+- (void)setSyntaxColoured:(BOOL)value
+{
+    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOIsSyntaxColoured];
+    [self reloadString];
+    // @todo: (jsd) there's a bug somewhere in the interaction. In the demo app if I
+    // turn ON line wrapping then turn OFF highlighting, then the ruler view
+    // corrupts its display. Turning on highlighting also doesn't affect the text.
+}
+
+- (BOOL)syntaxColoured
+{
+    NSNumber *value = [self objectForKey:MGSFOIsSyntaxColoured];
+    return [value boolValue];
+}
+
+
+/*
+ * @property setSyntaxDefinitionName:
+ */
+- (void)setSyntaxDefinitionName:(NSString *)value
+{
+    [self setObject:value forKey:MGSFOSyntaxDefinitionName];
+}
+
+- (NSString *)syntaxDefinitionName
+{
+    return [self objectForKey:MGSFOSyntaxDefinitionName];
+}
+
+
+/*
+ * @property syntaxErrors:
+ */
+- (void)setSyntaxErrors:(NSArray *)errors
+{
+    self.syntaxErrorController.syntaxErrors = errors;
+
+    /// @todo: (jsd) This is still keeping its own copy.
+    SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
+    syntaxColouring.syntaxErrors = errors;
+    [syntaxColouring highlightErrors];
+
+    MGSLineNumberView *lineNumberView = [docSpec valueForKey:ro_MGSFOGutterView];
+    [lineNumberView setNeedsDisplay:YES];
+}
+
+- (NSArray *)syntaxErrors
+{
+    return self.syntaxErrorController.syntaxErrors;
+}
+
+
+#pragma mark - Properties - System Components
+
+/*
+ * @property extraInterfaceController
+ */
+- (void)setExtraInterfaceController:(MGSExtraInterfaceController *)extraInterfaceController
+{
+	_extraInterfaceController = extraInterfaceController;
+}
+- (MGSExtraInterfaceController *)extraInterfaceController
+{
+	if (!_extraInterfaceController) {
+		_extraInterfaceController = [[MGSExtraInterfaceController alloc] init];
+	}
+
+	return _extraInterfaceController;
+}
+
+/*
+ * @property syntaxErrorController
+ * (synthesized)
+ */
+
+
+/*
+ * - textView
+ */
+- (NSTextView *)textView
+{
+    return [self objectForKey:ro_MGSFOTextView];
+}
+
+
+/*
+ * @property docSpec
+ * (synthesized)
+ */
+
+
+#pragma mark - Class methods
+
+/*
+ * + initialize
+ */
++ (void)initialize
+{
+    [MGSFragariaPreferences initializeValues];
+}
+
+
+/*
+ * + createDocSpec
+ */
++ (id)createDocSpec
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    // initialise document spec from user defaults
+    return [NSMutableDictionary dictionaryWithObjectsAndKeys:
+            [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
+            [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
+            @"Standard", MGSFOSyntaxDefinitionName,
+            [defaults objectForKey:MGSFragariaPrefsSyntaxColourNewDocuments], MGSFOIsSyntaxColoured,
+            [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
+            [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
+            [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
+            @(YES), MGSFOShowsWarningsInGutter,
+            nil];
+}
+
+
+/*
+ * + docSpec:setString:
+ */
++ (void)docSpec:(id)docSpec setString:(NSString *)string
+{
+    // set text view string
+    [[docSpec valueForKey:ro_MGSFOTextView] setString:string];
+}
+
+
+/*
+ * + docSpec:setString:options:
+ */
++ (void)docSpec:(id)docSpec setString:(NSString *)string options:(NSDictionary *)options
+{
+    // set text view string
+    [(SMLTextView *)[docSpec valueForKey:ro_MGSFOTextView] setString:string options:options];
+}
+
+
+/*
+ * docSpec:setAttributedString
+ */
++ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string
+{
+    // set text view string
+    [(SMLTextView *)[docSpec valueForKey:ro_MGSFOTextView] setAttributedString:string];
+}
+
+
+/*
+ * + docSpec:setAttributedString:options:
+ */
++ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string options:(NSDictionary *)options
+{
+    // set text view string
+    [(SMLTextView *)[docSpec valueForKey:ro_MGSFOTextView] setAttributedString:string options:options];
+}
+
+
+/*
+ * + stringForDocSpec:
+ */
++ (NSString *)stringForDocSpec:(id)docSpec
+{
+    return [[docSpec valueForKey:ro_MGSFOTextView] string];
+}
+
+
+/*
+ * + attributedStringForDocSpec:
+ */
++ (NSAttributedString *)attributedStringForDocSpec:(id)docSpec
+{
+    return [[[docSpec valueForKey:ro_MGSFOTextView] layoutManager] attributedString];
+}
+
+
+/*
+ * + attributedStringWithTemporaryAttributesAppliedForDocSpec:
+ */
++ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec
+{
+    // recolour the entire textview content
+    SMLTextView *textView = [docSpec valueForKey:ro_MGSFOTextView];
+    SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"colourAll", nil];
+    [syntaxColouring pageRecolourTextView:textView options: options];
+
+    // get content with layout manager temporary attributes persisted
+    SMLLayoutManager *layoutManager = (SMLLayoutManager *)[textView layoutManager];
+    return [layoutManager attributedStringWithTemporaryAttributesApplied];
+}
+
+
+#pragma mark - Class methods (deprecated)
 
 /*
  
@@ -106,143 +465,28 @@ char kcLineWrapPrefChanged;
         "properties by using the appropriate MGSFragaria instance directly.");
 }
 
-
 /*
- 
- + initialize
- 
+ * + imageNamed
  */
-+ (void)initialize
+
++ (NSImage *) imageNamed:(NSString *)name
 {
-	[MGSFragariaPreferences initializeValues];
+    NSLog(@"This method is deprecated and has no effect. It used to load images "
+          "from the framework bundle, but that's probably not what you want. "
+          "Load your own images from your application's own bundle instead.");
+    return nil;
 }
 
-/*
- 
- + initializeFramework
- 
- */
-+ (void)initializeFramework
-{
-	// + initialize does the work
-}
+
+
+#pragma mark - Instance Methods
 
 /*
- 
- + createDocSpec
- 
- */
-+ (id)createDocSpec
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    // initialise document spec from user defaults
-	return [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
-            [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
-            @"Standard", MGSFOSyntaxDefinitionName,
-            [defaults objectForKey:MGSFragariaPrefsSyntaxColourNewDocuments], MGSFOIsSyntaxColoured,
-            [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
-            [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
-            [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
-            @(YES), MGSFOShowsWarningsInGutter,
-			nil];
-}
-
-/*
- 
- + docSpec:setString:
- 
- */
-+ (void)docSpec:(id)docSpec setString:(NSString *)string
-{
-	// set text view string
-	[[docSpec valueForKey:ro_MGSFOTextView] setString:string];
-}
-
-/*
- 
- + docSpec:setString:options:
- 
- */
-+ (void)docSpec:(id)docSpec setString:(NSString *)string options:(NSDictionary *)options
-{
-	// set text view string
-	[(SMLTextView *)[docSpec valueForKey:ro_MGSFOTextView] setString:string options:options];
-}
-
-/*
- 
- + docSpec:setAttributedString
- 
- */
-+ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string 
-{
-	// set text view string
-	[(SMLTextView *)[docSpec valueForKey:ro_MGSFOTextView] setAttributedString:string];
-}
-
-/*
- 
- + docSpec:setAttributedString:options:
- 
- */
-+ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string options:(NSDictionary *)options
-{
-	// set text view string
-	[(SMLTextView *)[docSpec valueForKey:ro_MGSFOTextView] setAttributedString:string options:options];
-}
-
-/*
- 
- + stringForDocSpec:
- 
- */
-+ (NSString *)stringForDocSpec:(id)docSpec
-{
-	return [[docSpec valueForKey:ro_MGSFOTextView] string];
-}
-
-/*
- 
- + attributedStringForDocSpec:
- 
- */
-+ (NSAttributedString *)attributedStringForDocSpec:(id)docSpec
-{
-	return [[[docSpec valueForKey:ro_MGSFOTextView] layoutManager] attributedString];
-}
-
-/*
- 
- + attributedStringWithTemporaryAttributesAppliedForDocSpec:
- 
- */
-+ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec
-{
-	// recolour the entire textview content
-	SMLTextView *textView = [docSpec valueForKey:ro_MGSFOTextView];
-	SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
-	NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"colourAll", nil];
-	[syntaxColouring pageRecolourTextView:textView options: options];
-	
-	// get content with layout manager temporary attributes persisted
-	SMLLayoutManager *layoutManager = (SMLLayoutManager *)[textView layoutManager];
-	return [layoutManager attributedStringWithTemporaryAttributesApplied];
-}
-
-#pragma mark -
-#pragma mark Instance methods
-/*
- 
- - initWithObject
- 
- Designated initializer
- 
- Calling this method enables us to use a predefined object
- for our doc spec.
- eg: Smultron used a CoreData object.
- 
+ * - initWithObject
+ *
+ * Designated initializer
+ *
+ * Calling this method enables us to use a predefined object for our doc spec.
  */
 - (id)initWithObject:(id)object
 {
@@ -290,9 +534,7 @@ char kcLineWrapPrefChanged;
 }
 
 /*
- 
- - init
- 
+ * - init
  */
 - (id)init
 {
@@ -300,18 +542,51 @@ char kcLineWrapPrefChanged;
 }
 
 
-#pragma mark View handling
 /*
- 
- - embedInView:
- 
+ * - setObject:forKey:
+ */
+- (void)setObject:(id)object forKey:(id)key
+{
+    if ([key isEqual:MGSFOShowsWarningsInGutter]) {
+        NSLog(@"Using setObject:forKey: with the MGSFOShowsWarningsInGutter "
+              "property is not supported and has no effect. Please use "
+              "setShowsWarningsInGutter:");
+        return;
+    }
+
+    if ([self.objectSetterKeys containsObject:key]) {
+        [(id)self.docSpec setValue:object forKey:key];
+    }
+    if ([key isEqual:MGSFODelegate]) {
+        [[self textView] setDelegate:object];
+    } else if ([key isEqual:MGSFOBreakpointDelegate]) {
+        [[docSpec objectForKey:ro_MGSFOGutterView] setBreakpointDelegate:object];
+    }
+}
+
+
+/*
+ * - objectForKey:
+ */
+- (id)objectForKey:(id)key
+{
+    if ([self.objectGetterKeys containsObject:key]) {
+        return [self.docSpec valueForKey:key];
+    }
+    
+    return nil;
+}
+
+
+/*
+ * - embedInView:
  */
 - (void)embedInView:(NSView *)contentView
 {
     NSAssert(contentView != nil, @"A content view must be provided.");
     
     // TODO: allow user to pass in custom class name in doc spec. This will likely entail refactoring
-    // the relevant clas headers to exposure sufficient information to make subclassing feasible.
+    // the relevant class headers to expose sufficient information to make subclassing feasible.
     Class editorTextViewClass = [SMLTextView class];
     Class lineNumberClass = [SMLLineNumbers class];
     Class syntaxColouringClass = [SMLSyntaxColouring class];
@@ -327,7 +602,7 @@ char kcLineWrapPrefChanged;
         [textScrollView setHasVerticalScroller:NO];
         [textScrollView setAutohidesScrollers:NO];
     }
-    if (self.isScrollElasticityDisabled) {
+    if (self.scrollElasticityDisabled) {
         [textScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
     } else {
         [textScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
@@ -382,9 +657,17 @@ char kcLineWrapPrefChanged;
 
 
 /*
- 
- - goToLine:centered:
- 
+ * - replaceCharactersInRange:withString:options
+ */
+- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options
+{
+    SMLTextView *textView = (SMLTextView *)[self textView];
+    [textView replaceCharactersInRange:range withString:text options:options];
+}
+
+
+/*
+ * - goToLine:centered:highlight:
  */
 - (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight
 {
@@ -394,303 +677,26 @@ char kcLineWrapPrefChanged;
 }
 
 
-#pragma mark -
-#pragma mark Document specification
-
-
-
 /*
- 
- - setObject:forKey:
- 
- */
-- (void)setObject:(id)object forKey:(id)key
-{
-    if ([key isEqual:MGSFOShowsWarningsInGutter]) {
-        NSLog(@"Using setObject:forKey: with the MGSFOShowsWarningsInGutter "
-          "property is not supported and has no effect. Please use "
-          "setShowsWarningsInGutter:");
-        return;
-    }
-    
-	if ([self.objectSetterKeys containsObject:key]) {
-		[(id)self.docSpec setValue:object forKey:key];
-	}
-    if ([key isEqual:MGSFODelegate]) {
-        [[self textView] setDelegate:object];
-    } else if ([key isEqual:MGSFOBreakpointDelegate]) {
-        [[docSpec objectForKey:ro_MGSFOGutterView] setBreakpointDelegate:object];
-    }
-}
-
-/*
- 
- - objectForKey:
- 
- */
-- (id)objectForKey:(id)key
-{
-	if ([self.objectGetterKeys containsObject:key]) {
-		return [self.docSpec valueForKey:key];
-	}
-	
-	return nil;
-}
-
-
-#pragma mark -
-#pragma mark Accessors
-/*
- 
- - setString:
- 
- */
-- (void)setString:(NSString *)aString
-{
-	[[self class] docSpec:self.docSpec setString:aString];
-}
-
-/*
- 
- - setString:options:
- 
- */
+ * - setString:options:
+*/
 - (void)setString:(NSString *)aString options:(NSDictionary *)options
 {
 	[[self class] docSpec:self.docSpec setString:aString options:options];
 }
 
-/*
- 
- - string
- 
- */
-- (NSString *)string
-{
-	return [[self class] stringForDocSpec:self.docSpec];
-}
 
 /*
- 
- - setAttributedString:
- 
- */
-- (void)setAttributedString:(NSAttributedString *)aString 
-{
-	[[self class] docSpec:self.docSpec setAttributedString:aString];
-}
-
-/*
- 
- - setAttributedString:options:
- 
+ * - setAttributedString:options:
  */
 - (void)setAttributedString:(NSAttributedString *)aString options:(NSDictionary *)options
 {
 	[[self class] docSpec:self.docSpec setAttributedString:aString options:options];
 }
 
-/*
- 
- - attributedString
- 
- */
-- (NSAttributedString *)attributedString
-{
-	return [[self class] attributedStringForDocSpec:self.docSpec];
-}
 
 /*
- 
- - attributedStringWithTemporaryAttributesApplied
- 
- */
-- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
-{
-	return [[self class] attributedStringWithTemporaryAttributesAppliedForDocSpec:self.docSpec];
-}
-
-/*
- 
- - textView
- 
- */
-- (NSTextView *)textView
-{
-	return [self objectForKey:ro_MGSFOTextView];
-}
-
-/*
- 
- - setSyntaxDefinitionName:
- 
- */
-- (void)setSyntaxDefinitionName:(NSString *)value
-{
-    [self setObject:value forKey:MGSFOSyntaxDefinitionName];
-}
-/*
- 
- - syntaxDefinitionName
- 
- */
-- (NSString *)syntaxDefinitionName
-{
-    return [self objectForKey:MGSFOSyntaxDefinitionName];
-}
-
-/*
- 
- - setDocumentName:
- 
- */
-- (void)setDocumentName:(NSString *)value
-{
-    [self setObject:value forKey:MGSFODocumentName];
-}
-/*
- 
- - documentName
- 
- */
-- (NSString *)documentName
-{
-    return [self objectForKey:MGSFODocumentName];
-}
-
-/*
- 
- - setStartingLineNumber:
- 
- */
-- (void)setStartingLineNumber:(NSUInteger)value
-{
-    [[self objectForKey:ro_MGSFOGutterView] setStartingLineNumber:value];
-}
-/*
- 
- - startingLineNumber
- 
- */
-- (NSUInteger)startingLineNumber
-{
-    return [[self objectForKey:ro_MGSFOGutterView] startingLineNumber];
-}
-
-/*
- 
- - setDisableScrollElasticity:
- 
- */
-- (void)setDisableScrollElasticity:(BOOL)value
-{
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFODisableScrollElasticity];
-    [self updateGutterView];
-}
-/*
- 
- - isScrollElasticityDisabled
- 
- */
-- (BOOL)isScrollElasticityDisabled
-{
-    NSNumber *value = [self objectForKey:MGSFODisableScrollElasticity];
-    return [value boolValue];
-}
-
-/*
- 
- - setHasVerticalScroller:
- 
- */
-- (void)setHasVerticalScroller:(BOOL)value
-{
-  [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOHasVerticalScroller];
-  [self updateGutterView];
-}
-/*
- 
- - hasVerticalScroller
- 
- */
-- (BOOL)hasVerticalScroller
-{
-  NSNumber *value = [self objectForKey:MGSFOHasVerticalScroller];
-  return [value boolValue];
-}
-
-/*
- 
- - setShowsLineNumbers:
- 
- */
-- (void)setShowsLineNumbers:(BOOL)value
-{
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowLineNumberGutter];
-    [self updateGutterView];
-}
-/*
- 
- - showsLineNumbers
- 
- */
-- (BOOL)showsLineNumbers
-{
-    NSNumber *value = [self objectForKey:MGSFOShowLineNumberGutter];
-    return [value boolValue];
-}
-
-/*
-
- - setLineWrap:
-
- */
-- (void)setLineWrap:(BOOL)value
-{
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOLineWrap];
-    [(SMLTextView *)self.textView setLineWrap:value];
-    [self updateGutterView];
-    [self updateErrorHighlighting];
-}
-/*
-
- - lineWrap
-
- */
-- (BOOL)lineWrap
-{
-    return [(SMLTextView *)self.textView lineWrap];
-}
-
-/*
- 
- - setSyntaxColoured
- 
- */
-- (void)setSyntaxColoured:(BOOL)value
-{
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOIsSyntaxColoured]; 
-    [self reloadString];
-    // @todo: (jsd) there's a bug somewhere in the interaction. In the demo app if I
-    // turn ON line wrapping then turn OFF highlighting, then the ruler view
-    // corrupts its display. Turning on highlighting also doesn't affect the text.
-}
-
-/*
- 
- - isSyntaxColoured
- 
- */
-- (BOOL)isSyntaxColoured
-{
-    NSNumber *value = [self objectForKey:MGSFOIsSyntaxColoured];
-    return [value boolValue];
-}
-
-/*
-
- - reloadString
-
+ * - reloadString
  */
 - (void)reloadString
 {
@@ -698,106 +704,21 @@ char kcLineWrapPrefChanged;
 }
 
 
-/*
- 
- - setShowsWarningsInGutter
- 
- */
-- (void)setShowsWarningsInGutter:(BOOL)value
-{
-    [docSpec setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowsWarningsInGutter];
-
-    MGSLineNumberView * lineNumberView = [self.docSpec valueForKey:ro_MGSFOGutterView];
-    lineNumberView.showsWarnings = value;
-    [self updateGutterView];
-}
+#pragma mark - Instance Methods (deprecated)
 
 /*
- 
- - showsWarningsInGutter
- 
- */
-- (BOOL)showsWarningsInGutter
-{
-    NSNumber *value = [self objectForKey:MGSFOShowsWarningsInGutter];
-    return [value boolValue];
-}
-
-/*
- 
- - setSyntaxErrors:
- 
- */
-- (void)setSyntaxErrors:(NSArray *)errors
-{
-    self.syntaxErrorController.syntaxErrors = errors;
-
-    /// @todo: (jsd) This is still keeping its own copy.
-    SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
-    syntaxColouring.syntaxErrors = errors;
-    [syntaxColouring highlightErrors];
-
-    MGSLineNumberView *lineNumberView = [docSpec valueForKey:ro_MGSFOGutterView];
-    [lineNumberView setNeedsDisplay:YES];
-}
-
-/*
- 
- - syntaxErrors
- 
- */
-- (NSArray *)syntaxErrors
-{
-    return self.syntaxErrorController.syntaxErrors;
-}
-
-#pragma mark -
-#pragma mark String updating
-/*
- 
- - replaceCharactersInRange:withString:options
- 
- */
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options
-{
-    SMLTextView *textView = (SMLTextView *)[self textView];
-    [textView replaceCharactersInRange:range withString:text options:options];
-}
-
-#pragma mark -
-#pragma mark Controllers
-
-/*
- 
- - textMenuController
- 
+ * - textMenuController
  */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-
 - (MGSTextMenuController *)textMenuController
 {
-	return [MGSTextMenuController sharedInstance];
+    return [MGSTextMenuController sharedInstance];
 }
-
 #pragma clang diagnostic pop
 
-/*
- 
- - extraInterfaceController
- 
- */
-- (MGSExtraInterfaceController *)extraInterfaceController
-{
-	if (!extraInterfaceController) {
-		extraInterfaceController = [[MGSExtraInterfaceController alloc] init];
-	}
-	
-	return extraInterfaceController;
-}
 
-#pragma mark -
-#pragma mark KVO
+#pragma mark - KVO
 /*
  
  - observeValueForKeyPath:ofObject:change:context:
@@ -835,11 +756,10 @@ char kcLineWrapPrefChanged;
     } else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
-	
 }
 
-#pragma mark -
-#pragma mark Class extension
+
+#pragma mark - Class extension
 /*
  
  - updateGutterView
@@ -861,18 +781,5 @@ char kcLineWrapPrefChanged;
     [syntaxColouring highlightErrors];
 }
 
-
-
-#pragma mark -
-#pragma mark Resource loading
-
-+ (NSImage *) imageNamed:(NSString *)name
-{
-    NSBundle* bundle = [NSBundle bundleForClass:[self class]];
-    
-    NSString *path = [bundle pathForImageResource:name];
-    return path != nil ? [[NSImage alloc]
-                           initWithContentsOfFile:path] : nil;
-}
 
 @end
