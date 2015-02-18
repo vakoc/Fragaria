@@ -7,9 +7,14 @@
  *
  */
 
-// valid keys for 
-// - (void)setObject:(id)object forKey:(id)key;
-// - (id)objectForKey:(id)key;
+
+/**
+ *  The following keys are valid keys for:
+ *   - (void)setObject:(id)object forKey:(id)key;
+ *   - (id)objectForKey:(id)key;
+ *  Note that this usage is going away with the elimination of the
+ *  docSpec in favor of the use of properties.
+ **/
 
 // BOOL
 extern NSString * const MGSFOIsSyntaxColoured;
@@ -40,6 +45,7 @@ extern NSString * const MGSFOSyntaxColouringDelegate;
 extern NSString * const ro_MGSFOLineNumbers; // readonly
 extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 
+
 @class MGSTextMenuController;
 @class MGSExtraInterfaceController;
 
@@ -51,11 +57,31 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 #import "SMLSyntaxDefinition.h"
 #import "MGSSyntaxErrorController.h"
 
+
+/**
+ *  This protocol defines an interface for delegates that wish
+ *  to receive notifications when from Fragaria's text view.
+ **/
 @protocol MGSFragariaTextViewDelegate <NSObject>
 @optional
+
+/**
+ * This notification is send when the paste has been accepted. You can use
+ * this delegate method to query the pasteboard for additional pasteboard content
+ * that may be relevant to the application: eg: a plist that may contain custom data.
+ * @param note is an NSNotification instance.
+ **/
 - (void)mgsTextDidPaste:(NSNotification *)note;
+
 @end
 
+
+/**
+ * MGSFragaria is the main controller class for all of the individual components
+ * that constitute the MGSFragaria framework. As the main controller it owns the
+ * helper components that allow it to function, such as the custom text view, the
+ * gutter view, and so on.
+ **/
 @interface MGSFragaria : NSObject
 {
 	@private
@@ -65,11 +91,25 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
     NSSet* objectSetterKeys;
 }
 
+
 /// @name Properties
 
-@property (nonatomic, readonly) MGSExtraInterfaceController *extraInterfaceController;
-@property (nonatomic, strong) id docSpec;
+/**
+ *  This property provides access to Fragaria's extra interface items. Consult
+ *  MGSExtraInterfaceController.h for a description of what is available.
+ *  @todo: (jsd) Is this intended to be exposed for direct programmer use, or
+ *  is this something that we should abstract away via Fragaria's public properties?
+ **/
 
+@property (nonatomic, readonly) MGSExtraInterfaceController *extraInterfaceController;
+
+/**
+ *  When set to an array containing SMLSyntaxError instances, Fragaria can use these
+ *  instances to provide feedback to the user in the form of:
+ *   - highlighting lines and syntax errors in the text view.
+ *   - displaying warning icons in the gutter.
+ *   - providing a description of the syntax errors in popovers.
+ **/
 @property (nonatomic, assign) NSArray *syntaxErrors;
 
 
@@ -78,17 +118,19 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 /**
  *  SyntaxErrorController provides access to Fragaria's internal syntax
  *  error controller. Although it is exposed you should not use this property.
- *  @todo: (jsd) We could add this into a protocol in a private header, instead.
- *  This might be the best course of action to eliminate a lot of the components
- *  from being exposed while eliminating the docSpec.
+ *  @todo: (jsd) Will eventually migrate these into a category in a private header.
  **/
 @property (nonatomic, strong, readonly) MGSSyntaxErrorController *syntaxErrorController;
+
+/*
+ *  Do not develop further or use unless necessary. This is to be depreacated
+ *  in favor of public and private properties.
+ **/
+@property (nonatomic, strong) id docSpec;
 
 
 /// @name Class Methods
 
-+ (id)currentInstance DEPRECATED_ATTRIBUTE;
-+ (void)setCurrentInstance:(MGSFragaria *)anInstance DEPRECATED_ATTRIBUTE;
 + (void)initializeFramework;
 + (id)createDocSpec;
 + (void)docSpec:(id)docSpec setString:(NSString *)string;
@@ -98,15 +140,27 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 + (NSString *)stringForDocSpec:(id)docSpec;
 + (NSAttributedString *)attributedStringForDocSpec:(id)docSpec;
 + (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec;
++ (NSImage *)imageNamed:(NSString *)name;
 
 
-/// @name Instance Methods
+/// @name Class Methods (deprecated)
++ (id)currentInstance DEPRECATED_ATTRIBUTE;
++ (void)setCurrentInstance:(MGSFragaria *)anInstance DEPRECATED_ATTRIBUTE;
+
+
+/// @name Instance Methods - General
 
 - (id)initWithObject:(id)object;
 - (void)setObject:(id)object forKey:(id)key;
 - (id)objectForKey:(id)key;
 - (void)embedInView:(NSView *)view;
+- (MGSTextMenuController *)textMenuController;
+- (void)reloadString;
+- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options;
 - (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight;
+
+
+/// @name Instance Methods - Strings Related
 - (void)setString:(NSString *)aString;
 - (void)setString:(NSString *)aString options:(NSDictionary *)options;
 - (void)setAttributedString:(NSAttributedString *)aString;
@@ -115,7 +169,10 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied;
 - (NSString *)string;
 - (NSTextView *)textView;
-- (MGSTextMenuController *)textMenuController;
+
+
+/// @name Instance Methods - Appearance and Display
+
 - (void)setSyntaxColoured:(BOOL)value;
 - (BOOL)isSyntaxColoured;
 - (void)setShowsLineNumbers:(BOOL)value;
@@ -124,20 +181,20 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 - (BOOL)lineWrap;
 - (void)setShowsWarningsInGutter:(BOOL)value;
 - (BOOL)showsWarningsInGutter;
-- (void)reloadString;
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options;
+
+
 - (void)setHasVerticalScroller:(BOOL)value;
 - (BOOL)hasVerticalScroller;
 - (void)setDisableScrollElasticity:(BOOL)value;
 - (BOOL)isScrollElasticityDisabled;
 - (void)setStartingLineNumber:(NSUInteger)value;
 - (NSUInteger)startingLineNumber;
+
 - (void)setDocumentName:(NSString *)value;
 - (NSString *)documentName;
+
 - (void)setSyntaxDefinitionName:(NSString *)value;
 - (NSString *)syntaxDefinitionName;
-
-+ (NSImage *)imageNamed:(NSString *)name;
 
 
 /// @name Instance Methods that are synonyms of properties
