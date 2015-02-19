@@ -36,8 +36,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
 					*stringsColour, *variablesColour, *attributesColour,  *numbersColour;
     
-    NSArray *syntaxErrors;
-    
     MGSSyntaxDefinition *syntaxDefinition;
     
 	NSUndoManager *undoManager;
@@ -45,8 +43,10 @@ Unless required by applicable law or agreed to in writing, software distributed 
 	NSTimer *autocompleteWordsTimer;
 }
 
+@property (nonatomic,weak) MGSFragaria *fragaria;            ///< The owning controller for instances of this class.
+
 @property (strong) NSUndoManager *undoManager;
-@property (nonatomic, strong) NSArray* syntaxErrors;
+
 @property (strong) MGSSyntaxDefinition *syntaxDefinition;
 
 - (id)initWithDocument:(id)document;

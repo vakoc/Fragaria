@@ -66,7 +66,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 @implementation SMLSyntaxColouring
 
 
-@synthesize undoManager, syntaxErrors, syntaxDefinition;
+@synthesize undoManager, syntaxDefinition;
 
 
 #pragma mark -
@@ -1444,12 +1444,12 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         [button removeFromSuperview];
     }
     
-    if (!syntaxErrors) return;
+    if (!self.fragaria.syntaxErrors) return;
     
     // Highlight all errors and add buttons
     NSMutableSet* highlightedRows = [NSMutableSet set];
 
-    for (SMLSyntaxError* err in syntaxErrors)
+    for (SMLSyntaxError* err in self.fragaria.syntaxErrors)
     {
         // Highlight an erronous line
         NSInteger location = [self characterIndexFromLine:err.line character:err.character inString:text];
