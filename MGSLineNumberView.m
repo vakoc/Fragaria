@@ -794,6 +794,7 @@
     [markerImage addRepresentation:rep];
     [markerImage setName:[colorBase description]];
     [_markerImages setValue:markerImage forKey:[colorBase description]];
+    _markerImagesSize = size;
     return markerImage;
 }
 
