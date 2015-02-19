@@ -366,6 +366,15 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+- (void)setFrame:(NSRect)bounds
+{
+    [self setNeedsDisplayInRect:currentLineRect];
+    [super setFrame:bounds];
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
+
+
 #pragma mark -
 #pragma mark Mouse event handling
 
