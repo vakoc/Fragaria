@@ -162,7 +162,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setSyntaxColoured:(BOOL)syntaxColoured
 {
-	[self.fragaria setSyntaxColoured:syntaxColoured];
+	[self.fragaria setIsSyntaxColoured:syntaxColoured];
 }
 
 - (BOOL)syntaxColoured
@@ -218,12 +218,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setScrollElasticityDisabled:(BOOL)scrollElasticityDisabled
 {
-	[self.fragaria setDisableScrollElasticity:scrollElasticityDisabled];
+	[self.fragaria setScrollElasticityDisabled:scrollElasticityDisabled];
 }
 
 - (BOOL)scrollElasticityDisabled
 {
-	return [self.fragaria isScrollElasticityDisabled];
+	return [self.fragaria scrollElasticityDisabled];
 }
 
 
