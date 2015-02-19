@@ -609,10 +609,10 @@
         
         for (i = 0; i < rectCount; i++)
         {
-            if ((location >= NSMinY(rects[i])) && (location < NSMaxY(rects[i])))
-            {
+            if (location < NSMinY(rects[i]) && line)
+                return line-1;
+            else if (location < NSMaxY(rects[i]))
                 return line;
-            }
         }
     }
 	return NSNotFound;
