@@ -754,34 +754,38 @@
     } else {
         [_markerImages removeAllObjects];
     }
-    
-    float cornerRadius = 0.5;
 
     markerImage = [NSImage.alloc initWithSize:size];
     NSCustomImageRep *rep = [NSCustomImageRep.alloc initWithSize:size flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
+        NSRect rect;
+        NSBezierPath *path;
+        CGFloat lineWidth = (dstRect.size.height < 12.0 ? 1 : (dstRect.size.height / 12.0));
+        CGFloat cornerRadius = 3.0;
         
-        //NSRect rect = NSMakeRect(1.0, 2.0, dstRect.size.width - 2.0, dstRect.size.height - 3.0);
-        NSRect rect = NSMakeRect(0.0, 0.0, dstRect.size.width, dstRect.size.height);
-        NSBezierPath * path = NSBezierPath.bezierPath;
-        [path moveToPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + NSHeight(rect)/2)];
-        [path lineToPoint:NSMakePoint(NSMaxX(rect) - 5.0, NSMaxY(rect))];
+        rect = NSMakeRect(lineWidth/2.0, lineWidth/2.0, dstRect.size.width-lineWidth, dstRect.size.height-lineWidth);
+        NSPoint tip = NSMakePoint(NSMaxX(rect), NSMinY(rect) + NSHeight(rect)/2);
+        CGFloat arrowEndX = NSMaxX(rect)-NSWidth(rect)/7.0;
+        
+        path = [NSBezierPath bezierPath];
+        [path moveToPoint:tip];
+        [path lineToPoint:NSMakePoint(arrowEndX, NSMaxY(rect))];
         [path appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect) + cornerRadius, NSMaxY(rect) - cornerRadius) radius:cornerRadius startAngle:90 endAngle:180];
         [path appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect) + cornerRadius, NSMinY(rect) + cornerRadius) radius:cornerRadius startAngle:180 endAngle:270];
-        [path lineToPoint:NSMakePoint(NSMaxX(rect) - 5.0, NSMinY(rect))];
+        [path lineToPoint:NSMakePoint(arrowEndX, NSMinY(rect))];
         [path closePath];
         
         NSColor *colorFill1 = [colorBase colorUsingColorSpaceName:NSDeviceRGBColorSpace];
         CGFloat gradientTo = colorFill1.brightnessComponent - 0.1;
         NSColor *colorFill2 = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:gradientTo alpha:1];
         
-        CGFloat strokeTo = colorFill2.brightnessComponent - 0.5;
+        CGFloat strokeTo = colorFill2.brightnessComponent - 0.35;
         NSColor *colorStroke = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:strokeTo alpha:1];
         
         NSGradient *fill = [[NSGradient alloc] initWithColors:@[colorFill1, colorFill2]];
         [fill drawInBezierPath:path angle:-90.0];
         
         [colorStroke set];
-        [path setLineWidth:0.5];
+        [path setLineWidth:lineWidth];
         [path stroke];
         return YES;
     }];
