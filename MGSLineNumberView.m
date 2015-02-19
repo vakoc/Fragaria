@@ -463,7 +463,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 			linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
-#pragma cland diagnostic pop
+#pragma clang diagnostic pop
 		}
 	}
 
