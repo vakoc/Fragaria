@@ -152,12 +152,6 @@
 }
 
 
-- (void)setErrorTextColor:(NSColor *)errorTextColor {
-    _errorTextColor = errorTextColor;
-    [self setNeedsDisplay:YES];
-}
-
-
 - (void)setMarkerColor:(NSColor *)markerColor {
     _markerColor = markerColor;
     [self setNeedsDisplay:YES];
@@ -381,27 +375,6 @@
 }
 
 
-- (NSDictionary *)errorTextAttributes
-{
-    NSFont  *font;
-    NSColor *color;
-
-    font = [self font];
-    if (font == nil)
-    {
-        font = [self defaultFont];
-    }
-
-    color = [self errorTextColor];
-    if (color == nil)
-    {
-        color = [self defaultErrorTextColor];
-    }
-
-    return [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, nil];
-}
-
-
 - (CGFloat)requiredThickness
 {
     NSUInteger			lineCount, digits, i;
@@ -467,7 +440,6 @@
     NSAttributedString      *drawingAttributedString;
     CGContextRef            drawingContext;
     NSSet                   *linesWithBreakpoints;
-    BOOL                    willDrawErrors;
 
     layoutManager = [view layoutManager];
 
@@ -520,10 +492,6 @@
                 currentTextAttributes = [self markerTextAttributes];
             }
 
-            if ((willDrawErrors = self.showsWarnings && [self.fragaria.syntaxErrorController.linesWithErrors containsObject:@(line + 1)])) {
-                currentTextAttributes = [self errorTextAttributes];
-            }
-
             // Draw line numbers first so that error images won't be buried underneath long line numbers.
             // Line numbers are internally stored starting at 0
             labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine];
@@ -539,8 +507,7 @@
             CGContextSetTextPosition(drawingContext, xpos, baselinepos);
             CTLineDraw(line, drawingContext);
 
-            if (willDrawErrors)
-            {
+            if (_showsWarnings) {
                 [self drawErrorsInRect:wholeLineRect ofLine:lineNum];
             }
         }
@@ -784,35 +751,33 @@
     float cornerRadius = 0.5;
 
     markerImage = [NSImage.alloc initWithSize:size];
-    NSCustomImageRep *rep = [NSCustomImageRep.alloc initWithSize:size
-                                                         flipped:NO
-                                                  drawingHandler:^BOOL(NSRect dstRect) {
-
-                                                      //NSRect rect = NSMakeRect(1.0, 2.0, dstRect.size.width - 2.0, dstRect.size.height - 3.0);
-                                                      NSRect rect = NSMakeRect(0.0, 0.0, dstRect.size.width, dstRect.size.height);
-                                                      NSBezierPath * path = NSBezierPath.bezierPath;
-                                                      [path moveToPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + NSHeight(rect)/2)];
-                                                      [path lineToPoint:NSMakePoint(NSMaxX(rect) - 5.0, NSMaxY(rect))];
-                                                      [path appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect) + cornerRadius, NSMaxY(rect) - cornerRadius) radius:cornerRadius startAngle:90 endAngle:180];
-                                                      [path appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect) + cornerRadius, NSMinY(rect) + cornerRadius) radius:cornerRadius startAngle:180 endAngle:270];
-                                                      [path lineToPoint:NSMakePoint(NSMaxX(rect) - 5.0, NSMinY(rect))];
-                                                      [path closePath];
-
-                                                      NSColor *colorFill1 = [colorBase colorUsingColorSpaceName:NSDeviceRGBColorSpace];
-                                                      CGFloat gradientTo = colorFill1.brightnessComponent - 0.1;
-                                                      NSColor *colorFill2 = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:gradientTo alpha:1];
-
-                                                      CGFloat strokeTo = colorFill2.brightnessComponent - 0.5;
-                                                      NSColor *colorStroke = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:strokeTo alpha:1];
-
-                                                      NSGradient *fill = [[NSGradient alloc] initWithColors:@[colorFill1, colorFill2]];
-                                                      [fill drawInBezierPath:path angle:-90.0];
-
-                                                      [colorStroke set];
-                                                      [path setLineWidth:0.5];
-                                                      [path stroke];
-                                                      return YES;
-                                                  }];
+    NSCustomImageRep *rep = [NSCustomImageRep.alloc initWithSize:size flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
+        
+        //NSRect rect = NSMakeRect(1.0, 2.0, dstRect.size.width - 2.0, dstRect.size.height - 3.0);
+        NSRect rect = NSMakeRect(0.0, 0.0, dstRect.size.width, dstRect.size.height);
+        NSBezierPath * path = NSBezierPath.bezierPath;
+        [path moveToPoint:NSMakePoint(NSMaxX(rect), NSMinY(rect) + NSHeight(rect)/2)];
+        [path lineToPoint:NSMakePoint(NSMaxX(rect) - 5.0, NSMaxY(rect))];
+        [path appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect) + cornerRadius, NSMaxY(rect) - cornerRadius) radius:cornerRadius startAngle:90 endAngle:180];
+        [path appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect) + cornerRadius, NSMinY(rect) + cornerRadius) radius:cornerRadius startAngle:180 endAngle:270];
+        [path lineToPoint:NSMakePoint(NSMaxX(rect) - 5.0, NSMinY(rect))];
+        [path closePath];
+        
+        NSColor *colorFill1 = [colorBase colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+        CGFloat gradientTo = colorFill1.brightnessComponent - 0.1;
+        NSColor *colorFill2 = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:gradientTo alpha:1];
+        
+        CGFloat strokeTo = colorFill2.brightnessComponent - 0.5;
+        NSColor *colorStroke = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:strokeTo alpha:1];
+        
+        NSGradient *fill = [[NSGradient alloc] initWithColors:@[colorFill1, colorFill2]];
+        [fill drawInBezierPath:path angle:-90.0];
+        
+        [colorStroke set];
+        [path setLineWidth:0.5];
+        [path stroke];
+        return YES;
+    }];
     
     [rep setSize:size];
     [markerImage addRepresentation:rep];
