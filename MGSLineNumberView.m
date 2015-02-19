@@ -63,6 +63,7 @@
     NSUInteger _mouseDownLineTracking;
     NSRect     _mouseDownRectTracking;
     NSMutableDictionary *_markerImages;
+    NSSize _markerImagesSize;
 }
 
 @synthesize markerColor = _markerColor;
@@ -74,6 +75,8 @@
     {
         _lineIndices = [[NSMutableArray alloc] init];
         _startingLineNumber = 0;
+        _markerImagesSize = NSMakeSize(0,0);
+        _markerImages = [[NSMutableDictionary alloc] init];
         [self setClientView:[aScrollView documentView]];
     }
     return self;
@@ -741,13 +744,17 @@
 
 /* Adapted from Noodlekit (github.com/MrNoodle/NoodleKit) by Paul Kim. */
 - (NSImage*) defaultMarkerImageWithSize:(NSSize)size color:(NSColor*)colorBase  {
-
-    NSImage *markerImage = _markerImages[[colorBase description]];
-    if (markerImage)
-    {
-        return markerImage;
+    NSImage *markerImage;
+    
+    if (NSEqualSizes(size, _markerImagesSize)) {
+        markerImage = _markerImages[[colorBase description]];
+        if (markerImage) {
+            return markerImage;
+        }
+    } else {
+        [_markerImages removeAllObjects];
     }
-
+    
     float cornerRadius = 0.5;
 
     markerImage = [NSImage.alloc initWithSize:size];
@@ -782,7 +789,7 @@
     [rep setSize:size];
     [markerImage addRepresentation:rep];
     [markerImage setName:[colorBase description]];
-    [_markerImages = _markerImages ?: NSMutableDictionary.new setValue:markerImage forKey:[colorBase description]];
+    [_markerImages setValue:markerImage forKey:[colorBase description]];
     return markerImage;
 }
 
