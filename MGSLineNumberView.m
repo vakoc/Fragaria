@@ -633,8 +633,6 @@
     centeredRect.size.width -= RULER_MARGIN;
     
     alignedRect = [self backingAlignedRect:centeredRect options:NSAlignAllEdgesOutward];
-    
-    alignedRect = [self backingAlignedRect:centeredRect options:NSAlignAllEdgesOutward];
 
     NSImage *defaultImage = [self defaultMarkerImageWithSize:centeredRect.size color:self.markerColor];
     [defaultImage drawInRect:alignedRect fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:YES hints:nil];
