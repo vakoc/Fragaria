@@ -762,7 +762,7 @@
         
         rect = NSMakeRect(lineWidth/2.0, lineWidth/2.0, dstRect.size.width-lineWidth, dstRect.size.height-lineWidth);
         NSPoint tip = NSMakePoint(NSMaxX(rect), NSMinY(rect) + NSHeight(rect)/2);
-        CGFloat arrowEndX = NSMaxX(rect)-NSWidth(rect)/7.0;
+        CGFloat arrowEndX = NSMaxX(rect)-NSHeight(rect)/2.6;
         
         path = [NSBezierPath bezierPath];
         [path moveToPoint:tip];
