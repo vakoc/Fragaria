@@ -16,6 +16,7 @@
  *  docSpec in favor of the use of properties.
  **/
 #pragma mark - externs
+
 // BOOL
 extern NSString * const MGSFOIsSyntaxColoured;
 extern NSString * const MGSFOShowLineNumberGutter;
@@ -74,23 +75,28 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 /// @name Properties - Content Strings
 #pragma mark - Properties - Content Strings
 
-@property (nonatomic, assign) NSString * string;
-@property (nonatomic, assign) NSAttributedString *attributedString;
+@property (nonatomic, assign) NSString * string;                      ///< The plain text string of the text editor.
+@property (nonatomic, assign) NSAttributedString *attributedString;   ///< The text editor string with attributes.
+
+/**
+ *  The text editor string, including temporary attributes which
+ *  have been applied as attributes.
+ **/
 @property (nonatomic, strong, readonly) NSAttributedString *attributedStringWithTemporaryAttributesApplied;
 
 
 /// @name Properties - Appearance and Display
 #pragma mark - Properties - Appearance and Display
 
-@property (nonatomic, assign) NSString *documentName; // @todo fix strong, currently being retained elsewhere
-@property (nonatomic, assign) BOOL hasVerticalScroller;
-@property (nonatomic, assign) BOOL lineWrap;
-@property (nonatomic, assign) BOOL scrollElasticityDisabled;
-@property (nonatomic, assign) BOOL showsLineNumbers;
-@property (nonatomic, assign) BOOL showsWarningsInGutter;
-@property (nonatomic, assign) NSUInteger startingLineNumber;
-@property (nonatomic, assign) BOOL isSyntaxColoured;
-@property (nonatomic, assign) NSString *syntaxDefinitionName; // @todo fix strong, currently duplicate retain
+@property (nonatomic, assign) NSString *documentName;         ///< The document name. @todo: (jsd) fix strong, currently being retained elsewhere
+@property (nonatomic, assign) BOOL hasVerticalScroller;       ///< Indicates whether or not the vertical scroller should be displayed.
+@property (nonatomic, assign) BOOL lineWrap;                  ///< Indicates whether or not line wrap is enabled.
+@property (nonatomic, assign) BOOL scrollElasticityDisabled;  ///< Indicates whether or not the "rubber band" effect is disabled.
+@property (nonatomic, assign) BOOL showsLineNumbers;          ///< Indicates whether or not line numbers are displayed.
+@property (nonatomic, assign) BOOL showsWarningsInGutter;     ///< Indicates whether or not error warnings are displayed.
+@property (nonatomic, assign) NSUInteger startingLineNumber;  ///< Specifies the starting line number in the text view.
+@property (nonatomic, assign) BOOL isSyntaxColoured;          ///< Specifies whether the document shall be syntax highlighted.
+@property (nonatomic, assign) NSString *syntaxDefinitionName; ///< Specified the current syntax definition name. @todo: (jsd) fix strong, currently duplicate retain
 
 /**
  *  When set to an array containing SMLSyntaxError instances, Fragaria
@@ -105,6 +111,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 /// @name Properties - System Components (although exposed these are for internal use)
 /// @note: (jsd) to be migrated to a private header.
 #pragma mark - Properties - System Components
+
 /**
  *  This property provides access to Fragaria's extra interface items. Consult
  *  MGSExtraInterfaceController.h for a description of what is available.
@@ -122,7 +129,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
  **/
 @property (nonatomic, assign, readonly) NSTextView *textView;
 
-/*
+/**
  *  Do not develop further or use unless necessary. This is to be deprecated
  *  in favor of public and private properties.
  **/
@@ -132,40 +139,152 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 /// @name Class Methods
 #pragma mark - Class Methods
 
+/**
+ *  Creates the docSpec for the document.
+ **/
 + (id)createDocSpec;
+
+/**
+ *  Set the docSpec's string.
+ *  @param docSpec The docSpec whose string is to be set.
+ *  @param string The string to set.
+ **/
 + (void)docSpec:(id)docSpec setString:(NSString *)string;
+
+/**
+ *  Set's the docSpec's string, possible with options.
+ *  @param docSpec The docSpec whose string is to be set.
+ *  @param string The string to set.
+ *  @param options is a dictionary of options. Currently `undo` can be `YES` or `NO`..
+ **/
 + (void)docSpec:(id)docSpec setString:(NSString *)string options:(NSDictionary *)options;
+
+/**
+ *  Sets the docSpec's string using an attributed string.
+ *  @param docSpec The docSpec whose string is to be set.
+ *  @param string The string to set.
+ **/
 + (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string;
+
+/**
+ *  Sets the docSpec's string using an attributed string, with options.
+ *  @param docSpec The docSpec whose string is to be set.
+ *  @param string The string to set.
+ *  @param options A dictionary of options. Currently `undo` can be `YES` or `NO`.
+ **/
 + (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string options:(NSDictionary *)options;
+
+/**
+ *  Returns the string for the given docSpec.
+ *  @param docSpec The docSpec for which to return the string.
+ **/
 + (NSString *)stringForDocSpec:(id)docSpec;
+
+/**
+ *  Returns the attributed string for the given docSpec.
+ *  @param docSpec The docSpec for which to return the string.
+ **/
 + (NSAttributedString *)attributedStringForDocSpec:(id)docSpec;
+
+/**
+ *  Returns the attributed string for the given docSpec, with temporary
+ *  applied as attributes.
+ *  @param docSpec The docSpec for which to return the string.
+ **/
 + (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec;
 
 
 /// @name Class Methods (deprecated)
 #pragma mark - Class Methods (deprecated)
+
+/**
+ *  Deprecated. Do not use.
+ **/
 + (id)currentInstance DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Deprecated. Do not use.
+ *  @param anInstance Deprecated.
+ **/
 + (void)setCurrentInstance:(MGSFragaria *)anInstance DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Deprecated. Do not use.
+ *  @param name Deprecated.
+ **/
 + (NSImage *)imageNamed:(NSString *)name DEPRECATED_ATTRIBUTE;
 
 
 /// @name Instance Methods
 #pragma mark - Instance Methods
 
+/**
+ *  Initializes a new instance with `object`.
+ *  @param object A docSpec or nil.
+ **/
 - (id)initWithObject:(id)object;
+
+/**
+ *  Sets the value `object` identified by `key`.
+ *  @param object Any Objective-C object.
+ *  @param key A unique object to serve as the key; typically an NSString.
+ **/
 - (void)setObject:(id)object forKey:(id)key;
+
+/**
+ *  Returns the object specified by `key`.
+ *  @param key The lookup key.
+ **/
 - (id)objectForKey:(id)key;
+
+/**
+ *  Adds Fragaria and its components to the empty view.
+ *  @param view The empty view wherein Fragaria constructs its views.
+ **/
 - (void)embedInView:(NSView *)view;
+
+/**
+ *  Replaces the characters specified in a range with new text, with options.
+ *  @param range The range to be replaced.
+ *  @param text The replacement text.
+ *  @param options A dictionary of options. Currently `undo` can be `YES` or `NO`.
+ **/
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options;
+
+/**
+ *  Moves the view to a specific line, possibly centering it and/or highlighting it.
+ *  @param lineToGoTo Indicates the line the view should attempt to move to.
+ *  @param centered Indicates whether the desired line should be centered, if possible.
+ *  @param highlight Indicates whether or not the target line should be highlighted.
+ **/
 - (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight;
 
+/**
+ *  Sets the string, with options.
+ *  @param aString The string to set.
+ *  @param options A dictionary of options. Currently `undo` can be `YES` or `NO`.
+ **/
 - (void)setString:(NSString *)aString options:(NSDictionary *)options;
+
+/**
+ *  Set the string using an attributed string, with options.
+ *  @param aString The attributed string to set.
+ *  @param options A dictionary of options. Currently `undo` can be `YES` or `NO`.
+ **/
 - (void)setAttributedString:(NSAttributedString *)aString options:(NSDictionary *)options;
+
+/**
+ *
+ **/
 - (void)reloadString;
 
 
 /// @name Instance Methods (deprecated)
 #pragma mark - Instance Methods (deprecated)
+
+/**
+ *
+ **/
 - (MGSTextMenuController *)textMenuController DEPRECATED_ATTRIBUTE;
 
 
