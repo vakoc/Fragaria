@@ -9,7 +9,7 @@
 //
 
 #import "AppDelegate.h"
-#import "MGSFragariaFramework.h"
+#import "MGSFragaria.h"
 #import "MASPreferencesWindowController.h"
 #import "PrefsFontsAndColorsViewController.h"
 #import "PrefsTextEditingViewController.h"
