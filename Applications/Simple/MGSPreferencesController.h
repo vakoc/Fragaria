@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MGSFragaria.h"
 #import "DBPrefsWindowController.h"
 
 @interface MGSPreferencesController : DBPrefsWindowController {

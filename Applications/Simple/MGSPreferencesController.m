@@ -6,7 +6,7 @@
 //  Copyright 2010 mugginsoft.com. All rights reserved.
 //
 
-#import "MGSFragaria.h"
+#import "MGSPreferencesController.h"
 
 @interface MGSPreferencesController()
 - (BOOL)commitEditingAndDiscard:(BOOL)discard;
