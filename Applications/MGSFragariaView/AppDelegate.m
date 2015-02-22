@@ -10,6 +10,9 @@
 
 #import "AppDelegate.h"
 #import "MGSFragariaFramework.h"
+#import "MASPreferencesWindowController.h"
+#import "PrefsFontsAndColorsViewController.h"
+#import "PrefsTextEditingViewController.h"
 
 
 #pragma mark - PRIVATE INTERFACE
@@ -18,6 +21,8 @@
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
+
+@property (nonatomic, strong) NSWindowController *preferencesWindowController;
 
 @property (weak) IBOutlet MGSFragariaView *viewTop;
 
@@ -29,15 +34,18 @@
 
 @property (weak) IBOutlet NSToolbarItem * buttonToggleWordWrap;
 
+
+@property (strong) NSArray *breakpoints;
+
 @end
 
 
 #pragma mark - IMPLEMENTATION
 
 
-@implementation AppDelegate {
-	NSArray *_breakPoints;
-}
+@implementation AppDelegate
+
+@synthesize preferencesWindowController = _preferencesWindowController;
 
 
 #pragma mark - Initialization and Setup
@@ -84,8 +92,27 @@
 }
 
 
-#pragma mark - Delegate methods
+#pragma mark - Property Accessors
 
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	@preferencesWindowController
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSWindowController *)preferencesWindowController
+{
+    if (!_preferencesWindowController)
+    {
+        NSViewController *fontsAndColorsPrefsController = [[PrefsFontsAndColorsViewController alloc] init];
+        NSViewController *textEditingPrefsController = [[PrefsTextEditingViewController alloc] init];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:fontsAndColorsPrefsController, textEditingPrefsController, nil];
+
+        NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
+        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
+    }
+    return _preferencesWindowController;
+}
+
+
+#pragma mark - Delegate methods
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	textDidChange:
@@ -107,7 +134,7 @@
 - (NSSet*) breakpointsForView:(id)sender
 {
 	#pragma unused(sender)
-    return [NSSet setWithArray:_breakPoints];
+    return [NSSet setWithArray:self.breakpoints];
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -116,21 +143,21 @@
 - (void)toggleBreakpointForView:(id)sender onLine:(int)line;
 {
 	#pragma unused(sender)
-	if ([_breakPoints containsObject:@(line)])
+	if ([self.breakpoints containsObject:@(line)])
 	{
-		_breakPoints = [_breakPoints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+		self.breakpoints = [self.breakpoints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
 			return ![evaluatedObject isEqualToValue:@(line)];
 		}]];
 	}
 	else
 	{
-		if (_breakPoints)
+		if (self.breakpoints)
 		{
-			_breakPoints = [_breakPoints arrayByAddingObject:@(line)];
+			self.breakpoints = [self.breakpoints arrayByAddingObject:@(line)];
 		}
 		else
 		{
-			_breakPoints = @[@(line)];
+			self.breakpoints = @[@(line)];
 		}
 	}
 	
@@ -148,6 +175,14 @@
 
 
 #pragma mark - UI Handling
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	openPreferences:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (IBAction)openPreferences:(id)sender
+{
+    [self.preferencesWindowController showWindow:nil];
+}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -195,7 +230,6 @@
 
 #pragma marks - Private
 
-
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	makeSyntaxErrors
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
@@ -236,5 +270,6 @@
 
     return @[error1, error2, error3, error4];
 }
+
 
 @end
