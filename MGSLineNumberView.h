@@ -56,16 +56,16 @@
 
 /// @name Properties
 
-@property (nonatomic) id <MGSBreakpointDelegate> breakpointDelegate;
-@property (nonatomic,weak) MGSFragaria *fragaria;
+@property (nonatomic) id <MGSBreakpointDelegate> breakpointDelegate;   ///< Indicates the object acting as the breakpoint delegate.
+@property (nonatomic,weak) MGSFragaria *fragaria;                      ///< A reference to the owning Fragaria instance.
 
-@property (nonatomic) NSFont *font;
-@property (nonatomic) NSColor *textColor;
-@property (nonatomic) NSColor *alternateTextColor;
-@property (nonatomic) NSColor *backgroundColor;
-@property (nonatomic) CGFloat minimumWidth;
-@property (nonatomic) NSUInteger startingLineNumber;
-@property (nonatomic) BOOL *showsWarnings;
+@property (nonatomic) NSFont *font;                                    ///< The display font for the text editor.
+@property (nonatomic) NSColor *textColor;                              ///< Primary text color for the text editor.
+@property (nonatomic) NSColor *alternateTextColor;                     ///< Alternate text color for the text editor.
+@property (nonatomic) NSColor *backgroundColor;                        ///< Text editor background color.
+@property (nonatomic) CGFloat minimumWidth;                            ///< Minimum width of the gutter.
+@property (nonatomic) NSUInteger startingLineNumber;                   ///< The starting line number in the editor.
+@property (nonatomic) BOOL *showsWarnings;                             ///< Indicates whether or not to show error markers in the gutter.
 
 /**
  *   Indicates the default color to be used for breakpoint markers when
@@ -76,7 +76,16 @@
 
 /// @name Instance Methods
 
+/**
+ *  Initializes a new instance of MGSLineNumberView, associating is with aScrollView.
+ *  @param aScrollView Indicates the scroll view associated with this instance.
+ **/
 - (id)initWithScrollView:(NSScrollView *)aScrollView;
+
+/**
+ *  Returns the line number for a character position.
+ *  @param location The character position being checked.
+ **/
 - (NSUInteger)lineNumberForLocation:(CGFloat)location;
 
 @end

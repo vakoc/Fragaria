@@ -8,16 +8,16 @@
 
 #import "MGSFragariaPrefsViewController.h"
 
+
 @interface MGSFragariaPrefsViewController ()
 
 @end
 
+
 @implementation MGSFragariaPrefsViewController
 
 /*
- 
- - commitEditingAndDiscard:
- 
+ *  - commitEditingAndDiscard:
  */
 - (BOOL)commitEditingAndDiscard:(BOOL)discard
 {
@@ -32,13 +32,11 @@
     return commit;
 }
 
-#pragma mark -
-#pragma mark NSTabViewDelegate
+
+#pragma mark - NSTabViewDelegate
 
 /*
- 
- - tabView:shouldSelectTabViewItem:
- 
+ *  - tabView:shouldSelectTabViewItem:
  */
 - (BOOL)tabView:(NSTabView *)tabView shouldSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {

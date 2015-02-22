@@ -4,12 +4,11 @@
 //
 //  Created by Jim Derry on 2015/02/07.
 //
-//  A playgroundd and demonstration for MGSFragariaView, and
+//  A playground and demonstration for MGSFragariaView, and
 //  Fragaria and Smulton in general.
 //
 
 #import "AppDelegate.h"
-#import "MGSFragariaFramework.h"
 #import "MASPreferencesWindowController.h"
 #import "PrefsFontsAndColorsViewController.h"
 #import "PrefsTextEditingViewController.h"

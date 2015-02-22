@@ -6,7 +6,7 @@
 //  Copyright 2010 mugginsoft.com. All rights reserved.
 //
 
-#import "MGSFragariaFramework.h"
+#import "MGSPreferencesController.h"
 
 @interface MGSPreferencesController()
 - (BOOL)commitEditingAndDiscard:(BOOL)discard;
@@ -93,7 +93,7 @@
  */
 - (void)revertToStandardSettings:(id)sender
 {
-    [[MGSFragariaPreferences sharedInstance] revertToStandardSettings:sender];
+    [[NSUserDefaultsController sharedUserDefaultsController] revertToInitialValues:nil];
 }
 
 /*

@@ -701,27 +701,27 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABE25D0A1635CA7C00F23718 /* MGSFragariaPrefsViewController.h in Headers */,
-				D0C146751A871A0B00DDE90A /* MGSFragariaView.h in Headers */,
-				D0E521051A90DC02005CB80B /* MGSSyntaxErrorController.h in Headers */,
-				0191FA811A8829930099B50D /* SMLTextView+MGSTextActions.h in Headers */,
-				AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */,
-				AB257FE2129B1CE300A3FF76 /* MGSFragariaPreferences.h in Headers */,
-				0191FA841A882B290099B50D /* NSScanner+Fragaria.h in Headers */,
-				AB257FE4129B1CE300A3FF76 /* MGSTextMenuController.h in Headers */,
-				0191FA851A884CC20099B50D /* MGSExtraInterfaceController.h in Headers */,
-				017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */,
 				AB69B754118B830700903D1D /* MGSFragaria.h in Headers */,
+				E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */,
 				0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */,
+				0191FA851A884CC20099B50D /* MGSExtraInterfaceController.h in Headers */,
+				ABC578E91603D6000040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h in Headers */,
+				AB257FE2129B1CE300A3FF76 /* MGSFragariaPreferences.h in Headers */,
+				ABE25D0A1635CA7C00F23718 /* MGSFragariaPrefsViewController.h in Headers */,
+				ABC578ED1603D7ED0040B3FB /* MGSFragariaTextEditingPrefsViewController.h in Headers */,
+				AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */,
+				AB257FE4129B1CE300A3FF76 /* MGSTextMenuController.h in Headers */,
 				AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */,
 				E3D4B2771714D89700BB2CC6 /* SMLSyntaxError.h in Headers */,
 				D0E520F51A88EB6B005CB80B /* MGSFragariaPreferencesController.h in Headers */,
-				E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */,
-				ABC578E91603D6000040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h in Headers */,
+				D0C146751A871A0B00DDE90A /* MGSFragariaView.h in Headers */,
+				017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */,
 				E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
 				AB8387C5171D6115004408F4 /* SMLSyntaxDefinition.h in Headers */,
-				ABC578ED1603D7ED0040B3FB /* MGSFragariaTextEditingPrefsViewController.h in Headers */,
+				D0E521051A90DC02005CB80B /* MGSSyntaxErrorController.h in Headers */,
+				0191FA841A882B290099B50D /* NSScanner+Fragaria.h in Headers */,
+				0191FA811A8829930099B50D /* SMLTextView+MGSTextActions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -947,7 +947,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/appledoc \\\n--project-name MGSFragaria \\\n--project-company \"Jonathan Mitchell and significant other contributors\" \\\n--company-id com.mugginsoft \\\n--no-repeat-first-par \\\n--logformat xcode \\\n--no-install-docset \\\n--keep-undocumented-objects \\\n--keep-undocumented-members \\\n--keep-intermediate-files \\\n--ignore \"Pods\" \\\n--ignore \".m\" \\\n--index-desc \"${PROJECT_DIR}/README.md\" \\\n--ignore \"Applications\" \\\n--output \"AppleDoc\" \\\n--exit-threshold \"2\" \\\n.";
+			shellScript = "/usr/local/bin/appledoc \\\n--project-name MGSFragaria \\\n--project-company \"Jonathan Mitchell and significant other contributors\" \\\n--company-id com.mugginsoft \\\n--no-repeat-first-par \\\n--logformat xcode \\\n--no-install-docset \\\n--keep-undocumented-objects \\\n--keep-undocumented-members \\\n--keep-intermediate-files \\\n--ignore \"Pods\" \\\n--ignore \".md\" \\\n--ignore \".m\" \\\n--ignore \"Applications\" \\\n--output \"AppleDoc\" \\\n--exit-threshold \"2\" \\\n.";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -206,7 +206,7 @@
 }
 
 
-// Forces recalculation of line indicies starting from the given index
+// Forces recalculation of line indices starting from the given index
 - (void)invalidateLineIndicesFromCharacterIndex:(NSUInteger)charIndex
 {
     _invalidCharacterIndex = MIN(charIndex, _invalidCharacterIndex);

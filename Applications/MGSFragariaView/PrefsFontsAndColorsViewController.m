@@ -10,17 +10,6 @@
 
 @implementation PrefsFontsAndColorsViewController
 
-
-#pragma mark - Initialization
-
-//- (id)init
-//{
-//    return [super init];
-//    //return [super initWithNibName:@"AdvancedPreferencesView" bundle:nil];
-//    //return [super initWithNibName:@"MGSPreferencesFontsAndColours" bundle:[NSBundle bundleForClass:[MGSFragariaFontsAndColoursPrefsViewController class]]];
-//}
-
-
 #pragma mark - MASPreferencesViewController
 
 - (NSString *)identifier
@@ -40,11 +29,5 @@
     return NSLocalizedString(@"Fonts and Colors", @"Toolbar item name for the Fonts and Colors preference pane");
 }
 
-
-//- (NSView *)initialKeyView
-//{
-//    NSInteger focusedControlIndex = [[NSApp valueForKeyPath:@"delegate.focusedAdvancedControlIndex"] integerValue];
-//    return (focusedControlIndex == 0 ? self.textField : self.tableView);
-//}
 
 @end
