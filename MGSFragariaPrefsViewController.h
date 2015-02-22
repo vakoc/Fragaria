@@ -11,14 +11,15 @@
 /**
  *  MGSFragariaPrefsViewController provides a base class for other Fragaria
  *  preferences controllers. It is not implemented directly anywhere.
- *  @see MGSFragariaFontsAndColorsPrefsViewController.h
- *  @see MGSFragariaTextEditingPrefsViewController.h
+ *  @see MGSFragariaFontsAndColoursPrefsViewController
+ *  @see MGSFragariaTextEditingPrefsViewController
  **/
 
 @interface MGSFragariaPrefsViewController : NSViewController <NSTabViewDelegate>
 
 /**
  *  Commit edits, discarding changes on error.
+ *  @param discard indicates whether or not to discard current uncommitted changes.
  **/
 - (BOOL)commitEditingAndDiscard:(BOOL)discard;
 
