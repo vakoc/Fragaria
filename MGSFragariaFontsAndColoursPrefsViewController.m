@@ -21,7 +21,7 @@
  
  */
 - (id)init {
-    self = [super initWithNibName:@"MGSPreferencesFontsAndColours" bundle:[NSBundle bundleForClass:[self class]]];
+    self = [super initWithNibName:@"MGSPreferencesFontsAndColours" bundle:[NSBundle bundleForClass:[MGSFragariaFontsAndColoursPrefsViewController class]]];
     if (self) {
         
     }

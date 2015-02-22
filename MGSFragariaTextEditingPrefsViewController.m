@@ -21,7 +21,7 @@
  
  */
 - (id)init {
-    self = [super initWithNibName:@"MGSPreferencesTextEditing" bundle:[NSBundle bundleForClass:[self class]]];
+    self = [super initWithNibName:@"MGSPreferencesTextEditing" bundle:[NSBundle bundleForClass:[MGSFragariaTextEditingPrefsViewController class]]];
     if (self) {
 
     }
