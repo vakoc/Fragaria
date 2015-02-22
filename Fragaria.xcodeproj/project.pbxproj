@@ -947,7 +947,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/appledoc \\\n--project-name MGSFragaria \\\n--project-company \"Jonathan Mitchell and significant other contributors\" \\\n--company-id com.mugginsoft \\\n--no-repeat-first-par \\\n--logformat xcode \\\n--no-install-docset \\\n--keep-undocumented-objects \\\n--keep-undocumented-members \\\n--keep-intermediate-files \\\n--ignore \"Pods\" \\\n--ignore \".m\" \\\n--index-desc \"${PROJECT_DIR}/README.md\" \\\n--ignore \"Applications\" \\\n--output \"AppleDoc\" \\\n--exit-threshold \"2\" \\\n.";
+			shellScript = "/usr/local/bin/appledoc \\\n--project-name MGSFragaria \\\n--project-company \"Jonathan Mitchell and significant other contributors\" \\\n--company-id com.mugginsoft \\\n--no-repeat-first-par \\\n--logformat xcode \\\n--no-install-docset \\\n--keep-undocumented-objects \\\n--keep-undocumented-members \\\n--keep-intermediate-files \\\n--ignore \"Pods\" \\\n--ignore \".md\" \\\n--ignore \".m\" \\\n--ignore \"Applications\" \\\n--output \"AppleDoc\" \\\n--exit-threshold \"2\" \\\n.";
 		};
 /* End PBXShellScriptBuildPhase section */
 
