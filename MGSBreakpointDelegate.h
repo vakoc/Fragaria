@@ -30,19 +30,22 @@
  * This message is sent to a delegate when Fragaria indicates
  * that a request to toggle a breakpoint was made.
  * @param sender The object sending the message, and is a reference to the Fragaria instance.
- @ @param line The line number for which the request was made.
+ * @param line The line number for which the request was made.
  **/
 - (void) toggleBreakpointForView:(id)sender onLine:(int)line;
 
 
 /**
  *  @deprecated Use breakpointsForView: instead.
+ *  @param file Deprecated parameter.
  **/
 - (NSSet*) breakpointsForFile:(NSString*)file __deprecated_msg("Use breakpointsForView: instead.");
 
 
 /**
  *  @deprecated Use toggleBreakpointForView:onLine: instead.
+ *  @param file Deprecated parameter.
+ *  @param line Deprecated parameter.
  **/
 - (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line __deprecated_msg("Use toggleBreakpointForView:onLine: instead.");
 
