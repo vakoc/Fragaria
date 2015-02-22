@@ -83,6 +83,10 @@
 		D034C8081A997FA8003D3A41 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C8071A997FA8003D3A41 /* MainMenu.xib */; };
 		D034C80B1A99807F003D3A41 /* MainMenu-Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C8091A99807F003D3A41 /* MainMenu-Document.xib */; };
 		D034C80C1A99807F003D3A41 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C80A1A99807F003D3A41 /* MyDocument.xib */; };
+		D034C8151A998324003D3A41 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C8101A998324003D3A41 /* MASPreferencesWindow.xib */; };
+		D034C8161A998324003D3A41 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034C8121A998324003D3A41 /* MASPreferencesWindowController.m */; };
+		D034C81C1A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034C8191A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m */; };
+		D034C81D1A9984A1003D3A41 /* PrefsTextEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034C81B1A9984A1003D3A41 /* PrefsTextEditingViewController.m */; };
 		D0AB50F01A91CDC200A6DF58 /* SMLSyntaxErrorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AB50EF1A91CDC200A6DF58 /* SMLSyntaxErrorTests.m */; };
 		D0C145C71A85F2C900DDE90A /* SMLTextView+MGSDragging.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C145C31A85E1FD00DDE90A /* SMLTextView+MGSDragging.m */; };
 		D0C146521A87196200DDE90A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C146511A87196200DDE90A /* AppDelegate.m */; };
@@ -252,6 +256,14 @@
 		D034C8071A997FA8003D3A41 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = Applications/Simple/MainMenu.xib; sourceTree = "<group>"; };
 		D034C8091A99807F003D3A41 /* MainMenu-Document.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "MainMenu-Document.xib"; path = "Applications/Doc/MainMenu-Document.xib"; sourceTree = "<group>"; };
 		D034C80A1A99807F003D3A41 /* MyDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyDocument.xib; path = Applications/Doc/MyDocument.xib; sourceTree = "<group>"; };
+		D034C80F1A998324003D3A41 /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
+		D034C8101A998324003D3A41 /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
+		D034C8111A998324003D3A41 /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
+		D034C8121A998324003D3A41 /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
+		D034C8181A9984A1003D3A41 /* PrefsFontsAndColorsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefsFontsAndColorsViewController.h; path = Applications/MGSFragariaView/PrefsFontsAndColorsViewController.h; sourceTree = "<group>"; };
+		D034C8191A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrefsFontsAndColorsViewController.m; path = Applications/MGSFragariaView/PrefsFontsAndColorsViewController.m; sourceTree = "<group>"; };
+		D034C81A1A9984A1003D3A41 /* PrefsTextEditingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefsTextEditingViewController.h; path = Applications/MGSFragariaView/PrefsTextEditingViewController.h; sourceTree = "<group>"; };
+		D034C81B1A9984A1003D3A41 /* PrefsTextEditingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrefsTextEditingViewController.m; path = Applications/MGSFragariaView/PrefsTextEditingViewController.m; sourceTree = "<group>"; };
 		D0AB50EF1A91CDC200A6DF58 /* SMLSyntaxErrorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLSyntaxErrorTests.m; sourceTree = "<group>"; };
 		D0C145C21A85E1FD00DDE90A /* SMLTextView+MGSDragging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMLTextView+MGSDragging.h"; sourceTree = "<group>"; };
 		D0C145C31A85E1FD00DDE90A /* SMLTextView+MGSDragging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMLTextView+MGSDragging.m"; sourceTree = "<group>"; };
@@ -615,13 +627,30 @@
 			name = Fragaria;
 			sourceTree = "<group>";
 		};
+		D034C80D1A998324003D3A41 /* MASPreferences */ = {
+			isa = PBXGroup;
+			children = (
+				D034C80F1A998324003D3A41 /* MASPreferencesViewController.h */,
+				D034C8101A998324003D3A41 /* MASPreferencesWindow.xib */,
+				D034C8111A998324003D3A41 /* MASPreferencesWindowController.h */,
+				D034C8121A998324003D3A41 /* MASPreferencesWindowController.m */,
+			);
+			name = MASPreferences;
+			path = Applications/MGSFragariaView/MASPreferences;
+			sourceTree = "<group>";
+		};
 		D0E521001A90B899005CB80B /* MGSFragariaView */ = {
 			isa = PBXGroup;
 			children = (
 				D0C146501A87196200DDE90A /* AppDelegate.h */,
 				D0C146511A87196200DDE90A /* AppDelegate.m */,
+				D034C8181A9984A1003D3A41 /* PrefsFontsAndColorsViewController.h */,
+				D034C8191A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m */,
+				D034C81A1A9984A1003D3A41 /* PrefsTextEditingViewController.h */,
+				D034C81B1A9984A1003D3A41 /* PrefsTextEditingViewController.m */,
 				D0C146571A87196200DDE90A /* MainMenu.xib */,
 				D0C146771A871AF300DDE90A /* Lorem.html */,
+				D034C80D1A998324003D3A41 /* MASPreferences */,
 				D0E521011A90B8B7005CB80B /* Supporting Files */,
 			);
 			name = MGSFragariaView;
@@ -893,6 +922,7 @@
 			files = (
 				D0C146791A871AF300DDE90A /* Lorem.html in Resources */,
 				D0C146591A87196200DDE90A /* MainMenu.xib in Resources */,
+				D034C8151A998324003D3A41 /* MASPreferencesWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -977,8 +1007,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D034C81C1A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m in Sources */,
+				D034C8161A998324003D3A41 /* MASPreferencesWindowController.m in Sources */,
 				D0C146541A87196200DDE90A /* main.m in Sources */,
 				D0C146521A87196200DDE90A /* AppDelegate.m in Sources */,
+				D034C81D1A9984A1003D3A41 /* PrefsTextEditingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
