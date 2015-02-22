@@ -98,7 +98,7 @@
 
 /**
  *  Displays an NSPopover indicating the error(s).
- *  @param line ndicates the line number from which errors should be shown.
+ *  @param line indicates the line number from which errors should be shown.
  *  @param rect indicates the relative location to display the popover.
  *  @param view indicates the view that the popover is relative to.
  **/

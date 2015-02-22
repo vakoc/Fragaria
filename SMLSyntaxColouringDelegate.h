@@ -125,7 +125,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
 /**
  *  Query delegate if should colour this document.
  *  @param document The docSpec of the document being colored.
- *  @param block A block that peformings the coloring, with the following parameters.
+ *  @param block A block that performs the coloring, with the following parameters.
  *  @param string The document string.
  *  @param range The range of the string to color.
  *  @param info An information dictionary, as described in the discussion above.
@@ -135,7 +135,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
 /**
  *  Query delegate for each group defined by SMLSyntaxGroupInteger.
  *  @param document The docSpec of the document being colored.
- *  @param block A block that peformings the coloring, with the following parameters.
+ *  @param block A block that performs the coloring, with the following parameters.
  *  @param string The document string.
  *  @param range The range of the string to color.
  *  @param info An information dictionary, as described in the discussion above.
@@ -145,7 +145,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
 /**
  *  Inform the delegate that the group was colored.
  *  @param document The docSpec of the document being colored.
- *  @param block A block that peformings the coloring, with the following parameters.
+ *  @param block A block that performs the coloring, with the following parameters.
  *  @param string The document string.
  *  @param range The range of the string to color.
  *  @param info An information dictionary, as described in the discussion above.
@@ -155,7 +155,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
 /**
  *  Inform the delegate that the document was colored.
  *  @param document The docSpec of the document being colored.
- *  @param block A block that peformings the coloring, with the following parameters.
+ *  @param block A block that performs the coloring, with the following parameters.
  *  @param string The document string.
  *  @param range The range of the string to color.
  *  @param info An information dictionary, as described in the discussion above.

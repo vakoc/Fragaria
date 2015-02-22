@@ -1451,7 +1451,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
     for (SMLSyntaxError* err in self.fragaria.syntaxErrors)
     {
-        // Highlight an erronous line
+        // Highlight an erroneous line
         NSInteger location = [self characterIndexFromLine:err.line character:err.character inString:text];
         
         // Skip lines we cannot identify in the text

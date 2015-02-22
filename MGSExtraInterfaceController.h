@@ -48,8 +48,8 @@
 
 /// @name Properties
 
-@property SMLTextView *completionTarget;                              ///< The target view to autocompetion.
-@property (readonly) IBOutlet NSView *openPanelAccessoryView;         ///< Accesssory view for open panel.
+@property SMLTextView *completionTarget;                              ///< The target view to autocompletion.
+@property (readonly) IBOutlet NSView *openPanelAccessoryView;         ///< Accessory view for open panel.
 @property (readonly) IBOutlet NSPopUpButton *openPanelEncodingsPopUp; ///< Button that will open encodings popup.
 @property (readonly) IBOutlet NSWindow *commandResultWindow;          ///< Results window for commands.
 @property (readonly) IBOutlet NSTextView *commandResultTextView;      ///< Text view for command results.
@@ -61,7 +61,7 @@
 - (IBAction)cancelButtonEntabDetabGoToLineWindowsAction:(id)sender;   ///< @param sender Object sending the action.
 - (IBAction)goButtonGoToLineWindowAction:(id)sender;                  ///< @param sender Object sending the action.
 
-/// @name Implementors
+/// @name Implementers
 
 - (void)displayEntab;                                                 ///< Displays the entab sheet.
 - (void)displayDetab;                                                 ///< Displays the detab sheet.

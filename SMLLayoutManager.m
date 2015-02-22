@@ -184,7 +184,7 @@ do {
             // for some fonts the invisible characters are lower on the line than expected
             // when drawing with  -drawAtPoint:withAttributes:
             //
-            // experimental glyph substituion is available with useGlyphSubstitutionForInvisibleGlyphs = YES;
+            // experimental glyph substitution is available with useGlyphSubstitutionForInvisibleGlyphs = YES;
             //[outputChar drawAtPoint:pointToDrawAt withAttributes:defAttributes];
             //
             // see thread
@@ -192,7 +192,7 @@ do {
             // http://lists.apple.com/archives/cocoa-dev/2012/Sep/msg00531.html
             //
             // Draw profiling indicated that the CoreText approach on 10.8 is an order of magnitude
-            // faster that using the NSStringDRawing methods.
+            // faster that using the NSStringDrawing methods.
 
             if (drawInvisibleGlyphsUsingCoreText) {
                 

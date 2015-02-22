@@ -13,7 +13,7 @@
 /*
  *  Fragaria Preference Keys By Type
  *  @todo: rearrange by function/component.
- *  @todo: take an iventory of all components to ensure no keys are missing.
+ *  @todo: take an inventory of all components to ensure no keys are missing.
  */
 
 
@@ -91,7 +91,7 @@ extern NSString * const MGSFragariaPrefsSyntaxColouringPopUpString;
 #import "MGSFragariaTextEditingPrefsViewController.h"
 
 
-#pragma mark - MGSFragariaPreferneces
+#pragma mark - MGSFragariaPreferences
 
 /**
  *  MGSFragariaPreferences is responsible for registering the userDefaults for instances
@@ -112,7 +112,7 @@ extern NSString * const MGSFragariaPrefsSyntaxColouringPopUpString;
 /**
  *  Provides a singleton instance of MGSFragariaPreferences.
  *  @todo: this is *only* used in the demo application. And there, it's only
- *         use is to resolve to `revertToStandardSettigs`, which uses a
+ *         use is to resolve to `revertToStandardSettings`, which uses a
  *         global NSUserDefaultsController to perform its action. Issue #30.
  **/
 + (MGSFragariaPreferences *)sharedInstance DEPRECATED_MSG_ATTRIBUTE("Proposed elimination.");
@@ -121,7 +121,7 @@ extern NSString * const MGSFragariaPrefsSyntaxColouringPopUpString;
 /// @name Instance Methods
 
 /**
- *  Used by the preference view controllers to propogate the changeFont message
+ *  Used by the preference view controllers to propagate the changeFont message
  *  up the responder chain.
  *  @param sender is the sender of the message.
  **/

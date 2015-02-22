@@ -27,7 +27,7 @@ float const kMGSErrorCategoryDefault = 500;
 // manual
 @synthesize errorLineHighlightColor = _errorLineHighlightColor;
 @synthesize errorBackgroundHighlightColor = _errorBackgroundHighlightColor;
-@synthesize errorForegroundHilightColor = _errorForegroundHilightColor;
+@synthesize errorForegroundHighlightColor = _errorForegroundHighlightColor;
 @synthesize warningImage = _warningImage;
 
 // to be deprecated
@@ -130,19 +130,19 @@ float const kMGSErrorCategoryDefault = 500;
 }
 
 
--(void)setErrorForegroundHilightColor:(NSColor *)errorForegroundHilightColor
+-(void)setErrorForegroundHighlightColor:(NSColor *)errorForegroundHighlightColor
 {
-    _errorForegroundHilightColor = errorForegroundHilightColor;
+    errorForegroundHighlightColor = errorForegroundHighlightColor;
 }
 
-- (NSColor *)errorForegroundHilightColor
+- (NSColor *)errorForegroundHighlightColor
 {
-    if (!_errorForegroundHilightColor)
+    if (!_errorForegroundHighlightColor)
     {
-        _errorForegroundHilightColor = [NSColor whiteColor];
+        _errorForegroundHighlightColor = [NSColor whiteColor];
     }
 
-    return _errorForegroundHilightColor;
+    return _errorForegroundHighlightColor;
 }
 
 

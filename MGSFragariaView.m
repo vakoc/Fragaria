@@ -4,7 +4,7 @@
 //
 //  File created by Jim Derry on 2015/02/07.
 //
-//  Implements an NSView subsclass that abstracts several characteristics of Fragaria,
+//  Implements an NSView subclass that abstracts several characteristics of Fragaria,
 //  such as the use of Interface Builder to set delegates and assign key-value pairs.
 //  Also provides property abstractions for Fragaria's settings and methods.
 //

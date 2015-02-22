@@ -915,7 +915,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 		 see http://www.cocoabuilder.com/archive/cocoa/179875-exponent-action-in-nstextview-subclass.html
 		 entitled: Re: "exponent" action in NSTextView subclass (SOLVED)
 		 
-		 This details how to make programatic changes to the textStorage object.
+		 This details how to make programmatic changes to the textStorage object.
 		 
 		 */
         

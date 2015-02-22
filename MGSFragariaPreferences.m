@@ -202,7 +202,7 @@ static id sharedInstance = nil;
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	return [self sharedInstance];
-#pragma clang diagnotic pop
+#pragma clang diagnostic pop
 }
 
 
