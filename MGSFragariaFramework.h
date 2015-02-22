@@ -6,19 +6,19 @@
  *  Copyright 2010 mugginsoft.com. All rights reserved.
  *
  */
+
+/**
+ *  This common header imports key components into other key
+ *  components in order to simplify header dependencies.
+ **/
+
 #import "SMLStandardHeader.h"
-#import "SMLSyntaxColouring.h"
-#import "SMLTextView.h"
 #import "SMLLayoutManager.h"
 #import "SMLLineNumbers.h"
-#import "MGSLineNumberView.h"
+#import "SMLSyntaxColouring.h"
 #import "MGSExtraInterfaceController.h"
-#import "MGSTextMenuController.h"
-#import "MGSPreferencesController.h"
-#import "MGSSyntaxController.h"
-#import "NSScanner+Fragaria.h"
-#import "MGSFragariaPreferences.h"
 #import "MGSGlyphGenerator.h"
-#import "MGSFragariaPreferences.h"
-#import "SMLAutoCompleteDelegate.h"
-#import "MGSFragariaView.h"
+#import "MGSLineNumberView.h"
+#import "NSScanner+Fragaria.h"
+#import "MGSSyntaxController.h"
+#import "MGSTextMenuController.h"

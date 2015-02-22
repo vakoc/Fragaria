@@ -49,14 +49,15 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 @class MGSTextMenuController;
 @class MGSExtraInterfaceController;
 
-#import "MGSFragariaPreferences.h"
 #import "MGSBreakpointDelegate.h"
 #import "MGSDragOperationDelegate.h"
-#import "SMLSyntaxError.h"
-#import "SMLSyntaxColouringDelegate.h"
-#import "SMLSyntaxDefinition.h"
-#import "MGSSyntaxErrorController.h"
 #import "MGSFragariaTextViewDelegate.h"
+#import "SMLSyntaxColouringDelegate.h"
+
+#import "MGSFragariaPreferences.h"
+#import "SMLSyntaxError.h"
+#import "MGSSyntaxErrorController.h"
+#import "SMLSyntaxDefinition.h"
 #import "MGSFragariaView.h"
 
 
