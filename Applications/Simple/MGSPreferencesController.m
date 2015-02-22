@@ -93,7 +93,7 @@
  */
 - (void)revertToStandardSettings:(id)sender
 {
-    [[MGSFragariaPreferences sharedInstance] revertToStandardSettings:sender];
+    [[NSUserDefaultsController sharedUserDefaultsController] revertToInitialValues:nil];
 }
 
 /*
