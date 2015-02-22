@@ -9,9 +9,11 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSFragariaPrefsViewController.h"
 
-@interface MGSFragariaTextEditingPrefsViewController : MGSFragariaPrefsViewController {
-    NSImage *toolbarImage;
-}
+/**
+ *  MGSFragariaTextEditingPrefsViewController handles the view
+ *  provided by MGSPreferencesTextEditing.xib.
+ **/
 
-- (IBAction)changeGutterWidth:(id)sender;
+@interface MGSFragariaTextEditingPrefsViewController : MGSFragariaPrefsViewController
+
 @end
