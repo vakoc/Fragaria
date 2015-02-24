@@ -78,7 +78,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 @implementation SMLTextView
 
-@synthesize colouredIBeamCursor, fragaria, pageGuideColour, lineWrap;
+@synthesize fragaria, pageGuideColour, lineWrap;
 
 #pragma mark -
 #pragma mark Instance methods

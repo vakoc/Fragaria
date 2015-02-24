@@ -39,8 +39,6 @@
 	NSColor *pageGuideColour;
 	
 	BOOL showPageGuide;
-	
-	NSCursor *colouredIBeamCursor;
     
     NSRect currentLineRect;
 	
@@ -50,12 +48,6 @@
 
 
 /// @name Properties
-
-/**
- *   This property seems to serve no purpose.
- *   @todo Propose deleting this property and related code.
- **/
-@property (strong) NSCursor *colouredIBeamCursor DEPRECATED_MSG_ATTRIBUTE("Proposed Deletion, doesn't seem to be used");
 
 @property (strong) MGSFragaria *fragaria;                            ///< A reference to the owning Fragaria instance.
 @property (nonatomic) BOOL lineWrap;                                 ///< Indicates whether or not line wrap (word wrap) is enabled.
