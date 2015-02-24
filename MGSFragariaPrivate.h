@@ -9,13 +9,16 @@
 // class extension
 @interface MGSFragaria()
 
+/**
+ * The controller responsible for managing accessory dialogs for this instance
+ * of MGSFragaria.
+ */
 @property (nonatomic, readwrite) MGSExtraInterfaceController *extraInterfaceController;
+/**
+ * The controller which manages and displays the syntax errors in Fragaria's
+ * text view and gutter view.
+ */
 @property (nonatomic, strong, readwrite) MGSSyntaxErrorController *syntaxErrorController;
-
-@property (nonatomic,strong) NSSet* objectGetterKeys;
-@property (nonatomic,strong) NSSet* objectSetterKeys;
-
-- (void)updateGutterView;
 
 @end
 

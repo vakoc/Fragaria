@@ -57,6 +57,16 @@ char kcLineNumberPrefChanged;
 char kcLineWrapPrefChanged;
 
 
+@interface MGSFragaria ()
+
+@property (nonatomic,strong) NSSet* objectGetterKeys;
+@property (nonatomic,strong) NSSet* objectSetterKeys;
+
+- (void)updateGutterView;
+
+@end
+
+
 #pragma mark - Implementation
 
 @implementation MGSFragaria
