@@ -38,6 +38,7 @@
 #import "MGSFragariaFramework.h"
 #import <tgmath.h>
 #import "MGSSyntaxErrorController.h"
+#import "MGSFragariaPrivate.h"
 
 
 #define RULER_MARGIN		5.0

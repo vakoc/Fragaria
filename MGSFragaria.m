@@ -9,6 +9,7 @@
 #import "MGSFragaria.h"
 #import "MGSFragariaFramework.h"
 #import "FRAFontTransformer.h"
+#import "MGSFragariaPrivate.h"
 
 
 // BOOL
@@ -54,23 +55,6 @@ char kcSyntaxColourPrefChanged;
 char kcSpellCheckPrefChanged;
 char kcLineNumberPrefChanged;
 char kcLineWrapPrefChanged;
-
-
-#pragma mark - Class Extension
-
-// class extension
-// @todo: (jsd) To add to the eventual private header.
-@interface MGSFragaria()
-
-@property (nonatomic, readwrite) MGSExtraInterfaceController *extraInterfaceController;
-@property (nonatomic, strong, readwrite) MGSSyntaxErrorController *syntaxErrorController;
-
-@property (nonatomic,strong) NSSet* objectGetterKeys;
-@property (nonatomic,strong) NSSet* objectSetterKeys;
-
-- (void)updateGutterView;
-
-@end
 
 
 #pragma mark - Implementation

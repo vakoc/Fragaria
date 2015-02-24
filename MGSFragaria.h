@@ -108,24 +108,11 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 @property (nonatomic, assign) NSArray *syntaxErrors;
 
 
-/// @name Properties - System Components (although exposed these are for internal use)
-/// @note: (jsd) to be migrated to a private header.
+/// @name Properties - System Components
 #pragma mark - Properties - System Components
 
 /**
- *  This property provides access to Fragaria's extra interface items. Consult
- *  MGSExtraInterfaceController.h for a description of what is available.
-**/
-@property (nonatomic, readonly) MGSExtraInterfaceController *extraInterfaceController;
-
-/**
- *  SyntaxErrorController provides access to Fragaria's internal syntax
- *  error controller. Although it is exposed you should not use this property.
- **/
-@property (nonatomic, strong, readonly) MGSSyntaxErrorController *syntaxErrorController;
-
-/**
- *  This property exposes Fragaria's textView.
+ *  Fragaria's text view.
  **/
 @property (nonatomic, assign, readonly) NSTextView *textView;
 
