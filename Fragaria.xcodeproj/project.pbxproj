@@ -41,9 +41,6 @@
 		AB41C1051191FFCB004F0CB5 /* MGSFragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */; };
 		AB472B6F129972E400202CB5 /* MGSTextMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB472B6E129972E400202CB5 /* MGSTextMenuController.m */; };
 		AB472BF41299BBB100202CB5 /* MGSExtraInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */; };
-		AB472C7B1299C2F500202CB5 /* SMLCommandResult.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C7A1299C2F500202CB5 /* SMLCommandResult.xib */; };
-		AB472C811299C30F00202CB5 /* SMLRegularExpressionHelp.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C801299C30F00202CB5 /* SMLRegularExpressionHelp.xib */; };
-		AB472C831299C31F00202CB5 /* SMLOpenPanelAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C821299C31F00202CB5 /* SMLOpenPanelAccessoryView.xib */; };
 		AB472C851299C33100202CB5 /* SMLGoToLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C841299C33100202CB5 /* SMLGoToLine.xib */; };
 		AB472C881299C34500202CB5 /* SMLDetab.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C861299C34500202CB5 /* SMLDetab.xib */; };
 		AB472C891299C34500202CB5 /* SMLEntab.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C871299C34500202CB5 /* SMLEntab.xib */; };
@@ -204,9 +201,6 @@
 		AB472B7B1299732F00202CB5 /* MGSTextMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTextMenuController.h; sourceTree = "<group>"; };
 		AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSExtraInterfaceController.m; sourceTree = "<group>"; };
 		AB472BF51299BBBA00202CB5 /* MGSExtraInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSExtraInterfaceController.h; sourceTree = "<group>"; };
-		AB472C7A1299C2F500202CB5 /* SMLCommandResult.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLCommandResult.xib; sourceTree = "<group>"; };
-		AB472C801299C30F00202CB5 /* SMLRegularExpressionHelp.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLRegularExpressionHelp.xib; sourceTree = "<group>"; };
-		AB472C821299C31F00202CB5 /* SMLOpenPanelAccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLOpenPanelAccessoryView.xib; sourceTree = "<group>"; };
 		AB472C841299C33100202CB5 /* SMLGoToLine.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLGoToLine.xib; sourceTree = "<group>"; };
 		AB472C861299C34500202CB5 /* SMLDetab.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLDetab.xib; sourceTree = "<group>"; };
 		AB472C871299C34500202CB5 /* SMLEntab.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLEntab.xib; sourceTree = "<group>"; };
@@ -394,9 +388,6 @@
 				AB472C861299C34500202CB5 /* SMLDetab.xib */,
 				AB472C871299C34500202CB5 /* SMLEntab.xib */,
 				AB472C841299C33100202CB5 /* SMLGoToLine.xib */,
-				AB472C821299C31F00202CB5 /* SMLOpenPanelAccessoryView.xib */,
-				AB472C801299C30F00202CB5 /* SMLRegularExpressionHelp.xib */,
-				AB472C7A1299C2F500202CB5 /* SMLCommandResult.xib */,
 			);
 			name = "Text Editing UI";
 			sourceTree = "<group>";
@@ -887,9 +878,6 @@
 				D0C146891A8769C100DDE90A /* messagesPanic.icns in Resources */,
 				ABA812DC11B6855200A29990 /* LICENSE-2.0.txt in Resources */,
 				D0C1467D1A87627300DDE90A /* messagesWarning.icns in Resources */,
-				AB472C7B1299C2F500202CB5 /* SMLCommandResult.xib in Resources */,
-				AB472C811299C30F00202CB5 /* SMLRegularExpressionHelp.xib in Resources */,
-				AB472C831299C31F00202CB5 /* SMLOpenPanelAccessoryView.xib in Resources */,
 				AB472C851299C33100202CB5 /* SMLGoToLine.xib in Resources */,
 				AB472C881299C34500202CB5 /* SMLDetab.xib in Resources */,
 				AB472C891299C34500202CB5 /* SMLEntab.xib in Resources */,

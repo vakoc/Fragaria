@@ -37,23 +37,12 @@
 	IBOutlet NSWindow *entabWindow;
 	IBOutlet NSWindow *detabWindow;
 	IBOutlet NSWindow *goToLineWindow;
-	
-	IBOutlet NSView *openPanelAccessoryView;
-	IBOutlet NSPopUpButton *openPanelEncodingsPopUp;
-	
-	IBOutlet NSWindow *commandResultWindow;
-	IBOutlet NSTextView *commandResultTextView;
-	
-	IBOutlet NSPanel *regularExpressionsHelpPanel;
 }
 
 /// @name Properties
 
 @property SMLTextView *completionTarget;                              ///< The view which will be sent a perform message to after an entab, detab, goto action is confirmed by dismissing the corresponding dialog.
-@property (readonly) IBOutlet NSView *openPanelAccessoryView;         ///< Accessory view for open panel.
-@property (readonly) IBOutlet NSPopUpButton *openPanelEncodingsPopUp; ///< Button that will open encodings popup.
-@property (readonly) IBOutlet NSWindow *commandResultWindow;          ///< Results window for commands.
-@property (readonly) IBOutlet NSTextView *commandResultTextView;      ///< Text view for command results.
+
 
 /// @name Action Methods
 
@@ -67,8 +56,6 @@
 - (void)displayEntab;                                                 ///< Displays the entab sheet.
 - (void)displayDetab;                                                 ///< Displays the detab sheet.
 - (void)displayGoToLine;                                              ///< Displays the go to line sheet.
-- (void)showCommandResultWindow;                                      ///< Displays the command result window.
-- (void)showRegularExpressionsHelpPanel;                              ///< Displays the regex help panel.
 
 
 @end

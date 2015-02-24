@@ -24,13 +24,9 @@
 #import "MGSFragariaFramework.h"
 #import "SMLTextView+MGSTextActions.h"
 
-// class extension
-@interface MGSExtraInterfaceController()
-@end
 
 @implementation MGSExtraInterfaceController
 
-@synthesize openPanelAccessoryView, openPanelEncodingsPopUp, commandResultWindow, commandResultTextView;
 
 #pragma mark -
 #pragma mark Instance methods
@@ -162,91 +158,5 @@
 	[_completionTarget performGoToLine:[lineTextFieldGoToLineWindow integerValue] setSelected:YES];
 }
 
-#pragma mark -
-#pragma mark Panels
-/*
- 
- - openPanelEncodingsPopUp
- 
- */
-- (NSPopUpButton *)openPanelEncodingsPopUp
-{
-	if (openPanelEncodingsPopUp == nil) {
-		[NSBundle loadNibNamed:@"SMLOpenPanelAccessoryView.nib" owner:self];
-	}
-	
-	return openPanelEncodingsPopUp;
-}
-
-/*
- 
- - openPanelAccessoryView
- 
- */
-- (NSView *)openPanelAccessoryView
-{
-	if (openPanelAccessoryView == nil) {
-		[NSBundle loadNibNamed:@"SMLOpenPanelAccessoryView.nib" owner:self];
-	}
-	
-	return openPanelAccessoryView;
-}
-
-/*
- 
- - showRegularExpressionsHelpPanel
- 
- */
-- (void)showRegularExpressionsHelpPanel
-{
-	if (regularExpressionsHelpPanel == nil) {
-		[NSBundle loadNibNamed:@"SMLRegularExpressionHelp.nib" owner:self];
-	}
-	
-	[regularExpressionsHelpPanel makeKeyAndOrderFront:nil];
-}
-
-#pragma mark -
-#pragma mark Command handling
-
-/*
- 
- - commandResultWindow
- 
- */
-- (NSWindow *)commandResultWindow
-{
-    if (commandResultWindow == nil) {
-		[NSBundle loadNibNamed:@"SMLCommandResult.nib" owner:self];
-		[commandResultWindow setTitle:COMMAND_RESULT_WINDOW_TITLE];
-	}
-	
-	return commandResultWindow;
-}
-
-/*
- 
- - commandResultTextView
- 
- */
-- (NSTextView *)commandResultTextView
-{
-    if (commandResultTextView == nil) {
-		[NSBundle loadNibNamed:@"SMLCommandResult.nib" owner:self];
-		[commandResultWindow setTitle:COMMAND_RESULT_WINDOW_TITLE];		
-	}
-	
-	return commandResultTextView; 
-}
-
-/*
- 
- - showCommandResultWindow
- 
- */
-- (void)showCommandResultWindow
-{
-	[[self commandResultWindow] makeKeyAndOrderFront:nil];
-}
 
 @end
