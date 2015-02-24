@@ -22,13 +22,14 @@
  specific language governing permissions and limitations under the License.
 */
 
+
 #import <Cocoa/Cocoa.h>
 #import "SMLTextView+MGSTextActions.h"
 
-/**
- *  The MGSExtraInterfaceController controls some additional features of
- *  a view, such as entab and detab sheets, and so on.
- **/
+
+/** MGSExtraInterfaceController displays and controls the NSPanels used
+ *  by SMLTextView's methods which require an interaction with the user. */
+
 @interface MGSExtraInterfaceController : NSObject {
 	IBOutlet NSTextField *spacesTextFieldEntabWindow;
 	IBOutlet NSTextField *spacesTextFieldDetabWindow;
@@ -48,7 +49,7 @@
 
 /// @name Properties
 
-@property SMLTextView *completionTarget;                              ///< The target view to autocompletion.
+@property SMLTextView *completionTarget;                              ///< The view which will be sent a perform message to after an entab, detab, goto action is confirmed by dismissing the corresponding dialog.
 @property (readonly) IBOutlet NSView *openPanelAccessoryView;         ///< Accessory view for open panel.
 @property (readonly) IBOutlet NSPopUpButton *openPanelEncodingsPopUp; ///< Button that will open encodings popup.
 @property (readonly) IBOutlet NSWindow *commandResultWindow;          ///< Results window for commands.
@@ -68,13 +69,6 @@
 - (void)displayGoToLine;                                              ///< Displays the go to line sheet.
 - (void)showCommandResultWindow;                                      ///< Displays the command result window.
 - (void)showRegularExpressionsHelpPanel;                              ///< Displays the regex help panel.
-
-/// @name Property Accessors
-/// @todo No reason for these to be in the interface.
-- (NSView *)openPanelAccessoryView;                                   ///< Accessor for property.
-- (NSPopUpButton *)openPanelEncodingsPopUp;                           ///< Accessor for property.
-- (NSWindow *)commandResultWindow;                                    ///< Accessor for property.
-- (NSTextView *)commandResultTextView;                                ///< Accessor for property.
 
 
 @end
