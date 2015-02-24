@@ -153,6 +153,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	
 	[self setTextDefaults];
 	
+    [self setAutomaticDashSubstitutionEnabled:NO];
+    [self setAutomaticQuoteSubstitutionEnabled:NO];
 	[self setAutomaticDataDetectionEnabled:YES];
 	[self setAutomaticTextReplacementEnabled:YES];
 	
@@ -187,6 +189,16 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	[self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
 	[self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
 	[self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
+}
+
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    if ([menuItem action] == @selector(toggleAutomaticDashSubstitution:))
+        return NO;
+    if ([menuItem action] == @selector(toggleAutomaticQuoteSubstitution:))
+        return NO;
+    return [super validateMenuItem:menuItem];
 }
 
 
