@@ -10,6 +10,7 @@
 #import "MGSFragariaFramework.h"
 #import "FRAFontTransformer.h"
 #import "MGSFragariaPrivate.h"
+#import "MGSSyntaxErrorController.h"
 
 
 // BOOL

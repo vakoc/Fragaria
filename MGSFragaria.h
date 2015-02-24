@@ -48,7 +48,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 
 
 @class MGSTextMenuController;
-@class MGSExtraInterfaceController;
+
 
 #import "MGSBreakpointDelegate.h"
 #import "MGSDragOperationDelegate.h"
@@ -57,9 +57,9 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 
 #import "MGSFragariaPreferences.h"
 #import "SMLSyntaxError.h"
-#import "MGSSyntaxErrorController.h"
 #import "SMLSyntaxDefinition.h"
 #import "MGSFragariaView.h"
+#import "SMLTextView.h"
 
 
 /**
@@ -114,7 +114,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 /**
  *  Fragaria's text view.
  **/
-@property (nonatomic, assign, readonly) NSTextView *textView;
+@property (nonatomic, assign, readonly) SMLTextView *textView;
 
 /**
  *  Do not develop further or use unless necessary. This is to be deprecated

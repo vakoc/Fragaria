@@ -6,6 +6,10 @@
 //
 //
 
+@class MGSExtraInterfaceController;
+@class MGSSyntaxErrorController;
+
+
 // class extension
 @interface MGSFragaria()
 
