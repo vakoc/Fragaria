@@ -588,8 +588,7 @@ char kcLineWrapPrefChanged;
 	[textScrollView setPostsFrameChangedNotifications:YES];
 		
 	// create textview
-	SMLTextView *textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
-    [textView setFragaria:self];
+	 SMLTextView *textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height) fragaria:self];
 	[textScrollView setDocumentView:textView];
 
     // create line numbers

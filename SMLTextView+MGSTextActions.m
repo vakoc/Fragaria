@@ -38,7 +38,7 @@
         }
     } else if (action == @selector(commentOrUncomment:) ) {
         // Comment Or Uncomment
-        if ([[[[fragaria objectForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
+        if ([[[[self.fragaria objectForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
             enableItem = NO;
         }
     } else {
@@ -378,8 +378,8 @@
  */
 - (IBAction)entab:(id)sender
 {
-    [[fragaria extraInterfaceController] setCompletionTarget:self];
-    [[fragaria extraInterfaceController] displayEntab];
+    [[self.fragaria extraInterfaceController] setCompletionTarget:self];
+    [[self.fragaria extraInterfaceController] displayEntab];
 }
 
 /*
@@ -389,8 +389,8 @@
  */
 - (IBAction)detab:(id)sender
 {
-    [[fragaria extraInterfaceController] setCompletionTarget:self];
-    [[fragaria extraInterfaceController] displayDetab];
+    [[self.fragaria extraInterfaceController] setCompletionTarget:self];
+    [[self.fragaria extraInterfaceController] displayDetab];
 }
 
 
@@ -530,8 +530,8 @@
  */
 - (IBAction)goToLine:(id)sender
 {
-    [[fragaria extraInterfaceController] setCompletionTarget:self];
-    [[fragaria extraInterfaceController] displayGoToLine];
+    [[self.fragaria extraInterfaceController] setCompletionTarget:self];
+    [[self.fragaria extraInterfaceController] displayGoToLine];
 }
 
 
@@ -743,7 +743,7 @@
 - (IBAction)commentOrUncomment:(id)sender
 {
     NSString *completeString = [self string];
-    NSString *commentString = [[[fragaria objectForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment];
+    NSString *commentString = [[[self.fragaria objectForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment];
     NSUInteger commentStringLength = [commentString length];
     if ([commentString isEqualToString:@""] || [completeString length] < commentStringLength) {
         NSBeep();
