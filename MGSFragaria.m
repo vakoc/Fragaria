@@ -35,7 +35,6 @@ NSString * const MGSFOGutterWidth = @"gutterWidth";
 // NSView *
 NSString * const ro_MGSFOTextView = @"firstTextView"; // readonly
 NSString * const ro_MGSFOScrollView = @"firstTextScrollView"; // readonly
-NSString * const ro_MGSFOGutterScrollView = @"firstGutterScrollView"; // readonly, deprecated
 NSString * const ro_MGSFOGutterView = @"firstVerticalRuler"; // readonly, new
 
 // NSObject
