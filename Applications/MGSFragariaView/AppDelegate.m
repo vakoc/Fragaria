@@ -71,10 +71,10 @@
     }
 
     /* Make the upper view interesting. */
-    self.viewTop.string = fileContent;
+    self.viewTop.textView.string = fileContent;
     self.viewTop.startingLineNumber = 2025;
 	self.viewTop.showsLineNumbers = YES;
-    self.viewTop.lineWrap = NO;
+    self.viewTop.textView.lineWrap = NO;
 
     /* Make the lower view interesting. */
     self.self.viewBottom.string = fileContent;
