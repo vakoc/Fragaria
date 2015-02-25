@@ -42,7 +42,6 @@ extern NSString * const MGSFODelegate;
 extern NSString * const MGSFOBreakpointDelegate;
 extern NSString * const MGSFOSyntaxColouringDelegate;
 extern NSString * const ro_MGSFOLineNumbers; // readonly
-extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 
 
 @class MGSTextMenuController;               // @todo: (jsd) can be removed when the textMenuController deprecation is removed.

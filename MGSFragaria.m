@@ -44,7 +44,6 @@ NSString * const MGSFODelegate = @"delegate";
 NSString * const MGSFOBreakpointDelegate = @"breakpointDelegate";
 NSString * const MGSFOSyntaxColouringDelegate = @"syntaxColouringDelegate";
 NSString * const ro_MGSFOLineNumbers = @"lineNumbers"; // readonly
-NSString * const ro_MGSFOSyntaxColouring = @"syntaxColouring"; // readonly
 
 
 // KVO context constants
@@ -71,8 +70,7 @@ char kcLineWrapPrefChanged;
 
 @synthesize extraInterfaceController = _extraInterfaceController;
 @synthesize syntaxErrorController = _syntaxErrorController;
-
-@synthesize internalAutoCompleteDelegate = _internalAutoCompleteDelegate; // @todo: (jsd) temp, see accessors.
+@synthesize syntaxColouring = _syntaxColouring;
 
 @synthesize docSpec;
 @synthesize objectSetterKeys;
@@ -133,12 +131,7 @@ char kcLineWrapPrefChanged;
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
 {
     // recolour the entire textview content
-
-    // @todo: (jsd) use THIS line when syntaxColouring is made into a property:
-    //SMLSyntaxColouring *syntaxColouring = self.syntaxColouring;
-    SMLSyntaxColouring *syntaxColouring = [[SMLSyntaxColouring alloc] initWithFragaria:self];
-
-    [syntaxColouring pageRecolourTextView:self.textView options: @{ @"colourAll" : @(YES) }];
+    [self.syntaxColouring pageRecolourTextView:self.textView options: @{ @"colourAll" : @(YES) }];
 
     // get content with layout manager temporary attributes persisted
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)[self.textView layoutManager];
@@ -275,8 +268,7 @@ char kcLineWrapPrefChanged;
 {
     self.syntaxErrorController.syntaxErrors = errors;
 
-    SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
-    [syntaxColouring highlightErrors];
+    [self.syntaxColouring highlightErrors];
 
     MGSLineNumberView *lineNumberView = [docSpec valueForKey:ro_MGSFOGutterView];
     [lineNumberView setNeedsDisplay:YES];
@@ -314,6 +306,7 @@ char kcLineWrapPrefChanged;
 	return _extraInterfaceController;
 }
 
+
 /*
  * @property syntaxErrorController
  */
@@ -331,6 +324,26 @@ char kcLineWrapPrefChanged;
 
     return _syntaxErrorController;
 }
+
+
+/*
+ * @property syntaxColouring
+ */
+- (void)setSyntaxColouring:(SMLSyntaxColouring *)syntaxColouring
+{
+    _syntaxColouring = syntaxColouring;
+}
+
+- (SMLSyntaxColouring *)syntaxColouring
+{
+    if (!_syntaxColouring)
+    {
+        _syntaxColouring = [[SMLSyntaxColouring alloc] initWithFragaria:self];
+    }
+
+    return _syntaxColouring;
+}
+
 
 
 /*
@@ -530,7 +543,7 @@ char kcLineWrapPrefChanged;
                                  nil];
         
         // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOLineNumbers, ro_MGSFOSyntaxColouring, ro_MGSFOGutterView, nil];
+        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOLineNumbers, ro_MGSFOGutterView, nil];
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
@@ -629,11 +642,10 @@ char kcLineWrapPrefChanged;
 	[self.docSpec setValue:textView forKey:ro_MGSFOTextView];
 	[self.docSpec setValue:textScrollView forKey:ro_MGSFOScrollView];
     [self.docSpec setValue:lineNumberView forKey:ro_MGSFOGutterView];
-	
-	// add syntax colouring
-	SMLSyntaxColouring *syntaxColouring = [[SMLSyntaxColouring alloc] initWithFragaria:self];
-	[self.docSpec setValue:syntaxColouring forKey:ro_MGSFOSyntaxColouring];
 
+    // add syntax colouring
+    [self.syntaxColouring recolourExposedRange];
+	
 	// add scroll view to content view
 	[contentView addSubview:[self.docSpec valueForKey:ro_MGSFOScrollView]];
 	
@@ -720,28 +732,15 @@ char kcLineWrapPrefChanged;
 /*
  * @property internalAutoCompleteDelegate
  */
-- (void)setInternalAutoCompleteDelegate:(id<SMLAutoCompleteDelegate>)internalAutoCompleteDelegate
-{
-    _internalAutoCompleteDelegate = internalAutoCompleteDelegate;
-}
-
 - (id<SMLAutoCompleteDelegate>)internalAutoCompleteDelegate
 {
-    // @todo: (jsd) Right now the syntaxColouring object is stuck inside of the docspec.
-    //        For the time being, then, we'll simply use another instance tied to the same
-    //        document, until such time syntaxColouring is a property instead of a docSpec item.
-    //        Remember to change the property back to assign after fixing this.
-    if (!self.autoCompleteDelegate)
+    if (self.autoCompleteDelegate)
     {
-        if (!_internalAutoCompleteDelegate)
-        {
-            _internalAutoCompleteDelegate = [[SMLSyntaxColouring alloc] initWithFragaria:self];
-        }
-        return _internalAutoCompleteDelegate;
+        return self.autoCompleteDelegate;
     }
     else
     {
-        return self.autoCompleteDelegate;
+        return self.syntaxColouring;
     }
 }
 
@@ -805,8 +804,7 @@ char kcLineWrapPrefChanged;
 
  */
 - (void) updateErrorHighlighting {
-    SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
-    [syntaxColouring highlightErrors];
+    [self.syntaxColouring highlightErrors];
 }
 
 
