@@ -38,7 +38,7 @@ Copyright 2004-2009 Peter Borg
 
 /// @name Properties
 
-@property (nonatomic,weak) MGSFragaria *fragaria;            ///< The owning controller for instances of this class.
+@property (nonatomic,weak,readonly) MGSFragaria *fragaria;   ///< The owning controller for instances of this class.
 
 @property (strong) NSUndoManager *undoManager;               ///< The NSUndoManager instance used in this class.
 

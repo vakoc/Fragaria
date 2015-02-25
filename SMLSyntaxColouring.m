@@ -76,14 +76,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
     *stringsColour, *variablesColour, *attributesColour,  *numbersColour;
 
-    MGSSyntaxDefinition *syntaxDefinition;
-
-    NSUndoManager *undoManager;
-
     NSTimer *autocompleteWordsTimer;
 }
-
-@synthesize undoManager, syntaxDefinition;
 
 
 #pragma mark - Instance methods
@@ -217,7 +211,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (void)applySyntaxDefinition
 {			
 	// parse
-    syntaxDefinition = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:self.syntaxDictionary];
+    self.syntaxDefinition = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:self.syntaxDictionary];
     [self removeAllColours];
 }
 
@@ -430,7 +424,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     // This is not always correct but it's better than nothing.
     //
 	if (shouldColourMultiLineStrings) {
-		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:syntaxDefinition.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
+		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:self.syntaxDefinition.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
         if (beginFirstStringInMultiLine != NSNotFound) {
             NSDictionary *ta = [layoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL];
             if ([[ta objectForKey:NSForegroundColorAttributeName] isEqual:[stringsColour objectForKey:NSForegroundColorAttributeName]]) {
@@ -440,11 +434,11 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         }
         
         
-        NSInteger lastStringBegin = [documentString rangeOfString:syntaxDefinition.firstString options:NSBackwardsSearch range:rangeToRecolour].location;
+        NSInteger lastStringBegin = [documentString rangeOfString:self.syntaxDefinition.firstString options:NSBackwardsSearch range:rangeToRecolour].location;
         if (lastStringBegin != NSNotFound) {
             NSRange restOfString = NSMakeRange(NSMaxRange(rangeToRecolour), 0);
             restOfString.length = [documentString length] - restOfString.location;
-            NSInteger lastStringEnd = [documentString rangeOfString:syntaxDefinition.firstString options:0 range:restOfString].location;
+            NSInteger lastStringEnd = [documentString rangeOfString:self.syntaxDefinition.firstString options:0 range:restOfString].location;
             if (lastStringEnd != NSNotFound) {
                 NSInteger endOfLine = NSMaxRange([documentString lineRangeForRange:NSMakeRange(lastStringEnd, 0)]);
                 effectiveRange = NSUnionRange(effectiveRange, NSMakeRange(lastStringBegin, endOfLine-lastStringBegin));
@@ -537,11 +531,11 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 while (![rangeScanner isAtEnd]) {
                     
                     // scan up to a number character
-                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.numberCharacterSet intoString:NULL];
+                    [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.numberCharacterSet intoString:NULL];
                     colourStartLocation = [rangeScanner scanLocation];
                     
                     // scan to number end
-                    [rangeScanner scanCharactersFromSet:syntaxDefinition.numberCharacterSet intoString:NULL];
+                    [rangeScanner scanCharactersFromSet:self.syntaxDefinition.numberCharacterSet intoString:NULL];
                     colourEndLocation = [rangeScanner scanLocation];
                     
                     if (colourStartLocation == colourEndLocation) {
@@ -556,7 +550,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                         
                         // numbers can occur in variable, class and function names
                         // eg: var_1 should not be coloured as a number
-                        if ([syntaxDefinition.nameCharacterSet characterIsMember:testCharacter]) {
+                        if ([self.syntaxDefinition.nameCharacterSet characterIsMember:testCharacter]) {
                             continue;
                         }
                     }
@@ -567,7 +561,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     if (colourEndLocation > 0) {
                         queryLocation = colourEndLocation - 1;
                         testCharacter = [rangeString characterAtIndex:queryLocation];
-                        if (testCharacter == syntaxDefinition.decimalPointCharacter) {
+                        if (testCharacter == self.syntaxDefinition.decimalPointCharacter) {
                             colourEndLocation--;
                         }
                     }
@@ -598,20 +592,20 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
             } 
 
-            if (doColouring && ![syntaxDefinition.beginCommand isEqualToString:@""]) {
-                searchSyntaxLength = [syntaxDefinition.endCommand length];
-                unichar beginCommandCharacter = [syntaxDefinition.beginCommand characterAtIndex:0];
-                unichar endCommandCharacter = [syntaxDefinition.endCommand characterAtIndex:0];
+            if (doColouring && ![self.syntaxDefinition.beginCommand isEqualToString:@""]) {
+                searchSyntaxLength = [self.syntaxDefinition.endCommand length];
+                unichar beginCommandCharacter = [self.syntaxDefinition.beginCommand characterAtIndex:0];
+                unichar endCommandCharacter = [self.syntaxDefinition.endCommand characterAtIndex:0];
                 
                 // reset scanner
                 [rangeScanner mgs_setScanLocation:0];
 
                 // scan range to end
                 while (![rangeScanner isAtEnd]) {
-                    [rangeScanner scanUpToString:syntaxDefinition.beginCommand intoString:nil];
+                    [rangeScanner scanUpToString:self.syntaxDefinition.beginCommand intoString:nil];
                     colourStartLocation = [rangeScanner scanLocation];
                     endOfLine = NSMaxRange([rangeString lineRangeForRange:NSMakeRange(colourStartLocation, 0)]);
-                    if (![rangeScanner scanUpToString:syntaxDefinition.endCommand intoString:nil] || [rangeScanner scanLocation] >= endOfLine) {
+                    if (![rangeScanner scanUpToString:self.syntaxDefinition.endCommand intoString:nil] || [rangeScanner scanLocation] >= endOfLine) {
                         [rangeScanner mgs_setScanLocation:endOfLine];
                         continue; // Don't colour it if it hasn't got a closing tag
                     } else {
@@ -668,16 +662,16 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
             }
 
-            if (doColouring && ![syntaxDefinition.beginInstruction isEqualToString:@""]) {
+            if (doColouring && ![self.syntaxDefinition.beginInstruction isEqualToString:@""]) {
                 // It takes too long to scan the whole document if it's large, so for instructions, first multi-line comment and second multi-line comment search backwards and begin at the start of the first beginInstruction etc. that it finds from the present position and, below, break the loop if it has passed the scanned range (i.e. after the end instruction)
                 
-                beginLocationInMultiLine = [documentString rangeOfString:syntaxDefinition.beginInstruction options:NSBackwardsSearch range:NSMakeRange(0, rangeLocation)].location;
-                endLocationInMultiLine = [documentString rangeOfString:syntaxDefinition.endInstruction options:NSBackwardsSearch range:NSMakeRange(0, rangeLocation)].location;
+                beginLocationInMultiLine = [documentString rangeOfString:self.syntaxDefinition.beginInstruction options:NSBackwardsSearch range:NSMakeRange(0, rangeLocation)].location;
+                endLocationInMultiLine = [documentString rangeOfString:self.syntaxDefinition.endInstruction options:NSBackwardsSearch range:NSMakeRange(0, rangeLocation)].location;
                 if (beginLocationInMultiLine == NSNotFound || (endLocationInMultiLine != NSNotFound && beginLocationInMultiLine < endLocationInMultiLine)) {
                     beginLocationInMultiLine = rangeLocation;
                 }			
 
-                searchSyntaxLength = [syntaxDefinition.endInstruction length];
+                searchSyntaxLength = [self.syntaxDefinition.endInstruction length];
 
                 // reset scanner
                 [documentScanner mgs_setScanLocation:0];
@@ -689,12 +683,12 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                         searchRange = NSMakeRange(beginLocationInMultiLine, documentStringLength - beginLocationInMultiLine);
                     }
                     
-                    colourStartLocation = [documentString rangeOfString:syntaxDefinition.beginInstruction options:NSLiteralSearch range:searchRange].location;
+                    colourStartLocation = [documentString rangeOfString:self.syntaxDefinition.beginInstruction options:NSLiteralSearch range:searchRange].location;
                     if (colourStartLocation == NSNotFound) {
                         break;
                     }
                     [documentScanner mgs_setScanLocation:colourStartLocation];
-                    if (![documentScanner scanUpToString:syntaxDefinition.endInstruction intoString:nil] || [documentScanner scanLocation] >= documentStringLength) {
+                    if (![documentScanner scanUpToString:self.syntaxDefinition.endInstruction intoString:nil] || [documentScanner scanLocation] >= documentStringLength) {
                         if (shouldOnlyColourTillTheEndOfLine) {
                             [documentScanner mgs_setScanLocation:NSMaxRange([documentString lineRangeForRange:NSMakeRange(colourStartLocation, 0)])];
                         } else {
@@ -736,19 +730,19 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
             }
             
-            if (doColouring && [syntaxDefinition.keywords count] > 0) {
+            if (doColouring && [self.syntaxDefinition.keywords count] > 0) {
                 
                 // reset scanner
                 [rangeScanner mgs_setScanLocation:0];
                 
                 // scan range to end
                 while (![rangeScanner isAtEnd]) {
-                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.keywordStartCharacterSet intoString:nil];
+                    [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.keywordStartCharacterSet intoString:nil];
                     colourStartLocation = [rangeScanner scanLocation];
                     if ((colourStartLocation + 1) < rangeStringLength) {
                         [rangeScanner mgs_setScanLocation:(colourStartLocation + 1)];
                     }
-                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.keywordEndCharacterSet intoString:nil];
+                    [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.keywordEndCharacterSet intoString:nil];
                     
                     colourEndLocation = [rangeScanner scanLocation];
                     if (colourEndLocation > rangeStringLength || colourStartLocation == colourEndLocation) {
@@ -756,13 +750,13 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     }
                     
                     NSString *keywordTestString = nil;
-                    if (!syntaxDefinition.keywordsCaseSensitive) {
+                    if (!self.syntaxDefinition.keywordsCaseSensitive) {
                         keywordTestString = [[documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)] lowercaseString];
                     } else {
                         keywordTestString = [documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)];
                     }
-                    if ([syntaxDefinition.keywords containsObject:keywordTestString]) {
-                        if (!syntaxDefinition.recolourKeywordIfAlreadyColoured) {
+                    if ([self.syntaxDefinition.keywords containsObject:keywordTestString]) {
+                        if (!self.syntaxDefinition.recolourKeywordIfAlreadyColoured) {
                             if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
                                 continue;
                             }
@@ -794,19 +788,19 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
             }
             
-            if (doColouring && [syntaxDefinition.autocompleteWords count] > 0) {
+            if (doColouring && [self.syntaxDefinition.autocompleteWords count] > 0) {
                 
                 // reset scanner
                 [rangeScanner mgs_setScanLocation:0];
                 
                 // scan range to end
                 while (![rangeScanner isAtEnd]) {
-                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.keywordStartCharacterSet intoString:nil];
+                    [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.keywordStartCharacterSet intoString:nil];
                     colourStartLocation = [rangeScanner scanLocation];
                     if ((colourStartLocation + 1) < rangeStringLength) {
                         [rangeScanner mgs_setScanLocation:(colourStartLocation + 1)];
                     }
-                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.keywordEndCharacterSet intoString:nil];
+                    [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.keywordEndCharacterSet intoString:nil];
                     
                     colourEndLocation = [rangeScanner scanLocation];
                     if (colourEndLocation > rangeStringLength || colourStartLocation == colourEndLocation) {
@@ -814,13 +808,13 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     }
                     
                     NSString *autocompleteTestString = nil;
-                    if (!syntaxDefinition.keywordsCaseSensitive) {
+                    if (!self.syntaxDefinition.keywordsCaseSensitive) {
                         autocompleteTestString = [[documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)] lowercaseString];
                     } else {
                         autocompleteTestString = [documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)];
                     }
-                    if ([syntaxDefinition.autocompleteWords containsObject:autocompleteTestString]) {
-                        if (!syntaxDefinition.recolourKeywordIfAlreadyColoured) {
+                    if ([self.syntaxDefinition.autocompleteWords containsObject:autocompleteTestString]) {
+                        if (!self.syntaxDefinition.recolourKeywordIfAlreadyColoured) {
                             if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
                                 continue;
                             }
@@ -853,17 +847,17 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
             }
             
-            if (doColouring && syntaxDefinition.beginVariableCharacterSet != nil) {
+            if (doColouring && self.syntaxDefinition.beginVariableCharacterSet != nil) {
                 
                 // reset scanner
                 [rangeScanner mgs_setScanLocation:0];
                 
                 // scan range to end
                 while (![rangeScanner isAtEnd]) {
-                    [rangeScanner scanUpToCharactersFromSet:syntaxDefinition.beginVariableCharacterSet intoString:nil];
+                    [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.beginVariableCharacterSet intoString:nil];
                     colourStartLocation = [rangeScanner scanLocation];
                     if (colourStartLocation + 1 < rangeStringLength) {
-                        if ([syntaxDefinition.firstSingleLineComment isEqualToString:@"%"] && [rangeString characterAtIndex:colourStartLocation + 1] == '%') { // To avoid a problem in LaTex with \%
+                        if ([self.syntaxDefinition.firstSingleLineComment isEqualToString:@"%"] && [rangeString characterAtIndex:colourStartLocation + 1] == '%') { // To avoid a problem in LaTex with \%
                             if ([rangeScanner scanLocation] < rangeStringLength) {
                                 [rangeScanner mgs_setScanLocation:colourStartLocation + 1];
                             }
@@ -871,7 +865,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                         }
                     }
                     endOfLine = NSMaxRange([rangeString lineRangeForRange:NSMakeRange(colourStartLocation, 0)]);
-                    if (![rangeScanner scanUpToCharactersFromSet:syntaxDefinition.endVariableCharacterSet intoString:nil] || [rangeScanner scanLocation] >= endOfLine) {
+                    if (![rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.endVariableCharacterSet intoString:nil] || [rangeScanner scanLocation] >= endOfLine) {
                         [rangeScanner mgs_setScanLocation:endOfLine];
                         colourLength = [rangeScanner scanLocation] - colourStartLocation;
                     } else {
@@ -908,12 +902,12 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
             } 
 
-            if (doColouring && ![syntaxDefinition.secondString isEqualToString:@""]) {
+            if (doColouring && ![self.syntaxDefinition.secondString isEqualToString:@""]) {
 
                 if (!shouldColourMultiLineStrings)
-                    stringPattern = [syntaxDefinition secondStringPattern];
+                    stringPattern = [self.syntaxDefinition secondStringPattern];
                 else
-                    stringPattern = [syntaxDefinition secondMultilineStringPattern];
+                    stringPattern = [self.syntaxDefinition secondMultilineStringPattern];
 
                 regex = [NSRegularExpression regularExpressionWithPattern:stringPattern options:0 error:&error];
 
@@ -957,12 +951,12 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
             }
         
-            if (doColouring && ![syntaxDefinition.firstString isEqualToString:@""]) {
+            if (doColouring && ![self.syntaxDefinition.firstString isEqualToString:@""]) {
 
                 if (!shouldColourMultiLineStrings)
-                    stringPattern = [syntaxDefinition firstStringPattern];
+                    stringPattern = [self.syntaxDefinition firstStringPattern];
                 else
-                    stringPattern = [syntaxDefinition firstMultilineStringPattern];
+                    stringPattern = [self.syntaxDefinition firstMultilineStringPattern];
                 
                 regex = [NSRegularExpression regularExpressionWithPattern:stringPattern options:0 error:&error];
 
@@ -1022,7 +1016,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                         continue;
                     }
                     
-                    [rangeScanner scanCharactersFromSet:syntaxDefinition.attributesCharacterSet intoString:nil];
+                    [rangeScanner scanCharactersFromSet:self.syntaxDefinition.attributesCharacterSet intoString:nil];
                     colourEndLocation = [rangeScanner scanLocation];
                     
                     if (colourEndLocation + 1 < rangeStringLength) {
@@ -1059,7 +1053,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             } 
 
             if (doColouring) {
-                for (NSString *singleLineComment in syntaxDefinition.singleLineComments) {
+                for (NSString *singleLineComment in self.syntaxDefinition.singleLineComments) {
                     if (![singleLineComment isEqualToString:@""]) {
                         
                         // reset scanner
@@ -1144,7 +1138,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             }
         
             if (doColouring) {
-                for (NSArray *multiLineComment in syntaxDefinition.multiLineComments) {
+                for (NSArray *multiLineComment in self.syntaxDefinition.multiLineComments) {
                     
                     // Get strings
                     NSString *beginMultiLineComment = [multiLineComment objectAtIndex:0];
@@ -1222,7 +1216,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                                 
                                 // HTML specific
                                 if ([endMultiLineComment isEqualToString:@"-->"]) {
-                                    [documentScanner scanUpToCharactersFromSet:syntaxDefinition.letterCharacterSet intoString:nil]; // Search for the first letter after -->
+                                    [documentScanner scanUpToCharactersFromSet:self.syntaxDefinition.letterCharacterSet intoString:nil]; // Search for the first letter after -->
                                     if ([documentScanner scanLocation] + 6 < documentStringLength) {// Check if there's actually room for a </script>
                                         if ([documentString rangeOfString:@"</script>" options:NSCaseInsensitiveSearch range:NSMakeRange([documentScanner scanLocation] - 2, 9)].location != NSNotFound || [documentString rangeOfString:@"</style>" options:NSCaseInsensitiveSearch range:NSMakeRange([documentScanner scanLocation] - 2, 8)].location != NSNotFound) {
                                             beginLocationInMultiLine = [documentScanner scanLocation];
@@ -1270,12 +1264,12 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
             }
         
-            if (doColouring && ![syntaxDefinition.secondString isEqualToString:@""]) {
+            if (doColouring && ![self.syntaxDefinition.secondString isEqualToString:@""]) {
                 
                 if (!shouldColourMultiLineStrings)
-                    stringPattern = [syntaxDefinition secondStringPattern];
+                    stringPattern = [self.syntaxDefinition secondStringPattern];
                 else
-                    stringPattern = [syntaxDefinition secondMultilineStringPattern];
+                    stringPattern = [self.syntaxDefinition secondMultilineStringPattern];
 
                 regex = [NSRegularExpression regularExpressionWithPattern:stringPattern options:0 error:&error];
 
@@ -1374,7 +1368,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (BOOL)isSyntaxColouringRequired
 {
-    return ([[self.fragaria.docSpec valueForKey:MGSFOIsSyntaxColoured] boolValue] && syntaxDefinition.syntaxDefinitionAllowsColouring ? YES : NO);
+    return ([[self.fragaria.docSpec valueForKey:MGSFOIsSyntaxColoured] boolValue] && self.syntaxDefinition.syntaxDefinitionAllowsColouring ? YES : NO);
 }
 
 
@@ -1527,7 +1521,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (NSArray*) completions
 {
-    return syntaxDefinition.keywordsAndAutocompleteWords;
+    return self.syntaxDefinition.keywordsAndAutocompleteWords;
 }
 
 

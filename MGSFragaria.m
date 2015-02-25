@@ -609,7 +609,6 @@ char kcLineWrapPrefChanged;
 	
 	// add syntax colouring
 	SMLSyntaxColouring *syntaxColouring = [[SMLSyntaxColouring alloc] initWithFragaria:self];
-    syntaxColouring.fragaria = self;
 	[self.docSpec setValue:syntaxColouring forKey:ro_MGSFOSyntaxColouring];
 	[self.docSpec setValue:syntaxColouring forKey:MGSFOAutoCompleteDelegate];
     
