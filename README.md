@@ -10,6 +10,11 @@ wide range of programming languages and includes preference panel support.
 
 ## Why switching to this fork makes my code not build anymore?
 
+First, replace your `fragaria = [[MGSFragaria alloc] init];` with `fragaria = [[MGSFragaria alloc] initWithView:view]`,
+where `view` is the parameter you pass to `[fragaria embedInView:view];`. Then remove `[fragaria embedInView:view];`
+entirely. Most of the time, this is the only change you need to make, and is required by the new internal
+architecture of Fragaria. If you app continues not to work, read on.
+
 Fragaria used to be a part of a bigger application (Smultron). When it was separed from it, some things which
 Smultron used but were unrelated to Fragaria itself were mistakenly left in. Also, various internal components of 
 Fragaria were not made private (because in application code there's no distinction between public and private
@@ -73,16 +78,13 @@ A Fragaria view is embedded in a content view.
     NSView *containerView = nil; // loaded from nib or otherwise created
     
     // create our instance
-    MGSFragaria *fragaria = [[MGSFragaria alloc] init];
+    MGSFragaria *fragaria = [[MGSFragaria alloc] initWithView:containerView];
     
     // we want to be the delegate
     [fragaria setObject:self forKey:MGSFODelegate];
     
     // Objective-C is the place to be
     [self setSyntaxDefinition:@"Objective-C"];
-    
-    // embed in our container - exception thrown if containerView is nil
-    [fragaria embedInView:containerView];
     
     // set initial text
     [fragaria setString:@"// We don't need the future."];

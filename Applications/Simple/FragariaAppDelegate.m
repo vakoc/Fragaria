@@ -28,7 +28,7 @@
 #pragma unused(aNotification)
 	
 	// create an instance
-	fragaria = [[MGSFragaria alloc] init];
+	fragaria = [[MGSFragaria alloc] initWithView:editView];
 
 	// define initial object configuration
 	//
@@ -41,9 +41,6 @@
     
 	// define our syntax definition
 	[self setSyntaxDefinition:@"Objective-C"];
-	
-	// embed editor in editView
-	[fragaria embedInView:editView];
 
     //
 	// assign user defaults.

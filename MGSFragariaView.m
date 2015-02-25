@@ -44,7 +44,8 @@
 		   IB User Defined Runtime Attributes won't
 		   be honored.
 		 */
-		self.fragaria = [[MGSFragaria alloc] init];
+		self.fragaria = [[MGSFragaria alloc] initWithView:self];
+        self.textView = [self.fragaria objectForKey:ro_MGSFOTextView];
 	}
 	return self;
 }
@@ -62,19 +63,10 @@
 		   IB User Defined Runtime Attributes won't
 		   be honored.
 		 */
-		self.fragaria = [[MGSFragaria alloc] init];
+		self.fragaria = [[MGSFragaria alloc] initWithView:self];
+        self.textView = [self.fragaria objectForKey:ro_MGSFOTextView];
     }
     return self;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	awakeFromNib
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)awakeFromNib
-{
-	[self.fragaria embedInView:self];
-	self.textView = [self.fragaria objectForKey:ro_MGSFOTextView];
 }
 
 
@@ -117,12 +109,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setSyntaxColoringDelegate:(id<SMLSyntaxColouringDelegate>)syntaxColoringDelegate
 {
-	[self.fragaria setObject:syntaxColoringDelegate forKey:MGSFOSyntaxColouringDelegate];
+	[self.fragaria setSyntaxColouringDelegate:syntaxColoringDelegate];
 }
 
 - (id<SMLSyntaxColouringDelegate>)syntaxColoringDelegate
 {
-	return [self.fragaria objectForKey:MGSFODelegate];
+	return [self.fragaria syntaxColouringDelegate];
 }
 
 

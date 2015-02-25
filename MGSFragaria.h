@@ -209,11 +209,11 @@ extern NSString * const MGSFOSyntaxColouringDelegate;
 /// @name Instance Methods
 #pragma mark - Instance Methods
 
-/**
- *  Initializes a new instance with `object`.
- *  @param object A docSpec or nil.
- **/
-- (id)initWithObject:(id)object;
+/** Designated Initializer
+ *  Adds Fragaria and its components to the specified empty view. This method
+ *  now replaces embedInView.
+ *  @param view The parent view for Fragaria's components. */
+- (id)initWithView:(NSView*)view;
 
 /**
  *  Sets the value `object` identified by `key`.
@@ -227,12 +227,6 @@ extern NSString * const MGSFOSyntaxColouringDelegate;
  *  @param key The lookup key.
  **/
 - (id)objectForKey:(id)key;
-
-/**
- *  Adds Fragaria and its components to the empty view.
- *  @param view The empty view wherein Fragaria constructs its views.
- **/
-- (void)embedInView:(NSView *)view;
 
 /**
  *  Replaces the characters specified in a range with new text, with options.

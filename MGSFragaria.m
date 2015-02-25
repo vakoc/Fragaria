@@ -538,18 +538,26 @@ char kcLineWrapPrefChanged;
 	return self;
 }
 
+
 /*
- * - init
+ * - initWithView:
  */
-- (id)init
+- (instancetype)initWithView:(NSView *)view
 {
-	return [self initWithObject:nil];
+    self = [self initWithObject:nil];
+    [self embedInView:view];
+    return self;
 }
+
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 
 
 /*
  * - setObject:forKey:
  */
+
 - (void)setObject:(id)object forKey:(id)key
 {
     if ([key isEqual:MGSFOShowsWarningsInGutter]) {
