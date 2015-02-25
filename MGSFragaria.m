@@ -167,7 +167,7 @@ char kcLineWrapPrefChanged;
 
 - (BOOL)lineWrap
 {
-    return [(SMLTextView *)self.textView lineWrap];
+    return [self.textView lineWrap];
 }
 
 
@@ -312,7 +312,7 @@ char kcLineWrapPrefChanged;
 /*
  * @property textView
  */
-- (NSTextView *)textView
+- (SMLTextView *)textView
 {
     return [self objectForKey:ro_MGSFOTextView];
 }
@@ -548,7 +548,7 @@ char kcLineWrapPrefChanged;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
-        [(id)self.docSpec setValue:object forKey:key];
+        [self.docSpec setValue:object forKey:key];
     }
     if ([key isEqual:MGSFODelegate]) {
         [[self textView] setDelegate:object];
@@ -645,7 +645,7 @@ char kcLineWrapPrefChanged;
  */
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options
 {
-    SMLTextView *textView = (SMLTextView *)[self textView];
+    SMLTextView *textView = [self textView];
     [textView replaceCharactersInRange:range withString:text options:options];
 }
 
@@ -741,7 +741,7 @@ char kcLineWrapPrefChanged;
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    BOOL boolValue = NO;
+    BOOL boolValue;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
 	if (context == &kcGutterWidthPrefChanged) {
@@ -766,7 +766,7 @@ char kcLineWrapPrefChanged;
     } else if (context == &kcLineWrapPrefChanged) {
         
         boolValue = [defaults boolForKey:MGSFragariaPrefsLineWrapNewDocuments];
-        [(SMLTextView *)[self textView] setLineWrap:boolValue];
+        [[self textView] setLineWrap:boolValue];
         
     } else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

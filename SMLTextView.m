@@ -23,9 +23,6 @@
 
 #import "MGSFragaria.h"
 #import "MGSFragariaPrivate.h"
-#import "MGSFragariaFramework.h"
-#import "SMLAutoCompleteDelegate.h"
-#import "SMLTextView+MGSTextActions.h"
 
 
 static BOOL CharacterIsBrace(unichar c)
