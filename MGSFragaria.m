@@ -32,7 +32,6 @@ NSString * const MGSFOSyntaxColouringClassName = @"syntaxColouringClassName";
 // NSView *
 NSString * const ro_MGSFOTextView = @"firstTextView"; // readonly
 NSString * const ro_MGSFOScrollView = @"firstTextScrollView"; // readonly
-NSString * const ro_MGSFOGutterView = @"firstVerticalRuler"; // readonly, new
 
 // NSObject
 NSString * const MGSFODelegate = @"delegate";
@@ -208,8 +207,7 @@ char kcLineWrapPrefChanged;
 {
     [docSpec setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowsWarningsInGutter];
 
-    MGSLineNumberView * lineNumberView = [self.docSpec valueForKey:ro_MGSFOGutterView];
-    lineNumberView.showsWarnings = value;
+    self.gutterView.showsWarnings = value;
     [self updateGutterView];
 }
 
@@ -225,12 +223,12 @@ char kcLineWrapPrefChanged;
  */
 - (void)setStartingLineNumber:(NSUInteger)value
 {
-    [[self objectForKey:ro_MGSFOGutterView] setStartingLineNumber:value];
+    [self.gutterView setStartingLineNumber:value];
 }
 
 - (NSUInteger)startingLineNumber
 {
-    return [[self objectForKey:ro_MGSFOGutterView] startingLineNumber];
+    return [self.gutterView startingLineNumber];
 }
 
 
@@ -264,8 +262,7 @@ char kcLineWrapPrefChanged;
 
     [self.syntaxColouring highlightErrors];
 
-    MGSLineNumberView *lineNumberView = [docSpec valueForKey:ro_MGSFOGutterView];
-    [lineNumberView setNeedsDisplay:YES];
+    [self.gutterView setNeedsDisplay:YES];
 }
 
 - (NSArray *)syntaxErrors
@@ -532,7 +529,7 @@ char kcLineWrapPrefChanged;
                                  nil];
         
         // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOGutterView, nil];
+        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, nil];
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
@@ -568,7 +565,7 @@ char kcLineWrapPrefChanged;
     if ([key isEqual:MGSFODelegate]) {
         [[self textView] setDelegate:object];
     } else if ([key isEqual:MGSFOBreakpointDelegate]) {
-        [[docSpec objectForKey:ro_MGSFOGutterView] setBreakpointDelegate:object];
+        [self.gutterView setBreakpointDelegate:object];
     }
 }
 
@@ -618,19 +615,17 @@ char kcLineWrapPrefChanged;
 	[textScrollView setDocumentView:textView];
 
     // create line numbers
-    MGSLineNumberView *lineNumberView;
-    lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView fragaria:self];
-    [textScrollView setVerticalRulerView:lineNumberView];
+    self.gutterView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView fragaria:self];
+    [textScrollView setVerticalRulerView:self.gutterView];
     [textScrollView setHasVerticalRuler:YES];
     [textScrollView setHasHorizontalRuler:NO];
     
-    MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithLineNumberView:lineNumberView];
+    MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithLineNumberView:self.gutterView];
     self.lineNumberDefObserv = lineNumbers;
 	
 	// update the docSpec
 	[self.docSpec setValue:textView forKey:ro_MGSFOTextView];
 	[self.docSpec setValue:textScrollView forKey:ro_MGSFOScrollView];
-    [self.docSpec setValue:lineNumberView forKey:ro_MGSFOGutterView];
 
     // add syntax colouring
     [self.syntaxColouring recolourExposedRange];
@@ -651,7 +646,7 @@ char kcLineWrapPrefChanged;
         [[self textView] setDelegate:[docSpec objectForKey:MGSFODelegate]];
     
     if ([docSpec objectForKey:MGSFOBreakpointDelegate])
-        [lineNumberView setBreakpointDelegate:[docSpec objectForKey:MGSFOBreakpointDelegate]];
+        [self.gutterView setBreakpointDelegate:[docSpec objectForKey:MGSFOBreakpointDelegate]];
 }
 
 

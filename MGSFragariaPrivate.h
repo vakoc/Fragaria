@@ -36,6 +36,10 @@
  * removed in the near future. */
 @property MGSLineNumberDefaultsObserver *lineNumberDefObserv;
 
+/** Fragaria's left ruler. Handles display of line numbers, breakpoints and
+ * syntax error badges. */
+@property MGSLineNumberView *gutterView;
+
 
 #pragma mark - Internal Properties
 

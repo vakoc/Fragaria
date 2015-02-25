@@ -31,7 +31,6 @@ extern NSString * const MGSFOSyntaxDefinitionName;
 // NSView *
 extern NSString * const ro_MGSFOTextView; // readonly
 extern NSString * const ro_MGSFOScrollView; // readonly
-extern NSString * const ro_MGSFOGutterView; // readonly, new
 
 // NSObject
 extern NSString * const MGSFODelegate;
