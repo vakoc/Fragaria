@@ -27,7 +27,6 @@ extern NSString * const MGSFOShowsWarningsInGutter;
 
 // string
 extern NSString * const MGSFOSyntaxDefinitionName;
-extern NSString * const MGSFODocumentName;
 
 // integer
 extern NSString * const MGSFOGutterWidth;
@@ -83,10 +82,13 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 @property (nonatomic, strong, readonly) NSAttributedString *attributedStringWithTemporaryAttributesApplied;
 
 
+/// @name Properties - Document Support
+@property (nonatomic, strong) NSString *documentName;         ///< The document name. If set, Fragaria can try to guess the syntax definition.
+
+
 /// @name Properties - Appearance and Display
 #pragma mark - Properties - Appearance and Display
 
-@property (nonatomic, assign) NSString *documentName;         ///< The document name. @todo: (jsd) fix strong, currently being retained elsewhere
 @property (nonatomic, assign) BOOL hasVerticalScroller;       ///< Indicates whether or not the vertical scroller should be displayed.
 @property (nonatomic, assign) BOOL lineWrap;                  ///< Indicates whether or not line wrap is enabled.
 @property (nonatomic, assign) BOOL scrollElasticityDisabled;  ///< Indicates whether or not the "rubber band" effect is disabled.
@@ -95,6 +97,9 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 @property (nonatomic, assign) NSUInteger startingLineNumber;  ///< Specifies the starting line number in the text view.
 @property (nonatomic, assign) BOOL isSyntaxColoured;          ///< Specifies whether the document shall be syntax highlighted.
 @property (nonatomic, assign) NSString *syntaxDefinitionName; ///< Specified the current syntax definition name. @todo: (jsd) fix strong, currently duplicate retain
+
+
+/// @name Properties - Syntax Errors
 
 /**
  *  When set to an array containing SMLSyntaxError instances, Fragaria

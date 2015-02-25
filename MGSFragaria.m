@@ -22,7 +22,6 @@ NSString * const MGSFOShowsWarningsInGutter = @"showsWarningsInGutter";
 
 // string
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
-NSString * const MGSFODocumentName = @"name";
 
 // class name strings
 // TODO: expose these to allow subclass name definition
@@ -117,21 +116,15 @@ char kcLineWrapPrefChanged;
 }
 
 
-#pragma mark - Properties - Appearance and Display
+#pragma mark - Properties - Document Support
 
 /*
  * @property documentName:
+ * (synthesized)
  */
-- (void)setDocumentName:(NSString *)value
-{
-    [self setObject:value forKey:MGSFODocumentName];
-}
 
-- (NSString *)documentName
-{
-    return [self objectForKey:MGSFODocumentName];
-}
 
+#pragma mark - Properties - Appearance and Display
 
 /*
  * @property hasVerticalScroller:
@@ -506,7 +499,7 @@ char kcLineWrapPrefChanged;
         
         // Define read/write keys
         self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter,
-                                 MGSFOHasVerticalScroller, MGSFODisableScrollElasticity, MGSFODocumentName,
+                                 MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
                                  MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate,
                                  MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate, MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
