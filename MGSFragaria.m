@@ -43,7 +43,6 @@ NSString * const ro_MGSFOGutterView = @"firstVerticalRuler"; // readonly, new
 NSString * const MGSFODelegate = @"delegate";
 NSString * const MGSFOBreakpointDelegate = @"breakpointDelegate";
 NSString * const MGSFOSyntaxColouringDelegate = @"syntaxColouringDelegate";
-NSString * const ro_MGSFOLineNumbers = @"lineNumbers"; // readonly
 
 
 // KVO context constants
@@ -543,7 +542,7 @@ char kcLineWrapPrefChanged;
                                  nil];
         
         // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOLineNumbers, ro_MGSFOGutterView, nil];
+        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, ro_MGSFOGutterView, nil];
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
@@ -630,7 +629,7 @@ char kcLineWrapPrefChanged;
 
     // create line numbers
 	MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithFragaria:self];
-	[self.docSpec setValue:lineNumbers forKey:ro_MGSFOLineNumbers];
+    self.lineNumberDefObserv = lineNumbers;
 
     MGSLineNumberView *lineNumberView;
     lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView fragaria:self];
@@ -793,9 +792,7 @@ char kcLineWrapPrefChanged;
  
  */
 - (void) updateGutterView {
-    id document = self.docSpec;
-    
-    [[document objectForKey:ro_MGSFOLineNumbers] updateGutterView];
+    [self.lineNumberDefObserv updateGutterView];
 }
 
 /*
