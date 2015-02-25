@@ -132,7 +132,18 @@ char kcLineWrapPrefChanged;
  */
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
 {
-    return [[self class] attributedStringWithTemporaryAttributesAppliedForDocSpec:self.docSpec];
+    // recolour the entire textview content
+
+    // @todo: (jsd) use THIS line when syntaxColouring is made into a property:
+    //SMLSyntaxColouring *syntaxColouring = self.syntaxColouring;
+    SMLSyntaxColouring *syntaxColouring = [[SMLSyntaxColouring alloc] initWithFragaria:self];
+
+    [syntaxColouring pageRecolourTextView:self.textView options: @{ @"colourAll" : @(YES) }];
+
+    // get content with layout manager temporary attributes persisted
+    SMLLayoutManager *layoutManager = (SMLLayoutManager *)[self.textView layoutManager];
+
+    return [layoutManager attributedStringWithTemporaryAttributesApplied];
 }
 
 
@@ -414,23 +425,6 @@ char kcLineWrapPrefChanged;
 }
 
 
-/*
- * + attributedStringWithTemporaryAttributesAppliedForDocSpec:
- */
-+ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec
-{
-    // recolour the entire textview content
-    SMLTextView *textView = [docSpec valueForKey:ro_MGSFOTextView];
-    SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"colourAll", nil];
-    [syntaxColouring pageRecolourTextView:textView options: options];
-
-    // get content with layout manager temporary attributes persisted
-    SMLLayoutManager *layoutManager = (SMLLayoutManager *)[textView layoutManager];
-    return [layoutManager attributedStringWithTemporaryAttributesApplied];
-}
-
-
 #pragma mark - Class methods (deprecated)
 
 /*
@@ -470,6 +464,15 @@ char kcLineWrapPrefChanged;
     return nil;
 }
 
+/*
+ * + attributedStringWithTemporaryAttributesAppliedForDocSpec:
+ */
++ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec
+{
+    NSLog(@"This method is deprecated and has no effect. Use the property "
+          "attributedStringWithTemporaryAttributesApplied instead.");
+    return nil;
+}
 
 
 #pragma mark - Instance Methods

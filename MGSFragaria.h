@@ -150,7 +150,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 + (void)docSpec:(id)docSpec setString:(NSString *)string;
 
 /**
- *  Set's the docSpec's string, possible with options.
+ *  Set's the docSpec's string, possibly with options.
  *  @param docSpec The docSpec whose string is to be set.
  *  @param string The string to set.
  *  @param options is a dictionary of options. Currently `undo` can be `YES` or `NO`..
@@ -184,13 +184,6 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
  **/
 + (NSAttributedString *)attributedStringForDocSpec:(id)docSpec;
 
-/**
- *  Returns the attributed string for the given docSpec, with temporary
- *  applied as attributes.
- *  @param docSpec The docSpec for which to return the string.
- **/
-+ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec;
-
 
 /// @name Class Methods (deprecated)
 #pragma mark - Class Methods (deprecated)
@@ -211,6 +204,13 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
  *  @param name Deprecated.
  **/
 + (NSImage *)imageNamed:(NSString *)name DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Returns the attributed string for the given docSpec, with temporary
+ *  applied as attributes.
+ *  @param docSpec The docSpec for which to return the string.
+ **/
++ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec DEPRECATED_ATTRIBUTE;
 
 
 /// @name Instance Methods
