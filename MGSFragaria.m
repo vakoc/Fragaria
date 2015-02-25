@@ -316,8 +316,21 @@ char kcLineWrapPrefChanged;
 
 /*
  * @property syntaxErrorController
- * (synthesized)
  */
+- (void)setSyntaxErrorController:(MGSSyntaxErrorController *)syntaxErrorController
+{
+    _syntaxErrorController = syntaxErrorController;
+}
+
+- (MGSSyntaxErrorController *)syntaxErrorController
+{
+    if (!_syntaxErrorController)
+    {
+        _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
+    }
+
+    return _syntaxErrorController;
+}
 
 
 /*
@@ -521,9 +534,6 @@ char kcLineWrapPrefChanged;
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
-
-        // Create the syntaxErrorController
-        _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
 	}
 
 	return self;
