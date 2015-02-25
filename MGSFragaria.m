@@ -597,8 +597,7 @@ char kcLineWrapPrefChanged;
 	[self.docSpec setValue:lineNumbers forKey:ro_MGSFOLineNumbers];
 
     MGSLineNumberView *lineNumberView;
-    lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView];
-	lineNumberView.fragaria = self;
+    lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView fragaria:self];
     [textScrollView setVerticalRulerView:lineNumberView];
     [textScrollView setHasVerticalRuler:YES];
     [textScrollView setHasHorizontalRuler:NO];
