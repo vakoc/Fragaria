@@ -47,7 +47,12 @@
 
 /// @name Instance Methods
 
-- (id)initWithFrame:(NSRect)frame fragaria:(MGSFragaria *)fragaria;   ///< initWithFrame, assigning Fragaria instance at same time.
+/**
+ *  Standard initWithFrame, also allowing `fragaria` assignment at same time.
+ *  @param frame The frame for the view.
+ *  @param fragaria The instance of Fragaria to associate with this view.
+ **/
+- (id)initWithFrame:(NSRect)frame fragaria:(MGSFragaria *)fragaria;
 
 - (void)setDefaults;                                                  ///< Sets the initial defaults for the text view.
 
