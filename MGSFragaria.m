@@ -7,7 +7,6 @@
 //
 
 #import "MGSFragaria.h"
-#import "FRAFontTransformer.h"
 #import "MGSFragariaPrivate.h"
 #import "MGSSyntaxErrorController.h"
 
@@ -518,10 +517,6 @@ char kcLineWrapPrefChanged;
 		} else {
 			self.docSpec = [[self class] createDocSpec];
 		}
-        
-        // register the font transformer
-        FRAFontTransformer *fontTransformer = [[FRAFontTransformer alloc] init];
-        [NSValueTransformer setValueTransformer:fontTransformer forName:@"FontTransformer"];
         
         // observe defaults that affect rendering
         NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
