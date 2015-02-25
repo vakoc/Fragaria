@@ -34,7 +34,7 @@ extern NSString * const ro_MGSFOScrollView; // readonly
 
 // NSObject
 extern NSString * const MGSFODelegate;
-extern NSString * const MGSFOBreakpointDelegate;
+extern NSString * const MGSFOBreakpointDelegate DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOSyntaxColouringDelegate DEPRECATED_ATTRIBUTE;
 
 
@@ -115,6 +115,11 @@ extern NSString * const MGSFOSyntaxColouringDelegate DEPRECATED_ATTRIBUTE;
  * colouring delegate gets notified of the start and end of each colouring pass
  * so that it can modify the default syntax colouring provided by Fragaria. */
 @property (nonatomic, strong) id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
+
+/** The breakpoint delegate for this instance of Fragaria. The breakpoint
+ * delegate is responsible of managing a list of lines where a breakpoint
+ * marker is present. */
+@property (nonatomic, strong) id<MGSBreakpointDelegate> breakpointDelegate;
 
 
 /// @name Properties - System Components

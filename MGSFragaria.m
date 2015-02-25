@@ -91,6 +91,7 @@ char kcLineWrapPrefChanged;
     return [self objectForKey:MGSFOSyntaxDefinitionName];
 }
 
+
 /*
  * @property string:
  */
@@ -118,6 +119,7 @@ char kcLineWrapPrefChanged;
     return [[self class] attributedStringForDocSpec:self.docSpec];
 }
 
+
 /*
  * @property attributedStringWithTemporaryAttributesApplied
  */
@@ -134,6 +136,7 @@ char kcLineWrapPrefChanged;
 
 
 #pragma mark - Properties - Overall Appearance and Display
+
 
 /*
  * @property hasVerticalScroller:
@@ -260,9 +263,7 @@ char kcLineWrapPrefChanged;
 - (void)setSyntaxErrors:(NSArray *)errors
 {
     self.syntaxErrorController.syntaxErrors = errors;
-
     [self.syntaxColouring highlightErrors];
-
     [self.gutterView setNeedsDisplay:YES];
 }
 
@@ -286,6 +287,20 @@ char kcLineWrapPrefChanged;
 - (id<SMLSyntaxColouringDelegate>)syntaxColouringDelegate
 {
     return [self.syntaxColouring syntaxColouringDelegate];
+}
+
+
+/*
+ * @property breakpointDelegate
+ */
+- (void)setBreakpointDelegate:(id<MGSBreakpointDelegate>)breakpointDelegate
+{
+    [self.gutterView setBreakpointDelegate:breakpointDelegate];
+}
+
+- (id<MGSBreakpointDelegate>)breakpointDelegate
+{
+    return self.gutterView.breakpointDelegate;
 }
 
 
@@ -338,7 +353,6 @@ char kcLineWrapPrefChanged;
         _syntaxColouring = [[SMLSyntaxColouring alloc] initWithFragaria:self];
     return _syntaxColouring;
 }
-
 
 
 /*
@@ -528,7 +542,7 @@ char kcLineWrapPrefChanged;
         // Define read/write keys
         self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter,
                                  MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
-                                 MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate,
+                                 MGSFOSyntaxDefinitionName, MGSFODelegate,
                                  MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
                                  nil];
@@ -573,6 +587,9 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFOSyntaxColouringDelegate]) {
         [self setSyntaxColouringDelegate:object];
         return;
+    } else if ([key isEqual:MGSFOBreakpointDelegate]) {
+        [self setBreakpointDelegate:object];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -580,8 +597,6 @@ char kcLineWrapPrefChanged;
     }
     if ([key isEqual:MGSFODelegate]) {
         [[self textView] setDelegate:object];
-    } else if ([key isEqual:MGSFOBreakpointDelegate]) {
-        [self.gutterView setBreakpointDelegate:object];
     }
 }
 
@@ -593,6 +608,8 @@ char kcLineWrapPrefChanged;
 {
     if ([key isEqual:MGSFOSyntaxColouringDelegate])
         return self.syntaxColouringDelegate;
+    else if ([key isEqual:MGSFOBreakpointDelegate])
+        return self.breakpointDelegate;
     
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];
@@ -666,9 +683,6 @@ char kcLineWrapPrefChanged;
 
     if ([docSpec objectForKey:MGSFODelegate])
         [[self textView] setDelegate:[docSpec objectForKey:MGSFODelegate]];
-    
-    if ([docSpec objectForKey:MGSFOBreakpointDelegate])
-        [self.gutterView setBreakpointDelegate:[docSpec objectForKey:MGSFOBreakpointDelegate]];
 }
 
 
@@ -722,6 +736,7 @@ char kcLineWrapPrefChanged;
 
 #pragma mark - Instance Methods (deprecated)
 
+
 /*
  * - textMenuController
  */
@@ -736,19 +751,16 @@ char kcLineWrapPrefChanged;
 
 #pragma mark - Properties Internal Properties from MGSFragariaPrivate.h
 
+
 /*
  * @property internalAutoCompleteDelegate
  */
 - (id<SMLAutoCompleteDelegate>)internalAutoCompleteDelegate
 {
     if (self.autoCompleteDelegate)
-    {
         return self.autoCompleteDelegate;
-    }
     else
-    {
         return self.syntaxColouring;
-    }
 }
 
 

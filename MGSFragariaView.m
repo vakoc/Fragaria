@@ -94,12 +94,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setBreakPointDelegate:(id<MGSBreakpointDelegate>)breakPointDelegate
 {
-	[self.fragaria setObject:breakPointDelegate forKey:MGSFOBreakpointDelegate];
+	[self.fragaria setBreakpointDelegate:breakPointDelegate];
 }
 
 - (id<MGSBreakpointDelegate>)breakPointDelegate
 {
-	return [self.fragaria objectForKey:MGSFODelegate];
+	return self.fragaria.breakpointDelegate;
 }
 
 
