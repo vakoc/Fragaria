@@ -52,15 +52,12 @@
     [super windowControllerDidLoadNib:aController];
 
 	// create an instance
-	fragaria = [[MGSFragaria alloc] init];
+	fragaria = [[MGSFragaria alloc] initWithView:editView];
 	
 	[fragaria setObject:self forKey:MGSFODelegate];
 	
 	// define our syntax definition
 	[self setSyntaxDefinition:@"Objective-C"];
-	
-	// embed editor in editView
-	[fragaria embedInView:editView];
 	
     //
 	// assign user defaults.
