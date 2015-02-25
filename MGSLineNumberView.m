@@ -38,6 +38,7 @@
 #import "MGSFragariaFramework.h"
 #import <tgmath.h>
 #import "MGSSyntaxErrorController.h"
+#import "MGSFragariaPrivate.h"
 
 
 #define RULER_MARGIN		5.0
@@ -62,19 +63,27 @@
 @implementation MGSLineNumberView {
     NSUInteger _mouseDownLineTracking;
     NSRect     _mouseDownRectTracking;
+    NSMutableDictionary *_markerImages;
+    NSSize _markerImagesSize;
 }
+
+@synthesize markerColor = _markerColor;
 
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView
 {
+    return [self initWithScrollView:aScrollView fragaria:nil];
+}
+
+- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(MGSFragaria *)fragaria
+{
     if ((self = [super initWithScrollView:aScrollView orientation:NSVerticalRuler]) != nil)
     {
-        imgBreakpoint0 = [MGSFragaria imageNamed:@"editor-breakpoint-0.png"];
-        imgBreakpoint1 = [MGSFragaria imageNamed:@"editor-breakpoint-1.png"];
-        imgBreakpoint2 = [MGSFragaria imageNamed:@"editor-breakpoint-2.png"];
-        
         _lineIndices = [[NSMutableArray alloc] init];
         _startingLineNumber = 0;
+        _markerImagesSize = NSMakeSize(0,0);
+        _markerImages = [[NSMutableDictionary alloc] init];
+        _fragaria = fragaria;
         [self setClientView:[aScrollView documentView]];
     }
     return self;
@@ -108,6 +117,12 @@
 - (NSColor *)defaultErrorTextColor
 {
     return [NSColor blackColor];
+}
+
+
+- (NSColor *)defaultMarkerColor
+{
+    return [NSColor colorWithCalibratedRed:254.0/255.0 green:199.0/255.0 blue:249.0/255.0 alpha:1];
 }
 
 
@@ -147,9 +162,14 @@
 }
 
 
-- (void)setErrorTextColor:(NSColor *)errorTextColor {
-    _errorTextColor = errorTextColor;
+- (void)setMarkerColor:(NSColor *)markerColor {
+    _markerColor = markerColor;
     [self setNeedsDisplay:YES];
+}
+
+- (NSColor *)markerColor
+{
+    return _markerColor ? _markerColor : [self defaultMarkerColor];
 }
 
 
@@ -193,7 +213,7 @@
 }
 
 
-// Forces recalculation of line indicies starting from the given index
+// Forces recalculation of line indices starting from the given index
 - (void)invalidateLineIndicesFromCharacterIndex:(NSUInteger)charIndex
 {
     _invalidCharacterIndex = MIN(charIndex, _invalidCharacterIndex);
@@ -365,27 +385,6 @@
 }
 
 
-- (NSDictionary *)errorTextAttributes
-{
-    NSFont  *font;
-    NSColor *color;
-
-    font = [self font];
-    if (font == nil)
-    {
-        font = [self defaultFont];
-    }
-
-    color = [self errorTextColor];
-    if (color == nil)
-    {
-        color = [self defaultErrorTextColor];
-    }
-
-    return [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, nil];
-}
-
-
 - (CGFloat)requiredThickness
 {
     NSUInteger			lineCount, digits, i;
@@ -447,27 +446,19 @@
     NSRect                  wholeLineRect;
     CGFloat					ypos, yinset;
     NSDictionary			*textAttributes, *currentTextAttributes;
-    NSSize					stringSize;
     NSMutableArray			*lines;
-    NSTextContainer         *drawingTextContainer;
-    NSTextStorage           *drawingTextStorage;
-    NSLayoutManager         *drawingLayoutManager;
+    NSAttributedString      *drawingAttributedString;
+    CGContextRef            drawingContext;
     NSSet                   *linesWithBreakpoints;
-    BOOL                    willDrawErrors;
 
     layoutManager = [view layoutManager];
 
     yinset = [view textContainerInset].height;
 
-    drawingTextStorage = [[NSTextStorage alloc] init];
-    drawingLayoutManager = [[NSLayoutManager alloc] init];
-    [layoutManager setTypesetterBehavior:NSTypesetterLatestBehavior];
-    drawingTextContainer = [[NSTextContainer alloc] initWithContainerSize:bounds.size];
-    [drawingLayoutManager addTextContainer:drawingTextContainer];
-    [drawingTextStorage addLayoutManager:drawingLayoutManager];
-    [drawingTextContainer setLineFragmentPadding:0.0];
-
     textAttributes = [self textAttributes];
+    drawingContext = [[NSGraphicsContext currentContext] graphicsPort];
+    CGAffineTransform flipTransform = {1, 0, 0, -1, 0, 0};
+    CGContextSetTextMatrix(drawingContext, flipTransform);
     
     lines = [self lineIndices];
 	
@@ -479,7 +470,7 @@
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 			linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
-#pragma cland diagnostic pop
+#pragma clang diagnostic pop
 		}
 	}
 
@@ -511,27 +502,22 @@
                 currentTextAttributes = [self markerTextAttributes];
             }
 
-            if ((willDrawErrors = self.showsWarnings && [self.fragaria.syntaxErrorController.linesWithErrors containsObject:@(line + 1)])) {
-                currentTextAttributes = [self errorTextAttributes];
-            }
-
             // Draw line numbers first so that error images won't be buried underneath long line numbers.
             // Line numbers are internally stored starting at 0
             labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine];
-            [drawingTextStorage beginEditing];
-            [[drawingTextStorage mutableString] setString:labelText];
-            [drawingTextStorage setAttributes:currentTextAttributes range:NSMakeRange(0, [labelText length])];
-            [drawingTextStorage endEditing];
+            drawingAttributedString = [[NSAttributedString alloc] initWithString:labelText attributes:currentTextAttributes];
 
-            glyphRange = [drawingLayoutManager glyphRangeForTextContainer:drawingTextContainer];
-            stringSize = [drawingLayoutManager usedRectForTextContainer:drawingTextContainer].size;
+            CGFloat descent, leading;
+            CTLineRef line;
+            line = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)drawingAttributedString);
+            CGFloat width = CTLineGetTypographicBounds(line, NULL, &descent, &leading);
+            
+            CGFloat xpos = NSWidth(bounds) - width - RULER_MARGIN;
+            CGFloat baselinepos = ypos + NSHeight(wholeLineRect) - floor(descent + 0.5) - floor(leading+0.5);
+            CGContextSetTextPosition(drawingContext, xpos, baselinepos);
+            CTLineDraw(line, drawingContext);
 
-            NSPoint drawOrigin = NSMakePoint(NSWidth(bounds) - stringSize.width - RULER_MARGIN, ypos + (NSHeight(wholeLineRect) - stringSize.height) / 2.0);
-            // Draw string flush right, centered vertically within the line
-            [drawingLayoutManager drawGlyphsForGlyphRange:glyphRange atPoint:drawOrigin];
-
-            if (willDrawErrors)
-            {
+            if (_showsWarnings) {
                 [self drawErrorsInRect:wholeLineRect ofLine:lineNum];
             }
         }
@@ -562,7 +548,6 @@
     visibleRect = [[[self scrollView] contentView] bounds];
     stringLength = [[view string] length];
 
-    [layoutManager setTypesetterBehavior:NSTypesetterLatestBehavior];
     lines = [self lineIndices];
 
     // Find the characters that are currently visible
@@ -631,10 +616,10 @@
         
         for (i = 0; i < rectCount; i++)
         {
-            if ((location >= NSMinY(rects[i])) && (location < NSMaxY(rects[i])))
-            {
+            if (location < NSMinY(rects[i]) && line)
+                return line-1;
+            else if (location < NSMaxY(rects[i]))
                 return line;
-            }
         }
     }
 	return NSNotFound;
@@ -647,7 +632,7 @@
     NSRect centeredRect, alignedRect;
     CGFloat height;
     
-    height = [imgBreakpoint0 size].height;
+    height = rect.size.height;
     centeredRect = rect;
     centeredRect.origin.y += (rect.size.height - height) / 2.0;
     centeredRect.origin.x += RULER_MARGIN;
@@ -655,8 +640,9 @@
     centeredRect.size.width -= RULER_MARGIN;
     
     alignedRect = [self backingAlignedRect:centeredRect options:NSAlignAllEdgesOutward];
-    
-    NSDrawThreePartImage(alignedRect, imgBreakpoint0, imgBreakpoint1, imgBreakpoint2, NO, NSCompositeSourceOver, 1, YES);
+
+    NSImage *defaultImage = [self defaultMarkerImageWithSize:centeredRect.size color:self.markerColor];
+    [defaultImage drawInRect:alignedRect fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:YES hints:nil];
 }
 
 
@@ -665,7 +651,7 @@
 {
     SMLSyntaxError *error = [self.fragaria.syntaxErrorController errorForLine:[line integerValue] + 1]; // errors are one-based indexes.
 
-    [error.warningImage drawInRect:[self errorImageRectOfRect:rect ofLine:line] fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0];
+    [error.warningImage drawInRect:[self errorImageRectOfRect:rect ofLine:line] fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:YES hints:nil];
 }
 
 
@@ -758,7 +744,63 @@
     }
 
     [self setNeedsDisplay:YES];
+}
 
+
+/* Adapted from Noodlekit (github.com/MrNoodle/NoodleKit) by Paul Kim. */
+- (NSImage*) defaultMarkerImageWithSize:(NSSize)size color:(NSColor*)colorBase  {
+    NSImage *markerImage;
+    
+    if (NSEqualSizes(size, _markerImagesSize)) {
+        markerImage = _markerImages[[colorBase description]];
+        if (markerImage) {
+            return markerImage;
+        }
+    } else {
+        [_markerImages removeAllObjects];
+    }
+
+    markerImage = [NSImage.alloc initWithSize:size];
+    NSCustomImageRep *rep = [NSCustomImageRep.alloc initWithSize:size flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
+        NSRect rect;
+        NSBezierPath *path;
+        CGFloat lineWidth = (dstRect.size.height < 12.0 ? 1 : (dstRect.size.height / 12.0));
+        CGFloat cornerRadius = 3.0;
+        
+        rect = NSMakeRect(lineWidth/2.0, lineWidth/2.0, dstRect.size.width-lineWidth, dstRect.size.height-lineWidth);
+        NSPoint tip = NSMakePoint(NSMaxX(rect), NSMinY(rect) + NSHeight(rect)/2);
+        CGFloat arrowEndX = NSMaxX(rect)-NSHeight(rect)/2.6;
+        
+        path = [NSBezierPath bezierPath];
+        [path moveToPoint:tip];
+        [path lineToPoint:NSMakePoint(arrowEndX, NSMaxY(rect))];
+        [path appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect) + cornerRadius, NSMaxY(rect) - cornerRadius) radius:cornerRadius startAngle:90 endAngle:180];
+        [path appendBezierPathWithArcWithCenter:NSMakePoint(NSMinX(rect) + cornerRadius, NSMinY(rect) + cornerRadius) radius:cornerRadius startAngle:180 endAngle:270];
+        [path lineToPoint:NSMakePoint(arrowEndX, NSMinY(rect))];
+        [path closePath];
+        
+        NSColor *colorFill1 = [colorBase colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+        CGFloat gradientTo = colorFill1.brightnessComponent - 0.1;
+        NSColor *colorFill2 = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:gradientTo alpha:1];
+        
+        CGFloat strokeTo = colorFill2.brightnessComponent - 0.35;
+        NSColor *colorStroke = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:strokeTo alpha:1];
+        
+        NSGradient *fill = [[NSGradient alloc] initWithColors:@[colorFill1, colorFill2]];
+        [fill drawInBezierPath:path angle:-90.0];
+        
+        [colorStroke set];
+        [path setLineWidth:lineWidth];
+        [path stroke];
+        return YES;
+    }];
+    
+    [rep setSize:size];
+    [markerImage addRepresentation:rep];
+    [markerImage setName:[colorBase description]];
+    [_markerImages setValue:markerImage forKey:[colorBase description]];
+    _markerImagesSize = size;
+    return markerImage;
 }
 
 

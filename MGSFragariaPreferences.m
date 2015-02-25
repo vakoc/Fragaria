@@ -8,6 +8,8 @@
 
 #import "MGSFragariaPreferences.h"
 
+#pragma mark - Global Keys for Accessing Preferences' Strings
+
 // colour prefs
 // persisted as [NSArchiver archivedDataWithRootObject:[NSColor whiteColor]]
 NSString * const MGSFragariaPrefsCommandsColourWell = @"FragariaCommandsColourWell";
@@ -76,21 +78,30 @@ NSString * const MGSFragariaPrefsTextFont = @"FragariaTextFont";
 // string
 NSString * const MGSFragariaPrefsSyntaxColouringPopUpString = @"FragariaSyntaxColouringPopUpString";
 
+
+#pragma mark - Statics used for this class
+
 static BOOL MGS_preferencesInitialized = NO;
 static id sharedInstance = nil;
 
+
+#pragma mark - MGSFragariaPreferences Implementation
+
 @implementation MGSFragariaPreferences
 
-@synthesize fontsAndColoursPrefsViewController, textEditingPrefsViewController;
+@synthesize fontsAndColoursPrefsViewController = _fontsAndColoursPrefsViewController;
+@synthesize textEditingPrefsViewController = _textEditingPrefsViewController;
+
+
+#pragma mark - Class Methods
 
 /*
- 
- - initializeValues
- 
+ *  - initializeValues
  */
 + (void)initializeValues
 {
-	if (MGS_preferencesInitialized) {
+	if (MGS_preferencesInitialized)
+    {
 		return;
 	}
     
@@ -168,10 +179,9 @@ static id sharedInstance = nil;
 	MGS_preferencesInitialized = YES;
 }
 
+
 /*
- 
- + sharedInstance
- 
+ *  + sharedInstance
  */
 + (MGSFragariaPreferences *)sharedInstance
 {
@@ -181,55 +191,47 @@ static id sharedInstance = nil;
     return sharedInstance;
 }
 
+
 /*
- 
- + allocWithZone:
- 
- alloc with zone for singleton
- 
+ *  + allocWithZone:
+ *    alloc with zone for singleton
  */
 + (id)allocWithZone:(NSZone *)zone
 {
 #pragma unused(zone)
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 	return [self sharedInstance];
+#pragma clang diagnostic pop
 }
 
-#pragma mark -
-#pragma mark Instance methods
+
+#pragma mark - Instance methods
 
 /*
- 
- - init
- 
+ *  - init
  */
 - (id)init
 {
     if (sharedInstance) return sharedInstance;
     self = [super init];
-    if (self) {
-        // load view controllers
-        textEditingPrefsViewController = [[MGSFragariaTextEditingPrefsViewController alloc] init];
-        fontsAndColoursPrefsViewController = [[MGSFragariaFontsAndColoursPrefsViewController alloc] init];
-    }
     sharedInstance = self;
     return self;
 }
 
+
 /*
- 
- - changeFont:
- 
+ *  - changeFont:
  */
 - (void)changeFont:(id)sender
 {
     /* NSFontManager will send this method up the responder chain */
-    [fontsAndColoursPrefsViewController changeFont:sender];
+    [_fontsAndColoursPrefsViewController changeFont:sender];
 }
 
+
 /*
- 
- - revertToStandardSettings:
- 
+ *  - revertToStandardSettings:
  */
 - (void)revertToStandardSettings:(id)sender
 {
@@ -237,5 +239,39 @@ static id sharedInstance = nil;
     
 	[[NSUserDefaultsController sharedUserDefaultsController] revertToInitialValues:nil];
 }
+
+
+#pragma mark - Property Accessors
+
+
+/*
+ *  - MGSFragariaTextEditingPrefsViewController:
+ *    Don't allocate these resources unless someone actually needs them.
+ */
+-(MGSFragariaTextEditingPrefsViewController *)textEditingPrefsViewController
+{
+    if (!_textEditingPrefsViewController)
+    {
+        _textEditingPrefsViewController = [[MGSFragariaTextEditingPrefsViewController alloc] init];
+    }
+
+    return _textEditingPrefsViewController;
+}
+
+
+/*
+ *  - MGSFragariaFontsAndColoursPrefsViewController:
+ *    Don't allocate these resources unless someone actually needs them.
+ */
+-(MGSFragariaFontsAndColoursPrefsViewController *)fontsAndColoursPrefsViewController
+{
+    if (!_fontsAndColoursPrefsViewController)
+    {
+        _fontsAndColoursPrefsViewController = [[MGSFragariaFontsAndColoursPrefsViewController alloc] init];
+    }
+
+    return _fontsAndColoursPrefsViewController;
+}
+
 @end
 

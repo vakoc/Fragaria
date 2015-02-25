@@ -33,7 +33,11 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
+                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
+                                <connections>
+                                    <action selector="openPreferences:" target="Voe-Tx-rLC" id="vtx-ZQ-KT1"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -748,7 +752,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -806,18 +810,12 @@
                             <action selector="handleToggleGutterWarnings:" target="Voe-Tx-rLC" id="HSQ-Cl-ZHH"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="18BF5DEE-D185-4149-8137-19A69E5F49B3" label="Editor Warnings" paletteLabel="Editor Warnings" tag="-1" image="NSPreferencesGeneral" id="718-ku-hCi">
-                        <connections>
-                            <action selector="handleToggleEditorWarnings:" target="Voe-Tx-rLC" id="snw-76-9aD"/>
-                        </connections>
-                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="VYx-Bw-ODa"/>
                     <toolbarItem reference="zjs-Y2-GT1"/>
                     <toolbarItem reference="VN1-3q-5ti"/>
                     <toolbarItem reference="9o1-ZA-WDJ"/>
-                    <toolbarItem reference="718-ku-hCi"/>
                 </defaultToolbarItems>
             </toolbar>
         </window>

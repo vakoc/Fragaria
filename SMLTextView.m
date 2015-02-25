@@ -1,27 +1,29 @@
 /*
- 
- 
  MGSFragaria
  Written by Jonathan Mitchell, jonathan@mugginsoft.com
  Find the latest version at https://github.com/mugginsoft/Fragaria
- 
-Smultron version 3.6b1, 2009-09-12
-Written by Peter Borg, pgw3@mac.com
-Find the latest version at http://smultron.sourceforge.net
 
-Copyright 2004-2009 Peter Borg
- 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
- 
-http://www.apache.org/licenses/LICENSE-2.0
- 
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-*/
+ Smultron version 3.6b1, 2009-09-12
+ Written by Peter Borg, pgw3@mac.com
+ Find the latest version at http://smultron.sourceforge.net
 
-#import "MGSFragaria.h"
+ Copyright 2004-2009 Peter Borg
+
+ Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+ this file except in compliance with the License. You may obtain a copy of the
+ License at
+
+ http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software distributed
+ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+ CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ specific language governing permissions and limitations under the License.
+ */
+
 #import "MGSFragariaFramework.h"
-#import "SMLAutoCompleteDelegate.h"
-#import "SMLTextView+MGSTextActions.h"
+#import "MGSFragaria.h"
+#import "MGSFragariaPrivate.h"
 
 
 static BOOL CharacterIsBrace(unichar c)
@@ -62,7 +64,7 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 }
 
 
-// class extension
+#pragma mark - Class Extension
 @interface SMLTextView()
 
 @property (strong) NSColor *pageGuideColour;
@@ -73,42 +75,67 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
-@implementation SMLTextView
+#pragma mark - Implementation
 
-@synthesize colouredIBeamCursor, fragaria, pageGuideColour, lineWrap;
+@implementation SMLTextView {
 
-#pragma mark -
-#pragma mark Instance methods
+    NSInteger lineHeight;
+    BOOL isDragging;
+    NSPoint startPoint;
+    NSPoint startOrigin;
+    CGFloat pageGuideX;
+    NSColor *pageGuideColour;
+
+    BOOL showPageGuide;
+
+    NSRect currentLineRect;
+}
+
+
+
+@synthesize pageGuideColour, lineWrap;
+
+#pragma mark - Instance methods
+
+
 /*
- 
- - initWithFrame:
- 
+ * - initWithFrame:fragaria:
  */
-- (id)initWithFrame:(NSRect)frame
+
+- (id)initWithFrame:(NSRect)frame fragaria:(MGSFragaria *)fragaria
 {
-	if ((self = [super initWithFrame:frame])) {
-		SMLLayoutManager *layoutManager = [[SMLLayoutManager alloc] init];
-		[[self textContainer] replaceLayoutManager:layoutManager];
-		
-		[self setDefaults];
-        
+    if ((self = [super initWithFrame:frame])) {
+        SMLLayoutManager *layoutManager = [[SMLLayoutManager alloc] init];
+        [[self textContainer] replaceLayoutManager:layoutManager];
+
+        _fragaria = fragaria;
+
+        [self setDefaults];
+
         _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] initWithIndexesInRange:NSMakeRange(0,0)];
-        
+
         // set initial line wrapping
         lineWrap = YES;
         isDragging = NO;
         [self updateLineWrap];
-	}
-	return self;
+    }
+    return self;
 }
 
 
-#pragma mark -
-#pragma mark Accessors
 /*
- 
- - lineHeight
- 
+ * - initWithFrame:
+ */
+- (id)initWithFrame:(NSRect)frame
+{
+    return [self initWithFrame:frame fragaria:nil];
+}
+
+
+#pragma mark - Accessors
+
+/*
+ * - lineHeight
  */
 - (NSInteger)lineHeight
 {
@@ -117,9 +144,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
- 
- - setDefaults
- 
+ * - setDefaults
  */
 - (void)setDefaults
 {
@@ -150,6 +175,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	
 	[self setTextDefaults];
 	
+    [self setAutomaticDashSubstitutionEnabled:NO];
+    [self setAutomaticQuoteSubstitutionEnabled:NO];
 	[self setAutomaticDataDetectionEnabled:YES];
 	[self setAutomaticTextReplacementEnabled:YES];
 	
@@ -173,10 +200,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
 }
 
+
 /*
- 
- - setTextDefaults
- 
+ * - setTextDefaults
  */
 - (void)setTextDefaults
 {
@@ -187,13 +213,24 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-#pragma mark -
-#pragma mark Copy and paste
+/*
+ * - validateMenuItems
+ *   Note: permanently disabled.
+ */
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    if ([menuItem action] == @selector(toggleAutomaticDashSubstitution:))
+        return NO;
+    if ([menuItem action] == @selector(toggleAutomaticQuoteSubstitution:))
+        return NO;
+    return [super validateMenuItem:menuItem];
+}
+
+
+#pragma mark - Copy and paste
 
 /*
- 
- - paste
- 
+ * - paste
  */
 -(void)paste:(id)sender
 {
@@ -213,13 +250,11 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     }
 }
 
-#pragma mark -
-#pragma mark KVO
+
+#pragma mark - KVO
 
 /*
- 
- - observeValueForKeyPath:ofObject:change:context:
- 
+ * - observeValueForKeyPath:ofObject:change:context:
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -254,22 +289,19 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-#pragma mark -
-#pragma mark Drawing
+#pragma mark - Drawing
+
 /*
- 
- - isOpaque
- 
+ * - isOpaque
  */
 - (BOOL)isOpaque
 {
 	return YES;
 }
 
+
 /*
- 
- - drawRect:
- 
+ * - drawRect:
  */
 - (void)drawRect:(NSRect)rect
 {
@@ -287,7 +319,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 #pragma mark - Line Highlighting
 
-
+/*
+ * - setHighlightCurrentLine:
+ */
 - (void)setHighlightCurrentLine:(BOOL)highlightCurrentLine
 {
     [self setNeedsDisplayInRect:currentLineRect];
@@ -297,6 +331,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - setHighlightCurrentLine:
+ */
 - (void)drawViewBackgroundInRect:(NSRect)rect
 {
     [super drawViewBackgroundInRect:rect];
@@ -307,6 +344,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - lineHighlightingRect
+ */
 - (NSRect)lineHighlightingRect
 {
     NSMutableString *ms;
@@ -330,6 +370,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - setSelectedRanges:
+ */
 - (void)setSelectedRanges:(NSArray *)selectedRanges
 {
     [self setNeedsDisplayInRect:currentLineRect];
@@ -339,6 +382,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - setSelectedRange:
+ */
 - (void)setSelectedRange:(NSRange)selectedRange
 {
     [self setNeedsDisplayInRect:currentLineRect];
@@ -348,6 +394,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - setSelectedRange:affinity:stillSelecting:
+ */
 - (void)setSelectedRange:(NSRange)charRange affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag
 {
     [self setNeedsDisplayInRect:currentLineRect];
@@ -357,6 +406,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - setSelectedRanges:affinity:stillSelecting:
+ */
 - (void)setSelectedRanges:(NSArray *)ranges affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag
 {
     [self setNeedsDisplayInRect:currentLineRect];
@@ -366,10 +418,24 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-#pragma mark -
-#pragma mark Mouse event handling
+/*
+ * - setFrame:
+ */
+- (void)setFrame:(NSRect)bounds
+{
+    [self setNeedsDisplayInRect:currentLineRect];
+    [super setFrame:bounds];
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
 
 
+#pragma mark - Mouse event handling
+
+
+/*
+ * - flagsChanged:
+ */
 - (void)flagsChanged:(NSEvent *)theEvent
 {
     [super flagsChanged:theEvent];
@@ -385,9 +451,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
- 
- - mouseDown:
- 
+ * - mouseDown:
  */
 - (void)mouseDown:(NSEvent *)theEvent
 {
@@ -402,9 +466,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
- 
- - mouseDragged:
- 
+ * - mouseDragged:
  */
 - (void)mouseDragged:(NSEvent *)theEvent
 {
@@ -415,10 +477,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	}
 }
 
+
 /*
- 
- - mouseMoved:
- 
+ * - mouseMoved:
  */
 - (void)mouseMoved:(NSEvent *)theEvent
 {
@@ -427,10 +488,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         [[NSCursor openHandCursor] set];
 }
 
+
 /*
- 
- - menuForEvent:
- 
+ * - menuForEvent:
  */
 - (NSMenu *)menuForEvent:(NSEvent *)theEvent
 {
@@ -486,12 +546,10 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-#pragma mark -
-#pragma mark Tab and page guide handling
+#pragma mark - Tab and page guide handling
+
 /*
- 
- - insertTab:
- 
+ * - insertTab:
  */
 - (void)insertTab:(id)sender
 {	
@@ -532,10 +590,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	}
 }
 
+
 /*
- 
- - setTabWidth
- 
+ *- setTabWidth
  */
 - (void)setTabWidth
 {
@@ -560,10 +617,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [[self textStorage] addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0,[[self textStorage] length])];
 }
 
+
 /*
- 
- - setPageGuideValues
- 
+ * - setPageGuideValues
  */
 - (void)setPageGuideValues
 {
@@ -580,9 +636,12 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	[self display]; // To reflect the new values in the view
 }
 
-#pragma mark -
-#pragma mark Text handling
 
+#pragma mark - Text handling
+
+/*
+ * - shouldChangeTextInRanges:replacementStrings
+ */
 - (BOOL)shouldChangeTextInRanges:(NSArray *)affectedRanges replacementStrings:(NSArray *)replacementStrings
 {
     BOOL res;
@@ -622,9 +681,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
- 
- - insertText:
- 
+ * - insertText:
  */
 - (void)insertText:(NSString *)aString
 {
@@ -658,6 +715,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - insertStringAfterInsertionPoint
+ */
 - (void)insertStringAfterInsertionPoint:(NSString*)string
 {
     NSRange selectedRange = [self selectedRange];
@@ -669,6 +729,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - findBeginningOfNestedBlock:openedByCharacter:closedByCharacter:
+ */
 - (NSInteger)findBeginningOfNestedBlock:(NSInteger)charIdx openedByCharacter:(unichar)open closedByCharacter:(unichar)close
 {
     NSInteger skipMatchingBrace = 0;
@@ -691,6 +754,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - findEndOfNestedBlock:openedByCharacter:closedByCharacter:
+ */
 - (NSInteger)findEndOfNestedBlock:(NSInteger)charIdx openedByCharacter:(unichar)open closedByCharacter:(unichar)close
 {
     NSInteger skipMatchingBrace = 0;
@@ -714,6 +780,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - showBraceMatchingBrace:
+ */
 - (void)showBraceMatchingBrace:(unichar)characterToCheck;
 {
     NSInteger cursorLocation;
@@ -733,6 +802,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - shiftBackToLastOpenBrace
+ */
 - (void)shiftBackToLastOpenBrace
 {
     NSString *completeString = [self string];
@@ -781,9 +853,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
- 
- - insertNewline:
- 
+ * - insertNewline:
  */
 - (void)insertNewline:(id)sender
 {
@@ -815,10 +885,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	}
 }
 
+
 /*
- 
- - setString:
- 
+ *- setString:
  */
 - (void)setString:(NSString *)aString
 {
@@ -826,20 +895,19 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification object:self];
 }
 
+
 /*
- 
- - setString:options:
- 
+ * - setString:options:
  */
 - (void)setString:(NSString *)text options:(NSDictionary *)options
 {
     NSRange all = NSMakeRange(0, [self.textStorage length]);
     [self replaceCharactersInRange:all withString:text options:options];
 }
+
+
 /*
- 
- - replaceCharactersInRange:withString:options
- 
+ * - replaceCharactersInRange:withString:options
  */
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options
 {
@@ -877,10 +945,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	}	
 }
 
+
 /*
- 
- - setAttributedString:
- 
+ * - setAttributedString:
  */
 - (void)setAttributedString:(NSAttributedString *)text
 {
@@ -888,10 +955,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [textStorage setAttributedString:text];
 }
 
+
 /*
- 
- - setAttributedString:options:
- 
+ * - setAttributedString:options:
  */
 - (void)setAttributedString:(NSAttributedString *)text options:(NSDictionary *)options
 {
@@ -906,7 +972,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 		 see http://www.cocoabuilder.com/archive/cocoa/179875-exponent-action-in-nstextview-subclass.html
 		 entitled: Re: "exponent" action in NSTextView subclass (SOLVED)
 		 
-		 This details how to make programatic changes to the textStorage object.
+		 This details how to make programmatic changes to the textStorage object.
 		 
 		 */
         
@@ -944,10 +1010,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	
 }
 
-/*
 
- - appendString:
- 
+/*
+ * - appendString:
  */
 - (void)appendString:(NSString *)aString
 {
@@ -956,12 +1021,11 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setString:string];
 }
 
-#pragma mark -
-#pragma mark Selection handling
+
+#pragma mark - Selection handling
+
 /*
- 
- - selectionRangeForProposedRange:granularity:
- 
+ * - selectionRangeForProposedRange:granularity:
  */
 - (NSRange)selectionRangeForProposedRange:(NSRange)proposedSelRange granularity:(NSSelectionGranularity)granularity
 {
@@ -1040,13 +1104,11 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-#pragma mark -
-#pragma mark Auto Completion
+#pragma mark - Auto Completion
 
 
 /*
- 
- - rangeForUserCompletion
+ * - rangeForUserCompletion
  */
 - (NSRange)rangeForUserCompletion
 {
@@ -1097,10 +1159,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     return NSMakeRange(loc-numChars, numChars);
 }
 
+
 /*
- 
- - completionsForPartialWordRange:indexOfSelectedItem;
- 
+ * - completionsForPartialWordRange:indexOfSelectedItem;
  */
 - (NSArray*)completionsForPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
 {
@@ -1108,7 +1169,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
     // get completion handler
     NSMutableArray* matchArray = [NSMutableArray array];
-    id<SMLAutoCompleteDelegate> completeHandler = [fragaria.docSpec valueForKey:MGSFOAutoCompleteDelegate];
+    id<SMLAutoCompleteDelegate> completeHandler = self.fragaria.internalAutoCompleteDelegate;
 
     // use handler
     if (completeHandler) {
@@ -1133,15 +1194,11 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-#pragma mark -
-#pragma mark Line Wrap
+#pragma mark - Line Wrap
 
 /*
- 
- - setLineWrap:
- 
- see /developer/examples/appkit/TextSizingExample
- 
+ * - setLineWrap:
+ *   see /developer/examples/appkit/TextSizingExample
  */
 - (void)setLineWrap:(BOOL)value
 {
@@ -1149,13 +1206,11 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self updateLineWrap];
 }
 
+
 /*
- 
- - updateLineWrap
- 
- see http://developer.apple.com/library/mac/#samplecode/TextSizingExample
- 
- The readme file in the above example has very good info on how to configure NSTextView instances.
+ * - updateLineWrap
+ *   see http://developer.apple.com/library/mac/#samplecode/TextSizingExample
+ *   The readme file in the above example has very good info on how to configure NSTextView instances.
  */
 - (void)updateLineWrap {
     NSSize contentSize;
@@ -1220,5 +1275,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     NSEnableScreenUpdates();
     
 }
+
 
 @end

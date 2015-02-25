@@ -4,12 +4,14 @@
 //
 //  Created by Jim Derry on 2015/02/07.
 //
-//  A playgroundd and demonstration for MGSFragariaView, and
+//  A playground and demonstration for MGSFragariaView, and
 //  Fragaria and Smulton in general.
 //
 
 #import "AppDelegate.h"
-#import "MGSFragariaFramework.h"
+#import "MASPreferencesWindowController.h"
+#import "PrefsFontsAndColorsViewController.h"
+#import "PrefsTextEditingViewController.h"
 
 
 #pragma mark - PRIVATE INTERFACE
@@ -18,6 +20,8 @@
 @interface AppDelegate ()
 
 @property (weak) IBOutlet NSWindow *window;
+
+@property (nonatomic, strong) NSWindowController *preferencesWindowController;
 
 @property (weak) IBOutlet MGSFragariaView *viewTop;
 
@@ -29,15 +33,18 @@
 
 @property (weak) IBOutlet NSToolbarItem * buttonToggleWordWrap;
 
+
+@property (strong) NSArray *breakpoints;
+
 @end
 
 
 #pragma mark - IMPLEMENTATION
 
 
-@implementation AppDelegate {
-	NSArray *_breakPoints;
-}
+@implementation AppDelegate
+
+@synthesize preferencesWindowController = _preferencesWindowController;
 
 
 #pragma mark - Initialization and Setup
@@ -64,10 +71,10 @@
     }
 
     /* Make the upper view interesting. */
-    self.viewTop.string = fileContent;
-    //self.viewTop.startingLineNumber = 2025;
+    self.viewTop.textView.string = fileContent;
+    self.viewTop.startingLineNumber = 2025;
 	self.viewTop.showsLineNumbers = YES;
-    self.viewTop.lineWrap = NO;
+    self.viewTop.textView.lineWrap = NO;
 
     /* Make the lower view interesting. */
     self.self.viewBottom.string = fileContent;
@@ -84,8 +91,27 @@
 }
 
 
-#pragma mark - Delegate methods
+#pragma mark - Property Accessors
 
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	@preferencesWindowController
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSWindowController *)preferencesWindowController
+{
+    if (!_preferencesWindowController)
+    {
+        NSViewController *fontsAndColorsPrefsController = [[PrefsFontsAndColorsViewController alloc] init];
+        NSViewController *textEditingPrefsController = [[PrefsTextEditingViewController alloc] init];
+        NSArray *controllers = [[NSArray alloc] initWithObjects:fontsAndColorsPrefsController, textEditingPrefsController, nil];
+
+        NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
+        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
+    }
+    return _preferencesWindowController;
+}
+
+
+#pragma mark - Delegate methods
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	textDidChange:
@@ -107,7 +133,7 @@
 - (NSSet*) breakpointsForView:(id)sender
 {
 	#pragma unused(sender)
-    return [NSSet setWithArray:_breakPoints];
+    return [NSSet setWithArray:self.breakpoints];
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -116,21 +142,21 @@
 - (void)toggleBreakpointForView:(id)sender onLine:(int)line;
 {
 	#pragma unused(sender)
-	if ([_breakPoints containsObject:@(line)])
+	if ([self.breakpoints containsObject:@(line)])
 	{
-		_breakPoints = [_breakPoints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
+		self.breakpoints = [self.breakpoints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
 			return ![evaluatedObject isEqualToValue:@(line)];
 		}]];
 	}
 	else
 	{
-		if (_breakPoints)
+		if (self.breakpoints)
 		{
-			_breakPoints = [_breakPoints arrayByAddingObject:@(line)];
+			self.breakpoints = [self.breakpoints arrayByAddingObject:@(line)];
 		}
 		else
 		{
-			_breakPoints = @[@(line)];
+			self.breakpoints = @[@(line)];
 		}
 	}
 	
@@ -148,6 +174,14 @@
 
 
 #pragma mark - UI Handling
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	openPreferences:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (IBAction)openPreferences:(id)sender
+{
+    [self.preferencesWindowController showWindow:nil];
+}
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -193,19 +227,7 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleToggleEditorWarnings:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)handleToggleEditorWarnings:(id)sender
-{
-    #pragma unused(sender)
-    BOOL current = self.viewTop.showsWarningsInEditor;
-    self.viewTop.showsWarningsInEditor = !current;
-}
-
-
 #pragma marks - Private
-
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	makeSyntaxErrors
@@ -217,7 +239,7 @@
                                                                    @"line" : @(4),
                                                                    @"character" : @(3),
                                                                    @"length" : @(5),
-                                                                   @"hidden" : @(YES),
+                                                                   @"hidden" : @(NO),
                                                                    @"warningLevel" : @(kMGSErrorCategoryError)
                                                                    }];
 
@@ -235,17 +257,18 @@
     error3.line = 6;
     error3.character = 1;
     error3.length = 2;
-    error3.hideWarning = NO;
-    error3.warningStyle = kMGSErrorCategoryConfig;
+    error3.hidden = NO;
+    error3.warningLevel = kMGSErrorCategoryConfig;
 
     SMLSyntaxError *error4 = [SMLSyntaxError new];
     error4.description = @"This error will not be hidden.";
     error4.line = 10;
     error4.character = 12;
     error4.length = 7;
-    error4.hideWarning = NO;
+    error4.hidden = NO;
 
     return @[error1, error2, error3, error4];
 }
+
 
 @end

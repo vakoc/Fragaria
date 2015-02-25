@@ -7,7 +7,15 @@
  *
  */
 
-// Fragraria preference keys by type
+
+#pragma mark - Global Keys for Accessing Preferences' Strings
+
+/*
+ *  Fragaria Preference Keys By Type
+ *  @todo: rearrange by function/component.
+ *  @todo: take an inventory of all components to ensure no keys are missing.
+ */
+
 
 // color data
 // [NSArchiver archivedDataWithRootObject:[NSColor whiteColor]]
@@ -77,22 +85,69 @@ extern NSString * const MGSFragariaPrefsTextFont;
 // string
 extern NSString * const MGSFragariaPrefsSyntaxColouringPopUpString;
 
+
 #import "MGSFragariaPrefsViewController.h"
 #import "MGSFragariaFontsAndColoursPrefsViewController.h"
 #import "MGSFragariaTextEditingPrefsViewController.h"
 
-@interface MGSFragariaPreferences : NSObject {
-    
-    MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewController;
-    MGSFragariaTextEditingPrefsViewController *textEditingPrefsViewController;
-}
-+ (void)initializeValues;
-+ (MGSFragariaPreferences *)sharedInstance;
-- (void)changeFont:(id)sender;
-- (void)revertToStandardSettings:(id)sender;
 
-@property (readonly) MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewController;
-@property (readonly) MGSFragariaTextEditingPrefsViewController *textEditingPrefsViewController;
+#pragma mark - MGSFragariaPreferences
+
+/**
+ *  MGSFragariaPreferences is responsible for registering the userDefaults for instances
+ *  of Fragaria, and also offers some ready-made viewControllers should you want to
+ *  implement them in your application.
+ **/
+@interface MGSFragariaPreferences : NSObject
+
+
+/// @name Class Methods
+
+/**
+ *  Uses registerUserDefaults to add all of Fragaria's defaults to the defaults database.
+ **/
++ (void)initializeValues;
+
+
+/**
+ *  Provides a singleton instance of MGSFragariaPreferences.
+ *  @todo: this is *only* used in the demo application. And there, it's only
+ *         use is to resolve to `revertToStandardSettings`, which uses a
+ *         global NSUserDefaultsController to perform its action. Issue #30.
+ **/
++ (MGSFragariaPreferences *)sharedInstance DEPRECATED_MSG_ATTRIBUTE("Proposed elimination.");
+
+
+/// @name Instance Methods
+
+/**
+ *  Used by the preference view controllers to propagate the changeFont message
+ *  up the responder chain.
+ *  @param sender is the sender of the message.
+ **/
+- (void)changeFont:(id)sender DEPRECATED_MSG_ATTRIBUTE("Proposed elimination.");
+
+
+/**
+ *  Used by the preference view controllers, sets the shared userDefaultsController
+ *  back to initial values.
+ *  @param sender is the sender of the message.
+ **/
+- (void)revertToStandardSettings:(id)sender DEPRECATED_MSG_ATTRIBUTE("Proposed elimination.");
+
+
+/// @name Properties
+
+/**
+ *  Provides a ready-made instance of MGSFragariaFontsAndColoursPrefsViewController for applications.
+ **/
+@property (readonly) MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewController DEPRECATED_MSG_ATTRIBUTE("Proposed elimination.");
+
+
+/**
+ * Provides a ready-made instance of MGSFragariaTextEditingPrefsViewController for applications.
+ **/
+@property (readonly) MGSFragariaTextEditingPrefsViewController *textEditingPrefsViewController DEPRECATED_MSG_ATTRIBUTE("Proposed elimination.");
 
 @end
 

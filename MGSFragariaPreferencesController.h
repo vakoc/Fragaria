@@ -26,16 +26,16 @@
  *
  *   Additionally:
  *
- *   - Implementors will want some global changes to affect all instances.
+ *   - Implementers will want some global changes to affect all instances.
  *     This can be configured on a property-by-property basis. For example all
  *     instances may have a common background color while permitting different
  *     fonts.
- *   - Implementors will want some instance changes to apply globally. For
+ *   - Implementers will want some instance changes to apply globally. For
  *     example if the background color of an instance changes, then perhaps
  *     this should be reflected globally.
  *
  *   This behavior is managed internally using `standardUserDefaults` when
- *   necessary and a non-persistant `NSUserDefaults` otherwise.
+ *   necessary and a non-persistent `NSUserDefaults` otherwise.
  **/
 
 

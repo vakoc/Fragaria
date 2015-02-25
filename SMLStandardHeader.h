@@ -28,24 +28,6 @@ typedef enum : NSUInteger
 } SMLLineEndings;
 
 
-#import <Cocoa/Cocoa.h>
-#import <Carbon/Carbon.h>
-
-#import <ApplicationServices/ApplicationServices.h>
-
-#import <WebKit/WebKit.h>
-
-#import <QuartzCore/QuartzCore.h>
-
-
-#import <unistd.h>
-
-#import <unistd.h>
-#import <sys/param.h>
-#import <sys/mount.h>
-#import <sys/xattr.h>
-
-
 #define NAME_FOR_UNDO_CHANGE_LINE_ENDINGS NSLocalizedString(@"Change Line Endings", @"Name for undo Change Line Endings")
 
 #define COMMAND_RESULT_WINDOW_TITLE NSLocalizedStringFromTable(@"Command Result - Smultron", @"Localizable3", @"Command Result - Smultron")

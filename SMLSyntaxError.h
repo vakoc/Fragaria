@@ -79,7 +79,7 @@ extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCateg
 /// @name Properties
 
 /**
- * The line at which this error occurrs.
+ * The line at which this error occurs.
  * @discussion the line number is always one-based. Although Fragaria can display
  * line numbers starting with any value, but errors are always on lines 1...n.
  **/
@@ -91,7 +91,7 @@ extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCateg
 
 @property (nonatomic,copy) NSColor *errorLineHighlightColor;       ///< The color to use to highlight lines that have syntax errors.
 @property (nonatomic,copy) NSColor *errorBackgroundHighlightColor; ///< The color to use to highlight the background of specific errors.
-@property (nonatomic,copy) NSColor *errorForegroundHilightColor;   ///< The color to use to highlight the foreground of specific errors.
+@property (nonatomic,copy) NSColor *errorForegroundHighlightColor; ///< The color to use to highlight the foreground of specific errors.
 @property (nonatomic,assign) float warningLevel;                   ///< The warning level or severity of this syntax error.
 
 /**

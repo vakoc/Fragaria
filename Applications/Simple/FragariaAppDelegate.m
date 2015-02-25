@@ -361,9 +361,9 @@
  - fragariaDocument:didColourGroupWithBlock:string:range:info
  
  */
-- (void)fragariaDocument:(id)document didColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
+- (void)fragariaDocument:(MGSFragaria *)fragaria didColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
 {
-#pragma unused(document, string)
+#pragma unused(fragaria, string)
     
     // query info
     NSString *group = [info objectForKey:SMLSyntaxGroup];
@@ -446,9 +446,9 @@
  - fragariaDocument:didColourWithBlock:string:range:info
  
  */
-- (void)fragariaDocument:(id)document didColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
+- (void)fragariaDocument:(MGSFragaria *)fragaria didColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
 {
-    #pragma unused(document, colourWithBlock, string, range, info)
+    #pragma unused(fragaria, colourWithBlock, string, range, info)
     NSLog(@"Did colour document.");
     
     // we can call colourWithBlock to perform final colouring

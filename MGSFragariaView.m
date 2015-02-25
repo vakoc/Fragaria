@@ -4,7 +4,7 @@
 //
 //  File created by Jim Derry on 2015/02/07.
 //
-//  Implements an NSView subsclass that abstracts several characteristics of Fragaria,
+//  Implements an NSView subclass that abstracts several characteristics of Fragaria,
 //  such as the use of Interface Builder to set delegates and assign key-value pairs.
 //  Also provides property abstractions for Fragaria's settings and methods.
 //
@@ -162,7 +162,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setSyntaxColoured:(BOOL)syntaxColoured
 {
-	[self.fragaria setSyntaxColoured:syntaxColoured];
+	[self.fragaria setIsSyntaxColoured:syntaxColoured];
 }
 
 - (BOOL)syntaxColoured
@@ -218,12 +218,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setScrollElasticityDisabled:(BOOL)scrollElasticityDisabled
 {
-	[self.fragaria setDisableScrollElasticity:scrollElasticityDisabled];
+	[self.fragaria setScrollElasticityDisabled:scrollElasticityDisabled];
 }
 
 - (BOOL)scrollElasticityDisabled
 {
-	return [self.fragaria isScrollElasticityDisabled];
+	return [self.fragaria scrollElasticityDisabled];
 }
 
 
@@ -294,20 +294,6 @@
 - (BOOL)showsWarningsInGutter
 {
     return [self.fragaria showsWarningsInGutter];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	showsWarningsInEditor
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setShowsWarningsInEditor:(BOOL)showsWarningsInEditor
-{
-    [self.fragaria setShowsWarningsInEditor:showsWarningsInEditor];
-}
-
-- (BOOL)showsWarningsInEditor
-{
-    return [self.fragaria showsWarningsInEditor];
 }
 
 

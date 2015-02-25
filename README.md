@@ -1,19 +1,21 @@
 # MGSFragaria
 
-A fork of https://github.com/mugginsoft/Fragaria with a focus on updating it and fixing bugs.
-
-# Features
-
-Coming soon.
-
-# MGSFragaria (upon which this fork is based)
+A fork of https://github.com/mugginsoft/Fragaria with a focus on fixing bugs, while adding some new features along
+the way.
 
 ## What is it?
+
 Fragaria is an OS X Cocoa syntax colouring NSTextView implemented within a framework named MGSFragaria. It supports a
 wide range of programming languages and includes preference panel support.
 
-The MGSFragaria framework now properly supports both traditional reference counting memory management and garbage
-collection.
+## Why switching to this fork makes my code not build anymore?
+
+Fragaria used to be a part of a bigger application (Smultron). When it was separed from it, some things which
+Smultron used but were unrelated to Fragaria itself were mistakenly left in. Also, various internal components of 
+Fragaria were not made private (because in application code there's no distinction between public and private
+stuff). These things are being removed.
+
+If your app was using this stuff, you should reimplement it yourself.
 
 ## Where can I see it in use
 

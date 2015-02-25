@@ -16,22 +16,19 @@
 @implementation MGSFragariaFontsAndColoursPrefsViewController
 
 /*
- 
- - init
- 
+ *  - init
  */
 - (id)init {
-    self = [super initWithNibName:@"MGSPreferencesFontsAndColours" bundle:[NSBundle bundleForClass:[self class]]];
+    self = [super initWithNibName:@"MGSPreferencesFontsAndColours" bundle:[NSBundle bundleForClass:[MGSFragariaFontsAndColoursPrefsViewController class]]];
     if (self) {
         
     }
     return self;
 }
 
+
 /*
- 
- - setFontAction:
- 
+ *  - setFontAction:
  */
 - (IBAction)setFontAction:(id)sender
 {
@@ -42,21 +39,20 @@
     NSFont *font = [NSUnarchiver unarchiveObjectWithData:fontData];
 	[fontManager setSelectedFont:font isMultiple:NO];
 	[fontManager orderFrontFontPanel:nil];
-    
 }
 
+
 /*
- 
- - changeFont:
- 
+ *  - changeFont:
  */
 - (void)changeFont:(id)sender
 {
-    
     /* changeFont: is sent up the responder chain by the fontManager so we have to call this
-     method from say the preferences window controller which has been configured as the window delegate */
+    method from say the preferences window controller which has been configured as the window delegate */
 	NSFontManager *fontManager = sender;
 	NSFont *panelFont = [fontManager convertFont:[fontManager selectedFont]];
 	[SMLDefaults setValue:[NSArchiver archivedDataWithRootObject:panelFont] forKey:MGSFragariaPrefsTextFont];
 }
+
+
 @end
