@@ -73,101 +73,100 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 @synthesize undoManager, syntaxDefinition;
 
 
-#pragma mark -
-#pragma mark Instance methods
+#pragma mark - Instance methods
+
 /*
- 
- - init
- 
- */
+  - init
+  */
 - (id)init
 {
-	self = [self initWithDocument:nil];
+	self = [self initWithFragaria:nil];
 	
 	return self;
 }
 
+
 /*
- 
- - initWithDocument:
- 
+ * - initWithFragaria
  */
-- (id)initWithDocument:(id)theDocument
+- (instancetype)initWithFragaria:(MGSFragaria *)fragaria
 {
-	if ((self = [super init])) {
+    // @todo: We're still using the docSpec indirectly, but at least we're not longer dependent
+    //        upon it for initialization. As some of these properties are internally exposed,
+    //        we can start to eliminate getting them from the docSpec.
 
-		NSAssert(theDocument, @"bad document");
-		
-		// retain the document
-		document = theDocument;
+    if ((self = [super init])) {
 
-		// configure the document text view
-		NSTextView *textView = [document valueForKey:ro_MGSFOTextView];
-		NSAssert([textView isKindOfClass:[NSTextView class]], @"bad textview");
+        NSAssert(fragaria.docSpec, @"bad document");
+
+        _fragaria = fragaria;
+
+
+        // configure the document text view
+        NSTextView *textView = [self.fragaria.docSpec valueForKey:ro_MGSFOTextView];
+        NSAssert([textView isKindOfClass:[NSTextView class]], @"bad textview");
         self.undoManager = [textView undoManager];
-        
-        NSScrollView *scrollView = [document valueForKey:ro_MGSFOScrollView];
+
+        NSScrollView *scrollView = [self.fragaria.docSpec valueForKey:ro_MGSFOScrollView];
         [[scrollView contentView] setPostsBoundsChangedNotifications:YES];
 
-		// configure ivars
-		lastCursorLocation = 0;
-		
-		// configure layout managers
-		layoutManager = (SMLLayoutManager *)[textView layoutManager];
-		
-		// configure colouring
-		[self applyColourDefaults];
-		
-		// configure syntax definition
-		[self applySyntaxDefinition];
-		
-		// add document KVO observers
-		[document addObserver:self forKeyPath:@"syntaxDefinition" options:NSKeyValueObservingOptionNew context:@"syntaxDefinition"];
-        
+        // configure ivars
+        lastCursorLocation = 0;
+
+        // configure layout managers
+        layoutManager = (SMLLayoutManager *)[textView layoutManager];
+
+        // configure colouring
+        [self applyColourDefaults];
+
+        // configure syntax definition
+        [self applySyntaxDefinition];
+
+        // add document KVO observers
+        [self.fragaria.docSpec addObserver:self forKeyPath:@"syntaxDefinition" options:NSKeyValueObservingOptionNew context:@"syntaxDefinition"];
+
         // add text view notification observers
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:textView];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recolourExposedRange) name:NSViewBoundsDidChangeNotification object:[scrollView contentView]];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recolourExposedRange) name:NSViewFrameDidChangeNotification object:textView];
-		
-		// add NSUserDefaultsController KVO observers
-		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaCommandsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaCommentsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaInstructionsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaKeywordsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaAutocompleteColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaVariablesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaStringsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaAttributesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaNumbersColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourCommands" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourComments" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourInstructions" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourKeywords" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourAutocomplete" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourVariables" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourStrings" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourAttributes" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourNumbers" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaOnlyColourTillTheEndOfLine" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
+        // add NSUserDefaultsController KVO observers
+        NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaCommandsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaCommentsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaInstructionsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaKeywordsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaAutocompleteColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaVariablesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaStringsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaAttributesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaNumbersColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourCommands" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourComments" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourInstructions" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourKeywords" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourAutocomplete" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourVariables" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourStrings" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourAttributes" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourNumbers" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaOnlyColourTillTheEndOfLine" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
         
         [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:@"LineWrapChanged"];
-	}
-	
+    }
+    
     return self;
 }
 
 
-#pragma mark -
-#pragma mark KVO
+#pragma mark -KVO
+
 /*
- 
- - observeValueForKeyPath:ofObject:change:context:
- 
+ * - observeValueForKeyPath:ofObject:change:context:
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -188,23 +187,19 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 
 /*
- 
- - dealloc
- 
+ * - dealloc
  */
 -(void)dealloc
 {
-    [document removeObserver:self forKeyPath:@"syntaxDefinition"];
+    [self.fragaria.docSpec removeObserver:self forKeyPath:@"syntaxDefinition"];
     [[NSNotificationCenter defaultCenter] removeObserver:self ];
 }
 
 
-#pragma mark -
-#pragma mark Syntax definition handling
+#pragma mark - Syntax definition handling
+
 /*
- 
- - applySyntaxDefinition
- 
+ * - applySyntaxDefinition
  */
 - (void)applySyntaxDefinition
 {			
@@ -213,14 +208,13 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     [self removeAllColours];
 }
 
+
 /*
- 
- - syntaxDictionary
- 
+ * - syntaxDictionary
  */
 - (NSDictionary *)syntaxDictionary
 {
-	NSString *definitionName = [document valueForKey:MGSFOSyntaxDefinitionName];
+	NSString *definitionName = [self.fragaria.docSpec valueForKey:MGSFOSyntaxDefinitionName];
 	
 	// if document has no syntax definition name then assign one
 	if (!definitionName || [definitionName length] == 0) {
@@ -233,14 +227,13 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     return syntaxDictionary;
 }
 
+
 /*
- 
- - assignSyntaxDefinition
- 
+ * - assignSyntaxDefinition
  */
 - (NSString *)assignSyntaxDefinition
 {
-	NSString *definitionName = [document valueForKey:MGSFOSyntaxDefinitionName];
+	NSString *definitionName = [self.fragaria.docSpec valueForKey:MGSFOSyntaxDefinitionName];
 	if (definitionName && [definitionName length] > 0) return definitionName;
 
 	NSString *documentExtension = self.fragaria.documentName.pathExtension;
@@ -250,7 +243,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     // If there is no extension try to guess definition from first line
     if ([documentExtension isEqualToString:@""]) { 
         
-        NSString *string = [[[document valueForKey:ro_MGSFOScrollView] documentView] string];
+        NSString *string = [[[self.fragaria.docSpec valueForKey:ro_MGSFOScrollView] documentView] string];
         NSString *firstLine = [string substringWithRange:[string lineRangeForRange:NSMakeRange(0,0)]];
         if ([firstLine hasPrefix:@"#!"] || [firstLine hasPrefix:@"%"] || [firstLine hasPrefix:@"<?"]) {
             lowercaseExtension = [[MGSSyntaxController sharedInstance] guessSyntaxDefinitionExtensionFromFirstLine:firstLine];
@@ -268,57 +261,49 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	}
 	
 	// update document definition
-	[document setValue:definitionName forKey:MGSFOSyntaxDefinitionName];
+	[self.fragaria.docSpec setValue:definitionName forKey:MGSFOSyntaxDefinitionName];
 	
 	return definitionName;
 }
 
 
-#pragma mark -
-#pragma mark Accessors
+#pragma mark - Accessors
 
 /*
- 
- - completeString
- 
+ * - completeString
  */
 - (NSString *)completeString
 {
-	return [[document valueForKey:ro_MGSFOTextView] string];
+	return [[self.fragaria.docSpec valueForKey:ro_MGSFOTextView] string];
 }
 
-#pragma mark -
-#pragma mark Colouring
+
+#pragma mark - Colouring
 
 /*
- 
- - removeAllColours
- 
+ * - removeAllColours
  */
 - (void)removeAllColours
 {
 	NSRange wholeRange = NSMakeRange(0, [[self completeString] length]);
 	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:wholeRange];
-    [[[document objectForKey:ro_MGSFOTextView] inspectedCharacterIndexes] removeAllIndexes];
+    [[[self.fragaria.docSpec objectForKey:ro_MGSFOTextView] inspectedCharacterIndexes] removeAllIndexes];
 }
 
+
 /*
- 
- - removeColoursFromRange
- 
+ * - removeColoursFromRange
  */
 - (void)removeColoursFromRange:(NSRange)range
 {
 	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:range];
-    [[[document objectForKey:ro_MGSFOTextView] inspectedCharacterIndexes] removeIndexesInRange:range];
+    [[[self.fragaria.docSpec objectForKey:ro_MGSFOTextView] inspectedCharacterIndexes] removeIndexesInRange:range];
 }
 
 
 /*
- 
- - invalidateAllColouring
- 
-*/
+ * - invalidateAllColouring
+ */
 - (void)invalidateAllColouring
 {
     [self removeAllColours];
@@ -327,16 +312,14 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 
 /*
- 
- - invalidateVisibleRange
- 
-*/
+ * - invalidateVisibleRange
+ */
 - (void)invalidateVisibleRange
 {
     SMLTextView *textView;
     NSMutableIndexSet *validRanges;
     
-    textView = [document valueForKey:ro_MGSFOTextView];
+    textView = [self.fragaria.docSpec valueForKey:ro_MGSFOTextView];
     validRanges = [textView inspectedCharacterIndexes];
     NSRect visibleRect = [[[textView enclosingScrollView] contentView] documentVisibleRect];
     NSRange visibleRange = [[textView layoutManager] glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
@@ -346,9 +329,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 
 /*
- 
- - pageRecolour
- 
+ * - pageRecolour
  */
 - (void)recolourExposedRange
 {
@@ -359,7 +340,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	if (!self.isSyntaxColouringRequired) {
 		return;
 	}
-    textView = [document valueForKey:ro_MGSFOTextView];
+    textView = [self.fragaria.docSpec valueForKey:ro_MGSFOTextView];
     validRanges = [textView inspectedCharacterIndexes];
     
     NSRect visibleRect = [[[textView enclosingScrollView] contentView] documentVisibleRect];
@@ -375,10 +356,9 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     }];
 }
 
+
 /*
- 
- - pageRecolourTextView:options:
- 
+ * - pageRecolourTextView:options:
  */
 - (void)pageRecolourTextView:(SMLTextView *)textView options:(NSDictionary *)options
 {
@@ -400,10 +380,9 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     }
 }
 
+
 /*
- 
- - recolourRange:
- 
+ * - recolourRange:
  */
 - (NSRange)recolourChangedRange:(NSRange)rangeToRecolour
 {
@@ -483,7 +462,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	[self removeColoursFromRange:effectiveRange];
 	
     // colouring delegate
-    id colouringDelegate = [document valueForKey:MGSFOSyntaxColouringDelegate];
+    id colouringDelegate = [self.fragaria.docSpec valueForKey:MGSFOSyntaxColouringDelegate];
     BOOL delegateRespondsToShouldColourGroup = [colouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourGroupWithBlock:string:range:info:)];
     BOOL delegateRespondsToDidColourGroup = [colouringDelegate respondsToSelector:@selector(fragariaDocument:didColourGroupWithBlock:string:range:info:)];
     NSDictionary *delegateInfo =  nil;
@@ -514,7 +493,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             delegateInfo = @{SMLSyntaxInfo : self.syntaxDictionary, SMLSyntaxWillColour : @(self.isSyntaxColouringRequired)};
             
             // query delegate about colouring
-            doColouring = [colouringDelegate fragariaDocument:document shouldColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+            doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
             
         }
         
@@ -531,7 +510,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupNumber, SMLSyntaxGroupID : @(kSMLSyntaxGroupNumber), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : numbersColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             } 
             
@@ -585,7 +564,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 } 
             }
 
@@ -602,7 +581,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupCommand, SMLSyntaxGroupID : @(kSMLSyntaxGroupCommand), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : commandsColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             } 
 
@@ -654,7 +633,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
             }
             
@@ -672,7 +651,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupInstruction, SMLSyntaxGroupID : @(kSMLSyntaxGroupInstruction), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : instructionsColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             }
 
@@ -723,7 +702,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
             }
 
@@ -740,7 +719,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupKeyword, SMLSyntaxGroupID : @(kSMLSyntaxGroupKeyword), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : keywordsColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             }
             
@@ -781,7 +760,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
             }
 
@@ -798,7 +777,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupAutoComplete, SMLSyntaxGroupID : @(kSMLSyntaxGroupAutoComplete), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : autocompleteWordsColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             }
             
@@ -840,7 +819,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
             }
             
@@ -857,7 +836,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupVariable, SMLSyntaxGroupID : @(kSMLSyntaxGroupVariable), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : variablesColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             }
             
@@ -894,7 +873,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
             }
 
@@ -912,7 +891,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupSecondString, SMLSyntaxGroupID : @(kSMLSyntaxGroupSecondString), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : stringsColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             } 
 
@@ -943,7 +922,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
 
             }
@@ -961,7 +940,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupFirstString, SMLSyntaxGroupID : @(kSMLSyntaxGroupFirstString), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : stringsColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             }
         
@@ -990,7 +969,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
             
             }
@@ -1008,7 +987,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupAttribute, SMLSyntaxGroupID : @(kSMLSyntaxGroupAttribute), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : attributesColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             } 
 
@@ -1044,7 +1023,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
 
             }
@@ -1062,7 +1041,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupSingleLineComment, SMLSyntaxGroupID : @(kSMLSyntaxGroupSingleLineComment), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : commentsColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             } 
 
@@ -1130,7 +1109,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
             }
             
@@ -1147,7 +1126,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupMultiLineComment, SMLSyntaxGroupID : @(kSMLSyntaxGroupMultiLineComment), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : commentsColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             }
         
@@ -1257,7 +1236,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
                 
            }
@@ -1274,7 +1253,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 delegateInfo = @{SMLSyntaxGroup : SMLSyntaxGroupSecondStringPass2, SMLSyntaxGroupID : @(kSMLSyntaxGroupSecondStringPass2), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : stringsColour, SMLSyntaxInfo : self.syntaxDictionary};
                 
                 // call the delegate
-                doColouring = [colouringDelegate fragariaDocument:document shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
                 
             }
         
@@ -1304,7 +1283,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
                 // inform delegate that colouring is done
                 if (delegateRespondsToDidColourGroup) {
-                    [colouringDelegate fragariaDocument:document didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
+                    [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo];
                 }
             }
 
@@ -1317,7 +1296,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 // build minimal delegate info dictionary
                 delegateInfo = @{@"syntaxInfo" : self.syntaxDictionary};
                 
-                [colouringDelegate fragariaDocument:document didColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
             }
 
         }
@@ -1339,20 +1318,19 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     return effectiveRange;
 }
 
+
 /*
- 
- - setColour:range:
- 
+ * - setColour:range:
+
  */
 - (void)setColour:(NSDictionary *)colourDictionary range:(NSRange)range
 {
 	[layoutManager setTemporaryAttributes:colourDictionary forCharacterRange:range];
 }
 
+
 /*
- 
- - applyColourDefaults
- 
+ * - applyColourDefaults
  */
 - (void)applyColourDefaults
 {
@@ -1377,20 +1355,18 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     [self removeAllColours];
 }
 
+
 /*
- 
- - isSyntaxColouringRequired
- 
+ * - isSyntaxColouringRequired
  */
 - (BOOL)isSyntaxColouringRequired
 {
-    return ([[document valueForKey:MGSFOIsSyntaxColoured] boolValue] && syntaxDefinition.syntaxDefinitionAllowsColouring ? YES : NO);
+    return ([[self.fragaria.docSpec valueForKey:MGSFOIsSyntaxColoured] boolValue] && syntaxDefinition.syntaxDefinitionAllowsColouring ? YES : NO);
 }
 
+
 /*
- 
- - characterIndexFromLine:character:inString:
- 
+ * - characterIndexFromLine:character:inString:
  */
 - (NSInteger) characterIndexFromLine:(int)line character:(int)character inString:(NSString*) str
 {
@@ -1421,14 +1397,13 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     return -1;
 }
 
+
 /*
- 
- - highlightErrors
- 
+ * - highlightErrors
  */
 - (void)highlightErrors
 {
-    SMLTextView* textView = [document valueForKey:ro_MGSFOTextView];
+    SMLTextView* textView = [self.fragaria.docSpec valueForKey:ro_MGSFOTextView];
     NSString* text = [self completeString];
     
     // Clear all highlights
@@ -1479,13 +1454,10 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 }
 
 
-#pragma mark -
-#pragma mark Text change observation
+#pragma mark - Text change observation
 
 /*
- 
- - textDidChange:
- 
+ * - textDidChange:
  */
 - (void)textDidChange:(NSNotification *)notification
 {
@@ -1505,14 +1477,11 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 }
 
 
-#pragma mark -
-#pragma mark NSTimer callbacks
-/*
- 
- - autocompleteWordsTimerSelector:
- 
- */
+#pragma mark - NSTimer callbacks
 
+/*
+ * - autocompleteWordsTimerSelector:
+ */
 - (void)autocompleteWordsTimerSelector:(NSTimer *)theTimer
 {
 	SMLTextView *textView = [theTimer userInfo];
@@ -1537,13 +1506,11 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	}
 }
 
-#pragma mark -
-#pragma mark SMLAutoCompleteDelegate
+
+#pragma mark - SMLAutoCompleteDelegate
 
 /*
- 
- - completions
- 
+ * - completions
  */
 - (NSArray*) completions
 {

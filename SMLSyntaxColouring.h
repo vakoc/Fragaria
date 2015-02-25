@@ -35,7 +35,7 @@ Copyright 2004-2009 Peter Borg
  **/
 @interface SMLSyntaxColouring : NSObject <SMLAutoCompleteDelegate> {
 	
-	id document;
+    //	id document;
 	
 	SMLLayoutManager *layoutManager;
 	
@@ -64,10 +64,10 @@ Copyright 2004-2009 Peter Borg
 /// @name Instance Methods
 
 /**
- *  Initialize a new instance from the docSpec.
- *  @param document The docspec for this instance.
+ *  Initialize a new instance using a reference to an owning Fragaria..
+ *  @param fragaria The instance of fragaria associated with this instance.
  **/
-- (id)initWithDocument:(id)document;
+- (id)initWithFragaria:(MGSFragaria *)fragaria;
 
 /**
  *  Recolor the range that is visible.
