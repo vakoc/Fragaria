@@ -42,7 +42,7 @@ Copyright 2004-2009 Peter Borg
 /// @name Properties
 
 /** The owning controller for instances of this class. */
-@property (nonatomic,weak,readonly) MGSFragaria *fragaria;
+@property (nonatomic, weak, readonly) MGSFragaria *fragaria;
 
 /** The NSUndoManager instance used in this class. */
 @property (strong) NSUndoManager *undoManager;
@@ -53,7 +53,8 @@ Copyright 2004-2009 Peter Borg
 /** The syntax colouring delegate */
 @property (weak) id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
 
-
+/** Specifies if the syntax colourer has to be disabled or not. */
+@property (nonatomic, getter=isSyntaxColoured) BOOL syntaxColoured;
 
 
 /// @name Instance Methods

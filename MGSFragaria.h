@@ -18,7 +18,7 @@
 #pragma mark - externs
 
 // BOOL
-extern NSString * const MGSFOIsSyntaxColoured;
+extern NSString * const MGSFOIsSyntaxColoured DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOShowLineNumberGutter;
 extern NSString * const MGSFOHasVerticalScroller;
 extern NSString * const MGSFODisableScrollElasticity;

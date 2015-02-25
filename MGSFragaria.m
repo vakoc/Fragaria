@@ -241,17 +241,12 @@ char kcLineWrapPrefChanged;
  */
 - (void)setIsSyntaxColoured:(BOOL)value
 {
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOIsSyntaxColoured];
-    [self reloadString];
-    // @todo: (jsd) there's a bug somewhere in the interaction. In the demo app if I
-    // turn ON line wrapping then turn OFF highlighting, then the ruler view
-    // corrupts its display. Turning on highlighting also doesn't affect the text.
+    [self.syntaxColouring setSyntaxColoured:value];
 }
 
 - (BOOL)isSyntaxColoured
 {
-    NSNumber *value = [self objectForKey:MGSFOIsSyntaxColoured];
-    return [value boolValue];
+    return [self.syntaxColouring isSyntaxColoured];
 }
 
 
@@ -408,7 +403,6 @@ char kcLineWrapPrefChanged;
             [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
             [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
             @"Standard", MGSFOSyntaxDefinitionName,
-            [defaults objectForKey:MGSFragariaPrefsSyntaxColourNewDocuments], MGSFOIsSyntaxColoured,
             [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
             [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
             @(YES), MGSFOShowsWarningsInGutter,
@@ -555,7 +549,7 @@ char kcLineWrapPrefChanged;
         // Create the Sets containing the valid setter/getter combinations for the Docspec
         
         // Define read/write keys
-        self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter,
+        self.objectSetterKeys = [NSSet setWithObjects:MGSFOShowLineNumberGutter,
                                  MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
                                  MGSFOSyntaxDefinitionName,
                                  MGSFOLineWrap,
@@ -611,6 +605,9 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFOAutoCompleteDelegate]) {
         [self setAutoCompleteDelegate:object];
         return;
+    } else if ([key isEqual:MGSFOIsSyntaxColoured]) {
+        [self setIsSyntaxColoured:[object boolValue]];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -632,6 +629,8 @@ char kcLineWrapPrefChanged;
         return self.textViewDelegate;
     else if ([key isEqual:MGSFOAutoCompleteDelegate])
         return self.autoCompleteDelegate;
+    else if ([key isEqual:MGSFOIsSyntaxColoured])
+        return @(self.isSyntaxColoured);
     
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];

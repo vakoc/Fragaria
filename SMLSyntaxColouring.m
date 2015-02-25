@@ -108,7 +108,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
         _fragaria = fragaria;
 
-
         // configure the document text view
         NSTextView *textView = [self.fragaria.docSpec valueForKey:ro_MGSFOTextView];
         NSAssert([textView isKindOfClass:[NSTextView class]], @"bad textview");
@@ -164,9 +163,26 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         [defaultsController addObserver:self forKeyPath:@"values.FragariaOnlyColourTillTheEndOfLine" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
         
         [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:@"LineWrapChanged"];
+        
+        [self setSyntaxColoured:[[NSUserDefaults standardUserDefaults] boolForKey:MGSFragariaPrefsSyntaxColourNewDocuments]];
     }
     
     return self;
+}
+
+
+/*
+ * - setSyntaxColoured:
+ */
+- (void)setSyntaxColoured:(BOOL)syntaxColoured
+{
+    if (!_syntaxColoured && syntaxColoured) {
+        _syntaxColoured = YES;
+        [self recolourExposedRange];
+    } else if (_syntaxColoured && !syntaxColoured) {
+        _syntaxColoured = NO;
+        [self removeAllColours];
+    }
 }
 
 
@@ -336,7 +352,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 
 /*
- * - pageRecolour
+ * - recolourExposedRange
  */
 - (void)recolourExposedRange
 {
@@ -1261,7 +1277,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (BOOL)isSyntaxColouringRequired
 {
-    return ([[self.fragaria.docSpec valueForKey:MGSFOIsSyntaxColoured] boolValue] && self.syntaxDefinition.syntaxDefinitionAllowsColouring ? YES : NO);
+    return (self.isSyntaxColoured && self.syntaxDefinition.syntaxDefinitionAllowsColouring ? YES : NO);
 }
 
 
