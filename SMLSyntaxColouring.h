@@ -50,6 +50,7 @@ Copyright 2004-2009 Peter Borg
 /** The syntax definition that determines how to color the text. */
 @property (strong) MGSSyntaxDefinition *syntaxDefinition;
 
+/** The syntax colouring delegate */
 @property id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
 
 
