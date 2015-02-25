@@ -72,7 +72,7 @@
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView
 {
-    self = [self initWithScrollView:aScrollView fragaria:nil];
+    return [self initWithScrollView:aScrollView fragaria:nil];
 }
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(MGSFragaria *)fragaria
