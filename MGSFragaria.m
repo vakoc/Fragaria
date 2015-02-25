@@ -78,7 +78,26 @@ char kcLineWrapPrefChanged;
 @synthesize objectGetterKeys;
 
 
-#pragma mark - Properties - Content Strings
+#pragma mark - Properties - Document Properties
+
+/*
+ * @property documentName:
+ * (synthesized)
+ */
+
+
+/*
+ * @property syntaxDefinitionName:
+ */
+- (void)setSyntaxDefinitionName:(NSString *)value
+{
+    [self setObject:value forKey:MGSFOSyntaxDefinitionName];
+}
+
+- (NSString *)syntaxDefinitionName
+{
+    return [self objectForKey:MGSFOSyntaxDefinitionName];
+}
 
 /*
  * @property string:
@@ -116,15 +135,7 @@ char kcLineWrapPrefChanged;
 }
 
 
-#pragma mark - Properties - Document Support
-
-/*
- * @property documentName:
- * (synthesized)
- */
-
-
-#pragma mark - Properties - Appearance and Display
+#pragma mark - Properties - Overall Appearance and Display
 
 /*
  * @property hasVerticalScroller:
@@ -240,20 +251,6 @@ char kcLineWrapPrefChanged;
 {
     NSNumber *value = [self objectForKey:MGSFOIsSyntaxColoured];
     return [value boolValue];
-}
-
-
-/*
- * @property syntaxDefinitionName:
- */
-- (void)setSyntaxDefinitionName:(NSString *)value
-{
-    [self setObject:value forKey:MGSFOSyntaxDefinitionName];
-}
-
-- (NSString *)syntaxDefinitionName
-{
-    return [self objectForKey:MGSFOSyntaxDefinitionName];
 }
 
 
