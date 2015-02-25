@@ -243,7 +243,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	NSString *definitionName = [document valueForKey:MGSFOSyntaxDefinitionName];
 	if (definitionName && [definitionName length] > 0) return definitionName;
 
-	NSString *documentExtension = [[document valueForKey:MGSFODocumentName] pathExtension];
+	NSString *documentExtension = self.fragaria.documentName.pathExtension;
 	
     NSString *lowercaseExtension = nil;
     

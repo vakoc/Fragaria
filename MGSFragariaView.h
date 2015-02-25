@@ -72,7 +72,7 @@
 
 @property (strong, readonly) MGSFragaria *fragaria;   ///< A reference to the Fragaria instance owned by this view.
 
-@property (assign) NSTextView *textView;              ///< Provides direct access to Fragaria's text view instance.
+@property (assign) SMLTextView *textView;              ///< Provides direct access to Fragaria's text view instance.
 
 
 @end

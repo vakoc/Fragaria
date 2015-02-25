@@ -7,7 +7,6 @@
 //
 
 #import "MGSFragaria.h"
-#import "MGSFragariaFramework.h"
 #import "FRAFontTransformer.h"
 #import "MGSFragariaPrivate.h"
 #import "MGSSyntaxErrorController.h"
@@ -23,7 +22,6 @@ NSString * const MGSFOShowsWarningsInGutter = @"showsWarningsInGutter";
 
 // string
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
-NSString * const MGSFODocumentName = @"name";
 
 // class name strings
 // TODO: expose these to allow subclass name definition
@@ -80,7 +78,26 @@ char kcLineWrapPrefChanged;
 @synthesize objectGetterKeys;
 
 
-#pragma mark - Properties - Content Strings
+#pragma mark - Properties - Document Properties
+
+/*
+ * @property documentName:
+ * (synthesized)
+ */
+
+
+/*
+ * @property syntaxDefinitionName:
+ */
+- (void)setSyntaxDefinitionName:(NSString *)value
+{
+    [self setObject:value forKey:MGSFOSyntaxDefinitionName];
+}
+
+- (NSString *)syntaxDefinitionName
+{
+    return [self objectForKey:MGSFOSyntaxDefinitionName];
+}
 
 /*
  * @property string:
@@ -118,21 +135,7 @@ char kcLineWrapPrefChanged;
 }
 
 
-#pragma mark - Properties - Appearance and Display
-
-/*
- * @property documentName:
- */
-- (void)setDocumentName:(NSString *)value
-{
-    [self setObject:value forKey:MGSFODocumentName];
-}
-
-- (NSString *)documentName
-{
-    return [self objectForKey:MGSFODocumentName];
-}
-
+#pragma mark - Properties - Overall Appearance and Display
 
 /*
  * @property hasVerticalScroller:
@@ -248,20 +251,6 @@ char kcLineWrapPrefChanged;
 {
     NSNumber *value = [self objectForKey:MGSFOIsSyntaxColoured];
     return [value boolValue];
-}
-
-
-/*
- * @property syntaxDefinitionName:
- */
-- (void)setSyntaxDefinitionName:(NSString *)value
-{
-    [self setObject:value forKey:MGSFOSyntaxDefinitionName];
-}
-
-- (NSString *)syntaxDefinitionName
-{
-    return [self objectForKey:MGSFOSyntaxDefinitionName];
 }
 
 
@@ -507,7 +496,7 @@ char kcLineWrapPrefChanged;
         
         // Define read/write keys
         self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter,
-                                 MGSFOHasVerticalScroller, MGSFODisableScrollElasticity, MGSFODocumentName,
+                                 MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
                                  MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate,
                                  MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate, MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,

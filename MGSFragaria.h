@@ -27,7 +27,6 @@ extern NSString * const MGSFOShowsWarningsInGutter;
 
 // string
 extern NSString * const MGSFOSyntaxDefinitionName;
-extern NSString * const MGSFODocumentName;
 
 // integer
 extern NSString * const MGSFOGutterWidth;
@@ -47,19 +46,17 @@ extern NSString * const ro_MGSFOLineNumbers; // readonly
 extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 
 
-@class MGSTextMenuController;
+@class MGSTextMenuController;               // @todo: (jsd) can be removed when the textMenuController deprecation is removed.
 
+#import "MGSBreakpointDelegate.h"           // Justification: public delegate.
+#import "MGSDragOperationDelegate.h"        // Justification: public delegate.
+#import "MGSFragariaTextViewDelegate.h"     // Justification: public delegate.
+#import "SMLSyntaxColouringDelegate.h"      // Justification: public delegate.
 
-#import "MGSBreakpointDelegate.h"
-#import "MGSDragOperationDelegate.h"
-#import "MGSFragariaTextViewDelegate.h"
-#import "SMLSyntaxColouringDelegate.h"
-
-#import "MGSFragariaPreferences.h"
-#import "SMLSyntaxError.h"
-#import "SMLSyntaxDefinition.h"
-#import "MGSFragariaView.h"
-#import "SMLTextView.h"
+#import "MGSFragariaPreferences.h"          // Justification: currently exposed, but to be killed of later.
+#import "SMLSyntaxError.h"                  // Justification: external users require it.
+#import "MGSFragariaView.h"                 // Justification: external users require it.
+#import "SMLTextView.h"                     // Justification: external users require it / textView property is exposed.
 
 
 /**
@@ -72,9 +69,10 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 @interface MGSFragaria : NSObject
 
 
-/// @name Properties - Content Strings
-#pragma mark - Properties - Content Strings
-
+/// @name Properties - Document Properties
+#pragma mark - Properties - Document Support
+@property (nonatomic, strong) NSString *documentName;                 ///< The document name. If set, Fragaria can try to guess the syntax definition.
+@property (nonatomic, assign) NSString *syntaxDefinitionName;         ///< Specified the current syntax definition name. @todo: (jsd) fix strong, currently duplicate retain
 @property (nonatomic, assign) NSString * string;                      ///< The plain text string of the text editor.
 @property (nonatomic, assign) NSAttributedString *attributedString;   ///< The text editor string with attributes.
 
@@ -85,18 +83,19 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 @property (nonatomic, strong, readonly) NSAttributedString *attributedStringWithTemporaryAttributesApplied;
 
 
-/// @name Properties - Appearance and Display
-#pragma mark - Properties - Appearance and Display
+/// @name Properties - Overall Appearance and Display
+#pragma mark - Properties - Overall Appearance and Display
 
-@property (nonatomic, assign) NSString *documentName;         ///< The document name. @todo: (jsd) fix strong, currently being retained elsewhere
 @property (nonatomic, assign) BOOL hasVerticalScroller;       ///< Indicates whether or not the vertical scroller should be displayed.
+@property (nonatomic, assign) BOOL isSyntaxColoured;          ///< Specifies whether the document shall be syntax highlighted.
 @property (nonatomic, assign) BOOL lineWrap;                  ///< Indicates whether or not line wrap is enabled.
 @property (nonatomic, assign) BOOL scrollElasticityDisabled;  ///< Indicates whether or not the "rubber band" effect is disabled.
 @property (nonatomic, assign) BOOL showsLineNumbers;          ///< Indicates whether or not line numbers are displayed.
 @property (nonatomic, assign) BOOL showsWarningsInGutter;     ///< Indicates whether or not error warnings are displayed.
 @property (nonatomic, assign) NSUInteger startingLineNumber;  ///< Specifies the starting line number in the text view.
-@property (nonatomic, assign) BOOL isSyntaxColoured;          ///< Specifies whether the document shall be syntax highlighted.
-@property (nonatomic, assign) NSString *syntaxDefinitionName; ///< Specified the current syntax definition name. @todo: (jsd) fix strong, currently duplicate retain
+
+
+/// @name Properties - Syntax Errors
 
 /**
  *  When set to an array containing SMLSyntaxError instances, Fragaria
