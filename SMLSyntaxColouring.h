@@ -33,28 +33,12 @@ Copyright 2004-2009 Peter Borg
 /**
  *  Performs syntax colouring on the text editor document.
  **/
-@interface SMLSyntaxColouring : NSObject <SMLAutoCompleteDelegate> {
-	
-	id document;
-	
-	SMLLayoutManager *layoutManager;
-	
-	NSInteger lastCursorLocation;
-	
-	NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
-					*stringsColour, *variablesColour, *attributesColour,  *numbersColour;
-    
-    MGSSyntaxDefinition *syntaxDefinition;
-    
-	NSUndoManager *undoManager;
-    
-	NSTimer *autocompleteWordsTimer;
-}
+@interface SMLSyntaxColouring : NSObject <SMLAutoCompleteDelegate>
 
 
 /// @name Properties
 
-@property (nonatomic,weak) MGSFragaria *fragaria;            ///< The owning controller for instances of this class.
+@property (nonatomic,weak,readonly) MGSFragaria *fragaria;   ///< The owning controller for instances of this class.
 
 @property (strong) NSUndoManager *undoManager;               ///< The NSUndoManager instance used in this class.
 
@@ -64,10 +48,10 @@ Copyright 2004-2009 Peter Borg
 /// @name Instance Methods
 
 /**
- *  Initialize a new instance from the docSpec.
- *  @param document The docspec for this instance.
+ *  Initialize a new instance using a reference to an owning Fragaria..
+ *  @param fragaria The instance of fragaria associated with this instance.
  **/
-- (id)initWithDocument:(id)document;
+- (id)initWithFragaria:(MGSFragaria *)fragaria;
 
 /**
  *  Recolor the range that is visible.

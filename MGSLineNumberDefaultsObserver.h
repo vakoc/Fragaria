@@ -25,28 +25,36 @@
 #import <Cocoa/Cocoa.h>
 
 @class SMLTextView;
+@class MGSFragaria;
 
 
 /**
- *  SMLLineNumbers observes for some basic settings changes, and then
+ *  MGSLineNumberDefaultsObserver observes for some basic settings changes, and then
  *  updates the MGSLineNumberView. It also provides the initial appearance
  *  conditions.
- *  @todo This can probably be added to MGSLineNumberView. The remaining
- *        functionality is really bare-banes and pretty basic.
+ *  @todo: (jsd) Essentially the only thing this class currently does is monitor
+ *         changes in defaults. This should eventually be completely replaced with
+ *         properties in MGSFragaria.
  **/
-@interface SMLLineNumbers : NSObject {
-    id document;
-}
+@interface MGSLineNumberDefaultsObserver : NSObject
+
 
 /**
- *  Initializes the instances with the given docSpec.
- *  @param theDocument The docSpec document for this instance.
+ *  Initializes the instances with the given Fragaria instance.
+ *  @param fragaria The Fragaria instance.
  **/
-- (id)initWithDocument:(id)theDocument;
+- (instancetype)initWithFragaria:(MGSFragaria *)fragaria;
+
 
 /**
  *  Updates the MGSLineNumberView instance with the new appearance settings.
  **/
 - (void) updateGutterView;
+
+
+/**
+ *  Exposes the fragaria reference.
+ **/
+@property (nonatomic,weak,readonly) MGSFragaria *fragaria;
 
 @end

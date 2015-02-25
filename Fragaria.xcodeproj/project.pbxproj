@@ -37,7 +37,7 @@
 		AB3971CB118C1F8A00AEF388 /* MGSSyntaxController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */; };
 		AB39723A118C27E700AEF388 /* SyntaxDefinitions.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */; };
 		AB3972E5118C28E700AEF388 /* Syntax Definitions in Resources */ = {isa = PBXBuildFile; fileRef = AB397291118C28E700AEF388 /* Syntax Definitions */; };
-		AB41C1011191FDFE004F0CB5 /* SMLLineNumbers.m in Sources */ = {isa = PBXBuildFile; fileRef = AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */; };
+		AB41C1011191FDFE004F0CB5 /* MGSLineNumberDefaultsObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = AB41C1001191FDFE004F0CB5 /* MGSLineNumberDefaultsObserver.m */; };
 		AB41C1051191FFCB004F0CB5 /* MGSFragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */; };
 		AB472B6F129972E400202CB5 /* MGSTextMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB472B6E129972E400202CB5 /* MGSTextMenuController.m */; };
 		AB472BF41299BBB100202CB5 /* MGSExtraInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */; };
@@ -194,9 +194,9 @@
 		AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxController.m; sourceTree = "<group>"; };
 		AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SyntaxDefinitions.plist; sourceTree = "<group>"; };
 		AB397291118C28E700AEF388 /* Syntax Definitions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Syntax Definitions"; sourceTree = "<group>"; };
-		AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = SMLLineNumbers.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		AB41C1001191FDFE004F0CB5 /* MGSLineNumberDefaultsObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MGSLineNumberDefaultsObserver.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragaria.m; sourceTree = "<group>"; tabWidth = 4; };
-		AB41C1261192049F004F0CB5 /* SMLLineNumbers.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = SMLLineNumbers.h; sourceTree = "<group>"; tabWidth = 4; };
+		AB41C1261192049F004F0CB5 /* MGSLineNumberDefaultsObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberDefaultsObserver.h; sourceTree = "<group>"; tabWidth = 4; };
 		AB472B6E129972E400202CB5 /* MGSTextMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = MGSTextMenuController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		AB472B7B1299732F00202CB5 /* MGSTextMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTextMenuController.h; sourceTree = "<group>"; };
 		AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSExtraInterfaceController.m; sourceTree = "<group>"; };
@@ -416,8 +416,8 @@
 		01BB1BEE1A7964DC006C0056 /* Gutter Text View */ = {
 			isa = PBXGroup;
 			children = (
-				AB41C1261192049F004F0CB5 /* SMLLineNumbers.h */,
-				AB41C1001191FDFE004F0CB5 /* SMLLineNumbers.m */,
+				AB41C1261192049F004F0CB5 /* MGSLineNumberDefaultsObserver.h */,
+				AB41C1001191FDFE004F0CB5 /* MGSLineNumberDefaultsObserver.m */,
 				017FD5861A7A992700B305FB /* MGSLineNumberView.h */,
 				017FD5871A7A992700B305FB /* MGSLineNumberView.m */,
 			);
@@ -955,7 +955,7 @@
 				D0E520F61A88EB6B005CB80B /* MGSFragariaPreferencesController.m in Sources */,
 				AB69B6DA118B7F2A00903D1D /* SMLLayoutManager.m in Sources */,
 				AB3971CB118C1F8A00AEF388 /* MGSSyntaxController.m in Sources */,
-				AB41C1011191FDFE004F0CB5 /* SMLLineNumbers.m in Sources */,
+				AB41C1011191FDFE004F0CB5 /* MGSLineNumberDefaultsObserver.m in Sources */,
 				D0C145C71A85F2C900DDE90A /* SMLTextView+MGSDragging.m in Sources */,
 				AB41C1051191FFCB004F0CB5 /* MGSFragaria.m in Sources */,
 				D0E521061A90DC02005CB80B /* MGSSyntaxErrorController.m in Sources */,

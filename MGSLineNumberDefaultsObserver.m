@@ -26,61 +26,53 @@
 #import "MGSFragariaFramework.h"
 
 
-@interface SMLLineNumbers()
-
-@property (strong) id document;
-
-@end
+@implementation MGSLineNumberDefaultsObserver
 
 
-@implementation SMLLineNumbers
+#pragma mark - Instance methods
 
-@synthesize document;
-
-#pragma mark -
-#pragma mark Instance methods
 /*
- 
- - init
- 
+ * - init
  */
 - (id)init
 {
-	self = [self initWithDocument:nil];
+	self = [self initWithFragaria:nil];
 	
 	return self;
 }
 
 
+/*
+ * - initWithFragaria
+ */
+- (instancetype)initWithFragaria:(MGSFragaria *)fragaria
+{
+    if ((self = [super init]))
+    {
+        _fragaria = fragaria;
+
+        NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+        [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
+    }
+
+    return self;
+}
+
+
+/*
+ * - dealloc
+ */
 -(void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self ];
 }
 
-/*
- 
- - initWithDocument:
- 
- */
-- (id)initWithDocument:(id)theDocument
-{
-	if ((self = [super init])) {
-		
-		self.document = theDocument;
-    
-		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
-	}
-	
-    return self;
-}
 
-#pragma mark -
-#pragma mark KVO
+
+#pragma mark - KVO
+
 /*
- 
- - observeValueForKeyPath:ofObject:change:context
- 
+ * - observeValueForKeyPath:ofObject:change:context
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -91,20 +83,26 @@
 	}
 }
 
-#pragma mark -
-#pragma mark View updating
 
+#pragma mark - View updating
 
-- (void) updateGutterView {
+/*
+ * - updateGutterView
+ */
+- (void) updateGutterView
+{
+    // @todo: We're still using the docSpec indirectly, but at least we're not longer dependent
+    //        upon it for initialization. As some of these properties are internally exposed,
+    //        we can start to eliminate getting them from the docSpec.
+
     BOOL showGutter;
     
     // get editor views
-    NSScrollView *textScrollView = (NSScrollView *)[document valueForKey:ro_MGSFOScrollView];
-
-    MGSLineNumberView *ruler;
+    NSScrollView *textScrollView = [self.fragaria.docSpec valueForKey:ro_MGSFOScrollView];
+    MGSLineNumberView *ruler = [self.fragaria.docSpec valueForKey:ro_MGSFOGutterView];
     
-    showGutter = [[document valueForKey:MGSFOShowLineNumberGutter] boolValue];
-    ruler = [document valueForKey:ro_MGSFOGutterView];
+    showGutter = [[self.fragaria.docSpec valueForKey:MGSFOShowLineNumberGutter] boolValue];
+
     if (showGutter) {
         [ruler setBackgroundColor:[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f]];
         [ruler setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]]];

@@ -29,41 +29,36 @@
  *  The SMLTextView is the text view used by Fragaria, and offers rich integration
  *  possibilities with the rest of the MGSFragaria framework.
  **/
-@interface SMLTextView : NSTextView {
-	@private
-	NSInteger lineHeight;
-    BOOL isDragging;
-	NSPoint startPoint;
-    NSPoint startOrigin;
-	CGFloat pageGuideX;
-	NSColor *pageGuideColour;
-	
-	BOOL showPageGuide;
-    
-    NSRect currentLineRect;
-	
-	MGSFragaria *fragaria;
-    BOOL lineWrap;
-}
+@interface SMLTextView : NSTextView
 
 
 /// @name Properties
 
-@property (strong) MGSFragaria *fragaria;                            ///< A reference to the owning Fragaria instance.
+@property (nonatomic,assign,readonly) MGSFragaria *fragaria;         ///< A reference to the owning Fragaria instance.
+
 @property (nonatomic) BOOL lineWrap;                                 ///< Indicates whether or not line wrap (word wrap) is enabled.
+
 @property (readonly) NSMutableIndexSet *inspectedCharacterIndexes;   ///< Indicates the character indices that have been inspected.
 
 @property (nonatomic) BOOL highlightCurrentLine;                     ///< Indicates whether or not the current line is highlighted.
+
 @property NSColor *currentLineHighlightColor;                        ///< Indicates the color to use for current line highlighting.
 
 
 /// @name Instance Methods
 
-- (void)setDefaults;          ///< Sets the initial defaults for the text view.
+/**
+ *  Standard initWithFrame, also allowing `fragaria` assignment at same time.
+ *  @param frame The frame for the view.
+ *  @param fragaria The instance of Fragaria to associate with this view.
+ **/
+- (id)initWithFrame:(NSRect)frame fragaria:(MGSFragaria *)fragaria;
 
-- (void)setTextDefaults;      ///< Sets the initial text defaults for the text view.
+- (void)setDefaults;                                                  ///< Sets the initial defaults for the text view.
 
-- (NSInteger)lineHeight;      ///< Returns the default line height for the current font.
+- (void)setTextDefaults;                                              ///< Sets the initial text defaults for the text view.
+
+- (NSInteger)lineHeight;                                              ///< Returns the default line height for the current font.
 
 /**
  *  Set the width of every tab by first checking the size of the tab in spaces in the current

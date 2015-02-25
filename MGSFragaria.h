@@ -40,7 +40,6 @@ extern NSString * const ro_MGSFOGutterView; // readonly, new
 // NSObject
 extern NSString * const MGSFODelegate;
 extern NSString * const MGSFOBreakpointDelegate;
-extern NSString * const MGSFOAutoCompleteDelegate;
 extern NSString * const MGSFOSyntaxColouringDelegate;
 extern NSString * const ro_MGSFOLineNumbers; // readonly
 extern NSString * const ro_MGSFOSyntaxColouring; // readonly
@@ -52,6 +51,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 #import "MGSDragOperationDelegate.h"        // Justification: public delegate.
 #import "MGSFragariaTextViewDelegate.h"     // Justification: public delegate.
 #import "SMLSyntaxColouringDelegate.h"      // Justification: public delegate.
+#import "SMLAutoCompleteDelegate.h"         // Justification: public delegate.
 
 #import "MGSFragariaPreferences.h"          // Justification: currently exposed, but to be killed of later.
 #import "SMLSyntaxError.h"                  // Justification: external users require it.
@@ -96,6 +96,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 
 
 /// @name Properties - Syntax Errors
+#pragma mark - Properties - Syntax Errors
 
 /**
  *  When set to an array containing SMLSyntaxError instances, Fragaria
@@ -105,6 +106,17 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
  *   - providing a description of the syntax errors in popovers.
  **/
 @property (nonatomic, assign) NSArray *syntaxErrors;
+
+
+/// @name Properties - Delegates
+#pragma mark - Properties - Delegates
+
+/**
+ *  This property allows you to specify your own delegate that can
+ *  specify words for autocompletion. If you do not specify this,
+ *  then the internal autocomplete delegate will be used.
+ **/
+@property (nonatomic, strong) id<SMLAutoCompleteDelegate> autoCompleteDelegate;
 
 
 /// @name Properties - System Components
@@ -138,7 +150,7 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 + (void)docSpec:(id)docSpec setString:(NSString *)string;
 
 /**
- *  Set's the docSpec's string, possible with options.
+ *  Set's the docSpec's string, possibly with options.
  *  @param docSpec The docSpec whose string is to be set.
  *  @param string The string to set.
  *  @param options is a dictionary of options. Currently `undo` can be `YES` or `NO`..
@@ -172,13 +184,6 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
  **/
 + (NSAttributedString *)attributedStringForDocSpec:(id)docSpec;
 
-/**
- *  Returns the attributed string for the given docSpec, with temporary
- *  applied as attributes.
- *  @param docSpec The docSpec for which to return the string.
- **/
-+ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec;
-
 
 /// @name Class Methods (deprecated)
 #pragma mark - Class Methods (deprecated)
@@ -199,6 +204,13 @@ extern NSString * const ro_MGSFOSyntaxColouring; // readonly
  *  @param name Deprecated.
  **/
 + (NSImage *)imageNamed:(NSString *)name DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Returns the attributed string for the given docSpec, with temporary
+ *  applied as attributes.
+ *  @param docSpec The docSpec for which to return the string.
+ **/
++ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec DEPRECATED_ATTRIBUTE;
 
 
 /// @name Instance Methods

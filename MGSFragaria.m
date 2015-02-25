@@ -42,7 +42,6 @@ NSString * const ro_MGSFOGutterView = @"firstVerticalRuler"; // readonly, new
 // NSObject
 NSString * const MGSFODelegate = @"delegate";
 NSString * const MGSFOBreakpointDelegate = @"breakpointDelegate";
-NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 NSString * const MGSFOSyntaxColouringDelegate = @"syntaxColouringDelegate";
 NSString * const ro_MGSFOLineNumbers = @"lineNumbers"; // readonly
 NSString * const ro_MGSFOSyntaxColouring = @"syntaxColouring"; // readonly
@@ -72,6 +71,8 @@ char kcLineWrapPrefChanged;
 
 @synthesize extraInterfaceController = _extraInterfaceController;
 @synthesize syntaxErrorController = _syntaxErrorController;
+
+@synthesize internalAutoCompleteDelegate = _internalAutoCompleteDelegate; // @todo: (jsd) temp, see accessors.
 
 @synthesize docSpec;
 @synthesize objectSetterKeys;
@@ -131,7 +132,18 @@ char kcLineWrapPrefChanged;
  */
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
 {
-    return [[self class] attributedStringWithTemporaryAttributesAppliedForDocSpec:self.docSpec];
+    // recolour the entire textview content
+
+    // @todo: (jsd) use THIS line when syntaxColouring is made into a property:
+    //SMLSyntaxColouring *syntaxColouring = self.syntaxColouring;
+    SMLSyntaxColouring *syntaxColouring = [[SMLSyntaxColouring alloc] initWithFragaria:self];
+
+    [syntaxColouring pageRecolourTextView:self.textView options: @{ @"colourAll" : @(YES) }];
+
+    // get content with layout manager temporary attributes persisted
+    SMLLayoutManager *layoutManager = (SMLLayoutManager *)[self.textView layoutManager];
+
+    return [layoutManager attributedStringWithTemporaryAttributesApplied];
 }
 
 
@@ -159,14 +171,14 @@ char kcLineWrapPrefChanged;
 - (void)setLineWrap:(BOOL)value
 {
     [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOLineWrap];
-    [(SMLTextView *)self.textView setLineWrap:value];
+    [self.textView setLineWrap:value];
     [self updateGutterView];
     [self updateErrorHighlighting];
 }
 
 - (BOOL)lineWrap
 {
-    return [(SMLTextView *)self.textView lineWrap];
+    return [self.textView lineWrap];
 }
 
 
@@ -254,6 +266,8 @@ char kcLineWrapPrefChanged;
 }
 
 
+#pragma mark - Properties - Syntax Errors
+
 /*
  * @property syntaxErrors:
  */
@@ -272,6 +286,14 @@ char kcLineWrapPrefChanged;
 {
     return self.syntaxErrorController.syntaxErrors;
 }
+
+
+#pragma mark - Properties - Delegates
+
+/*
+ * @property autoCompleteDelegate
+ * (synthesized)
+ */
 
 
 #pragma mark - Properties - System Components
@@ -294,14 +316,27 @@ char kcLineWrapPrefChanged;
 
 /*
  * @property syntaxErrorController
- * (synthesized)
  */
+- (void)setSyntaxErrorController:(MGSSyntaxErrorController *)syntaxErrorController
+{
+    _syntaxErrorController = syntaxErrorController;
+}
+
+- (MGSSyntaxErrorController *)syntaxErrorController
+{
+    if (!_syntaxErrorController)
+    {
+        _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
+    }
+
+    return _syntaxErrorController;
+}
 
 
 /*
  * @property textView
  */
-- (NSTextView *)textView
+- (SMLTextView *)textView
 {
     return [self objectForKey:ro_MGSFOTextView];
 }
@@ -403,23 +438,6 @@ char kcLineWrapPrefChanged;
 }
 
 
-/*
- * + attributedStringWithTemporaryAttributesAppliedForDocSpec:
- */
-+ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec
-{
-    // recolour the entire textview content
-    SMLTextView *textView = [docSpec valueForKey:ro_MGSFOTextView];
-    SMLSyntaxColouring *syntaxColouring = [docSpec valueForKey:ro_MGSFOSyntaxColouring];
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:YES], @"colourAll", nil];
-    [syntaxColouring pageRecolourTextView:textView options: options];
-
-    // get content with layout manager temporary attributes persisted
-    SMLLayoutManager *layoutManager = (SMLLayoutManager *)[textView layoutManager];
-    return [layoutManager attributedStringWithTemporaryAttributesApplied];
-}
-
-
 #pragma mark - Class methods (deprecated)
 
 /*
@@ -459,6 +477,15 @@ char kcLineWrapPrefChanged;
     return nil;
 }
 
+/*
+ * + attributedStringWithTemporaryAttributesAppliedForDocSpec:
+ */
++ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec
+{
+    NSLog(@"This method is deprecated and has no effect. Use the property "
+          "attributedStringWithTemporaryAttributesApplied instead.");
+    return nil;
+}
 
 
 #pragma mark - Instance Methods
@@ -498,7 +525,7 @@ char kcLineWrapPrefChanged;
         self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter,
                                  MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
                                  MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate,
-                                 MGSFOAutoCompleteDelegate, MGSFOSyntaxColouringDelegate, MGSFOLineWrap,
+                                 MGSFOSyntaxColouringDelegate, MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
                                  nil];
         
@@ -507,9 +534,6 @@ char kcLineWrapPrefChanged;
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
-
-        // Create the syntaxErrorController
-        _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
 	}
 
 	return self;
@@ -537,7 +561,7 @@ char kcLineWrapPrefChanged;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
-        [(id)self.docSpec setValue:object forKey:key];
+        [self.docSpec setValue:object forKey:key];
     }
     if ([key isEqual:MGSFODelegate]) {
         [[self textView] setDelegate:object];
@@ -588,17 +612,15 @@ char kcLineWrapPrefChanged;
 	[textScrollView setPostsFrameChangedNotifications:YES];
 		
 	// create textview
-	SMLTextView *textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
-    [textView setFragaria:self];
+	 SMLTextView *textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height) fragaria:self];
 	[textScrollView setDocumentView:textView];
 
     // create line numbers
-	SMLLineNumbers *lineNumbers = [[SMLLineNumbers alloc] initWithDocument:self.docSpec];
+	MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithFragaria:self];
 	[self.docSpec setValue:lineNumbers forKey:ro_MGSFOLineNumbers];
 
     MGSLineNumberView *lineNumberView;
-    lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView];
-	lineNumberView.fragaria = self;
+    lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView fragaria:self];
     [textScrollView setVerticalRulerView:lineNumberView];
     [textScrollView setHasVerticalRuler:YES];
     [textScrollView setHasHorizontalRuler:NO];
@@ -609,11 +631,9 @@ char kcLineWrapPrefChanged;
     [self.docSpec setValue:lineNumberView forKey:ro_MGSFOGutterView];
 	
 	// add syntax colouring
-	SMLSyntaxColouring *syntaxColouring = [[SMLSyntaxColouring alloc] initWithDocument:self.docSpec];
-    syntaxColouring.fragaria = self;
+	SMLSyntaxColouring *syntaxColouring = [[SMLSyntaxColouring alloc] initWithFragaria:self];
 	[self.docSpec setValue:syntaxColouring forKey:ro_MGSFOSyntaxColouring];
-	[self.docSpec setValue:syntaxColouring forKey:MGSFOAutoCompleteDelegate];
-    
+
 	// add scroll view to content view
 	[contentView addSubview:[self.docSpec valueForKey:ro_MGSFOScrollView]];
 	
@@ -638,7 +658,7 @@ char kcLineWrapPrefChanged;
  */
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options
 {
-    SMLTextView *textView = (SMLTextView *)[self textView];
+    SMLTextView *textView = [self textView];
     [textView replaceCharactersInRange:range withString:text options:options];
 }
 
@@ -695,6 +715,37 @@ char kcLineWrapPrefChanged;
 #pragma clang diagnostic pop
 
 
+#pragma mark - Properties Internal Properties from MGSFragariaPrivate.h
+
+/*
+ * @property internalAutoCompleteDelegate
+ */
+- (void)setInternalAutoCompleteDelegate:(id<SMLAutoCompleteDelegate>)internalAutoCompleteDelegate
+{
+    _internalAutoCompleteDelegate = internalAutoCompleteDelegate;
+}
+
+- (id<SMLAutoCompleteDelegate>)internalAutoCompleteDelegate
+{
+    // @todo: (jsd) Right now the syntaxColouring object is stuck inside of the docspec.
+    //        For the time being, then, we'll simply use another instance tied to the same
+    //        document, until such time syntaxColouring is a property instead of a docSpec item.
+    //        Remember to change the property back to assign after fixing this.
+    if (!self.autoCompleteDelegate)
+    {
+        if (!_internalAutoCompleteDelegate)
+        {
+            _internalAutoCompleteDelegate = [[SMLSyntaxColouring alloc] initWithFragaria:self];
+        }
+        return _internalAutoCompleteDelegate;
+    }
+    else
+    {
+        return self.autoCompleteDelegate;
+    }
+}
+
+
 #pragma mark - KVO
 /*
  
@@ -703,7 +754,7 @@ char kcLineWrapPrefChanged;
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    BOOL boolValue = NO;
+    BOOL boolValue;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     
 	if (context == &kcGutterWidthPrefChanged) {
@@ -728,7 +779,7 @@ char kcLineWrapPrefChanged;
     } else if (context == &kcLineWrapPrefChanged) {
         
         boolValue = [defaults boolForKey:MGSFragariaPrefsLineWrapNewDocuments];
-        [(SMLTextView *)[self textView] setLineWrap:boolValue];
+        [[self textView] setLineWrap:boolValue];
         
     } else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

@@ -14,7 +14,7 @@
 
 #import "SMLStandardHeader.h"
 #import "SMLLayoutManager.h"
-#import "SMLLineNumbers.h"
+#import "MGSLineNumberDefaultsObserver.h"
 #import "SMLSyntaxColouring.h"
 #import "MGSExtraInterfaceController.h"
 #import "MGSGlyphGenerator.h"

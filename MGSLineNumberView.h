@@ -57,7 +57,7 @@
 /// @name Properties
 
 @property (nonatomic) id <MGSBreakpointDelegate> breakpointDelegate;   ///< Indicates the object acting as the breakpoint delegate.
-@property (nonatomic,weak) MGSFragaria *fragaria;                      ///< A reference to the owning Fragaria instance.
+@property (nonatomic,weak,readonly) MGSFragaria *fragaria;             ///< A reference to the owning Fragaria instance.
 
 @property (nonatomic) NSFont *font;                                    ///< The display font for the text editor.
 @property (nonatomic) NSColor *textColor;                              ///< Primary text color for the text editor.
@@ -75,6 +75,14 @@
 
 
 /// @name Instance Methods
+
+/**
+ *  Initializes a new instance of MGSLineNumberView, associating is with aScrollView.
+ *  and an owning Fragaria instance.
+ *  @param aScrollView Indicates the scroll view associated with this instance.
+ *  @param fragaria Indicates the Fragaria instance associated with this instance.
+ **/
+- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(MGSFragaria *)fragaria;
 
 /**
  *  Initializes a new instance of MGSLineNumberView, associating is with aScrollView.

@@ -72,12 +72,18 @@
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView
 {
+    return [self initWithScrollView:aScrollView fragaria:nil];
+}
+
+- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(MGSFragaria *)fragaria
+{
     if ((self = [super initWithScrollView:aScrollView orientation:NSVerticalRuler]) != nil)
     {
         _lineIndices = [[NSMutableArray alloc] init];
         _startingLineNumber = 0;
         _markerImagesSize = NSMakeSize(0,0);
         _markerImages = [[NSMutableDictionary alloc] init];
+        _fragaria = fragaria;
         [self setClientView:[aScrollView documentView]];
     }
     return self;
