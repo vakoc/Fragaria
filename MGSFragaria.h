@@ -47,19 +47,17 @@ extern NSString * const ro_MGSFOLineNumbers; // readonly
 extern NSString * const ro_MGSFOSyntaxColouring; // readonly
 
 
-@class MGSTextMenuController;
+@class MGSTextMenuController;               // @todo: (jsd) can be removed when the textMenuController deprecation is removed.
 
+#import "MGSBreakpointDelegate.h"           // Justification: public delegate.
+#import "MGSDragOperationDelegate.h"        // Justification: public delegate.
+#import "MGSFragariaTextViewDelegate.h"     // Justification: public delegate.
+#import "SMLSyntaxColouringDelegate.h"      // Justification: public delegate.
 
-#import "MGSBreakpointDelegate.h"
-#import "MGSDragOperationDelegate.h"
-#import "MGSFragariaTextViewDelegate.h"
-#import "SMLSyntaxColouringDelegate.h"
-
-#import "MGSFragariaPreferences.h"
-#import "SMLSyntaxError.h"
-#import "SMLSyntaxDefinition.h"
-#import "MGSFragariaView.h"
-#import "SMLTextView.h"
+#import "MGSFragariaPreferences.h"          // Justification: currently exposed, but to be killed of later.
+#import "SMLSyntaxError.h"                  // Justification: external users require it.
+#import "MGSFragariaView.h"                 // Justification: external users require it.
+#import "SMLTextView.h"                     // Justification: external users require it / textView property is exposed.
 
 
 /**
