@@ -22,6 +22,8 @@
  */
 
 #import <Cocoa/Cocoa.h>
+#import "MGSFragariaTextViewDelegate.h"
+
 
 @class MGSFragaria;
 
@@ -34,15 +36,24 @@
 
 /// @name Properties
 
-@property (nonatomic,assign,readonly) MGSFragaria *fragaria;         ///< A reference to the owning Fragaria instance.
 
-@property (nonatomic) BOOL lineWrap;                                 ///< Indicates whether or not line wrap (word wrap) is enabled.
+/** A reference to the owning Fragaria instance. */
+@property (nonatomic,assign,readonly) MGSFragaria *fragaria;
 
-@property (readonly) NSMutableIndexSet *inspectedCharacterIndexes;   ///< Indicates the character indices that have been inspected.
+/** Indicates whether or not line wrap (word wrap) is enabled. */
+@property (nonatomic) BOOL lineWrap;
 
-@property (nonatomic) BOOL highlightCurrentLine;                     ///< Indicates whether or not the current line is highlighted.
+/** Indicates the character indices that have been inspected. */
+@property (readonly) NSMutableIndexSet *inspectedCharacterIndexes;
 
-@property NSColor *currentLineHighlightColor;                        ///< Indicates the color to use for current line highlighting.
+/** Indicates whether or not the current line is highlighted. */
+@property (nonatomic) BOOL highlightCurrentLine;
+
+/** Indicates the color to use for current line highlighting. */
+@property NSColor *currentLineHighlightColor;
+
+/** The text view's delegate */
+@property (assign) id<MGSFragariaTextViewDelegate> delegate;
 
 
 /// @name Instance Methods

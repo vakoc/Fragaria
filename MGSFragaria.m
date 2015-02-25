@@ -304,6 +304,20 @@ char kcLineWrapPrefChanged;
 }
 
 
+/*
+ * @property textViewDelegate
+ */
+- (void)setTextViewDelegate:(id<MGSFragariaTextViewDelegate>)textViewDelegate
+{
+    [self.textView setDelegate:textViewDelegate];
+}
+
+- (id<MGSFragariaTextViewDelegate>)textViewDelegate
+{
+    return self.textView.delegate;
+}
+
+
 #pragma mark - Properties - System Components
 
 
@@ -542,7 +556,7 @@ char kcLineWrapPrefChanged;
         // Define read/write keys
         self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter,
                                  MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
-                                 MGSFOSyntaxDefinitionName, MGSFODelegate,
+                                 MGSFOSyntaxDefinitionName,
                                  MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
                                  nil];
@@ -590,13 +604,13 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFOBreakpointDelegate]) {
         [self setBreakpointDelegate:object];
         return;
+    } else if ([key isEqual:MGSFODelegate]) {
+        [self setTextViewDelegate:object];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
         [self.docSpec setValue:object forKey:key];
-    }
-    if ([key isEqual:MGSFODelegate]) {
-        [[self textView] setDelegate:object];
     }
 }
 
@@ -610,11 +624,12 @@ char kcLineWrapPrefChanged;
         return self.syntaxColouringDelegate;
     else if ([key isEqual:MGSFOBreakpointDelegate])
         return self.breakpointDelegate;
+    else if ([key isEqual:MGSFODelegate])
+        return self.textViewDelegate;
     
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];
     }
-    
     return nil;
 }
 
@@ -680,9 +695,6 @@ char kcLineWrapPrefChanged;
     [textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
     
     [self setShowsWarningsInGutter:YES];
-
-    if ([docSpec objectForKey:MGSFODelegate])
-        [[self textView] setDelegate:[docSpec objectForKey:MGSFODelegate]];
 }
 
 

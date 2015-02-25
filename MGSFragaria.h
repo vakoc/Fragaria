@@ -33,7 +33,7 @@ extern NSString * const ro_MGSFOTextView; // readonly
 extern NSString * const ro_MGSFOScrollView; // readonly
 
 // NSObject
-extern NSString * const MGSFODelegate;
+extern NSString * const MGSFODelegate DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOBreakpointDelegate DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOSyntaxColouringDelegate DEPRECATED_ATTRIBUTE;
 
@@ -120,6 +120,10 @@ extern NSString * const MGSFOSyntaxColouringDelegate DEPRECATED_ATTRIBUTE;
  * delegate is responsible of managing a list of lines where a breakpoint
  * marker is present. */
 @property (nonatomic, strong) id<MGSBreakpointDelegate> breakpointDelegate;
+
+/** The text view delegate of this instance of Fragaria. This is an utility
+ * accessor and setter for textView.delegate. */
+@property (nonatomic, strong) id<MGSFragariaTextViewDelegate> textViewDelegate;
 
 
 /// @name Properties - System Components

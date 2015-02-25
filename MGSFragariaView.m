@@ -79,12 +79,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setDelegate:(id<MGSFragariaTextViewDelegate>)delegate
 {
-	[self.fragaria setObject:delegate forKey:MGSFODelegate];
+	[self.fragaria setTextViewDelegate:delegate];
 }
 
 - (id<MGSFragariaTextViewDelegate>)delegate
 {
-	return [self.fragaria objectForKey:MGSFODelegate];
+	return self.fragaria.textViewDelegate;
 }
 
 
