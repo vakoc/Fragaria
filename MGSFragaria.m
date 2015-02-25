@@ -253,6 +253,7 @@ char kcLineWrapPrefChanged;
 
 #pragma mark - Properties - Syntax Errors
 
+
 /*
  * @property syntaxErrors:
  */
@@ -273,13 +274,23 @@ char kcLineWrapPrefChanged;
 
 #pragma mark - Properties - Delegates
 
+
 /*
- * @property autoCompleteDelegate
- * (synthesized)
+ * @property syntaxColouringDelegate
  */
+- (void)setSyntaxColouringDelegate:(id<SMLSyntaxColouringDelegate>)syntaxColouringDelegate
+{
+    [self.syntaxColouring setSyntaxColouringDelegate:syntaxColouringDelegate];
+}
+
+- (id<SMLSyntaxColouringDelegate>)syntaxColouringDelegate
+{
+    return [self.syntaxColouring syntaxColouringDelegate];
+}
 
 
 #pragma mark - Properties - System Components
+
 
 /*
  * @property extraInterfaceController
@@ -288,12 +299,11 @@ char kcLineWrapPrefChanged;
 {
 	_extraInterfaceController = extraInterfaceController;
 }
+
 - (MGSExtraInterfaceController *)extraInterfaceController
 {
-	if (!_extraInterfaceController) {
+	if (!_extraInterfaceController)
 		_extraInterfaceController = [[MGSExtraInterfaceController alloc] init];
-	}
-
 	return _extraInterfaceController;
 }
 
@@ -309,10 +319,7 @@ char kcLineWrapPrefChanged;
 - (MGSSyntaxErrorController *)syntaxErrorController
 {
     if (!_syntaxErrorController)
-    {
         _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
-    }
-
     return _syntaxErrorController;
 }
 
@@ -328,10 +335,7 @@ char kcLineWrapPrefChanged;
 - (SMLSyntaxColouring *)syntaxColouring
 {
     if (!_syntaxColouring)
-    {
         _syntaxColouring = [[SMLSyntaxColouring alloc] initWithFragaria:self];
-    }
-
     return _syntaxColouring;
 }
 
@@ -493,6 +497,7 @@ char kcLineWrapPrefChanged;
 
 #pragma mark - Instance Methods
 
+
 /*
  * - initWithObject
  *
@@ -524,7 +529,7 @@ char kcLineWrapPrefChanged;
         self.objectSetterKeys = [NSSet setWithObjects:MGSFOIsSyntaxColoured, MGSFOShowLineNumberGutter,
                                  MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
                                  MGSFOSyntaxDefinitionName, MGSFODelegate, MGSFOBreakpointDelegate,
-                                 MGSFOSyntaxColouringDelegate, MGSFOLineWrap,
+                                 MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
                                  nil];
         
@@ -565,6 +570,9 @@ char kcLineWrapPrefChanged;
               "property is not supported and has no effect. Please use "
               "setShowsWarningsInGutter:");
         return;
+    } else if ([key isEqual:MGSFOSyntaxColouringDelegate]) {
+        [self setSyntaxColouringDelegate:object];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -583,12 +591,18 @@ char kcLineWrapPrefChanged;
  */
 - (id)objectForKey:(id)key
 {
+    if ([key isEqual:MGSFOSyntaxColouringDelegate])
+        return self.syntaxColouringDelegate;
+    
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];
     }
     
     return nil;
 }
+
+
+#pragma clang diagnostics pop
 
 
 /*

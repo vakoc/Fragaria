@@ -454,7 +454,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	[self removeColoursFromRange:effectiveRange];
 	
     // colouring delegate
-    id colouringDelegate = [self.fragaria.docSpec valueForKey:MGSFOSyntaxColouringDelegate];
     NSDictionary *delegateInfo =  nil;
 	
     // define a block that the colour delegate can use to effect colouring
@@ -472,13 +471,13 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         //
         // query delegate about colouring the document
         //
-        if ([colouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourWithBlock:string:range:info:)]) {
+        if ([self.syntaxColouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourWithBlock:string:range:info:)]) {
             
             // build minimal delegate info dictionary
             delegateInfo = @{SMLSyntaxInfo : self.syntaxDictionary, SMLSyntaxWillColour : @(self.isSyntaxColouringRequired)};
             
             // query delegate about colouring
-            doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+            doColouring = [self.syntaxColouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
             
         }
         
@@ -486,18 +485,18 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             
             for (NSInteger i = 0; i < kSMLCountOfSyntaxGroups; i++) {
                 /* Colour all syntax groups */
-                [self colourGroupWithIdentifier:i inRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner queryingDelegate:colouringDelegate colouringBlock:colourRangeBlock];
+                [self colourGroupWithIdentifier:i inRange:effectiveRange withRangeScanner:rangeScanner documentScanner:documentScanner queryingDelegate:self.syntaxColouringDelegate colouringBlock:colourRangeBlock];
             }
 
             //
             // tell delegate we are did colour the document
             //
-            if ([colouringDelegate respondsToSelector:@selector(fragariaDocument:didColourWithBlock:string:range:info:)]) {
+            if ([self.syntaxColouringDelegate respondsToSelector:@selector(fragariaDocument:didColourWithBlock:string:range:info:)]) {
                 
                 // build minimal delegate info dictionary
                 delegateInfo = @{@"syntaxInfo" : self.syntaxDictionary};
                 
-                [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                [self.syntaxColouringDelegate fragariaDocument:self.fragaria.docSpec didColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
             }
 
         }

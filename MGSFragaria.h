@@ -35,7 +35,7 @@ extern NSString * const ro_MGSFOScrollView; // readonly
 // NSObject
 extern NSString * const MGSFODelegate;
 extern NSString * const MGSFOBreakpointDelegate;
-extern NSString * const MGSFOSyntaxColouringDelegate;
+extern NSString * const MGSFOSyntaxColouringDelegate DEPRECATED_ATTRIBUTE;
 
 
 @class MGSTextMenuController;               // @todo: (jsd) can be removed when the textMenuController deprecation is removed.
@@ -104,16 +104,22 @@ extern NSString * const MGSFOSyntaxColouringDelegate;
 /// @name Properties - Delegates
 #pragma mark - Properties - Delegates
 
-/**
- *  This property allows you to specify your own delegate that can
- *  specify words for autocompletion. If you do not specify this,
- *  then the internal autocomplete delegate will be used.
- **/
+
+/** The autocomplete delegate for this instance of Fragaria. The autocomplete
+ * delegate provides a list of words that can be used by the autocomplete
+ * feature. If this property is nil, then the list of autocomple words will
+ * be read from the current syntax highlighting dictionary. */
 @property (nonatomic, strong) id<SMLAutoCompleteDelegate> autoCompleteDelegate;
+
+/** The syntax colouring delegate for this instance of Fragaria. The syntax
+ * colouring delegate gets notified of the start and end of each colouring pass
+ * so that it can modify the default syntax colouring provided by Fragaria. */
+@property (nonatomic, strong) id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
 
 
 /// @name Properties - System Components
 #pragma mark - Properties - System Components
+
 
 /**
  *  Fragaria's text view.

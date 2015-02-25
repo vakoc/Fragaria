@@ -27,8 +27,11 @@ Copyright 2004-2009 Peter Borg
 #import "SMLTextView.h"
 #import "SMLAutoCompleteDelegate.h"
 #import "MGSSyntaxDefinition.h"
+#import "SMLSyntaxColouringDelegate.h"
+
 
 @class SMLLayoutManager;
+
 
 /**
  *  Performs syntax colouring on the text editor document.
@@ -38,11 +41,16 @@ Copyright 2004-2009 Peter Borg
 
 /// @name Properties
 
-@property (nonatomic,weak,readonly) MGSFragaria *fragaria;   ///< The owning controller for instances of this class.
+/** The owning controller for instances of this class. */
+@property (nonatomic,weak,readonly) MGSFragaria *fragaria;
 
-@property (strong) NSUndoManager *undoManager;               ///< The NSUndoManager instance used in this class.
+/** The NSUndoManager instance used in this class. */
+@property (strong) NSUndoManager *undoManager;
 
-@property (strong) MGSSyntaxDefinition *syntaxDefinition;    ///< The syntax definition that determines how to color the text.
+/** The syntax definition that determines how to color the text. */
+@property (strong) MGSSyntaxDefinition *syntaxDefinition;
+
+@property id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
 
 
 /// @name Instance Methods
