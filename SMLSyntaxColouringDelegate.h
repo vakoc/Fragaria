@@ -48,7 +48,7 @@ enum {
 typedef NSInteger SMLSyntaxGroupInteger;
 
 /**
- *  A class implementing the SMLSyntaxColoringDelegate protocol can customize or
+ *  A class implementing the SMLSyntaxColouringDelegate protocol can customize or
  *  override the default syntax coloring.
  *
  *  Arguments used in the delegate methods

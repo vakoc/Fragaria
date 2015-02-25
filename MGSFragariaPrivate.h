@@ -29,12 +29,18 @@
 @property (nonatomic, strong, readwrite) MGSSyntaxErrorController *syntaxErrorController;
 
 
+/**
+ * Instances of this class will perform syntax highlighting in text views.
+ */
+@property (nonatomic, strong, readwrite) SMLSyntaxColouring *syntaxColouring;
+
+
 #pragma mark - Internal Properties
 
 /**
  *  The internal autoCompleteDelegate
  **/
-@property (nonatomic, strong) id<SMLAutoCompleteDelegate> internalAutoCompleteDelegate; // @todo: make assign. See accessor notes.
+@property (nonatomic, assign, readonly) id<SMLAutoCompleteDelegate> internalAutoCompleteDelegate;
 
 
 @end

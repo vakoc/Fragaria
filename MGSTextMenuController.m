@@ -129,7 +129,7 @@ static id sharedInstance = nil;
 	}
     // Comment Or Uncomment
     else if (action == @selector(commentOrUncommentAction:) ) {
-		if ([[[[[responder fragaria] objectForKey:ro_MGSFOSyntaxColouring] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
+		if ([[[[[responder fragaria] valueForKey:@"syntaxColouring"] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
 			enableMenuItem = NO;
 		}
 	} 
