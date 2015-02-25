@@ -94,22 +94,14 @@
     // @todo: We're still using the docSpec indirectly, but at least we're not longer dependent
     //        upon it for initialization. As some of these properties are internally exposed,
     //        we can start to eliminate getting them from the docSpec.
-
-    BOOL showGutter;
     
     // get editor views
-    NSScrollView *textScrollView = [self.fragaria.docSpec valueForKey:ro_MGSFOScrollView];
     MGSLineNumberView *ruler = [self.fragaria.docSpec valueForKey:ro_MGSFOGutterView];
-    
-    showGutter = [[self.fragaria.docSpec valueForKey:MGSFOShowLineNumberGutter] boolValue];
 
-    if (showGutter) {
-        [ruler setBackgroundColor:[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f]];
-        [ruler setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]]];
-        [ruler setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-        [ruler setMinimumWidth:[[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] doubleValue]];
-    }
-    [textScrollView setRulersVisible:showGutter];
+    [ruler setBackgroundColor:[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f]];
+    [ruler setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]]];
+    [ruler setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+    [ruler setMinimumWidth:[[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] doubleValue]];
 }
 
 

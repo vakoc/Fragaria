@@ -191,7 +191,7 @@ char kcLineWrapPrefChanged;
 - (void)setShowsLineNumbers:(BOOL)value
 {
     [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowLineNumberGutter];
-    [self updateGutterView];
+    [[self objectForKey:ro_MGSFOScrollView] setRulersVisible:value];
 }
 
 - (BOOL)showsLineNumbers
@@ -614,7 +614,7 @@ char kcLineWrapPrefChanged;
 	[textScrollView setPostsFrameChangedNotifications:YES];
 		
 	// create textview
-	 SMLTextView *textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height) fragaria:self];
+    SMLTextView *textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height) fragaria:self];
 	[textScrollView setDocumentView:textView];
 
     // create line numbers
@@ -640,6 +640,7 @@ char kcLineWrapPrefChanged;
 	
     // update the gutter view
     [self updateGutterView];
+    [textScrollView setRulersVisible:[self showsLineNumbers]];
 
     // apply default line wrapping
     [textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
