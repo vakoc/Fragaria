@@ -67,8 +67,21 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 @end
 
 
-@implementation SMLSyntaxColouring
+@implementation SMLSyntaxColouring {
 
+    SMLLayoutManager *layoutManager;
+
+    NSInteger lastCursorLocation;
+
+    NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
+    *stringsColour, *variablesColour, *attributesColour,  *numbersColour;
+
+    MGSSyntaxDefinition *syntaxDefinition;
+
+    NSUndoManager *undoManager;
+
+    NSTimer *autocompleteWordsTimer;
+}
 
 @synthesize undoManager, syntaxDefinition;
 

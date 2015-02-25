@@ -33,23 +33,7 @@ Copyright 2004-2009 Peter Borg
 /**
  *  Performs syntax colouring on the text editor document.
  **/
-@interface SMLSyntaxColouring : NSObject <SMLAutoCompleteDelegate> {
-	
-    //	id document;
-	
-	SMLLayoutManager *layoutManager;
-	
-	NSInteger lastCursorLocation;
-	
-	NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
-					*stringsColour, *variablesColour, *attributesColour,  *numbersColour;
-    
-    MGSSyntaxDefinition *syntaxDefinition;
-    
-	NSUndoManager *undoManager;
-    
-	NSTimer *autocompleteWordsTimer;
-}
+@interface SMLSyntaxColouring : NSObject <SMLAutoCompleteDelegate>
 
 
 /// @name Properties
