@@ -248,7 +248,7 @@ static id sharedInstance = nil;
  *  - MGSFragariaTextEditingPrefsViewController:
  *    Don't allocate these resources unless someone actually needs them.
  */
--(MGSFragariaTextEditingPrefsViewController *)MGSFragariaTextEditingPrefsViewController
+-(MGSFragariaTextEditingPrefsViewController *)textEditingPrefsViewController
 {
     if (!_textEditingPrefsViewController)
     {
@@ -263,7 +263,7 @@ static id sharedInstance = nil;
  *  - MGSFragariaFontsAndColoursPrefsViewController:
  *    Don't allocate these resources unless someone actually needs them.
  */
--(MGSFragariaFontsAndColoursPrefsViewController *)MGSFragariaFontsAndColoursPrefsViewController
+-(MGSFragariaFontsAndColoursPrefsViewController *)fontsAndColoursPrefsViewController
 {
     if (!_fontsAndColoursPrefsViewController)
     {
