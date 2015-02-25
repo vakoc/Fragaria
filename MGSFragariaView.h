@@ -22,11 +22,14 @@
 
 #pragma mark - DELEGATES
 
-@property (assign) IBOutlet id <MGSFragariaTextViewDelegate> delegate;                ///< The delegate providing MGSFragariaTextViewDelegate methods.
+/** The delegate providing MGSFragariaTextViewDelegate methods. */
+@property (weak) IBOutlet id <MGSFragariaTextViewDelegate> delegate;
 
-@property (assign) IBOutlet id <MGSBreakpointDelegate> breakPointDelegate;            ///< The delegate providing MGSBreakpointDelegate methods.
+/** The delegate providing MGSBreakpointDelegate methods. */
+@property (weak) IBOutlet id <MGSBreakpointDelegate> breakPointDelegate;
 
-@property (assign) IBOutlet id <SMLSyntaxColouringDelegate> syntaxColoringDelegate;   ///< The delegate for providing SMLSyntaxColouringDelegate methods.
+/** The delegate for providing SMLSyntaxColouringDelegate methods. */
+@property (weak) IBOutlet id <SMLSyntaxColouringDelegate> syntaxColoringDelegate;
 
 
 #pragma mark - KEY FRAGARIA METHOD-TO-PROPERTY PROMOTIONS

@@ -51,7 +51,9 @@ Copyright 2004-2009 Peter Borg
 @property (strong) MGSSyntaxDefinition *syntaxDefinition;
 
 /** The syntax colouring delegate */
-@property id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
+@property (weak) id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
+
+
 
 
 /// @name Instance Methods

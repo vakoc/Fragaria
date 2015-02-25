@@ -56,21 +56,31 @@
 
 /// @name Properties
 
-@property (nonatomic) id <MGSBreakpointDelegate> breakpointDelegate;   ///< Indicates the object acting as the breakpoint delegate.
-@property (nonatomic,weak,readonly) MGSFragaria *fragaria;             ///< A reference to the owning Fragaria instance.
 
-@property (nonatomic) NSFont *font;                                    ///< The display font for the text editor.
-@property (nonatomic) NSColor *textColor;                              ///< Primary text color for the text editor.
-@property (nonatomic) NSColor *alternateTextColor;                     ///< Alternate text color for the text editor.
-@property (nonatomic) NSColor *backgroundColor;                        ///< Text editor background color.
-@property (nonatomic) CGFloat minimumWidth;                            ///< Minimum width of the gutter.
-@property (nonatomic) NSUInteger startingLineNumber;                   ///< The starting line number in the editor.
-@property (nonatomic) BOOL *showsWarnings;                             ///< Indicates whether or not to show error markers in the gutter.
+/** Indicates the object acting as the breakpoint delegate. */
+@property (nonatomic, weak) id <MGSBreakpointDelegate> breakpointDelegate;
 
-/**
- *   Indicates the default color to be used for breakpoint markers when
- *   not specified by the delegate.
- **/
+/** A reference to the owning Fragaria instance. */
+@property (nonatomic, weak, readonly) MGSFragaria *fragaria;
+
+/** The display font for the text editor. */
+@property (nonatomic) NSFont *font;
+/** Primary text color for the text editor. */
+@property (nonatomic) NSColor *textColor;
+/** Alternate text color for the text editor. */
+@property (nonatomic) NSColor *alternateTextColor;
+/** Text editor background color. */
+@property (nonatomic) NSColor *backgroundColor;
+/** Minimum width of the gutter. */
+
+@property (nonatomic) CGFloat minimumWidth;
+/** The starting line number in the editor. */
+@property (nonatomic) NSUInteger startingLineNumber;
+/** Indicates whether or not to show error markers in the gutter. */
+@property (nonatomic) BOOL *showsWarnings;
+
+/** Indicates the default color to be used for breakpoint markers when
+ * not specified by the delegate. */
 @property (nonatomic) NSColor *markerColor;
 
 
@@ -95,5 +105,6 @@
  *  @param location The character position being checked.
  **/
 - (NSUInteger)lineNumberForLocation:(CGFloat)location;
+
 
 @end
