@@ -22,3 +22,4 @@
 #import "NSScanner+Fragaria.h"
 #import "MGSSyntaxController.h"
 #import "MGSTextMenuController.h"
+#import "MGSSyntaxErrorController.h"

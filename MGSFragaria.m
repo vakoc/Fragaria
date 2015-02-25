@@ -6,9 +6,9 @@
 //  Copyright 2010 mugginsoft.com. All rights reserved.
 //
 
+#import "MGSFragariaFramework.h"
 #import "MGSFragaria.h"
 #import "MGSFragariaPrivate.h"
-#import "MGSSyntaxErrorController.h"
 
 
 // BOOL
@@ -618,14 +618,14 @@ char kcLineWrapPrefChanged;
 	[textScrollView setDocumentView:textView];
 
     // create line numbers
-	MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithFragaria:self];
-    self.lineNumberDefObserv = lineNumbers;
-
     MGSLineNumberView *lineNumberView;
     lineNumberView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView fragaria:self];
     [textScrollView setVerticalRulerView:lineNumberView];
     [textScrollView setHasVerticalRuler:YES];
     [textScrollView setHasHorizontalRuler:NO];
+    
+    MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithLineNumberView:lineNumberView];
+    self.lineNumberDefObserv = lineNumbers;
 	
 	// update the docSpec
 	[self.docSpec setValue:textView forKey:ro_MGSFOTextView];

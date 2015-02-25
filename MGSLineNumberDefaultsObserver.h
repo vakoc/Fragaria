@@ -24,8 +24,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class SMLTextView;
-@class MGSFragaria;
+
+@class MGSLineNumberView;
 
 
 /**
@@ -39,22 +39,18 @@
 @interface MGSLineNumberDefaultsObserver : NSObject
 
 
-/**
- *  Initializes the instances with the given Fragaria instance.
- *  @param fragaria The Fragaria instance.
- **/
-- (instancetype)initWithFragaria:(MGSFragaria *)fragaria;
+/** Designated initializer. Initializes the class for controlling the specified
+ * MGSLineNumberView.
+ * @param lnv The MGSLineNumberView instance to be controlled. */
+- (instancetype)initWithLineNumberView:(MGSLineNumberView *)lnv;
+
+/** Updates the MGSLineNumberView instance with the new appearance settings. */
+- (void)updateGutterView;
 
 
-/**
- *  Updates the MGSLineNumberView instance with the new appearance settings.
- **/
-- (void) updateGutterView;
+/** The controlled line number view. */
+@property (readonly) MGSLineNumberView *lineNumberView;
 
-
-/**
- *  Exposes the fragaria reference.
- **/
-@property (nonatomic,weak,readonly) MGSFragaria *fragaria;
 
 @end
+

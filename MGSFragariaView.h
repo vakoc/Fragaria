@@ -10,10 +10,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MGSFragariaFramework.h"
+#import "MGSFragaria.h"
+#import "SMLTextView.h"
 
-
-@class MGSFragaria;
 
 /**
  *  MGSFragariaView abstracts much of Fragaria's overhead into an IB-compatible view.

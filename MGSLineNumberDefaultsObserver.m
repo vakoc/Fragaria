@@ -31,25 +31,15 @@
 
 #pragma mark - Instance methods
 
-/*
- * - init
- */
-- (id)init
-{
-	self = [self initWithFragaria:nil];
-	
-	return self;
-}
-
 
 /*
  * - initWithFragaria
  */
-- (instancetype)initWithFragaria:(MGSFragaria *)fragaria
+- (instancetype)initWithLineNumberView:(MGSLineNumberView *)lnv
 {
     if ((self = [super init]))
     {
-        _fragaria = fragaria;
+        _lineNumberView = lnv;
 
         NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
         [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
@@ -91,17 +81,10 @@
  */
 - (void) updateGutterView
 {
-    // @todo: We're still using the docSpec indirectly, but at least we're not longer dependent
-    //        upon it for initialization. As some of these properties are internally exposed,
-    //        we can start to eliminate getting them from the docSpec.
-    
-    // get editor views
-    MGSLineNumberView *ruler = [self.fragaria.docSpec valueForKey:ro_MGSFOGutterView];
-
-    [ruler setBackgroundColor:[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f]];
-    [ruler setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]]];
-    [ruler setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-    [ruler setMinimumWidth:[[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] doubleValue]];
+    [_lineNumberView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f]];
+    [_lineNumberView setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]]];
+    [_lineNumberView setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+    [_lineNumberView setMinimumWidth:[[SMLDefaults valueForKey:MGSFragariaPrefsGutterWidth] doubleValue]];
 }
 
 
