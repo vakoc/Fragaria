@@ -22,6 +22,7 @@
  */
 
 #import "MGSFragaria.h"
+#import "MGSFragariaPrivate.h"
 #import "MGSFragariaFramework.h"
 #import "SMLAutoCompleteDelegate.h"
 #import "SMLTextView+MGSTextActions.h"
@@ -1170,7 +1171,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
     // get completion handler
     NSMutableArray* matchArray = [NSMutableArray array];
-    id<SMLAutoCompleteDelegate> completeHandler = [self.fragaria.docSpec valueForKey:MGSFOAutoCompleteDelegate];
+    id<SMLAutoCompleteDelegate> completeHandler = self.fragaria.internalAutoCompleteDelegate;
 
     // use handler
     if (completeHandler) {
