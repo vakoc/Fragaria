@@ -10,7 +10,7 @@
 
 
 /**
- *  The SMLAutoCompleteDelegate defines an interface for allow a delegate to
+ *  The SMLAutoCompleteDelegate defines an interface for allowing a delegate to
  *  return a list of suitable autocomplete choices.
  **/
 @protocol SMLAutoCompleteDelegate <NSObject>
