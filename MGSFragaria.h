@@ -28,9 +28,6 @@ extern NSString * const MGSFOShowsWarningsInGutter;
 // string
 extern NSString * const MGSFOSyntaxDefinitionName;
 
-// integer
-extern NSString * const MGSFOGutterWidth;
-
 // NSView *
 extern NSString * const ro_MGSFOTextView; // readonly
 extern NSString * const ro_MGSFOScrollView; // readonly

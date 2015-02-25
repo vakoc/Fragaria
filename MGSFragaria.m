@@ -29,9 +29,6 @@ NSString * const MGSFOLineNumbersClassName = @"lineNumbersClassName";
 NSString * const MGSFOGutterTextViewClassName = @"gutterTextViewClassName";
 NSString * const MGSFOSyntaxColouringClassName = @"syntaxColouringClassName";
 
-// integer
-NSString * const MGSFOGutterWidth = @"gutterWidth";
-
 // NSView *
 NSString * const ro_MGSFOTextView = @"firstTextView"; // readonly
 NSString * const ro_MGSFOScrollView = @"firstTextScrollView"; // readonly
@@ -383,7 +380,6 @@ char kcLineWrapPrefChanged;
             @"Standard", MGSFOSyntaxDefinitionName,
             [defaults objectForKey:MGSFragariaPrefsSyntaxColourNewDocuments], MGSFOIsSyntaxColoured,
             [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
-            [defaults objectForKey:MGSFragariaPrefsGutterWidth], MGSFOGutterWidth,
             [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
             @(YES), MGSFOShowsWarningsInGutter,
             nil];
