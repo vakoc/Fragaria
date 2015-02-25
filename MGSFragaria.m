@@ -593,7 +593,7 @@ char kcLineWrapPrefChanged;
 	[textScrollView setDocumentView:textView];
 
     // create line numbers
-	SMLLineNumbers *lineNumbers = [[SMLLineNumbers alloc] initWithDocument:self.docSpec];
+	MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithFragaria:self];
 	[self.docSpec setValue:lineNumbers forKey:ro_MGSFOLineNumbers];
 
     MGSLineNumberView *lineNumberView;
