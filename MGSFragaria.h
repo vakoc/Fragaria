@@ -36,6 +36,7 @@ extern NSString * const ro_MGSFOScrollView; // readonly
 extern NSString * const MGSFODelegate DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOBreakpointDelegate DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOSyntaxColouringDelegate DEPRECATED_ATTRIBUTE;
+extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 
 @class MGSTextMenuController;               // @todo: (jsd) can be removed when the textMenuController deprecation is removed.

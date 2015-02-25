@@ -37,6 +37,7 @@ NSString * const ro_MGSFOScrollView = @"firstTextScrollView"; // readonly
 NSString * const MGSFODelegate = @"delegate";
 NSString * const MGSFOBreakpointDelegate = @"breakpointDelegate";
 NSString * const MGSFOSyntaxColouringDelegate = @"syntaxColouringDelegate";
+NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 // KVO context constants
@@ -607,6 +608,9 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFODelegate]) {
         [self setTextViewDelegate:object];
         return;
+    } else if ([key isEqual:MGSFOAutoCompleteDelegate]) {
+        [self setAutoCompleteDelegate:object];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -626,6 +630,8 @@ char kcLineWrapPrefChanged;
         return self.breakpointDelegate;
     else if ([key isEqual:MGSFODelegate])
         return self.textViewDelegate;
+    else if ([key isEqual:MGSFOAutoCompleteDelegate])
+        return self.autoCompleteDelegate;
     
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];
