@@ -554,6 +554,8 @@ char kcLineWrapPrefChanged;
 		}
         
         // observe defaults that affect rendering
+        // @todo: (jsd) Will have to delete this. Application is responsible for preferences
+        //        and setting properties based on those. Future preferences framework.
         NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
         [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterWidth" options:NSKeyValueObservingOptionNew context:&kcGutterWidthPrefChanged];
         [defaultsController addObserver:self forKeyPath:@"values.FragariaSyntaxColourNewDocuments" options:NSKeyValueObservingOptionNew context:&kcSyntaxColourPrefChanged];
@@ -825,7 +827,7 @@ char kcLineWrapPrefChanged;
     } else if (context == &kcLineNumberPrefChanged) {
         
         boolValue = [defaults boolForKey:MGSFragariaPrefsShowLineNumberGutter];
-        [self setShowsLineNumbers:boolValue];
+        [self setShowsGutter:boolValue];
         
     } else if (context == &kcSyntaxColourPrefChanged) {
         
