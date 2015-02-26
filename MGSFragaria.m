@@ -68,6 +68,7 @@ char kcLineWrapPrefChanged;
 @synthesize extraInterfaceController = _extraInterfaceController;
 @synthesize syntaxErrorController = _syntaxErrorController;
 @synthesize syntaxColouring = _syntaxColouring;
+@synthesize showsGutter = _showsGutter;
 
 @synthesize docSpec;
 @synthesize objectSetterKeys;
@@ -210,14 +211,12 @@ char kcLineWrapPrefChanged;
  */
 - (void)setShowsGutter:(BOOL)showsGutter
 {
-    [self setObject:[NSNumber numberWithBool:showsGutter] forKey:MGSFOShowLineNumberGutter];
-    [[self objectForKey:ro_MGSFOScrollView] setRulersVisible:showsGutter];
+    self.scrollView.rulersVisible = showsGutter;
 }
 
 - (BOOL)showsGutter
 {
-    NSNumber *value = [self objectForKey:MGSFOShowLineNumberGutter];
-    return [value boolValue];
+    return self.scrollView.rulersVisible;
 }
 
 
@@ -572,7 +571,7 @@ char kcLineWrapPrefChanged;
                                  nil];
         
         // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, nil];
+        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, nil];
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
@@ -626,6 +625,9 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFOSyntaxDefinitionName]) {
         [self setSyntaxDefinitionName:object];
          return;
+    } else if ([key isEqual:MGSFOShowLineNumberGutter]) {
+        [self setShowsGutter:[object boolValue]];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -651,6 +653,8 @@ char kcLineWrapPrefChanged;
         return @(self.isSyntaxColoured);
     else if ([key isEqual:MGSFOSyntaxDefinitionName])
          return self.syntaxDefinitionName;
+    else if ([key isEqual:MGSFOShowLineNumberGutter])
+        return @(self.showsGutter);
 
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];
@@ -670,41 +674,40 @@ char kcLineWrapPrefChanged;
     NSAssert(contentView != nil, @"A content view must be provided.");
     
     // create text scrollview
-	NSScrollView *textScrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
-	NSSize contentSize = [textScrollView contentSize];
-	[textScrollView setBorderType:NSNoBorder];
+	self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
+	NSSize contentSize = [self.scrollView contentSize];
+	[self.scrollView setBorderType:NSNoBorder];
     if (self.hasVerticalScroller) {
-        [textScrollView setHasVerticalScroller:YES];
-        [textScrollView setAutohidesScrollers:YES];
+        [self.scrollView setHasVerticalScroller:YES];
+        [self.scrollView setAutohidesScrollers:YES];
 	} else {
-        [textScrollView setHasVerticalScroller:NO];
-        [textScrollView setAutohidesScrollers:NO];
+        [self.scrollView setHasVerticalScroller:NO];
+        [self.scrollView setAutohidesScrollers:NO];
     }
     if (self.scrollElasticityDisabled) {
-        [textScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+        [self.scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
     } else {
-        [textScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+        [self.scrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
     }
-	[textScrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[[textScrollView contentView] setAutoresizesSubviews:YES];
-	[textScrollView setPostsFrameChangedNotifications:YES];
+	[self.scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+	[[self.scrollView contentView] setAutoresizesSubviews:YES];
+	[self.scrollView setPostsFrameChangedNotifications:YES];
 		
 	// create textview
     SMLTextView *textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height) fragaria:self];
-	[textScrollView setDocumentView:textView];
+	[self.scrollView setDocumentView:textView];
 
     // create line numbers
-    self.gutterView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView fragaria:self];
-    [textScrollView setVerticalRulerView:self.gutterView];
-    [textScrollView setHasVerticalRuler:YES];
-    [textScrollView setHasHorizontalRuler:NO];
+    self.gutterView = [[MGSLineNumberView alloc] initWithScrollView:self.scrollView fragaria:self];
+    [self.scrollView setVerticalRulerView:self.gutterView];
+    [self.scrollView setHasVerticalRuler:YES];
+    [self.scrollView setHasHorizontalRuler:NO];
     
     MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithLineNumberView:self.gutterView];
     self.lineNumberDefObserv = lineNumbers;
 	
 	// update the docSpec
 	[self.docSpec setValue:textView forKey:ro_MGSFOTextView];
-	[self.docSpec setValue:textScrollView forKey:ro_MGSFOScrollView];
 
     // carryover default syntaxDefinition name from old docSpec
     self.syntaxDefinitionName = @"Standard";
@@ -713,11 +716,11 @@ char kcLineWrapPrefChanged;
     [self.syntaxColouring recolourExposedRange];
 	
 	// add scroll view to content view
-	[contentView addSubview:[self.docSpec valueForKey:ro_MGSFOScrollView]];
+	[contentView addSubview:self.scrollView];
 	
     // update the gutter view
     [self updateGutterView];
-    [textScrollView setRulersVisible:[self showsLineNumbers]];
+    [self.scrollView setRulersVisible:[self showsLineNumbers]];
 
     // apply default line wrapping
     [textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];

@@ -30,7 +30,7 @@ extern NSString * const MGSFOSyntaxDefinitionName DEPRECATED_ATTRIBUTE;
 
 // NSView *
 extern NSString * const ro_MGSFOTextView; // readonly
-extern NSString * const ro_MGSFOScrollView; // readonly
+extern NSString * const ro_MGSFOScrollView DEPRECATED_ATTRIBUTE; // readonly
 
 // NSObject
 extern NSString * const MGSFODelegate DEPRECATED_ATTRIBUTE;
