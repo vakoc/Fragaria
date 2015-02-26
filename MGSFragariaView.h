@@ -54,8 +54,6 @@
 
 @property (assign) NSString *syntaxDefinitionName;       ///< Indicates the syntax definition name, which indicates how to highlight the text.
 
-@property (assign) NSString *documentName;               ///< Indicates the current document name.
-
 @property (assign) NSArray *syntaxErrors;                ///< Contains an array of MGSSyntaxError objects, which can be displayed in the editor.
 
 @property (assign) BOOL showsWarningsInGutter;           ///< Indicates whether or not error warnings are displayed in the gutter.

@@ -72,11 +72,6 @@ char kcLineWrapPrefChanged;
 
 #pragma mark - Properties - Document Properties
 
-/*
- * @property documentName:
- * (synthesized)
- */
-
 
 /*
  * @property syntaxDefinitionName:

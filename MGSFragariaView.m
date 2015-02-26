@@ -262,20 +262,6 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	documentName
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setDocumentName:(NSString *)documentName
-{
-	[self.fragaria setDocumentName:documentName];
-}
-
-- (NSString *)documentName
-{
-	return [self.fragaria documentName];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	syntaxErrors
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setSyntaxErrors:(NSArray *)syntaxErrors
