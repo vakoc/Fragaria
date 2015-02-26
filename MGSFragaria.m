@@ -22,16 +22,6 @@ NSString * const MGSFOShowsWarningsInGutter = @"showsWarningsInGutter";
 // string
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
 
-// class name strings
-// @todo: expose these to allow subclass name definition
-// @todo: (jsd) Is this still a valid todo? Strings aren't used anywhere
-//        and there's no infrastructure in place to allow substituting
-//        other classes.
-NSString * const MGSFOEditorTextViewClassName = @"editorTextViewClassName";
-NSString * const MGSFOLineNumbersClassName = @"lineNumbersClassName";
-NSString * const MGSFOGutterTextViewClassName = @"gutterTextViewClassName";
-NSString * const MGSFOSyntaxColouringClassName = @"syntaxColouringClassName";
-
 // NSView *
 NSString * const ro_MGSFOTextView = @"firstTextView"; // readonly
 NSString * const ro_MGSFOScrollView = @"firstTextScrollView"; // readonly
@@ -172,8 +162,6 @@ char kcLineWrapPrefChanged;
 {
     NSScrollElasticity setting = value ? NSScrollElasticityNone : NSScrollElasticityAutomatic;
     [self.scrollView setVerticalScrollElasticity:setting];
-
-    //    [self updateGutterView];
 }
 
 - (BOOL)scrollElasticityDisabled
@@ -799,6 +787,8 @@ char kcLineWrapPrefChanged;
 
 
 #pragma mark - Class extension
+
+
 /*
  * - updateGutterView
  */
