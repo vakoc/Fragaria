@@ -621,9 +621,6 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFOLineWrap]) {
         [self setLineWrap:[object boolValue]];
         return;
-    } else if ([key isEqual:MGSFOShowsWarningsInGutter]) {
-        [self setLineWrap:[object boolValue]];
-        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -656,8 +653,6 @@ char kcLineWrapPrefChanged;
     else if ([key isEqual:MGSFODisableScrollElasticity])
         return @(self.scrollElasticityDisabled);
     else if ([key isEqual:MGSFOLineWrap])
-        return @(self.lineWrap);
-    else if ([key isEqual:MGSFOShowsWarningsInGutter])
         return @(self.lineWrap);
 
     if ([self.objectGetterKeys containsObject:key]) {
