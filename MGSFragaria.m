@@ -552,7 +552,7 @@ char kcLineWrapPrefChanged;
         self.objectSetterKeys = [NSMutableSet setWithArray:@[]];
         
         // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithArray:@[ro_MGSFOTextView]];
+        self.objectGetterKeys = [NSMutableSet setWithArray:@[]];
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
@@ -691,9 +691,6 @@ char kcLineWrapPrefChanged;
     MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithLineNumberView:self.gutterView];
     self.lineNumberDefObserv = lineNumbers;
 	
-	// update the docSpec
-	[self.docSpec setValue:self.textView forKey:ro_MGSFOTextView];
-
     // carryover default syntaxDefinition name from old docSpec
     self.syntaxDefinitionName = @"Standard";
 
@@ -731,7 +728,7 @@ char kcLineWrapPrefChanged;
 {
     if (centered)
         NSLog(@"Warning: centered option is ignored.");
-    [[self objectForKey:ro_MGSFOTextView] performGoToLine:lineToGoTo setSelected:highlight];
+    [self.textView performGoToLine:lineToGoTo setSelected:highlight];
 }
 
 
