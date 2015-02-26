@@ -178,6 +178,20 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	showsGutter
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setShowsGutter:(BOOL)showsGutter
+{
+    [self.fragaria setShowsGutter:showsGutter];
+}
+
+- (BOOL)showsGutter
+{
+    return [self.fragaria showsGutter];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	lineWrap
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setLineWrap:(BOOL)lineWrap

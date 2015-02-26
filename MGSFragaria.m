@@ -196,11 +196,25 @@ char kcLineWrapPrefChanged;
  */
 - (void)setShowsLineNumbers:(BOOL)value
 {
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowLineNumberGutter];
-    [[self objectForKey:ro_MGSFOScrollView] setRulersVisible:value];
+    // @todo: make the ruler toggle line numbers
 }
 
 - (BOOL)showsLineNumbers
+{
+    // @todo: make the ruler toggle line numbers
+    return YES;
+}
+
+/*
+ * @property showsGutter
+ */
+- (void)setShowsGutter:(BOOL)showsGutter
+{
+    [self setObject:[NSNumber numberWithBool:showsGutter] forKey:MGSFOShowLineNumberGutter];
+    [[self objectForKey:ro_MGSFOScrollView] setRulersVisible:showsGutter];
+}
+
+- (BOOL)showsGutter
 {
     NSNumber *value = [self objectForKey:MGSFOShowLineNumberGutter];
     return [value boolValue];

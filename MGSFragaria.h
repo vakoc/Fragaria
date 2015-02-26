@@ -86,7 +86,8 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) BOOL isSyntaxColoured;          ///< Specifies whether the document shall be syntax highlighted.
 @property (nonatomic, assign) BOOL lineWrap;                  ///< Indicates whether or not line wrap is enabled.
 @property (nonatomic, assign) BOOL scrollElasticityDisabled;  ///< Indicates whether or not the "rubber band" effect is disabled.
-@property (nonatomic, assign) BOOL showsLineNumbers;          ///< Indicates whether or not line numbers are displayed.
+@property (nonatomic, assign) BOOL showsLineNumbers;          ///< Indicates whether or not line numbers are displayed when the gutter is visible.
+@property (nonatomic, assign) BOOL showsGutter;               ///< Indicates whether or not the gutter is visible.
 @property (nonatomic, assign) BOOL showsWarningsInGutter;     ///< Indicates whether or not error warnings are displayed.
 @property (nonatomic, assign) NSUInteger startingLineNumber;  ///< Specifies the starting line number in the text view.
 
