@@ -45,7 +45,7 @@
 		   be honored.
 		 */
 		self.fragaria = [[MGSFragaria alloc] initWithView:self];
-        self.textView = [self.fragaria objectForKey:ro_MGSFOTextView];
+        self.textView = self.fragaria.textView;
 	}
 	return self;
 }
@@ -64,7 +64,7 @@
 		   be honored.
 		 */
 		self.fragaria = [[MGSFragaria alloc] initWithView:self];
-        self.textView = [self.fragaria objectForKey:ro_MGSFOTextView];
+        self.textView = self.fragaria.textView;
     }
     return self;
 }
