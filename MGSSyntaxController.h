@@ -27,11 +27,7 @@
 /**
  *  Manages syntax definitions for Fragaria.
  **/
-@interface MGSSyntaxController : NSObject {
-
-	NSArray *syntaxDefinitionNames;
-    NSMutableDictionary *syntaxDefinitions;
-}
+@interface MGSSyntaxController : NSObject
 
 
 /// @name Class Methods
@@ -48,11 +44,6 @@
 
 
 /// @name Instance Methods
-
-/**
- *  Returns an array of all of the available syntax definitions.
- **/
-- (NSArray *)syntaxDefinitionNames;
 
 /**
  *  Constructs the array of all syntax definitions.
@@ -87,8 +78,8 @@
 /// @name Properties
 
 /**
- *
+ *  Returns an array of all of the syntax definition names that are known.
  **/
-@property (strong, nonatomic,readonly) NSArray *syntaxDefinitionNames;
+@property (strong,nonatomic,readonly) NSArray *syntaxDefinitionNames;
 
 @end
