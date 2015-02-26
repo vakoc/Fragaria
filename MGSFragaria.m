@@ -68,7 +68,6 @@ char kcLineWrapPrefChanged;
 @synthesize extraInterfaceController = _extraInterfaceController;
 @synthesize syntaxErrorController = _syntaxErrorController;
 @synthesize syntaxColouring = _syntaxColouring;
-@synthesize hasVerticalScroller = _hasVerticalScroller;
 
 @synthesize docSpec;
 @synthesize objectSetterKeys;
@@ -180,14 +179,15 @@ char kcLineWrapPrefChanged;
  */
 - (void)setScrollElasticityDisabled:(BOOL)value
 {
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFODisableScrollElasticity];
-    [self updateGutterView];
+    NSScrollElasticity setting = value ? NSScrollElasticityNone : NSScrollElasticityAutomatic;
+    [self.scrollView setVerticalScrollElasticity:setting];
+
+    //    [self updateGutterView];
 }
 
 - (BOOL)scrollElasticityDisabled
 {
-    NSNumber *value = [self objectForKey:MGSFODisableScrollElasticity];
-    return [value boolValue];
+    return (self.scrollView.verticalScrollElasticity == NSScrollElasticityNone);
 }
 
 
@@ -414,7 +414,6 @@ char kcLineWrapPrefChanged;
 
     // initialise document spec from user defaults
     return [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
             [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
             @(YES), MGSFOShowsWarningsInGutter,
             nil];
@@ -563,7 +562,6 @@ char kcLineWrapPrefChanged;
         
         // Define read/write keys
         self.objectSetterKeys = [NSSet setWithArray:@[
-                                 MGSFODisableScrollElasticity,
                                  MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
                                  ]];
@@ -629,6 +627,9 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFOHasVerticalScroller]) {
         [self setHasVerticalScroller:[object boolValue]];
         return;
+    } else if ([key isEqual:MGSFODisableScrollElasticity]) {
+        [self setScrollElasticityDisabled:[object boolValue]];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -658,6 +659,8 @@ char kcLineWrapPrefChanged;
         return @(self.showsGutter);
     else if ([key isEqual:MGSFOHasVerticalScroller])
         return @(self.hasVerticalScroller);
+    else if ([key isEqual:MGSFODisableScrollElasticity])
+        return @(self.scrollElasticityDisabled);
 
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];
@@ -681,11 +684,6 @@ char kcLineWrapPrefChanged;
 	NSSize contentSize = [self.scrollView contentSize];
 	[self.scrollView setBorderType:NSNoBorder];
 
-    if (self.scrollElasticityDisabled) {
-        [self.scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
-    } else {
-        [self.scrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
-    }
 	[self.scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
 	[[self.scrollView contentView] setAutoresizesSubviews:YES];
 	[self.scrollView setPostsFrameChangedNotifications:YES];
