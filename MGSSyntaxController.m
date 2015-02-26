@@ -35,12 +35,6 @@ NSString * const KMGSSyntaxDefinitionsFolder = @"Syntax Definitions";
 
 @interface MGSSyntaxController()
 
-- (NSMutableArray *)loadSyntaxDefinitions;
-- (void)addSyntaxDefinitions:(NSMutableArray *)definitions path:(NSString *)path;
-- (NSDictionary *)standardSyntaxDefinition;
-- (NSDictionary *)syntaxDefinitionWithName:(NSString *)name;
-- (NSBundle *)bundle;
-
 @property (strong, nonatomic, readwrite) NSArray *syntaxDefinitionNames;
 @property (strong) NSMutableDictionary *syntaxDefinitions;
 
@@ -50,9 +44,6 @@ NSString * const KMGSSyntaxDefinitionsFolder = @"Syntax Definitions";
 #pragma mark - Implementation
 
 @implementation MGSSyntaxController
-
-@synthesize syntaxDefinitionNames;
-@synthesize syntaxDefinitions;
 
 static id sharedInstance = nil;
 
