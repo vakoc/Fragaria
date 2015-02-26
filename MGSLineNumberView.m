@@ -504,7 +504,7 @@
 
             // Draw line numbers first so that error images won't be buried underneath long line numbers.
             // Line numbers are internally stored starting at 0
-            labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine];
+            labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine - 1];
             drawingAttributedString = [[NSAttributedString alloc] initWithString:labelText attributes:currentTextAttributes];
 
             CGFloat descent, leading;
