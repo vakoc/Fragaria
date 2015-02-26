@@ -25,6 +25,7 @@
 */
 
 #import "MGSFragaria.h"
+#import "MGSFragariaPrivate.h"
 #import "MGSFragariaFramework.h"
 
 
@@ -114,7 +115,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         NSAssert([textView isKindOfClass:[NSTextView class]], @"bad textview");
         self.undoManager = [textView undoManager];
 
-        NSScrollView *scrollView = [self.fragaria.docSpec valueForKey:ro_MGSFOScrollView];
+        NSScrollView *scrollView = self.fragaria.scrollView;
         [[scrollView contentView] setPostsBoundsChangedNotifications:YES];
 
         // configure ivars
@@ -258,7 +259,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     // If there is no extension try to guess definition from first line
     if ([documentExtension isEqualToString:@""]) { 
         
-        NSString *string = [[[self.fragaria.docSpec valueForKey:ro_MGSFOScrollView] documentView] string];
+        NSString *string = [self.fragaria.scrollView.documentView string];
         NSString *firstLine = [string substringWithRange:[string lineRangeForRange:NSMakeRange(0,0)]];
         if ([firstLine hasPrefix:@"#!"] || [firstLine hasPrefix:@"%"] || [firstLine hasPrefix:@"<?"]) {
             lowercaseExtension = [[MGSSyntaxController sharedInstance] guessSyntaxDefinitionExtensionFromFirstLine:firstLine];
