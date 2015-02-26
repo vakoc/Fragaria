@@ -7,11 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SMLAutoCompleteDelegate.h"
 
 /**
  *  This class defines a single instance of a syntax definition.
  **/
-@interface MGSSyntaxDefinition : NSObject
+@interface MGSSyntaxDefinition : NSObject <SMLAutoCompleteDelegate>
 
 
 @property (readonly) NSString *functionDefinition;              ///< An expression that defines what a function is.
@@ -60,6 +61,10 @@
  *  @param syntaxDictionary The dictionary representation of the plist file that
  *  defines the syntax. */
 - (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary;
+
+/** Autocomplete delegate main method. Returns as autocomplete words the 
+ * keywordsAndAutocompleteWords array. */
+- (NSArray*)completions;
 
 
 @end

@@ -348,4 +348,10 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 }
 
 
+- (NSArray*)completions
+{
+    return self.keywordsAndAutocompleteWords;
+}
+
+
 @end
