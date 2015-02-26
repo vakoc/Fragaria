@@ -21,7 +21,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="450" height="370"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box autoresizesSubviews="NO" title="Upper View" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="UbJ-ck-GAa">
+                    <box autoresizesSubviews="NO" misplaced="YES" title="Upper View" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="UbJ-ck-GAa">
                         <rect key="frame" x="17" y="184" width="416" height="166"/>
                         <view key="contentView">
                             <rect key="frame" x="1" y="1" width="414" height="150"/>
@@ -133,12 +133,28 @@
                                         </binding>
                                     </connections>
                                 </button>
+                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gg8-RP-10h">
+                                    <rect key="frame" x="16" y="24" width="118" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Vertical Scroller" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="KYC-47-lpS">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.viewTop.hasVerticalScroller" id="h7l-Iy-i2F">
+                                            <dictionary key="options">
+                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
+                                </button>
                             </subviews>
                         </view>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" title="Lower View" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="OMj-yp-1Jo">
+                    <box autoresizesSubviews="NO" misplaced="YES" title="Lower View" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="OMj-yp-1Jo">
                         <rect key="frame" x="17" y="16" width="416" height="165"/>
                         <view key="contentView">
                             <rect key="frame" x="1" y="1" width="414" height="149"/>
@@ -242,6 +258,22 @@
                                     </buttonCell>
                                     <connections>
                                         <binding destination="-2" name="value" keyPath="self.viewBottom.showsGutter" id="bLo-Oa-kT6">
+                                            <dictionary key="options">
+                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
+                                </button>
+                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VG5-pi-rhT">
+                                    <rect key="frame" x="16" y="22" width="118" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Vertical Scroller" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="FXz-De-c6b">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.viewBottom.hasVerticalScroller" id="xbI-e1-jbU">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEnabled" value="NO"/>
