@@ -143,54 +143,6 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 #pragma mark - Class Methods (deprecated)
 
 /**
- *  Creates the docSpec for the document.
- *  @todo: (jsd) safe to delete once all of the class methods are deprecated.
- **/
-+ (id)createDocSpec DEPRECATED_ATTRIBUTE;
-
-/**
- *  Deprecated. Do not use.
- *  @param docSpec Deprecated.
- *  @param string Deprecated.
- **/
-+ (void)docSpec:(id)docSpec setString:(NSString *)string DEPRECATED_ATTRIBUTE;
-
-/**
- *  Deprecated. Do not use.
- *  @param docSpec Deprecated.
- *  @param string Deprecated.
- *  @param options Deprecated.
- **/
-+ (void)docSpec:(id)docSpec setString:(NSString *)string options:(NSDictionary *)options DEPRECATED_ATTRIBUTE;
-
-/**
- *  Deprecated. Do not use.
- *  @param docSpec Deprecated.
- *  @param string Deprecated.
- **/
-+ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string DEPRECATED_ATTRIBUTE;
-
-/**
- *  Deprecated. Do not use.
- *  @param docSpec Deprecated.
- *  @param string Deprecated.
- *  @param options Deprecated.
- **/
-+ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string options:(NSDictionary *)options DEPRECATED_ATTRIBUTE;
-
-/**
- *  Deprecated. Do not use.
- *  @param docSpec Deprecated.
- **/
-+ (NSString *)stringForDocSpec:(id)docSpec DEPRECATED_ATTRIBUTE;
-
-/**
- *  Deprecated. Do not use.
- *  @param docSpec Deprecated.
- **/
-+ (NSAttributedString *)attributedStringForDocSpec:(id)docSpec DEPRECATED_ATTRIBUTE;
-
-/**
  *  Deprecated. Do not use.
  **/
 + (id)currentInstance DEPRECATED_ATTRIBUTE;
@@ -206,13 +158,6 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
  *  @param name Deprecated.
  **/
 + (NSImage *)imageNamed:(NSString *)name DEPRECATED_ATTRIBUTE;
-
-/**
- *  Returns the attributed string for the given docSpec, with temporary
- *  applied as attributes.
- *  @param docSpec The docSpec for which to return the string.
- **/
-+ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec DEPRECATED_ATTRIBUTE;
 
 
 /// @name Instance Methods

@@ -378,74 +378,6 @@ char kcLineWrapPrefChanged;
 }
 
 
-/*
- * + createDocSpec
- */
-+ (id)createDocSpec
-{
-    NSLog(@"This method is deprecated and has no effect.");
-    return nil;
-}
-
-
-/*
- * + docSpec:setString:
- */
-+ (void)docSpec:(id)docSpec setString:(NSString *)string
-{
-    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
-}
-
-
-/*
- * + docSpec:setString:options:
- */
-+ (void)docSpec:(id)docSpec setString:(NSString *)string options:(NSDictionary *)options
-{
-    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
-}
-
-
-/*
- * docSpec:setAttributedString
- */
-+ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string
-{
-    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
-}
-
-
-/*
- * + docSpec:setAttributedString:options:
- */
-+ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string options:(NSDictionary *)options
-{
-    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
-}
-
-
-/*
- * + stringForDocSpec:
- */
-+ (NSString *)stringForDocSpec:(id)docSpec
-{
-    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
-
-    return nil;
-}
-
-
-/*
- * + attributedStringForDocSpec:
- */
-+ (NSAttributedString *)attributedStringForDocSpec:(id)docSpec
-{
-    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
-
-    return nil;
-}
-
-
 #pragma mark - Class methods (deprecated)
 
 /*
@@ -482,16 +414,6 @@ char kcLineWrapPrefChanged;
     NSLog(@"This method is deprecated and has no effect. It used to load images "
           "from the framework bundle, but that's probably not what you want. "
           "Load your own images from your application's own bundle instead.");
-    return nil;
-}
-
-/*
- * + attributedStringWithTemporaryAttributesAppliedForDocSpec:
- */
-+ (NSAttributedString *)attributedStringWithTemporaryAttributesAppliedForDocSpec:(id)docSpec
-{
-    NSLog(@"This method is deprecated and has no effect. Use the property "
-          "attributedStringWithTemporaryAttributesApplied instead.");
     return nil;
 }
 
