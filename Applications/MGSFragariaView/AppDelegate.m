@@ -9,9 +9,11 @@
 //
 
 #import "AppDelegate.h"
+#import <MGSFragaria/MGSFragaria.h>
 #import "MASPreferencesWindowController.h"
 #import "PrefsFontsAndColorsViewController.h"
 #import "PrefsTextEditingViewController.h"
+#import "FeaturesWindowController.h"
 
 
 #pragma mark - PRIVATE INTERFACE
@@ -21,17 +23,14 @@
 
 @property (weak) IBOutlet NSWindow *window;
 
-@property (nonatomic, strong) NSWindowController *preferencesWindowController;
-
 @property (weak) IBOutlet MGSFragariaView *viewTop;
 
 @property (weak) IBOutlet MGSFragariaView *viewBottom;
 
-@property (weak) IBOutlet NSToolbarItem *buttonToggleHighlighting;
 
-@property (weak) IBOutlet NSToolbarItem * buttonToggleLineNumbers;
+@property (nonatomic, strong) NSWindowController *preferencesWindowController;
 
-@property (weak) IBOutlet NSToolbarItem * buttonToggleWordWrap;
+@property (nonatomic, strong) FeaturesWindowController *featuresWindowController;
 
 
 @property (strong) NSArray *breakpoints;
@@ -45,6 +44,7 @@
 @implementation AppDelegate
 
 @synthesize preferencesWindowController = _preferencesWindowController;
+@synthesize featuresWindowController = _featuresWindowController;
 
 
 #pragma mark - Initialization and Setup
@@ -72,22 +72,18 @@
 
     /* Make the upper view interesting. */
     self.viewTop.textView.string = fileContent;
-    self.viewTop.startingLineNumber = 2025;
+    self.viewTop.startingLineNumber = 1;
 	self.viewTop.showsLineNumbers = YES;
     self.viewTop.textView.lineWrap = NO;
 
     /* Make the lower view interesting. */
     self.self.viewBottom.string = fileContent;
-    //[self.viewBottom bind:@"string" toObject:self.viewTop withKeyPath:@"string" options:nil];
 	self.viewBottom.showsLineNumbers = YES;
     self.viewBottom.lineWrap = NO;
 
 
 	/* Sample Syntax Error Definitions */
     self.viewTop.syntaxErrors = [self makeSyntaxErrors];
-
-
-
 }
 
 
@@ -111,6 +107,21 @@
 }
 
 
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	@featuresWindowController
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSWindowController *)featuresWindowController
+{
+    if (!_featuresWindowController)
+    {
+        _featuresWindowController = [[FeaturesWindowController alloc] initWithWindowNibName:@"Features"];
+        _featuresWindowController.viewTop = self.viewTop;
+        _featuresWindowController.viewBottom = self.viewBottom;
+    }
+    return _featuresWindowController;
+}
+
+
 #pragma mark - Delegate methods
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -119,11 +130,7 @@
 - (void)textDidChange:(NSNotification *)notification
 {
 	#pragma unused(notification)
-	NSLog(@"%@", @"I'm the delegate.");
-
-	// proving that `string` isn't KVC compliant.
-	[self.viewTop willChangeValueForKey:@"string"];
-	[self.viewTop didChangeValueForKey:@"string"];
+	NSLog(@"%@", @"textDidChange: notification.");
 }
 
 
@@ -138,6 +145,8 @@
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	toggleBreakpointForView:onLine
+        This simple demonstration simply toggles breakpoints every
+        time the line number is clicked.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)toggleBreakpointForView:(id)sender onLine:(int)line;
 {
@@ -169,7 +178,7 @@
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender
 {
 	#pragma unused(sender)
-	NSLog(@"%@", @"Something dropped here.");
+	NSLog(@"%@", @"concludeDragOperation: delegate method.");
 }
 
 
@@ -185,49 +194,15 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleToggleLineNumbers:
+	openFeatures:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)handleToggleLineNumbers:(id)sender
+- (IBAction)openFeatures:(id)sender
 {
-	#pragma unused(sender)
-	self.viewTop.showsLineNumbers = !self.viewTop.showsLineNumbers;
-	self.viewBottom.showsLineNumbers = !self.viewBottom.showsLineNumbers;
+    [self.featuresWindowController showWindow:nil];
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleToggleHighlighting:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)handleToggleHighlighting:(id)sender
-{
-	#pragma unused(sender)
-	self.viewTop.syntaxColoured = !self.viewTop.syntaxColoured;
-	self.viewBottom.syntaxColoured = !self.viewBottom.syntaxColoured;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleToggleLineWrap:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)handleToggleLineWrap:(id)sender
-{
-	#pragma unused(sender)
-	self.viewTop.lineWrap = !self.viewTop.lineWrap;
-	self.viewBottom.lineWrap = !self.viewBottom.lineWrap;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	handleToggleGutterWarnings:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)handleToggleGutterWarnings:(id)sender
-{
-    #pragma unused(sender)
-    self.viewTop.showsWarningsInGutter = !self.viewTop.showsWarningsInGutter;
-}
-
-
-#pragma marks - Private
+#pragma mark - Private
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	makeSyntaxErrors
