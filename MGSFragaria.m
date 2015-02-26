@@ -68,7 +68,7 @@ char kcLineWrapPrefChanged;
 @synthesize extraInterfaceController = _extraInterfaceController;
 @synthesize syntaxErrorController = _syntaxErrorController;
 @synthesize syntaxColouring = _syntaxColouring;
-@synthesize showsGutter = _showsGutter;
+@synthesize hasVerticalScroller = _hasVerticalScroller;
 
 @synthesize docSpec;
 @synthesize objectSetterKeys;
@@ -148,14 +148,13 @@ char kcLineWrapPrefChanged;
  */
 - (void)setHasVerticalScroller:(BOOL)value
 {
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOHasVerticalScroller];
-    [self updateGutterView];
+    self.scrollView.hasVerticalScroller = value;
+    self.scrollView.autohidesScrollers = value;
 }
 
 - (BOOL)hasVerticalScroller
 {
-    NSNumber *value = [self objectForKey:MGSFOHasVerticalScroller];
-    return [value boolValue];
+    return self.scrollView.hasVerticalScroller;
 }
 
 
@@ -415,7 +414,6 @@ char kcLineWrapPrefChanged;
 
     // initialise document spec from user defaults
     return [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
             [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
             [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
             @(YES), MGSFOShowsWarningsInGutter,
@@ -565,7 +563,6 @@ char kcLineWrapPrefChanged;
         
         // Define read/write keys
         self.objectSetterKeys = [NSSet setWithArray:@[
-                                 MGSFOHasVerticalScroller,
                                  MGSFODisableScrollElasticity,
                                  MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
@@ -629,6 +626,9 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFOShowLineNumberGutter]) {
         [self setShowsGutter:[object boolValue]];
         return;
+    } else if ([key isEqual:MGSFOHasVerticalScroller]) {
+        [self setHasVerticalScroller:[object boolValue]];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -656,6 +656,8 @@ char kcLineWrapPrefChanged;
          return self.syntaxDefinitionName;
     else if ([key isEqual:MGSFOShowLineNumberGutter])
         return @(self.showsGutter);
+    else if ([key isEqual:MGSFOHasVerticalScroller])
+        return @(self.hasVerticalScroller);
 
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];
@@ -678,13 +680,7 @@ char kcLineWrapPrefChanged;
 	self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
 	NSSize contentSize = [self.scrollView contentSize];
 	[self.scrollView setBorderType:NSNoBorder];
-    if (self.hasVerticalScroller) {
-        [self.scrollView setHasVerticalScroller:YES];
-        [self.scrollView setAutohidesScrollers:YES];
-	} else {
-        [self.scrollView setHasVerticalScroller:NO];
-        [self.scrollView setAutohidesScrollers:NO];
-    }
+
     if (self.scrollElasticityDisabled) {
         [self.scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
     } else {
@@ -851,18 +847,15 @@ char kcLineWrapPrefChanged;
 
 #pragma mark - Class extension
 /*
- 
- - updateGutterView
- 
+ * - updateGutterView
  */
 - (void) updateGutterView {
     [self.lineNumberDefObserv updateGutterView];
 }
 
+
 /*
-
- - updateErrorHighlighting
-
+ * - updateErrorHighlighting
  */
 - (void) updateErrorHighlighting {
     [self.syntaxColouring highlightErrors];

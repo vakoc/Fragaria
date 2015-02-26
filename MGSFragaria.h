@@ -20,7 +20,7 @@
 // BOOL
 extern NSString * const MGSFOIsSyntaxColoured DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOShowLineNumberGutter DEPRECATED_ATTRIBUTE;
-extern NSString * const MGSFOHasVerticalScroller;
+extern NSString * const MGSFOHasVerticalScroller DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFODisableScrollElasticity;
 extern NSString * const MGSFOLineWrap;
 extern NSString * const MGSFOShowsWarningsInGutter;

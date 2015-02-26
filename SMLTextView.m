@@ -1241,9 +1241,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         [self setMinSize:NSMakeSize(10, contentSize.height)];
         [self setMaxSize:NSMakeSize(10, CGFLOAT_MAX)];
 
-        // setup scroll view
-        [textScrollView setHasHorizontalScroller:NO];
-        [textScrollView setHasVerticalScroller:YES];
     } else {
 
         // setup text container
