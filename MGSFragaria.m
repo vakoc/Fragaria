@@ -417,7 +417,6 @@ char kcLineWrapPrefChanged;
     return [NSMutableDictionary dictionaryWithObjectsAndKeys:
             [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
             [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
-            [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
             [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
             @(YES), MGSFOShowsWarningsInGutter,
             nil];
@@ -565,11 +564,12 @@ char kcLineWrapPrefChanged;
         // Create the Sets containing the valid setter/getter combinations for the Docspec
         
         // Define read/write keys
-        self.objectSetterKeys = [NSSet setWithObjects:MGSFOShowLineNumberGutter,
-                                 MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
+        self.objectSetterKeys = [NSSet setWithArray:@[
+                                 MGSFOHasVerticalScroller,
+                                 MGSFODisableScrollElasticity,
                                  MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
-                                 nil];
+                                 ]];
         
         // Define read only keys
         self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, nil];
