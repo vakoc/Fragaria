@@ -460,7 +460,9 @@ char kcLineWrapPrefChanged;
  */
 + (NSAttributedString *)attributedStringForDocSpec:(id)docSpec
 {
-    return [[[docSpec valueForKey:ro_MGSFOTextView] layoutManager] attributedString];
+    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
+
+    return nil;
 }
 
 
