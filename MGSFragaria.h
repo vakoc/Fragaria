@@ -227,14 +227,4 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 - (MGSTextMenuController *)textMenuController DEPRECATED_ATTRIBUTE;
 
 
-/// @name Properties (deprecated)
-#pragma mark - Properties (deprecated)
-
-/**
- *  Do not develop further or use unless necessary. This is to be deprecated
- *  in favor of public and private properties.
- **/
-@property (nonatomic, strong) id docSpec DEPRECATED_ATTRIBUTE;
-
-
 @end

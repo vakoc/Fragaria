@@ -57,8 +57,6 @@ char kcLineWrapPrefChanged;
 @synthesize syntaxColouring = _syntaxColouring;
 @synthesize syntaxDefinitionName = _syntaxDefinitionName;
 
-@synthesize docSpec;
-
 
 #pragma mark - Properties - Document Properties
 
@@ -357,12 +355,6 @@ char kcLineWrapPrefChanged;
 
 /*
  * @property textView
- * (snythesized)
- */
-
-
-/*
- * @property docSpec
  * (synthesized)
  */
 
@@ -422,37 +414,22 @@ char kcLineWrapPrefChanged;
 
 
 /*
- * - initWithObject
- *
- * Designated initializer
- *
- * Calling this method enables us to use a predefined object for our doc spec.
- */
-- (id)initWithObject:(id)object
-{
-	if ((self = [super init])) {
-
-        // observe defaults that affect rendering
-        // @todo: (jsd) Will have to delete this. Application is responsible for preferences
-        //        and setting properties based on those. Future preferences framework.
-        NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterWidth" options:NSKeyValueObservingOptionNew context:&kcGutterWidthPrefChanged];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaSyntaxColourNewDocuments" options:NSKeyValueObservingOptionNew context:&kcSyntaxColourPrefChanged];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionNew context:&kcSpellCheckPrefChanged];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaShowLineNumberGutter" options:NSKeyValueObservingOptionNew context:&kcLineNumberPrefChanged];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:&kcLineWrapPrefChanged];
-    }
-
-	return self;
-}
-
-
-/*
  * - initWithView:
  */
 - (instancetype)initWithView:(NSView *)view
 {
-    self = [self initWithObject:nil];
+    self = [super init];
+    
+    // observe defaults that affect rendering
+    // @todo: (jsd) Will have to delete this. Application is responsible for preferences
+    //        and setting properties based on those. Future preferences framework.
+    NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterWidth" options:NSKeyValueObservingOptionNew context:&kcGutterWidthPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaSyntaxColourNewDocuments" options:NSKeyValueObservingOptionNew context:&kcSyntaxColourPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionNew context:&kcSpellCheckPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowLineNumberGutter" options:NSKeyValueObservingOptionNew context:&kcLineNumberPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:&kcLineWrapPrefChanged];
+    
     [self embedInView:view];
     return self;
 }
@@ -490,7 +467,7 @@ char kcLineWrapPrefChanged;
         return;
     } else if ([key isEqual:MGSFOSyntaxDefinitionName]) {
         [self setSyntaxDefinitionName:object];
-         return;
+        return;
     } else if ([key isEqual:MGSFOShowLineNumberGutter]) {
         [self setShowsGutter:[object boolValue]];
         return;
@@ -523,7 +500,7 @@ char kcLineWrapPrefChanged;
     else if ([key isEqual:MGSFOIsSyntaxColoured])
         return @(self.isSyntaxColoured);
     else if ([key isEqual:MGSFOSyntaxDefinitionName])
-         return self.syntaxDefinitionName;
+        return self.syntaxDefinitionName;
     else if ([key isEqual:MGSFOShowLineNumberGutter])
         return @(self.showsGutter);
     else if ([key isEqual:MGSFOHasVerticalScroller])
@@ -532,7 +509,7 @@ char kcLineWrapPrefChanged;
         return @(self.scrollElasticityDisabled);
     else if ([key isEqual:MGSFOLineWrap])
         return @(self.lineWrap);
-
+    
     return nil;
 }
 
