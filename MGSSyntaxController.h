@@ -26,6 +26,9 @@
 
 /**
  *  Manages syntax definitions for Fragaria.
+ *  @discussion Syntax definitions are found in the framework bundle by default,
+ *  but can also be loaded automatically from your app bundle and from
+ *  /Users/{user}/Library/Application Support/{appname}/.
  **/
 @interface MGSSyntaxController : NSObject
 
