@@ -44,6 +44,10 @@ Copyright 2004-2009 Peter Borg
 /** The owning controller for instances of this class. */
 @property (nonatomic, weak, readonly) MGSFragaria *fragaria;
 
+/** The syntax definition name. If not set, SMLSyntaxColouring
+ *  will try to guess based on various factors. */
+@property (nonatomic, strong) NSString *syntaxDefinitionName;
+
 /** The NSUndoManager instance used in this class. */
 @property (strong) NSUndoManager *undoManager;
 

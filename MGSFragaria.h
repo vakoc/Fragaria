@@ -26,7 +26,7 @@ extern NSString * const MGSFOLineWrap;
 extern NSString * const MGSFOShowsWarningsInGutter;
 
 // string
-extern NSString * const MGSFOSyntaxDefinitionName;
+extern NSString * const MGSFOSyntaxDefinitionName DEPRECATED_ATTRIBUTE;
 
 // NSView *
 extern NSString * const ro_MGSFOTextView; // readonly
@@ -68,7 +68,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 
 @property (nonatomic, strong) NSString *documentName;                 ///< The document name. If set, Fragaria can try to guess the syntax definition.
-@property (nonatomic, assign) NSString *syntaxDefinitionName;         ///< Specifies the current syntax definition name. @todo: (jsd) fix strong, currently duplicate retain
+@property (nonatomic, assign) NSString *syntaxDefinitionName;         ///< Specifies the current syntax definition name.
 @property (nonatomic, assign) NSString * string;                      ///< The plain text string of the text editor.
 @property (nonatomic, assign) NSAttributedString *attributedString;   ///< The text editor string with attributes.
 

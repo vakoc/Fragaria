@@ -23,7 +23,10 @@ NSString * const MGSFOShowsWarningsInGutter = @"showsWarningsInGutter";
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
 
 // class name strings
-// TODO: expose these to allow subclass name definition
+// @todo: expose these to allow subclass name definition
+// @todo: (jsd) Is this still a valid todo? Strings aren't used anywhere
+//        and there's no infrastructure in place to allow substituting
+//        other classes.
 NSString * const MGSFOEditorTextViewClassName = @"editorTextViewClassName";
 NSString * const MGSFOLineNumbersClassName = @"lineNumbersClassName";
 NSString * const MGSFOGutterTextViewClassName = @"gutterTextViewClassName";
@@ -84,12 +87,12 @@ char kcLineWrapPrefChanged;
  */
 - (void)setSyntaxDefinitionName:(NSString *)value
 {
-    [self setObject:value forKey:MGSFOSyntaxDefinitionName];
+    self.syntaxColouring.syntaxDefinitionName = value;
 }
 
 - (NSString *)syntaxDefinitionName
 {
-    return [self objectForKey:MGSFOSyntaxDefinitionName];
+    return self.syntaxColouring.syntaxDefinitionName;
 }
 
 
@@ -402,7 +405,6 @@ char kcLineWrapPrefChanged;
     return [NSMutableDictionary dictionaryWithObjectsAndKeys:
             [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
             [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
-            @"Standard", MGSFOSyntaxDefinitionName,
             [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
             [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
             @(YES), MGSFOShowsWarningsInGutter,
@@ -551,7 +553,6 @@ char kcLineWrapPrefChanged;
         // Define read/write keys
         self.objectSetterKeys = [NSSet setWithObjects:MGSFOShowLineNumberGutter,
                                  MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
-                                 MGSFOSyntaxDefinitionName,
                                  MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
                                  nil];
@@ -686,6 +687,9 @@ char kcLineWrapPrefChanged;
 	[self.docSpec setValue:textView forKey:ro_MGSFOTextView];
 	[self.docSpec setValue:textScrollView forKey:ro_MGSFOScrollView];
 
+    // carryover default syntaxDefinition name from old docSpec
+    self.syntaxDefinitionName = @"Standard";
+
     // add syntax colouring
     [self.syntaxColouring recolourExposedRange];
 	
@@ -698,7 +702,7 @@ char kcLineWrapPrefChanged;
 
     // apply default line wrapping
     [textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
-    
+
     [self setShowsWarningsInGutter:YES];
 }
 

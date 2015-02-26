@@ -79,6 +79,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSTimer *autocompleteWordsTimer;
 }
 
+@synthesize syntaxDefinitionName = _syntaxDefinitionName;
 
 #pragma mark - Instance methods
 
@@ -127,9 +128,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
         // configure syntax definition
         [self applySyntaxDefinition];
-
-        // add document KVO observers
-        [self.fragaria.docSpec addObserver:self forKeyPath:@"syntaxDefinition" options:NSKeyValueObservingOptionNew context:@"syntaxDefinition"];
 
         // add text view notification observers
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:textView];
@@ -186,7 +184,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 }
 
 
-#pragma mark -KVO
+#pragma mark - KVO
 
 /*
  * - observeValueForKeyPath:ofObject:change:context:
@@ -197,9 +195,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		[self applyColourDefaults];
 		[self recolourExposedRange];
 	} else if ([(__bridge NSString *)context isEqualToString:@"MultiLineChanged"]) {
-        [self invalidateAllColouring];
-	} else if ([(__bridge NSString *)context isEqualToString:@"syntaxDefinition"]) {
-		[self applySyntaxDefinition];
         [self invalidateAllColouring];
 	} else if ([(__bridge NSString*)context isEqualToString:@"LineWrapChanged"]) {
         [self recolourExposedRange];
@@ -214,7 +209,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 -(void)dealloc
 {
-    [self.fragaria.docSpec removeObserver:self forKeyPath:@"syntaxDefinition"];
     [[NSNotificationCenter defaultCenter] removeObserver:self ];
 }
 
@@ -237,15 +231,14 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (NSDictionary *)syntaxDictionary
 {
-	NSString *definitionName = [self.fragaria.docSpec valueForKey:MGSFOSyntaxDefinitionName];
-	
 	// if document has no syntax definition name then assign one
-	if (!definitionName || [definitionName length] == 0) {
-		definitionName = [self assignSyntaxDefinition];
-	}
-	
+    if (!self.syntaxDefinitionName || [self.syntaxDefinitionName length] == 0)
+    {
+        self.syntaxDefinitionName = [self assignSyntaxDefinition];
+    }
+
 	// get syntax dictionary
-	NSDictionary *syntaxDictionary = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:definitionName];
+	NSDictionary *syntaxDictionary = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:self.syntaxDefinitionName];
     
     return syntaxDictionary;
 }
@@ -256,8 +249,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (NSString *)assignSyntaxDefinition
 {
-	NSString *definitionName = [self.fragaria.docSpec valueForKey:MGSFOSyntaxDefinitionName];
-	if (definitionName && [definitionName length] > 0) return definitionName;
+	if (self.syntaxDefinitionName && [self.syntaxDefinitionName length] > 0) return self.syntaxDefinitionName;
 
 	NSString *documentExtension = self.fragaria.documentName.pathExtension;
 	
@@ -276,17 +268,14 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     }
     
     if (lowercaseExtension) {
-        definitionName = [[MGSSyntaxController sharedInstance] syntaxDefinitionNameWithExtension:lowercaseExtension];
+        self.syntaxDefinitionName = [[MGSSyntaxController sharedInstance] syntaxDefinitionNameWithExtension:lowercaseExtension];
     }
 	
-	if (!definitionName || [definitionName length] == 0) {
-		definitionName = [MGSSyntaxController standardSyntaxDefinitionName];
+	if (!self.syntaxDefinitionName || [self.syntaxDefinitionName length] == 0) {
+		self.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
 	}
 	
-	// update document definition
-	[self.fragaria.docSpec setValue:definitionName forKey:MGSFOSyntaxDefinitionName];
-	
-	return definitionName;
+	return self.syntaxDefinitionName;
 }
 
 
@@ -298,6 +287,22 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (NSString *)completeString
 {
 	return [[self.fragaria.docSpec valueForKey:ro_MGSFOTextView] string];
+}
+
+
+/*
+ *  @property syntaxDefinitionName
+ */
+- (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
+{
+    _syntaxDefinitionName = syntaxDefinitionName;
+    [self applySyntaxDefinition];
+    [self invalidateAllColouring];
+}
+
+- (NSString *)syntaxDefinitionName
+{
+    return _syntaxDefinitionName;
 }
 
 
@@ -712,7 +717,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             }
         }
         
-        // TODO: handle constructs such as 1..5 which may occur within some loop constructs
+        // @todo: handle constructs such as 1..5 which may occur within some loop constructs
         
         // don't colour a trailing decimal point as some languages may use it as a line terminator
         if (colourEndLocation > 0) {
