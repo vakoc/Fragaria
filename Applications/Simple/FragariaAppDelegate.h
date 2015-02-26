@@ -7,25 +7,24 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <MGSFragaria/MGSFragariaTextViewDelegate.h>
+#import <MGSFragaria/SMLSyntaxColouringDelegate.h>
 
 @class SMLTextView;
 @class MGSFragaria;
 @class MGSSimpleBreakpointDelegate;
 
-@interface FragariaAppDelegate : NSObject <NSApplicationDelegate> {
-    NSWindow *__weak window;
-	IBOutlet NSView *editView;
-	MGSFragaria *fragaria;
-	BOOL isEdited;
-    MGSSimpleBreakpointDelegate *breakptDelegate;
-}
+@interface FragariaAppDelegate : NSObject <NSApplicationDelegate, MGSFragariaTextViewDelegate, SMLSyntaxColouringDelegate>
 
 - (IBAction)showPreferencesWindow:(id)sender;
 - (IBAction)copyToPasteBoard:(id)sender;
 - (IBAction)reloadString:(id)sender;
+
 @property (weak) IBOutlet NSWindow *window;
 
-- (void)setSyntaxDefinition:(NSString *)name;
-- (NSString *)syntaxDefinition;
+@property (weak) IBOutlet NSView *editView;
+
+@property (nonatomic,assign) NSString *syntaxDefinition;
+
 
 @end

@@ -11,35 +11,36 @@
 #import "MGSPreferencesController.h"
 #import "MGSSimpleBreakpointDelegate.h"
 
-@implementation FragariaAppDelegate
+@implementation FragariaAppDelegate {
+    MGSFragaria *fragaria;
+    MGSSimpleBreakpointDelegate *breakptDelegate;
+}
 
 @synthesize window;
 
 
-#pragma mark -
-#pragma mark NSApplicationDelegate
+#pragma mark - NSApplicationDelegate
+
 /*
- 
- - applicationDidFinishLaunching:
- 
+ * - applicationDidFinishLaunching:
  */
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification 
 {
 #pragma unused(aNotification)
 	
 	// create an instance
-	fragaria = [[MGSFragaria alloc] initWithView:editView];
+	fragaria = [[MGSFragaria alloc] initWithView:self.editView];
 
 	// define initial object configuration
 	//
 	// see MGSFragaria.h for details
 	//
-	[fragaria setObject:self forKey:MGSFODelegate];
+    fragaria.textViewDelegate = self;
 	
     // set the syntax colouring delegate
-    [fragaria setObject:self forKey:MGSFOSyntaxColouringDelegate];
-    
-	// define our syntax definition
+    fragaria.syntaxColouringDelegate = self;
+
+	// set our syntax definition
 	[self setSyntaxDefinition:@"Objective-C"];
 
     //
@@ -55,47 +56,37 @@
 	NSString *fileText = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
 	
 	// set text
-	//[fragaria performSelector:@selector(setString:) withObject:fileText afterDelay:0];
-	[fragaria setString:fileText];
-    
-	// access the NSTextView directly
-	NSTextView *textView = [fragaria objectForKey:ro_MGSFOTextView];
-	
+    fragaria.string = fileText;
+
     // define a syntax error
     SMLSyntaxError *syntaxError = [SMLSyntaxError new];
-    syntaxError.description = @"Syntax errors can be defined";
+    syntaxError.description = @"Syntax errors can be defined.";
     syntaxError.line = 1;
     syntaxError.character = 1;
     syntaxError.length = 10;
-    
     fragaria.syntaxErrors = @[syntaxError];
-    
+
+    // specify a breakpoint delegate
     breakptDelegate = [[MGSSimpleBreakpointDelegate alloc] init];
-    [fragaria setObject:breakptDelegate forKey:MGSFOBreakpointDelegate];
-    
-#pragma unused(textView)
-	
+    fragaria.breakpointDelegate = breakptDelegate;
 }
 
+
 /*
- 
- - applicationShouldTerminateAfterLastWindowClosed:
- 
+ * - applicationShouldTerminateAfterLastWindowClosed:
  */
- - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
- {
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication
+{
 	 #pragma unused(theApplication)
 	 
 	 return YES;
- }
+}
 
-#pragma mark -
-#pragma mark Actions
+
+#pragma mark - Actions
 
 /*
- 
- - showPreferencesWindow
- 
+ * - showPreferencesWindow:
  */
 - (IBAction)showPreferencesWindow:(id)sender
 {
@@ -104,23 +95,22 @@
     [[MGSPreferencesController sharedPrefsWindowController] showWindow:self];
 }
 
+
 /*
- 
- reloadString:
- 
+ * - reloadString:
  */
 - (IBAction)reloadString:(id)sender
 {
-#pragma unused(sender)
+    #pragma unused(sender)
+
     [fragaria reloadString];
 }
 
-#pragma mark -
-#pragma mark Pasteboard handling
+
+#pragma mark - Pasteboard handling
+
 /*
- 
- copyToPasteBoard
- 
+ * - copyToPasteBoard:
  */
 - (IBAction)copyToPasteBoard:(id)sender
 {
@@ -134,36 +124,26 @@
 }
 
 
-#pragma mark -
-#pragma mark Syntax definition handling
+#pragma mark - Property Accessors
+
 /*
- 
- - setSyntaxDefinition:
- 
+ * @property syntaxDefinition
  */
- 
 - (void)setSyntaxDefinition:(NSString *)name
 {
     fragaria.syntaxDefinitionName = name;
 }
 
-/*
- 
- - syntaxDefinition
- 
- */
 - (NSString *)syntaxDefinition
 {
 	return fragaria.syntaxDefinitionName;
-
 }
-#pragma mark -
-#pragma mark NSTextDelegate
+
+
+#pragma mark - NSTextDelegate
 
 /*
- 
- - textDidChange:
- 
+ * - textDidChange:
  */
 - (void)textDidChange:(NSNotification *)notification
 {
@@ -172,85 +152,74 @@
 	[window setDocumentEdited:YES];
 }
 
+
 /*
- 
- - textDidBeginEditing:
- 
+ * - textDidBeginEditing:
  */
 - (void)textDidBeginEditing:(NSNotification *)aNotification
 {
 	NSLog(@"notification : %@", [aNotification name]);
 }
 
+
 /*
- 
- - textDidEndEditing:
- 
+ * - textDidEndEditing:
  */
 - (void)textDidEndEditing:(NSNotification *)aNotification
 {
 	NSLog(@"notification : %@", [aNotification name]);
 }
 
+
 /*
- 
- - textShouldBeginEditing:
- 
+ * - textShouldBeginEditing:
  */
 - (BOOL)textShouldBeginEditing:(NSText *)aTextObject
 {
-#pragma unused(aTextObject)
+    #pragma unused(aTextObject)
 	
 	return YES;
 }
 
+
 /*
- 
- - textShouldEndEditing:
- 
+ * - textShouldEndEditing:
  */
 - (BOOL)textShouldEndEditing:(NSText *)aTextObject
 {
-#pragma unused(aTextObject)
+    #pragma unused(aTextObject)
 	
 	return YES;
 }
 
-#pragma mark -
-#pragma mark MGSFragariaTextViewDelegate
+
+#pragma mark - MGSFragariaTextViewDelegate
 
 /*
- 
- - mgsTextDidPaste:
- 
+ * - mgsTextDidPaste:
  */
 - (void)mgsTextDidPaste:(NSNotification *)aNotification
 {
-    /*
-     When this notification is received the paste will have been accepted.
-     Use this method to query the pasteboard for additional pasteboard content
-     that may be relevant to the application: eg: a plist that may contain custom data.
-     */
-    NSLog(@"notification : %@", [aNotification name]); 
+    // When this notification is received the paste will have been accepted.
+    // Use this method to query the pasteboard for additional pasteboard content
+    // that may be relevant to the application: eg: a plist that may contain custom data.
+    NSLog(@"notification : %@", [aNotification name]);
 }
 
-#pragma mark -
-#pragma mark SMLSyntaxColouringDelegate
+
+#pragma mark - SMLSyntaxColouringDelegate
 
 /*
- 
- For more information on custom colouring see SMLSyntaxColouringDelegate.h
- 
+ * For more information on custom colouring see SMLSyntaxColouringDelegate.h
  */
 
+
 /*
- 
- - fragariaDocument:shouldColourWithBlock:string:range:info
- 
+ * - fragariaDocument:shouldColourWithBlock:string:range:info
  */
 - (BOOL)fragariaDocument:(id)document shouldColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
 {
-#pragma unused(document, colourWithBlock, string, range, info)
+    #pragma unused(document, colourWithBlock, string, range, info)
     
     // query info
     BOOL willColour = [[info objectForKey:SMLSyntaxWillColour] boolValue];
@@ -267,10 +236,10 @@
     // NO: Fragaria should not colour document
     return YES;
 }
+
+
 /*
- 
- - fragariaDocument:shouldColourGroupWithBlock:string:range:info
- 
+ * - fragariaDocument:shouldColourGroupWithBlock:string:range:info
  */
 - (BOOL)fragariaDocument:(id)document shouldColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
 {
@@ -353,14 +322,13 @@
     return fragariaShouldColour;
 }
 
+
 /*
- 
- - fragariaDocument:didColourGroupWithBlock:string:range:info
- 
+ * - fragariaDocument:didColourGroupWithBlock:string:range:info
  */
 - (void)fragariaDocument:(MGSFragaria *)fragaria didColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
 {
-#pragma unused(fragaria, string)
+    #pragma unused(fragaria, string)
     
     // query info
     NSString *group = [info objectForKey:SMLSyntaxGroup];
@@ -438,10 +406,9 @@
     }
 }
 
+
 /*
- 
- - fragariaDocument:didColourWithBlock:string:range:info
- 
+ * - fragariaDocument:didColourWithBlock:string:range:info
  */
 - (void)fragariaDocument:(MGSFragaria *)fragaria didColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
 {
@@ -451,4 +418,6 @@
     // we can call colourWithBlock to perform final colouring
 
 }
+
+
 @end
