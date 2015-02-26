@@ -448,7 +448,7 @@
     NSLayoutManager			*layoutManager;
     NSRange					range, glyphRange;
     NSString				*labelText;
-    NSUInteger				index, line, startingLine;
+    NSUInteger				index, line;
     NSRect                  wholeLineRect;
     CGFloat					ypos, yinset;
     NSDictionary			*textAttributes, *currentTextAttributes;
@@ -480,8 +480,6 @@
 		}
 	}
 
-    startingLine = _startingLineNumber + 1;
-
     // Find the characters that are currently visible, make a range,  then fudge the range a tad in case
     // there is an extra new line at end. It doesn't show up in the glyphs so would not be accounted for.
     glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:[view textContainer]];
@@ -512,7 +510,7 @@
             {
                 // Draw line numbers first so that error images won't be buried underneath long line numbers.
                 // Line numbers are internally stored starting at 0
-                labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine - 1];
+                labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + _startingLineNumber];
                 drawingAttributedString = [[NSAttributedString alloc] initWithString:labelText attributes:currentTextAttributes];
 
                 CGFloat descent, leading;
