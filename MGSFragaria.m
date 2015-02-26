@@ -222,16 +222,13 @@ char kcLineWrapPrefChanged;
  */
 - (void)setShowsWarningsInGutter:(BOOL)value
 {
-    [docSpec setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowsWarningsInGutter];
-
     self.gutterView.showsWarnings = value;
     [self updateGutterView];
 }
 
 - (BOOL)showsWarningsInGutter
 {
-    NSNumber *value = [self objectForKey:MGSFOShowsWarningsInGutter];
-    return [value boolValue];
+    return self.gutterView.showsWarnings;
 }
 
 
@@ -410,9 +407,7 @@ char kcLineWrapPrefChanged;
 + (id)createDocSpec
 {
     // initialise document spec from user defaults
-    return [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            @(YES), MGSFOShowsWarningsInGutter,
-            nil];
+    return nil;
 }
 
 
@@ -557,9 +552,7 @@ char kcLineWrapPrefChanged;
         // Create the Sets containing the valid setter/getter combinations for the Docspec
         
         // Define read/write keys
-        self.objectSetterKeys = [NSSet setWithArray:@[
-                                 MGSFOShowsWarningsInGutter,
-                                 ]];
+        self.objectSetterKeys = nil;
         
         // Define read only keys
         self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, nil];
@@ -628,6 +621,9 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFOLineWrap]) {
         [self setLineWrap:[object boolValue]];
         return;
+    } else if ([key isEqual:MGSFOShowsWarningsInGutter]) {
+        [self setLineWrap:[object boolValue]];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -660,6 +656,8 @@ char kcLineWrapPrefChanged;
     else if ([key isEqual:MGSFODisableScrollElasticity])
         return @(self.scrollElasticityDisabled);
     else if ([key isEqual:MGSFOLineWrap])
+        return @(self.lineWrap);
+    else if ([key isEqual:MGSFOShowsWarningsInGutter])
         return @(self.lineWrap);
 
     if ([self.objectGetterKeys containsObject:key]) {

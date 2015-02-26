@@ -23,7 +23,7 @@ extern NSString * const MGSFOShowLineNumberGutter DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOHasVerticalScroller DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFODisableScrollElasticity DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOLineWrap DEPRECATED_ATTRIBUTE;
-extern NSString * const MGSFOShowsWarningsInGutter;
+extern NSString * const MGSFOShowsWarningsInGutter DEPRECATED_ATTRIBUTE;
 
 // string
 extern NSString * const MGSFOSyntaxDefinitionName DEPRECATED_ATTRIBUTE;
