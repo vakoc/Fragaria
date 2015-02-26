@@ -8,16 +8,16 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import <MGSFragaria/MGSFragariaTextViewDelegate.h>
 
 @class MGSFragaria;
 
-@interface MyDocument : NSDocument {
+@interface MyDocument : NSDocument <MGSFragariaTextViewDelegate> {
 	IBOutlet NSView *editView;
 	MGSFragaria *fragaria;
 	BOOL isEdited;
 }
 
-- (void)setSyntaxDefinition:(NSString *)name;
-- (NSString *)syntaxDefinition;
+@property (nonatomic,assign) NSString *syntaxDefinition;
 
 @end

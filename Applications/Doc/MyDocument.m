@@ -12,40 +12,34 @@
 @implementation MyDocument
 
 /*
- 
- - init
- 
+ * - init
  */
 - (id)init
 {
-    self = [super init];
-    if (self) {
-    
+    if ((self = [super init]))
+    {
         // Add your subclass-specific initialization here.
-     
     }
     return self;
 }
 
 
-#pragma mark -
-#pragma mark Nib loading
+#pragma mark - Nib loading
+
 /*
- 
- - windowNibName
- 
+ * - windowNibName
  */
 - (NSString *)windowNibName
 {
-    // Override returning the nib file name of the document
-    // If you need to use a subclass of NSWindowController or if your document supports multiple NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
+    // Override returning the nib file name of the document.
+    // If you need to use a subclass of NSWindowController or if your document supports multiple
+    // NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"MyDocument";
 }
 
+
 /*
- 
- - windowControllerDidLoadNib:
- 
+ * - windowControllerDidLoadNib:
  */
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
@@ -54,14 +48,14 @@
 	// create an instance
 	fragaria = [[MGSFragaria alloc] initWithView:editView];
 	
-	[fragaria setObject:self forKey:MGSFODelegate];
+    fragaria.textViewDelegate = self;
 	
-	// define our syntax definition
+	// set our syntax definition
 	[self setSyntaxDefinition:@"Objective-C"];
 	
     //
 	// assign user defaults.
-	// a number of properties are derived from the user defaults system rather than the doc spec.
+	// a number of properties are currently derived from the user defaults system.
 	//
 	// see MGSFragariaPreferences.h for details
 	//
@@ -75,36 +69,32 @@
 	// see MGSFragaria.h for details
 	//
     if (YES) {
-        [fragaria setObject:[NSNumber numberWithBool:YES] forKey:MGSFOIsSyntaxColoured];
-        [fragaria setObject:[NSNumber numberWithBool:YES] forKey:MGSFOShowLineNumberGutter];
+        fragaria.isSyntaxColoured = YES;
+        fragaria.showsLineNumbers = YES;
     }
 
     // set text
 	[fragaria setString:@"// We Don't need the future"];
 	
-
-	// access the NSTextView
-	NSTextView *textView = [fragaria objectForKey:ro_MGSFOTextView];
     // Set the undo manager. This is fundamental and allows NSDocument to perform its magic.
-    [self setUndoManager:[textView undoManager]];
+    [self setUndoManager:[fragaria.textView undoManager]];
 }
 
-#pragma mark -
-#pragma mark NSDocument data
+
+#pragma mark - NSDocument data
+
 /*
- 
- - dataOfType:error:
- 
+ * - dataOfType:error:
  */
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
 #pragma unused(typeName)
 	
-    // Insert code here to write your document to data of the specified type. If the given outError != NULL, ensure that you set *outError when returning nil.
+    // Insert code here to write your document to data of the specified type. If the given outError != NULL,
+    // ensure that you set *outError when returning nil.
 
-    // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:, or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-
-    // For applications targeted for Panther or earlier systems, you should use the deprecated API -dataRepresentationOfType:. In this case you can also choose to override -fileWrapperRepresentationOfType: or -writeToFile:ofType: instead.
+    // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:,
+    // or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
 
     if ( outError != NULL ) {
 		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
@@ -112,46 +102,40 @@
 	return nil;
 }
 
+
 /*
- 
- readFromData:ofType:error:
- 
+ * - readFromData:ofType:error:
  */
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
 {
 #pragma unused(data)
 #pragma unused(typeName)
 	
-    // Insert code here to read your document from the given data of the specified type.  If the given outError != NULL, ensure that you set *outError when returning NO.
+    // Insert code here to read your document from the given data of the specified type.
+    // If the given outError != NULL, ensure that you set *outError when returning NO.
 
     // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead. 
-    
-    // For applications targeted for Panther or earlier systems, you should use the deprecated API -loadDataRepresentation:ofType. In this case you can also choose to override -readFromFile:ofType: or -loadFileWrapperRepresentation:ofType: instead.
-    
+
     if ( outError != NULL ) {
 		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
 	}
     return YES;
 }
 
-#pragma mark -
-#pragma mark Syntax definition handling
+
+#pragma mark - Property Accessors
 
 /*
- 
- - setSyntaxDefinition:
- 
+ * - setSyntaxDefinition:
  */
-
 - (void)setSyntaxDefinition:(NSString *)name
 {
     fragaria.syntaxDefinitionName = name;
 }
 
+
 /*
- 
- - syntaxDefinition
- 
+ * - syntaxDefinition
  */
 - (NSString *)syntaxDefinition
 {
