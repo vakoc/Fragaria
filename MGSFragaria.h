@@ -139,12 +139,6 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
  **/
 @property (nonatomic, strong, readonly) SMLTextView *textView;
 
-/**
- *  Do not develop further or use unless necessary. This is to be deprecated
- *  in favor of public and private properties.
- **/
-@property (nonatomic, strong) id docSpec;
-
 
 /// @name Class Methods (deprecated)
 #pragma mark - Class Methods (deprecated)
@@ -287,6 +281,16 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
  *  Deprecated. Do not use.
  **/
 - (MGSTextMenuController *)textMenuController DEPRECATED_ATTRIBUTE;
+
+
+/// @name Properties (deprecated)
+#pragma mark - Properties (deprecated)
+
+/**
+ *  Do not develop further or use unless necessary. This is to be deprecated
+ *  in favor of public and private properties.
+ **/
+@property (nonatomic, strong) id docSpec DEPRECATED_ATTRIBUTE;
 
 
 @end

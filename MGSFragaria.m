@@ -53,9 +53,6 @@ char kcLineWrapPrefChanged;
 
 @interface MGSFragaria ()
 
-@property (nonatomic,strong) NSSet* objectGetterKeys;
-@property (nonatomic,strong) NSSet* objectSetterKeys;
-
 - (void)updateGutterView;
 
 @end
@@ -70,8 +67,6 @@ char kcLineWrapPrefChanged;
 @synthesize syntaxColouring = _syntaxColouring;
 
 @synthesize docSpec;
-@synthesize objectSetterKeys;
-@synthesize objectGetterKeys;
 
 
 #pragma mark - Properties - Document Properties
@@ -403,8 +398,8 @@ char kcLineWrapPrefChanged;
  */
 + (id)createDocSpec
 {
-    // initialise document spec from user defaults
-    return [[NSMutableDictionary alloc] init];
+    NSLog(@"This method is deprecated and has no effect.");
+    return nil;
 }
 
 
@@ -529,13 +524,7 @@ char kcLineWrapPrefChanged;
 - (id)initWithObject:(id)object
 {
 	if ((self = [super init])) {
-		// a doc spec is mandatory
-		if (object) {
-			self.docSpec = object;
-		} else {
-			self.docSpec = [[self class] createDocSpec];
-		}
-        
+
         // observe defaults that affect rendering
         // @todo: (jsd) Will have to delete this. Application is responsible for preferences
         //        and setting properties based on those. Future preferences framework.
@@ -545,18 +534,7 @@ char kcLineWrapPrefChanged;
         [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionNew context:&kcSpellCheckPrefChanged];
         [defaultsController addObserver:self forKeyPath:@"values.FragariaShowLineNumberGutter" options:NSKeyValueObservingOptionNew context:&kcLineNumberPrefChanged];
         [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:&kcLineWrapPrefChanged];
-        
-        // Create the Sets containing the valid setter/getter combinations for the Docspec
-        
-        // Define read/write keys
-        self.objectSetterKeys = [NSMutableSet setWithArray:@[]];
-        
-        // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithArray:@[]];
-        
-        // Merge both to get all getters
-        [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
-	}
+    }
 
 	return self;
 }
@@ -619,10 +597,6 @@ char kcLineWrapPrefChanged;
         [self setLineWrap:[object boolValue]];
         return;
     }
-
-    if ([self.objectSetterKeys containsObject:key]) {
-        [self.docSpec setValue:object forKey:key];
-    }
 }
 
 
@@ -652,9 +626,6 @@ char kcLineWrapPrefChanged;
     else if ([key isEqual:MGSFOLineWrap])
         return @(self.lineWrap);
 
-    if ([self.objectGetterKeys containsObject:key]) {
-        return [self.docSpec valueForKey:key];
-    }
     return nil;
 }
 
