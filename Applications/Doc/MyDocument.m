@@ -9,7 +9,10 @@
 #import "MyDocument.h"
 #import <MGSFragaria/MGSFragaria.h>
 
-@implementation MyDocument
+@implementation MyDocument{
+    MGSFragaria *fragaria;
+}
+
 
 /*
  * - init
@@ -46,7 +49,7 @@
     [super windowControllerDidLoadNib:aController];
 
 	// create an instance
-	fragaria = [[MGSFragaria alloc] initWithView:editView];
+	fragaria = [[MGSFragaria alloc] initWithView:self.editView];
 	
     fragaria.textViewDelegate = self;
 	

@@ -12,11 +12,9 @@
 
 @class MGSFragaria;
 
-@interface MyDocument : NSDocument <MGSFragariaTextViewDelegate> {
-	IBOutlet NSView *editView;
-	MGSFragaria *fragaria;
-	BOOL isEdited;
-}
+@interface MyDocument : NSDocument <MGSFragariaTextViewDelegate>
+
+@property (assign) IBOutlet NSView *editView;
 
 @property (nonatomic,assign) NSString *syntaxDefinition;
 
