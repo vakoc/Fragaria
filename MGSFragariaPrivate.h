@@ -40,8 +40,11 @@
  * syntax error badges. */
 @property MGSLineNumberView *gutterView;
 
-/** A system-wide reference to Fragaria's scroll view. */
+/** Fragaria's scroll view. */
 @property (nonatomic, strong) NSScrollView *scrollView;
+
+/** Fragaria's scroll view. */
+@property (nonatomic, strong) SMLTextView *textView;
 
 #pragma mark - Internal Properties
 

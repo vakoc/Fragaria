@@ -29,7 +29,7 @@ extern NSString * const MGSFOShowsWarningsInGutter DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOSyntaxDefinitionName DEPRECATED_ATTRIBUTE;
 
 // NSView *
-extern NSString * const ro_MGSFOTextView; // readonly
+extern NSString * const ro_MGSFOTextView DEPRECATED_ATTRIBUTE; // readonly
 extern NSString * const ro_MGSFOScrollView DEPRECATED_ATTRIBUTE; // readonly
 
 // NSObject
@@ -137,7 +137,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 /**
  *  Fragaria's text view.
  **/
-@property (nonatomic, assign, readonly) SMLTextView *textView;
+@property (nonatomic, strong, readonly) SMLTextView *textView;
 
 /**
  *  Do not develop further or use unless necessary. This is to be deprecated

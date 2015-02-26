@@ -377,11 +377,8 @@ char kcLineWrapPrefChanged;
 
 /*
  * @property textView
+ * (snythesized)
  */
-- (SMLTextView *)textView
-{
-    return [self objectForKey:ro_MGSFOTextView];
-}
 
 
 /*
@@ -552,10 +549,10 @@ char kcLineWrapPrefChanged;
         // Create the Sets containing the valid setter/getter combinations for the Docspec
         
         // Define read/write keys
-        self.objectSetterKeys = nil;
+        self.objectSetterKeys = [NSMutableSet setWithArray:@[]];
         
         // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, nil];
+        self.objectGetterKeys = [NSMutableSet setWithArray:@[ro_MGSFOTextView]];
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
@@ -682,8 +679,8 @@ char kcLineWrapPrefChanged;
 	[self.scrollView setPostsFrameChangedNotifications:YES];
 		
 	// create textview
-    SMLTextView *textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height) fragaria:self];
-	[self.scrollView setDocumentView:textView];
+    self.textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height) fragaria:self];
+	[self.scrollView setDocumentView:self.textView];
 
     // create line numbers
     self.gutterView = [[MGSLineNumberView alloc] initWithScrollView:self.scrollView fragaria:self];
@@ -695,7 +692,7 @@ char kcLineWrapPrefChanged;
     self.lineNumberDefObserv = lineNumbers;
 	
 	// update the docSpec
-	[self.docSpec setValue:textView forKey:ro_MGSFOTextView];
+	[self.docSpec setValue:self.textView forKey:ro_MGSFOTextView];
 
     // carryover default syntaxDefinition name from old docSpec
     self.syntaxDefinitionName = @"Standard";
@@ -711,7 +708,7 @@ char kcLineWrapPrefChanged;
     [self.scrollView setRulersVisible:[self showsLineNumbers]];
 
     // apply default line wrapping
-    [textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
+    [self.textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
 
     [self setShowsWarningsInGutter:YES];
 }
