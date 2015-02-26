@@ -162,7 +162,6 @@ char kcLineWrapPrefChanged;
  */
 - (void)setLineWrap:(BOOL)value
 {
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOLineWrap];
     [self.textView setLineWrap:value];
     [self updateGutterView];
     [self updateErrorHighlighting];
@@ -410,11 +409,8 @@ char kcLineWrapPrefChanged;
  */
 + (id)createDocSpec
 {
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
     // initialise document spec from user defaults
     return [NSMutableDictionary dictionaryWithObjectsAndKeys:
-            [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
             @(YES), MGSFOShowsWarningsInGutter,
             nil];
 }
@@ -562,7 +558,6 @@ char kcLineWrapPrefChanged;
         
         // Define read/write keys
         self.objectSetterKeys = [NSSet setWithArray:@[
-                                 MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
                                  ]];
         
@@ -630,6 +625,9 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFODisableScrollElasticity]) {
         [self setScrollElasticityDisabled:[object boolValue]];
         return;
+    } else if ([key isEqual:MGSFOLineWrap]) {
+        [self setLineWrap:[object boolValue]];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -661,6 +659,8 @@ char kcLineWrapPrefChanged;
         return @(self.hasVerticalScroller);
     else if ([key isEqual:MGSFODisableScrollElasticity])
         return @(self.scrollElasticityDisabled);
+    else if ([key isEqual:MGSFOLineWrap])
+        return @(self.lineWrap);
 
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];
