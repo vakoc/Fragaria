@@ -1308,15 +1308,4 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 }
 
 
-#pragma mark - SMLAutoCompleteDelegate
-
-/*
- * - completions
- */
-- (NSArray*) completions
-{
-    return self.syntaxDefinition.keywordsAndAutocompleteWords;
-}
-
-
 @end

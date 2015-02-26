@@ -77,6 +77,11 @@ char kcLineWrapPrefChanged;
     syntaxDict = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:value];
     syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict];
     [self.syntaxColouring setSyntaxDefinition:syntaxDef];
+    
+    /* Update the default autocomplete delegate with the new
+     * syntax definition, if needed. */
+    if (!self.autoCompleteDelegate)
+        [self setAutoCompleteDelegate:nil];
 }
 
 
@@ -315,7 +320,7 @@ char kcLineWrapPrefChanged;
     if (autoCompleteDelegate)
         [self.textView setAutocompleteDelegate:autoCompleteDelegate];
     else
-        [self.textView setAutocompleteDelegate:self.syntaxColouring];
+        [self.textView setAutocompleteDelegate:self.syntaxColouring.syntaxDefinition];
 }
 
 - (id<SMLAutoCompleteDelegate>)autoCompleteDelegate

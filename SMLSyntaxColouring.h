@@ -36,7 +36,7 @@ Copyright 2004-2009 Peter Borg
 /**
  *  Performs syntax colouring on the text editor document.
  **/
-@interface SMLSyntaxColouring : NSObject <SMLAutoCompleteDelegate>
+@interface SMLSyntaxColouring : NSObject
 
 
 /// @name Properties
