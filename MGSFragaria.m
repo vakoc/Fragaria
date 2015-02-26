@@ -609,6 +609,9 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFOIsSyntaxColoured]) {
         [self setIsSyntaxColoured:[object boolValue]];
         return;
+    } else if ([key isEqual:MGSFOSyntaxDefinitionName]) {
+        [self setSyntaxDefinitionName:object];
+         return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -632,7 +635,9 @@ char kcLineWrapPrefChanged;
         return self.autoCompleteDelegate;
     else if ([key isEqual:MGSFOIsSyntaxColoured])
         return @(self.isSyntaxColoured);
-    
+    else if ([key isEqual:MGSFOSyntaxDefinitionName])
+         return self.syntaxDefinitionName;
+
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];
     }
