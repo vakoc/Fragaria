@@ -238,12 +238,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
 {
-	[self.fragaria setSyntaxDefinitionName:syntaxDefinitionName];
+	self.fragaria.syntaxDefinitionName = syntaxDefinitionName;
 }
 
 - (NSString *)syntaxDefinitionName
 {
-	return [self.fragaria syntaxDefinitionName];
+    return self.fragaria.syntaxDefinitionName;
 }
 
 

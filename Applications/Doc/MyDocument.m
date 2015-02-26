@@ -145,7 +145,7 @@
 
 - (void)setSyntaxDefinition:(NSString *)name
 {
-	[fragaria setObject:name forKey:MGSFOSyntaxDefinitionName];
+    fragaria.syntaxDefinitionName = name;
 }
 
 /*
@@ -155,8 +155,7 @@
  */
 - (NSString *)syntaxDefinition
 {
-	return [fragaria objectForKey:MGSFOSyntaxDefinitionName];
-	
+    return fragaria.syntaxDefinitionName;
 }
 
 
