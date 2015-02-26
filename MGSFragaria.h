@@ -47,7 +47,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 #import "SMLSyntaxColouringDelegate.h"      // Justification: public delegate.
 #import "SMLAutoCompleteDelegate.h"         // Justification: public delegate.
 
-#import "MGSFragariaPreferences.h"          // Justification: currently exposed, but to be killed of later.
+#import "MGSFragariaPreferences.h"          // Justification: currently exposed, but to be killed off later.
 #import "SMLSyntaxError.h"                  // Justification: external users require it.
 #import "MGSFragariaView.h"                 // Justification: external users require it.
 #import "SMLTextView.h"                     // Justification: external users require it / textView property is exposed.
@@ -68,7 +68,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 
 @property (nonatomic, strong) NSString *documentName;                 ///< The document name. If set, Fragaria can try to guess the syntax definition.
-@property (nonatomic, assign) NSString *syntaxDefinitionName;         ///< Specified the current syntax definition name. @todo: (jsd) fix strong, currently duplicate retain
+@property (nonatomic, assign) NSString *syntaxDefinitionName;         ///< Specifies the current syntax definition name. @todo: (jsd) fix strong, currently duplicate retain
 @property (nonatomic, assign) NSString * string;                      ///< The plain text string of the text editor.
 @property (nonatomic, assign) NSAttributedString *attributedString;   ///< The text editor string with attributes.
 
