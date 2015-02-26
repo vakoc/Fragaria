@@ -80,7 +80,7 @@
     if ((self = [super initWithScrollView:aScrollView orientation:NSVerticalRuler]) != nil)
     {
         _lineIndices = [[NSMutableArray alloc] init];
-        _startingLineNumber = 0;
+        _startingLineNumber = 1;
         _markerImagesSize = NSMakeSize(0,0);
         _markerImages = [[NSMutableDictionary alloc] init];
         _fragaria = fragaria;

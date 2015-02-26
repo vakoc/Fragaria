@@ -72,7 +72,7 @@
 
     /* Make the upper view interesting. */
     self.viewTop.textView.string = fileContent;
-    self.viewTop.startingLineNumber = 1;
+    self.viewTop.startingLineNumber = 314;
 	self.viewTop.showsLineNumbers = YES;
     self.viewTop.textView.lineWrap = NO;
 
