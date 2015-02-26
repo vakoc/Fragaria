@@ -101,12 +101,12 @@ char kcLineWrapPrefChanged;
  */
 - (void)setString:(NSString *)aString
 {
-    [[self class] docSpec:self.docSpec setString:aString];
+	[self.textView setString:aString];
 }
 
 - (NSString *)string
 {
-    return [[self class] stringForDocSpec:self.docSpec];
+	return self.textView.string;
 }
 
 
@@ -115,12 +115,12 @@ char kcLineWrapPrefChanged;
  */
 - (void)setAttributedString:(NSAttributedString *)aString
 {
-    [[self class] docSpec:self.docSpec setAttributedString:aString];
+	[self.textView setAttributedString:aString];
 }
 
 - (NSAttributedString *)attributedString
 {
-    return [[self class] attributedStringForDocSpec:self.docSpec];
+	return self.textView.attributedString;
 }
 
 
@@ -413,8 +413,7 @@ char kcLineWrapPrefChanged;
  */
 + (void)docSpec:(id)docSpec setString:(NSString *)string
 {
-    // set text view string
-    [[docSpec valueForKey:ro_MGSFOTextView] setString:string];
+    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
 }
 
 
@@ -423,8 +422,7 @@ char kcLineWrapPrefChanged;
  */
 + (void)docSpec:(id)docSpec setString:(NSString *)string options:(NSDictionary *)options
 {
-    // set text view string
-    [(SMLTextView *)[docSpec valueForKey:ro_MGSFOTextView] setString:string options:options];
+    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
 }
 
 
@@ -433,8 +431,7 @@ char kcLineWrapPrefChanged;
  */
 + (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string
 {
-    // set text view string
-    [(SMLTextView *)[docSpec valueForKey:ro_MGSFOTextView] setAttributedString:string];
+    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
 }
 
 
@@ -443,8 +440,7 @@ char kcLineWrapPrefChanged;
  */
 + (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string options:(NSDictionary *)options
 {
-    // set text view string
-    [(SMLTextView *)[docSpec valueForKey:ro_MGSFOTextView] setAttributedString:string options:options];
+    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
 }
 
 
@@ -453,7 +449,9 @@ char kcLineWrapPrefChanged;
  */
 + (NSString *)stringForDocSpec:(id)docSpec
 {
-    return [[docSpec valueForKey:ro_MGSFOTextView] string];
+    NSLog(@"This method is deprecated and has no effect. Use the instance-based equivalent instead.");
+
+    return nil;
 }
 
 
@@ -740,7 +738,7 @@ char kcLineWrapPrefChanged;
 */
 - (void)setString:(NSString *)aString options:(NSDictionary *)options
 {
-	[[self class] docSpec:self.docSpec setString:aString options:options];
+	[self.textView setString:aString options:options];
 }
 
 
@@ -749,7 +747,7 @@ char kcLineWrapPrefChanged;
  */
 - (void)setAttributedString:(NSAttributedString *)aString options:(NSDictionary *)options
 {
-	[[self class] docSpec:self.docSpec setAttributedString:aString options:options];
+	[self.textView setAttributedString:aString options:options];
 }
 
 
