@@ -42,19 +42,12 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 @implementation MGSSyntaxDefinition
 
 
-- (instancetype)init
-{
-    self = [super init];
-    [self setDefaults];
-    return self;
-}
-
-
 - (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary
 {
     self = [super init];
     [self setDefaults];
     
+    _syntaxDictionary = syntaxDictionary;
     NSMutableArray *keywordsAndAutocompleteWordsTemporary = [NSMutableArray array];
     
     // If the plist file is malformed be sure to set the values to something

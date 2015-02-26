@@ -65,6 +65,7 @@ char kcLineWrapPrefChanged;
 @synthesize extraInterfaceController = _extraInterfaceController;
 @synthesize syntaxErrorController = _syntaxErrorController;
 @synthesize syntaxColouring = _syntaxColouring;
+@synthesize syntaxDefinitionName = _syntaxDefinitionName;
 
 @synthesize docSpec;
 
@@ -82,12 +83,13 @@ char kcLineWrapPrefChanged;
  */
 - (void)setSyntaxDefinitionName:(NSString *)value
 {
-    self.syntaxColouring.syntaxDefinitionName = value;
-}
-
-- (NSString *)syntaxDefinitionName
-{
-    return self.syntaxColouring.syntaxDefinitionName;
+    NSDictionary *syntaxDict;
+    MGSSyntaxDefinition *syntaxDef;
+    
+    _syntaxDefinitionName = value;
+    syntaxDict = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:value];
+    syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict];
+    [self.syntaxColouring setSyntaxDefinition:syntaxDef];
 }
 
 
@@ -663,7 +665,7 @@ char kcLineWrapPrefChanged;
     self.lineNumberDefObserv = lineNumbers;
 	
     // carryover default syntaxDefinition name from old docSpec
-    self.syntaxDefinitionName = @"Standard";
+    self.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
 
     // add syntax colouring
     [self.syntaxColouring recolourExposedRange];

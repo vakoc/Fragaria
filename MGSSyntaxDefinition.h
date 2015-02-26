@@ -13,6 +13,7 @@
  **/
 @interface MGSSyntaxDefinition : NSObject
 
+
 @property (readonly) NSString *functionDefinition;              ///< An expression that defines what a function is.
 @property (readonly) NSString *removeFromFunction;              ///< Content that should be removed from a function.
 @property (readonly) NSString *secondString;                    ///< Secondary string delimiter.
@@ -49,13 +50,17 @@
 @property (readonly) NSString *secondMultilineStringPattern;    ///< The regex pattern for identifying multiline strings (secondary).
 @property (readonly) unichar decimalPointCharacter;             ///< The character considered as a decimal separator.
 
-/**
+/** A dictionary which describes this syntax definition. */
+@property (readonly) NSDictionary *syntaxDictionary;
+
+
+/** Designated initializer.
  *  Initializes a new syntax definition object from a dictionary object, usually
  *  read from a plist in the framework bundle.
  *  @param syntaxDictionary The dictionary representation of the plist file that
- *  defines the syntax.
- **/
+ *  defines the syntax. */
 - (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary;
+
 
 @end
 

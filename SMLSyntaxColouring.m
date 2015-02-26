@@ -54,8 +54,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 // class extension
 @interface SMLSyntaxColouring()
 
-- (void)applySyntaxDefinition;
-- (NSString *)assignSyntaxDefinition;
 - (void)autocompleteWordsTimerSelector:(NSTimer *)theTimer;
 - (NSString *)completeString;
 - (void)applyColourDefaults;
@@ -63,7 +61,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (void)removeColoursFromRange:(NSRange)range;
 - (void)setColour:(NSDictionary *)colour range:(NSRange)range;
 - (BOOL)isSyntaxColouringRequired;
-- (NSDictionary *)syntaxDictionary;
 
 @end
 
@@ -80,7 +77,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSTimer *autocompleteWordsTimer;
 }
 
-@synthesize syntaxDefinitionName = _syntaxDefinitionName;
 
 #pragma mark - Instance methods
 
@@ -124,9 +120,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
         // configure colouring
         [self applyColourDefaults];
-
-        // configure syntax definition
-        [self applySyntaxDefinition];
 
         // add text view notification observers
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:textView];
@@ -212,72 +205,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 }
 
 
-#pragma mark - Syntax definition handling
-
-/*
- * - applySyntaxDefinition
- */
-- (void)applySyntaxDefinition
-{			
-	// parse
-    self.syntaxDefinition = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:self.syntaxDictionary];
-    [self removeAllColours];
-}
-
-
-/*
- * - syntaxDictionary
- */
-- (NSDictionary *)syntaxDictionary
-{
-	// if document has no syntax definition name then assign one
-    if (!self.syntaxDefinitionName || [self.syntaxDefinitionName length] == 0)
-    {
-        self.syntaxDefinitionName = [self assignSyntaxDefinition];
-    }
-
-	// get syntax dictionary
-	NSDictionary *syntaxDictionary = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:self.syntaxDefinitionName];
-    
-    return syntaxDictionary;
-}
-
-
-/*
- * - assignSyntaxDefinition
- */
-- (NSString *)assignSyntaxDefinition
-{
-	if (self.syntaxDefinitionName && [self.syntaxDefinitionName length] > 0) return self.syntaxDefinitionName;
-
-	NSString *documentExtension = self.fragaria.documentName.pathExtension;
-	
-    NSString *lowercaseExtension = nil;
-    
-    // If there is no extension try to guess definition from first line
-    if ([documentExtension isEqualToString:@""]) { 
-        
-        NSString *string = [self.fragaria.scrollView.documentView string];
-        NSString *firstLine = [string substringWithRange:[string lineRangeForRange:NSMakeRange(0,0)]];
-        if ([firstLine hasPrefix:@"#!"] || [firstLine hasPrefix:@"%"] || [firstLine hasPrefix:@"<?"]) {
-            lowercaseExtension = [[MGSSyntaxController sharedInstance] guessSyntaxDefinitionExtensionFromFirstLine:firstLine];
-        } 
-    } else {
-        lowercaseExtension = [documentExtension lowercaseString];
-    }
-    
-    if (lowercaseExtension) {
-        self.syntaxDefinitionName = [[MGSSyntaxController sharedInstance] syntaxDefinitionNameWithExtension:lowercaseExtension];
-    }
-	
-	if (!self.syntaxDefinitionName || [self.syntaxDefinitionName length] == 0) {
-		self.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
-	}
-	
-	return self.syntaxDefinitionName;
-}
-
-
 #pragma mark - Accessors
 
 /*
@@ -290,18 +217,13 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 
 /*
- *  @property syntaxDefinitionName
+ *  @property syntaxDefinition
  */
-- (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
+- (void)setSyntaxDefinition:(MGSSyntaxDefinition *)syntaxDefinition
 {
-    _syntaxDefinitionName = syntaxDefinitionName;
-    [self applySyntaxDefinition];
-    [self invalidateAllColouring];
-}
-
-- (NSString *)syntaxDefinitionName
-{
-    return _syntaxDefinitionName;
+    _syntaxDefinition = syntaxDefinition;
+    [self removeAllColours];
+    [self recolourExposedRange];
 }
 
 
@@ -491,7 +413,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         if ([self.syntaxColouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourWithBlock:string:range:info:)]) {
             
             // build minimal delegate info dictionary
-            delegateInfo = @{SMLSyntaxInfo : self.syntaxDictionary, SMLSyntaxWillColour : @(self.isSyntaxColouringRequired)};
+            delegateInfo = @{SMLSyntaxInfo : self.syntaxDefinition.syntaxDictionary, SMLSyntaxWillColour : @(self.isSyntaxColouringRequired)};
             
             // query delegate about colouring
             doColouring = [self.syntaxColouringDelegate fragariaDocument:self.fragaria shouldColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
@@ -511,7 +433,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             if ([self.syntaxColouringDelegate respondsToSelector:@selector(fragariaDocument:didColourWithBlock:string:range:info:)]) {
                 
                 // build minimal delegate info dictionary
-                delegateInfo = @{@"syntaxInfo" : self.syntaxDictionary};
+                delegateInfo = @{@"syntaxInfo" : self.syntaxDefinition.syntaxDictionary};
                 
                 [self.syntaxColouringDelegate fragariaDocument:self.fragaria didColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
             }
@@ -620,7 +542,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     
     if ([colouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourGroupWithBlock:string:range:info:)]) {
         // build delegate info dictionary
-        delegateInfo = @{SMLSyntaxGroup : groupName, SMLSyntaxGroupID : @(group), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : attributes, SMLSyntaxInfo : self.syntaxDictionary};
+        delegateInfo = @{SMLSyntaxGroup : groupName, SMLSyntaxGroupID : @(group), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : attributes, SMLSyntaxInfo : self.syntaxDefinition.syntaxDictionary};
         
         // call the delegate
         doColouring = [colouringDelegate fragariaDocument:self.fragaria shouldColourGroupWithBlock:colourRangeBlock string:documentString range:effectiveRange info:delegateInfo];
@@ -1278,7 +1200,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (BOOL)isSyntaxColouringRequired
 {
-    return (self.isSyntaxColoured && self.syntaxDefinition.syntaxDefinitionAllowsColouring ? YES : NO);
+    return self.isSyntaxColoured && self.syntaxDefinition && self.syntaxDefinition.syntaxDefinitionAllowsColouring;
 }
 
 

@@ -67,8 +67,8 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 #pragma mark - Properties - Document Support
 
 
-@property (nonatomic, strong) NSString *documentName;                 ///< The document name. If set, Fragaria can try to guess the syntax definition.
-@property (nonatomic, assign) NSString *syntaxDefinitionName;         ///< Specifies the current syntax definition name.
+@property (nonatomic) NSString *documentName;                 ///< The document name. If set, Fragaria can try to guess the syntax definition.
+@property (nonatomic) NSString *syntaxDefinitionName;         ///< Specifies the current syntax definition name.
 @property (nonatomic, assign) NSString * string;                      ///< The plain text string of the text editor.
 @property (nonatomic, assign) NSAttributedString *attributedString;   ///< The text editor string with attributes.
 

@@ -44,15 +44,11 @@ Copyright 2004-2009 Peter Borg
 /** The owning controller for instances of this class. */
 @property (nonatomic, weak, readonly) MGSFragaria *fragaria;
 
-/** The syntax definition name. If not set, SMLSyntaxColouring
- *  will try to guess based on various factors. */
-@property (nonatomic, strong) NSString *syntaxDefinitionName;
-
 /** The NSUndoManager instance used in this class. */
 @property (strong) NSUndoManager *undoManager;
 
 /** The syntax definition that determines how to color the text. */
-@property (strong) MGSSyntaxDefinition *syntaxDefinition;
+@property (nonatomic, strong) MGSSyntaxDefinition *syntaxDefinition;
 
 /** The syntax colouring delegate */
 @property (weak) id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
@@ -78,11 +74,6 @@ Copyright 2004-2009 Peter Borg
  *  Invalidates the coloring of the entire document.
  **/
 - (void)invalidateAllColouring;
-
-/**
- *  Applies the syntax definition to the text.
- **/
-- (void)applySyntaxDefinition;
 
 /**
  *  Recolours a view, with the option to color the entire range or only the exposed area.
