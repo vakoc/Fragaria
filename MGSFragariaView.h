@@ -23,7 +23,7 @@
 #pragma mark - DELEGATES
 
 /** The delegate providing MGSFragariaTextViewDelegate methods. */
-@property (weak) IBOutlet id <MGSFragariaTextViewDelegate> delegate;
+@property (weak) IBOutlet id <MGSFragariaTextViewDelegate, MGSDragOperationDelegate> delegate;
 
 /** The delegate providing MGSBreakpointDelegate methods. */
 @property (weak) IBOutlet id <MGSBreakpointDelegate> breakPointDelegate;

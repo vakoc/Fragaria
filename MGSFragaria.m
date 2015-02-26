@@ -303,7 +303,7 @@ char kcLineWrapPrefChanged;
 /*
  * @property textViewDelegate
  */
-- (void)setTextViewDelegate:(id<MGSFragariaTextViewDelegate>)textViewDelegate
+- (void)setTextViewDelegate:(id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate>)textViewDelegate
 {
     [self.textView setDelegate:textViewDelegate];
 }
