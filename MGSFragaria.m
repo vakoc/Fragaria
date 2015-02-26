@@ -197,13 +197,12 @@ char kcLineWrapPrefChanged;
  */
 - (void)setShowsLineNumbers:(BOOL)value
 {
-    // @todo: make the ruler toggle line numbers
+    self.gutterView.drawsLineNumbers = value;
 }
 
 - (BOOL)showsLineNumbers
 {
-    // @todo: make the ruler toggle line numbers
-    return YES;
+    return self.gutterView.drawsLineNumbers;
 }
 
 /*
