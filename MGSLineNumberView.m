@@ -84,6 +84,7 @@
         _markerImagesSize = NSMakeSize(0,0);
         _markerImages = [[NSMutableDictionary alloc] init];
         _fragaria = fragaria;
+        _drawsLineNumbers = YES;
         [self setClientView:[aScrollView documentView]];
     }
     return self;
@@ -140,6 +141,11 @@
 
 - (void)setStartingLineNumber:(NSUInteger)startingLineNumber {
     _startingLineNumber = startingLineNumber;
+    [self setNeedsDisplay:YES];
+}
+
+- (void)setDrawsLineNumbers:(BOOL *)drawsLineNumbers {
+    _drawsLineNumbers = drawsLineNumbers;
     [self setNeedsDisplay:YES];
 }
 
@@ -502,20 +508,23 @@
                 currentTextAttributes = [self markerTextAttributes];
             }
 
-            // Draw line numbers first so that error images won't be buried underneath long line numbers.
-            // Line numbers are internally stored starting at 0
-            labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine];
-            drawingAttributedString = [[NSAttributedString alloc] initWithString:labelText attributes:currentTextAttributes];
+            if (self.drawsLineNumbers)
+            {
+                // Draw line numbers first so that error images won't be buried underneath long line numbers.
+                // Line numbers are internally stored starting at 0
+                labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + startingLine - 1];
+                drawingAttributedString = [[NSAttributedString alloc] initWithString:labelText attributes:currentTextAttributes];
 
-            CGFloat descent, leading;
-            CTLineRef line;
-            line = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)drawingAttributedString);
-            CGFloat width = CTLineGetTypographicBounds(line, NULL, &descent, &leading);
-            
-            CGFloat xpos = NSWidth(bounds) - width - RULER_MARGIN;
-            CGFloat baselinepos = ypos + NSHeight(wholeLineRect) - floor(descent + 0.5) - floor(leading+0.5);
-            CGContextSetTextPosition(drawingContext, xpos, baselinepos);
-            CTLineDraw(line, drawingContext);
+                CGFloat descent, leading;
+                CTLineRef line;
+                line = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)drawingAttributedString);
+                CGFloat width = CTLineGetTypographicBounds(line, NULL, &descent, &leading);
+                
+                CGFloat xpos = NSWidth(bounds) - width - RULER_MARGIN;
+                CGFloat baselinepos = ypos + NSHeight(wholeLineRect) - floor(descent + 0.5) - floor(leading+0.5);
+                CGContextSetTextPosition(drawingContext, xpos, baselinepos);
+                CTLineDraw(line, drawingContext);
+            }
 
             if (_showsWarnings) {
                 [self drawErrorsInRect:wholeLineRect ofLine:lineNum];

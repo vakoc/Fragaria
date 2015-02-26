@@ -30,30 +30,26 @@ NSString * const kMGSSyntaxDefinitionsFile = @"SyntaxDefinitions.plist";
 NSString * const KMGSSyntaxDictionaryExt = @"plist";
 NSString * const KMGSSyntaxDefinitionsFolder = @"Syntax Definitions";
 
-// class extension
+
+#pragma mark - Class Extension
+
 @interface MGSSyntaxController()
-- (NSMutableArray *)loadSyntaxDefinitions;
-- (void)addSyntaxDefinitions:(NSMutableArray *)definitions path:(NSString *)path;
-- (NSDictionary *)standardSyntaxDefinition;
-- (NSDictionary *)syntaxDefinitionWithName:(NSString *)name;
-- (NSBundle *)bundle;
 
 @property (strong, nonatomic, readwrite) NSArray *syntaxDefinitionNames;
 @property (strong) NSMutableDictionary *syntaxDefinitions;
 
 @end
 
-@implementation MGSSyntaxController
 
-@synthesize syntaxDefinitionNames;
-@synthesize syntaxDefinitions;
+#pragma mark - Implementation
+
+@implementation MGSSyntaxController
 
 static id sharedInstance = nil;
 
+
 /*
- 
- + sharedInstance
- 
+ * + sharedInstance
  */
 + (instancetype)sharedInstance
 {
@@ -65,20 +61,18 @@ static id sharedInstance = nil;
 	return sharedInstance;
 } 
 
+
 /*
- 
- + standardSyntaxDefinitionName
- 
+ * + standardSyntaxDefinitionName
  */
 + (NSString *)standardSyntaxDefinitionName
 {
 	return @"Standard";
 }
 
+
 /*
- 
- - init
- 
+ * - init
  */
 - (id)init 
 {
@@ -93,10 +87,9 @@ static id sharedInstance = nil;
     return self;
 }
 
+
 /*
- 
- - standardSyntaxDefinition
- 
+ *- standardSyntaxDefinition
  */
 - (NSDictionary *)standardSyntaxDefinition
 {
@@ -107,10 +100,9 @@ static id sharedInstance = nil;
 	return definition;
 }
 
+
 /*
- 
- - syntaxDefinitionWithName:
- 
+ * - syntaxDefinitionWithName:
  */
 - (NSDictionary *)syntaxDefinitionWithName:(NSString *)name
 {
@@ -123,10 +115,9 @@ static id sharedInstance = nil;
 	return definition;
 }
 
+
 /*
- 
- - syntaxDefinitionNameWithExtension
- 
+ * - syntaxDefinitionNameWithExtension
  */
 - (NSString *)syntaxDefinitionNameWithExtension:(NSString *)extension
 {
@@ -138,10 +129,10 @@ static id sharedInstance = nil;
 	
 	return name;
 }
+
+
 /*
- 
- - syntaxDefinitionWithExtension
- 
+ * - syntaxDefinitionWithExtension
  */
 - (NSDictionary *)syntaxDefinitionWithExtension:(NSString *)extension
 {
@@ -168,10 +159,9 @@ static id sharedInstance = nil;
 	return definition;
 }
 
+
 /*
- 
- - guessSyntaxDefinitionExtensionFromFirstLine:
- 
+ * - guessSyntaxDefinitionExtensionFromFirstLine:
  */
 - (NSString *)guessSyntaxDefinitionExtensionFromFirstLine:(NSString *)firstLine
 {
@@ -202,10 +192,9 @@ static id sharedInstance = nil;
     return returnString;
 }
 
+
 /*
- 
- - insertSyntaxDefinitions
- 
+ * - insertSyntaxDefinitions
  */
 - (void)insertSyntaxDefinitions
 {
@@ -221,9 +210,7 @@ static id sharedInstance = nil;
 	[syntaxDefinitionsArray insertObject:standard atIndex:0];
 		
 	/*
-	 
 	 build a dictionary of definitions keyed by lowercase definition name
-	 
 	 */
 	self.syntaxDefinitions = [NSMutableDictionary dictionaryWithCapacity:30];
 	NSMutableArray *definitionNames = [NSMutableArray arrayWithCapacity:30];
@@ -253,10 +240,9 @@ static id sharedInstance = nil;
 
 }
 
+
 /*
- 
- - bundle
- 
+ * - bundle
  */
 - (NSBundle *)bundle
 {
@@ -264,10 +250,10 @@ static id sharedInstance = nil;
 
 	return frameworkBundle;
 }
+
+
 /*
- 
- - loadSyntaxDefinitions
- 
+ * - loadSyntaxDefinitions
  */
 - (NSMutableArray *)loadSyntaxDefinitions
 {
@@ -290,10 +276,9 @@ static id sharedInstance = nil;
 	return syntaxDefinitionsArray;
 }
 
+
 /*
- 
- - syntaxDictionaryWithName:
- 
+ * - syntaxDictionaryWithName:
  */
 - (NSDictionary *)syntaxDictionaryWithName:(NSString *)name
 {
@@ -326,10 +311,10 @@ static id sharedInstance = nil;
 	
 	return nil;
 }
+
+
 /*
- 
- - addSyntaxDefinitions:path:
- 
+ * - addSyntaxDefinitions:path:
  */
 - (void)addSyntaxDefinitions:(NSMutableArray *)definitions path:(NSString *)path
 {

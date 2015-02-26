@@ -23,7 +23,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSFragariaTextViewDelegate.h"
-
+#import "MGSDragOperationDelegate.h"
 
 @class MGSFragaria;
 
@@ -53,7 +53,7 @@
 @property NSColor *currentLineHighlightColor;
 
 /** The text view's delegate */
-@property (assign) id<MGSFragariaTextViewDelegate> delegate;
+@property (assign) id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> delegate;
 
 
 /// @name Instance Methods

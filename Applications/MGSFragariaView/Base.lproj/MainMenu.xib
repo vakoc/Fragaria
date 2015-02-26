@@ -790,37 +790,26 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="65C67096-4946-4999-AF7B-720E08B06DD4" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="83M-69-f2l">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="24F589A6-5083-47EA-BD62-B4B0CB83457B" label="Line Wrap" paletteLabel="Line Wrap" tag="-1" image="NSPreferencesGeneral" id="VYx-Bw-ODa">
+                    <toolbarItem implicitItemIdentifier="285A32C5-A2B5-4167-B7FC-6484B851DBC1" label="Preferences" paletteLabel="Preferences" tag="-1" image="NSPreferencesGeneral" id="9o1-ZA-WDJ">
                         <connections>
-                            <action selector="handleToggleLineWrap:" target="Voe-Tx-rLC" id="1py-Iq-zOs"/>
+                            <action selector="openPreferences:" target="Voe-Tx-rLC" id="MQa-Ez-5VE"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="6B354013-D0D2-447D-A335-C2408CC2EB64" label="Line Numbers" paletteLabel="Line Numbers" tag="-1" image="NSPreferencesGeneral" id="zjs-Y2-GT1">
+                    <toolbarItem implicitItemIdentifier="4DB76091-4088-462F-9D65-09C146AA5956" label="Features" paletteLabel="Features" tag="-1" image="NSActionTemplate" id="pm1-IK-QRH">
                         <connections>
-                            <action selector="handleToggleLineNumbers:" target="Voe-Tx-rLC" id="O4i-aI-s0y"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="55C8C112-5D72-448D-A9CB-EA9548CDE831" label="Highlighting" paletteLabel="Highlighting" tag="-1" image="NSPreferencesGeneral" id="VN1-3q-5ti">
-                        <connections>
-                            <action selector="handleToggleHighlighting:" target="Voe-Tx-rLC" id="a36-Yr-c4o"/>
-                        </connections>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="285A32C5-A2B5-4167-B7FC-6484B851DBC1" label="Gutter Warnings" paletteLabel="Gutter Warnings" tag="-1" image="NSPreferencesGeneral" id="9o1-ZA-WDJ">
-                        <connections>
-                            <action selector="handleToggleGutterWarnings:" target="Voe-Tx-rLC" id="HSQ-Cl-ZHH"/>
+                            <action selector="openFeatures:" target="Voe-Tx-rLC" id="ebb-1o-cjB"/>
                         </connections>
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="VYx-Bw-ODa"/>
-                    <toolbarItem reference="zjs-Y2-GT1"/>
-                    <toolbarItem reference="VN1-3q-5ti"/>
                     <toolbarItem reference="9o1-ZA-WDJ"/>
+                    <toolbarItem reference="pm1-IK-QRH"/>
                 </defaultToolbarItems>
             </toolbar>
         </window>
     </objects>
     <resources>
+        <image name="NSActionTemplate" width="14" height="14"/>
         <image name="NSPreferencesGeneral" width="32" height="32"/>
     </resources>
 </document>

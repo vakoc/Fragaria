@@ -23,7 +23,10 @@ NSString * const MGSFOShowsWarningsInGutter = @"showsWarningsInGutter";
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
 
 // class name strings
-// TODO: expose these to allow subclass name definition
+// @todo: expose these to allow subclass name definition
+// @todo: (jsd) Is this still a valid todo? Strings aren't used anywhere
+//        and there's no infrastructure in place to allow substituting
+//        other classes.
 NSString * const MGSFOEditorTextViewClassName = @"editorTextViewClassName";
 NSString * const MGSFOLineNumbersClassName = @"lineNumbersClassName";
 NSString * const MGSFOGutterTextViewClassName = @"gutterTextViewClassName";
@@ -65,6 +68,7 @@ char kcLineWrapPrefChanged;
 @synthesize extraInterfaceController = _extraInterfaceController;
 @synthesize syntaxErrorController = _syntaxErrorController;
 @synthesize syntaxColouring = _syntaxColouring;
+@synthesize showsGutter = _showsGutter;
 
 @synthesize docSpec;
 @synthesize objectSetterKeys;
@@ -84,12 +88,12 @@ char kcLineWrapPrefChanged;
  */
 - (void)setSyntaxDefinitionName:(NSString *)value
 {
-    [self setObject:value forKey:MGSFOSyntaxDefinitionName];
+    self.syntaxColouring.syntaxDefinitionName = value;
 }
 
 - (NSString *)syntaxDefinitionName
 {
-    return [self objectForKey:MGSFOSyntaxDefinitionName];
+    return self.syntaxColouring.syntaxDefinitionName;
 }
 
 
@@ -193,14 +197,25 @@ char kcLineWrapPrefChanged;
  */
 - (void)setShowsLineNumbers:(BOOL)value
 {
-    [self setObject:[NSNumber numberWithBool:value] forKey:MGSFOShowLineNumberGutter];
-    [[self objectForKey:ro_MGSFOScrollView] setRulersVisible:value];
+    self.gutterView.drawsLineNumbers = value;
 }
 
 - (BOOL)showsLineNumbers
 {
-    NSNumber *value = [self objectForKey:MGSFOShowLineNumberGutter];
-    return [value boolValue];
+    return self.gutterView.drawsLineNumbers;
+}
+
+/*
+ * @property showsGutter
+ */
+- (void)setShowsGutter:(BOOL)showsGutter
+{
+    self.scrollView.rulersVisible = showsGutter;
+}
+
+- (BOOL)showsGutter
+{
+    return self.scrollView.rulersVisible;
 }
 
 
@@ -303,7 +318,7 @@ char kcLineWrapPrefChanged;
 /*
  * @property textViewDelegate
  */
-- (void)setTextViewDelegate:(id<MGSFragariaTextViewDelegate>)textViewDelegate
+- (void)setTextViewDelegate:(id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate>)textViewDelegate
 {
     [self.textView setDelegate:textViewDelegate];
 }
@@ -402,7 +417,6 @@ char kcLineWrapPrefChanged;
     return [NSMutableDictionary dictionaryWithObjectsAndKeys:
             [NSNumber numberWithBool:YES], MGSFOHasVerticalScroller,
             [NSNumber numberWithBool:NO], MGSFODisableScrollElasticity,
-            @"Standard", MGSFOSyntaxDefinitionName,
             [defaults objectForKey:MGSFragariaPrefsShowLineNumberGutter], MGSFOShowLineNumberGutter,
             [defaults objectForKey:MGSFragariaPrefsLineWrapNewDocuments], MGSFOLineWrap,
             @(YES), MGSFOShowsWarningsInGutter,
@@ -539,6 +553,8 @@ char kcLineWrapPrefChanged;
 		}
         
         // observe defaults that affect rendering
+        // @todo: (jsd) Will have to delete this. Application is responsible for preferences
+        //        and setting properties based on those. Future preferences framework.
         NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
         [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterWidth" options:NSKeyValueObservingOptionNew context:&kcGutterWidthPrefChanged];
         [defaultsController addObserver:self forKeyPath:@"values.FragariaSyntaxColourNewDocuments" options:NSKeyValueObservingOptionNew context:&kcSyntaxColourPrefChanged];
@@ -551,13 +567,12 @@ char kcLineWrapPrefChanged;
         // Define read/write keys
         self.objectSetterKeys = [NSSet setWithObjects:MGSFOShowLineNumberGutter,
                                  MGSFOHasVerticalScroller, MGSFODisableScrollElasticity,
-                                 MGSFOSyntaxDefinitionName,
                                  MGSFOLineWrap,
                                  MGSFOShowsWarningsInGutter,
                                  nil];
         
         // Define read only keys
-        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, ro_MGSFOScrollView, nil];
+        self.objectGetterKeys = [NSMutableSet setWithObjects:ro_MGSFOTextView, nil];
         
         // Merge both to get all getters
         [(NSMutableSet *)self.objectGetterKeys unionSet:self.objectSetterKeys];
@@ -608,6 +623,12 @@ char kcLineWrapPrefChanged;
     } else if ([key isEqual:MGSFOIsSyntaxColoured]) {
         [self setIsSyntaxColoured:[object boolValue]];
         return;
+    } else if ([key isEqual:MGSFOSyntaxDefinitionName]) {
+        [self setSyntaxDefinitionName:object];
+         return;
+    } else if ([key isEqual:MGSFOShowLineNumberGutter]) {
+        [self setShowsGutter:[object boolValue]];
+        return;
     }
 
     if ([self.objectSetterKeys containsObject:key]) {
@@ -631,7 +652,11 @@ char kcLineWrapPrefChanged;
         return self.autoCompleteDelegate;
     else if ([key isEqual:MGSFOIsSyntaxColoured])
         return @(self.isSyntaxColoured);
-    
+    else if ([key isEqual:MGSFOSyntaxDefinitionName])
+         return self.syntaxDefinitionName;
+    else if ([key isEqual:MGSFOShowLineNumberGutter])
+        return @(self.showsGutter);
+
     if ([self.objectGetterKeys containsObject:key]) {
         return [self.docSpec valueForKey:key];
     }
@@ -650,55 +675,57 @@ char kcLineWrapPrefChanged;
     NSAssert(contentView != nil, @"A content view must be provided.");
     
     // create text scrollview
-	NSScrollView *textScrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
-	NSSize contentSize = [textScrollView contentSize];
-	[textScrollView setBorderType:NSNoBorder];
+	self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
+	NSSize contentSize = [self.scrollView contentSize];
+	[self.scrollView setBorderType:NSNoBorder];
     if (self.hasVerticalScroller) {
-        [textScrollView setHasVerticalScroller:YES];
-        [textScrollView setAutohidesScrollers:YES];
+        [self.scrollView setHasVerticalScroller:YES];
+        [self.scrollView setAutohidesScrollers:YES];
 	} else {
-        [textScrollView setHasVerticalScroller:NO];
-        [textScrollView setAutohidesScrollers:NO];
+        [self.scrollView setHasVerticalScroller:NO];
+        [self.scrollView setAutohidesScrollers:NO];
     }
     if (self.scrollElasticityDisabled) {
-        [textScrollView setVerticalScrollElasticity:NSScrollElasticityNone];
+        [self.scrollView setVerticalScrollElasticity:NSScrollElasticityNone];
     } else {
-        [textScrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
+        [self.scrollView setVerticalScrollElasticity:NSScrollElasticityAutomatic];
     }
-	[textScrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[[textScrollView contentView] setAutoresizesSubviews:YES];
-	[textScrollView setPostsFrameChangedNotifications:YES];
+	[self.scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+	[[self.scrollView contentView] setAutoresizesSubviews:YES];
+	[self.scrollView setPostsFrameChangedNotifications:YES];
 		
 	// create textview
     SMLTextView *textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height) fragaria:self];
-	[textScrollView setDocumentView:textView];
+	[self.scrollView setDocumentView:textView];
 
     // create line numbers
-    self.gutterView = [[MGSLineNumberView alloc] initWithScrollView:textScrollView fragaria:self];
-    [textScrollView setVerticalRulerView:self.gutterView];
-    [textScrollView setHasVerticalRuler:YES];
-    [textScrollView setHasHorizontalRuler:NO];
+    self.gutterView = [[MGSLineNumberView alloc] initWithScrollView:self.scrollView fragaria:self];
+    [self.scrollView setVerticalRulerView:self.gutterView];
+    [self.scrollView setHasVerticalRuler:YES];
+    [self.scrollView setHasHorizontalRuler:NO];
     
     MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithLineNumberView:self.gutterView];
     self.lineNumberDefObserv = lineNumbers;
 	
 	// update the docSpec
 	[self.docSpec setValue:textView forKey:ro_MGSFOTextView];
-	[self.docSpec setValue:textScrollView forKey:ro_MGSFOScrollView];
+
+    // carryover default syntaxDefinition name from old docSpec
+    self.syntaxDefinitionName = @"Standard";
 
     // add syntax colouring
     [self.syntaxColouring recolourExposedRange];
 	
 	// add scroll view to content view
-	[contentView addSubview:[self.docSpec valueForKey:ro_MGSFOScrollView]];
+	[contentView addSubview:self.scrollView];
 	
     // update the gutter view
     [self updateGutterView];
-    [textScrollView setRulersVisible:[self showsLineNumbers]];
+    [self.scrollView setRulersVisible:[self showsLineNumbers]];
 
     // apply default line wrapping
     [textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
-    
+
     [self setShowsWarningsInGutter:YES];
 }
 
@@ -799,7 +826,7 @@ char kcLineWrapPrefChanged;
     } else if (context == &kcLineNumberPrefChanged) {
         
         boolValue = [defaults boolForKey:MGSFragariaPrefsShowLineNumberGutter];
-        [self setShowsLineNumbers:boolValue];
+        [self setShowsGutter:boolValue];
         
     } else if (context == &kcSyntaxColourPrefChanged) {
         

@@ -178,6 +178,20 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	showsGutter
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setShowsGutter:(BOOL)showsGutter
+{
+    [self.fragaria setShowsGutter:showsGutter];
+}
+
+- (BOOL)showsGutter
+{
+    return [self.fragaria showsGutter];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	lineWrap
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setLineWrap:(BOOL)lineWrap
@@ -238,12 +252,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
 {
-	[self.fragaria setSyntaxDefinitionName:syntaxDefinitionName];
+	self.fragaria.syntaxDefinitionName = syntaxDefinitionName;
 }
 
 - (NSString *)syntaxDefinitionName
 {
-	return [self.fragaria syntaxDefinitionName];
+    return self.fragaria.syntaxDefinitionName;
 }
 
 

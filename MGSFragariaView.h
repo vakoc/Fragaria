@@ -23,7 +23,7 @@
 #pragma mark - DELEGATES
 
 /** The delegate providing MGSFragariaTextViewDelegate methods. */
-@property (weak) IBOutlet id <MGSFragariaTextViewDelegate> delegate;
+@property (weak) IBOutlet id <MGSFragariaTextViewDelegate, MGSDragOperationDelegate> delegate;
 
 /** The delegate providing MGSBreakpointDelegate methods. */
 @property (weak) IBOutlet id <MGSBreakpointDelegate> breakPointDelegate;
@@ -40,7 +40,9 @@
 
 @property (assign) BOOL syntaxColoured;                  ///< Indicates whether or not the text editor is using syntax highlighting.
 
-@property (assign) BOOL showsLineNumbers;                ///< Indicates whether or not the text editor is displaying line numbers.
+@property (assign) BOOL showsLineNumbers;                ///< Indicates whether or not the text editor is displaying line numbers when the gutter is visible.
+
+@property (assign) BOOL showsGutter;                     ///< Indicates whether or not the text editor gutter is visible.
 
 @property (assign) BOOL lineWrap;                        ///< Indicates whether or not line wrap (word wrap) is on or off.
 

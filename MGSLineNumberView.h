@@ -79,6 +79,9 @@
 /** Indicates whether or not to show error markers in the gutter. */
 @property (nonatomic) BOOL *showsWarnings;
 
+/** Indicates whether or not line numbers should be drawn. */
+@property (nonatomic) BOOL *drawsLineNumbers;
+
 /** Indicates the default color to be used for breakpoint markers when
  * not specified by the delegate. */
 @property (nonatomic) NSColor *markerColor;

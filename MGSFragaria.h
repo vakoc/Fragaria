@@ -26,11 +26,11 @@ extern NSString * const MGSFOLineWrap;
 extern NSString * const MGSFOShowsWarningsInGutter;
 
 // string
-extern NSString * const MGSFOSyntaxDefinitionName;
+extern NSString * const MGSFOSyntaxDefinitionName DEPRECATED_ATTRIBUTE;
 
 // NSView *
 extern NSString * const ro_MGSFOTextView; // readonly
-extern NSString * const ro_MGSFOScrollView; // readonly
+extern NSString * const ro_MGSFOScrollView DEPRECATED_ATTRIBUTE; // readonly
 
 // NSObject
 extern NSString * const MGSFODelegate DEPRECATED_ATTRIBUTE;
@@ -47,7 +47,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 #import "SMLSyntaxColouringDelegate.h"      // Justification: public delegate.
 #import "SMLAutoCompleteDelegate.h"         // Justification: public delegate.
 
-#import "MGSFragariaPreferences.h"          // Justification: currently exposed, but to be killed of later.
+#import "MGSFragariaPreferences.h"          // Justification: currently exposed, but to be killed off later.
 #import "SMLSyntaxError.h"                  // Justification: external users require it.
 #import "MGSFragariaView.h"                 // Justification: external users require it.
 #import "SMLTextView.h"                     // Justification: external users require it / textView property is exposed.
@@ -68,7 +68,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 
 @property (nonatomic, strong) NSString *documentName;                 ///< The document name. If set, Fragaria can try to guess the syntax definition.
-@property (nonatomic, assign) NSString *syntaxDefinitionName;         ///< Specified the current syntax definition name. @todo: (jsd) fix strong, currently duplicate retain
+@property (nonatomic, assign) NSString *syntaxDefinitionName;         ///< Specifies the current syntax definition name.
 @property (nonatomic, assign) NSString * string;                      ///< The plain text string of the text editor.
 @property (nonatomic, assign) NSAttributedString *attributedString;   ///< The text editor string with attributes.
 
@@ -86,7 +86,8 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) BOOL isSyntaxColoured;          ///< Specifies whether the document shall be syntax highlighted.
 @property (nonatomic, assign) BOOL lineWrap;                  ///< Indicates whether or not line wrap is enabled.
 @property (nonatomic, assign) BOOL scrollElasticityDisabled;  ///< Indicates whether or not the "rubber band" effect is disabled.
-@property (nonatomic, assign) BOOL showsLineNumbers;          ///< Indicates whether or not line numbers are displayed.
+@property (nonatomic, assign) BOOL showsLineNumbers;          ///< Indicates whether or not line numbers are displayed when the gutter is visible.
+@property (nonatomic, assign) BOOL showsGutter;               ///< Indicates whether or not the gutter is visible.
 @property (nonatomic, assign) BOOL showsWarningsInGutter;     ///< Indicates whether or not error warnings are displayed.
 @property (nonatomic, assign) NSUInteger startingLineNumber;  ///< Specifies the starting line number in the text view.
 

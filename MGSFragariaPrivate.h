@@ -10,7 +10,7 @@
 @class MGSSyntaxErrorController;
 @class SMLSyntaxColouring;
 @class MGSLineNumberDefaultsObserver;
-
+@class MGSLineNumberView;
 
 #pragma mark - Class Extension
 
@@ -40,6 +40,8 @@
  * syntax error badges. */
 @property MGSLineNumberView *gutterView;
 
+/** A system-wide reference to Fragaria's scroll view. */
+@property (nonatomic, strong) NSScrollView *scrollView;
 
 #pragma mark - Internal Properties
 
