@@ -407,7 +407,7 @@ char kcLineWrapPrefChanged;
 + (id)createDocSpec
 {
     // initialise document spec from user defaults
-    return nil;
+    return [[NSMutableDictionary alloc] init];
 }
 
 
