@@ -105,10 +105,6 @@
 		D0E521131A90E34F005CB80B /* MGSFragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* MGSFragaria.framework */; };
 		D0E5211A1A90E399005CB80B /* MGSSyntaxErrorControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E521071A90E307005CB80B /* MGSSyntaxErrorControllerTests.m */; };
 		E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E3AA871B16E1817800585940 /* editor-breakpoint.png in Resources */ = {isa = PBXBuildFile; fileRef = E3AA871A16E1817800585940 /* editor-breakpoint.png */; };
-		E3BBA50B16E52FE600D89923 /* editor-breakpoint-0.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */; };
-		E3BBA50C16E52FE600D89923 /* editor-breakpoint-1.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA50916E52FE600D89923 /* editor-breakpoint-1.png */; };
-		E3BBA50D16E52FE600D89923 /* editor-breakpoint-2.png in Resources */ = {isa = PBXBuildFile; fileRef = E3BBA50A16E52FE600D89923 /* editor-breakpoint-2.png */; };
 		E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CF4B7816E6927300C27B5C /* MGSBreakpointDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E3D4B2771714D89700BB2CC6 /* SMLSyntaxError.h in Headers */ = {isa = PBXBuildFile; fileRef = E3D4B2751714D89700BB2CC6 /* SMLSyntaxError.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E3D4B2781714D89700BB2CC6 /* SMLSyntaxError.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D4B2761714D89700BB2CC6 /* SMLSyntaxError.m */; };
@@ -283,10 +279,6 @@
 		D0E5210D1A90E34F005CB80B /* MGSFragaria Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MGSFragaria Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E521101A90E34F005CB80B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLAutoCompleteDelegate.h; sourceTree = "<group>"; };
-		E3AA871A16E1817800585940 /* editor-breakpoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint.png"; sourceTree = "<group>"; };
-		E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint-0.png"; sourceTree = "<group>"; };
-		E3BBA50916E52FE600D89923 /* editor-breakpoint-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint-1.png"; sourceTree = "<group>"; };
-		E3BBA50A16E52FE600D89923 /* editor-breakpoint-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "editor-breakpoint-2.png"; sourceTree = "<group>"; };
 		E3CF4B7816E6927300C27B5C /* MGSBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBreakpointDelegate.h; sourceTree = "<group>"; };
 		E3D4B2751714D89700BB2CC6 /* SMLSyntaxError.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = SMLSyntaxError.h; sourceTree = "<group>"; tabWidth = 4; };
 		E3D4B2761714D89700BB2CC6 /* SMLSyntaxError.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLSyntaxError.m; sourceTree = "<group>"; };
@@ -521,10 +513,6 @@
 				D0C146821A8769C100DDE90A /* messagesInfo.icns */,
 				D0C146831A8769C100DDE90A /* messagesPanic.icns */,
 				D0C1467C1A87627300DDE90A /* messagesWarning.icns */,
-				E3BBA50816E52FE600D89923 /* editor-breakpoint-0.png */,
-				E3BBA50916E52FE600D89923 /* editor-breakpoint-1.png */,
-				E3BBA50A16E52FE600D89923 /* editor-breakpoint-2.png */,
-				E3AA871A16E1817800585940 /* editor-breakpoint.png */,
 				ABA812DB11B6855200A29990 /* LICENSE-2.0.txt */,
 				AB69B62C118B745700903D1D /* MGSFragaria-Info.plist */,
 				AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */,
@@ -880,10 +868,6 @@
 				AB472C851299C33100202CB5 /* SMLGoToLine.xib in Resources */,
 				AB472C881299C34500202CB5 /* SMLDetab.xib in Resources */,
 				AB472C891299C34500202CB5 /* SMLEntab.xib in Resources */,
-				E3AA871B16E1817800585940 /* editor-breakpoint.png in Resources */,
-				E3BBA50B16E52FE600D89923 /* editor-breakpoint-0.png in Resources */,
-				E3BBA50C16E52FE600D89923 /* editor-breakpoint-1.png in Resources */,
-				E3BBA50D16E52FE600D89923 /* editor-breakpoint-2.png in Resources */,
 				AB8386D91719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib in Resources */,
 				AB8386DA1719E3D3004408F4 /* MGSPreferencesTextEditing.xib in Resources */,
 			);
