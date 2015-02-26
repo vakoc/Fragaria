@@ -494,7 +494,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             delegateInfo = @{SMLSyntaxInfo : self.syntaxDictionary, SMLSyntaxWillColour : @(self.isSyntaxColouringRequired)};
             
             // query delegate about colouring
-            doColouring = [self.syntaxColouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+            doColouring = [self.syntaxColouringDelegate fragariaDocument:self.fragaria shouldColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
             
         }
         
@@ -513,7 +513,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 // build minimal delegate info dictionary
                 delegateInfo = @{@"syntaxInfo" : self.syntaxDictionary};
                 
-                [self.syntaxColouringDelegate fragariaDocument:self.fragaria.docSpec didColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
+                [self.syntaxColouringDelegate fragariaDocument:self.fragaria didColourWithBlock:colourRangeBlock string:documentString range:rangeToRecolour info:delegateInfo ];
             }
 
         }
@@ -623,7 +623,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         delegateInfo = @{SMLSyntaxGroup : groupName, SMLSyntaxGroupID : @(group), SMLSyntaxWillColour : @(doColouring), SMLSyntaxAttributes : attributes, SMLSyntaxInfo : self.syntaxDictionary};
         
         // call the delegate
-        doColouring = [colouringDelegate fragariaDocument:self.fragaria.docSpec shouldColourGroupWithBlock:colourRangeBlock string:documentString range:effectiveRange info:delegateInfo];
+        doColouring = [colouringDelegate fragariaDocument:self.fragaria shouldColourGroupWithBlock:colourRangeBlock string:documentString range:effectiveRange info:delegateInfo];
     }
     
     if (!doColouring) return;
@@ -672,7 +672,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     
     // inform delegate that colouring is done
     if ([colouringDelegate respondsToSelector:@selector(fragariaDocument:didColourGroupWithBlock:string:range:info:)]) {
-        [colouringDelegate fragariaDocument:self.fragaria.docSpec didColourGroupWithBlock:colourRangeBlock string:documentString range:effectiveRange info:delegateInfo];
+        [colouringDelegate fragariaDocument:self.fragaria didColourGroupWithBlock:colourRangeBlock string:documentString range:effectiveRange info:delegateInfo];
     }
 }
 

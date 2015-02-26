@@ -139,66 +139,57 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
  **/
 @property (nonatomic, strong, readonly) SMLTextView *textView;
 
-/**
- *  Do not develop further or use unless necessary. This is to be deprecated
- *  in favor of public and private properties.
- **/
-@property (nonatomic, strong) id docSpec;
-
-
-/// @name Class Methods
-#pragma mark - Class Methods
-
-/**
- *  Creates the docSpec for the document.
- **/
-+ (id)createDocSpec;
-
-/**
- *  Set the docSpec's string.
- *  @param docSpec The docSpec whose string is to be set.
- *  @param string The string to set.
- **/
-+ (void)docSpec:(id)docSpec setString:(NSString *)string;
-
-/**
- *  Set's the docSpec's string, possibly with options.
- *  @param docSpec The docSpec whose string is to be set.
- *  @param string The string to set.
- *  @param options is a dictionary of options. Currently `undo` can be `YES` or `NO`..
- **/
-+ (void)docSpec:(id)docSpec setString:(NSString *)string options:(NSDictionary *)options;
-
-/**
- *  Sets the docSpec's string using an attributed string.
- *  @param docSpec The docSpec whose string is to be set.
- *  @param string The string to set.
- **/
-+ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string;
-
-/**
- *  Sets the docSpec's string using an attributed string, with options.
- *  @param docSpec The docSpec whose string is to be set.
- *  @param string The string to set.
- *  @param options A dictionary of options. Currently `undo` can be `YES` or `NO`.
- **/
-+ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string options:(NSDictionary *)options;
-
-/**
- *  Returns the string for the given docSpec.
- *  @param docSpec The docSpec for which to return the string.
- **/
-+ (NSString *)stringForDocSpec:(id)docSpec;
-
-/**
- *  Returns the attributed string for the given docSpec.
- *  @param docSpec The docSpec for which to return the string.
- **/
-+ (NSAttributedString *)attributedStringForDocSpec:(id)docSpec;
-
 
 /// @name Class Methods (deprecated)
 #pragma mark - Class Methods (deprecated)
+
+/**
+ *  Creates the docSpec for the document.
+ *  @todo: (jsd) safe to delete once all of the class methods are deprecated.
+ **/
++ (id)createDocSpec DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Deprecated. Do not use.
+ *  @param docSpec Deprecated.
+ *  @param string Deprecated.
+ **/
++ (void)docSpec:(id)docSpec setString:(NSString *)string DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Deprecated. Do not use.
+ *  @param docSpec Deprecated.
+ *  @param string Deprecated.
+ *  @param options Deprecated.
+ **/
++ (void)docSpec:(id)docSpec setString:(NSString *)string options:(NSDictionary *)options DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Deprecated. Do not use.
+ *  @param docSpec Deprecated.
+ *  @param string Deprecated.
+ **/
++ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Deprecated. Do not use.
+ *  @param docSpec Deprecated.
+ *  @param string Deprecated.
+ *  @param options Deprecated.
+ **/
++ (void)docSpec:(id)docSpec setAttributedString:(NSAttributedString *)string options:(NSDictionary *)options DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Deprecated. Do not use.
+ *  @param docSpec Deprecated.
+ **/
++ (NSString *)stringForDocSpec:(id)docSpec DEPRECATED_ATTRIBUTE;
+
+/**
+ *  Deprecated. Do not use.
+ *  @param docSpec Deprecated.
+ **/
++ (NSAttributedString *)attributedStringForDocSpec:(id)docSpec DEPRECATED_ATTRIBUTE;
 
 /**
  *  Deprecated. Do not use.
@@ -278,7 +269,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 - (void)setAttributedString:(NSAttributedString *)aString options:(NSDictionary *)options;
 
 /**
- *
+ *  Forces the text view to reload its string.
  **/
 - (void)reloadString;
 
@@ -287,9 +278,19 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 #pragma mark - Instance Methods (deprecated)
 
 /**
- *
+ *  Deprecated. Do not use.
  **/
 - (MGSTextMenuController *)textMenuController DEPRECATED_ATTRIBUTE;
+
+
+/// @name Properties (deprecated)
+#pragma mark - Properties (deprecated)
+
+/**
+ *  Do not develop further or use unless necessary. This is to be deprecated
+ *  in favor of public and private properties.
+ **/
+@property (nonatomic, strong) id docSpec DEPRECATED_ATTRIBUTE;
 
 
 @end
