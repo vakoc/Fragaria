@@ -525,18 +525,19 @@ char kcLineWrapPrefChanged;
     NSAssert(contentView != nil, @"A content view must be provided.");
     
     // create text scrollview
-	self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
-	NSSize contentSize = [self.scrollView contentSize];
-	[self.scrollView setBorderType:NSNoBorder];
-
-	[self.scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
-	[[self.scrollView contentView] setAutoresizesSubviews:YES];
-	[self.scrollView setPostsFrameChangedNotifications:YES];
-		
-	// create textview
+    self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
+    NSSize contentSize = [self.scrollView contentSize];
+    [self.scrollView setBorderType:NSNoBorder];
+    
+    [self.scrollView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    [[self.scrollView contentView] setAutoresizesSubviews:YES];
+    [self.scrollView setPostsFrameChangedNotifications:YES];
+    self.hasVerticalScroller = YES;
+    
+    // create textview
     self.textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height) fragaria:self];
-	[self.scrollView setDocumentView:self.textView];
-
+    [self.scrollView setDocumentView:self.textView];
+    
     // create line numbers
     self.gutterView = [[MGSLineNumberView alloc] initWithScrollView:self.scrollView fragaria:self];
     [self.scrollView setVerticalRulerView:self.gutterView];
@@ -545,23 +546,23 @@ char kcLineWrapPrefChanged;
     
     MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithLineNumberView:self.gutterView];
     self.lineNumberDefObserv = lineNumbers;
-	
+    
     // carryover default syntaxDefinition name from old docSpec
     self.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
-
+    
     // add syntax colouring
     [self.syntaxColouring recolourExposedRange];
-	
-	// add scroll view to content view
-	[contentView addSubview:self.scrollView];
-	
+    
+    // add scroll view to content view
+    [contentView addSubview:self.scrollView];
+    
     // update the gutter view
     [self updateGutterView];
     [self.scrollView setRulersVisible:[self showsLineNumbers]];
-
+    
     // apply default line wrapping
     [self.textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
-
+    
     [self setShowsWarningsInGutter:YES];
 }
 

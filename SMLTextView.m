@@ -1228,7 +1228,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     }
     
     if (self.lineWrap) {
-        
         // setup text container
         [textContainer setContainerSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
         [textContainer setWidthTracksTextView:YES];
@@ -1241,6 +1240,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         [self setMinSize:NSMakeSize(10, contentSize.height)];
         [self setMaxSize:NSMakeSize(10, CGFLOAT_MAX)];
 
+        // setup scroll view
+        [textScrollView setHasHorizontalScroller:NO];
     } else {
 
         // setup text container
@@ -1257,9 +1258,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         
         // setup scroll view
         [textScrollView setHasHorizontalScroller:YES];
-        [textScrollView setHasVerticalScroller:YES];
     }
-        
     
     // invalidate the glyph layout
 	[[self layoutManager] textContainerChangedGeometry:textContainer];
@@ -1270,7 +1269,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [textScrollView reflectScrolledClipView:textScrollView.contentView];
     [textScrollView display];
     NSEnableScreenUpdates();
-    
 }
 
 
