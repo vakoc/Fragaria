@@ -54,7 +54,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 // class extension
 @interface SMLSyntaxColouring()
 
-- (void)autocompleteWordsTimerSelector:(NSTimer *)theTimer;
 - (NSString *)completeString;
 - (void)applyColourDefaults;
 - (void)removeAllColours;
@@ -1295,53 +1294,16 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 #pragma mark - Text change observation
 
+
 /*
  * - textDidChange:
  */
 - (void)textDidChange:(NSNotification *)notification
 {
-	SMLTextView *textView = (SMLTextView *)[notification object];
-	
-    if ([self isSyntaxColouringRequired]) {
+	if ([self isSyntaxColouringRequired]) {
         /* We could call pageRecolour, but invalidating the entire page makes 
          * our bugs less visible */
 		[self invalidateVisibleRange];
-	}
-	
-	if (autocompleteWordsTimer != nil) {
-		[autocompleteWordsTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:[[SMLDefaults valueForKey:MGSFragariaPrefsAutocompleteAfterDelay] floatValue]]];
-	} else if ([[SMLDefaults valueForKey:MGSFragariaPrefsAutocompleteSuggestAutomatically] boolValue] == YES) {
-		autocompleteWordsTimer = [NSTimer scheduledTimerWithTimeInterval:[[SMLDefaults valueForKey:MGSFragariaPrefsAutocompleteAfterDelay] floatValue] target:self selector:@selector(autocompleteWordsTimerSelector:) userInfo:textView repeats:NO];
-	}
-}
-
-
-#pragma mark - NSTimer callbacks
-
-/*
- * - autocompleteWordsTimerSelector:
- */
-- (void)autocompleteWordsTimerSelector:(NSTimer *)theTimer
-{
-	SMLTextView *textView = [theTimer userInfo];
-	NSRange selectedRange = [textView selectedRange];
-	NSString *completeString = [self completeString];
-	NSUInteger stringLength = [completeString length];
-    
-	if (selectedRange.location <= stringLength && selectedRange.length == 0 && stringLength != 0) {
-		if (selectedRange.location == stringLength) { // If we're at the very end of the document
-			[textView complete:nil];
-		} else {
-			unichar characterAfterSelection = [completeString characterAtIndex:selectedRange.location];
-			if ([[NSCharacterSet symbolCharacterSet] characterIsMember:characterAfterSelection] || [[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:characterAfterSelection] || [[NSCharacterSet punctuationCharacterSet] characterIsMember:characterAfterSelection] || selectedRange.location == stringLength) { // Don't autocomplete if we're in the middle of a word
-				[textView complete:nil];
-			}
-		}
-	}
-	
-	if (autocompleteWordsTimer) {
-		[autocompleteWordsTimer invalidate];
-		autocompleteWordsTimer = nil;
 	}
 }
 

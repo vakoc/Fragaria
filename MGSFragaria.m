@@ -9,6 +9,7 @@
 #import "MGSFragariaFramework.h"
 #import "MGSFragaria.h"
 #import "MGSFragariaPrivate.h"
+#import "SMLTextViewPrivate.h"
 
 
 // BOOL
@@ -50,12 +51,15 @@ char kcLineWrapPrefChanged;
 
 #pragma mark - Implementation
 
+
 @implementation MGSFragaria
+
 
 @synthesize extraInterfaceController = _extraInterfaceController;
 @synthesize syntaxErrorController = _syntaxErrorController;
 @synthesize syntaxColouring = _syntaxColouring;
 @synthesize syntaxDefinitionName = _syntaxDefinitionName;
+@synthesize autoCompleteDelegate = _autoCompleteDelegate;
 
 
 #pragma mark - Properties - Document Properties
@@ -299,6 +303,24 @@ char kcLineWrapPrefChanged;
 - (id<MGSFragariaTextViewDelegate>)textViewDelegate
 {
     return self.textView.delegate;
+}
+
+
+/*
+ * @property autoCompleteDelegate
+ */
+- (void)setAutoCompleteDelegate:(id<SMLAutoCompleteDelegate>)autoCompleteDelegate
+{
+    _autoCompleteDelegate = autoCompleteDelegate;
+    if (autoCompleteDelegate)
+        [self.textView setAutocompleteDelegate:autoCompleteDelegate];
+    else
+        [self.textView setAutocompleteDelegate:self.syntaxColouring];
+}
+
+- (id<SMLAutoCompleteDelegate>)autoCompleteDelegate
+{
+    return _autoCompleteDelegate;
 }
 
 
@@ -564,6 +586,7 @@ char kcLineWrapPrefChanged;
     [self.textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
     
     [self setShowsWarningsInGutter:YES];
+    [self setAutoCompleteDelegate:nil];
 }
 
 
@@ -628,21 +651,6 @@ char kcLineWrapPrefChanged;
     return [MGSTextMenuController sharedInstance];
 }
 #pragma clang diagnostic pop
-
-
-#pragma mark - Properties Internal Properties from MGSFragariaPrivate.h
-
-
-/*
- * @property internalAutoCompleteDelegate
- */
-- (id<SMLAutoCompleteDelegate>)internalAutoCompleteDelegate
-{
-    if (self.autoCompleteDelegate)
-        return self.autoCompleteDelegate;
-    else
-        return self.syntaxColouring;
-}
 
 
 #pragma mark - KVO

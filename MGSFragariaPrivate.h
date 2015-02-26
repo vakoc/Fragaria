@@ -46,12 +46,6 @@
 /** Fragaria's scroll view. */
 @property (nonatomic, strong) SMLTextView *textView;
 
-#pragma mark - Internal Properties
-
-
-/** The internal autoCompleteDelegate */
-@property (nonatomic, assign, readonly) id<SMLAutoCompleteDelegate> internalAutoCompleteDelegate;
-
 
 @end
 

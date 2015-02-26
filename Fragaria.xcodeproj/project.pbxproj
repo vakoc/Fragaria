@@ -172,6 +172,7 @@
 		0105F3E11A86811C0045BDD3 /* SMLSyntaxColouring.m */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = SMLSyntaxColouring.m; sourceTree = "<group>"; };
 		013278661A81614500D2DCA5 /* MGSSyntaxDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSyntaxDefinition.h; sourceTree = "<group>"; };
 		013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxDefinition.m; sourceTree = "<group>"; };
+		0166D9971A9FC3B20099AB81 /* SMLTextViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMLTextViewPrivate.h; sourceTree = "<group>"; };
 		017FD5861A7A992700B305FB /* MGSLineNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberView.h; sourceTree = "<group>"; };
 		017FD5871A7A992700B305FB /* MGSLineNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLineNumberView.m; sourceTree = "<group>"; };
 		0191FA7C1A881F280099B50D /* MGSDragOperationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGSDragOperationDelegate.h; sourceTree = "<group>"; };
@@ -390,6 +391,7 @@
 			isa = PBXGroup;
 			children = (
 				AB69B666118B768000903D1D /* SMLTextView.h */,
+				0166D9971A9FC3B20099AB81 /* SMLTextViewPrivate.h */,
 				AB69B68E118B78D400903D1D /* SMLTextView.m */,
 				D0C145C21A85E1FD00DDE90A /* SMLTextView+MGSDragging.h */,
 				D0C145C31A85E1FD00DDE90A /* SMLTextView+MGSDragging.m */,

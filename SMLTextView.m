@@ -24,6 +24,7 @@
 #import "MGSFragariaFramework.h"
 #import "MGSFragaria.h"
 #import "MGSFragariaPrivate.h"
+#import "SMLTextViewPrivate.h"
 
 
 static BOOL CharacterIsBrace(unichar c)
@@ -78,17 +79,19 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 #pragma mark - Implementation
 
 @implementation SMLTextView {
-
     NSInteger lineHeight;
+    
     BOOL isDragging;
     NSPoint startPoint;
     NSPoint startOrigin;
+    
     CGFloat pageGuideX;
     NSColor *pageGuideColour;
-
     BOOL showPageGuide;
 
     NSRect currentLineRect;
+    
+    NSTimer *autocompleteWordsTimer;
 }
 
 
@@ -712,6 +715,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
             [self showBraceMatchingBrace:[aString characterAtIndex:0]];
         }
     }
+    
+    if ([ud boolForKey:MGSFragariaPrefsAutocompleteSuggestAutomatically])
+        [self scheduleAutocomplete];
 }
 
 
@@ -1108,6 +1114,62 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
+ * - scheduleAutocomplete
+ */
+- (void)scheduleAutocomplete
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    double autocompleteDelay;
+    
+    autocompleteDelay = [ud doubleForKey:MGSFragariaPrefsAutocompleteAfterDelay];
+    
+    if (!autocompleteWordsTimer) {
+        autocompleteWordsTimer = [NSTimer scheduledTimerWithTimeInterval:autocompleteDelay
+          target:self selector:@selector(autocompleteWordsTimerSelector:)
+          userInfo:nil repeats:NO];
+    }
+    [autocompleteWordsTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:autocompleteDelay]];
+}
+
+
+/*
+ * - autocompleteWordsTimerSelector:
+ */
+- (void)autocompleteWordsTimerSelector:(NSTimer *)theTimer
+{
+    NSRange selectedRange = [self selectedRange];
+    NSString *completeString = [self string];
+    NSUInteger stringLength = [completeString length];
+    
+    if (selectedRange.location <= stringLength && selectedRange.length == 0 && stringLength != 0) {
+        if (selectedRange.location == stringLength) { // If we're at the very end of the document
+            [self complete:nil];
+        } else {
+            unichar characterAfterSelection = [completeString characterAtIndex:selectedRange.location];
+            if ([[NSCharacterSet symbolCharacterSet] characterIsMember:characterAfterSelection] || [[NSCharacterSet whitespaceAndNewlineCharacterSet] characterIsMember:characterAfterSelection] || [[NSCharacterSet punctuationCharacterSet] characterIsMember:characterAfterSelection] || selectedRange.location == stringLength) { // Don't autocomplete if we're in the middle of a word
+                [self complete:nil];
+            }
+        }
+    }
+}
+
+
+/*
+ * - complete:
+ */
+- (void)complete:(id)sender
+{
+    /* If somebody triggers autocompletion with ESC, we don't want to trigger
+     * it again in the future because of the timer */
+    if (autocompleteWordsTimer) {
+        [autocompleteWordsTimer invalidate];
+        autocompleteWordsTimer = nil;
+    }
+    [super complete:sender];
+}
+
+
+/*
  * - rangeForUserCompletion
  */
 - (NSRange)rangeForUserCompletion
@@ -1165,17 +1227,13 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (NSArray*)completionsForPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
 {
-#pragma unused(index, charRange)
-
-    // get completion handler
     NSMutableArray* matchArray = [NSMutableArray array];
-    id<SMLAutoCompleteDelegate> completeHandler = self.fragaria.internalAutoCompleteDelegate;
 
     // use handler
-    if (completeHandler) {
+    if (self.autocompleteDelegate) {
         
         // get all completions
-        NSArray* allCompletions = [completeHandler completions];
+        NSArray* allCompletions = [self.autocompleteDelegate completions];
         
         // get string to match
         NSString *matchString = [[self string] substringWithRange:charRange];
