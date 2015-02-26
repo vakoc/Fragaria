@@ -106,8 +106,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
     if ((self = [super init])) {
 
-        NSAssert(fragaria.docSpec, @"bad document");
-
         _fragaria = fragaria;
 
         // configure the document text view
