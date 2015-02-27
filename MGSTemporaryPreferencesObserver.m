@@ -106,35 +106,12 @@ char kcGutterGutterTextColourWell;
     }
     else if (context == &kcGutterGutterTextColourWell)
     {
-        self.fragaria.gutterTextColour = [defaults valueForKey:MGSFragariaPrefsGutterTextColourWell];
+        self.fragaria.gutterTextColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsGutterTextColourWell]];
     }
     else
     {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
-}
-
-
-/*
- *  - setupInitialProperties
- */
-- (void)setupInitialProperties
-{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-
-    self.fragaria.gutterMinimumWidth = [defaults integerForKey:MGSFragariaPrefsGutterWidth];
-
-    self.fragaria.showsGutter = [defaults boolForKey:MGSFragariaPrefsShowLineNumberGutter];;
-
-    self.fragaria.isSyntaxColoured = [defaults boolForKey:MGSFragariaPrefsSyntaxColourNewDocuments];
-
-    self.fragaria.autoSpellCheck = [defaults boolForKey:MGSFragariaPrefsAutoSpellCheck];
-
-    self.fragaria.lineWrap = [defaults boolForKey:MGSFragariaPrefsLineWrapNewDocuments];
-
-    self.fragaria.gutterFont = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextFont]];
-
-    self.fragaria.gutterTextColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsGutterTextColourWell]];
 }
 
 

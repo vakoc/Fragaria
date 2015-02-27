@@ -629,7 +629,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
     // create the temporary preferences observer
     self.temporaryPreferencesObserver = [[MGSTemporaryPreferencesObserver alloc] initWithFragaria:self];
-    [self.temporaryPreferencesObserver setupInitialProperties];
 }
 
 
