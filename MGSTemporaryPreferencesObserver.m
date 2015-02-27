@@ -58,13 +58,13 @@ char kcGutterGutterTextColourWell;
 -(void)registerKVO
 {
     NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterWidth" options:NSKeyValueObservingOptionNew context:&kcGutterWidthPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaSyntaxColourNewDocuments" options:NSKeyValueObservingOptionNew context:&kcSyntaxColourPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionNew context:&kcSpellCheckPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowLineNumberGutter" options:NSKeyValueObservingOptionNew context:&kcLineNumberPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:&kcLineWrapPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:&kcGutterTextFontChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterTextColourWell" options:NSKeyValueObservingOptionNew context:&kcGutterGutterTextColourWell];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterWidth" options:NSKeyValueObservingOptionInitial context:&kcGutterWidthPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaSyntaxColourNewDocuments" options:NSKeyValueObservingOptionInitial context:&kcSyntaxColourPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionInitial context:&kcSpellCheckPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowLineNumberGutter" options:NSKeyValueObservingOptionInitial context:&kcLineNumberPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionInitial context:&kcLineWrapPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:&kcGutterTextFontChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcGutterGutterTextColourWell];
 }
 
 
