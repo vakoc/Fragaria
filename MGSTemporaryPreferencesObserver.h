@@ -25,4 +25,5 @@
  **/
 - (instancetype)initWithFragaria:(MGSFragaria *)fragaria;
 
+
 @end

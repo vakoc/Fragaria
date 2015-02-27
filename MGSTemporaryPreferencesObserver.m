@@ -16,7 +16,8 @@ char kcSyntaxColourPrefChanged;
 char kcSpellCheckPrefChanged;
 char kcLineNumberPrefChanged;
 char kcLineWrapPrefChanged;
-
+char kcGutterTextFontChanged;
+char kcGutterGutterTextColourWell;
 
 @interface MGSTemporaryPreferencesObserver ()
 
@@ -62,6 +63,8 @@ char kcLineWrapPrefChanged;
     [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionInitial context:&kcSpellCheckPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaShowLineNumberGutter" options:NSKeyValueObservingOptionInitial context:&kcLineNumberPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionInitial context:&kcLineWrapPrefChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:&kcGutterTextFontChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcGutterGutterTextColourWell];
 }
 
 
@@ -73,7 +76,11 @@ char kcLineWrapPrefChanged;
     BOOL boolValue;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
-    if (context == &kcLineNumberPrefChanged)
+    if (context == &kcGutterWidthPrefChanged)
+    {
+        self.fragaria.gutterMinimumWidth = [defaults integerForKey:MGSFragariaPrefsGutterWidth];
+    }
+    else if (context == &kcLineNumberPrefChanged)
     {
         boolValue = [defaults boolForKey:MGSFragariaPrefsShowLineNumberGutter];
         self.fragaria.showsGutter = boolValue;
@@ -93,10 +100,13 @@ char kcLineWrapPrefChanged;
         boolValue = [defaults boolForKey:MGSFragariaPrefsLineWrapNewDocuments];
         self.fragaria.lineWrap = boolValue;
     }
-    else if (context == &kcGutterWidthPrefChanged)
+    else if (context == &kcGutterTextFontChanged)
     {
-        NSUInteger val = [defaults integerForKey:MGSFragariaPrefsGutterWidth];
-        self.fragaria.gutterMinimumWidth = val;
+        self.fragaria.gutterFont = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextFont]];
+    }
+    else if (context == &kcGutterGutterTextColourWell)
+    {
+        self.fragaria.gutterTextColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsGutterTextColourWell]];
     }
     else
     {
