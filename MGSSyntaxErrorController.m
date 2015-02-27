@@ -20,6 +20,7 @@
 
 #pragma mark - Property Accessors
 
+
 - (void)setSyntaxErrors:(NSArray *)syntaxErrors
 {
     NSPredicate *filter = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {

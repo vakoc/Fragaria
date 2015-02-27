@@ -65,7 +65,6 @@ char kcGutterGutterTextColourWell;
     [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:&kcLineWrapPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:&kcGutterTextFontChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterTextColourWell" options:NSKeyValueObservingOptionNew context:&kcGutterGutterTextColourWell];
-
 }
 
 

@@ -589,9 +589,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 {
     NSAssert(contentView != nil, @"A content view must be provided.");
 
-    // create the temporary preferences observer
-    self.temporaryPreferencesObserver = [[MGSTemporaryPreferencesObserver alloc] initWithFragaria:self];
-
     // create text scrollview
     self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
     NSSize contentSize = [self.scrollView contentSize];
@@ -630,6 +627,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [self setShowsWarningsInGutter:YES];
     [self setAutoCompleteDelegate:nil];
 
+    // create the temporary preferences observer
+    self.temporaryPreferencesObserver = [[MGSTemporaryPreferencesObserver alloc] initWithFragaria:self];
     [self.temporaryPreferencesObserver setupInitialProperties];
 }
 

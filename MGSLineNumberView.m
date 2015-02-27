@@ -130,7 +130,7 @@
 
 - (NSColor *)defaultBackgroundColor
 {
-    return [NSColor controlBackgroundColor];
+    return [NSColor colorWithCalibratedWhite:0.94f alpha:1.0f];
 }
 
 
@@ -153,6 +153,7 @@
 
 - (void)setFont:(NSFont *)font {
     _font = font;
+    [self setRuleThickness:[self requiredThickness]];
     [self setNeedsDisplay:YES];
 }
 
