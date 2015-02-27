@@ -198,7 +198,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (void)setLineWrap:(BOOL)value
 {
     [self.textView setLineWrap:value];
-    [self updateErrorHighlighting];
 }
 
 - (BOOL)lineWrap
@@ -300,8 +299,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (void)setSyntaxErrors:(NSArray *)errors
 {
     self.syntaxErrorController.syntaxErrors = errors;
-    [self.syntaxColouring highlightErrors];
-    [self.gutterView setNeedsDisplay:YES];
 }
 
 - (NSArray *)syntaxErrors
@@ -610,6 +607,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     
     _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
     self.syntaxErrorController.lineNumberView = self.gutterView;
+    self.syntaxErrorController.textView = self.textView;
     [self setShowsWarningsInGutter:YES];
     
     [self setAutoCompleteDelegate:nil];
@@ -681,16 +679,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 #pragma clang diagnostic pop
 
-
-#pragma mark - Class extension
-
-
-/*
- * - updateErrorHighlighting
- */
-- (void) updateErrorHighlighting {
-    [self.syntaxColouring highlightErrors];
-}
 
 
 @end

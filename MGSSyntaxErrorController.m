@@ -13,6 +13,36 @@
 #define kSMLErrorPopOverErrorSpacing 4.0
 
 
+NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSString* str)
+{
+    NSScanner* scanner = [NSScanner scannerWithString:str];
+    [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@""]];
+    
+    int currentLine = 1;
+    while (![scanner isAtEnd])
+    {
+        if (currentLine == line)
+        {
+            // Found the right line
+            NSInteger location = [scanner scanLocation] + character-1;
+            if (location >= (NSInteger)str.length) location = str.length - 1;
+            return location;
+        }
+        
+        // Scan to a new line
+        [scanner scanUpToString:@"\n" intoString:NULL];
+        
+        if (![scanner isAtEnd])
+        {
+            scanner.scanLocation += 1;
+        }
+        currentLine++;
+    }
+    
+    return -1;
+}
+
+
 @implementation MGSSyntaxErrorController
 
 
@@ -43,13 +73,70 @@
 }
 
 
+- (void)setTextView:(SMLTextView *)textView
+{
+    if (_textView) {
+        [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:NSTextDidChangeNotification];
+    }
+    _textView = textView;
+    if (_textView) {
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(highlightErrors) name:NSTextDidChangeNotification object:_textView];
+    }
+    [self updateSyntaxErrorsDisplay];
+}
+
+
+#pragma mark - Syntax error display
+
+
 - (void)updateSyntaxErrorsDisplay
 {
+    if (_textView) [self highlightErrors];
     if (!_showSyntaxErrors) {
         [self.lineNumberView setDecorations:[NSDictionary dictionary]];
         return;
     }
     [self.lineNumberView setDecorations:[self errorDecorations]];
+}
+
+
+- (void)highlightErrors
+{
+    SMLTextView* textView = self.textView;
+    NSString* text = [textView string];
+    NSLayoutManager *layoutManager = [textView layoutManager];
+    
+    // Clear all highlights
+    [layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:NSMakeRange(0, text.length)];
+    
+    if (!self.showSyntaxErrors) return;
+    
+    // Highlight all errors and add buttons
+    NSMutableSet* highlightedRows = [NSMutableSet set];
+    
+    for (SMLSyntaxError* err in self.syntaxErrors)
+    {
+        // Highlight an erroneous line
+        NSInteger location = CharacterIndexFromRowAndColumn(err.line, err.character, text);
+        
+        // Skip lines we cannot identify in the text
+        if (location == -1) continue;
+        
+        NSRange lineRange = [text lineRangeForRange:NSMakeRange(location, 0)];
+        
+        // Highlight row if it is not already highlighted
+        if (![highlightedRows containsObject:[NSNumber numberWithInt:err.line]])
+        {
+            // Remember that we are highlighting this row
+            [highlightedRows addObject:[NSNumber numberWithInt:err.line]];
+            
+            // Add highlight for background
+            [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
+            
+            if ([err.description length] > 0)
+                [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
+        }
+    }
 }
 
 
@@ -113,6 +200,9 @@
 }
 
 
+#pragma mark - Action methods
+
+
 - (void)showErrorsForLine:(NSUInteger)line relativeToRect:(NSRect)rect ofView:(NSView*)view
 {
     /// @todo: (jsd) add images.
@@ -173,7 +263,6 @@
 
     [popover showRelativeToRect:rect ofView:view preferredEdge:NSMinYEdge];
 }
-
 
 
 @end

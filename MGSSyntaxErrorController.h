@@ -6,9 +6,10 @@
 //
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
 #import "SMLSyntaxError.h"
 #import "MGSLineNumberView.h"
+#import "SMLTextView.h"
 
 
 /**
@@ -30,6 +31,8 @@
 @property (nonatomic) BOOL showSyntaxErrors;
 
 @property (nonatomic) MGSLineNumberView *lineNumberView;
+
+@property (nonatomic) SMLTextView *textView;
 
 
 /// @name Instance Methods

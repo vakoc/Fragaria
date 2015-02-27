@@ -444,15 +444,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 		NSLog(@"Syntax colouring exception: %@", exception);
 	}
 
-    @try {
-        //
-        // highlight errors
-        //
-        [self highlightErrors];
-	}
-	@catch (NSException *exception) {
-		NSLog(@"Error highlighting exception: %@", exception);
-	}
     return effectiveRange;
 }
 
@@ -1163,7 +1154,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (void)setColour:(NSDictionary *)colourDictionary range:(NSRange)range
 {
-	[layoutManager setTemporaryAttributes:colourDictionary forCharacterRange:range];
+	[layoutManager addTemporaryAttributes:colourDictionary forCharacterRange:range];
 }
 
 
@@ -1200,95 +1191,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (BOOL)isSyntaxColouringRequired
 {
     return self.isSyntaxColoured && self.syntaxDefinition && self.syntaxDefinition.syntaxDefinitionAllowsColouring;
-}
-
-
-/*
- * - characterIndexFromLine:character:inString:
- */
-- (NSInteger) characterIndexFromLine:(int)line character:(int)character inString:(NSString*) str
-{
-    NSScanner* scanner = [NSScanner scannerWithString:str];
-    [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@""]];
-    
-    int currentLine = 1;
-    while (![scanner isAtEnd])
-    {
-        if (currentLine == line)
-        {
-            // Found the right line
-            NSInteger location = [scanner scanLocation] + character-1;
-            if (location >= (NSInteger)str.length) location = str.length - 1;
-            return location;
-        }
-        
-        // Scan to a new line
-        [scanner scanUpToString:@"\n" intoString:NULL];
-        
-        if (![scanner isAtEnd])
-        {
-            scanner.scanLocation += 1;
-        }
-        currentLine++;
-    }
-    
-    return -1;
-}
-
-
-/*
- * - highlightErrors
- */
-- (void)highlightErrors
-{
-    SMLTextView* textView = self.fragaria.textView;
-    NSString* text = [self completeString];
-    
-    // Clear all highlights
-    [layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:NSMakeRange(0, text.length)];
-
-    // Clear all buttons
-    NSMutableArray* buttons = [NSMutableArray array];
-    for (NSView* subview in [textView subviews])
-    {
-        if ([subview isKindOfClass:[NSButton class]])
-        {
-            [buttons addObject:subview];
-        }
-    }
-    for (NSButton* button in buttons)
-    {
-        [button removeFromSuperview];
-    }
-    
-    if (!self.fragaria.syntaxErrors) return;
-    
-    // Highlight all errors and add buttons
-    NSMutableSet* highlightedRows = [NSMutableSet set];
-
-    for (SMLSyntaxError* err in self.fragaria.syntaxErrors)
-    {
-        // Highlight an erroneous line
-        NSInteger location = [self characterIndexFromLine:err.line character:err.character inString:text];
-        
-        // Skip lines we cannot identify in the text
-        if (location == -1) continue;
-        
-        NSRange lineRange = [text lineRangeForRange:NSMakeRange(location, 0)];
-     
-        // Highlight row if it is not already highlighted
-        if (![highlightedRows containsObject:[NSNumber numberWithInt:err.line]])
-        {
-            // Remember that we are highlighting this row
-            [highlightedRows addObject:[NSNumber numberWithInt:err.line]];
-            
-            // Add highlight for background
-            [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
-            
-            if ([err.description length] > 0)
-                [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
-        }
-    }
 }
 
 

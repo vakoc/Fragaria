@@ -89,9 +89,5 @@ Copyright 2004-2009 Peter Borg
  **/
 - (NSRange)recolourChangedRange:(NSRange)rangeToRecolour;
 
-/**
- *  Indicates whether or not to highlight syntax errors in the document.
- **/
-- (void)highlightErrors;
 
 @end
