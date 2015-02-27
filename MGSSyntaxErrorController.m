@@ -15,8 +15,6 @@
 
 @implementation MGSSyntaxErrorController
 
-@synthesize syntaxErrors = _syntaxErrors;
-
 
 #pragma mark - Property Accessors
 
@@ -27,26 +25,35 @@
         return [evaluatedObject isKindOfClass:[SMLSyntaxError class]];
     }];
     _syntaxErrors = [syntaxErrors filteredArrayUsingPredicate:filter];;
-
+    [self updateSyntaxErrorsDisplay];
 }
 
-- (NSArray*)syntaxErrors
+
+- (void)setShowSyntaxErrors:(BOOL)showSyntaxErrors
 {
-    return _syntaxErrors;
+    _showSyntaxErrors = showSyntaxErrors;
+    [self updateSyntaxErrorsDisplay];
+}
+
+
+- (void)setLineNumberView:(MGSLineNumberView *)lineNumberView
+{
+    _lineNumberView = lineNumberView;
+    [self updateSyntaxErrorsDisplay];
+}
+
+
+- (void)updateSyntaxErrorsDisplay
+{
+    if (!_showSyntaxErrors) {
+        [self.lineNumberView setDecorations:[NSDictionary dictionary]];
+        return;
+    }
+    [self.lineNumberView setDecorations:[self errorDecorations]];
 }
 
 
 #pragma mark - Instance Methods
-
-- (instancetype)initWithArray:(NSArray *)array
-{
-    if ((self = [super init]))
-    {
-        [self setSyntaxErrors:array];
-    }
-
-    return self;
-}
 
 
 - (NSArray *)linesWithErrors

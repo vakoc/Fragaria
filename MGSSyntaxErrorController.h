@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import "SMLSyntaxError.h"
+#import "MGSLineNumberView.h"
+
 
 /**
  *  MGSSyntaxErrorController provides internal services and methods to Fragaria
@@ -25,14 +27,12 @@
  **/
 @property (nonatomic, strong) NSArray *syntaxErrors;
 
+@property (nonatomic) BOOL showSyntaxErrors;
+
+@property (nonatomic) MGSLineNumberView *lineNumberView;
+
 
 /// @name Instance Methods
-
-/**
- *  Initializes the instance with an NSArray of SMLSyntaxError instances.
- *  @param array is the array of SMLSyntaxError objects to check.
- **/
-- (instancetype)initWithArray:(NSArray *)array;
 
 
 /**

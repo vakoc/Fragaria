@@ -254,12 +254,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setShowsWarningsInGutter:(BOOL)value
 {
-    self.gutterView.showsWarnings = value;
+    self.syntaxErrorController.showSyntaxErrors = value;
 }
 
 - (BOOL)showsWarningsInGutter
 {
-    return self.gutterView.showsWarnings;
+    return self.syntaxErrorController.showSyntaxErrors;
 }
 
 
@@ -389,22 +389,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 	if (!_extraInterfaceController)
 		_extraInterfaceController = [[MGSExtraInterfaceController alloc] init];
 	return _extraInterfaceController;
-}
-
-
-/*
- * @property syntaxErrorController
- */
-- (void)setSyntaxErrorController:(MGSSyntaxErrorController *)syntaxErrorController
-{
-    _syntaxErrorController = syntaxErrorController;
-}
-
-- (MGSSyntaxErrorController *)syntaxErrorController
-{
-    if (!_syntaxErrorController)
-        _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
-    return _syntaxErrorController;
 }
 
 
@@ -624,7 +608,10 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     // apply default line wrapping
     [self.textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
     
+    _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
+    self.syntaxErrorController.lineNumberView = self.gutterView;
     [self setShowsWarningsInGutter:YES];
+    
     [self setAutoCompleteDelegate:nil];
 
     // create the temporary preferences observer

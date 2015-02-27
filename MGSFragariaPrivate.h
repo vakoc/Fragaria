@@ -28,7 +28,7 @@
 
 /** The controller which manages and displays the syntax errors in Fragaria's
  * text view and gutter view. */
-@property (nonatomic, strong, readwrite) MGSSyntaxErrorController *syntaxErrorController;
+@property (nonatomic, strong, readonly) MGSSyntaxErrorController *syntaxErrorController;
 
 /** Instances of this class will perform syntax highlighting in text views. */
 @property (nonatomic, strong, readwrite) SMLSyntaxColouring *syntaxColouring;

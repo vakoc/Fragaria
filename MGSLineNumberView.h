@@ -76,8 +76,8 @@
 @property (nonatomic) CGFloat minimumWidth;
 /** The starting line number in the editor. */
 @property (nonatomic) NSUInteger startingLineNumber;
-/** Indicates whether or not to show error markers in the gutter. */
-@property (nonatomic) BOOL *showsWarnings;
+
+@property (nonatomic) NSDictionary *decorations;
 
 /** Indicates whether or not line numbers should be drawn. */
 @property (nonatomic) BOOL *drawsLineNumbers;

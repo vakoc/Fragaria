@@ -44,28 +44,13 @@
 #define RULER_MARGIN		5.0
 
 
-@interface MGSLineNumberView (Private)
-
-- (NSFont *)defaultFont;
-- (NSColor *)defaultTextColor;
-- (NSColor *)defaultAlternateTextColor;
-- (NSColor *)defaultErrorTextColor;
-- (NSMutableArray *)lineIndices;
-- (void)invalidateLineIndicesFromCharacterIndex:(NSUInteger)charIndex;
-- (void)calculateLines;
-- (NSUInteger)lineNumberForCharacterIndex:(NSUInteger)index inText:(NSString *)text;
-- (NSDictionary *)textAttributes;
-- (NSDictionary *)markerTextAttributes;
-
-@end
-
-
 @implementation MGSLineNumberView {
     NSUInteger _mouseDownLineTracking;
     NSRect     _mouseDownRectTracking;
     NSMutableDictionary *_markerImages;
     NSSize _markerImagesSize;
 }
+
 
 @synthesize markerColor = _markerColor;
 
@@ -74,6 +59,7 @@
 {
     return [self initWithScrollView:aScrollView fragaria:nil];
 }
+
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(MGSFragaria *)fragaria
 {
@@ -96,6 +82,9 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
+
+#pragma mark - Default property values
 
 
 - (NSFont *)defaultFont
@@ -134,45 +123,63 @@
 }
 
 
-- (void)setMinimumWidth:(CGFloat)minimumWidth {
+#pragma mark - Property getters & setters
+
+
+- (void)setDecorations:(NSDictionary *)decorations
+{
+    _decorations = decorations;
+    [self setNeedsDisplay:YES];
+}
+
+
+- (void)setMinimumWidth:(CGFloat)minimumWidth
+{
     _minimumWidth = minimumWidth;
     [self setRuleThickness:[self requiredThickness]];
 }
 
 
-- (void)setStartingLineNumber:(NSUInteger)startingLineNumber {
+- (void)setStartingLineNumber:(NSUInteger)startingLineNumber
+{
     _startingLineNumber = startingLineNumber;
     [self setNeedsDisplay:YES];
 }
 
-- (void)setDrawsLineNumbers:(BOOL *)drawsLineNumbers {
+- (void)setDrawsLineNumbers:(BOOL *)drawsLineNumbers
+{
     _drawsLineNumbers = drawsLineNumbers;
     [self setNeedsDisplay:YES];
 }
 
 
-- (void)setFont:(NSFont *)font {
+- (void)setFont:(NSFont *)font
+{
     _font = font;
     [self setRuleThickness:[self requiredThickness]];
 }
 
 
-- (void)setTextColor:(NSColor *)textColor {
+- (void)setTextColor:(NSColor *)textColor
+{
     _textColor = textColor;
     [self setNeedsDisplay:YES];
 }
 
 
-- (void)setAlternateTextColor:(NSColor *)alternateTextColor {
+- (void)setAlternateTextColor:(NSColor *)alternateTextColor
+{
     _alternateTextColor = alternateTextColor;
     [self setNeedsDisplay:YES];
 }
 
 
-- (void)setMarkerColor:(NSColor *)markerColor {
+- (void)setMarkerColor:(NSColor *)markerColor
+{
     _markerColor = markerColor;
     [self setNeedsDisplay:YES];
 }
+
 
 - (NSColor *)markerColor
 {
@@ -180,7 +187,8 @@
 }
 
 
-- (void)setBackgroundColor:(NSColor *)backgroundColor {
+- (void)setBackgroundColor:(NSColor *)backgroundColor
+{
     _backgroundColor = backgroundColor;
     [self setNeedsDisplay:YES];
 }
@@ -343,6 +351,9 @@
 }
 
 
+#pragma mark - Drawing utility functions
+
+
 - (NSDictionary *)textAttributes
 {
     NSFont  *font;
@@ -385,6 +396,9 @@
 }
 
 
+#pragma mark - Automatic thickness control
+
+
 - (CGFloat)requiredThickness
 {
     NSUInteger			lineCount, digits, i;
@@ -404,7 +418,6 @@
 		// number for the current font but nah.
         [sampleString appendString:@"8"];
     }
-    
     stringSize = [sampleString sizeWithAttributes:[self textAttributes]];
 
 	// Round up the value. There is a bug on 10.4 where the display gets all
@@ -509,7 +522,7 @@
     glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:[view textContainer]];
     range = [layoutManager characterRangeForGlyphRange:glyphRange actualGlyphRange:NULL];
     range.length++;
-    
+
     for (line = [self lineNumberForCharacterIndex:range.location inText:[view string]]; line < [lines count]; line++)
     {
         index = [[lines objectAtIndex:line] unsignedIntegerValue];
@@ -548,9 +561,7 @@
                 CTLineDraw(line, drawingContext);
             }
 
-            if (_showsWarnings) {
-                [self drawErrorsInRect:wholeLineRect ofLine:lineNum];
-            }
+            [self drawDecorationsInRect:wholeLineRect ofLine:lineNum];
         }
         if (index > NSMaxRange(range))
         {
@@ -558,6 +569,7 @@
         }
     }
 }
+
 
 /// @param line uses zero-based indexing.
 - (NSRect)wholeLineRectForLine:(NSNumber*)line
@@ -678,103 +690,39 @@
 
 
 /// @param line uses zero-based indexing.
-- (void)drawErrorsInRect:(NSRect)rect ofLine:(NSNumber*)line
+- (void)drawDecorationsInRect:(NSRect)rect ofLine:(NSNumber*)line
 {
-    SMLSyntaxError *error = [self.fragaria.syntaxErrorController errorForLine:[line integerValue] + 1]; // errors are one-based indexes.
+    NSImage *image;
+    NSRect centeredRect;
+    
+    image = [_decorations objectForKey:@([line integerValue] + 1)];
+    if (!image) return;
+    
+    centeredRect = [self decorationRectOfLine:[line integerValue]];
 
-    [error.warningImage drawInRect:[self errorImageRectOfRect:rect ofLine:line] fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:YES hints:nil];
+    [image drawInRect:centeredRect fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:YES hints:nil];
 }
 
 
-/// @param line uses zero-based indexing.
-- (NSRect)errorImageRectOfRect:(NSRect)rect ofLine:(NSNumber*)line
+- (NSRect)decorationRectOfLine:(NSUInteger)line
 {
-    NSRect centeredRect;
+    NSRect rect;
+    NSImage *image;
     CGFloat height;
-
-    SMLSyntaxError *error = [self.fragaria.syntaxErrorController errorForLine:[line integerValue] + 1]; // errors are one-based indexes.
-    NSImage *sourceImage = error.warningImage;
-
+    NSRect centeredRect;
+    
+    image = [_decorations objectForKey:@(line+1)];
+    if (!image) return NSZeroRect;
+    
+    rect = [self wholeLineRectForLine:@(line)];
     height = rect.size.height;
     centeredRect = rect;
     centeredRect.origin.y += (rect.size.height - height) / 2.0;
     centeredRect.origin.x += RULER_MARGIN;
     centeredRect.size.height = height;
-    centeredRect.size.width = sourceImage.size.width / (sourceImage.size.height / height);
-
+    centeredRect.size.width = image.size.width / (image.size.height / height);
+    
     return [self backingAlignedRect:centeredRect options:NSAlignAllEdgesOutward];
-}
-
-
-- (void)mouseDown:(NSEvent *)theEvent
-{
-    NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-    NSUInteger line = [self lineNumberForLocation:location.y];
-    NSRect imageRect;
-    BOOL errorHit = NO;
-
-    if (line != NSNotFound)
-    {
-        _mouseDownLineTracking = line + 1; // now has 1-based index.
-        _mouseDownRectTracking = NSMakeRect(0.0, 0.0, 0.0, 0.0);
-
-        if (self.showsWarnings && [self.fragaria.syntaxErrorController.linesWithErrors containsObject:@(_mouseDownLineTracking)])
-        {
-            imageRect = [self errorImageRectOfRect:[self wholeLineRectForLine:@(line)] ofLine:@(line)];
-
-            if (CGRectContainsPoint(imageRect, location))//(location.x <= imageRect.origin.x + imageRect.size.width)
-            {
-                errorHit = YES;
-            }
-        }
-
-        if (errorHit)
-        {
-            _mouseDownRectTracking = imageRect;
-        }
-        else
-        {
-            [self handleBreakpoint];
-        }
-    }
-}
-
-- (void)mouseUp:(NSEvent *)theEvent
-{
-    NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-    NSUInteger line = [self lineNumberForLocation:location.y]; // method returns 0-based index.
-
-    if ( (line != _mouseDownLineTracking -1) || (location.x > self.frame.size.width) )
-    {
-        [self handleBreakpoint];
-    }
-    else
-    {
-        if (self.showsWarnings && [self.fragaria.syntaxErrorController.linesWithErrors containsObject:@(_mouseDownLineTracking)])
-        {
-            if (CGRectContainsPoint(_mouseDownRectTracking, location))
-            {
-                [self.fragaria.syntaxErrorController showErrorsForLine:_mouseDownLineTracking relativeToRect:_mouseDownRectTracking ofView:self];
-            }
-        }
-    }
-}
-
-- (void)handleBreakpoint
-{
-    if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForView:onLine:)])
-    {
-        [_breakpointDelegate toggleBreakpointForView:self.fragaria onLine:(int)_mouseDownLineTracking];
-    }
-    else if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)])
-    {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)_mouseDownLineTracking];
-#pragma clang diagnostic pop
-    }
-
-    [self setNeedsDisplay:YES];
 }
 
 
@@ -790,7 +738,7 @@
     } else {
         [_markerImages removeAllObjects];
     }
-
+    
     markerImage = [NSImage.alloc initWithSize:size];
     NSCustomImageRep *rep = [NSCustomImageRep.alloc initWithSize:size flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
         NSRect rect;
@@ -832,6 +780,80 @@
     [_markerImages setValue:markerImage forKey:[colorBase description]];
     _markerImagesSize = size;
     return markerImage;
+}
+
+
+#pragma mark - NSResponder
+
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSUInteger line = [self lineNumberForLocation:location.y];
+    NSRect imageRect;
+    BOOL errorHit = NO;
+
+    if (line != NSNotFound)
+    {
+        _mouseDownLineTracking = line + 1; // now has 1-based index.
+        _mouseDownRectTracking = NSMakeRect(0.0, 0.0, 0.0, 0.0);
+
+        if ([_decorations objectForKey:@(_mouseDownLineTracking)]) {
+            _mouseDownRectTracking = imageRect = [self decorationRectOfLine:line];
+
+            if (CGRectContainsPoint(imageRect, location))
+                errorHit = YES;
+        }
+
+        if (errorHit)
+        {
+            _mouseDownRectTracking = imageRect;
+        }
+        else
+        {
+            [self handleBreakpoint];
+        }
+    }
+}
+
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    NSUInteger line = [self lineNumberForLocation:location.y]; // method returns 0-based index.
+
+    if ( (line != _mouseDownLineTracking -1) || (location.x > self.frame.size.width) )
+    {
+        [self handleBreakpoint];
+    }
+    else
+    {
+        if ([_decorations objectForKey:@(_mouseDownLineTracking)])
+        {
+            if (CGRectContainsPoint(_mouseDownRectTracking, location))
+            {
+                [self.fragaria.syntaxErrorController showErrorsForLine:_mouseDownLineTracking relativeToRect:_mouseDownRectTracking ofView:self];
+            }
+        }
+    }
+}
+
+
+- (void)handleBreakpoint
+{
+    if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForView:onLine:)])
+    {
+        [_breakpointDelegate toggleBreakpointForView:self.fragaria onLine:(int)_mouseDownLineTracking];
+    }
+    else if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)])
+    {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        [_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)_mouseDownLineTracking];
+#pragma clang diagnostic pop
+    }
+
+    [self setNeedsDisplay:YES];
 }
 
 
