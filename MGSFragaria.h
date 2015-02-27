@@ -81,7 +81,9 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 /// @name Properties - Overall Appearance and Display
 #pragma mark - Properties - Overall Appearance and Display
 
+@property (nonatomic, assign) BOOL autoSpellCheck;            ///< Specifies whether or not automatic spell checking is enabled.
 @property (nonatomic, assign) BOOL hasVerticalScroller;       ///< Indicates whether or not the vertical scroller should be displayed.
+@property (nonatomic, assign) NSUInteger gutterMinimumWidth;  ///< Specifies the minimum width of the line number gutter.
 @property (nonatomic, assign) BOOL isSyntaxColoured;          ///< Specifies whether the document shall be syntax highlighted.
 @property (nonatomic, assign) BOOL lineWrap;                  ///< Indicates whether or not line wrap is enabled.
 @property (nonatomic, assign) BOOL scrollElasticityDisabled;  ///< Indicates whether or not the "rubber band" effect is disabled.

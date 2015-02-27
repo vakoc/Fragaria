@@ -10,6 +10,7 @@
 #import "MGSFragaria.h"
 #import "MGSFragariaPrivate.h"
 #import "SMLTextViewPrivate.h"
+#import "MGSTemporaryPreferencesObserver.h"
 
 
 // BOOL
@@ -32,14 +33,6 @@ NSString * const MGSFODelegate = @"delegate";
 NSString * const MGSFOBreakpointDelegate = @"breakpointDelegate";
 NSString * const MGSFOSyntaxColouringDelegate = @"syntaxColouringDelegate";
 NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
-
-
-// KVO context constants
-char kcGutterWidthPrefChanged;
-char kcSyntaxColourPrefChanged;
-char kcSpellCheckPrefChanged;
-char kcLineNumberPrefChanged;
-char kcLineWrapPrefChanged;
 
 
 @interface MGSFragaria ()
@@ -132,6 +125,19 @@ char kcLineWrapPrefChanged;
 
 
 /*
+ * @property autoSpellCheck
+ */
+- (void)setAutoSpellCheck:(BOOL)autoSpellCheck
+{
+    self.textView.continuousSpellCheckingEnabled = autoSpellCheck;
+}
+
+- (BOOL)autoSpellCheck
+{
+    return self.textView.continuousSpellCheckingEnabled;
+}
+
+/*
  * @property hasVerticalScroller:
  */
 - (void)setHasVerticalScroller:(BOOL)value
@@ -143,6 +149,24 @@ char kcLineWrapPrefChanged;
 - (BOOL)hasVerticalScroller
 {
     return self.scrollView.hasVerticalScroller;
+}
+
+
+/*
+ * @property gutterMinimumWidth
+ */
+- (void)setGutterMinimumWidth:(NSUInteger)gutterMinimumWidth
+{
+    self.gutterView.minimumWidth = (CGFloat)gutterMinimumWidth;
+    [self updateGutterView];
+    // @todo: (jsd) updateGutterView should be a method in MGSLineNumberView instead of the convoluted method
+    // of notifying the temporary observer to perform some default colouring then updating the view.
+    // Right now this is broken inside MGSLineNumberView -- setRuleThickness isn't doing anything at all.
+}
+
+- (NSUInteger)gutterMinimumWidth
+{
+    return (NSUInteger)self.gutterView.minimumWidth;
 }
 
 
@@ -446,17 +470,6 @@ char kcLineWrapPrefChanged;
 - (instancetype)initWithView:(NSView *)view
 {
     self = [super init];
-    
-    // observe defaults that affect rendering
-    // @todo: (jsd) Will have to delete this. Application is responsible for preferences
-    //        and setting properties based on those. Future preferences framework.
-    NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterWidth" options:NSKeyValueObservingOptionNew context:&kcGutterWidthPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaSyntaxColourNewDocuments" options:NSKeyValueObservingOptionNew context:&kcSyntaxColourPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionNew context:&kcSpellCheckPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowLineNumberGutter" options:NSKeyValueObservingOptionNew context:&kcLineNumberPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:&kcLineWrapPrefChanged];
-    
     [self embedInView:view];
     return self;
 }
@@ -550,7 +563,10 @@ char kcLineWrapPrefChanged;
 - (void)embedInView:(NSView *)contentView
 {
     NSAssert(contentView != nil, @"A content view must be provided.");
-    
+
+    // create the temporary preferences observer
+    self.temporaryPreferencesObserver = [[MGSTemporaryPreferencesObserver alloc] initWithFragaria:self];
+
     // create text scrollview
     self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
     NSSize contentSize = [self.scrollView contentSize];
@@ -656,47 +672,6 @@ char kcLineWrapPrefChanged;
     return [MGSTextMenuController sharedInstance];
 }
 #pragma clang diagnostic pop
-
-
-#pragma mark - KVO
-/*
- 
- - observeValueForKeyPath:ofObject:change:context:
- 
- */
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    BOOL boolValue;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-	if (context == &kcGutterWidthPrefChanged) {
-
-        [self updateGutterView];
-
-    } else if (context == &kcLineNumberPrefChanged) {
-        
-        boolValue = [defaults boolForKey:MGSFragariaPrefsShowLineNumberGutter];
-        [self setShowsGutter:boolValue];
-        
-    } else if (context == &kcSyntaxColourPrefChanged) {
-        
-        boolValue = [defaults boolForKey:MGSFragariaPrefsSyntaxColourNewDocuments];
-        [self setIsSyntaxColoured:boolValue];
-        
-    } else if (context == &kcSpellCheckPrefChanged) {
-        
-        boolValue = [defaults boolForKey:MGSFragariaPrefsAutoSpellCheck];
-        [[self textView] setContinuousSpellCheckingEnabled:boolValue];
-        
-    } else if (context == &kcLineWrapPrefChanged) {
-        
-        boolValue = [defaults boolForKey:MGSFragariaPrefsLineWrapNewDocuments];
-        [[self textView] setLineWrap:boolValue];
-        
-    } else {
-		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-	}
-}
 
 
 #pragma mark - Class extension
