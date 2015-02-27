@@ -37,8 +37,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 @interface MGSFragaria ()
 
-- (void)updateGutterView;
-
 @end
 
 
@@ -153,15 +151,25 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
+ * @property gutterFont
+ */
+-(void)setGutterFont:(NSFont *)gutterFont
+{
+    [self.gutterView setFont:gutterFont];
+}
+
+-(NSFont *)gutterFont
+{
+    return [self.gutterView font];
+}
+
+
+/*
  * @property gutterMinimumWidth
  */
 - (void)setGutterMinimumWidth:(NSUInteger)gutterMinimumWidth
 {
     self.gutterView.minimumWidth = (CGFloat)gutterMinimumWidth;
-    [self updateGutterView];
-    // @todo: (jsd) updateGutterView should be a method in MGSLineNumberView instead of the convoluted method
-    // of notifying the temporary observer to perform some default colouring then updating the view.
-    // Right now this is broken inside MGSLineNumberView -- setRuleThickness isn't doing anything at all.
 }
 
 - (NSUInteger)gutterMinimumWidth
@@ -171,12 +179,25 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
+ * @property gutterTextColour
+ */
+-(void)setGutterTextColour:(NSColor *)gutterTextColour
+{
+    [self.gutterView setTextColor:gutterTextColour];
+}
+
+-(NSColor *)gutterTextColour
+{
+    return [self.gutterView textColor];
+}
+
+
+/*
  * @property lineWrap:
  */
 - (void)setLineWrap:(BOOL)value
 {
     [self.textView setLineWrap:value];
-    [self updateGutterView];
     [self updateErrorHighlighting];
 }
 
@@ -234,7 +255,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (void)setShowsWarningsInGutter:(BOOL)value
 {
     self.gutterView.showsWarnings = value;
-    [self updateGutterView];
 }
 
 - (BOOL)showsWarningsInGutter
@@ -592,9 +612,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [self.scrollView setHasVerticalRuler:YES];
     [self.scrollView setHasHorizontalRuler:NO];
     
-    MGSLineNumberDefaultsObserver *lineNumbers = [[MGSLineNumberDefaultsObserver alloc] initWithLineNumberView:self.gutterView];
-    self.lineNumberDefObserv = lineNumbers;
-    
     // carryover default syntaxDefinition name from old docSpec
     self.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
     
@@ -605,7 +622,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [contentView addSubview:self.scrollView];
     
     // update the gutter view
-    [self updateGutterView];
     [self.scrollView setRulersVisible:[self showsLineNumbers]];
     
     // apply default line wrapping
@@ -613,6 +629,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     
     [self setShowsWarningsInGutter:YES];
     [self setAutoCompleteDelegate:nil];
+
+    [self.temporaryPreferencesObserver setupInitialProperties];
 }
 
 
@@ -680,14 +698,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 #pragma mark - Class extension
-
-
-/*
- * - updateGutterView
- */
-- (void) updateGutterView {
-    [self.lineNumberDefObserv updateGutterView];
-}
 
 
 /*

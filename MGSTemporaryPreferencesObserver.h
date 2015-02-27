@@ -25,4 +25,9 @@
  **/
 - (instancetype)initWithFragaria:(MGSFragaria *)fragaria;
 
+
+/**
+ *  Sets the inital properties from those in defaults.
+ **/
+- (void)setupInitialProperties;
 @end

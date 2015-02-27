@@ -85,6 +85,7 @@
         _markerImages = [[NSMutableDictionary alloc] init];
         _fragaria = fragaria;
         _drawsLineNumbers = YES;
+        [self setBackgroundColor:[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f]];
         [self setClientView:[aScrollView documentView]];
     }
     return self;
