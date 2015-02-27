@@ -158,10 +158,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (void)setGutterMinimumWidth:(NSUInteger)gutterMinimumWidth
 {
     self.gutterView.minimumWidth = (CGFloat)gutterMinimumWidth;
-    [self updateGutterView];
-    // @todo: (jsd) updateGutterView should be a method in MGSLineNumberView instead of the convoluted method
-    // of notifying the temporary observer to perform some default colouring then updating the view.
-    // Right now this is broken inside MGSLineNumberView -- setRuleThickness isn't doing anything at all.
 }
 
 - (NSUInteger)gutterMinimumWidth
@@ -569,9 +565,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 {
     NSAssert(contentView != nil, @"A content view must be provided.");
 
-    // create the temporary preferences observer
-    self.temporaryPreferencesObserver = [[MGSTemporaryPreferencesObserver alloc] initWithFragaria:self];
-
     // create text scrollview
     self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
     NSSize contentSize = [self.scrollView contentSize];
@@ -613,6 +606,9 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     
     [self setShowsWarningsInGutter:YES];
     [self setAutoCompleteDelegate:nil];
+    
+    // create the temporary preferences observer
+    self.temporaryPreferencesObserver = [[MGSTemporaryPreferencesObserver alloc] initWithFragaria:self];
 }
 
 
