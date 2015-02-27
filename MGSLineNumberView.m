@@ -129,7 +129,7 @@
 
 - (NSColor *)defaultBackgroundColor
 {
-    return [NSColor controlBackgroundColor];
+    return [NSColor colorWithCalibratedWhite:0.94f alpha:1.0f];
 }
 
 

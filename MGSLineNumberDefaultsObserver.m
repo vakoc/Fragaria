@@ -81,7 +81,6 @@
  */
 - (void) updateGutterView
 {
-    [_lineNumberView setBackgroundColor:[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f]];
     [_lineNumberView setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsGutterTextColourWell]]];
     [_lineNumberView setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
 }
