@@ -152,6 +152,7 @@
 
 - (void)setFont:(NSFont *)font {
     _font = font;
+    [self setRuleThickness:[self requiredThickness]];
     [self setNeedsDisplay:YES];
 }
 
