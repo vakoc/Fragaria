@@ -529,8 +529,7 @@
         
         if (NSLocationInRange(index, range))
         {
-            NSNumber *lineNum = [NSNumber numberWithInteger:line];    // zero-based line number, Fragaria's count.
-            wholeLineRect = [self wholeLineRectForLine:lineNum];
+            wholeLineRect = [self wholeLineRectForLine:line];
 
             // Note that the ruler view is only as tall as the visible
             // portion. Need to compensate for the clipview's coordinates.
@@ -539,7 +538,7 @@
             currentTextAttributes = textAttributes;
 
             if ([linesWithBreakpoints containsObject:@(line + 1)]) {
-                [self drawMarkerInRect:wholeLineRect ofLine:lineNum];
+                [self drawMarkerInRect:wholeLineRect];
                 currentTextAttributes = [self markerTextAttributes];
             }
 
@@ -561,7 +560,7 @@
                 CTLineDraw(line, drawingContext);
             }
 
-            [self drawDecorationsInRect:wholeLineRect ofLine:lineNum];
+            [self drawDecorationOfLine:line];
         }
         if (index > NSMaxRange(range))
         {
@@ -572,7 +571,7 @@
 
 
 /// @param line uses zero-based indexing.
-- (NSRect)wholeLineRectForLine:(NSNumber*)line
+- (NSRect)wholeLineRectForLine:(NSUInteger)line
 {
     id			      view;
     NSRect            visibleRect;
@@ -601,7 +600,7 @@
     // It doesn't show up in the glyphs so would not be accounted for.
     range.length++;
 
-    index = [[lines objectAtIndex:[line unsignedIntegerValue]] unsignedIntegerValue];
+    index = [[lines objectAtIndex:line] unsignedIntegerValue];
 
     if (NSLocationInRange(index, range))
     {
@@ -670,7 +669,7 @@
 
 
 /// @param line uses zero-based indexing.
-- (void)drawMarkerInRect:(NSRect)rect ofLine:(NSNumber*)line
+- (void)drawMarkerInRect:(NSRect)rect
 {
     NSRect centeredRect, alignedRect;
     CGFloat height;
@@ -690,15 +689,15 @@
 
 
 /// @param line uses zero-based indexing.
-- (void)drawDecorationsInRect:(NSRect)rect ofLine:(NSNumber*)line
+- (void)drawDecorationOfLine:(NSUInteger)line
 {
     NSImage *image;
     NSRect centeredRect;
     
-    image = [_decorations objectForKey:@([line integerValue] + 1)];
+    image = [_decorations objectForKey:@(line + 1)];
     if (!image) return;
     
-    centeredRect = [self decorationRectOfLine:[line integerValue]];
+    centeredRect = [self decorationRectOfLine:line];
 
     [image drawInRect:centeredRect fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:YES hints:nil];
 }
@@ -714,7 +713,7 @@
     image = [_decorations objectForKey:@(line+1)];
     if (!image) return NSZeroRect;
     
-    rect = [self wholeLineRectForLine:@(line)];
+    rect = [self wholeLineRectForLine:line];
     height = rect.size.height;
     centeredRect = rect;
     centeredRect.origin.y += (rect.size.height - height) / 2.0;
@@ -727,7 +726,7 @@
 
 
 /* Adapted from Noodlekit (github.com/MrNoodle/NoodleKit) by Paul Kim. */
-- (NSImage*) defaultMarkerImageWithSize:(NSSize)size color:(NSColor*)colorBase  {
+- (NSImage *)defaultMarkerImageWithSize:(NSSize)size color:(NSColor*)colorBase  {
     NSImage *markerImage;
     
     if (NSEqualSizes(size, _markerImagesSize)) {
