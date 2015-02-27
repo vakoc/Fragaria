@@ -411,6 +411,8 @@
 {
     CGFloat         oldThickness, newThickness;
     
+    [super viewWillDraw];
+    
     if (_invalidCharacterIndex < NSUIntegerMax)
         [self calculateLines];
     
