@@ -417,6 +417,11 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 + (void)initialize
 {
+    NSLog(@"This method is deprecated. Its only purpose is to register user defaults. "
+          "Fragaria shouldn't be doing that for you; you should use your own defaults. "
+          "The helper framework MGSFragariaPreferences can provide suggested defaults and "
+          "suggested keynames for you. "
+          "VERY SOON this automatic registration will stop. Make the transition today.");
     [MGSFragariaPreferences initializeValues];
 }
 

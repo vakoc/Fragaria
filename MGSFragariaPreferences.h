@@ -106,7 +106,7 @@ extern NSString * const MGSFragariaPrefsSyntaxColouringPopUpString;
 /**
  *  Uses registerUserDefaults to add all of Fragaria's defaults to the defaults database.
  **/
-+ (void)initializeValues;
++ (void)initializeValues DEPRECATED_MSG_ATTRIBUTE("Deprecated, do not use. Use the fragariaDefaultsDictionary property instead.");
 
 
 /**
@@ -139,6 +139,15 @@ extern NSString * const MGSFragariaPrefsSyntaxColouringPopUpString;
 /// @name Properties
 
 /**
+ *  Provides a dictionary of Fragaria's default values suitable for adding to your registerUserDefaults call in your
+ *  application.
+ *  @discussion The Framework should not register user defaults for you; you should register them yourself. This
+ *  dictionary is suitable for using with your own user defaults when your application starts up.
+ **/
+@property (nonatomic, readonly) NSDictionary *fragariaDefaultsDictionary;
+
+
+/**
  *  Provides a ready-made instance of MGSFragariaFontsAndColoursPrefsViewController for applications.
  **/
 @property (readonly) MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewController DEPRECATED_MSG_ATTRIBUTE("Proposed elimination.");
@@ -149,7 +158,6 @@ extern NSString * const MGSFragariaPrefsSyntaxColouringPopUpString;
  **/
 @property (readonly) MGSFragariaTextEditingPrefsViewController *textEditingPrefsViewController DEPRECATED_MSG_ATTRIBUTE("Proposed elimination.");
 
+
 @end
-
-
 
