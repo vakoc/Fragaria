@@ -154,7 +154,6 @@
 - (void)setFont:(NSFont *)font {
     _font = font;
     [self setRuleThickness:[self requiredThickness]];
-    [self setNeedsDisplay:YES];
 }
 
 
@@ -253,7 +252,6 @@
     
     NSUInteger      charIndex, stringLength, lineEnd, contentEnd, count, lineIndex;
     NSString        *text;
-    CGFloat         oldThickness, newThickness;
     
     text = [view string];
     stringLength = [text length];
@@ -293,18 +291,6 @@
     if (contentEnd < lineEnd)
     {
         [_lineIndices addObject:[NSNumber numberWithUnsignedInteger:charIndex]];
-    }
-
-    // See if we need to adjust the width of the view
-    oldThickness = [self ruleThickness];
-    newThickness = [self requiredThickness];
-    if (fabs(oldThickness - newThickness) > 1)
-    {
-        // Not a good idea to resize the view during calculations (which
-        // can happen during display). Do a delayed perform.
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self setRuleThickness:newThickness];
-        });
     }
 }
 
@@ -419,6 +405,21 @@
 	// Round up the value. There is a bug on 10.4 where the display gets all
     // wonky when scrolling if you don't return an integral value here.
     return ceil(MAX(_minimumWidth, stringSize.width + RULER_MARGIN * 2));
+}
+
+
+- (void)viewWillDraw
+{
+    CGFloat         oldThickness, newThickness;
+    
+    if (_invalidCharacterIndex < NSUIntegerMax)
+        [self calculateLines];
+    
+    // See if we need to adjust the width of the view
+    oldThickness = [self ruleThickness];
+    newThickness = [self requiredThickness];
+    if (fabs(oldThickness - newThickness) > 1)
+        [self setRuleThickness:newThickness];
 }
 
 
