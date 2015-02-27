@@ -46,8 +46,8 @@ extern NSString * const MGSFragariaPrefsColourStrings;
 extern NSString * const MGSFragariaPrefsColourAttributes;	
 extern NSString * const MGSFragariaPrefsShowFullPathInWindowTitle;
 extern NSString * const MGSFragariaPrefsShowLineNumberGutter;
-extern NSString * const MGSFragariaPrefsSyntaxColourNewDocuments;
-extern NSString * const MGSFragariaPrefsLineWrapNewDocuments;
+extern NSString * const MGSFragariaPrefsSyntaxColourNewDocuments;            // Despite the name, this never affected only new documents, but also the current document.
+extern NSString * const MGSFragariaPrefsLineWrapNewDocuments;                // Desptie the name, this never affected only new documents, but also the current document.
 extern NSString * const MGSFragariaPrefsIndentNewLinesAutomatically;
 extern NSString * const MGSFragariaPrefsOnlyColourTillTheEndOfLine;
 extern NSString * const MGSFragariaPrefsShowMatchingBraces;
