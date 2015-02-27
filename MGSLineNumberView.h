@@ -79,6 +79,12 @@
 
 @property (nonatomic) NSDictionary *decorations;
 
+@property (weak) id decorationActionTarget;
+
+@property (assign) SEL decorationActionSelector;
+
+@property (readonly) NSUInteger selectedLineNumber;
+
 /** Indicates whether or not line numbers should be drawn. */
 @property (nonatomic) BOOL *drawsLineNumbers;
 
@@ -108,6 +114,8 @@
  *  @param location The character position being checked.
  **/
 - (NSUInteger)lineNumberForLocation:(CGFloat)location;
+
+- (NSRect)decorationRectOfLine:(NSUInteger)line;
 
 
 @end

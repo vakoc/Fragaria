@@ -832,7 +832,8 @@
         {
             if (CGRectContainsPoint(_mouseDownRectTracking, location))
             {
-                [self.fragaria.syntaxErrorController showErrorsForLine:_mouseDownLineTracking relativeToRect:_mouseDownRectTracking ofView:self];
+                _selectedLineNumber = line;
+                [NSApp sendAction:_decorationActionSelector to:_decorationActionTarget from:self];
             }
         }
     }

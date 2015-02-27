@@ -13,7 +13,7 @@
 #define kSMLErrorPopOverErrorSpacing 4.0
 
 
-NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSString* str)
+static NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSString* str)
 {
     NSScanner* scanner = [NSScanner scannerWithString:str];
     [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@""]];
@@ -68,7 +68,10 @@ NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSString* str)
 
 - (void)setLineNumberView:(MGSLineNumberView *)lineNumberView
 {
+    [_lineNumberView setDecorationActionTarget:nil];
     _lineNumberView = lineNumberView;
+    [_lineNumberView setDecorationActionTarget:self];
+    [_lineNumberView setDecorationActionSelector:@selector(clickedError:)];
     [self updateSyntaxErrorsDisplay];
 }
 
@@ -201,6 +204,17 @@ NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSString* str)
 
 
 #pragma mark - Action methods
+
+
+- (void)clickedError:(MGSLineNumberView *)sender
+{
+    NSRect rect;
+    NSUInteger selLine;
+    
+    selLine = [sender selectedLineNumber];
+    rect = [sender decorationRectOfLine:selLine];
+    [self showErrorsForLine:selLine+1 relativeToRect:rect ofView:sender];
+}
 
 
 - (void)showErrorsForLine:(NSUInteger)line relativeToRect:(NSRect)rect ofView:(NSView*)view
