@@ -118,7 +118,7 @@
 }
 
 
-#pragma mark - Key Method-to-Property Promotions
+#pragma mark - Properties - Document Support
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
@@ -150,16 +150,116 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	syntaxColoured
+	syntaxDefinitionName
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setSyntaxColoured:(BOOL)syntaxColoured
+- (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
+{
+    self.fragaria.syntaxDefinitionName = syntaxDefinitionName;
+}
+
+- (NSString *)syntaxDefinitionName
+{
+    return self.fragaria.syntaxDefinitionName;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	syntaxErrors
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setSyntaxErrors:(NSArray *)syntaxErrors
+{
+    self.fragaria.syntaxErrors = syntaxErrors;
+}
+
+- (NSArray *)syntaxErrors
+{
+    return self.fragaria.syntaxErrors;
+}
+
+
+#pragma mark - Properties - Overall Appearance and Display
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	autoSpellCheck
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setAutoSpellCheck:(BOOL)autoSpellCheck
+{
+    self.fragaria.autoSpellCheck = autoSpellCheck;
+}
+
+- (BOOL)autoSpellCheck
+{
+    return self.fragaria.autoSpellCheck;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	hasVerticalScroller
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setHasVerticalScroller:(BOOL)hasVerticalScroller
+{
+    [self.fragaria setHasVerticalScroller:hasVerticalScroller];
+}
+
+- (BOOL)hasVerticalScroller
+{
+    return [self.fragaria hasVerticalScroller];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	gutterMinimumWidth
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setGutterMinimumWidth:(NSUInteger)gutterMinimumWidth
+{
+    self.fragaria.gutterMinimumWidth = gutterMinimumWidth;
+}
+
+- (NSUInteger)gutterMinimumWidth
+{
+    return self.fragaria.gutterMinimumWidth;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	isSyntaxColoured
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setIsSyntaxColoured:(BOOL)syntaxColoured
 {
 	[self.fragaria setIsSyntaxColoured:syntaxColoured];
 }
 
-- (BOOL)syntaxColoured
+- (BOOL)isSyntaxColoured
 {
 	return [self.fragaria isSyntaxColoured];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	lineWrap
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setLineWrap:(BOOL)lineWrap
+{
+    [self.fragaria setLineWrap:lineWrap];
+}
+
+- (BOOL)lineWrap
+{
+    return [self.fragaria lineWrap];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	scrollElasticityDisabled
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setScrollElasticityDisabled:(BOOL)scrollElasticityDisabled
+{
+    [self.fragaria setScrollElasticityDisabled:scrollElasticityDisabled];
+}
+
+- (BOOL)scrollElasticityDisabled
+{
+    return [self.fragaria scrollElasticityDisabled];
 }
 
 
@@ -192,44 +292,16 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	lineWrap
+	showsWarningsInGutter
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setLineWrap:(BOOL)lineWrap
+- (void)setShowsWarningsInGutter:(BOOL)showsWarningsInGutter
 {
-    [self.fragaria setLineWrap:lineWrap];
+    [self.fragaria setShowsWarningsInGutter:showsWarningsInGutter];
 }
 
-- (BOOL)lineWrap
+- (BOOL)showsWarningsInGutter
 {
-    return [self.fragaria lineWrap];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	hasVerticalScroller
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setHasVerticalScroller:(BOOL)hasVerticalScroller
-{
-	[self.fragaria setHasVerticalScroller:hasVerticalScroller];
-}
-
-- (BOOL)hasVerticalScroller
-{
-	return [self.fragaria hasVerticalScroller];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	scrollElasticityDisabled
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setScrollElasticityDisabled:(BOOL)scrollElasticityDisabled
-{
-	[self.fragaria setScrollElasticityDisabled:scrollElasticityDisabled];
-}
-
-- (BOOL)scrollElasticityDisabled
-{
-	return [self.fragaria scrollElasticityDisabled];
+    return [self.fragaria showsWarningsInGutter];
 }
 
 
@@ -244,48 +316,6 @@
 - (NSUInteger)startingLineNumber
 {
 	return [self.fragaria startingLineNumber];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	syntaxDefinitionName
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
-{
-	self.fragaria.syntaxDefinitionName = syntaxDefinitionName;
-}
-
-- (NSString *)syntaxDefinitionName
-{
-    return self.fragaria.syntaxDefinitionName;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	syntaxErrors
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setSyntaxErrors:(NSArray *)syntaxErrors
-{
-	self.fragaria.syntaxErrors = syntaxErrors;
-}
-
-- (NSArray *)syntaxErrors
-{
-	return self.fragaria.syntaxErrors;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	showsWarningsInGutter
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setShowsWarningsInGutter:(BOOL)showsWarningsInGutter
-{
-    [self.fragaria setShowsWarningsInGutter:showsWarningsInGutter];
-}
-
-- (BOOL)showsWarningsInGutter
-{
-    return [self.fragaria showsWarningsInGutter];
 }
 
 
