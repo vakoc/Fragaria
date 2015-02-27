@@ -385,12 +385,11 @@
     NSMutableString     *sampleString;
     NSSize              stringSize;
     
-    lineCount = [[self lineIndices] count];
+    lineCount = [[self lineIndices] count] + (_startingLineNumber - 1);
     digits = 1;
     if (lineCount > 0)
-    {
         digits = (NSUInteger)log10(lineCount) + 1;
-    }
+    
 	sampleString = [NSMutableString string];
     for (i = 0; i < digits; i++)
     {
