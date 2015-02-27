@@ -15,26 +15,26 @@
         <window title="Features" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="K34-13-j1l" userLabel="Features" customClass="NSPanel">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="272" y="176" width="450" height="412"/>
+            <rect key="contentRect" x="272" y="176" width="450" height="443"/>
             <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="1Bg-1l-liR">
-                <rect key="frame" x="0.0" y="0.0" width="450" height="412"/>
+                <rect key="frame" x="0.0" y="0.0" width="450" height="443"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <box autoresizesSubviews="NO" title="Upper View" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="UbJ-ck-GAa">
-                        <rect key="frame" x="17" y="205" width="416" height="187"/>
+                        <rect key="frame" x="17" y="221" width="416" height="202"/>
                         <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="414" height="171"/>
+                            <rect key="frame" x="1" y="1" width="414" height="186"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h9x-vk-QWV">
-                                    <rect key="frame" x="16" y="145" width="142" height="18"/>
+                                    <rect key="frame" x="16" y="160" width="142" height="18"/>
                                     <buttonCell key="cell" type="check" title="Syntax Highlighting" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CeR-vU-MuM">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewTop.syntaxColoured" id="fE1-Qo-3ny">
+                                        <binding destination="-2" name="value" keyPath="self.viewTop.isSyntaxColoured" id="OKd-Bs-Jjw">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEnabled" value="NO"/>
@@ -44,7 +44,7 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xQu-2v-Pd1">
-                                    <rect key="frame" x="16" y="125" width="108" height="18"/>
+                                    <rect key="frame" x="16" y="140" width="108" height="18"/>
                                     <buttonCell key="cell" type="check" title="Line Numbers" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="E9f-CF-YSK">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -60,7 +60,7 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RdX-7u-GMl">
-                                    <rect key="frame" x="16" y="105" width="85" height="18"/>
+                                    <rect key="frame" x="16" y="120" width="85" height="18"/>
                                     <buttonCell key="cell" type="check" title="Line Wrap" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="iUY-em-XBp">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -76,7 +76,7 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YXZ-Zp-BPs">
-                                    <rect key="frame" x="16" y="85" width="90" height="18"/>
+                                    <rect key="frame" x="16" y="100" width="90" height="18"/>
                                     <buttonCell key="cell" type="check" title="Error Icons" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="VCG-Ry-o24">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -92,7 +92,7 @@
                                     </connections>
                                 </button>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QYV-Lc-Kqa">
-                                    <rect key="frame" x="343" y="143" width="53" height="22"/>
+                                    <rect key="frame" x="343" y="158" width="53" height="22"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="iaS-d8-Frq">
                                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="ajB-Qz-3wQ"/>
                                         <font key="font" metaFont="system"/>
@@ -110,15 +110,33 @@
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uA5-hi-sae">
-                                    <rect key="frame" x="197" y="146" width="140" height="17"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Starting Line Number:" id="oi7-W4-VwP">
+                                    <rect key="frame" x="197" y="161" width="140" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Starting Line Number:" id="oi7-W4-VwP">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
+                                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TBN-LA-BIG">
+                                    <rect key="frame" x="343" y="130" width="53" height="22"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="DZK-LF-T8T">
+                                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="lvY-cd-zaM"/>
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.viewTop.gutterMinimumWidth" id="gRU-Qs-wS2">
+                                            <dictionary key="options">
+                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                <bool key="NSConditionallySetsEditable" value="NO"/>
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
+                                </textField>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nhc-PU-R1S">
-                                    <rect key="frame" x="16" y="66" width="61" height="18"/>
+                                    <rect key="frame" x="16" y="81" width="61" height="18"/>
                                     <buttonCell key="cell" type="check" title="Gutter" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="L8e-dj-LCp">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -134,7 +152,7 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gg8-RP-10h">
-                                    <rect key="frame" x="16" y="45" width="118" height="18"/>
+                                    <rect key="frame" x="16" y="61" width="118" height="18"/>
                                     <buttonCell key="cell" type="check" title="Vertical Scroller" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="KYC-47-lpS">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -150,7 +168,7 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LvK-DR-ay9">
-                                    <rect key="frame" x="16" y="24" width="174" height="18"/>
+                                    <rect key="frame" x="16" y="41" width="174" height="18"/>
                                     <buttonCell key="cell" type="check" title="Scroll Elasticity Disabled" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="F7I-jJ-R7q">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -165,19 +183,43 @@
                                         </binding>
                                     </connections>
                                 </button>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="znJ-t0-gXd">
+                                    <rect key="frame" x="220" y="133" width="117" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Min. Gutter Width:" id="l6v-Gm-elJ">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Txw-Ti-hMm">
+                                    <rect key="frame" x="16" y="21" width="129" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Auto Spell Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="We2-2u-6sN">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.viewTop.autoSpellCheck" id="oUJ-qd-KaL">
+                                            <dictionary key="options">
+                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
+                                </button>
                             </subviews>
                         </view>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
                     <box autoresizesSubviews="NO" title="Lower View" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="OMj-yp-1Jo">
-                        <rect key="frame" x="17" y="16" width="416" height="187"/>
+                        <rect key="frame" x="17" y="16" width="416" height="203"/>
                         <view key="contentView">
-                            <rect key="frame" x="1" y="1" width="414" height="171"/>
+                            <rect key="frame" x="1" y="1" width="414" height="187"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="D04-KH-8Op">
-                                    <rect key="frame" x="16" y="125" width="108" height="18"/>
+                                    <rect key="frame" x="16" y="141" width="108" height="18"/>
                                     <buttonCell key="cell" type="check" title="Line Numbers" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="6om-Ba-SQj">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -193,7 +235,7 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ixI-Y4-ges">
-                                    <rect key="frame" x="16" y="105" width="85" height="18"/>
+                                    <rect key="frame" x="16" y="121" width="85" height="18"/>
                                     <buttonCell key="cell" type="check" title="Line Wrap" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="ZNv-Qo-nBx">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -209,7 +251,7 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R6x-KT-PMd">
-                                    <rect key="frame" x="16" y="84" width="90" height="18"/>
+                                    <rect key="frame" x="16" y="100" width="90" height="18"/>
                                     <buttonCell key="cell" type="check" title="Error Icons" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="v4d-P5-Ioz">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -225,13 +267,13 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uaC-mf-uxk">
-                                    <rect key="frame" x="16" y="145" width="142" height="18"/>
+                                    <rect key="frame" x="16" y="161" width="142" height="18"/>
                                     <buttonCell key="cell" type="check" title="Syntax Highlighting" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="fvi-24-CUG">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewBottom.syntaxColoured" id="9ey-lH-TJh">
+                                        <binding destination="-2" name="value" keyPath="self.viewBottom.isSyntaxColoured" id="Okn-Dw-r2G">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEnabled" value="NO"/>
@@ -241,7 +283,7 @@
                                     </connections>
                                 </button>
                                 <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uLu-Cl-Sd4">
-                                    <rect key="frame" x="343" y="143" width="53" height="22"/>
+                                    <rect key="frame" x="343" y="159" width="53" height="22"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="2Dw-kL-n4z">
                                         <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="9Ff-7g-t6J"/>
                                         <font key="font" metaFont="system"/>
@@ -259,7 +301,7 @@
                                     </connections>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GoB-we-pCB">
-                                    <rect key="frame" x="197" y="146" width="140" height="17"/>
+                                    <rect key="frame" x="197" y="162" width="140" height="17"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Starting Line Number:" id="eOy-qX-3ot">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -267,7 +309,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Dt8-pS-rOG">
-                                    <rect key="frame" x="16" y="64" width="61" height="18"/>
+                                    <rect key="frame" x="16" y="80" width="61" height="18"/>
                                     <buttonCell key="cell" type="check" title="Gutter" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="tMG-QK-gfx">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -283,7 +325,7 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VG5-pi-rhT">
-                                    <rect key="frame" x="16" y="44" width="118" height="18"/>
+                                    <rect key="frame" x="16" y="60" width="118" height="18"/>
                                     <buttonCell key="cell" type="check" title="Vertical Scroller" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="FXz-De-c6b">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
@@ -299,13 +341,55 @@
                                     </connections>
                                 </button>
                                 <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cZ2-hR-dAP">
-                                    <rect key="frame" x="16" y="24" width="174" height="18"/>
+                                    <rect key="frame" x="16" y="40" width="174" height="18"/>
                                     <buttonCell key="cell" type="check" title="Scroll Elasticity Disabled" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Xqd-4S-YZ9">
                                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
                                         <binding destination="-2" name="value" keyPath="self.viewBottom.scrollElasticityDisabled" id="L0j-IT-Bmt">
+                                            <dictionary key="options">
+                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                <bool key="NSConditionallySetsEnabled" value="NO"/>
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
+                                </button>
+                                <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e4D-f1-u85">
+                                    <rect key="frame" x="343" y="132" width="53" height="22"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="g4d-4p-W5v">
+                                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="JZk-wV-0tX"/>
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.viewBottom.gutterMinimumWidth" id="gk1-fb-LiG">
+                                            <dictionary key="options">
+                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                                <bool key="NSConditionallySetsEditable" value="NO"/>
+                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
+                                            </dictionary>
+                                        </binding>
+                                    </connections>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LbK-5D-VwN">
+                                    <rect key="frame" x="220" y="135" width="117" height="17"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Min. Gutter Width:" id="58f-6c-vLY">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QRi-tU-qs1">
+                                    <rect key="frame" x="16" y="20" width="129" height="18"/>
+                                    <buttonCell key="cell" type="check" title="Auto Spell Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="GV8-BF-ZQj">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <binding destination="-2" name="value" keyPath="self.viewBottom.autoSpellCheck" id="td4-kB-eEP">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEnabled" value="NO"/>
@@ -334,7 +418,7 @@
             <connections>
                 <outlet property="delegate" destination="-2" id="UDB-ue-iIb"/>
             </connections>
-            <point key="canvasLocation" x="375" y="726"/>
+            <point key="canvasLocation" x="375" y="741.5"/>
         </window>
     </objects>
 </document>
