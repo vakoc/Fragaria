@@ -188,7 +188,8 @@
 
 - (void)setClientView:(NSView *)aView
 {
-	id		oldClientView;
+	NSView *oldClientView;
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
 	
     if (aView && ![aView isKindOfClass:[NSTextView class]])
         [NSException raise:@"MGSLineNumberViewNotTextViewClient"
@@ -198,16 +199,21 @@
 	
     if (oldClientView && (oldClientView != aView))
     {
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:NSTextStorageDidProcessEditingNotification object:[(NSTextView *)oldClientView textStorage]];
+		[nc removeObserver:self name:NSTextStorageDidProcessEditingNotification object:[(NSTextView *)oldClientView textStorage]];
+        [nc removeObserver:self name:NSViewFrameDidChangeNotification object:oldClientView];
     }
     [super setClientView:aView];
     if (aView)
     {
-		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textStorageDidProcessEditing:) name:NSTextStorageDidProcessEditingNotification object:[(NSTextView *)aView textStorage]];
+		[nc addObserver:self selector:@selector(textStorageDidProcessEditing:) name:NSTextStorageDidProcessEditingNotification object:[(NSTextView *)aView textStorage]];
+        [nc addObserver:self selector:@selector(textViewFrameDidChange:) name:NSViewFrameDidChangeNotification object:aView];
 
 		[self invalidateLineIndicesFromCharacterIndex:0];
     }
 }
+
+
+#pragma mark - Line number cache
 
 
 - (NSMutableArray *)lineIndices
@@ -421,6 +427,20 @@
     newThickness = [self requiredThickness];
     if (fabs(oldThickness - newThickness) > 1)
         [self setRuleThickness:newThickness];
+}
+
+
+#pragma mark - Main draw methods
+
+
+- (void)textViewFrameDidChange:(NSNotification *)notification
+{
+    /* Delay the call because otherwise, when drawRect is called, the text
+     * view's layout manager will still be set to the old frame (and will
+     * return inconsistent values). */
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self setNeedsDisplay:YES];
+    });
 }
 
 
