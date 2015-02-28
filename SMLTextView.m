@@ -1354,11 +1354,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [[self layoutManager] textContainerChangedGeometry:textContainer];
 
     // redraw the display and reposition scrollers
-    NSDisableScreenUpdates();
-    [textScrollView display];
     [textScrollView reflectScrolledClipView:textScrollView.contentView];
-    [textScrollView display];
-    NSEnableScreenUpdates();
+    [textScrollView setNeedsDisplay:YES];
 }
 
 
