@@ -22,6 +22,8 @@
 
 /* Begin PBXBuildFile section */
 		0105F3E31A8681430045BDD3 /* SMLSyntaxColouring.m in Resources */ = {isa = PBXBuildFile; fileRef = 0105F3E11A86811C0045BDD3 /* SMLSyntaxColouring.m */; };
+		012B706E1AA236BA0004C0D3 /* MGSTypesetter.h in Headers */ = {isa = PBXBuildFile; fileRef = 012B706C1AA236BA0004C0D3 /* MGSTypesetter.h */; };
+		012B706F1AA236BA0004C0D3 /* MGSTypesetter.m in Sources */ = {isa = PBXBuildFile; fileRef = 012B706D1AA236BA0004C0D3 /* MGSTypesetter.m */; };
 		0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */; };
 		017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 017FD5861A7A992700B305FB /* MGSLineNumberView.h */; };
 		017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FD5871A7A992700B305FB /* MGSLineNumberView.m */; };
@@ -170,6 +172,8 @@
 
 /* Begin PBXFileReference section */
 		0105F3E11A86811C0045BDD3 /* SMLSyntaxColouring.m */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = SMLSyntaxColouring.m; sourceTree = "<group>"; };
+		012B706C1AA236BA0004C0D3 /* MGSTypesetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTypesetter.h; sourceTree = "<group>"; };
+		012B706D1AA236BA0004C0D3 /* MGSTypesetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSTypesetter.m; sourceTree = "<group>"; };
 		013278661A81614500D2DCA5 /* MGSSyntaxDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSyntaxDefinition.h; sourceTree = "<group>"; };
 		013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxDefinition.m; sourceTree = "<group>"; };
 		0166D9971A9FC3B20099AB81 /* SMLTextViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMLTextViewPrivate.h; sourceTree = "<group>"; };
@@ -401,6 +405,8 @@
 				AB69B65A118B75FB00903D1D /* SMLSyntaxColouring.m */,
 				AB69B678118B76E700903D1D /* SMLLayoutManager.h */,
 				AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */,
+				012B706C1AA236BA0004C0D3 /* MGSTypesetter.h */,
+				012B706D1AA236BA0004C0D3 /* MGSTypesetter.m */,
 				013278651A81610E00D2DCA5 /* Syntax Definition Manager */,
 				01BB1BEE1A7964DC006C0056 /* Gutter Text View */,
 			);
@@ -686,6 +692,7 @@
 				019F56D51A9D3511009F9DCD /* SMLTextView+MGSDragging.h in Headers */,
 				019B80191A9E77330007D234 /* MGSFragariaTextViewDelegate.h in Headers */,
 				AB69B754118B830700903D1D /* MGSFragaria.h in Headers */,
+				012B706E1AA236BA0004C0D3 /* MGSTypesetter.h in Headers */,
 				E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */,
 				0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */,
 				ABC578E91603D6000040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h in Headers */,
@@ -950,6 +957,7 @@
 				D0E521061A90DC02005CB80B /* MGSSyntaxErrorController.m in Sources */,
 				AB472B6F129972E400202CB5 /* MGSTextMenuController.m in Sources */,
 				AB472BF41299BBB100202CB5 /* MGSExtraInterfaceController.m in Sources */,
+				012B706F1AA236BA0004C0D3 /* MGSTypesetter.m in Sources */,
 				ABF28AF014C075D400ECAD48 /* NSScanner+Fragaria.m in Sources */,
 				ABC578D3160350240040B3FB /* MGSFragariaPreferences.m in Sources */,
 				ABC578EA1603D6000040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.m in Sources */,

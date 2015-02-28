@@ -23,6 +23,7 @@
 
 #import "MGSFragariaFramework.h"
 #import "SMLLayoutManager.h"
+#import "MGSTypesetter.h"
 
 typedef enum : NSUInteger
 {
@@ -66,6 +67,8 @@ typedef enum : NSUInteger
         [self resetAttributesAndGlyphs];
         
 		[self setAllowsNonContiguousLayout:YES]; // Setting this to YES sometimes causes "an extra toolbar" and other graphical glitches to sometimes appear in the text view when one sets a temporary attribute, reported as ID #5832329 to Apple
+        
+        [self setTypesetter:[[MGSTypesetter alloc] init]];
 	}
 	return self;
 }
