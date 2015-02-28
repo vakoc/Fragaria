@@ -112,6 +112,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         [[self textContainer] replaceLayoutManager:layoutManager];
 
         _fragaria = fragaria;
+        _interfaceController = [[MGSExtraInterfaceController alloc] init];
+        [_interfaceController setCompletionTarget:self];
 
         [self setDefaults];
 

@@ -46,7 +46,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @implementation MGSFragaria
 
 
-@synthesize extraInterfaceController = _extraInterfaceController;
 @synthesize syntaxErrorController = _syntaxErrorController;
 @synthesize syntaxColouring = _syntaxColouring;
 @synthesize syntaxDefinitionName = _syntaxDefinitionName;
@@ -371,22 +370,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 #pragma mark - Properties - System Components
-
-
-/*
- * @property extraInterfaceController
- */
-- (void)setExtraInterfaceController:(MGSExtraInterfaceController *)extraInterfaceController
-{
-	_extraInterfaceController = extraInterfaceController;
-}
-
-- (MGSExtraInterfaceController *)extraInterfaceController
-{
-	if (!_extraInterfaceController)
-		_extraInterfaceController = [[MGSExtraInterfaceController alloc] init];
-	return _extraInterfaceController;
-}
 
 
 /*

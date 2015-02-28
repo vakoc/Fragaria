@@ -22,10 +22,6 @@
 #pragma mark - System Components
 
 
-/** The controller responsible for managing accessory dialogs for this instance
- * of MGSFragaria. */
-@property (nonatomic, readwrite) MGSExtraInterfaceController *extraInterfaceController;
-
 /** The controller which manages and displays the syntax errors in Fragaria's
  * text view and gutter view. */
 @property (nonatomic, strong, readonly) MGSSyntaxErrorController *syntaxErrorController;

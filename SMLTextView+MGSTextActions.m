@@ -9,6 +9,7 @@
 #import "SMLTextView+MGSTextActions.h"
 #import "MGSFragariaFramework.h"
 #import "MGSFragariaPrivate.h"
+#import "SMLTextViewPrivate.h"
 
 
 @implementation SMLTextView (MGSTextActions)
@@ -378,8 +379,7 @@
  */
 - (IBAction)entab:(id)sender
 {
-    [[self.fragaria extraInterfaceController] setCompletionTarget:self];
-    [[self.fragaria extraInterfaceController] displayEntab];
+    [self.interfaceController displayEntab];
 }
 
 /*
@@ -389,8 +389,7 @@
  */
 - (IBAction)detab:(id)sender
 {
-    [[self.fragaria extraInterfaceController] setCompletionTarget:self];
-    [[self.fragaria extraInterfaceController] displayDetab];
+    [self.interfaceController displayDetab];
 }
 
 
@@ -530,8 +529,7 @@
  */
 - (IBAction)goToLine:(id)sender
 {
-    [[self.fragaria extraInterfaceController] setCompletionTarget:self];
-    [[self.fragaria extraInterfaceController] displayGoToLine];
+    [self.interfaceController displayGoToLine];
 }
 
 

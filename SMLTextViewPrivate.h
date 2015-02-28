@@ -19,5 +19,9 @@
  * delegate is set to nil. */
 @property id<SMLAutoCompleteDelegate> autocompleteDelegate;
 
+/** The controller which manages the accessory user interface for this text
+ * view. */
+@property (readonly) MGSExtraInterfaceController *interfaceController;
+
 
 @end
