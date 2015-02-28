@@ -224,10 +224,12 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         [style removeTabStop:item];
     }
     [style setDefaultTabInterval:sizeOfTab];
-    NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:style, NSParagraphStyleAttributeName, nil];
+    
+    NSMutableDictionary *attributes = [[self typingAttributes] mutableCopy];
+    [attributes setObject:style forKey:NSParagraphStyleAttributeName];
     [self setTypingAttributes:attributes];
+    
     [[self textStorage] addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0,[[self textStorage] length])];
-    [self setFont:self.textFont];
 }
 
 
@@ -256,6 +258,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setFont:textFont];
     self.lineHeight = [self.textContainer.layoutManager defaultLineHeightForFont:textFont];
     [self configurePageGuide];
+    [self setTabWidth:_tabWidth];
 }
 
 - (NSFont *)textFont
