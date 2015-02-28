@@ -44,9 +44,6 @@
 /** Indicates the character indices that have been inspected. */
 @property (nonatomic, strong, readonly) NSMutableIndexSet *inspectedCharacterIndexes;
 
-/** Returns the default line height for the current font. */
-@property (nonatomic, assign, readonly) NSInteger lineHeight;
-
 
 /// @name Properties - Appearance and Behaviours
 #pragma mark - Properties - Appearance and Behaviours

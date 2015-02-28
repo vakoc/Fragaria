@@ -70,8 +70,6 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 
 @property (strong) NSColor *pageGuideColour;
 
-@property (nonatomic, assign, readwrite) NSInteger lineHeight;
-
 @property (readwrite) NSMutableIndexSet *inspectedCharacterIndexes;
 
 @end
@@ -112,14 +110,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  * @property inspectedCharacterIndexes
  * (synthesized)
  */
-
-/*
- * - lineHeight
- */
-- (NSInteger)lineHeight
-{
-    return self.lineHeight;
-}
 
 
 #pragma mark - Properties - Appearance and Behaviours
@@ -256,7 +246,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     _textFont = textFont;
     [self setFont:textFont];
-    self.lineHeight = [self.textContainer.layoutManager defaultLineHeightForFont:textFont];
     [self configurePageGuide];
     [self setTabWidth:_tabWidth];
 }
