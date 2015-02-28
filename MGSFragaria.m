@@ -49,8 +49,9 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @synthesize extraInterfaceController = _extraInterfaceController;
 @synthesize syntaxErrorController = _syntaxErrorController;
 @synthesize syntaxColouring = _syntaxColouring;
-@synthesize syntaxDefinitionName = _syntaxDefinitionName;
+
 @synthesize autoCompleteDelegate = _autoCompleteDelegate;
+@synthesize syntaxDefinitionName = _syntaxDefinitionName;
 
 
 #pragma mark - Properties - Document Properties
@@ -247,6 +248,19 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     return self.scrollView.rulersVisible;
 }
 
+/*
+ * @property showsInvisibleCharacters
+ */
+- (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
+{
+    self.textView.layoutManager.showsInvisibleCharacters = showsInvisibleCharacters;
+}
+
+- (BOOL)showsInvisibleCharacters
+{
+    return self.textView.layoutManager.showsInvisibleCharacters;
+}
+
 
 /*
  * @property showsWarningsInGutter
@@ -287,6 +301,38 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (BOOL)isSyntaxColoured
 {
     return [self.syntaxColouring isSyntaxColoured];
+}
+
+
+/*
+ * @property textFont
+ */
+- (void)setTextFont:(NSFont *)textFont
+{
+    self.textView.textFont = textFont;
+    SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
+    layoutManager.textFont =textFont;
+}
+
+- (NSFont *)textFont
+{
+    return self.textView.textFont;
+}
+
+
+/*
+ * @property textInvisibleCharactersColor
+ */
+- (void)setTextInvisibleCharactersColor:(NSColor *)textInvisibleCharactersColor
+{
+    SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
+    layoutManager.textInvisibleCharactersColour = textInvisibleCharactersColor;
+}
+
+- (NSColor *)textInvisibleCharactersColor
+{
+    SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
+    return layoutManager.textInvisibleCharactersColour;
 }
 
 

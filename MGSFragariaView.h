@@ -45,25 +45,29 @@
 
 #pragma mark - Properties - Overall Appearance and Display
 
-@property (assign) BOOL autoSpellCheck;                  ///< Specifies whether or not automatic spell checking is enabled.
+@property (assign) BOOL autoSpellCheck;                                ///< Specifies whether or not automatic spell checking is enabled.
 
-@property (assign) BOOL hasVerticalScroller;             ///< Indicates whether or not the vertical scroller is always present.
+@property (assign) BOOL hasVerticalScroller;                           ///< Indicates whether or not the vertical scroller is always present.
 
-@property (assign) NSUInteger gutterMinimumWidth;        ///< Specifies the minimum width of the line number gutter.
+@property (assign) NSUInteger gutterMinimumWidth;                      ///< Specifies the minimum width of the line number gutter.
 
-@property (assign) BOOL isSyntaxColoured;                ///< Indicates whether or not the text editor is using syntax highlighting.
+@property (assign) BOOL isSyntaxColoured;                              ///< Indicates whether or not the text editor is using syntax highlighting.
 
-@property (assign) BOOL lineWrap;                        ///< Indicates whether or not line wrap (word wrap) is on or off.
+@property (assign) BOOL lineWrap;                                      ///< Indicates whether or not line wrap (word wrap) is on or off.
 
-@property (assign) BOOL scrollElasticityDisabled;        ///< Indicates whether text text view's "rubber band" effect is disabled.
+@property (assign) BOOL scrollElasticityDisabled;                      ///< Indicates whether text text view's "rubber band" effect is disabled.
 
-@property (assign) BOOL showsLineNumbers;                ///< Indicates whether or not the text editor is displaying line numbers when the gutter is visible.
+@property (assign) BOOL showsLineNumbers;                              ///< Indicates whether or not the text editor is displaying line numbers when the gutter is visible.
 
-@property (assign) BOOL showsGutter;                     ///< Indicates whether or not the text editor gutter is visible.
+@property (assign) BOOL showsGutter;                                   ///< Indicates whether or not the text editor gutter is visible.
 
-@property (assign) BOOL showsWarningsInGutter;           ///< Indicates whether or not error warnings are displayed in the gutter.
+@property (assign) BOOL showsWarningsInGutter;                         ///< Indicates whether or not error warnings are displayed in the gutter.
 
-@property (assign) NSUInteger startingLineNumber;        ///< Indicates the starting line number of the text view.
+@property (assign) NSUInteger startingLineNumber;                      ///< Indicates the starting line number of the text view.
+
+@property (assign) NSFont *textFont;                                   ///< Specifies the text editor font.
+
+@property (assign) NSColor *textInvisibleCharactersColor;              ///< Specifies the color to render invisible characters in the text view.
 
 
 

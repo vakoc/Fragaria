@@ -320,10 +320,36 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	textFont
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setTextFont:(NSFont *)textFont
+{
+    self.fragaria.textFont = textFont;
+}
+
+- (NSFont *)textFont
+{
+    return self.fragaria.textFont;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	textInvisibleCharactersColor
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (void)setTextInvisibleCharactersColor:(NSColor *)textInvisibleCharactersColor
+{
+    self.fragaria.textInvisibleCharactersColor = textInvisibleCharactersColor;
+}
+
+- (NSColor *)textInvisibleCharactersColor
+{
+    return self.fragaria.textInvisibleCharactersColor;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	goToLine
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-#pragma mark - KEY FRAGARIA METHOD PROMOTIONS
-
 - (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight
 {
 	[self.fragaria goToLine:lineToGoTo centered:centered highlight:highlight];
