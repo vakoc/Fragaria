@@ -96,7 +96,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 @synthesize lineWrap = _lineWrap;
 @synthesize pageGuideColour = _pageGuideColour;
 @synthesize showsPageGuide = _showsPageGuide;
-@synthesize textFont = _textFont;
 
 
 #pragma mark - Properties - Internal
@@ -204,7 +203,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     while (numberOfSpaces--) {
         [sizeString appendString:@" "];
     }
-    NSDictionary *sizeAttribute = @{ NSFontAttributeName : self.textFont };
+    NSDictionary *sizeAttribute = [self typingAttributes];
     CGFloat sizeOfTab = [sizeString sizeWithAttributes:sizeAttribute].width;
 
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -244,7 +243,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)setTextFont:(NSFont *)textFont
 {
-    _textFont = textFont;
+    /* setFont: also updates our typing attributes */
     [self setFont:textFont];
     [self configurePageGuide];
     [self setTabWidth:_tabWidth];
@@ -252,7 +251,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 - (NSFont *)textFont
 {
-    return _textFont ? _textFont : [NSFont fontWithName:@"Menlo" size:11];
+    return [[self typingAttributes] objectForKey:NSFontAttributeName];
 }
 
 
@@ -1363,7 +1362,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 - (void)configurePageGuide
 {
-    NSDictionary *sizeAttribute = @{NSFontAttributeName : self.textFont};
+    NSDictionary *sizeAttribute = [self typingAttributes];
 
     NSString *sizeString = @" ";
     CGFloat sizeOfCharacter = [sizeString sizeWithAttributes:sizeAttribute].width;
