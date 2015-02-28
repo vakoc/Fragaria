@@ -95,11 +95,10 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     NSRect currentLineRect;
     
     NSTimer *autocompleteWordsTimer;
-
-    NSFont *textFontShadow;
 }
 
 @synthesize pageGuideColour, lineWrap;
+@synthesize textFont = _textFont;
 
 
 #pragma mark - Properties - Internal
@@ -182,7 +181,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     while (numberOfSpaces--) {
         [sizeString appendString:@" "];
     }
-    NSDictionary *sizeAttribute = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
+    NSDictionary *sizeAttribute = @{ NSFontAttributeName : self.textFont };
     CGFloat sizeOfTab = [sizeString sizeWithAttributes:sizeAttribute].width;
 
     NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
@@ -204,10 +203,14 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 - (void)setTextFont:(NSFont *)textFont
 {
     _textFont = textFont;
-    textFontShadow = textFont;
     [self setFont:textFont];
     self.lineHeight = [self.textContainer.layoutManager defaultLineHeightForFont:textFont];
     [self configurePageGuide];
+}
+
+- (NSFont *)textFont
+{
+    return _textFont ? _textFont : [NSFont fontWithName:@"Menlo" size:11];
 }
 
 
@@ -280,7 +283,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
             // reset the default font if text was empty as the font gets reset to system default.
             if (textIsEmpty) {
-                [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+                [self setFont:self.textFont];
             }
 
             [self didChangeText];
@@ -317,7 +320,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
             // reset the default font if text was empty as the font gets reset to system default.
             if (textViewWasEmpty) {
-                [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+                [self setFont:self.textFont];
             }
 
             // TODO: this doesn't seem to be having the desired effect
@@ -425,10 +428,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:0 context:LineHighlightingPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionInitial context:LineHighlightingPrefChanged];
-
-//    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:@"TextFontChanged"];
-
-    self.lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
 }
 
 
@@ -437,7 +436,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)setTextDefaults
 {
-    [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
     [self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
     [self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
     [self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
@@ -1337,8 +1335,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     if (!self.textFont) return;
     
     NSDictionary *sizeAttribute = @{NSFontAttributeName : self.textFont};
-    sizeAttribute = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
-    
+
     NSString *sizeString = @" ";
     CGFloat sizeOfCharacter = [sizeString sizeWithAttributes:sizeAttribute].width;
     pageGuideX = floor(sizeOfCharacter * (self.pageGuideColumn + 1)) - 1.5f; // -1.5 to put it between the two characters and draw only on one pixel and not two (as the system draws it in a special way), and that's also why the width above is set to zero
@@ -1369,11 +1366,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         [self setHighlightCurrentLine:boolValue];
         colorVal = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsHighlightLineColourWell]];
         [self setCurrentLineHighlightColour:colorVal];
-
-//    } else if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
-//        [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-//        self.lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-//        [self configurePageGuide];
 
     } else if ([(__bridge NSString *)context isEqualToString:@"TextColourChanged"]) {
         [self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
