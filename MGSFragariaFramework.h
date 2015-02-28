@@ -16,7 +16,6 @@
 #import "SMLLayoutManager.h"
 #import "SMLSyntaxColouring.h"
 #import "MGSExtraInterfaceController.h"
-#import "MGSGlyphGenerator.h"
 #import "MGSLineNumberView.h"
 #import "NSScanner+Fragaria.h"
 #import "MGSSyntaxController.h"

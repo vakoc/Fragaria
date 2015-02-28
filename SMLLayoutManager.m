@@ -63,21 +63,9 @@ typedef enum : NSUInteger
 		
         invisibleGlyphs = NULL;
         
-        // experimental glyph substitution can be enabled with useGlyphSubstitutionForInvisibleGlyphs = YES
-        useGlyphSubstitutionForInvisibleGlyphs = NO;
-        
-        // draw inivisble glyphs using core text
-        drawInvisibleGlyphsUsingCoreText = YES;
-        
         [self resetAttributesAndGlyphs];
         
 		[self setAllowsNonContiguousLayout:YES]; // Setting this to YES sometimes causes "an extra toolbar" and other graphical glitches to sometimes appear in the text view when one sets a temporary attribute, reported as ID #5832329 to Apple
-
-        // assign our custom glyph generator
-        if (useGlyphSubstitutionForInvisibleGlyphs) {
-            [self setGlyphGenerator:[[MGSGlyphGenerator alloc] init]];
-        }
-
 	}
 	return self;
 }
@@ -91,19 +79,7 @@ typedef enum : NSUInteger
 - (void)drawGlyphsForGlyphRange:(NSRange)glyphRange atPoint:(NSPoint)containerOrigin
 {
 
-// uncomment below to enable draw profiling
-//#define MGS_PROFILE_DRAW
-    
-#ifdef MGS_PROFILE_DRAW
-NSDate *methodStart = [NSDate date];
-
-NSUInteger drawLoopMax = 100;
-NSUInteger drawLoop = drawLoopMax;
-do {
-        
-#endif
-        
-    if (self.showsInvisibleCharacters && !useGlyphSubstitutionForInvisibleGlyphs) {
+    if (self.showsInvisibleCharacters) {
         
 		NSPoint pointToDrawAt;
 		NSRect glyphFragment;
@@ -112,17 +88,14 @@ do {
         
         void *gcContext = [[NSGraphicsContext currentContext] graphicsPort];
         
-        if (drawInvisibleGlyphsUsingCoreText) {
-                
-            // see http://www.cocoabuilder.com/archive/cocoa/242724-ctlinecreatewithattributedstring-ignoring-font-size.html
-            
-            // if our context is flipped then we need to flip our drawn text too
-            CGAffineTransform t = {1.0, 0.0, 0.0, -1.0, 0.0, 0.0};
-            if (![[NSGraphicsContext currentContext] isFlipped]) {
-                t = CGAffineTransformIdentity;
-            }
-            CGContextSetTextMatrix (gcContext, t);
+        // see http://www.cocoabuilder.com/archive/cocoa/242724-ctlinecreatewithattributedstring-ignoring-font-size.html
+        
+        // if our context is flipped then we need to flip our drawn text too
+        CGAffineTransform t = {1.0, 0.0, 0.0, -1.0, 0.0, 0.0};
+        if (![[NSGraphicsContext currentContext] isFlipped]) {
+            t = CGAffineTransformIdentity;
         }
+        CGContextSetTextMatrix (gcContext, t);
     
         // we may not have any glyphs generated at this stage
 		for (NSInteger idx = glyphRange.location; idx < lengthToRedraw; idx++) {
@@ -159,119 +132,22 @@ do {
             //
             // Draw profiling indicated that the CoreText approach on 10.8 is an order of magnitude
             // faster that using the NSStringDrawing methods.
-
-            if (drawInvisibleGlyphsUsingCoreText) {
                 
-                // draw with cached core text line ref
-                pointToDrawAt.x += glyphFragment.origin.x;
-                pointToDrawAt.y += glyphFragment.origin.y;
-                
-                // get our text line object
-                CTLineRef line = (__bridge CTLineRef)[lineRefs objectAtIndex:lineRefIndex];
-                
-                CGContextSetTextPosition(gcContext, pointToDrawAt.x, pointToDrawAt.y);
-                CTLineDraw(line, gcContext);
-           } else {
-               
-               // draw with NSString
-               glyphFragment.origin.x += pointToDrawAt.x;
-               glyphFragment.origin.y += pointToDrawAt.y;
-               
-               [subCharacter drawWithRect:glyphFragment options:0 attributes:defAttributes];
-           }
+            // draw with cached core text line ref
+            pointToDrawAt.x += glyphFragment.origin.x;
+            pointToDrawAt.y += glyphFragment.origin.y;
             
+            // get our text line object
+            CTLineRef line = (__bridge CTLineRef)[lineRefs objectAtIndex:lineRefIndex];
+            
+            CGContextSetTextPosition(gcContext, pointToDrawAt.x, pointToDrawAt.y);
+            CTLineDraw(line, gcContext);
 		}
     }
     
-// profile invisible glyph drawing
-#ifdef MGS_PROFILE_DRAW
-    
-    drawLoop--;
-} while (drawLoop);
-
-    
-
-    NSDate *methodFinish = [NSDate date];
-    
-    NSTimeInterval executionTime = [methodFinish timeIntervalSinceDate:methodStart];
-    
-    static NSTimeInterval totalExecutionTime = 0;
-    static NSUInteger drawCount = 0;
-    
-    drawCount++;
-    totalExecutionTime += executionTime;
-    NSTimeInterval avgExecutionTime = totalExecutionTime / drawCount;
-    
-    NSLog(@"(%d) avg invisible glyph draw (looped %d) time = %f", drawCount, drawLoopMax, avgExecutionTime);
-#endif
     
     // the following causes glyph generation to occur if required
     [super drawGlyphsForGlyphRange:glyphRange atPoint:containerOrigin];
-}
-
-
-/*
- * - insertGlyphs:length:forStartingGlyphAtIndex:characterIndex:
- */
-- (void)insertGlyphs:(const NSGlyph *)glyphs
-              length:(NSUInteger)length
-forStartingGlyphAtIndex:(NSUInteger)glyphIndex
-      characterIndex:(NSUInteger)charIndex
-{
-    /*
-     
-     This method is called by the NSGlyphGenerator with chunks of glyphs 
-     each index of which correspond to a character in the text storage.
-     
-     This method is called lazily to generate glyphs as required for display
-     
-     Glyph substitution causes tabbing to break at present.
-     Plus line end characters are not rendered.
-     Colourisation is also made more difficult.
-     
-     Left this method in for now as the approach may be useful in the future
-     
-     */
-    
-    if (self.showsInvisibleCharacters && useGlyphSubstitutionForInvisibleGlyphs) {
-        NSString *textString = [[self attributedString] string];
-    
-        for (NSUInteger i = 0; i < length; i++) {
-
-            unichar characterToCheck = [textString characterAtIndex:charIndex + i];
-            NSUInteger inivisbleGlyphIndex = 0;
-
-            // glyph filter
-            if (characterToCheck == '\t') {
-                inivisbleGlyphIndex = 0;
-            } else if (characterToCheck == ' ') {
-                inivisbleGlyphIndex = 1;
-            } else if (characterToCheck == '\n' || characterToCheck == '\r') {
-                inivisbleGlyphIndex = 2;
-            } else {
-                continue;
-            }
-
-            // insert new glyph
-            ((NSGlyph *)glyphs)[i] = invisibleGlyphs[inivisbleGlyphIndex];
-        }
-
-    }
-    [super insertGlyphs:glyphs
-                        length:length
-       forStartingGlyphAtIndex:glyphIndex
-                characterIndex:charIndex];
-}
-
-
-/*
- * - showCGGlyphs:positions:count:font:matrix:attributes:inContext:
- */
-- (void)showCGGlyphs:(const CGGlyph *)glyphs positions:(const NSPoint *)positions count:(NSUInteger)glyphCount font:(NSFont *)font matrix:(NSAffineTransform *)textMatrix attributes:(NSDictionary *)attributes inContext:(NSGraphicsContext *)graphicsContext
-{
-    // customise glyph drawing here
-    [super showCGGlyphs:glyphs positions:positions count:glyphCount font:font matrix:textMatrix attributes:attributes inContext:graphicsContext];
-
 }
 
 
@@ -387,46 +263,24 @@ forStartingGlyphAtIndex:(NSUInteger)glyphIndex
     newLineCharacter = [[NSString alloc] initWithCharacters:&newLineUnichar length:1];
     spaceCharacter = @".";
     
-    if (drawInvisibleGlyphsUsingCoreText) {
-        // all CFTypes can be added to NS collections
-        // http://www.mikeash.com/pyblog/friday-qa-2010-01-22-toll-free-bridging-internals.html
-        lineRefs = [NSMutableArray arrayWithCapacity:kNewLineLine+1];
-        
-        NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:tabCharacter attributes:defAttributes];
-        CTLineRef textLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
-        [lineRefs addObject:(__bridge id)textLine]; // kTabLine
-        CFRelease(textLine);
-        
-        attrString = [[NSAttributedString alloc] initWithString:spaceCharacter attributes:defAttributes];
-        textLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
-        [lineRefs addObject:(__bridge id)textLine]; // kSpaceLine
-        CFRelease(textLine);
-        
-        attrString = [[NSAttributedString alloc] initWithString:newLineCharacter attributes:defAttributes];
-        textLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
-        [lineRefs addObject:(__bridge id)textLine]; // kNewLineLine
-        CFRelease(textLine);
-    }
+    // all CFTypes can be added to NS collections
+    // http://www.mikeash.com/pyblog/friday-qa-2010-01-22-toll-free-bridging-internals.html
+    lineRefs = [NSMutableArray arrayWithCapacity:kNewLineLine+1];
     
-    // experimental glyph substitution
-    if (useGlyphSubstitutionForInvisibleGlyphs) {
-
-        NSString *glyphString = [NSString stringWithFormat:@"%@%@%@", tabCharacter, spaceCharacter, newLineCharacter];
-        
-        // use NSLayoutManager instance to generate required glyphs using the default attributes
-        NSTextStorage *textStorage = [[NSTextStorage alloc] initWithString:glyphString];
-        [textStorage setAttributes:defAttributes range:NSMakeRange(0, [glyphString length])];
-        NSLayoutManager *layoutManager = [[NSLayoutManager alloc] init];
-        NSTextContainer *textContainer = [[NSTextContainer alloc] init];
-        [layoutManager addTextContainer:textContainer];
-        [textStorage addLayoutManager:layoutManager];
-        
-        // cache the invisible glyphs
-        if (invisibleGlyphs == NULL) {
-            invisibleGlyphs = malloc(sizeof(NSGlyph) * [glyphString length] + 1);
-        }
-        [layoutManager getGlyphs:invisibleGlyphs range:NSMakeRange(0, [glyphString length])];
-    }
+    NSAttributedString *attrString = [[NSAttributedString alloc] initWithString:tabCharacter attributes:defAttributes];
+    CTLineRef textLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
+    [lineRefs addObject:(__bridge id)textLine]; // kTabLine
+    CFRelease(textLine);
+    
+    attrString = [[NSAttributedString alloc] initWithString:spaceCharacter attributes:defAttributes];
+    textLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
+    [lineRefs addObject:(__bridge id)textLine]; // kSpaceLine
+    CFRelease(textLine);
+    
+    attrString = [[NSAttributedString alloc] initWithString:newLineCharacter attributes:defAttributes];
+    textLine = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)attrString);
+    [lineRefs addObject:(__bridge id)textLine]; // kNewLineLine
+    CFRelease(textLine);
 }
 
 

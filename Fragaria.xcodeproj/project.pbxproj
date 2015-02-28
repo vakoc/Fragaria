@@ -52,7 +52,6 @@
 		AB69B6CA118B7D2100903D1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AB69B6DA118B7F2A00903D1D /* SMLLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */; };
 		AB69B754118B830700903D1D /* MGSFragaria.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B753118B830700903D1D /* MGSFragaria.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AB6C86C4160FA2B500488AF2 /* MGSGlyphGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = AB6C86C2160FA2B500488AF2 /* MGSGlyphGenerator.m */; };
 		AB8386D91719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */; };
 		AB8386DA1719E3D3004408F4 /* MGSPreferencesTextEditing.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */; };
 		AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = AB8387A9171B4505004408F4 /* SMLSyntaxColouringDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -218,8 +217,6 @@
 		AB69B753118B830700903D1D /* MGSFragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragaria.h; sourceTree = "<group>"; tabWidth = 4; };
 		AB69B809118B8D0400903D1D /* MGSPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSPreferencesController.h; path = Applications/Simple/MGSPreferencesController.h; sourceTree = "<group>"; };
 		AB69B80A118B8D0400903D1D /* MGSPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MGSPreferencesController.m; path = Applications/Simple/MGSPreferencesController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AB6C86C1160FA2B500488AF2 /* MGSGlyphGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSGlyphGenerator.h; sourceTree = "<group>"; };
-		AB6C86C2160FA2B500488AF2 /* MGSGlyphGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSGlyphGenerator.m; sourceTree = "<group>"; };
 		AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MGSPreferencesFontsAndColours.xib; sourceTree = "<group>"; };
 		AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MGSPreferencesTextEditing.xib; sourceTree = "<group>"; };
 		AB8387A9171B4505004408F4 /* SMLSyntaxColouringDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLSyntaxColouringDelegate.h; sourceTree = "<group>"; };
@@ -404,8 +401,6 @@
 				AB69B65A118B75FB00903D1D /* SMLSyntaxColouring.m */,
 				AB69B678118B76E700903D1D /* SMLLayoutManager.h */,
 				AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */,
-				AB6C86C1160FA2B500488AF2 /* MGSGlyphGenerator.h */,
-				AB6C86C2160FA2B500488AF2 /* MGSGlyphGenerator.m */,
 				013278651A81610E00D2DCA5 /* Syntax Definition Manager */,
 				01BB1BEE1A7964DC006C0056 /* Gutter Text View */,
 			);
@@ -962,7 +957,6 @@
 				ABC578EE1603D7ED0040B3FB /* MGSFragariaTextEditingPrefsViewController.m in Sources */,
 				D0C146761A871A0B00DDE90A /* MGSFragariaView.m in Sources */,
 				ABC5799816047B4E0040B3FB /* FRAFontTransformer.m in Sources */,
-				AB6C86C4160FA2B500488AF2 /* MGSGlyphGenerator.m in Sources */,
 				ABE25D0B1635CA7C00F23718 /* MGSFragariaPrefsViewController.m in Sources */,
 				0191FA821A8829930099B50D /* SMLTextView+MGSTextActions.m in Sources */,
 				E3D4B2781714D89700BB2CC6 /* SMLSyntaxError.m in Sources */,
