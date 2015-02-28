@@ -136,6 +136,19 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 
 /*
+ * @property backgroundColor
+ */
+- (void)setBackgroundColor:(NSColor *)backgroundColor
+{
+    self.textView.backgroundColor = backgroundColor;
+}
+
+- (NSColor *)backgroundColor
+{
+    return self.textView.backgroundColor;
+}
+
+/*
  * @property hasVerticalScroller:
  */
 - (void)setHasVerticalScroller:(BOOL)value
@@ -193,6 +206,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
+ * @property insertionPointColor
+ */
+- (void)setInsertionPointColor:(NSColor *)insertionPointColor
+{
+    self.textView.insertionPointColor = insertionPointColor;
+}
+
+- (NSColor *)insertionPointColor
+{
+    return self.textView.insertionPointColor;
+}
+
+
+/*
  * @property lineWrap:
  */
 - (void)setLineWrap:(BOOL)value
@@ -203,6 +230,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (BOOL)lineWrap
 {
     return [self.textView lineWrap];
+}
+
+
+/*
+ * @property pageGuideColumn
+ */
+- (void)setPageGuideColumn:(NSInteger)pageGuideColumn
+{
+    self.textView.pageGuideColumn = pageGuideColumn;
+}
+
+- (NSInteger)pageGuideColumn
+{
+    return self.textView.pageGuideColumn;
 }
 
 
@@ -234,6 +275,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     return self.gutterView.drawsLineNumbers;
 }
 
+
 /*
  * @property showsGutter
  */
@@ -247,6 +289,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     return self.scrollView.rulersVisible;
 }
 
+
 /*
  * @property showsInvisibleCharacters
  */
@@ -258,6 +301,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (BOOL)showsInvisibleCharacters
 {
     return self.textView.layoutManager.showsInvisibleCharacters;
+}
+
+
+/*
+ * @property showsPageGuide
+ */
+- (void)setShowsPageGuide:(BOOL)showsPageGuide
+{
+    self.textView.showsPageGuide = showsPageGuide;
+}
+
+- (BOOL)showsPageGuide
+{
+    return self.textView.showsPageGuide;
 }
 
 
@@ -290,6 +347,34 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
+ * @property textColor
+ */
+- (void)setTextColor:(NSColor *)textColor
+{
+    self.textView.textColor = textColor;
+}
+
+- (NSColor *)textColor
+{
+    return self.textView.textColor;
+}
+
+
+/*
+ * @property textCurrentLineHighlightColor
+ */
+- (void)setTextCurrentLineHighlightColour:(NSColor *)textCurrentLineHighlightColour
+{
+    self.textView.currentLineHighlightColour = textCurrentLineHighlightColour;
+}
+
+- (NSColor *)textCurrentLineHighlightColour
+{
+    return self.textView.currentLineHighlightColour;
+}
+
+
+/*
  * @property isSyntaxColoured
  */
 - (void)setIsSyntaxColoured:(BOOL)value
@@ -308,9 +393,10 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setTextFont:(NSFont *)textFont
 {
-    self.textView.textFont = textFont;
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
+
     layoutManager.textFont =textFont;
+    self.textView.textFont = textFont;
 }
 
 - (NSFont *)textFont
@@ -332,6 +418,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 {
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
     return layoutManager.textInvisibleCharactersColour;
+}
+
+
+/*
+ * @property textTabWidth
+ */
+- (void)setTextTabWidth:(NSInteger)textTabWidth
+{
+    self.textView.tabWidth = textTabWidth;
+}
+
+- (NSInteger)textTabWidth
+{
+    return self.textView.tabWidth;
 }
 
 

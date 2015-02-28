@@ -35,57 +35,65 @@
 @interface SMLTextView : NSTextView
 
 
-/// @name Properties
-
+/// @name Properties - Internal
+#pragma mark - Properties - Internal
 
 /** A reference to the owning Fragaria instance. */
 @property (nonatomic,assign,readonly) MGSFragaria *fragaria;
 
-/** Indicates whether or not line wrap (word wrap) is enabled. */
-@property (nonatomic) BOOL lineWrap;
-
 /** Indicates the character indices that have been inspected. */
-@property (readonly) NSMutableIndexSet *inspectedCharacterIndexes;
+@property (nonatomic, strong, readonly) NSMutableIndexSet *inspectedCharacterIndexes;
 
-/** Indicates whether or not the current line is highlighted. */
-@property (nonatomic) BOOL highlightCurrentLine;
+/** Returns the default line height for the current font. */
+@property (nonatomic, assign, readonly) NSInteger lineHeight;
+
+
+/// @name Properties - Appearance and Behaviours
+#pragma mark - Properties - Appearance and Behaviours
 
 /** Indicates the color to use for current line highlighting. */
-@property NSColor *currentLineHighlightColor;
+@property (nonatomic, strong) NSColor *currentLineHighlightColour;
+
+/** Indicates whether or not the current line is highlighted. */
+@property (nonatomic, assign) BOOL highlightCurrentLine;
+
+/** Indicates the current insertion point color. */
+@property (nonatomic, assign) NSColor *insertionPointColor;
+
+/** Indicates whether or not line wrap (word wrap) is enabled. */
+@property (nonatomic, assign) BOOL lineWrap;
+
+/** Specifies the column position to draw the page guide. */
+@property (nonatomic, assign) NSInteger pageGuideColumn;
+
+/** Specifies whether or not to show the page guide. */
+@property (nonatomic, assign) BOOL showsPageGuide;
+
+/** Indicates the number of spaces per tab character. **/
+@property (nonatomic, assign) NSInteger tabWidth;
+
+/** Indicates the current text color. */
+@property (nonatomic, assign) NSColor *textColor;
 
 /** Indicates the current editor font. */
-// @todo: (jsd) right now this is just strong storage for fragaria. Have to update this class to actually USE it.
 @property (nonatomic, strong) NSFont *textFont;
 
+
+/// @name Properties - Delegates
+#pragma mark - Properties - Delegates
+
 /** The text view's delegate */
-@property (assign) id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> delegate;
+@property (nonatomic, assign) id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> delegate;
 
 
-/// @name Instance Methods
+/// @name Strings - Properties and Methods
+#pragma mark - Strings - Properties and Methods
 
-/**
- *  Standard initWithFrame, also allowing `fragaria` assignment at same time.
- *  @param frame The frame for the view.
- *  @param fragaria The instance of Fragaria to associate with this view.
- **/
-- (id)initWithFrame:(NSRect)frame fragaria:(MGSFragaria *)fragaria;
+/** The string property represents the string in the text view. */
+@property (nonatomic, strong) NSString *string;
 
-- (void)setDefaults;                                                  ///< Sets the initial defaults for the text view.
-
-- (void)setTextDefaults;                                              ///< Sets the initial text defaults for the text view.
-
-- (NSInteger)lineHeight;                                              ///< Returns the default line height for the current font.
-
-/**
- *  Set the width of every tab by first checking the size of the tab in spaces in the current
- *  font and then remove all tabs that sets automatically and then set the default tab stop distance.
- **/
-- (void)setTabWidth;
-
-/**
- *  Set the page guide values based on the size of the current font.
- **/
-- (void)setPageGuideValues;
+/** The attributedString property represents the string in the text view as an attributed string. */
+@property (nonatomic, strong) NSAttributedString *attributedString;
 
 /**
  *  Sets the text with a string with possible options.
@@ -95,22 +103,11 @@
 - (void)setString:(NSString *)text options:(NSDictionary *)options;
 
 /**
- *  Sets the text view with an attributed string.
- *  @param text The attributed string to set.
- **/
-- (void)setAttributedString:(NSAttributedString *)text;
-
-/**
  *  Sets the text with an attributed string with possible options.
  *  @param text Is the string to set.
  *  @param options is a dictionary of options. Currently `undo` can be `YES` or `NO`.
  **/
 - (void)setAttributedString:(NSAttributedString *)text options:(NSDictionary *)options;
-
-/**
- *  Configures the view for lineWrapping based on the `lineWrap` property.
- **/
-- (void)updateLineWrap;
 
 /**
  *  Replaces the characters in a given range with a string, with possible options.
@@ -119,6 +116,19 @@
  *  @param options A dictionary of options. Currently `undo` can be `YES` or `NO`.
  **/
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options;
+
+
+/// @name Instance Methods - Initializers and Setup
+#pragma mark - Instance Methods - Intializers and Setup
+
+/**
+ *  Standard initWithFrame, also allowing `fragaria` assignment at same time.
+ *  @param frame The frame for the view.
+ *  @param fragaria The instance of Fragaria to associate with this view.
+ **/
+- (id)initWithFrame:(NSRect)frame fragaria:(MGSFragaria *)fragaria;
+
+- (void)setDefaults;                                                  ///< Sets the initial defaults for the text view.
 
 
 @end

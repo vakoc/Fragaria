@@ -32,6 +32,11 @@
 @property (weak) IBOutlet id <SMLSyntaxColouringDelegate> syntaxColoringDelegate;
 
 
+/*** @todo: (jsd) Probably fair to say we don't need these any more, or at least most of them. With Fragaria
+            moving to properties, it's no big deal for users to use myView.Fragaria instead of duplicating
+            every single property in this file.
+ ***/
+
 #pragma mark - Properties - Document Support
 
 @property (assign) NSString *string;                     ///< The content of the text editor as a plain string.

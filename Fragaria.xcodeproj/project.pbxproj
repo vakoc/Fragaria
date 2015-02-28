@@ -390,8 +390,8 @@
 		01BB1BEC1A7962C7006C0056 /* Text View Components */ = {
 			isa = PBXGroup;
 			children = (
-				AB69B666118B768000903D1D /* SMLTextView.h */,
 				0166D9971A9FC3B20099AB81 /* SMLTextViewPrivate.h */,
+				AB69B666118B768000903D1D /* SMLTextView.h */,
 				AB69B68E118B78D400903D1D /* SMLTextView.m */,
 				D0C145C21A85E1FD00DDE90A /* SMLTextView+MGSDragging.h */,
 				D0C145C31A85E1FD00DDE90A /* SMLTextView+MGSDragging.m */,
