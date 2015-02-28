@@ -127,7 +127,7 @@ char kcFragariaInvisibleCharactersColourWellChanged;
     }
     else if (context == &kcFragariaInvisibleCharactersColourWellChanged)
     {
-        self.fragaria.textInvisibleCharactersColor = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsInvisibleCharactersColourWell]];
+        self.fragaria.textInvisibleCharactersColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsInvisibleCharactersColourWell]];
     }
     else
     {

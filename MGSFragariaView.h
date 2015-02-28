@@ -67,7 +67,7 @@
 
 @property (assign) NSFont *textFont;                                   ///< Specifies the text editor font.
 
-@property (assign) NSColor *textInvisibleCharactersColor;              ///< Specifies the color to render invisible characters in the text view.
+@property (assign) NSColor *textInvisibleCharactersColour;             ///< Specifies the colour to render invisible characters in the text view.
 
 
 

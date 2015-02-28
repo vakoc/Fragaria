@@ -334,16 +334,16 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	textInvisibleCharactersColor
+	textInvisibleCharactersColour
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setTextInvisibleCharactersColor:(NSColor *)textInvisibleCharactersColor
+- (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColor
 {
-    self.fragaria.textInvisibleCharactersColor = textInvisibleCharactersColor;
+    self.fragaria.textInvisibleCharactersColour = textInvisibleCharactersColor;
 }
 
-- (NSColor *)textInvisibleCharactersColor
+- (NSColor *)textInvisibleCharactersColour
 {
-    return self.fragaria.textInvisibleCharactersColor;
+    return self.fragaria.textInvisibleCharactersColour;
 }
 
 

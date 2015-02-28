@@ -95,7 +95,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) BOOL showsWarningsInGutter;              ///< Indicates whether or not error warnings are displayed.
 @property (nonatomic, assign) NSUInteger startingLineNumber;           ///< Specifies the starting line number in the text view.
 @property (nonatomic, assign) NSFont *textFont;                        ///< Specifies the text editor font.
-@property (nonatomic, assign) NSColor *textInvisibleCharactersColor;   ///< Specifies the color to render invisible characters in the text view.
+@property (nonatomic, assign) NSColor *textInvisibleCharactersColour;  ///< Specifies the colour to render invisible characters in the text view.
 
 
 /// @name Properties - Syntax Errors

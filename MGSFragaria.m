@@ -323,13 +323,13 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 /*
  * @property textInvisibleCharactersColor
  */
-- (void)setTextInvisibleCharactersColor:(NSColor *)textInvisibleCharactersColor
+- (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
 {
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
-    layoutManager.textInvisibleCharactersColour = textInvisibleCharactersColor;
+    layoutManager.textInvisibleCharactersColour = textInvisibleCharactersColour;
 }
 
-- (NSColor *)textInvisibleCharactersColor
+- (NSColor *)textInvisibleCharactersColour
 {
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
     return layoutManager.textInvisibleCharactersColour;
