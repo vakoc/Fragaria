@@ -70,6 +70,10 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 
 @property (strong) NSColor *pageGuideColour;
 
+@property (nonatomic, assign, readwrite) NSInteger lineHeight;
+
+@property (readwrite) NSMutableIndexSet *inspectedCharacterIndexes;
+
 @end
 
 
@@ -79,8 +83,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 #pragma mark - Implementation
 
 @implementation SMLTextView {
-    NSInteger lineHeight;
-    
+
     BOOL isDragging;
     NSPoint startPoint;
     NSPoint startOrigin;
@@ -92,14 +95,242 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     NSRect currentLineRect;
     
     NSTimer *autocompleteWordsTimer;
+
+    NSFont *textFontShadow;
 }
-
-
 
 @synthesize pageGuideColour, lineWrap;
 
-#pragma mark - Instance methods
 
+#pragma mark - Properties - Internal
+
+/*
+ * @property fragaria
+ * (synthesized)
+ */
+
+/*
+ * @property inspectedCharacterIndexes
+ * (synthesized)
+ */
+
+/*
+ * - lineHeight
+ */
+- (NSInteger)lineHeight
+{
+    return self.lineHeight;
+}
+
+
+#pragma mark - Properties - Appearance and Behaviours
+
+/*
+ * @property currentLineHighlightColor
+ * (synthesized)
+ */
+
+
+/*
+ * @property highlightCurrentLine
+ */
+- (void)setHighlightCurrentLine:(BOOL)highlightCurrentLine
+{
+    [self setNeedsDisplayInRect:currentLineRect];
+    _highlightCurrentLine = highlightCurrentLine;
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
+
+/*
+ * @property lineWrap
+ *   see /developer/examples/appkit/TextSizingExample
+ */
+- (void)setLineWrap:(BOOL)value
+{
+    lineWrap = value;
+    [self updateLineWrap];
+}
+
+
+/*
+ * @property pageGuideColumn
+ */
+- (void)setPageGuideColumn:(NSInteger)pageGuideColumn
+{
+    _pageGuideColumn = pageGuideColumn;
+    [self configurePageGuide];
+}
+
+
+/*
+ * @property tabWidth
+ */
+- (void)setTabWidth:(NSInteger)tabWidth
+{
+    _tabWidth = tabWidth;
+
+    // Set the width of every tab by first checking the size of the tab in spaces in the current font and then remove all tabs that sets automatically and then set the default tab stop distance
+    NSMutableString *sizeString = [NSMutableString string];
+    NSInteger numberOfSpaces = _tabWidth;
+    while (numberOfSpaces--) {
+        [sizeString appendString:@" "];
+    }
+    NSDictionary *sizeAttribute = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
+    CGFloat sizeOfTab = [sizeString sizeWithAttributes:sizeAttribute].width;
+
+    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+
+    NSArray *array = [style tabStops];
+    for (id item in array) {
+        [style removeTabStop:item];
+    }
+    [style setDefaultTabInterval:sizeOfTab];
+    NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:style, NSParagraphStyleAttributeName, nil];
+    [self setTypingAttributes:attributes];
+    [[self textStorage] addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0,[[self textStorage] length])];
+}
+
+
+/*
+ * @property textFont
+ */
+- (void)setTextFont:(NSFont *)textFont
+{
+    _textFont = textFont;
+    textFontShadow = textFont;
+    self.lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+    [self configurePageGuide];
+}
+
+
+#pragma mark - Strings - Properties and Methods
+
+
+/*
+ * @property string:
+ */
+- (void)setString:(NSString *)aString
+{
+    [super setString:aString];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification object:self];
+}
+
+
+/*
+ * @property attributedString:
+ */
+- (void)setAttributedString:(NSAttributedString *)attrString
+{
+    NSTextStorage *textStorage = [self textStorage];
+    [textStorage setAttributedString:attrString];
+}
+
+/*
+ * - setString:options:
+ */
+- (void)setString:(NSString *)aString options:(NSDictionary *)options
+{
+    NSRange all = NSMakeRange(0, [self.textStorage length]);
+    [self replaceCharactersInRange:all withString:aString options:options];
+}
+
+
+/*
+ * - setAttributedString:options:
+ */
+- (void)setAttributedString:(NSAttributedString *)text options:(NSDictionary *)options
+{
+    BOOL undo = [[options objectForKey:@"undo"] boolValue];
+
+    NSTextStorage *textStorage = [self textStorage];
+
+    if ([self isEditable] && undo) {
+
+        /*
+
+         see http://www.cocoabuilder.com/archive/cocoa/179875-exponent-action-in-nstextview-subclass.html
+         entitled: Re: "exponent" action in NSTextView subclass (SOLVED)
+
+         This details how to make programmatic changes to the textStorage object.
+
+         */
+
+        /*
+
+         code here reflects what occurs in - setString:options:
+
+         may be over complicated
+
+         */
+        NSRange all = NSMakeRange(0, [textStorage length]);
+        BOOL textIsEmpty = ([textStorage length] == 0 ? YES : NO);
+
+        if ([self shouldChangeTextInRange:all replacementString:[text string]]) {
+            [textStorage beginEditing];
+            [textStorage setAttributedString:text];
+            [textStorage endEditing];
+
+            // reset the default font if text was empty as the font gets reset to system default.
+            if (textIsEmpty) {
+                [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+            }
+
+            [self didChangeText];
+
+            NSUndoManager *undoManager = [self undoManager];
+
+            // TODO: this doesn't seem to be having the desired effect
+            [undoManager setActionName:NSLocalizedString(@"Content Change", @"undo content change")];
+            
+        }
+    } else {
+        [self setAttributedString:text];
+    }
+}
+
+
+/*
+ * - replaceCharactersInRange:withString:options
+ */
+- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options
+{
+    BOOL undo = [[options objectForKey:@"undo"] boolValue];
+    BOOL textViewWasEmpty = ([self.textStorage length] == 0 ? YES : NO);
+
+    if ([self isEditable] && undo) {
+
+        // this sequence will be registered with the undo manager
+        if ([self shouldChangeTextInRange:range replacementString:text]) {
+
+            // modify he text storage
+            [self.textStorage beginEditing];
+            [self.textStorage replaceCharactersInRange:range withString:text];
+            [self.textStorage endEditing];
+
+            // reset the default font if text was empty as the font gets reset to system default.
+            if (textViewWasEmpty) {
+                [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+            }
+
+            // TODO: this doesn't seem to be having the desired effect
+            NSUndoManager *undoManager = [self undoManager];
+            [undoManager setActionName:NSLocalizedString(@"Content Change", @"undo content change")];
+
+            // complete the text change operation
+            [self didChangeText];
+        }
+    } else if (textViewWasEmpty) {
+        // this operation will not be registered with the undo manager
+        [self setString:text];
+    } else {
+        // this operation will not be registered with the undo manager
+        [self.textStorage replaceCharactersInRange:range withString:text];;
+    }
+}
+
+
+#pragma mark - Instance methods - Intializers and Setup
 
 /*
  * - initWithFrame:fragaria:
@@ -115,7 +346,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
         [self setDefaults];
 
-        _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] initWithIndexesInRange:NSMakeRange(0,0)];
+        self.inspectedCharacterIndexes = [[NSMutableIndexSet alloc] initWithIndexesInRange:NSMakeRange(0,0)];
 
         // set initial line wrapping
         lineWrap = YES;
@@ -135,72 +366,61 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-#pragma mark - Accessors
-
-/*
- * - lineHeight
- */
-- (NSInteger)lineHeight
-{
-    return lineHeight;
-}
-
-
 /*
  * - setDefaults
  */
 - (void)setDefaults
 {
 
-	[self setTabWidth];
-	
-	[self setVerticallyResizable:YES];
-	[self setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
-	[self setAutoresizingMask:NSViewWidthSizable];
-	[self setAllowsUndo:YES];
+    self.tabWidth = 4; // @todo: (jsd) temporary reasonable stand-in value
+
+    [self setVerticallyResizable:YES];
+    [self setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
+    [self setAutoresizingMask:NSViewWidthSizable];
+    [self setAllowsUndo:YES];
     if ([self respondsToSelector:@selector(setUsesFindBar:)]) {
         [self setUsesFindBar:YES];
         [self setIncrementalSearchingEnabled:NO];
     } else {
         [self setUsesFindPanel:YES];
     }
-	[self setAllowsDocumentBackgroundColorChange:NO];
-	[self setRichText:NO];
-	[self setImportsGraphics:NO];
-	[self setUsesFontPanel:NO];
-	
-	[self setContinuousSpellCheckingEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutoSpellCheck] boolValue]];
-	[self setGrammarCheckingEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutoGrammarCheck] boolValue]];
-	
-	[self setSmartInsertDeleteEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue]];
-	[self setAutomaticLinkDetectionEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticLinkDetection] boolValue]];
-	[self setAutomaticQuoteSubstitutionEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticQuoteSubstitution] boolValue]];
-	
-	[self setTextDefaults];
-	
+    [self setAllowsDocumentBackgroundColorChange:NO];
+    [self setRichText:NO];
+    [self setImportsGraphics:NO];
+    [self setUsesFontPanel:NO];
+
+    [self setContinuousSpellCheckingEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutoSpellCheck] boolValue]];
+    [self setGrammarCheckingEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutoGrammarCheck] boolValue]];
+
+    [self setSmartInsertDeleteEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue]];
+    [self setAutomaticLinkDetectionEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticLinkDetection] boolValue]];
+    [self setAutomaticQuoteSubstitutionEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticQuoteSubstitution] boolValue]];
+
+    [self setTextDefaults];
+
     [self setAutomaticDashSubstitutionEnabled:NO];
     [self setAutomaticQuoteSubstitutionEnabled:NO];
-	[self setAutomaticDataDetectionEnabled:YES];
-	[self setAutomaticTextReplacementEnabled:YES];
-	
-	[self setPageGuideValues];
-	
-	NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveWhenFirstResponder) owner:self userInfo:nil];
-	[self addTrackingArea:trackingArea];
-  
-	NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-	[defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.FragariaTextColourWell" options:NSKeyValueObservingOptionNew context:@"TextColourChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.FragariaBackgroundColourWell" options:NSKeyValueObservingOptionNew context:@"BackgroundColourChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.FragariaTabWidth" options:NSKeyValueObservingOptionNew context:@"TabWidthChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuide" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuideAtColumn" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
-	[defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
+    [self setAutomaticDataDetectionEnabled:YES];
+    [self setAutomaticTextReplacementEnabled:YES];
+
+    [self configurePageGuide];
+
+    NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveWhenFirstResponder) owner:self userInfo:nil];
+    [self addTrackingArea:trackingArea];
+
+    NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextColourWell" options:NSKeyValueObservingOptionNew context:@"TextColourChanged"];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaBackgroundColourWell" options:NSKeyValueObservingOptionNew context:@"BackgroundColourChanged"];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaTabWidth" options:NSKeyValueObservingOptionNew context:@"TabWidthChanged"];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuide" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuideAtColumn" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:0 context:LineHighlightingPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionInitial context:LineHighlightingPrefChanged];
-	
-	lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+
+    self.lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
 }
 
 
@@ -209,12 +429,14 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)setTextDefaults
 {
-	[self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-	[self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
-	[self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
-	[self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
+    [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+    [self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
+    [self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
+    [self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
 }
 
+
+#pragma mark - Menu Item Validation
 
 /*
  * - validateMenuItems
@@ -254,44 +476,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-#pragma mark - KVO
-
-/*
- * - observeValueForKeyPath:ofObject:change:context:
- */
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    BOOL boolValue = NO;
-    NSColor *colorVal;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    if (context == LineHighlightingPrefChanged) {
-        boolValue = [defaults boolForKey:MGSFragariaPrefsHighlightCurrentLine];
-        [self setHighlightCurrentLine:boolValue];
-        colorVal = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsHighlightLineColourWell]];
-        [self setCurrentLineHighlightColor:colorVal];
-    } else if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
-		[self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-		lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-		[self setPageGuideValues];
-	} else if ([(__bridge NSString *)context isEqualToString:@"TextColourChanged"]) {
-		[self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
-		[self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
-		[self setPageGuideValues];
-	} else if ([(__bridge NSString *)context isEqualToString:@"BackgroundColourChanged"]) {
-		[self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
-	} else if ([(__bridge NSString *)context isEqualToString:@"SmartInsertDeleteChanged"]) {
-		[self setSmartInsertDeleteEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue]];
-	} else if ([(__bridge NSString *)context isEqualToString:@"TabWidthChanged"]) {
-		[self setTabWidth];
-	} else if ([(__bridge NSString *)context isEqualToString:@"PageGuideChanged"]) {
-		[self setPageGuideValues];
-    } else {
-		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-	}
-}
-
-
 #pragma mark - Drawing
 
 /*
@@ -322,26 +506,15 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 #pragma mark - Line Highlighting
 
-/*
- * - setHighlightCurrentLine:
- */
-- (void)setHighlightCurrentLine:(BOOL)highlightCurrentLine
-{
-    [self setNeedsDisplayInRect:currentLineRect];
-    _highlightCurrentLine = highlightCurrentLine;
-    currentLineRect = [self lineHighlightingRect];
-    [self setNeedsDisplayInRect:currentLineRect];
-}
-
 
 /*
- * - setHighlightCurrentLine:
+ * - drawViewBackgroundInRect:
  */
 - (void)drawViewBackgroundInRect:(NSRect)rect
 {
     [super drawViewBackgroundInRect:rect];
     if ([self needsToDrawRect:currentLineRect]) {
-        [_currentLineHighlightColor set];
+        [self.currentLineHighlightColor set];
         [NSBezierPath fillRect:currentLineRect];
     }
 }
@@ -594,51 +767,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-/*
- *- setTabWidth
- */
-- (void)setTabWidth
-{
-	// Set the width of every tab by first checking the size of the tab in spaces in the current font and then remove all tabs that sets automatically and then set the default tab stop distance
-	NSMutableString *sizeString = [NSMutableString string];
-	NSInteger numberOfSpaces = [[SMLDefaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
-	while (numberOfSpaces--) {
-		[sizeString appendString:@" "];
-	}
-	NSDictionary *sizeAttribute = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
-	CGFloat sizeOfTab = [sizeString sizeWithAttributes:sizeAttribute].width;
-	
-	NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-	
-	NSArray *array = [style tabStops];
-	for (id item in array) {
-		[style removeTabStop:item];
-	}
-	[style setDefaultTabInterval:sizeOfTab];
-	NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:style, NSParagraphStyleAttributeName, nil];
-	[self setTypingAttributes:attributes];
-    [[self textStorage] addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0,[[self textStorage] length])];
-}
-
-
-/*
- * - setPageGuideValues
- */
-- (void)setPageGuideValues
-{
-	NSDictionary *sizeAttribute = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
-	NSString *sizeString = @" ";
-	CGFloat sizeOfCharacter = [sizeString sizeWithAttributes:sizeAttribute].width;
-	pageGuideX = floor(sizeOfCharacter * ([[SMLDefaults valueForKey:MGSFragariaPrefsShowPageGuideAtColumn] integerValue] + 1)) - 1.5f; // -1.5 to put it between the two characters and draw only on one pixel and not two (as the system draws it in a special way), and that's also why the width above is set to zero
-	
-	NSColor *color = [NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]];
-	self.pageGuideColour = [color colorWithAlphaComponent:([color alphaComponent] / 4)]; // Use the same colour as the text but with more transparency
-	
-	showPageGuide = [[SMLDefaults valueForKey:MGSFragariaPrefsShowPageGuide] boolValue];
-	
-	[self display]; // To reflect the new values in the view
-}
-
 
 #pragma mark - Text handling
 
@@ -656,7 +784,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     res = [super shouldChangeTextInRanges:affectedRanges replacementStrings:replacementStrings];
     
     if (!affectedRanges)
-        [_inspectedCharacterIndexes removeAllIndexes];
+        [self.inspectedCharacterIndexes removeAllIndexes];
     else {
         sortedRanges = [affectedRanges sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
             {
@@ -675,8 +803,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
             newLen = [[replacementStrings objectAtIndex:i] length];
             /* This is not really needed, but it allows for better edit coalescing */
             range = [[self string] lineRangeForRange:[rangeVal rangeValue]];
-            [_inspectedCharacterIndexes removeIndexesInRange:range];
-            [_inspectedCharacterIndexes shiftIndexesStartingAtIndex:range.location by:(newLen - range.length)];
+            [self.inspectedCharacterIndexes removeIndexesInRange:range];
+            [self.inspectedCharacterIndexes shiftIndexesStartingAtIndex:range.location by:(newLen - range.length)];
         }
     }
     return res;
@@ -889,131 +1017,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 			}
 		}
 	}
-}
-
-
-/*
- *- setString:
- */
-- (void)setString:(NSString *)aString
-{
-	[super setString:aString];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification object:self];
-}
-
-
-/*
- * - setString:options:
- */
-- (void)setString:(NSString *)text options:(NSDictionary *)options
-{
-    NSRange all = NSMakeRange(0, [self.textStorage length]);
-    [self replaceCharactersInRange:all withString:text options:options];
-}
-
-
-/*
- * - replaceCharactersInRange:withString:options
- */
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options
-{
-	BOOL undo = [[options objectForKey:@"undo"] boolValue];
-    BOOL textViewWasEmpty = ([self.textStorage length] == 0 ? YES : NO);
-
-	if ([self isEditable] && undo) {
-        
-        // this sequence will be registered with the undo manager
-		if ([self shouldChangeTextInRange:range replacementString:text]) {
-            
-            // modify he text storage
-			[self.textStorage beginEditing];
-			[self.textStorage replaceCharactersInRange:range withString:text];
-			[self.textStorage endEditing];
-            
-            // reset the default font if text was empty as the font gets reset to system default.
-            if (textViewWasEmpty) {
-                [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-            }
-
-			// TODO: this doesn't seem to be having the desired effect
-            NSUndoManager *undoManager = [self undoManager];
-			[undoManager setActionName:NSLocalizedString(@"Content Change", @"undo content change")];
-
-            // complete the text change operation
-			[self didChangeText];
-		}
-	} else if (textViewWasEmpty) {
-        // this operation will not be registered with the undo manager
-        [self setString:text];
-    } else {
-        // this operation will not be registered with the undo manager
-		[self.textStorage replaceCharactersInRange:range withString:text];;
-	}	
-}
-
-
-/*
- * - setAttributedString:
- */
-- (void)setAttributedString:(NSAttributedString *)text
-{
-    NSTextStorage *textStorage = [self textStorage];
-    [textStorage setAttributedString:text];
-}
-
-
-/*
- * - setAttributedString:options:
- */
-- (void)setAttributedString:(NSAttributedString *)text options:(NSDictionary *)options
-{
-	BOOL undo = [[options objectForKey:@"undo"] boolValue];
-
-    NSTextStorage *textStorage = [self textStorage];
-
-	if ([self isEditable] && undo) {
-		
-        /*
-		 
-		 see http://www.cocoabuilder.com/archive/cocoa/179875-exponent-action-in-nstextview-subclass.html
-		 entitled: Re: "exponent" action in NSTextView subclass (SOLVED)
-		 
-		 This details how to make programmatic changes to the textStorage object.
-		 
-		 */
-        
-        /*
-         
-         code here reflects what occurs in - setString:options:
-         
-         may be over complicated
-         
-         */
-		NSRange all = NSMakeRange(0, [textStorage length]);
-        BOOL textIsEmpty = ([textStorage length] == 0 ? YES : NO);
-        
-		if ([self shouldChangeTextInRange:all replacementString:[text string]]) {
-			[textStorage beginEditing];
-			[textStorage setAttributedString:text];
-			[textStorage endEditing];
-            
-            // reset the default font if text was empty as the font gets reset to system default.
-            if (textIsEmpty) {
-                [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-            }
-            
-			[self didChangeText];
-            
-			NSUndoManager *undoManager = [self undoManager];
-			
-			// TODO: this doesn't seem to be having the desired effect
-			[undoManager setActionName:NSLocalizedString(@"Content Change", @"undo content change")];
-			
-		}
-	} else {
-        [self setAttributedString:text];
-	}
-	
 }
 
 
@@ -1255,17 +1258,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 #pragma mark - Line Wrap
 
 /*
- * - setLineWrap:
- *   see /developer/examples/appkit/TextSizingExample
- */
-- (void)setLineWrap:(BOOL)value
-{
-    lineWrap = value;
-    [self updateLineWrap];
-}
-
-
-/*
  * - updateLineWrap
  *   see http://developer.apple.com/library/mac/#samplecode/TextSizingExample
  *   The readme file in the above example has very good info on how to configure NSTextView instances.
@@ -1328,6 +1320,66 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [textScrollView display];
     NSEnableScreenUpdates();
 }
+
+
+#pragma mark - Page Guide
+
+- (void)configurePageGuide
+{
+    if (!self.textFont) return;
+    
+    NSDictionary *sizeAttribute = @{NSFontAttributeName : self.textFont};
+    NSString *sizeString = @" ";
+    CGFloat sizeOfCharacter = [sizeString sizeWithAttributes:sizeAttribute].width;
+    pageGuideX = floor(sizeOfCharacter * (self.pageGuideColumn + 1)) - 1.5f; // -1.5 to put it between the two characters and draw only on one pixel and not two (as the system draws it in a special way), and that's also why the width above is set to zero
+
+    NSColor *color = [NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]];
+    self.pageGuideColour = [color colorWithAlphaComponent:([color alphaComponent] / 4)]; // Use the same colour as the text but with more transparency
+
+    showPageGuide = [[SMLDefaults valueForKey:MGSFragariaPrefsShowPageGuide] boolValue];
+
+    [self display]; // To reflect the new values in the view
+}
+
+
+
+#pragma mark - KVO
+
+/*
+ * - observeValueForKeyPath:ofObject:change:context:
+ */
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    BOOL boolValue = NO;
+    NSColor *colorVal;
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+    if (context == LineHighlightingPrefChanged) {
+        boolValue = [defaults boolForKey:MGSFragariaPrefsHighlightCurrentLine];
+        [self setHighlightCurrentLine:boolValue];
+        colorVal = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsHighlightLineColourWell]];
+        [self setCurrentLineHighlightColor:colorVal];
+    } else if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
+        [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+        self.lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+        [self configurePageGuide];
+    } else if ([(__bridge NSString *)context isEqualToString:@"TextColourChanged"]) {
+        [self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
+        [self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
+        [self configurePageGuide];;
+    } else if ([(__bridge NSString *)context isEqualToString:@"BackgroundColourChanged"]) {
+        [self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
+    } else if ([(__bridge NSString *)context isEqualToString:@"SmartInsertDeleteChanged"]) {
+        [self setSmartInsertDeleteEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue]];
+    } else if ([(__bridge NSString *)context isEqualToString:@"TabWidthChanged"]) {
+        self.tabWidth = 4; // @todo: (jsd) Temporary stand-in value.
+    } else if ([(__bridge NSString *)context isEqualToString:@"PageGuideChanged"]) {
+        [self configurePageGuide];;
+    } else {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 
 
 @end
