@@ -65,15 +65,10 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 
 @implementation SMLSyntaxColouring {
-
     SMLLayoutManager *layoutManager;
-
-    NSInteger lastCursorLocation;
 
     NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
     *stringsColour, *variablesColour, *attributesColour,  *numbersColour;
-
-    NSTimer *autocompleteWordsTimer;
 }
 
 
@@ -110,9 +105,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
         NSScrollView *scrollView = self.fragaria.scrollView;
         [[scrollView contentView] setPostsBoundsChangedNotifications:YES];
-
-        // configure ivars
-        lastCursorLocation = 0;
 
         // configure layout managers
         layoutManager = (SMLLayoutManager *)[textView layoutManager];
