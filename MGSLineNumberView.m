@@ -442,13 +442,17 @@
 {
     NSArray *linesWithDecorations = [_decorations allKeys];
     NSNumber *line;
+    NSUInteger linenum;
     CGFloat value, max = 0;
     NSRect decorationRect;
 
     for (line in linesWithDecorations) {
-        decorationRect = [self decorationRectOfLine:[line integerValue]-1];
-        value = decorationRect.origin.x + decorationRect.size.width;
-        if (value > max) max = value;
+        linenum = [line integerValue] - 1;
+        if (linenum < [self.lineIndices count]) {
+            decorationRect = [self decorationRectOfLine:linenum];
+            value = decorationRect.origin.x + decorationRect.size.width;
+            if (value > max) max = value;
+        }
     }
     return max;
 }
