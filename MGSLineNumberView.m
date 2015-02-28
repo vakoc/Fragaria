@@ -129,6 +129,7 @@
 - (void)setDecorations:(NSDictionary *)decorations
 {
     _decorations = decorations;
+    [self setRuleThickness:[self requiredThickness]];
     [self setNeedsDisplay:YES];
 }
 
@@ -137,6 +138,7 @@
 {
     _minimumWidth = minimumWidth;
     [self setRuleThickness:[self requiredThickness]];
+    [self setNeedsDisplay:YES];
 }
 
 
@@ -146,9 +148,11 @@
     [self setNeedsDisplay:YES];
 }
 
+
 - (void)setDrawsLineNumbers:(BOOL *)drawsLineNumbers
 {
     _drawsLineNumbers = drawsLineNumbers;
+    [self setRuleThickness:[self requiredThickness]];
     [self setNeedsDisplay:YES];
 }
 
@@ -157,6 +161,7 @@
 {
     _font = font;
     [self setRuleThickness:[self requiredThickness]];
+    [self setNeedsDisplay:YES];
 }
 
 
@@ -404,25 +409,48 @@
     NSUInteger			lineCount, digits, i;
     NSMutableString     *sampleString;
     NSSize              stringSize;
+    CGFloat decorationsWidth;
     
-    lineCount = [[self lineIndices] count] + (_startingLineNumber - 1);
-    digits = 1;
-    if (lineCount > 0)
-        digits = (NSUInteger)log10(lineCount) + 1;
-    
-	sampleString = [NSMutableString string];
-    for (i = 0; i < digits; i++)
-    {
-        // Use "8" since it is one of the fatter numbers. Anything but "1"
-        // will probably be ok here. I could be pedantic and actually find the fattest
-		// number for the current font but nah.
-        [sampleString appendString:@"8"];
+    if (_drawsLineNumbers) {
+        lineCount = [[self lineIndices] count] + (_startingLineNumber - 1);
+        digits = 1;
+        if (lineCount > 0)
+            digits = (NSUInteger)log10(lineCount) + 1;
+        
+        sampleString = [NSMutableString string];
+        for (i = 0; i < digits; i++) {
+            // Use "8" since it is one of the fatter numbers. Anything but "1"
+            // will probably be ok here. I could be pedantic and actually find the fattest
+            // number for the current font but nah.
+            [sampleString appendString:@"8"];
+        }
+        stringSize = [sampleString sizeWithAttributes:[self textAttributes]];
+        stringSize.width += RULER_MARGIN;
+    } else {
+        stringSize = NSZeroSize;
     }
-    stringSize = [sampleString sizeWithAttributes:[self textAttributes]];
+    
+    decorationsWidth = [self decorationColumnWidth];
 
 	// Round up the value. There is a bug on 10.4 where the display gets all
     // wonky when scrolling if you don't return an integral value here.
-    return ceil(MAX(_minimumWidth, stringSize.width + RULER_MARGIN * 2));
+    return ceil(MAX(_minimumWidth, decorationsWidth + stringSize.width + RULER_MARGIN));
+}
+
+
+- (CGFloat)decorationColumnWidth
+{
+    NSArray *linesWithDecorations = [_decorations allKeys];
+    NSNumber *line;
+    CGFloat value, max = 0;
+    NSRect decorationRect;
+
+    for (line in linesWithDecorations) {
+        decorationRect = [self decorationRectOfLine:[line integerValue]-1];
+        value = decorationRect.origin.x + decorationRect.size.width;
+        if (value > max) max = value;
+    }
+    return max;
 }
 
 
@@ -592,33 +620,23 @@
 
     lines = [self lineIndices];
 
-    // Find the characters that are currently visible
-    glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:container];
-    range = [layoutManager characterRangeForGlyphRange:glyphRange actualGlyphRange:NULL];
-
-    // Fudge the range a tad in case there is an extra new line at end.
-    // It doesn't show up in the glyphs so would not be accounted for.
-    range.length++;
-
     index = [[lines objectAtIndex:line] unsignedIntegerValue];
 
-    if (NSLocationInRange(index, range))
-    {
-        NSUInteger glyphIdx = [layoutManager glyphIndexForCharacterAtIndex:index];
-        if (index < stringLength)
-            rect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIdx effectiveRange:NULL];
-        else
-            rect = [layoutManager boundingRectForGlyphRange:NSMakeRange(glyphIdx, 0) inTextContainer:container];
+    NSUInteger glyphIdx = [layoutManager glyphIndexForCharacterAtIndex:index];
+    if (index < stringLength)
+        rect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIdx effectiveRange:NULL];
+    else
+        rect = [layoutManager boundingRectForGlyphRange:NSMakeRange(glyphIdx, 0) inTextContainer:container];
 
-        // Note that the ruler view is only as tall as the visible
-        // portion. Need to compensate for the clipview's coordinates.
-        CGFloat ypos = [view textContainerInset].height + NSMinY(rect) - NSMinY(visibleRect);
+    // Note that the ruler view is only as tall as the visible
+    // portion. Need to compensate for the clipview's coordinates.
+    CGFloat ypos = [view textContainerInset].height + NSMinY(rect) - NSMinY(visibleRect);
 
-        wholeLineRect.size.width = self.bounds.size.width;
-        wholeLineRect.size.height = rect.size.height;
-        wholeLineRect.origin.x = 0;
-        wholeLineRect.origin.y = ypos;
-    }
+    wholeLineRect.size.width = self.bounds.size.width;
+    wholeLineRect.size.height = rect.size.height;
+    wholeLineRect.origin.x = 0;
+    wholeLineRect.origin.y = ypos;
+
     return wholeLineRect;
 }
 
