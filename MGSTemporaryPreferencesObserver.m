@@ -12,9 +12,11 @@
 
 // KVO context constants
 char kcAutoSpellCheckChanged;
+char kcBackgroundColorChanged;
 char kcFragariaInvisibleCharactersColourWellChanged;
 char kcFragariaTabWidthChanged;
 char kcFragariaTextFontChanged;
+char kcInsertionPointColorChanged;
 char kcGutterGutterTextColourWell;
 char kcGutterWidthPrefChanged;
 char kcInvisibleCharacterValueChanged;
@@ -22,6 +24,7 @@ char kcLineNumberPrefChanged;
 char kcLineWrapPrefChanged;
 char kcSpellCheckPrefChanged;
 char kcSyntaxColourPrefChanged;
+char kcTextColorChanged;
 
 
 @interface MGSTemporaryPreferencesObserver ()
@@ -76,7 +79,9 @@ char kcSyntaxColourPrefChanged;
 
     [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionInitial context:&kcAutoSpellCheckChanged];
 
-
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaBackgroundColourWell" options:NSKeyValueObservingOptionInitial context:&kcBackgroundColorChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcInsertionPointColorChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcTextColorChanged];
 }
 
 
@@ -86,6 +91,9 @@ char kcSyntaxColourPrefChanged;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     BOOL boolValue;
+    NSColor *colorValue;
+    NSFont *fontValue;
+
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 
     if (context == &kcGutterWidthPrefChanged)
@@ -122,9 +130,9 @@ char kcSyntaxColourPrefChanged;
     }
     else if (context == &kcFragariaTextFontChanged)
     {
-        NSFont *font = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextFont]];
-        self.fragaria.textFont = font;   // these won't always be tied together, but this is current behavior.
-        self.fragaria.gutterFont = font; // these won't always be tied together, but this is current behavior.
+        fontValue = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextFont]];
+        self.fragaria.textFont = fontValue;   // these won't always be tied together, but this is current behavior.
+        self.fragaria.gutterFont = fontValue; // these won't always be tied together, but this is current behavior.
     }
     else if (context == &kcFragariaInvisibleCharactersColourWellChanged)
     {
@@ -137,6 +145,16 @@ char kcSyntaxColourPrefChanged;
     else if (context == &kcAutoSpellCheckChanged)
     {
         self.fragaria.autoSpellCheck = [[defaults valueForKey:MGSFragariaPrefsAutoSpellCheck] boolValue];
+    }
+    else if (context == &kcBackgroundColorChanged)
+    {
+        self.fragaria.textView.backgroundColor = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsBackgroundColourWell]];
+    }
+    else if (context == &kcInsertionPointColorChanged || context == &kcTextColorChanged)
+    {
+        colorValue = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextColourWell]];
+        self.fragaria.textView.insertionPointColor = colorValue;
+        self.fragaria.textView.textColor = colorValue;
     }
     else
     {

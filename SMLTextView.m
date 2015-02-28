@@ -147,6 +147,23 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setNeedsDisplayInRect:currentLineRect];
 }
 
+
+/*
+ * @property insertionPointColor
+ */
+- (void)setInsertionPointColor:(NSColor *)insertionPointColor
+{
+    [super setInsertionPointColor:insertionPointColor];
+    [self configurePageGuide];
+
+}
+
+- (NSColor *)insertionPointColor
+{
+    return [super insertionPointColor];
+}
+
+
 /*
  * @property lineWrap
  *   see /developer/examples/appkit/TextSizingExample
@@ -196,6 +213,22 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setTypingAttributes:attributes];
     [[self textStorage] addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0,[[self textStorage] length])];
     [self setFont:self.textFont];
+}
+
+
+/*
+ * @property textColor
+ */
+- (void)setTextColor:(NSColor *)textColor
+{
+    [super setTextColor:textColor];
+    [self configurePageGuide];
+
+}
+
+- (NSColor *)textColor
+{
+    return [super textColor];
 }
 
 
@@ -423,14 +456,11 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setAutomaticLinkDetectionEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticLinkDetection] boolValue]];
     [self setAutomaticQuoteSubstitutionEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticQuoteSubstitution] boolValue]];
 
-    [self setTextDefaults];
-
     [self configurePageGuide];
 
 
     NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextColourWell" options:NSKeyValueObservingOptionNew context:@"TextColourChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaBackgroundColourWell" options:NSKeyValueObservingOptionNew context:@"BackgroundColourChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuide" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
@@ -438,17 +468,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:0 context:LineHighlightingPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionInitial context:LineHighlightingPrefChanged];
-}
-
-
-/*
- * - setTextDefaults
- */
-- (void)setTextDefaults
-{
-    [self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
-    [self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
-    [self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
 }
 
 
@@ -1376,11 +1395,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         [self setHighlightCurrentLine:boolValue];
         colorVal = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsHighlightLineColourWell]];
         [self setCurrentLineHighlightColour:colorVal];
-        
-    } else if ([(__bridge NSString *)context isEqualToString:@"TextColourChanged"]) {
-        [self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
-        [self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
-        [self configurePageGuide];
         
     } else if ([(__bridge NSString *)context isEqualToString:@"BackgroundColourChanged"]) {
         [self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];

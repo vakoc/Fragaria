@@ -57,6 +57,9 @@
 /** Indicates whether or not the current line is highlighted. */
 @property (nonatomic, assign) BOOL highlightCurrentLine;
 
+/** Indicates the current insertion point color. */
+@property (nonatomic, assign) NSColor *insertionPointColor;
+
 /** Indicates whether or not line wrap (word wrap) is enabled. */
 @property (nonatomic, assign) BOOL lineWrap;
 
@@ -65,6 +68,9 @@
 
 /** Indicates the number of spaces per tab character. **/
 @property (nonatomic, assign) NSInteger tabWidth;
+
+/** Indicates the current text color. */
+@property (nonatomic, assign) NSColor *textColor;
 
 /** Indicates the current editor font. */
 @property (nonatomic, strong) NSFont *textFont;

@@ -137,6 +137,19 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 
 /*
+ * @property backgroundColor
+ */
+- (void)setBackgroundColor:(NSColor *)backgroundColor
+{
+    self.textView.backgroundColor = backgroundColor;
+}
+
+- (NSColor *)backgroundColor
+{
+    return self.textView.backgroundColor;
+}
+
+/*
  * @property hasVerticalScroller:
  */
 - (void)setHasVerticalScroller:(BOOL)value
@@ -190,6 +203,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 -(NSColor *)gutterTextColour
 {
     return [self.gutterView textColor];
+}
+
+
+/*
+ * @property insertionPointColor
+ */
+- (void)setInsertionPointColor:(NSColor *)insertionPointColor
+{
+    self.textView.insertionPointColor = insertionPointColor;
+}
+
+- (NSColor *)insertionPointColor
+{
+    return self.textView.insertionPointColor;
 }
 
 
@@ -288,6 +315,21 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 {
     return [self.gutterView startingLineNumber];
 }
+
+
+/*
+ * @property textColor
+ */
+- (void)setTextColor:(NSColor *)textColor
+{
+    self.textView.textColor = textColor;
+}
+
+- (NSColor *)textColor
+{
+    return self.textView.textColor;
+}
+
 
 /*
  * @property textCurrentLineHighlightColor
