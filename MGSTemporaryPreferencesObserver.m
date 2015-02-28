@@ -11,16 +11,17 @@
 
 
 // KVO context constants
-char kcGutterWidthPrefChanged;
-char kcSyntaxColourPrefChanged;
-char kcSpellCheckPrefChanged;
-char kcLineNumberPrefChanged;
-char kcLineWrapPrefChanged;
-char kcGutterGutterTextColourWell;
-char kcInvisibleCharacterValueChanged;
-char kcFragariaTextFontChanged;
+char kcAutoSpellCheckChanged;
 char kcFragariaInvisibleCharactersColourWellChanged;
 char kcFragariaTabWidthChanged;
+char kcFragariaTextFontChanged;
+char kcGutterGutterTextColourWell;
+char kcGutterWidthPrefChanged;
+char kcInvisibleCharacterValueChanged;
+char kcLineNumberPrefChanged;
+char kcLineWrapPrefChanged;
+char kcSpellCheckPrefChanged;
+char kcSyntaxColourPrefChanged;
 
 
 @interface MGSTemporaryPreferencesObserver ()
@@ -71,8 +72,10 @@ char kcFragariaTabWidthChanged;
     [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:&kcFragariaTextFontChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaInvisibleCharactersColourWell" options:NSKeyValueObservingOptionInitial context:&kcFragariaInvisibleCharactersColourWellChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaShowInvisibleCharacters" options:NSKeyValueObservingOptionInitial context:&kcInvisibleCharacterValueChanged];
-
     [defaultsController addObserver:self forKeyPath:@"values.FragariaTabWidth" options:NSKeyValueObservingOptionInitial context:&kcFragariaTabWidthChanged];
+
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionInitial context:&kcAutoSpellCheckChanged];
+
 
 }
 
@@ -130,6 +133,10 @@ char kcFragariaTabWidthChanged;
     else if (context == &kcFragariaTabWidthChanged)
     {
         self.fragaria.textTabWidth = [[defaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
+    }
+    else if (context == &kcAutoSpellCheckChanged)
+    {
+        self.fragaria.autoSpellCheck = [[defaults valueForKey:MGSFragariaPrefsAutoSpellCheck] boolValue];
     }
     else
     {
