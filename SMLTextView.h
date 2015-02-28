@@ -53,6 +53,10 @@
 /** Indicates the color to use for current line highlighting. */
 @property NSColor *currentLineHighlightColor;
 
+/** Indicates the current editor font. */
+// @todo: (jsd) right now this is just strong storage for fragaria. Have to update this class to actually USE it.
+@property (nonatomic, strong) NSFont *textFont;
+
 /** The text view's delegate */
 @property (assign) id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> delegate;
 
