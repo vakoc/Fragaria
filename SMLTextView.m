@@ -126,9 +126,15 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 #pragma mark - Properties - Appearance and Behaviours
 
 /*
- * @property currentLineHighlightColor
+ * @property currentLineHighlightColour
  * (synthesized)
  */
+- (void)setCurrentLineHighlightColour:(NSColor *)currentLineHighlightColour
+{
+    _currentLineHighlightColour = currentLineHighlightColour;
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
 
 
 /*
@@ -199,7 +205,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     _textFont = textFont;
     textFontShadow = textFont;
-    self.lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+    [self setFont:textFont];
+    self.lineHeight = [self.textContainer.layoutManager defaultLineHeightForFont:textFont];
     [self configurePageGuide];
 }
 
@@ -409,7 +416,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self addTrackingArea:trackingArea];
 
     NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"TextFontChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaTextColourWell" options:NSKeyValueObservingOptionNew context:@"TextColourChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaBackgroundColourWell" options:NSKeyValueObservingOptionNew context:@"BackgroundColourChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
@@ -419,6 +425,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:0 context:LineHighlightingPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionInitial context:LineHighlightingPrefChanged];
+
+//    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:@"TextFontChanged"];
 
     self.lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
 }
@@ -514,7 +522,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     [super drawViewBackgroundInRect:rect];
     if ([self needsToDrawRect:currentLineRect]) {
-        [self.currentLineHighlightColor set];
+        [self.currentLineHighlightColour set];
         [NSBezierPath fillRect:currentLineRect];
     }
 }
@@ -1329,6 +1337,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     if (!self.textFont) return;
     
     NSDictionary *sizeAttribute = @{NSFontAttributeName : self.textFont};
+    sizeAttribute = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, nil];
+    
     NSString *sizeString = @" ";
     CGFloat sizeOfCharacter = [sizeString sizeWithAttributes:sizeAttribute].width;
     pageGuideX = floor(sizeOfCharacter * (self.pageGuideColumn + 1)) - 1.5f; // -1.5 to put it between the two characters and draw only on one pixel and not two (as the system draws it in a special way), and that's also why the width above is set to zero
@@ -1358,23 +1368,30 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         boolValue = [defaults boolForKey:MGSFragariaPrefsHighlightCurrentLine];
         [self setHighlightCurrentLine:boolValue];
         colorVal = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsHighlightLineColourWell]];
-        [self setCurrentLineHighlightColor:colorVal];
-    } else if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
-        [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-        self.lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
-        [self configurePageGuide];
+        [self setCurrentLineHighlightColour:colorVal];
+
+//    } else if ([(__bridge NSString *)context isEqualToString:@"TextFontChanged"]) {
+//        [self setFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+//        self.lineHeight = [[[self textContainer] layoutManager] defaultLineHeightForFont:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]]];
+//        [self configurePageGuide];
+
     } else if ([(__bridge NSString *)context isEqualToString:@"TextColourChanged"]) {
         [self setTextColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
         [self setInsertionPointColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]]];
-        [self configurePageGuide];;
+        [self configurePageGuide];
+
     } else if ([(__bridge NSString *)context isEqualToString:@"BackgroundColourChanged"]) {
         [self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
+
     } else if ([(__bridge NSString *)context isEqualToString:@"SmartInsertDeleteChanged"]) {
         [self setSmartInsertDeleteEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue]];
+
     } else if ([(__bridge NSString *)context isEqualToString:@"TabWidthChanged"]) {
         self.tabWidth = 4; // @todo: (jsd) Temporary stand-in value.
+
     } else if ([(__bridge NSString *)context isEqualToString:@"PageGuideChanged"]) {
-        [self configurePageGuide];;
+        [self configurePageGuide];
+
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }

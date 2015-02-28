@@ -289,6 +289,19 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     return [self.gutterView startingLineNumber];
 }
 
+/*
+ * @property textCurrentLineHighlightColor
+ */
+- (void)setTextCurrentLineHighlightColour:(NSColor *)textCurrentLineHighlightColour
+{
+    self.textView.currentLineHighlightColour = textCurrentLineHighlightColour;
+}
+
+- (NSColor *)textCurrentLineHighlightColour
+{
+    return self.textView.currentLineHighlightColour;
+}
+
 
 /*
  * @property isSyntaxColoured
@@ -309,9 +322,10 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setTextFont:(NSFont *)textFont
 {
-    self.textView.textFont = textFont;
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
+
     layoutManager.textFont =textFont;
+    self.textView.textFont = textFont;
 }
 
 - (NSFont *)textFont

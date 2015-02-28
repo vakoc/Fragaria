@@ -52,7 +52,7 @@
 #pragma mark - Properties - Appearance and Behaviours
 
 /** Indicates the color to use for current line highlighting. */
-@property (nonatomic, strong) NSColor *currentLineHighlightColor;
+@property (nonatomic, strong) NSColor *currentLineHighlightColour;
 
 /** Indicates whether or not the current line is highlighted. */
 @property (nonatomic, assign) BOOL highlightCurrentLine;

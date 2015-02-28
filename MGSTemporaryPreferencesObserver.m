@@ -16,7 +16,6 @@ char kcSyntaxColourPrefChanged;
 char kcSpellCheckPrefChanged;
 char kcLineNumberPrefChanged;
 char kcLineWrapPrefChanged;
-char kcGutterTextFontChanged;
 char kcGutterGutterTextColourWell;
 char kcInvisibleCharacterValueChanged;
 char kcFragariaTextFontChanged;
@@ -67,9 +66,7 @@ char kcFragariaInvisibleCharactersColourWellChanged;
     [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionInitial context:&kcSpellCheckPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaShowLineNumberGutter" options:NSKeyValueObservingOptionInitial context:&kcLineNumberPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionInitial context:&kcLineWrapPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:&kcGutterTextFontChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcGutterGutterTextColourWell];
-
     [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:&kcFragariaTextFontChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaInvisibleCharactersColourWell" options:NSKeyValueObservingOptionInitial context:&kcFragariaInvisibleCharactersColourWellChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaShowInvisibleCharacters" options:NSKeyValueObservingOptionInitial context:&kcInvisibleCharacterValueChanged];
@@ -109,10 +106,6 @@ char kcFragariaInvisibleCharactersColourWellChanged;
         boolValue = [defaults boolForKey:MGSFragariaPrefsLineWrapNewDocuments];
         self.fragaria.lineWrap = boolValue;
     }
-    else if (context == &kcGutterTextFontChanged)
-    {
-        self.fragaria.gutterFont = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextFont]];
-    }
     else if (context == &kcGutterGutterTextColourWell)
     {
         self.fragaria.gutterTextColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsGutterTextColourWell]];
@@ -123,7 +116,9 @@ char kcFragariaInvisibleCharactersColourWellChanged;
     }
     else if (context == &kcFragariaTextFontChanged)
     {
-        self.fragaria.textFont = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextFont]];
+        NSFont *font = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextFont]];
+        self.fragaria.textFont = font;   // these won't always be tied together, but this is current behavior.
+        self.fragaria.gutterFont = font; // these won't always be tied together, but this is current behavior.
     }
     else if (context == &kcFragariaInvisibleCharactersColourWellChanged)
     {
