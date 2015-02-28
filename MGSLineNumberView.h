@@ -48,8 +48,8 @@
 {
     // Array of character indices for the beginning of each line
     NSMutableArray      *_lineIndices;
-    // When text is edited, this is the start of the editing region. All line calculations after this point are invalid
-    // and need to be recalculated.
+    // When text is edited, this is the start of the editing region. All line
+    // calculations after this point are invalid and need to be recalculated.
     NSUInteger          _invalidCharacterIndex;
 }
 
@@ -72,17 +72,20 @@
 /** Text editor background color. */
 @property (nonatomic) NSColor *backgroundColor;
 /** Minimum width of the gutter. */
-
 @property (nonatomic) CGFloat minimumWidth;
+
 /** The starting line number in the editor. */
 @property (nonatomic) NSUInteger startingLineNumber;
-
+/** A dictionary of NSImages, keyed by zero-based line numbers as NSNumbers.
+ * The NSImages will be shown at the line specified by their key. */
 @property (nonatomic) NSDictionary *decorations;
-
+/** The target of the action that is sent when a decoration is clicked. */
 @property (weak) id decorationActionTarget;
-
+/** The action that is sent to decorationActionTarget when a decoration is
+ * clicked. */
 @property (assign) SEL decorationActionSelector;
-
+/** The last line clicked by the user in the gutter. May be used by
+ * decorationActionTarget to determine which decoration was clicked. */
 @property (readonly) NSUInteger selectedLineNumber;
 
 /** Indicates whether or not line numbers should be drawn. */
@@ -95,26 +98,24 @@
 
 /// @name Instance Methods
 
-/**
- *  Initializes a new instance of MGSLineNumberView, associating is with aScrollView.
- *  and an owning Fragaria instance.
- *  @param aScrollView Indicates the scroll view associated with this instance.
- *  @param fragaria Indicates the Fragaria instance associated with this instance.
- **/
+
+/** Initializes a new instance of MGSLineNumberView, associating is with aScrollView.
+ * and an owning Fragaria instance.
+ * @param aScrollView Indicates the scroll view associated with this instance.
+ * @param fragaria Indicates the Fragaria instance associated with this instance. */
 - (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(MGSFragaria *)fragaria;
 
-/**
- *  Initializes a new instance of MGSLineNumberView, associating is with aScrollView.
- *  @param aScrollView Indicates the scroll view associated with this instance.
- **/
+/** Initializes a new instance of MGSLineNumberView, associating is with aScrollView.
+ * @param aScrollView Indicates the scroll view associated with this instance. */
 - (id)initWithScrollView:(NSScrollView *)aScrollView;
 
-/**
- *  Returns the line number for a character position.
- *  @param location The character position being checked.
- **/
+/** Returns the line number for a character position.
+ * @param location The character position being checked. */
 - (NSUInteger)lineNumberForLocation:(CGFloat)location;
 
+/** The rectangle (relative to this view's origin) where the decoration of
+ * the specified line is drawn.
+ * @param line A zero-based line number. */
 - (NSRect)decorationRectOfLine:(NSUInteger)line;
 
 

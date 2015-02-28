@@ -22,16 +22,19 @@
 
 /// @name Properties
 
-/**
- *  MGSSyntaxErrorController will maintain an owned copy of the array of
- *  SMLSyntaxError objects.
- **/
+
+/** The array of MGSSyntaxError objects which determines the syntax errors
+ * shown in the line number view and the text view. */
 @property (nonatomic, strong) NSArray *syntaxErrors;
 
+/** Set to YES when syntax errors should be visible both in the line number
+ * view and the text view, set to NO to make all syntax errors invisible. */
 @property (nonatomic) BOOL showSyntaxErrors;
 
+/** The MGSLineNumberView where to show the error decorations (icons) */
 @property (nonatomic) MGSLineNumberView *lineNumberView;
 
+/** The SMLTextView where to highlight the lines where the errors are. */
 @property (nonatomic) SMLTextView *textView;
 
 

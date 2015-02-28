@@ -18,11 +18,11 @@
  *  This class is highly inefficient and is only a bandage for separating properties!
  *  Don't develop except for removing observers and such in Fragaria.
  **/
+
 @interface MGSTemporaryPreferencesObserver : NSObject
 
-/**
- *  Designated initializer.
- **/
+/** Designated initializer.
+ * @param fragaria The fragaria class controlled by the new instance. */
 - (instancetype)initWithFragaria:(MGSFragaria *)fragaria;
 
 
