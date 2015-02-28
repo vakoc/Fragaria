@@ -20,6 +20,7 @@ char kcGutterGutterTextColourWell;
 char kcInvisibleCharacterValueChanged;
 char kcFragariaTextFontChanged;
 char kcFragariaInvisibleCharactersColourWellChanged;
+char kcFragariaTabWidthChanged;
 
 
 @interface MGSTemporaryPreferencesObserver ()
@@ -70,6 +71,8 @@ char kcFragariaInvisibleCharactersColourWellChanged;
     [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:&kcFragariaTextFontChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaInvisibleCharactersColourWell" options:NSKeyValueObservingOptionInitial context:&kcFragariaInvisibleCharactersColourWellChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaShowInvisibleCharacters" options:NSKeyValueObservingOptionInitial context:&kcInvisibleCharacterValueChanged];
+
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaTabWidth" options:NSKeyValueObservingOptionInitial context:&kcFragariaTabWidthChanged];
 
 }
 
@@ -123,6 +126,10 @@ char kcFragariaInvisibleCharactersColourWellChanged;
     else if (context == &kcFragariaInvisibleCharactersColourWellChanged)
     {
         self.fragaria.textInvisibleCharactersColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsInvisibleCharactersColourWell]];
+    }
+    else if (context == &kcFragariaTabWidthChanged)
+    {
+        self.fragaria.textTabWidth = [[defaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
     }
     else
     {

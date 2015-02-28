@@ -350,6 +350,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 
 
+/*
+ * @property textTabWidth
+ */
+- (void)setTextTabWidth:(NSInteger)textTabWidth
+{
+    self.textView.tabWidth = textTabWidth;
+}
+
+- (NSInteger)textTabWidth
+{
+    return self.textView.tabWidth;
+}
+
+
 #pragma mark - Properties - Syntax Errors
 
 

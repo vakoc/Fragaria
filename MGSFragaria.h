@@ -97,7 +97,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) NSColor *textCurrentLineHighlightColour; ///< Specifies the colour to render invisible characters in the text view.
 @property (nonatomic, assign) NSFont *textFont;                        ///< Specifies the text editor font.
 @property (nonatomic, assign) NSColor *textInvisibleCharactersColour;  ///< Specifies the colour to render invisible characters in the text view.
-
+@property (nonatomic, assign) NSInteger textTabWidth;                  ///< Specifies the number of spaces per tab.
 
 /// @name Properties - Syntax Errors
 #pragma mark - Properties - Syntax Errors
