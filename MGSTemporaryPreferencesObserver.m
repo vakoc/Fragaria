@@ -18,6 +18,10 @@ char kcLineNumberPrefChanged;
 char kcLineWrapPrefChanged;
 char kcGutterTextFontChanged;
 char kcGutterGutterTextColourWell;
+char kcInvisibleCharacterValueChanged;
+char kcFragariaTextFontChanged;
+char kcFragariaInvisibleCharactersColourWellChanged;
+
 
 @interface MGSTemporaryPreferencesObserver ()
 
@@ -65,6 +69,11 @@ char kcGutterGutterTextColourWell;
     [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionInitial context:&kcLineWrapPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:&kcGutterTextFontChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcGutterGutterTextColourWell];
+
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:&kcFragariaTextFontChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaInvisibleCharactersColourWell" options:NSKeyValueObservingOptionInitial context:&kcFragariaInvisibleCharactersColourWellChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowInvisibleCharacters" options:NSKeyValueObservingOptionInitial context:&kcInvisibleCharacterValueChanged];
+
 }
 
 
@@ -107,6 +116,18 @@ char kcGutterGutterTextColourWell;
     else if (context == &kcGutterGutterTextColourWell)
     {
         self.fragaria.gutterTextColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsGutterTextColourWell]];
+    }
+    else if (context == &kcInvisibleCharacterValueChanged)
+    {
+        self.fragaria.showsInvisibleCharacters = [[defaults valueForKey:MGSFragariaPrefsShowInvisibleCharacters] boolValue];
+    }
+    else if (context == &kcFragariaTextFontChanged)
+    {
+        self.fragaria.textFont = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextFont]];
+    }
+    else if (context == &kcFragariaInvisibleCharactersColourWellChanged)
+    {
+        self.fragaria.textInvisibleCharactersColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsInvisibleCharactersColourWell]];
     }
     else
     {
