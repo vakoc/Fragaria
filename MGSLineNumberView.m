@@ -605,7 +605,6 @@
     NSRect            visibleRect;
     NSLayoutManager	  *layoutManager;
     NSTextContainer	  *container;
-    NSRange           range, glyphRange;
     NSUInteger        index, stringLength;
     NSRect            rect;
     NSMutableArray    *lines;
