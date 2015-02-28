@@ -35,16 +35,26 @@ typedef enum : NSUInteger
 - (void)resetAttributesAndGlyphs;
 @end
 
-@implementation SMLLayoutManager
+@implementation SMLLayoutManager {
 
-@synthesize showInvisibleCharacters;
+    NSDictionary *defAttributes;
+    NSString *tabCharacter;
+    NSString *newLineCharacter;
+    NSString *spaceCharacter;
+    NSGlyph *invisibleGlyphs;
+    BOOL useGlyphSubstitutionForInvisibleGlyphs;
+    BOOL drawInvisibleGlyphsUsingCoreText;
+    NSMutableArray *lineRefs;
+}
 
-#pragma mark -
-#pragma mark Instance methods
+@synthesize showsInvisibleCharacters = _showsInvisibleCharacters;
+@synthesize textFont = _textFont;
+@synthesize textInvisibleCharactersColour = _textInvisibleCharactersColour;
+
+#pragma mark - Instance methods
+
 /*
- 
- - init
- 
+ * - init
  */
 - (id)init
 {
@@ -61,19 +71,8 @@ typedef enum : NSUInteger
         
         [self resetAttributesAndGlyphs];
         
-		[self setShowInvisibleCharacters:[[SMLDefaults valueForKey:MGSFragariaPrefsShowInvisibleCharacters] boolValue]];
 		[self setAllowsNonContiguousLayout:YES]; // Setting this to YES sometimes causes "an extra toolbar" and other graphical glitches to sometimes appear in the text view when one sets a temporary attribute, reported as ID #5832329 to Apple
-		
-		NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-        
-        // text font and colour preferences
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionNew context:@"FontOrColourValueChanged"];
-		[defaultsController addObserver:self forKeyPath:@"values.FragariaInvisibleCharactersColourWell" options:NSKeyValueObservingOptionNew context:@"FontOrColourValueChanged"];
-        
-        // invisible characters preference
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaShowInvisibleCharacters" options:NSKeyValueObservingOptionNew context:@"InvisibleCharacterValueChanged"];
-        
-        
+
         // assign our custom glyph generator
         if (useGlyphSubstitutionForInvisibleGlyphs) {
             [self setGlyphGenerator:[[MGSGlyphGenerator alloc] init]];
@@ -83,44 +82,11 @@ typedef enum : NSUInteger
 	return self;
 }
 
-#pragma mark -
-#pragma mark KVO
-/*
- 
- - observeValueForKeyPath:ofObject:change:context:
- 
- */
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	if ([(__bridge NSString *)context isEqualToString:@"FontOrColourValueChanged"]) {
-		[self resetAttributesAndGlyphs];
-		[[self firstTextView] setNeedsDisplay:YES];
-    } else if ([(__bridge NSString *)context isEqualToString:@"InvisibleCharacterValueChanged"]) {
-        [self setShowInvisibleCharacters:[[SMLDefaults valueForKey:MGSFragariaPrefsShowInvisibleCharacters] boolValue]];
-        
-        if (useGlyphSubstitutionForInvisibleGlyphs) {
-            // we need to regenerate the glyph cache
-            [self replaceTextStorage:[self textStorage]];
-        }
-		[[self firstTextView] setNeedsDisplay:YES];
 
-        
-	} else {
-		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-	}
-}
-
-
-#pragma mark -
-#pragma mark Glyph handling
-
-#pragma mark -
-#pragma mark Drawing
+#pragma mark - Drawing
 
 /*
- 
- - drawGlyphsForGlyphRange:atPoint:
- 
+ * - drawGlyphsForGlyphRange:atPoint:
  */
 - (void)drawGlyphsForGlyphRange:(NSRange)glyphRange atPoint:(NSPoint)containerOrigin
 {
@@ -137,7 +103,7 @@ do {
         
 #endif
         
-    if (showInvisibleCharacters && !useGlyphSubstitutionForInvisibleGlyphs) {
+    if (self.showsInvisibleCharacters && !useGlyphSubstitutionForInvisibleGlyphs) {
         
 		NSPoint pointToDrawAt;
 		NSRect glyphFragment;
@@ -241,14 +207,11 @@ do {
     
     // the following causes glyph generation to occur if required
     [super drawGlyphsForGlyphRange:glyphRange atPoint:containerOrigin];
-
-
 }
 
+
 /*
- 
- - insertGlyphs:length:forStartingGlyphAtIndex:characterIndex:
- 
+ * - insertGlyphs:length:forStartingGlyphAtIndex:characterIndex:
  */
 - (void)insertGlyphs:(const NSGlyph *)glyphs
               length:(NSUInteger)length
@@ -270,7 +233,7 @@ forStartingGlyphAtIndex:(NSUInteger)glyphIndex
      
      */
     
-    if (showInvisibleCharacters && useGlyphSubstitutionForInvisibleGlyphs) {
+    if (self.showsInvisibleCharacters && useGlyphSubstitutionForInvisibleGlyphs) {
         NSString *textString = [[self attributedString] string];
     
         for (NSUInteger i = 0; i < length; i++) {
@@ -300,10 +263,9 @@ forStartingGlyphAtIndex:(NSUInteger)glyphIndex
                 characterIndex:charIndex];
 }
 
+
 /*
- 
- - showCGGlyphs:positions:count:font:matrix:attributes:inContext:
- 
+ * - showCGGlyphs:positions:count:font:matrix:attributes:inContext:
  */
 - (void)showCGGlyphs:(const CGGlyph *)glyphs positions:(const NSPoint *)positions count:(NSUInteger)glyphCount font:(NSFont *)font matrix:(NSAffineTransform *)textMatrix attributes:(NSDictionary *)attributes inContext:(NSGraphicsContext *)graphicsContext
 {
@@ -312,14 +274,11 @@ forStartingGlyphAtIndex:(NSUInteger)glyphIndex
 
 }
 
-#pragma mark -
-#pragma mark Accessors
 
+#pragma mark - Accessors
 
 /*
- 
- - attributedStringWithTemporaryAttributesApplied
- 
+ * - attributedStringWithTemporaryAttributesApplied
  */
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
 {
@@ -354,14 +313,72 @@ forStartingGlyphAtIndex:(NSUInteger)glyphIndex
 	return attributedString;	
 }
 
-#pragma mark -
-#pragma mark Class extension
 
+#pragma mark - Property Accessors
+
+
+/*
+ * @property textFont
+ */
+-(void)setTextFont:(NSFont *)textFont
+{
+    _textFont = textFont;
+    [self resetAttributesAndGlyphs];
+    [[self firstTextView] setNeedsDisplay:YES];
+
+}
+
+-(NSFont *)textFont
+{
+    return _textFont;
+}
+
+
+/*
+ * @property textInvisibleCharactersColor
+ */
+- (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
+{
+    _textInvisibleCharactersColour = textInvisibleCharactersColour;
+    [self resetAttributesAndGlyphs];
+    [[self firstTextView] setNeedsDisplay:YES];
+}
+
+- (NSColor *)textInvisibleCharactersColour
+{
+    return _textInvisibleCharactersColour;
+}
+
+
+/*
+ * @property showInvisibleCharacters
+ */
+- (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
+{
+    _showsInvisibleCharacters = showsInvisibleCharacters;
+    if (useGlyphSubstitutionForInvisibleGlyphs)
+    {
+        // we need to regenerate the glyph cache
+        [self replaceTextStorage:[self textStorage]];
+    }
+    [[self firstTextView] setNeedsDisplay:YES];
+}
+
+- (BOOL)showsInvisibleCharacters
+{
+    return _showsInvisibleCharacters;
+}
+
+
+#pragma mark - Class extension
+
+/*
+ * - resetAttributesAndGlyphs
+ */
 - (void)resetAttributesAndGlyphs
 {
     // assemble our default attributes
-    defAttributes = [[NSDictionary alloc] initWithObjectsAndKeys:
-                  [NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextFont]], NSFontAttributeName, [NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsInvisibleCharactersColourWell]], NSForegroundColorAttributeName, nil];
+    defAttributes = [[NSDictionary alloc] initWithObjectsAndKeys: self.textFont, NSFontAttributeName, self.textInvisibleCharactersColour, NSForegroundColorAttributeName, nil];
 
     // define substitute characters for whitespace chars
     unichar tabUnichar = 0x00AC;
@@ -411,4 +428,6 @@ forStartingGlyphAtIndex:(NSUInteger)glyphIndex
         [layoutManager getGlyphs:invisibleGlyphs range:NSMakeRange(0, [glyphString length])];
     }
 }
+
+
 @end

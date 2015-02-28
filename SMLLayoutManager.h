@@ -26,18 +26,7 @@
 /**
  *  SMLLayoutManager handles the layout of all of the glyphs in the text editor.
  **/
-@interface SMLLayoutManager : NSLayoutManager {
-	
-	NSDictionary *defAttributes;
-	NSString *tabCharacter;
-	NSString *newLineCharacter;
-    NSString *spaceCharacter;
-	BOOL showInvisibleCharacters;
-    NSGlyph *invisibleGlyphs;
-    BOOL useGlyphSubstitutionForInvisibleGlyphs;
-    BOOL drawInvisibleGlyphsUsingCoreText;
-    NSMutableArray *lineRefs;
-}
+@interface SMLLayoutManager : NSLayoutManager
 
 /**
  *  Returns an attributed string with temporary attributes having been
@@ -46,9 +35,19 @@
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied;
 
 /**
+ *  A reference to the text editor font.
+ **/
+@property (nonatomic, assign) NSFont *textFont;
+
+/**
+ *  Specifies the color to draw invisible characters.
+ **/
+@property (nonatomic, strong) NSColor *textInvisibleCharactersColour;
+
+/**
  *  Indicates whether or not glyphs for invisible characters will
  *  appear in the text editor.
  **/
-@property BOOL showInvisibleCharacters;
+@property (atomic, assign) BOOL showsInvisibleCharacters;
 
 @end
