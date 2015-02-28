@@ -22,6 +22,7 @@ char kcGutterWidthPrefChanged;
 char kcInvisibleCharacterValueChanged;
 char kcLineNumberPrefChanged;
 char kcLineWrapPrefChanged;
+char kcPageGuideChanged;
 char kcSpellCheckPrefChanged;
 char kcSyntaxColourPrefChanged;
 char kcTextColorChanged;
@@ -76,12 +77,13 @@ char kcTextColorChanged;
     [defaultsController addObserver:self forKeyPath:@"values.FragariaInvisibleCharactersColourWell" options:NSKeyValueObservingOptionInitial context:&kcFragariaInvisibleCharactersColourWellChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaShowInvisibleCharacters" options:NSKeyValueObservingOptionInitial context:&kcInvisibleCharacterValueChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaTabWidth" options:NSKeyValueObservingOptionInitial context:&kcFragariaTabWidthChanged];
-
     [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionInitial context:&kcAutoSpellCheckChanged];
-
     [defaultsController addObserver:self forKeyPath:@"values.FragariaBackgroundColourWell" options:NSKeyValueObservingOptionInitial context:&kcBackgroundColorChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcInsertionPointColorChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcTextColorChanged];
+
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuide" options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
+    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuideAtColumn" options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
 }
 
 
@@ -155,6 +157,11 @@ char kcTextColorChanged;
         colorValue = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextColourWell]];
         self.fragaria.textView.insertionPointColor = colorValue;
         self.fragaria.textView.textColor = colorValue;
+    }
+    else if (context == &kcPageGuideChanged)
+    {
+        self.fragaria.pageGuideColumn = [[defaults valueForKey:MGSFragariaPrefsShowPageGuideAtColumn] integerValue];
+        self.fragaria.showsPageGuide = [[defaults valueForKey:MGSFragariaPrefsShowPageGuide] boolValue];
     }
     else
     {

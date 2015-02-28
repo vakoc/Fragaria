@@ -90,10 +90,12 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) NSColor *insertionPointColor;            ///< Indicates the color of the insertion point.
 @property (nonatomic, assign) BOOL isSyntaxColoured;                   ///< Specifies whether the document shall be syntax highlighted.
 @property (nonatomic, assign) BOOL lineWrap;                           ///< Indicates whether or not line wrap is enabled.
+ @property (nonatomic, assign) NSInteger pageGuideColumn;               ///< Indicates the column number at which the page guide appears.
 @property (nonatomic, assign) BOOL scrollElasticityDisabled;           ///< Indicates whether or not the "rubber band" effect is disabled.
 @property (nonatomic, assign) BOOL showsLineNumbers;                   ///< Indicates whether or not line numbers are displayed when the gutter is visible.
 @property (nonatomic, assign) BOOL showsGutter;                        ///< Indicates whether or not the gutter is visible.
 @property (nonatomic, assign) BOOL showsInvisibleCharacters;           ///< Indicates whether or not invisible characters in the editor are revealed.
+ @property (nonatomic, assign) BOOL showsPageGuide;                     ///< Specifies whether or not to show the page guide.
 @property (nonatomic, assign) BOOL showsWarningsInGutter;              ///< Indicates whether or not error warnings are displayed.
 @property (nonatomic, assign) NSUInteger startingLineNumber;           ///< Specifies the starting line number in the text view.
 @property (nonatomic, assign) NSColor *textColor;                      ///< Indicates the base (non-highlighted) text color.

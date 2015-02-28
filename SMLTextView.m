@@ -89,15 +89,15 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     NSPoint startOrigin;
 
     CGFloat pageGuideX;
-    NSColor *pageGuideColour;
-    BOOL showPageGuide;
 
     NSRect currentLineRect;
 
     NSTimer *autocompleteWordsTimer;
 }
 
-@synthesize pageGuideColour, lineWrap;
+@synthesize lineWrap = _lineWrap;
+@synthesize pageGuideColour = _pageGuideColour;
+@synthesize showsPageGuide = _showsPageGuide;
 @synthesize textFont = _textFont;
 
 
@@ -170,7 +170,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)setLineWrap:(BOOL)value
 {
-    lineWrap = value;
+    _lineWrap = value;
     [self updateLineWrap];
 }
 
@@ -182,6 +182,21 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     _pageGuideColumn = pageGuideColumn;
     [self configurePageGuide];
+}
+
+
+/*
+ * @property showsPageGuide
+ */
+- (void)setShowsPageGuide:(BOOL)showsPageGuide
+{
+    _showsPageGuide = showsPageGuide;
+    [self configurePageGuide];
+}
+
+- (BOOL)showsPageGuide
+{
+    return _showsPageGuide;
 }
 
 
@@ -394,7 +409,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         self.inspectedCharacterIndexes = [[NSMutableIndexSet alloc] initWithIndexesInRange:NSMakeRange(0,0)];
 
         // set initial line wrapping
-        lineWrap = YES;
+        _lineWrap = YES;
         isDragging = NO;
         [self updateLineWrap];
     }
@@ -449,7 +464,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
     ///////////////////////
     
-    [self setContinuousSpellCheckingEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutoSpellCheck] boolValue]];
     [self setGrammarCheckingEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutoGrammarCheck] boolValue]];
 
     [self setSmartInsertDeleteEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue]];
@@ -461,10 +475,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
     NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
 
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaBackgroundColourWell" options:NSKeyValueObservingOptionNew context:@"BackgroundColourChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuide" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuideAtColumn" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:0 context:LineHighlightingPrefChanged];
     [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionInitial context:LineHighlightingPrefChanged];
@@ -529,7 +540,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     [super drawRect:rect];
 
-    if (showPageGuide == YES) {
+    if (self.showsPageGuide == YES) {
         NSRect bounds = [self bounds];
         if ([self needsToDrawRect:NSMakeRect(pageGuideX, 0, 1, bounds.size.height)] == YES) { // So that it doesn't draw the line if only e.g. the cursor updates
             [self.pageGuideColour set];
@@ -1361,18 +1372,14 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 - (void)configurePageGuide
 {
-    if (!self.textFont) return;
-
     NSDictionary *sizeAttribute = @{NSFontAttributeName : self.textFont};
 
     NSString *sizeString = @" ";
     CGFloat sizeOfCharacter = [sizeString sizeWithAttributes:sizeAttribute].width;
     pageGuideX = floor(sizeOfCharacter * (self.pageGuideColumn + 1)) - 1.5f; // -1.5 to put it between the two characters and draw only on one pixel and not two (as the system draws it in a special way), and that's also why the width above is set to zero
 
-    NSColor *color = [NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsTextColourWell]];
+    NSColor *color = self.textColor;
     self.pageGuideColour = [color colorWithAlphaComponent:([color alphaComponent] / 4)]; // Use the same colour as the text but with more transparency
-
-    showPageGuide = [[SMLDefaults valueForKey:MGSFragariaPrefsShowPageGuide] boolValue];
 
     [self display]; // To reflect the new values in the view
 }
@@ -1396,14 +1403,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         colorVal = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsHighlightLineColourWell]];
         [self setCurrentLineHighlightColour:colorVal];
         
-    } else if ([(__bridge NSString *)context isEqualToString:@"BackgroundColourChanged"]) {
-        [self setBackgroundColor:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsBackgroundColourWell]]];
-        
     } else if ([(__bridge NSString *)context isEqualToString:@"SmartInsertDeleteChanged"]) {
         [self setSmartInsertDeleteEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue]];
-        
-    } else if ([(__bridge NSString *)context isEqualToString:@"PageGuideChanged"]) {
-        [self configurePageGuide];
         
     } else {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];

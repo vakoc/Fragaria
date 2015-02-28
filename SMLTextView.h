@@ -66,6 +66,9 @@
 /** Specifies the column position to draw the page guide. */
 @property (nonatomic, assign) NSInteger pageGuideColumn;
 
+/** Specifies whether or not to show the page guide. */
+@property (nonatomic, assign) BOOL showsPageGuide;
+
 /** Indicates the number of spaces per tab character. **/
 @property (nonatomic, assign) NSInteger tabWidth;
 
@@ -126,8 +129,6 @@
 - (id)initWithFrame:(NSRect)frame fragaria:(MGSFragaria *)fragaria;
 
 - (void)setDefaults;                                                  ///< Sets the initial defaults for the text view.
-
-- (void)setTextDefaults;                                              ///< Sets the initial text defaults for the text view.
 
 
 @end

@@ -235,6 +235,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
+ * @property pageGuideColumn
+ */
+- (void)setPageGuideColumn:(NSInteger)pageGuideColumn
+{
+    self.textView.pageGuideColumn = pageGuideColumn;
+}
+
+- (NSInteger)pageGuideColumn
+{
+    return self.textView.pageGuideColumn;
+}
+
+
+/*
  * @property scrollElasticityDisabled:
  */
 - (void)setScrollElasticityDisabled:(BOOL)value
@@ -262,6 +276,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     return self.gutterView.drawsLineNumbers;
 }
 
+
 /*
  * @property showsGutter
  */
@@ -275,6 +290,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     return self.scrollView.rulersVisible;
 }
 
+
 /*
  * @property showsInvisibleCharacters
  */
@@ -286,6 +302,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (BOOL)showsInvisibleCharacters
 {
     return self.textView.layoutManager.showsInvisibleCharacters;
+}
+
+
+/*
+ * @property showsPageGuide
+ */
+- (void)setShowsPageGuide:(BOOL)showsPageGuide
+{
+    self.textView.showsPageGuide = showsPageGuide;
+}
+
+- (BOOL)showsPageGuide
+{
+    return self.textView.showsPageGuide;
 }
 
 
