@@ -735,10 +735,11 @@
     if (!image) return NSZeroRect;
     
     rect = [self wholeLineRectForLine:line];
-    height = rect.size.height;
+    CGFloat lineWidth = (rect.size.height < 12.0 ? 1 : (rect.size.height / 12.0));
+    height = rect.size.height - 2.0 * lineWidth;
     centeredRect = rect;
     centeredRect.origin.y += (rect.size.height - height) / 2.0;
-    centeredRect.origin.x += RULER_MARGIN;
+    centeredRect.origin.x += RULER_MARGIN + lineWidth;
     centeredRect.size.height = height;
     centeredRect.size.width = image.size.width / (image.size.height / height);
     
