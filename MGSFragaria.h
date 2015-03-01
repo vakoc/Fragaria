@@ -81,50 +81,38 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 /// @name Properties - Overall Appearance and Display
 #pragma mark - Properties - Overall Appearance and Display
 
-@property (nonatomic, assign) BOOL autoSpellCheck;                     ///< Specifies whether or not automatic spell checking is enabled.
-@property (nonatomic, assign) NSColor *backgroundColor;                ///< Indicates the text view background color.
-@property (nonatomic, assign) BOOL hasVerticalScroller;                ///< Indicates whether or not the vertical scroller should be displayed.
-@property (nonatomic, assign) NSFont *gutterFont;                      ///< Specifies the standard font for the line numbers in the gutter.
-@property (nonatomic, assign) NSUInteger gutterMinimumWidth;           ///< Specifies the minimum width of the line number gutter.
-@property (nonatomic, assign) NSColor *gutterTextColour;               ///< Specifies the standard color of the line numbers in the gutter.
-@property (nonatomic, assign) NSColor *insertionPointColor;            ///< Indicates the color of the insertion point.
-@property (nonatomic, assign) BOOL isSyntaxColoured;                   ///< Specifies whether the document shall be syntax highlighted.
-@property (nonatomic, assign) BOOL lineWrap;                           ///< Indicates whether or not line wrap is enabled.
- @property (nonatomic, assign) NSInteger pageGuideColumn;               ///< Indicates the column number at which the page guide appears.
-@property (nonatomic, assign) BOOL scrollElasticityDisabled;           ///< Indicates whether or not the "rubber band" effect is disabled.
-@property (nonatomic, assign) BOOL showsLineNumbers;                   ///< Indicates whether or not line numbers are displayed when the gutter is visible.
-@property (nonatomic, assign) BOOL showsGutter;                        ///< Indicates whether or not the gutter is visible.
-@property (nonatomic, assign) BOOL showsInvisibleCharacters;           ///< Indicates whether or not invisible characters in the editor are revealed.
- @property (nonatomic, assign) BOOL showsPageGuide;                     ///< Specifies whether or not to show the page guide.
-@property (nonatomic, assign) BOOL showsWarningsInGutter;              ///< Indicates whether or not error warnings are displayed.
-@property (nonatomic, assign) NSUInteger startingLineNumber;           ///< Specifies the starting line number in the text view.
-@property (nonatomic, assign) NSColor *textColor;                      ///< Indicates the base (non-highlighted) text color.
-@property (nonatomic, assign) NSColor *textCurrentLineHighlightColour; ///< Specifies the colour to render invisible characters in the text view.
-@property (nonatomic, assign) NSFont *textFont;                        ///< Specifies the text editor font.
-@property (nonatomic, assign) NSColor *textInvisibleCharactersColour;  ///< Specifies the colour to render invisible characters in the text view.
-@property (nonatomic, assign) NSInteger textTabWidth;                  ///< Specifies the number of spaces per tab.
+ @property (nonatomic, assign) BOOL automaticDashSubstitutionEnabled;      ///< Specifies whether or not automatic dash substitution is enabled.
+ @property (nonatomic, assign) BOOL automaticDataDetectionEnabled;         ///< Specifies whether or not automatic data detection is enabled.
+@property (nonatomic, assign) BOOL automaticLinkDetectionEnabled;         ///< Specifies whether or not automatic link detection is enabled.
+@property (nonatomic, assign) BOOL automaticQuoteSubstitutionEnabled;     ///< Specifies whether or not automatic quote substitution is enabled.
+ @property (nonatomic, assign) BOOL automaticTextReplacementEnabled;       ///< Specifies whether or not automatic text replacement is enabled.
+@property (nonatomic, assign) NSColor *backgroundColor;                   ///< Indicates the text view background color.
+@property (nonatomic, assign) BOOL continuousSpellCheckingEnabled;        ///< Specifies whether or not automatic spell checking is enabled.
+@property (nonatomic, assign) NSColor *currentLineHighlightColour;        ///< Specifies the color to use when highlighting the current line.
+@property (nonatomic, assign) BOOL hasVerticalScroller;                   ///< Indicates whether or not the vertical scroller should be displayed.
+@property (nonatomic, assign) BOOL grammarCheckingEnabled;                ///< Specifies whether or not automatic grammar checking is enabled.
+@property (nonatomic, assign) NSFont *gutterFont;                         ///< Specifies the standard font for the line numbers in the gutter.
+@property (nonatomic, assign) NSUInteger gutterMinimumWidth;              ///< Specifies the minimum width of the line number gutter.
+@property (nonatomic, assign) NSColor *gutterTextColour;                  ///< Specifies the standard color of the line numbers in the gutter.
+@property (nonatomic, assign) BOOL highlightsCurrentLine;                 ///< Specifies whether or not the line with the cursor should be highlighted.
+@property (nonatomic, assign) NSColor *insertionPointColor;               ///< Indicates the color of the insertion point.
+@property (nonatomic, assign) BOOL isSyntaxColoured;                      ///< Specifies whether the document shall be syntax highlighted.
+@property (nonatomic, assign) BOOL lineWrap;                              ///< Indicates whether or not line wrap is enabled.
+@property (nonatomic, assign) NSInteger pageGuideColumn;                  ///< Indicates the column number at which the page guide appears.
+@property (nonatomic, assign) BOOL scrollElasticityDisabled;              ///< Indicates whether or not the "rubber band" effect is disabled.
+@property (nonatomic, assign) BOOL showsLineNumbers;                      ///< Indicates whether or not line numbers are displayed when the gutter is visible.
+@property (nonatomic, assign) BOOL showsGutter;                           ///< Indicates whether or not the gutter is visible.
+@property (nonatomic, assign) BOOL showsInvisibleCharacters;              ///< Indicates whether or not invisible characters in the editor are revealed.
+@property (nonatomic, assign) BOOL showsPageGuide;                        ///< Specifies whether or not to show the page guide.
+@property (nonatomic, assign) BOOL showsWarningsInGutter;                 ///< Indicates whether or not error warnings are displayed.
+@property (nonatomic, assign) BOOL smartInsertDeleteEnabled;              ///< Specifies whether or not smart insert and delete is enabled.
+@property (nonatomic, assign) NSUInteger startingLineNumber;              ///< Specifies the starting line number in the text view.
+@property (nonatomic, assign) NSColor *textColor;                         ///< Indicates the base (non-highlighted) text color.
+@property (nonatomic, assign) NSColor *textCurrentLineHighlightColour;    ///< Specifies the colour to render invisible characters in the text view.
+@property (nonatomic, assign) NSFont *textFont;                           ///< Specifies the text editor font.
+@property (nonatomic, assign) NSColor *textInvisibleCharactersColour;     ///< Specifies the colour to render invisible characters in the text view.
+@property (nonatomic, assign) NSInteger textTabWidth;                     ///< Specifies the number of spaces per tab.
 
-
-
-/*
- 
- [self setGrammarCheckingEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutoGrammarCheck] boolValue]];
-
- [self setSmartInsertDeleteEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue]];
- [self setAutomaticLinkDetectionEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticLinkDetection] boolValue]];
- [self setAutomaticQuoteSubstitutionEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticQuoteSubstitution] boolValue]];
-
- 
- [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
- [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuide" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
- [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuideAtColumn" options:NSKeyValueObservingOptionNew context:@"PageGuideChanged"];
- [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
- [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:0 context:LineHighlightingPrefChanged];
- [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionInitial context:LineHighlightingPrefChanged];
-
-
-
-*/
 
 /// @name Properties - Syntax Errors
 #pragma mark - Properties - Syntax Errors

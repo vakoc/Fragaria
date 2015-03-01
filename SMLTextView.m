@@ -456,6 +456,10 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setImportsGraphics:NO];
     [self setUsesFontPanel:NO];
 
+    /// @todo: (jsd) These now have properties, but are NOT linked in the
+    ///        temporary defaults observer, as they've never been observed.
+    ///        Add suitable defaults in the current registerUserDefaults,
+    ///        and then delete these lines.
     [self setAutomaticDashSubstitutionEnabled:NO];
     [self setAutomaticQuoteSubstitutionEnabled:NO];
     [self setAutomaticDataDetectionEnabled:YES];
@@ -464,24 +468,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveWhenFirstResponder) owner:self userInfo:nil];
     [self addTrackingArea:trackingArea];
 
-
-    ///////////////////////
-    
-    [self setGrammarCheckingEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutoGrammarCheck] boolValue]];
-
-    [self setSmartInsertDeleteEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue]];
-    [self setAutomaticLinkDetectionEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticLinkDetection] boolValue]];
-    [self setAutomaticQuoteSubstitutionEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticQuoteSubstitution] boolValue]];
-
     [self configurePageGuide];
-
-
-    NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaSmartInsertDelete" options:NSKeyValueObservingOptionNew context:@"SmartInsertDeleteChanged"];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightCurrentLine" options:0 context:LineHighlightingPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaHighlightLineColourWell" options:NSKeyValueObservingOptionInitial context:LineHighlightingPrefChanged];
 }
 
 
@@ -1384,34 +1371,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
     [self display]; // To reflect the new values in the view
 }
-
-
-
-#pragma mark - KVO
-
-/*
- * - observeValueForKeyPath:ofObject:change:context:
- */
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    BOOL boolValue = NO;
-    NSColor *colorVal;
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
-    if (context == LineHighlightingPrefChanged) {
-        boolValue = [defaults boolForKey:MGSFragariaPrefsHighlightCurrentLine];
-        [self setHighlightCurrentLine:boolValue];
-        colorVal = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsHighlightLineColourWell]];
-        [self setCurrentLineHighlightColour:colorVal];
-        
-    } else if ([(__bridge NSString *)context isEqualToString:@"SmartInsertDeleteChanged"]) {
-        [self setSmartInsertDeleteEnabled:[[SMLDefaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue]];
-        
-    } else {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
-}
-
 
 
 @end

@@ -184,12 +184,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setAutoSpellCheck:(BOOL)autoSpellCheck
 {
-    self.fragaria.autoSpellCheck = autoSpellCheck;
+    self.fragaria.continuousSpellCheckingEnabled = autoSpellCheck;
 }
 
 - (BOOL)autoSpellCheck
 {
-    return self.fragaria.autoSpellCheck;
+    return self.fragaria.continuousSpellCheckingEnabled;
 }
 
 

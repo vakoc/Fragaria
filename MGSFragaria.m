@@ -121,19 +121,75 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 #pragma mark - Properties - Overall Appearance and Display
 
+/*
+ * @property automaticDashSubstitutionEnabled
+ */
+- (void) setAutomaticDashSubstitutionEnabled:(BOOL)automaticDashSubstitutionEnabled
+{
+    self.textView.automaticDataDetectionEnabled = automaticDashSubstitutionEnabled;
+}
+
+- (BOOL)automaticDashSubstitutionEnabled
+{
+    return self.textView.automaticDashSubstitutionEnabled;
+}
+
 
 /*
- * @property autoSpellCheck
+ * @property automaticDataDetectionEnabled
  */
-- (void)setAutoSpellCheck:(BOOL)autoSpellCheck
+- (void)setAutomaticDataDetectionEnabled:(BOOL)automaticDataDetectionEnabled
 {
-    self.textView.continuousSpellCheckingEnabled = autoSpellCheck;
+    self.textView.automaticDataDetectionEnabled = automaticDataDetectionEnabled;
 }
 
-- (BOOL)autoSpellCheck
+- (BOOL)automaticDataDetectionEnabled
 {
-    return self.textView.continuousSpellCheckingEnabled;
+    return self.textView.automaticDataDetectionEnabled;
 }
+
+
+/*
+ * @property automaticLinkDetectionEnabled
+ */
+- (void)setAutomaticLinkDetectionEnabled:(BOOL)setAutomaticLinkDetectionEnabled
+{
+    self.textView.automaticLinkDetectionEnabled = setAutomaticLinkDetectionEnabled;
+}
+
+- (BOOL)automaticLinkDetectionEnabled
+{
+    return self.textView.automaticLinkDetectionEnabled;
+}
+
+
+/*
+ * @property automaticQuoteSubstitutionEnabled
+ */
+- (void)setAutomaticQuoteSubstitutionEnabled:(BOOL)automaticQuoteSubstitutionEnabled
+{
+    self.textView.automaticQuoteSubstitutionEnabled = automaticQuoteSubstitutionEnabled;
+}
+
+- (BOOL)automaticQuoteSubstitutionEnabled
+{
+    return self.textView.automaticQuoteSubstitutionEnabled;
+}
+
+
+/*
+ * @property automaticTextReplacementEnabled
+ */
+- (void)setAutomaticTextReplacementEnabled:(BOOL)automaticTextReplacementEnabled
+{
+    self.textView.automaticTextReplacementEnabled = automaticTextReplacementEnabled;
+}
+
+- (BOOL)automaticTextReplacementEnabled
+{
+    return self.textView.automaticTextReplacementEnabled;
+}
+
 
 /*
  * @property backgroundColor
@@ -148,18 +204,45 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     return self.textView.backgroundColor;
 }
 
+
 /*
- * @property hasVerticalScroller:
+ * @property continuousSpellCheckingEnabled
  */
-- (void)setHasVerticalScroller:(BOOL)value
+- (void)setContinuousSpellCheckingEnabled:(BOOL)continuousSpellCheckingEnabled
 {
-    self.scrollView.hasVerticalScroller = value;
-    self.scrollView.autohidesScrollers = value;
+    self.textView.continuousSpellCheckingEnabled = continuousSpellCheckingEnabled;
 }
 
-- (BOOL)hasVerticalScroller
+- (BOOL)continuousSpellCheckingEnabled
 {
-    return self.scrollView.hasVerticalScroller;
+    return self.textView.continuousSpellCheckingEnabled;
+}
+
+/*
+ * @property currentLineHighlightColour
+ */
+- (void)setCurrentLineHighlightColour:(NSColor *)currentLineHighlightColour
+{
+    self.textView.currentLineHighlightColour = currentLineHighlightColour;
+}
+
+- (NSColor *)currentLineHighlightColour
+{
+    return self.textView.currentLineHighlightColour;
+}
+
+
+/*
+ * @property grammarCheckingEnabled
+ */
+- (void)grammarCheckingEnabled:(BOOL)grammarCheckingEnabled
+{
+    self.textView.grammarCheckingEnabled = grammarCheckingEnabled;
+}
+
+- (BOOL)grammarCheckingEnabled
+{
+    return self.textView.grammarCheckingEnabled;
 }
 
 
@@ -202,6 +285,35 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 -(NSColor *)gutterTextColour
 {
     return [self.gutterView textColor];
+}
+
+
+/*
+ * @property hasVerticalScroller:
+ */
+- (void)setHasVerticalScroller:(BOOL)value
+{
+    self.scrollView.hasVerticalScroller = value;
+    self.scrollView.autohidesScrollers = value;
+}
+
+- (BOOL)hasVerticalScroller
+{
+    return self.scrollView.hasVerticalScroller;
+}
+
+
+/*
+ * @property highlightsCurrentLine
+ */
+- (void)setHighlightsCurrentLine:(BOOL)highlightsCurrentLine
+{
+    self.textView.highlightCurrentLine = highlightsCurrentLine;
+}
+
+- (BOOL)highlightsCurrentLine
+{
+    return self.textView.highlightCurrentLine;
 }
 
 
@@ -329,6 +441,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (BOOL)showsWarningsInGutter
 {
     return self.syntaxErrorController.showSyntaxErrors;
+}
+
+
+/*
+ * @property smartInsertDeleteEnabled
+ */
+- (void)setSmartInsertDeleteEnabled:(BOOL)smartInsertDeleteEnabled
+{
+    self.textView.smartInsertDeleteEnabled = smartInsertDeleteEnabled;
+}
+
+- (BOOL)smartInsertDeleteEnabled
+{
+    return self.textView.smartInsertDeleteEnabled;
 }
 
 
