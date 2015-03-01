@@ -1142,10 +1142,26 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 /*
  * - setColour:range:
-
  */
 - (void)setColour:(NSDictionary *)colourDictionary range:(NSRange)range
 {
+    NSRange effectiveRange = NSMakeRange(0,0);
+    NSRange bounds = NSMakeRange(0, [[layoutManager textStorage] length]);
+    NSUInteger i = range.location;
+    NSString *attr;
+    NSSet *overlapSet = [NSSet setWithObjects:SMLSyntaxGroupCommand, nil];
+    
+    while (NSLocationInRange(i, range)) {
+        attr = [layoutManager temporaryAttribute:SMLSyntaxGroup atCharacterIndex:i
+          longestEffectiveRange:&effectiveRange inRange:bounds];
+        if (![overlapSet containsObject:attr]) {
+            [layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName
+              forCharacterRange:effectiveRange];
+            [layoutManager removeTemporaryAttribute:SMLSyntaxGroup
+              forCharacterRange:effectiveRange];
+        }
+        i = NSMaxRange(effectiveRange);
+    }
 	[layoutManager addTemporaryAttributes:colourDictionary forCharacterRange:range];
 }
 
@@ -1153,25 +1169,30 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 /*
  * - applyColourDefaults
  */
+
+#define NSCOLOR_FROM_USER_DEFAULTS(name)  [NSUnarchiver \
+  unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] \
+  objectForKey:name]]
+
 - (void)applyColourDefaults
 {
-	commandsColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsCommandsColourWell]], NSForegroundColorAttributeName, nil];
+    commandsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsCommandsColourWell), SMLSyntaxGroup: SMLSyntaxGroupCommand};
 	
-	commentsColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsCommentsColourWell]], NSForegroundColorAttributeName, nil];
+    commentsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsCommentsColourWell), SMLSyntaxGroup: @"comments"};
 	
-	instructionsColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsInstructionsColourWell]], NSForegroundColorAttributeName, nil];
+    instructionsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsInstructionsColourWell), SMLSyntaxGroup: SMLSyntaxGroupInstruction};
 	
-	keywordsColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsKeywordsColourWell]], NSForegroundColorAttributeName, nil];
+    keywordsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsKeywordsColourWell), SMLSyntaxGroup: SMLSyntaxGroupKeyword};
 	
-	autocompleteWordsColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsAutocompleteColourWell]], NSForegroundColorAttributeName, nil];
+    autocompleteWordsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsAutocompleteColourWell), SMLSyntaxGroup: SMLSyntaxGroupAutoComplete};
 	
-	stringsColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsStringsColourWell]], NSForegroundColorAttributeName, nil];
+    stringsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsStringsColourWell), SMLSyntaxGroup: @"strings"};
 	
-	variablesColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsVariablesColourWell]], NSForegroundColorAttributeName, nil];
+    variablesColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsVariablesColourWell), SMLSyntaxGroup: SMLSyntaxGroupVariable};
 	
-	attributesColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsAttributesColourWell]], NSForegroundColorAttributeName, nil];
+    attributesColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsAttributesColourWell), SMLSyntaxGroup: SMLSyntaxGroupAttribute};
 
-	numbersColour = [[NSDictionary alloc] initWithObjectsAndKeys:[NSUnarchiver unarchiveObjectWithData:[SMLDefaults valueForKey:MGSFragariaPrefsNumbersColourWell]], NSForegroundColorAttributeName, nil];
+    numbersColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsNumbersColourWell), SMLSyntaxGroup: SMLSyntaxGroupNumber};
 
     [self removeAllColours];
 }
