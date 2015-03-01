@@ -44,9 +44,6 @@ Copyright 2004-2009 Peter Borg
 /** The owning controller for instances of this class. */
 @property (nonatomic, weak, readonly) MGSFragaria *fragaria;
 
-/** The NSUndoManager instance used in this class. */
-@property (strong) NSUndoManager *undoManager;
-
 /** The syntax definition that determines how to color the text. */
 @property (nonatomic, strong) MGSSyntaxDefinition *syntaxDefinition;
 

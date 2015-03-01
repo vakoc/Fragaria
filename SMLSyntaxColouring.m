@@ -100,7 +100,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         // configure the document text view
         NSTextView *textView = self.fragaria.textView;
         NSAssert([textView isKindOfClass:[NSTextView class]], @"bad textview");
-        self.undoManager = [textView undoManager];
 
         NSScrollView *scrollView = self.fragaria.scrollView;
         [[scrollView contentView] setPostsBoundsChangedNotifications:YES];
