@@ -73,16 +73,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 #pragma mark - Instance methods
 
-/*
-  - init
-  */
-- (id)init
-{
-	self = [self initWithFragaria:nil];
-	
-	return self;
-}
-
 
 /*
  * - initWithFragaria
