@@ -30,6 +30,7 @@
 		0191FA821A8829930099B50D /* SMLTextView+MGSTextActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0191FA801A8829930099B50D /* SMLTextView+MGSTextActions.m */; };
 		019B80191A9E77330007D234 /* MGSFragariaTextViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 019B80181A9E77330007D234 /* MGSFragariaTextViewDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		019F56D51A9D3511009F9DCD /* SMLTextView+MGSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = D0C145C21A85E1FD00DDE90A /* SMLTextView+MGSDragging.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		01AC7E721AA341AA00DF7620 /* ErrorBadges.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01AC7E711AA341AA00DF7620 /* ErrorBadges.xcassets */; };
 		01BB1BF41A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */; };
 		AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B666118B768000903D1D /* SMLTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -96,13 +97,6 @@
 		D0C146751A871A0B00DDE90A /* MGSFragariaView.h in Headers */ = {isa = PBXBuildFile; fileRef = D0C146731A871A0B00DDE90A /* MGSFragariaView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0C146761A871A0B00DDE90A /* MGSFragariaView.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C146741A871A0B00DDE90A /* MGSFragariaView.m */; };
 		D0C146791A871AF300DDE90A /* Lorem.html in Resources */ = {isa = PBXBuildFile; fileRef = D0C146771A871AF300DDE90A /* Lorem.html */; };
-		D0C1467D1A87627300DDE90A /* messagesWarning.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C1467C1A87627300DDE90A /* messagesWarning.icns */; };
-		D0C146841A8769C100DDE90A /* messagesAccess.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C1467E1A8769C100DDE90A /* messagesAccess.icns */; };
-		D0C146851A8769C100DDE90A /* messagesConfig.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C1467F1A8769C100DDE90A /* messagesConfig.icns */; };
-		D0C146861A8769C100DDE90A /* messagesDocument.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C146801A8769C100DDE90A /* messagesDocument.icns */; };
-		D0C146871A8769C100DDE90A /* messagesError.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C146811A8769C100DDE90A /* messagesError.icns */; };
-		D0C146881A8769C100DDE90A /* messagesInfo.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C146821A8769C100DDE90A /* messagesInfo.icns */; };
-		D0C146891A8769C100DDE90A /* messagesPanic.icns in Resources */ = {isa = PBXBuildFile; fileRef = D0C146831A8769C100DDE90A /* messagesPanic.icns */; };
 		D0E521061A90DC02005CB80B /* MGSSyntaxErrorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E521041A90DC02005CB80B /* MGSSyntaxErrorController.m */; };
 		D0E521131A90E34F005CB80B /* MGSFragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* MGSFragaria.framework */; };
 		D0E5211A1A90E399005CB80B /* MGSSyntaxErrorControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E521071A90E307005CB80B /* MGSSyntaxErrorControllerTests.m */; };
@@ -180,6 +174,7 @@
 		0191FA801A8829930099B50D /* SMLTextView+MGSTextActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMLTextView+MGSTextActions.m"; sourceTree = "<group>"; };
 		019B80181A9E77330007D234 /* MGSFragariaTextViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaTextViewDelegate.h; sourceTree = "<group>"; };
 		019F56D41A9D297F009F9DCD /* MGSFragariaPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGSFragariaPrivate.h; sourceTree = "<group>"; };
+		01AC7E711AA341AA00DF7620 /* ErrorBadges.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ErrorBadges.xcassets; sourceTree = "<group>"; };
 		01BB1BF11A79AA15006C0056 /* MGSSimpleBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSSimpleBreakpointDelegate.h; path = Applications/Simple/MGSSimpleBreakpointDelegate.h; sourceTree = "<group>"; };
 		01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSSimpleBreakpointDelegate.m; path = Applications/Simple/MGSSimpleBreakpointDelegate.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -269,13 +264,6 @@
 		D0C146731A871A0B00DDE90A /* MGSFragariaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaView.h; sourceTree = "<group>"; };
 		D0C146741A871A0B00DDE90A /* MGSFragariaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragariaView.m; sourceTree = "<group>"; };
 		D0C146781A871AF300DDE90A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Lorem.html; sourceTree = "<group>"; };
-		D0C1467C1A87627300DDE90A /* messagesWarning.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesWarning.icns; sourceTree = "<group>"; };
-		D0C1467E1A8769C100DDE90A /* messagesAccess.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesAccess.icns; sourceTree = "<group>"; };
-		D0C1467F1A8769C100DDE90A /* messagesConfig.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesConfig.icns; sourceTree = "<group>"; };
-		D0C146801A8769C100DDE90A /* messagesDocument.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesDocument.icns; sourceTree = "<group>"; };
-		D0C146811A8769C100DDE90A /* messagesError.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesError.icns; sourceTree = "<group>"; };
-		D0C146821A8769C100DDE90A /* messagesInfo.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesInfo.icns; sourceTree = "<group>"; };
-		D0C146831A8769C100DDE90A /* messagesPanic.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = messagesPanic.icns; sourceTree = "<group>"; };
 		D0E520F21A88E577005CB80B /* Fragaria_Document-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Fragaria_Document-Info.plist"; path = "Applications/Doc/Fragaria_Document-Info.plist"; sourceTree = "<group>"; };
 		D0E521031A90DC02005CB80B /* MGSSyntaxErrorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSyntaxErrorController.h; sourceTree = "<group>"; };
 		D0E521041A90DC02005CB80B /* MGSSyntaxErrorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxErrorController.m; sourceTree = "<group>"; };
@@ -402,18 +390,18 @@
 				AB69B678118B76E700903D1D /* SMLLayoutManager.h */,
 				AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */,
 				013278651A81610E00D2DCA5 /* Syntax Definition Manager */,
-				01BB1BEE1A7964DC006C0056 /* Gutter Text View */,
+				01BB1BEE1A7964DC006C0056 /* Gutter View */,
 			);
 			name = "Text View Components";
 			sourceTree = "<group>";
 		};
-		01BB1BEE1A7964DC006C0056 /* Gutter Text View */ = {
+		01BB1BEE1A7964DC006C0056 /* Gutter View */ = {
 			isa = PBXGroup;
 			children = (
 				017FD5861A7A992700B305FB /* MGSLineNumberView.h */,
 				017FD5871A7A992700B305FB /* MGSLineNumberView.m */,
 			);
-			name = "Gutter Text View";
+			name = "Gutter View";
 			sourceTree = "<group>";
 		};
 		01BB1BEF1A7966E7006C0056 /* Standard UI */ = {
@@ -509,13 +497,7 @@
 		AB3972FC118C2A5D00AEF388 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				D0C1467E1A8769C100DDE90A /* messagesAccess.icns */,
-				D0C1467F1A8769C100DDE90A /* messagesConfig.icns */,
-				D0C146801A8769C100DDE90A /* messagesDocument.icns */,
-				D0C146811A8769C100DDE90A /* messagesError.icns */,
-				D0C146821A8769C100DDE90A /* messagesInfo.icns */,
-				D0C146831A8769C100DDE90A /* messagesPanic.icns */,
-				D0C1467C1A87627300DDE90A /* messagesWarning.icns */,
+				01AC7E711AA341AA00DF7620 /* ErrorBadges.xcassets */,
 				ABA812DB11B6855200A29990 /* LICENSE-2.0.txt */,
 				AB69B62C118B745700903D1D /* MGSFragaria-Info.plist */,
 				AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */,
@@ -863,17 +845,11 @@
 			files = (
 				AB39723A118C27E700AEF388 /* SyntaxDefinitions.plist in Resources */,
 				AB3972E5118C28E700AEF388 /* Syntax Definitions in Resources */,
-				D0C146841A8769C100DDE90A /* messagesAccess.icns in Resources */,
 				ABA1C12316144EFD00C8723F /* README.md in Resources */,
-				D0C146861A8769C100DDE90A /* messagesDocument.icns in Resources */,
-				D0C146881A8769C100DDE90A /* messagesInfo.icns in Resources */,
-				D0C146871A8769C100DDE90A /* messagesError.icns in Resources */,
-				D0C146851A8769C100DDE90A /* messagesConfig.icns in Resources */,
-				D0C146891A8769C100DDE90A /* messagesPanic.icns in Resources */,
 				ABA812DC11B6855200A29990 /* LICENSE-2.0.txt in Resources */,
-				D0C1467D1A87627300DDE90A /* messagesWarning.icns in Resources */,
 				AB472C851299C33100202CB5 /* SMLGoToLine.xib in Resources */,
 				AB472C881299C34500202CB5 /* SMLDetab.xib in Resources */,
+				01AC7E721AA341AA00DF7620 /* ErrorBadges.xcassets in Resources */,
 				AB472C891299C34500202CB5 /* SMLEntab.xib in Resources */,
 				AB8386D91719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib in Resources */,
 				AB8386DA1719E3D3004408F4 /* MGSPreferencesTextEditing.xib in Resources */,
