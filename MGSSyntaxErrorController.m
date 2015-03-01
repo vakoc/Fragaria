@@ -9,8 +9,12 @@
 #import "MGSSyntaxErrorController.h"
 
 
-#define kSMLErrorPopOverMargin       8
-#define kSMLErrorPopOverErrorSpacing 4.0
+#define kSMLErrorPopOverMargin        6.0
+#define kSMLErrorPopOverErrorSpacing  2.0
+
+/* Set this to 1 to disable suppression of badge icons in the syntax error
+ * balloons when there is only a single error to display. */
+#define kSMLAlwaysShowBadgesInBalloon 0
 
 
 static NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSString* str)
@@ -41,6 +45,22 @@ static NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSStrin
     
     return -1;
 }
+
+
+@interface MGSErrorBadgeAttachmentCell : NSTextAttachmentCell
+
+/* This class exists only because NSTextAttachmentCell does not have a setter
+ * for cellBaselineOffset. cellBaselineOffset is used to center the badge on
+ * the line of the syntax error it is associated with. */
+
+@end
+
+@implementation MGSErrorBadgeAttachmentCell
+
+- (NSPoint)cellBaselineOffset { return NSMakePoint(0,-2); }
+
+@end
+
 
 
 @implementation MGSSyntaxErrorController
@@ -219,16 +239,17 @@ static NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSStrin
 
 - (void)showErrorsForLine:(NSUInteger)line relativeToRect:(NSRect)rect ofView:(NSView*)view
 {
-    /// @todo: (jsd) add images.
-    NSArray *errors = [[self errorsForLine:line] valueForKeyPath:@"@distinctUnionOfObjects.description"];
-    if (!errors.count) return;
-
-    NSFont* font = [NSFont systemFontOfSize:10];
+    NSArray *errors, *images;
+    NSFont* font;
     NSMutableAttributedString *errorsString;
     NSMutableParagraphStyle *parStyle;
     NSTextField *textField;
     NSSize balloonSize;
-    int i;
+    NSInteger i, c;
+    
+    errors = [[self errorsForLine:line] valueForKey:@"description"];
+    images = [[self errorsForLine:line] valueForKey:@"warningImage"];
+    if (!(c = [errors count])) return;
 
     // Create view controller
     NSViewController *vc = [[NSViewController alloc] init];
@@ -238,22 +259,40 @@ static NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSStrin
     i = 0;
     for (NSString* err in errors) {
         NSMutableString *muts;
+        NSImage *warnImg;
+        NSTextAttachment *attachment;
+        MGSErrorBadgeAttachmentCell *attachmentCell;
+        NSAttributedString *attachmStr;
 
         muts = [err mutableCopy];
         [muts replaceOccurrencesOfString:@"\n" withString:@"\u2028" options:0 range:NSMakeRange(0, [muts length])];
         if (i != 0)
             [[errorsString mutableString] appendString:@"\n"];
+        
+        if (kSMLAlwaysShowBadgesInBalloon || c > 1) {
+            warnImg = [[images objectAtIndex:i] copy];
+            [warnImg setSize:NSMakeSize(11,11)];
+            
+            attachment = [[NSTextAttachment alloc] init];
+            attachmentCell = [[MGSErrorBadgeAttachmentCell alloc] initImageCell:warnImg];
+            [attachment setAttachmentCell:attachmentCell];
+            attachmStr = [NSAttributedString attributedStringWithAttachment:attachment];
+            [errorsString appendAttributedString:attachmStr];
+            [[errorsString mutableString] appendString:@" "];
+        }
+        
         [[errorsString mutableString] appendString:muts];
         i++;
     }
 
+    font = [NSFont systemFontOfSize:10];
     parStyle = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
     [parStyle setParagraphSpacing:kSMLErrorPopOverErrorSpacing];
-    [errorsString setAttributes:
-     @{NSParagraphStyleAttributeName: parStyle, NSFontAttributeName: font}
-                          range:NSMakeRange(0, [errorsString length])];
+    [errorsString addAttributes: @{NSParagraphStyleAttributeName: parStyle,
+      NSFontAttributeName: font} range:NSMakeRange(0, [errorsString length])];
 
     textField = [[NSTextField alloc] initWithFrame:NSZeroRect];
+    [textField setAllowsEditingTextAttributes:YES];
     [textField setAttributedStringValue:errorsString];
     [textField setBezeled:NO];
     [textField setDrawsBackground:NO];
@@ -280,3 +319,6 @@ static NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSStrin
 
 
 @end
+
+
+
