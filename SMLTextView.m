@@ -255,6 +255,16 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * -(void)setLayoutOrientation:
+ */
+- (void)setLayoutOrientation:(NSTextLayoutOrientation)theOrientation
+{
+    /* Currently, vertical layout breaks the ruler */
+    [super setLayoutOrientation:NSTextLayoutOrientationHorizontal];
+}
+
+
 #pragma mark - Strings - Properties and Methods
 
 
@@ -479,13 +489,14 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 /*
  * - validateMenuItems
- *   Note: permanently disabled.
  */
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
     if ([menuItem action] == @selector(toggleAutomaticDashSubstitution:))
         return NO;
     if ([menuItem action] == @selector(toggleAutomaticQuoteSubstitution:))
+        return NO;
+    if ([menuItem action] == @selector(changeLayoutOrientation:))
         return NO;
     return [super validateMenuItem:menuItem];
 }
