@@ -57,7 +57,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (NSString *)completeString;
 - (void)applyColourDefaults;
 - (void)removeAllColours;
-- (void)removeColoursFromRange:(NSRange)range;
 - (void)setColour:(NSDictionary *)colour range:(NSRange)range;
 - (BOOL)isSyntaxColouringRequired;
 
@@ -227,17 +226,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 {
 	NSRange wholeRange = NSMakeRange(0, [[self completeString] length]);
 	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:wholeRange];
+    [layoutManager removeTemporaryAttribute:SMLSyntaxGroup forCharacterRange:wholeRange];
     [[self.fragaria.textView inspectedCharacterIndexes] removeAllIndexes];
-}
-
-
-/*
- * - removeColoursFromRange
- */
-- (void)removeColoursFromRange:(NSRange)range
-{
-	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:range];
-    [[self.fragaria.textView inspectedCharacterIndexes] removeIndexesInRange:range];
 }
 
 
@@ -381,7 +371,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	[documentScanner setCharactersToBeSkipped:nil];
 	
     // uncolour the range
-	[self removeColoursFromRange:effectiveRange];
+	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:effectiveRange];
 	
     // colouring delegate
     NSDictionary *delegateInfo =  nil;
