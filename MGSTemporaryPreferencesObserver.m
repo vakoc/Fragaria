@@ -9,9 +9,15 @@
 #import "MGSTemporaryPreferencesObserver.h"
 #import "MGSFragaria.h"
 
+/* simple utility so we can use they key names without having to cross reference the strings every time. */
+static NSString *VK(NSString *key)
+{
+    return [NSString stringWithFormat:@"values.%@", key];
+}
 
 // KVO context constants
-char kcAutoSpellCheckChanged;
+char kcAutoSomethingChanged;
+
 char kcBackgroundColorChanged;
 char kcFragariaInvisibleCharactersColourWellChanged;
 char kcFragariaTabWidthChanged;
@@ -20,10 +26,10 @@ char kcInsertionPointColorChanged;
 char kcGutterGutterTextColourWell;
 char kcGutterWidthPrefChanged;
 char kcInvisibleCharacterValueChanged;
+char kcLineHighlightingChanged;
 char kcLineNumberPrefChanged;
 char kcLineWrapPrefChanged;
 char kcPageGuideChanged;
-char kcSpellCheckPrefChanged;
 char kcSyntaxColourPrefChanged;
 char kcTextColorChanged;
 
@@ -67,23 +73,29 @@ char kcTextColorChanged;
 -(void)registerKVO
 {
     NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterWidth" options:NSKeyValueObservingOptionInitial context:&kcGutterWidthPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaSyntaxColourNewDocuments" options:NSKeyValueObservingOptionInitial context:&kcSyntaxColourPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionInitial context:&kcSpellCheckPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowLineNumberGutter" options:NSKeyValueObservingOptionInitial context:&kcLineNumberPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionInitial context:&kcLineWrapPrefChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaGutterTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcGutterGutterTextColourWell];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextFont" options:NSKeyValueObservingOptionInitial context:&kcFragariaTextFontChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaInvisibleCharactersColourWell" options:NSKeyValueObservingOptionInitial context:&kcFragariaInvisibleCharactersColourWellChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowInvisibleCharacters" options:NSKeyValueObservingOptionInitial context:&kcInvisibleCharacterValueChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaTabWidth" options:NSKeyValueObservingOptionInitial context:&kcFragariaTabWidthChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaAutoSpellCheck" options:NSKeyValueObservingOptionInitial context:&kcAutoSpellCheckChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaBackgroundColourWell" options:NSKeyValueObservingOptionInitial context:&kcBackgroundColorChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcInsertionPointColorChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaTextColourWell" options:NSKeyValueObservingOptionInitial context:&kcTextColorChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsGutterWidth) options:NSKeyValueObservingOptionInitial context:&kcGutterWidthPrefChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsSyntaxColourNewDocuments) options:NSKeyValueObservingOptionInitial context:&kcSyntaxColourPrefChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowLineNumberGutter) options:NSKeyValueObservingOptionInitial context:&kcLineNumberPrefChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsLineWrapNewDocuments) options:NSKeyValueObservingOptionInitial context:&kcLineWrapPrefChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsGutterTextColourWell) options:NSKeyValueObservingOptionInitial context:&kcGutterGutterTextColourWell];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsTextFont) options:NSKeyValueObservingOptionInitial context:&kcFragariaTextFontChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsInvisibleCharactersColourWell) options:NSKeyValueObservingOptionInitial context:&kcFragariaInvisibleCharactersColourWellChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowInvisibleCharacters) options:NSKeyValueObservingOptionInitial context:&kcInvisibleCharacterValueChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsTabWidth) options:NSKeyValueObservingOptionInitial context:&kcFragariaTabWidthChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsBackgroundColourWell) options:NSKeyValueObservingOptionInitial context:&kcBackgroundColorChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsGutterTextColourWell) options:NSKeyValueObservingOptionInitial context:&kcInsertionPointColorChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsGutterTextColourWell) options:NSKeyValueObservingOptionInitial context:&kcTextColorChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowPageGuide) options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowPageGuideAtColumn) options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
 
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuide" options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
-    [defaultsController addObserver:self forKeyPath:@"values.FragariaShowPageGuideAtColumn" options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoSpellCheck) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutomaticQuoteSubstitution) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutomaticLinkDetection) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoGrammarCheck) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsSmartInsertDelete) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
+
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightCurrentLine) options:NSKeyValueObservingOptionInitial context:&kcLineHighlightingChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightLineColourWell) options:NSKeyValueObservingOptionInitial context:&kcLineHighlightingChanged];
 }
 
 
@@ -112,11 +124,6 @@ char kcTextColorChanged;
         boolValue = [defaults boolForKey:MGSFragariaPrefsSyntaxColourNewDocuments];
         self.fragaria.isSyntaxColoured = boolValue;
     }
-    else if (context == &kcSpellCheckPrefChanged)
-    {
-        boolValue = [defaults boolForKey:MGSFragariaPrefsAutoSpellCheck];
-        self.fragaria.autoSpellCheck = boolValue;
-    }
     else if (context == &kcLineWrapPrefChanged)
     {
         boolValue = [defaults boolForKey:MGSFragariaPrefsLineWrapNewDocuments];
@@ -144,9 +151,13 @@ char kcTextColorChanged;
     {
         self.fragaria.textTabWidth = [[defaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
     }
-    else if (context == &kcAutoSpellCheckChanged)
+    else if (context == &kcAutoSomethingChanged)
     {
-        self.fragaria.autoSpellCheck = [[defaults valueForKey:MGSFragariaPrefsAutoSpellCheck] boolValue];
+        self.fragaria.continuousSpellCheckingEnabled = [[defaults valueForKey:MGSFragariaPrefsAutoSpellCheck] boolValue];
+        self.fragaria.automaticQuoteSubstitutionEnabled = [[defaults valueForKey:MGSFragariaPrefsAutomaticQuoteSubstitution] boolValue];
+        self.fragaria.automaticLinkDetectionEnabled = [[defaults valueForKey:MGSFragariaPrefsAutomaticLinkDetection] boolValue];
+        self.fragaria.grammarCheckingEnabled = [[defaults valueForKey:MGSFragariaPrefsAutoGrammarCheck] boolValue];
+        self.fragaria.smartInsertDeleteEnabled = [[defaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue];
     }
     else if (context == &kcBackgroundColorChanged)
     {
@@ -162,6 +173,11 @@ char kcTextColorChanged;
     {
         self.fragaria.pageGuideColumn = [[defaults valueForKey:MGSFragariaPrefsShowPageGuideAtColumn] integerValue];
         self.fragaria.showsPageGuide = [[defaults valueForKey:MGSFragariaPrefsShowPageGuide] boolValue];
+    }
+    else if (context == &kcLineHighlightingChanged)
+    {
+        self.fragaria.highlightsCurrentLine = [[defaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue];
+        self.fragaria.currentLineHighlightColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsHighlightLineColourWell]];
     }
     else
     {
