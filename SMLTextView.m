@@ -70,8 +70,6 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 
 @property (strong) NSColor *pageGuideColour;
 
-@property (readwrite) NSMutableIndexSet *inspectedCharacterIndexes;
-
 @end
 
 
@@ -408,8 +406,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         [_interfaceController setCompletionTarget:self];
 
         [self setDefaults];
-
-        self.inspectedCharacterIndexes = [[NSMutableIndexSet alloc] initWithIndexesInRange:NSMakeRange(0,0)];
 
         // set initial line wrapping
         _lineWrap = YES;
@@ -817,11 +813,13 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     NSValue *rangeVal;
     NSRange range;
     NSInteger i, newLen;
+    NSMutableIndexSet *insp;
 
     res = [super shouldChangeTextInRanges:affectedRanges replacementStrings:replacementStrings];
-
+    insp = self.fragaria.syntaxColouring.inspectedCharacterIndexes;
+    
     if (!affectedRanges)
-        [self.inspectedCharacterIndexes removeAllIndexes];
+        [insp removeAllIndexes];
     else {
         sortedRanges = [affectedRanges sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
                         {
@@ -840,8 +838,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
             newLen = [[replacementStrings objectAtIndex:i] length];
             /* This is not really needed, but it allows for better edit coalescing */
             range = [[self string] lineRangeForRange:[rangeVal rangeValue]];
-            [self.inspectedCharacterIndexes removeIndexesInRange:range];
-            [self.inspectedCharacterIndexes shiftIndexesStartingAtIndex:range.location by:(newLen - range.length)];
+            [insp removeIndexesInRange:range];
+            [insp shiftIndexesStartingAtIndex:range.location by:(newLen - range.length)];
         }
     }
     return res;

@@ -41,9 +41,6 @@
 /** A reference to the owning Fragaria instance. */
 @property (nonatomic,assign,readonly) MGSFragaria *fragaria;
 
-/** Indicates the character indices that have been inspected. */
-@property (nonatomic, strong, readonly) NSMutableIndexSet *inspectedCharacterIndexes;
-
 
 /// @name Properties - Appearance and Behaviours
 #pragma mark - Properties - Appearance and Behaviours

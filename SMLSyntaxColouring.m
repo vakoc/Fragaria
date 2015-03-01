@@ -96,6 +96,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
         // configure layout managers
         layoutManager = (SMLLayoutManager *)[textView layoutManager];
+        _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] init];
 
         // configure colouring
         [self applyColourDefaults];
@@ -216,7 +217,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	NSRange wholeRange = NSMakeRange(0, [[self completeString] length]);
 	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:wholeRange];
     [layoutManager removeTemporaryAttribute:SMLSyntaxGroup forCharacterRange:wholeRange];
-    [[self.fragaria.textView inspectedCharacterIndexes] removeAllIndexes];
+    [self.inspectedCharacterIndexes removeAllIndexes];
 }
 
 
@@ -238,7 +239,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSMutableIndexSet *validRanges;
     SMLTextView *textView = self.fragaria.textView;
 
-    validRanges = [textView inspectedCharacterIndexes];
+    validRanges = self.inspectedCharacterIndexes;
     NSRect visibleRect = [[[textView enclosingScrollView] contentView] documentVisibleRect];
     NSRange visibleRange = [[textView layoutManager] glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
     [validRanges removeIndexesInRange:visibleRange];
@@ -257,7 +258,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	if (!self.isSyntaxColouringRequired) {
 		return;
 	}
-    validRanges = [self.fragaria.textView inspectedCharacterIndexes];
+    validRanges = self.inspectedCharacterIndexes;
     
     NSRect visibleRect = [[[self.fragaria.textView enclosingScrollView] contentView] documentVisibleRect];
     NSRange visibleRange = [[self.fragaria.textView layoutManager] glyphRangeForBoundingRect:visibleRect inTextContainer:[self.fragaria.textView textContainer]];

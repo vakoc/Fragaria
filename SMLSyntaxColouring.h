@@ -53,6 +53,9 @@ Copyright 2004-2009 Peter Borg
 /** Specifies if the syntax colourer has to be disabled or not. */
 @property (nonatomic, getter=isSyntaxColoured) BOOL syntaxColoured;
 
+/** Indicates the character ranges which colouring is valid. */
+@property (strong, readonly) NSMutableIndexSet *inspectedCharacterIndexes;
+
 
 /// @name Instance Methods
 
