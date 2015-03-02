@@ -55,7 +55,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic string, attributedString, attributedStringWithTemporaryAttributesApplied;
 @dynamic automaticDashSubstitutionEnabled, automaticDataDetectionEnabled, automaticLinkDetectionEnabled;
 @dynamic automaticQuoteSubstitutionEnabled, automaticTextReplacementEnabled;
-@dynamic backgroundColor, continuousSpellCheckingEnabled, currentLineHighlightColour;
+@dynamic backgroundColor, currentLineHighlightColour;
 @dynamic grammarCheckingEnabled, highlightsCurrentLine, insertionPointColor, lineWrap, pageGuideColumn;
 @dynamic showsPageGuide, smartInsertDeleteEnabled, tabWidth, textColor, textCurrentLineHighlightColour;
 
@@ -84,6 +84,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 #pragma mark - Properties - Overall Appearance and Display
+
+/*
+ * @property continuousSpellCheckingEnabled
+ */
+- (void)continuousSpellCheckingEnabled:(BOOL)value
+{
+	self.textView.continuousSpellCheckingEnabled = value;
+}
+
+- (BOOL)continuousSpellCheckingEnabled
+{
+	return self.textView.continuousSpellCheckingEnabled;
+}
+
 
 /*
  * @property gutterFont
@@ -668,9 +682,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 		   
 		   [NSValue valueWithPointer:@selector(backgroundColor)],
 		   [NSValue valueWithPointer:@selector(setBackgroundColor:)],
-		   
-		   [NSValue valueWithPointer:@selector(continuousSpellCheckingEnabled)],
-		   [NSValue valueWithPointer:@selector(setContinuousSpellCheckingEnabled:)],
 		   
 		   [NSValue valueWithPointer:@selector(currentLineHighlightColour)],
 		   [NSValue valueWithPointer:@selector(setCurrentLineHighlightColour:)],
