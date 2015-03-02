@@ -101,17 +101,13 @@ typedef enum : NSUInteger
 		for (NSInteger idx = glyphRange.location; idx < lengthToRedraw; idx++) {
 			unichar characterToCheck = [completeString characterAtIndex:idx];
             NSUInteger lineRefIndex = 0;
-            NSString *subCharacter = nil;
             
 			if (characterToCheck == '\t') {
                 lineRefIndex = kTabLine;
-                subCharacter = tabCharacter;
             } else if (characterToCheck == ' ') {
                 lineRefIndex = kSpaceLine;
-                subCharacter = spaceCharacter;
 			} else if (characterToCheck == '\n' || characterToCheck == '\r') {
                 lineRefIndex = kNewLineLine;
-                subCharacter = newLineCharacter;
 			} else {
                 continue;
             }
