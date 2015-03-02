@@ -519,7 +519,7 @@
     NSString				*labelText;
     NSUInteger				index, line;
     NSRect                  wholeLineRect;
-    CGFloat					ypos, yinset;
+    CGFloat					ypos;
     NSDictionary			*textAttributes, *currentTextAttributes;
     NSMutableArray			*lines;
     NSAttributedString      *drawingAttributedString;
@@ -527,8 +527,6 @@
     NSSet                   *linesWithBreakpoints;
 
     layoutManager = [view layoutManager];
-
-    yinset = [view textContainerInset].height;
 
     textAttributes = [self textAttributes];
     drawingContext = [[NSGraphicsContext currentContext] graphicsPort];
@@ -582,14 +580,15 @@
                 drawingAttributedString = [[NSAttributedString alloc] initWithString:labelText attributes:currentTextAttributes];
 
                 CGFloat descent, leading;
-                CTLineRef line;
-                line = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)drawingAttributedString);
-                CGFloat width = CTLineGetTypographicBounds(line, NULL, &descent, &leading);
+                CTLineRef textline;
+                textline = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)drawingAttributedString);
+                CGFloat width = CTLineGetTypographicBounds(textline, NULL, &descent, &leading);
                 
                 CGFloat xpos = NSWidth(bounds) - width - RULER_MARGIN;
                 CGFloat baselinepos = ypos + NSHeight(wholeLineRect) - floor(descent + 0.5) - floor(leading+0.5);
                 CGContextSetTextPosition(drawingContext, xpos, baselinepos);
-                CTLineDraw(line, drawingContext);
+                CTLineDraw(textline, drawingContext);
+                CFRelease(textline);
             }
 
             [self drawDecorationOfLine:line];
