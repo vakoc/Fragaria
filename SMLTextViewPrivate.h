@@ -17,7 +17,7 @@
 /** The autocomplete delegate for this text view. This property is private
  * because it is set to an internal object when MGSFragaria's autocomplete
  * delegate is set to nil. */
-@property id<SMLAutoCompleteDelegate> autocompleteDelegate;
+@property (weak) id<SMLAutoCompleteDelegate> autocompleteDelegate;
 
 /** The controller which manages the accessory user interface for this text
  * view. */
