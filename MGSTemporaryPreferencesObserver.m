@@ -33,6 +33,8 @@ char kcMultiLineChanged;
 char kcPageGuideChanged;
 char kcSyntaxColourPrefChanged;
 char kcTextColorChanged;
+char kcShowMatchingBracesChanged;
+char kcAutoInsertionPrefsChanged;
 
 
 @interface MGSTemporaryPreferencesObserver ()
@@ -107,6 +109,11 @@ char kcTextColorChanged;
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsSmartInsertDelete) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightCurrentLine) options:NSKeyValueObservingOptionInitial context:&kcLineHighlightingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightLineColourWell) options:NSKeyValueObservingOptionInitial context:&kcLineHighlightingChanged];
+    
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowMatchingBraces) options:NSKeyValueObservingOptionInitial context:&kcShowMatchingBracesChanged];
+    
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoInsertAClosingBrace) options:NSKeyValueObservingOptionInitial context:&kcAutoInsertionPrefsChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoInsertAClosingParenthesis) options:NSKeyValueObservingOptionInitial context:&kcAutoInsertionPrefsChanged];
 
 	// SMLSyntaxColouring
 	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommandsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
@@ -192,6 +199,15 @@ char kcTextColorChanged;
         self.fragaria.continuousSpellCheckingEnabled = [[defaults valueForKey:MGSFragariaPrefsAutoSpellCheck] boolValue];
         self.fragaria.grammarCheckingEnabled = [[defaults valueForKey:MGSFragariaPrefsAutoGrammarCheck] boolValue];
         self.fragaria.smartInsertDeleteEnabled = [[defaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue];
+    }
+    else if (context == &kcShowMatchingBracesChanged)
+    {
+        self.fragaria.showsMatchingBraces = [[defaults valueForKey:MGSFragariaPrefsShowMatchingBraces] boolValue];
+    }
+    else if (context == &kcAutoInsertionPrefsChanged)
+    {
+        self.fragaria.insertClosingBraceAutomatically = [[defaults valueForKey:MGSFragariaPrefsAutoInsertAClosingBrace] boolValue];
+        self.fragaria.insertClosingParenthesisAutomatically = [[defaults valueForKey:MGSFragariaPrefsAutoInsertAClosingParenthesis] boolValue];
     }
     else if (context == &kcBackgroundColorChanged)
     {

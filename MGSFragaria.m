@@ -56,6 +56,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic backgroundColor, currentLineHighlightColour;
 @dynamic grammarCheckingEnabled, highlightsCurrentLine, insertionPointColor, pageGuideColumn;
 @dynamic showsPageGuide, smartInsertDeleteEnabled, tabWidth, textColor, textCurrentLineHighlightColour;
+@dynamic showsMatchingBraces, insertClosingParenthesisAutomatically, insertClosingBraceAutomatically;
 
 
 // SMLSyntaxColouring dynamic properties:
@@ -694,89 +695,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (id)forwardingTargetForSelector:(SEL)aSelector
 {
-	static NSSet *textViewProperties = nil;
 	static NSSet *syntaxColoringProperties = nil;
-
-	if (!textViewProperties)
-	{
-		textViewProperties = [NSSet setWithArray: @[
-													 
-		   [NSValue valueWithPointer:@selector(string)],
-		   [NSValue valueWithPointer:@selector(setString:)],
-	   
-		   [NSValue valueWithPointer:@selector(attributedString)],
-		   [NSValue valueWithPointer:@selector(setAttributedString:)],
-		   
-		   [NSValue valueWithPointer:@selector(attributedStringWithTemporaryAttributesApplied)],
-
-		   [NSValue valueWithPointer:@selector(autoCompleteDelay)],
-		   [NSValue valueWithPointer:@selector(setAutoCompleteDelay:)],
-
-		   [NSValue valueWithPointer:@selector(autoCompleteEnabled)],
-		   [NSValue valueWithPointer:@selector(setAutoCompleteEnabled:)],
-
-		   [NSValue valueWithPointer:@selector(backgroundColor)],
-		   [NSValue valueWithPointer:@selector(setBackgroundColor:)],
-		   
-		   [NSValue valueWithPointer:@selector(currentLineHighlightColour)],
-		   [NSValue valueWithPointer:@selector(setCurrentLineHighlightColour:)],
-		   
-		   [NSValue valueWithPointer:@selector(grammarCheckingEnabled)],
-		   [NSValue valueWithPointer:@selector(setGrammarCheckingEnabled:)],
-		   
-		   [NSValue valueWithPointer:@selector(indentBracesAutomatically)],
-		   [NSValue valueWithPointer:@selector(setIndentBracesAutomatically:)],
-
-		   [NSValue valueWithPointer:@selector(indentNewLinesAutomatically)],
-		   [NSValue valueWithPointer:@selector(setIndentNewLinesAutomatically:)],
-
-		   [NSValue valueWithPointer:@selector(indentWidth)],
-		   [NSValue valueWithPointer:@selector(setIndentWidth:)],
-
-		   [NSValue valueWithPointer:@selector(indentWithSpaces)],
-		   [NSValue valueWithPointer:@selector(setIndentWithSpaces:)],
-
-		   [NSValue valueWithPointer:@selector(highlightsCurrentLine)],
-		   [NSValue valueWithPointer:@selector(setHighlightsCurrentLine:)],
-		   
-		   [NSValue valueWithPointer:@selector(insertClosingBraceAutomatically)],
-		   [NSValue valueWithPointer:@selector(setInsertClosingBraceAutomatically:)],
-
-		   [NSValue valueWithPointer:@selector(insertClosingParenthesisAutomatically)],
-		   [NSValue valueWithPointer:@selector(setInsertClosingParenthesisAutomatically:)],
-
-		   [NSValue valueWithPointer:@selector(insertionPointColor)],
-		   [NSValue valueWithPointer:@selector(setInsertionPointColor:)],
-		   
-		   [NSValue valueWithPointer:@selector(pageGuideColumn)],
-		   [NSValue valueWithPointer:@selector(setPageGuideColumn:)],
-		   
-		   [NSValue valueWithPointer:@selector(showsMatchingBraces)],
-		   [NSValue valueWithPointer:@selector(setShowsMatchingBraces:)],
-
-		   [NSValue valueWithPointer:@selector(showsPageGuide)],
-		   [NSValue valueWithPointer:@selector(setShowsPageGuide:)],
-		   
-		   [NSValue valueWithPointer:@selector(smartInsertDeleteEnabled)],
-		   [NSValue valueWithPointer:@selector(setSmartInsertDeleteEnabled:)],
-		   
-		   [NSValue valueWithPointer:@selector(spacesPerEntabDetab)],
-		   [NSValue valueWithPointer:@selector(setSpacesPerEntabDetab:)],
-
-		   [NSValue valueWithPointer:@selector(tabWidth)],
-		   [NSValue valueWithPointer:@selector(setTabWidth:)],
-		   
-		   [NSValue valueWithPointer:@selector(textColor)],
-		   [NSValue valueWithPointer:@selector(setTextColor:)],
-		   
-		   [NSValue valueWithPointer:@selector(textCurrentLineHighlightColour)],
-		   [NSValue valueWithPointer:@selector(setTextCurrentLineHighlightColour:)],
-		   
-		   [NSValue valueWithPointer:@selector(useTabStops)],
-		   [NSValue valueWithPointer:@selector(setUseTabStops:)],
-		   
-		]];
-	}
 	
 	if (!syntaxColoringProperties)
 	{
@@ -838,18 +757,11 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 		  
 		]];
 	}
-	
-	
-	if ([textViewProperties containsObject:[NSValue valueWithPointer:aSelector]] && [self.textView respondsToSelector:aSelector])
-	{
-		return self.textView;
-	}
-    if ([syntaxColoringProperties containsObject:[NSValue valueWithPointer:aSelector]] && [self.textView.syntaxColouring respondsToSelector:aSelector])
-    {
-        return self.textView.syntaxColouring;
-    }
 
-	return nil;
+    if ([syntaxColoringProperties containsObject:[NSValue valueWithPointer:aSelector]] && [self.textView.syntaxColouring respondsToSelector:aSelector])
+        return self.textView.syntaxColouring;
+
+    return self.textView;
 }
 
 
