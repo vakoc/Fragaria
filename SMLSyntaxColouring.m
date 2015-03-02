@@ -294,6 +294,18 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         }
 	}
     
+    /* Expand the range to not start or end in the middle of an already coloured
+     * block. */
+    NSRange longRange;
+    NSRange wholeRange = NSMakeRange(0, [documentString length]);
+    
+    if ([layoutManager temporaryAttribute:SMLSyntaxGroup atCharacterIndex:effectiveRange.location longestEffectiveRange:&longRange inRange:wholeRange]) {
+        effectiveRange = NSUnionRange(effectiveRange, longRange);
+    }
+    if ([layoutManager temporaryAttribute:SMLSyntaxGroup atCharacterIndex:NSMaxRange(effectiveRange) longestEffectiveRange:&longRange inRange:wholeRange]) {
+        effectiveRange = NSUnionRange(effectiveRange, longRange);
+    }
+    
     // assign range string
 	NSString *rangeString = [documentString substringWithRange:effectiveRange];
 	NSUInteger rangeStringLength = [rangeString length];
@@ -311,6 +323,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	
     // uncolour the range
 	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:effectiveRange];
+    [layoutManager removeTemporaryAttribute:SMLSyntaxGroup forCharacterRange:effectiveRange];
 	
     // colouring delegate
     NSDictionary *delegateInfo =  nil;

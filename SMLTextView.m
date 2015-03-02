@@ -864,7 +864,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
             range = [[self string] lineRangeForRange:[rangeVal rangeValue]];
             [insp removeIndexesInRange:range];
             [insp shiftIndexesStartingAtIndex:range.location by:(newLen - range.length)];
-            [self.syntaxColouring invalidateVisibleRangeOfTextView:self];
         }
     }
     return res;
@@ -1169,9 +1168,10 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 - (void)scheduleAutocomplete
 {
     if (!autocompleteWordsTimer) {
-        autocompleteWordsTimer = [NSTimer scheduledTimerWithTimeInterval:self.autoCompleteDelay
-                                                                  target:self selector:@selector(autocompleteWordsTimerSelector:)
-                                                                userInfo:nil repeats:NO];
+        autocompleteWordsTimer = [NSTimer
+          scheduledTimerWithTimeInterval:self.autoCompleteDelay
+          target:self selector:@selector(autocompleteWordsTimerSelector:)
+          userInfo:nil repeats:NO];
     }
     [autocompleteWordsTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:self.autoCompleteDelay]];
 }
