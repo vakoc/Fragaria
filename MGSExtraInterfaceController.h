@@ -39,10 +39,6 @@
 	IBOutlet NSWindow *goToLineWindow;
 }
 
-/// @name Properties
-
-@property SMLTextView *completionTarget;                              ///< The view which will be sent a perform message to after an entab, detab, goto action is confirmed by dismissing the corresponding dialog.
-
 
 /// @name Action Methods
 
@@ -53,9 +49,9 @@
 
 /// @name Implementers
 
-- (void)displayEntab;                                                 ///< Displays the entab sheet.
-- (void)displayDetab;                                                 ///< Displays the detab sheet.
-- (void)displayGoToLine;                                              ///< Displays the go to line sheet.
+- (void)displayEntabForTarget:(SMLTextView *)target;                                                 ///< Displays the entab sheet.
+- (void)displayDetabForTarget:(SMLTextView *)target;                                                 ///< Displays the detab sheet.
+- (void)displayGoToLineForTarget:(SMLTextView *)target;                                              ///< Displays the go to line sheet.
 
 
 @end

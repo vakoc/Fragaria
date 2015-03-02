@@ -379,7 +379,7 @@
  */
 - (IBAction)entab:(id)sender
 {
-    [self.interfaceController displayEntab];
+    [self.interfaceController displayEntabForTarget:self];
 }
 
 /*
@@ -389,7 +389,7 @@
  */
 - (IBAction)detab:(id)sender
 {
-    [self.interfaceController displayDetab];
+    [self.interfaceController displayDetabForTarget:self];
 }
 
 
@@ -533,7 +533,7 @@
  */
 - (IBAction)goToLine:(id)sender
 {
-    [self.interfaceController displayGoToLine];
+    [self.interfaceController displayGoToLineForTarget:self];
 }
 
 

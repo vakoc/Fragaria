@@ -25,22 +25,10 @@
 #import "SMLTextView+MGSTextActions.h"
 
 
-@implementation MGSExtraInterfaceController
-
-
-#pragma mark -
-#pragma mark Instance methods
-
-/*
- 
- - init
- 
- */
-- (id)init 
-{
-	self = [super init];
-	return self;
+@implementation MGSExtraInterfaceController {
+    SMLTextView *_completionTarget;
 }
+
 
 #pragma mark -
 #pragma mark Tabbing
@@ -50,7 +38,7 @@
  
  */
 
-- (void)displayEntab
+- (void)displayEntabForTarget:(SMLTextView *)target
 {
     NSWindow *wnd;
     
@@ -58,6 +46,7 @@
 		[NSBundle loadNibNamed:@"SMLEntab.nib" owner:self];
 	}
 	
+    _completionTarget = target;
     wnd = [_completionTarget window];
 	[NSApp beginSheet:entabWindow modalForWindow:wnd modalDelegate:self didEndSelector:nil contextInfo:nil];
 }
@@ -67,7 +56,7 @@
  - displayDetab
  
  */
-- (void)displayDetab
+- (void)displayDetabForTarget:(SMLTextView *)target
 {
     NSWindow *wnd;
     
@@ -75,6 +64,7 @@
 		[NSBundle loadNibNamed:@"SMLDetab.nib" owner:self];
 	}
 	
+    _completionTarget = target;
     wnd = [_completionTarget window];
 	[NSApp beginSheet:detabWindow modalForWindow:wnd modalDelegate:self didEndSelector:nil contextInfo:nil];
 }
@@ -93,6 +83,7 @@
 	[[wnd attachedSheet] close];
 	
     [_completionTarget performEntab];
+    _completionTarget = nil;
 }
 
 /*
@@ -108,6 +99,7 @@
     [[wnd attachedSheet] close];
 	
 	[_completionTarget performDetab];
+    _completionTarget = nil;
 }
 
 #pragma mark -
@@ -124,6 +116,7 @@
     
     [NSApp endSheet:[wnd attachedSheet]];
     [[wnd attachedSheet] close];
+    _completionTarget = nil;
 }
 
 
@@ -132,8 +125,9 @@
  - displayGoToLine
  
  */
-- (void)displayGoToLine
+- (void)displayGoToLineForTarget:(SMLTextView *)target
 {
+    _completionTarget = target;
     NSWindow *wnd = [_completionTarget window];
     
 	if (goToLineWindow == nil) {
@@ -156,6 +150,7 @@
     [[wnd attachedSheet] close];
 	
 	[_completionTarget performGoToLine:[lineTextFieldGoToLineWindow integerValue] setSelected:YES];
+    _completionTarget = nil;
 }
 
 

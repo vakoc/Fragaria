@@ -419,7 +419,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
         _fragaria = fragaria;
         _interfaceController = [[MGSExtraInterfaceController alloc] init];
-        [_interfaceController setCompletionTarget:self];
         
         _syntaxColouring = [[SMLSyntaxColouring alloc] initWithLayoutManager:layoutManager];
 
