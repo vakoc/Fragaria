@@ -52,7 +52,6 @@ char kcTextColorChanged;
     if ((self = [super init]))
     {
         self.fragaria = fragaria;
-		[self configureLegacyDefaults];
         [self registerKVO];
     }
 	
@@ -77,17 +76,6 @@ char kcTextColorChanged;
     [[NSNotificationCenter defaultCenter] removeObserver:self ];
 }
 
-
-/*
- *  - configureLegacyDefaults
- *    As Fragaria is migrated to a purely property driven system the current behavior
- *    should be maintained as long as possible. This method is a dumping-ground for
- *    current defaults that aren't controlled by the legacy KVO/userDefaults method.
- */
-- (void)configureLegacyDefaults
-{
-
-}
 
 /*
  *  - registerKVO
