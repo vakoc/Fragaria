@@ -88,11 +88,11 @@
         NSInteger charactersRemovedInSelection = 0;
         NSRange rangeOfLine;
         unichar characterToTest;
-        NSInteger numberOfSpacesPerTab = [[SMLDefaults valueForKey:MGSFragariaPrefsIndentWidth] integerValue];
+        NSInteger numberOfSpacesPerTab = self.indentWidth;
         NSInteger numberOfSpacesToDeleteOnFirstLine = -1;
         for (idx = 0; idx < numberOfLines; idx++) {
             rangeOfLine = [completeString lineRangeForRange:NSMakeRange(temporaryLocation, 0)];
-            if ([[SMLDefaults valueForKey:MGSFragariaPrefsUseTabStops] boolValue] == YES && [[SMLDefaults valueForKey:MGSFragariaPrefsIndentWithSpaces] boolValue] == YES) {
+            if (self.useTabStops && self.indentWithSpaces) {
                 NSUInteger startOfLine = rangeOfLine.location;
                 while (startOfLine < NSMaxRange(rangeOfLine) && [completeString characterAtIndex:startOfLine] == ' ' && rangeOfLine.length > 0) {
                     startOfLine++;
@@ -179,10 +179,10 @@
     NSRange selectedRange;
     
     NSMutableString *replacementString;
-    if ([[SMLDefaults valueForKey:MGSFragariaPrefsIndentWithSpaces] boolValue] == YES) {
+    if (self.indentWithSpaces) {
         replacementString = [NSMutableString string];
-        NSInteger numberOfSpacesPerTab = [[SMLDefaults valueForKey:MGSFragariaPrefsIndentWidth] integerValue];
-        if ([[SMLDefaults valueForKey:MGSFragariaPrefsUseTabStops] boolValue] == YES) {
+        NSInteger numberOfSpacesPerTab = self.indentWidth;
+        if (self.useTabStops) {
             NSInteger locationOnLine = [self selectedRange].location - [[self string] lineRangeForRange:NSMakeRange([self selectedRange].location, 0)].location;
             if (numberOfSpacesPerTab != 0) {
                 NSInteger numberOfSpacesLess = locationOnLine % numberOfSpacesPerTab;
@@ -404,7 +404,7 @@
     NSRange savedRange = [self selectedRange];
     
     NSArray *array = [self selectedRanges];
-    NSInteger numberOfSpaces = [[SMLDefaults valueForKey:MGSFragariaPrefsSpacesPerTabEntabDetab] integerValue];
+    NSInteger numberOfSpaces = self.spacesPerEntabDetab;
     NSMutableString *completeString = [NSMutableString stringWithString:[self string]];
     NSInteger sumOfRemovedCharacters = 0;
     for (id item in array) {
@@ -472,7 +472,7 @@
     
     NSArray *array = [self selectedRanges];
     NSMutableString *spaces = [NSMutableString string];
-    NSInteger numberOfSpaces = [[SMLDefaults valueForKey:MGSFragariaPrefsSpacesPerTabEntabDetab] integerValue];
+    NSInteger numberOfSpaces = self.spacesPerEntabDetab;
     for (i=0; i<numberOfSpaces; i++) {
         [spaces appendString:@" "];
     }

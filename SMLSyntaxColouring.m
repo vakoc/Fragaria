@@ -60,6 +60,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (void)setColour:(NSDictionary *)colour range:(NSRange)range;
 - (BOOL)isSyntaxColouringRequired;
 
+@property (nonatomic, assign) BOOL coloursChanged;
+
 @end
 
 
@@ -68,6 +70,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
     NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
     *stringsColour, *variablesColour, *attributesColour,  *numbersColour;
+
+    char kcColoursChanged;
 }
 
 
@@ -91,36 +95,9 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         // configure colouring
         [self applyColourDefaults];
 
-        // add NSUserDefaultsController KVO observers
-        NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaCommandsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaCommentsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaInstructionsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaKeywordsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaAutocompleteColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaVariablesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaStringsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaAttributesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaNumbersColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourCommands" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourComments" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourInstructions" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourKeywords" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourAutocomplete" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourVariables" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourStrings" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourAttributes" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourNumbers" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaOnlyColourTillTheEndOfLine" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
-        
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:@"LineWrapChanged"];
-        
-        [self setSyntaxColoured:[[NSUserDefaults standardUserDefaults] boolForKey:MGSFragariaPrefsSyntaxColourNewDocuments]];
-    }
+        // register for KVO -- observe our own properties.
+        [self addObserver:self forKeyPath:@"coloursChanged" options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	}
     
     return self;
 }
@@ -144,18 +121,44 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 #pragma mark - KVO
 
 /*
+ * + keyPathsForValuesAffectingColoursChanged
+ *   Instead of writing 36 getters and setters, we'll just observe the coloursChanged property.
+ */
++ (NSSet *)keyPathsForValuesAffectingColoursChanged
+{
+    return [NSSet setWithArray:@[
+        NSStringFromSelector(@selector(colourForAttributes)),
+        NSStringFromSelector(@selector(colourForAutocomplete)),
+        NSStringFromSelector(@selector(colourForCommands)),
+        NSStringFromSelector(@selector(colourForComments)),
+        NSStringFromSelector(@selector(colourForInstructions)),
+        NSStringFromSelector(@selector(colourForKeywords)),
+        NSStringFromSelector(@selector(colourForNumbers)),
+        NSStringFromSelector(@selector(colourForStrings)),
+        NSStringFromSelector(@selector(colourForVariables)),
+
+        NSStringFromSelector(@selector(coloursAttributes)),
+        NSStringFromSelector(@selector(coloursAutocomplete)),
+        NSStringFromSelector(@selector(coloursCommands)),
+        NSStringFromSelector(@selector(coloursComments)),
+        NSStringFromSelector(@selector(coloursInstructions)),
+        NSStringFromSelector(@selector(coloursKeywords)),
+        NSStringFromSelector(@selector(coloursNumbers)),
+        NSStringFromSelector(@selector(coloursStrings)),
+        NSStringFromSelector(@selector(coloursVariables)),
+    ]];
+}
+
+/*
  * - observeValueForKeyPath:ofObject:change:context:
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(__bridge NSString *)context isEqualToString:@"ColoursChanged"]) {
+	if (context == &kcColoursChanged) {
 		[self applyColourDefaults];
 		[self removeAllColours];
-	} else if ([(__bridge NSString *)context isEqualToString:@"MultiLineChanged"]) {
-        [self invalidateAllColouring];
-	} else if ([(__bridge NSString*)context isEqualToString:@"LineWrapChanged"]) {
-        [self removeAllColours];
-    } else {
+	}
+	else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 }
@@ -253,9 +256,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (NSRange)recolourChangedRange:(NSRange)rangeToRecolour
 {
-    // establish behavior
-	BOOL shouldColourMultiLineStrings = [[SMLDefaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue];
-    	
     // setup
     NSString *documentString = [self completeString];
 	NSRange effectiveRange = [documentString lineRangeForRange:rangeToRecolour];
@@ -272,7 +272,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     //
     // This is not always correct but it's better than nothing.
     //
-	if (shouldColourMultiLineStrings) {
+	if (self.colourMultiLineStringsEnabled) {
 		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:self.syntaxDefinition.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
         if (beginFirstStringInMultiLine != NSNotFound) {
             NSDictionary *ta = [layoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL];
@@ -372,85 +372,85 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 - (void)colourGroupWithIdentifier:(NSInteger)group inRange:(NSRange)effectiveRange withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner queryingDelegate:(id)colouringDelegate colouringBlock:(BOOL(^)(NSDictionary *, NSRange))colourRangeBlock
 {
-    NSString *prefKey;
+//    NSString *prefKey;
+    BOOL useColor;
     NSString *groupName;
     BOOL doColouring = YES;
     NSDictionary *delegateInfo;
     NSString *documentString = [documentScanner string];
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     NSDictionary *attributes;
     
     switch (group) {
         case kSMLSyntaxGroupNumber:
             groupName = SMLSyntaxGroupNumber;
-            prefKey = MGSFragariaPrefsColourNumbers;
+            useColor = self.coloursNumbers;
             attributes = numbersColour;
             break;
         case kSMLSyntaxGroupCommand:
             groupName = SMLSyntaxGroupCommand;
-            prefKey = MGSFragariaPrefsColourCommands;
+            useColor = self.coloursCommands;
             doColouring = ![self.syntaxDefinition.beginCommand isEqual:@""];
             attributes = commandsColour;
             break;
         case kSMLSyntaxGroupInstruction:
             groupName = SMLSyntaxGroupInstruction;
-            prefKey = MGSFragariaPrefsColourInstructions;
+            useColor = self.coloursInstructions;
             doColouring = ![self.syntaxDefinition.beginInstruction isEqual:@""];
             attributes = instructionsColour;
             break;
         case kSMLSyntaxGroupKeyword:
             groupName = SMLSyntaxGroupKeyword;
-            prefKey = MGSFragariaPrefsColourKeywords;
+            useColor = self.coloursKeywords;
             doColouring = [self.syntaxDefinition.keywords count] > 0;
             attributes = keywordsColour;
             break;
         case kSMLSyntaxGroupAutoComplete:
             groupName = SMLSyntaxGroupAutoComplete;
-            prefKey = MGSFragariaPrefsColourAutocomplete;
+            useColor = self.coloursAutocomplete;
             doColouring = [self.syntaxDefinition.autocompleteWords count] > 0;
             attributes = autocompleteWordsColour;
             break;
         case kSMLSyntaxGroupVariable:
             groupName = SMLSyntaxGroupVariable;
-            prefKey = MGSFragariaPrefsColourVariables;
+            useColor = self.coloursVariables;
             doColouring = (self.syntaxDefinition.beginVariableCharacterSet != nil);
             attributes = variablesColour;
             break;
         case kSMLSyntaxGroupSecondString:
             groupName = SMLSyntaxGroupSecondString;
-            prefKey = MGSFragariaPrefsColourStrings;
+            useColor = self.coloursStrings;
             doColouring = ![self.syntaxDefinition.secondString isEqual:@""];
             attributes = stringsColour;
             break;
         case kSMLSyntaxGroupFirstString:
             groupName = SMLSyntaxGroupFirstString;
-            prefKey = MGSFragariaPrefsColourStrings;
+            useColor = self.coloursStrings;
             doColouring = ![self.syntaxDefinition.firstString isEqual:@""];
             attributes = stringsColour;
             break;
         case kSMLSyntaxGroupAttribute:
             groupName = SMLSyntaxGroupAttribute;
-            prefKey = MGSFragariaPrefsColourAttributes;
+            useColor = self.coloursAttributes;
             attributes = attributesColour;
             break;
         case kSMLSyntaxGroupSingleLineComment:
             groupName = SMLSyntaxGroupSingleLineComment;
-            prefKey = MGSFragariaPrefsColourComments;
+            useColor = self.coloursComments;
             attributes = commentsColour;
             break;
         case kSMLSyntaxGroupMultiLineComment:
             groupName = SMLSyntaxGroupMultiLineComment;
-            prefKey = MGSFragariaPrefsColourComments;
+            useColor = self.coloursComments;
             attributes = commentsColour;
             break;
         case kSMLSyntaxGroupSecondStringPass2:
             groupName = SMLSyntaxGroupSecondStringPass2;
-            prefKey = MGSFragariaPrefsColourStrings;
+            useColor = self.coloursStrings;
             doColouring = ![self.syntaxDefinition.secondString isEqual:@""];
             attributes = stringsColour;
     }
     
-    doColouring = doColouring && [ud boolForKey:prefKey];
+    doColouring = doColouring && useColor;
     
     if ([colouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourGroupWithBlock:string:range:info:)]) {
         // build delegate info dictionary
@@ -625,8 +625,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSUInteger documentStringLength = [documentString length];
     NSUInteger maxRangeLocation = NSMaxRange(rangeToRecolour);
     
-    BOOL shouldOnlyColourTillTheEndOfLine = [[SMLDefaults valueForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine] boolValue];
-    
     // It takes too long to scan the whole document if it's large, so for instructions, first multi-line comment and second multi-line comment search backwards and begin at the start of the first beginInstruction etc. that it finds from the present position and, below, break the loop if it has passed the scanned range (i.e. after the end instruction)
     
     beginLocationInMultiLine = [documentString rangeOfString:self.syntaxDefinition.beginInstruction options:NSBackwardsSearch range:NSMakeRange(0, rangeLocation)].location;
@@ -650,7 +648,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         }
         [documentScanner mgs_setScanLocation:colourStartLocation];
         if (![documentScanner scanUpToString:self.syntaxDefinition.endInstruction intoString:nil] || [documentScanner scanLocation] >= documentStringLength) {
-            if (shouldOnlyColourTillTheEndOfLine) {
+            if (self.colourOnlyUntilEndOfLineEnabled) {
                 [documentScanner mgs_setScanLocation:NSMaxRange([documentString lineRangeForRange:NSMakeRange(colourStartLocation, 0)])];
             } else {
                 [documentScanner mgs_setScanLocation:documentStringLength];
@@ -766,9 +764,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSString *rangeString = [rangeScanner string];
     NSInteger rangeLocation = rangeToRecolour.location;
     
-    BOOL shouldColourMultiLineStrings = [[SMLDefaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue];
-    
-    if (!shouldColourMultiLineStrings)
+    if (!self.colourMultiLineStringsEnabled)
         stringPattern = [self.syntaxDefinition secondStringPattern];
     else
         stringPattern = [self.syntaxDefinition secondMultilineStringPattern];
@@ -796,9 +792,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSString *rangeString = [rangeScanner string];
     NSInteger rangeLocation = rangeToRecolour.location;
     
-    BOOL shouldColourMultiLineStrings = [[SMLDefaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue];
-    
-    if (!shouldColourMultiLineStrings)
+    if (!self.colourMultiLineStringsEnabled)
         stringPattern = [self.syntaxDefinition firstStringPattern];
     else
         stringPattern = [self.syntaxDefinition firstMultilineStringPattern];
@@ -935,8 +929,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSUInteger searchSyntaxLength;
     NSUInteger maxRangeLocation = NSMaxRange(rangeToRecolour);
     
-    BOOL shouldOnlyColourTillTheEndOfLine = [[SMLDefaults valueForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine] boolValue];
-    
     for (NSArray *multiLineComment in self.syntaxDefinition.multiLineComments) {
         
         // Get strings
@@ -997,7 +989,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 if (![documentScanner scanUpToString:endMultiLineComment intoString:nil] || [documentScanner scanLocation] >= documentStringLength) {
                     
                     // Comment end not found
-                    if (shouldOnlyColourTillTheEndOfLine) {
+                    if (self.colourOnlyUntilEndOfLineEnabled) {
                         [documentScanner mgs_setScanLocation:NSMaxRange([documentString lineRangeForRange:NSMakeRange(colourStartLocation, 0)])];
                     } else {
                         [documentScanner mgs_setScanLocation:documentStringLength];
@@ -1050,9 +1042,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSString *rangeString = [rangeScanner string];
     NSInteger rangeLocation = rangeToRecolour.location;
     
-    BOOL shouldColourMultiLineStrings = [[SMLDefaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue];
-    
-    if (!shouldColourMultiLineStrings)
+    if (!self.colourMultiLineStringsEnabled)
         stringPattern = [self.syntaxDefinition secondStringPattern];
     else
         stringPattern = [self.syntaxDefinition secondMultilineStringPattern];
@@ -1099,30 +1089,25 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 /*
  * - applyColourDefaults
  */
-
-#define NSCOLOR_FROM_USER_DEFAULTS(name)  [NSUnarchiver \
-  unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] \
-  objectForKey:name]]
-
 - (void)applyColourDefaults
 {
-    commandsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsCommandsColourWell), SMLSyntaxGroup: SMLSyntaxGroupCommand};
+    commandsColour = @{NSForegroundColorAttributeName: self.colourForCommands ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupCommand};
 	
-    commentsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsCommentsColourWell), SMLSyntaxGroup: @"comments"};
+    commentsColour = @{NSForegroundColorAttributeName: self.colourForComments ? : [NSNull null], SMLSyntaxGroup: @"comments"};
 	
-    instructionsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsInstructionsColourWell), SMLSyntaxGroup: SMLSyntaxGroupInstruction};
+    instructionsColour = @{NSForegroundColorAttributeName: self.colourForInstructions ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupInstruction};
 	
-    keywordsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsKeywordsColourWell), SMLSyntaxGroup: SMLSyntaxGroupKeyword};
+    keywordsColour = @{NSForegroundColorAttributeName: self.colourForKeywords ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupKeyword};
 	
-    autocompleteWordsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsAutocompleteColourWell), SMLSyntaxGroup: SMLSyntaxGroupAutoComplete};
+    autocompleteWordsColour = @{NSForegroundColorAttributeName: self.colourForAutocomplete ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupAutoComplete};
 	
-    stringsColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsStringsColourWell), SMLSyntaxGroup: @"strings"};
+    stringsColour = @{NSForegroundColorAttributeName: self.colourForStrings ? : [NSNull null], SMLSyntaxGroup: @"strings"};
 	
-    variablesColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsVariablesColourWell), SMLSyntaxGroup: SMLSyntaxGroupVariable};
+    variablesColour = @{NSForegroundColorAttributeName: self.colourForVariables ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupVariable};
 	
-    attributesColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsAttributesColourWell), SMLSyntaxGroup: SMLSyntaxGroupAttribute};
+    attributesColour = @{NSForegroundColorAttributeName: self.colourForAttributes ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupAttribute};
 
-    numbersColour = @{NSForegroundColorAttributeName : NSCOLOR_FROM_USER_DEFAULTS(MGSFragariaPrefsNumbersColourWell), SMLSyntaxGroup: SMLSyntaxGroupNumber};
+    numbersColour = @{NSForegroundColorAttributeName: self.colourForNumbers ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupNumber};
 
     [self removeAllColours];
 }
