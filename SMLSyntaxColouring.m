@@ -371,8 +371,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 - (void)colourGroupWithIdentifier:(NSInteger)group inRange:(NSRange)effectiveRange withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner queryingDelegate:(id)colouringDelegate colouringBlock:(BOOL(^)(NSDictionary *, NSRange))colourRangeBlock
 {
-//    NSString *prefKey;
-    BOOL useColor;
     NSString *groupName;
     BOOL doColouring = YES;
     NSDictionary *delegateInfo;
@@ -382,74 +380,64 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     switch (group) {
         case kSMLSyntaxGroupNumber:
             groupName = SMLSyntaxGroupNumber;
-            useColor = self.coloursNumbers;
+            doColouring = self.coloursNumbers;
             attributes = numbersColour;
             break;
         case kSMLSyntaxGroupCommand:
             groupName = SMLSyntaxGroupCommand;
-            useColor = self.coloursCommands;
-            doColouring = ![self.syntaxDefinition.beginCommand isEqual:@""];
+            doColouring = self.coloursCommands && ![self.syntaxDefinition.beginCommand isEqual:@""];
             attributes = commandsColour;
             break;
         case kSMLSyntaxGroupInstruction:
             groupName = SMLSyntaxGroupInstruction;
-            useColor = self.coloursInstructions;
-            doColouring = ![self.syntaxDefinition.beginInstruction isEqual:@""];
+            doColouring = self.coloursInstructions && ![self.syntaxDefinition.beginInstruction isEqual:@""];
             attributes = instructionsColour;
             break;
         case kSMLSyntaxGroupKeyword:
             groupName = SMLSyntaxGroupKeyword;
-            useColor = self.coloursKeywords;
-            doColouring = [self.syntaxDefinition.keywords count] > 0;
+            doColouring = self.coloursKeywords && [self.syntaxDefinition.keywords count] > 0;
             attributes = keywordsColour;
             break;
         case kSMLSyntaxGroupAutoComplete:
             groupName = SMLSyntaxGroupAutoComplete;
-            useColor = self.coloursAutocomplete;
-            doColouring = [self.syntaxDefinition.autocompleteWords count] > 0;
+            doColouring = self.coloursAutocomplete && [self.syntaxDefinition.autocompleteWords count] > 0;
             attributes = autocompleteWordsColour;
             break;
         case kSMLSyntaxGroupVariable:
             groupName = SMLSyntaxGroupVariable;
-            useColor = self.coloursVariables;
-            doColouring = (self.syntaxDefinition.beginVariableCharacterSet != nil);
+            doColouring = self.coloursVariables && self.syntaxDefinition.beginVariableCharacterSet != nil;
             attributes = variablesColour;
             break;
         case kSMLSyntaxGroupSecondString:
             groupName = SMLSyntaxGroupSecondString;
-            useColor = self.coloursStrings;
-            doColouring = ![self.syntaxDefinition.secondString isEqual:@""];
+            doColouring = self.coloursStrings && ![self.syntaxDefinition.secondString isEqual:@""];
             attributes = stringsColour;
             break;
         case kSMLSyntaxGroupFirstString:
             groupName = SMLSyntaxGroupFirstString;
-            useColor = self.coloursStrings;
-            doColouring = ![self.syntaxDefinition.firstString isEqual:@""];
+            doColouring = self.coloursStrings && ![self.syntaxDefinition.firstString isEqual:@""];
             attributes = stringsColour;
             break;
         case kSMLSyntaxGroupAttribute:
             groupName = SMLSyntaxGroupAttribute;
-            useColor = self.coloursAttributes;
+            doColouring = self.coloursAttributes;
             attributes = attributesColour;
             break;
         case kSMLSyntaxGroupSingleLineComment:
             groupName = SMLSyntaxGroupSingleLineComment;
-            useColor = self.coloursComments;
+            doColouring = self.coloursComments;
             attributes = commentsColour;
             break;
         case kSMLSyntaxGroupMultiLineComment:
             groupName = SMLSyntaxGroupMultiLineComment;
-            useColor = self.coloursComments;
+            doColouring = self.coloursComments;
             attributes = commentsColour;
             break;
         case kSMLSyntaxGroupSecondStringPass2:
             groupName = SMLSyntaxGroupSecondStringPass2;
-            useColor = self.coloursStrings;
-            doColouring = ![self.syntaxDefinition.secondString isEqual:@""];
+            doColouring = self.coloursStrings && ![self.syntaxDefinition.secondString isEqual:@""];
             attributes = stringsColour;
     }
-    
-    doColouring = doColouring && useColor;
     
     if ([colouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourGroupWithBlock:string:range:info:)]) {
         // build delegate info dictionary
