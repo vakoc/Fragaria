@@ -169,7 +169,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 -(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self ];
+    [self removeObserver:self forKeyPath:@"coloursChanged"];
 }
 
 
