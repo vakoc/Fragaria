@@ -124,14 +124,14 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 /*
  * @property continuousSpellCheckingEnabled
  */
-- (void)continuousSpellCheckingEnabled:(BOOL)value
+- (void)setContinuousSpellCheckingEnabled:(BOOL)value
 {
-	self.textView.continuousSpellCheckingEnabled = value;
+    [self.textView setContinuousSpellCheckingEnabled:value];
 }
 
 - (BOOL)continuousSpellCheckingEnabled
 {
-	return self.textView.continuousSpellCheckingEnabled;
+    return [self.textView isContinuousSpellCheckingEnabled];
 }
 
 
