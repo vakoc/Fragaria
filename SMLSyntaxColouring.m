@@ -450,6 +450,9 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
             groupName = SMLSyntaxGroupSecondStringPass2;
             doColouring = self.coloursStrings && ![self.syntaxDefinition.secondString isEqual:@""];
             attributes = stringsColour;
+            break;
+        default:
+            @throw [NSString stringWithFormat:@"Unrecognized syntax group identifier %ld", (long)group];
     }
     
     if ([colouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourGroupWithBlock:string:range:info:)]) {
