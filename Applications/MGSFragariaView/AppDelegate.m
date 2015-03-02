@@ -74,12 +74,10 @@
     self.viewTop.textView.string = fileContent;
     self.viewTop.startingLineNumber = 314;
 	self.viewTop.showsLineNumbers = YES;
-    self.viewTop.textView.lineWrap = NO;
 
     /* Make the lower view interesting. */
     self.self.viewBottom.string = fileContent;
 	self.viewBottom.showsLineNumbers = YES;
-    self.viewBottom.lineWrap = NO;
 
 
 	/* Sample Syntax Error Definitions */
