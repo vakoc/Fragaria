@@ -51,6 +51,9 @@ NSString *SMLSyntaxGroupMultiLineComment = @"multiLineComment";
 NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 
+static char kcColoursChanged;
+
+
 // class extension
 @interface SMLSyntaxColouring()
 
@@ -70,8 +73,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
     NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
     *stringsColour, *variablesColour, *attributesColour,  *numbersColour;
-
-    char kcColoursChanged;
 }
 
 

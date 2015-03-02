@@ -11,26 +11,26 @@
 
 
 // KVO context constants
-char kcAutoSomethingChanged;
-char kcBackgroundColorChanged;
-char kcColoursChanged;
-char kcFragariaInvisibleCharactersColourWellChanged;
-char kcFragariaTabWidthChanged;
-char kcFragariaTextFontChanged;
-char kcInsertionPointColorChanged;
-char kcGutterGutterTextColourWell;
-char kcGutterWidthPrefChanged;
-char kcInvisibleCharacterValueChanged;
-char kcLineHighlightingChanged;
-char kcLineNumberPrefChanged;
-char kcLineWrapPrefChanged;
-char kcMultiLineChanged;
-char kcPageGuideChanged;
-char kcSyntaxColourPrefChanged;
-char kcTextColorChanged;
-char kcShowMatchingBracesChanged;
-char kcAutoInsertionPrefsChanged;
-char kcIndentingPrefsChanged;
+static char kcAutoSomethingChanged;
+static char kcBackgroundColorChanged;
+static char kcColoursChanged;
+static char kcFragariaInvisibleCharactersColourWellChanged;
+static char kcFragariaTabWidthChanged;
+static char kcFragariaTextFontChanged;
+static char kcInsertionPointColorChanged;
+static char kcGutterGutterTextColourWell;
+static char kcGutterWidthPrefChanged;
+static char kcInvisibleCharacterValueChanged;
+static char kcLineHighlightingChanged;
+static char kcLineNumberPrefChanged;
+static char kcLineWrapPrefChanged;
+static char kcMultiLineChanged;
+static char kcPageGuideChanged;
+static char kcSyntaxColourPrefChanged;
+static char kcTextColorChanged;
+static char kcShowMatchingBracesChanged;
+static char kcAutoInsertionPrefsChanged;
+static char kcIndentingPrefsChanged;
 
 
 @interface MGSTemporaryPreferencesObserver ()
