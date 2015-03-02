@@ -55,7 +55,7 @@
 @property (nonatomic, strong) NSColor *currentLineHighlightColour;
 
 /** Indicates whether or not the current line is highlighted. */
-@property (nonatomic, assign) BOOL highlightCurrentLine;
+@property (nonatomic, assign) BOOL highlightsCurrentLine;
 
 /** Indicates whether or not braces should be indented automatically. */
 @property (nonatomic, assign) BOOL indentBracesAutomatically;

@@ -163,7 +163,7 @@ char kcTextColorChanged;
     }
     else if (context == &kcFragariaTabWidthChanged)
     {
-        self.fragaria.textTabWidth = [[defaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
+        self.fragaria.tabWidth = [[defaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
     }
     else if (context == &kcAutoSomethingChanged)
     {

@@ -107,11 +107,11 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) BOOL showsWarningsInGutter;                 ///< Indicates whether or not error warnings are displayed.
 @property (nonatomic, assign) BOOL smartInsertDeleteEnabled;              ///< Specifies whether or not smart insert and delete is enabled.
 @property (nonatomic, assign) NSUInteger startingLineNumber;              ///< Specifies the starting line number in the text view.
+@property (nonatomic, assign) NSInteger tabWidth;                         ///< Specifies the number of spaces per tab.
 @property (nonatomic, assign) NSColor *textColor;                         ///< Indicates the base (non-highlighted) text color.
 @property (nonatomic, assign) NSColor *textCurrentLineHighlightColour;    ///< Specifies the colour to render invisible characters in the text view.
 @property (nonatomic, assign) NSFont *textFont;                           ///< Specifies the text editor font.
 @property (nonatomic, assign) NSColor *textInvisibleCharactersColour;     ///< Specifies the colour to render invisible characters in the text view.
-@property (nonatomic, assign) NSInteger textTabWidth;                     ///< Specifies the number of spaces per tab.
 
 
 /// @name Properties - Syntax Errors

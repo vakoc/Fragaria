@@ -129,7 +129,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 - (void)setHighlightCurrentLine:(BOOL)highlightCurrentLine
 {
     [self setNeedsDisplayInRect:currentLineRect];
-    _highlightCurrentLine = highlightCurrentLine;
+    _highlightsCurrentLine = highlightCurrentLine;
     currentLineRect = [self lineHighlightingRect];
     [self setNeedsDisplayInRect:currentLineRect];
 }
@@ -582,7 +582,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     NSRange selRange, lineRange, multipleLineRange;
     NSRect lineRect;
 
-    if (!_highlightCurrentLine) return NSZeroRect;
+    if (!_highlightsCurrentLine) return NSZeroRect;
 
     selRange = [self selectedRange];
     ms = [[self textStorage] mutableString];
