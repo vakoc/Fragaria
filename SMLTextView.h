@@ -45,11 +45,11 @@
 /// @name Properties - Appearance and Behaviours
 #pragma mark - Properties - Appearance and Behaviours
 
-/** Specifies whether or not auto complete is enabled. */
-@property (nonatomic, assign) BOOL autoCompleteEnabled;
-
 /** Specifies the delay time for autocomplete, in seconds. */
 @property (nonatomic, assign) double autoCompleteDelay;
+
+/** Specifies whether or not auto complete is enabled. */
+@property (nonatomic, assign) BOOL autoCompleteEnabled;
 
 /** Indicates the color to use for current line highlighting. */
 @property (nonatomic, strong) NSColor *currentLineHighlightColour;
@@ -72,7 +72,7 @@
 /** Specifies whether or not closing paretheses are inserted automatically. */
 @property (nonatomic, assign) BOOL insertClosingParenthesisAutomatically;
 
-/** Speicifies whether or not closing braces are inserted automatically. */
+/** Specifies whether or not closing braces are inserted automatically. */
 @property (nonatomic, assign) BOOL insertClosingBraceAutomatically;
 
 /** Indicates the current insertion point color. */
@@ -93,7 +93,6 @@
 /** Indicates the number of spaces when performing entab or detab operations. */
 @property (nonatomic, assign) NSUInteger spacesPerEntabDetab;
  
- 
 /** Indicates the number of spaces per tab character. **/
 @property (nonatomic, assign) NSInteger tabWidth;
 
@@ -103,7 +102,7 @@
 /** Indicates the current editor font. */
 @property (nonatomic, strong) NSFont *textFont;
 
-/** Specified whether or not tab stops should be used when indenting. */
+/** Specifies whether or not tab stops should be used when indenting. */
 @property (nonatomic, assign) BOOL useTabStops;
 
 
