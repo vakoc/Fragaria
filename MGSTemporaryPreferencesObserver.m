@@ -123,28 +123,28 @@ char kcTextColorChanged;
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightLineColourWell) options:NSKeyValueObservingOptionInitial context:&kcLineHighlightingChanged];
 
 	// SMLSyntaxColouring
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommandsColourWell) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommentsColourWell) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsInstructionsColourWell) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsKeywordsColourWell) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutocompleteColourWell) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsVariablesColourWell) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsStringsColourWell) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAttributesColourWell) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsNumbersColourWell) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommandsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommentsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsInstructionsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsKeywordsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutocompleteColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsVariablesColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsStringsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAttributesColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsNumbersColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
 	
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourCommands) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourComments) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourInstructions) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourKeywords) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourAutocomplete) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourVariables) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourStrings) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourAttributes) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourNumbers) options:NSKeyValueObservingOptionNew context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourCommands) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourComments) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourInstructions) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourKeywords) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourAutocomplete) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourVariables) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourStrings) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourAttributes) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourNumbers) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
 	
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourMultiLineStrings) options:NSKeyValueObservingOptionNew context:&kcMultiLineChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsOnlyColourTillTheEndOfLine) options:NSKeyValueObservingOptionNew context:&kcMultiLineChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourMultiLineStrings) options:NSKeyValueObservingOptionInitial context:&kcMultiLineChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsOnlyColourTillTheEndOfLine) options:NSKeyValueObservingOptionInitial context:&kcMultiLineChanged];
 
 }
 
