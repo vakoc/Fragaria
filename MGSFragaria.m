@@ -78,7 +78,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 	
     _syntaxDefinitionName = value;
     syntaxDict = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:value];
-    syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict fragaria:(MGSFragaria *)self];
+    syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict];
     [self.textView.syntaxColouring setSyntaxDefinition:syntaxDef];
     
     /* Update the default autocomplete delegate with the new
