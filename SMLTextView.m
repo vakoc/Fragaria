@@ -433,8 +433,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 - (void)setDefaults
 {
 
-    self.tabWidth = 4; // @todo: (jsd) temporary reasonable stand-in value
-
     [self setVerticallyResizable:YES];
     [self setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
     [self setAutoresizingMask:NSViewWidthSizable];
@@ -783,10 +781,10 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
     if (shouldShiftText) {
         [self shiftRight:nil];
-    } else if ([[SMLDefaults valueForKey:MGSFragariaPrefsIndentWithSpaces] boolValue] == YES) {
+    } else if (self.indentWithSpaces) {
         NSMutableString *spacesString = [NSMutableString string];
-        NSInteger numberOfSpacesPerTab = [[SMLDefaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
-        if ([[SMLDefaults valueForKey:MGSFragariaPrefsUseTabStops] boolValue] == YES) {
+        NSInteger numberOfSpacesPerTab = self.tabWidth;
+        if (self.useTabStops) {
             NSInteger locationOnLine = [self selectedRange].location - [[self string] lineRangeForRange:[self selectedRange]].location;
             if (numberOfSpacesPerTab != 0) {
                 NSInteger numberOfSpacesLess = locationOnLine % numberOfSpacesPerTab;
@@ -857,8 +855,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)insertText:(NSString *)aString
 {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-
     /* AppKit Bug: when inserting an emoji (for example by double-clicking it
      * in the character set panel) an NSMutableAttributedString is passed to
      * insertText instead of an NSString. This works around this by making the
@@ -867,25 +863,25 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         aString = [(NSAttributedString *)aString string];
     }
 
-    if ([aString isEqualToString:@"}"] && [ud boolForKey:MGSFragariaPrefsIndentNewLinesAutomatically] && [ud boolForKey:MGSFragariaPrefsAutomaticallyIndentBraces]) {
+    if ([aString isEqualToString:@"}"] && self.indentNewLinesAutomatically && self.indentBracesAutomatically) {
         [self shiftBackToLastOpenBrace];
     }
 
     [super insertText:aString];
 
-    if ([aString isEqualToString:@"("] && [ud boolForKey:MGSFragariaPrefsAutoInsertAClosingParenthesis]) {
+    if ([aString isEqualToString:@"("] && self.insertClosingParenthesisAutomatically) {
         [self insertStringAfterInsertionPoint:@")"];
-    } else if ([aString isEqualToString:@"{"] && [ud boolForKey:MGSFragariaPrefsAutoInsertAClosingBrace]) {
+    } else if ([aString isEqualToString:@"{"] && self.insertClosingBraceAutomatically) {
         [self insertStringAfterInsertionPoint:@"}"];
     }
 
-    if ([aString length] == 1 && [ud boolForKey:MGSFragariaPrefsShowMatchingBraces]) {
+    if ([aString length] == 1 && self.showsMatchingBraces) {
         if (CharacterIsClosingBrace([aString characterAtIndex:0])) {
             [self showBraceMatchingBrace:[aString characterAtIndex:0]];
         }
     }
 
-    if ([ud boolForKey:MGSFragariaPrefsAutocompleteSuggestAutomatically])
+    if (self.autoCompleteEnabled)
         [self scheduleAutocomplete];
 }
 
@@ -1036,7 +1032,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
     // If we should indent automatically, check the previous line and scan all the whitespace at the beginning of the line into a string and insert that string into the new line
     NSString *lastLineString = [[self string] substringWithRange:[[self string] lineRangeForRange:NSMakeRange([self selectedRange].location - 1, 0)]];
-    if ([[SMLDefaults valueForKey:MGSFragariaPrefsIndentNewLinesAutomatically] boolValue] == YES) {
+    if (self.indentNewLinesAutomatically) {
         NSString *previousLineWhitespaceString;
         NSScanner *previousLineScanner = [[NSScanner alloc] initWithString:[[self string] substringWithRange:[[self string] lineRangeForRange:NSMakeRange([self selectedRange].location - 1, 0)]]];
         [previousLineScanner setCharactersToBeSkipped:nil];
@@ -1044,7 +1040,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
             [self insertText:previousLineWhitespaceString];
         }
 
-        if ([[SMLDefaults valueForKey:MGSFragariaPrefsAutomaticallyIndentBraces] boolValue] == YES) {
+        if (self.indentBracesAutomatically) {
             NSCharacterSet *characterSet = [NSCharacterSet whitespaceAndNewlineCharacterSet];
             NSInteger idx = [lastLineString length];
             while (idx--) {
@@ -1058,17 +1054,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
             }
         }
     }
-}
-
-
-/*
- * - appendString:
- */
-- (void)appendString:(NSString *)aString
-{
-    NSMutableString * string = [NSMutableString stringWithString:[super string]];
-    [string appendString:aString];
-    [self setString:string];
 }
 
 
@@ -1162,17 +1147,12 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)scheduleAutocomplete
 {
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    double autocompleteDelay;
-
-    autocompleteDelay = [ud doubleForKey:MGSFragariaPrefsAutocompleteAfterDelay];
-
     if (!autocompleteWordsTimer) {
-        autocompleteWordsTimer = [NSTimer scheduledTimerWithTimeInterval:autocompleteDelay
+        autocompleteWordsTimer = [NSTimer scheduledTimerWithTimeInterval:self.autoCompleteDelay
                                                                   target:self selector:@selector(autocompleteWordsTimerSelector:)
                                                                 userInfo:nil repeats:NO];
     }
-    [autocompleteWordsTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:autocompleteDelay]];
+    [autocompleteWordsTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:self.autoCompleteDelay]];
 }
 
 

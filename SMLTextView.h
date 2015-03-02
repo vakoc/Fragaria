@@ -45,11 +45,35 @@
 /// @name Properties - Appearance and Behaviours
 #pragma mark - Properties - Appearance and Behaviours
 
+/** Specifies whether or not auto complete is enabled. */
+@property (nonatomic, assign) BOOL autoCompleteEnabled;
+
+/** Specifies the delay time for autocomplete, in seconds. */
+@property (nonatomic, assign) double autoCompleteDelay;
+
 /** Indicates the color to use for current line highlighting. */
 @property (nonatomic, strong) NSColor *currentLineHighlightColour;
 
 /** Indicates whether or not the current line is highlighted. */
 @property (nonatomic, assign) BOOL highlightCurrentLine;
+
+/** Indicates whether or not braces should be indented automatically. */
+@property (nonatomic, assign) BOOL indentBracesAutomatically;
+
+/** Indicates whether or not new lines should be indented automatically. */
+@property (nonatomic, assign) BOOL indentNewLinesAutomatically;
+
+/** Specifies the automatic indentation width. */
+@property (nonatomic, assign) NSUInteger indentWidth;
+
+/** Specifies whether spaces should be inserted instead of tab characters when indenting. */
+@property (nonatomic, assign) BOOL indentWithSpaces;
+
+/** Specifies whether or not closing paretheses are inserted automatically. */
+@property (nonatomic, assign) BOOL insertClosingParenthesisAutomatically;
+
+/** Speicifies whether or not closing braces are inserted automatically. */
+@property (nonatomic, assign) BOOL insertClosingBraceAutomatically;
 
 /** Indicates the current insertion point color. */
 @property (nonatomic, assign) NSColor *insertionPointColor;
@@ -60,9 +84,16 @@
 /** Specifies the column position to draw the page guide. */
 @property (nonatomic, assign) NSInteger pageGuideColumn;
 
+/** Specifies whether or not matching braces are shown in the editor. */
+@property (nonatomic, assign) BOOL showsMatchingBraces;
+
 /** Specifies whether or not to show the page guide. */
 @property (nonatomic, assign) BOOL showsPageGuide;
 
+/** Indicates the number of spaces when performing entab or detab operations. */
+@property (nonatomic, assign) NSUInteger spacesPerEntabDetab;
+ 
+ 
 /** Indicates the number of spaces per tab character. **/
 @property (nonatomic, assign) NSInteger tabWidth;
 
@@ -71,6 +102,9 @@
 
 /** Indicates the current editor font. */
 @property (nonatomic, strong) NSFont *textFont;
+
+/** Specified whether or not tab stops should be used when indenting. */
+@property (nonatomic, assign) BOOL useTabStops;
 
 
 /// @name Properties - Delegates
