@@ -100,49 +100,50 @@ char kcIndentingPrefsChanged;
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsBackgroundColourWell) options:NSKeyValueObservingOptionInitial context:&kcBackgroundColorChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsGutterTextColourWell) options:NSKeyValueObservingOptionInitial context:&kcInsertionPointColorChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsGutterTextColourWell) options:NSKeyValueObservingOptionInitial context:&kcTextColorChanged];
-    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowPageGuide) options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
+    
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowPageGuide) options:0 context:&kcPageGuideChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowPageGuideAtColumn) options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
-    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoSpellCheck) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
-
-    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutomaticLinkDetection) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
-
-    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoGrammarCheck) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
+    
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoSpellCheck) options:0 context:&kcAutoSomethingChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutomaticLinkDetection) options:0 context:&kcAutoSomethingChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoGrammarCheck) options:0 context:&kcAutoSomethingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsSmartInsertDelete) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
-    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightCurrentLine) options:NSKeyValueObservingOptionInitial context:&kcLineHighlightingChanged];
+    
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightCurrentLine) options:0 context:&kcLineHighlightingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightLineColourWell) options:NSKeyValueObservingOptionInitial context:&kcLineHighlightingChanged];
     
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowMatchingBraces) options:NSKeyValueObservingOptionInitial context:&kcShowMatchingBracesChanged];
     
-    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoInsertAClosingBrace) options:NSKeyValueObservingOptionInitial context:&kcAutoInsertionPrefsChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoInsertAClosingBrace) options:0 context:&kcAutoInsertionPrefsChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoInsertAClosingParenthesis) options:NSKeyValueObservingOptionInitial context:&kcAutoInsertionPrefsChanged];
     
-    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsIndentWithSpaces) options:NSKeyValueObservingOptionInitial context:&kcIndentingPrefsChanged];
-    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsUseTabStops) options:NSKeyValueObservingOptionInitial context:&kcIndentingPrefsChanged];
-    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsIndentNewLinesAutomatically) options:NSKeyValueObservingOptionInitial context:&kcIndentingPrefsChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsIndentWithSpaces) options:0 context:&kcIndentingPrefsChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsUseTabStops) options:0 context:&kcIndentingPrefsChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsIndentNewLinesAutomatically) options:0 context:&kcIndentingPrefsChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutomaticallyIndentBraces) options:NSKeyValueObservingOptionInitial context:&kcIndentingPrefsChanged];
 
 	// SMLSyntaxColouring
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommandsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommentsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsInstructionsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsKeywordsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutocompleteColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsVariablesColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsStringsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAttributesColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsNumbersColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommandsColourWell) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommentsColourWell) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsInstructionsColourWell) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsKeywordsColourWell) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutocompleteColourWell) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsVariablesColourWell) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsStringsColourWell) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAttributesColourWell) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsNumbersColourWell) options:0 context:&kcColoursChanged];
 	
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourCommands) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourComments) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourInstructions) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourKeywords) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourAutocomplete) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourVariables) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourStrings) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourAttributes) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourCommands) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourComments) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourInstructions) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourKeywords) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourAutocomplete) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourVariables) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourStrings) options:0 context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourAttributes) options:0 context:&kcColoursChanged];
 	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourNumbers) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
 	
-	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourMultiLineStrings) options:NSKeyValueObservingOptionInitial context:&kcMultiLineChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourMultiLineStrings) options:0 context:&kcMultiLineChanged];
 	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsOnlyColourTillTheEndOfLine) options:NSKeyValueObservingOptionInitial context:&kcMultiLineChanged];
 }
 
