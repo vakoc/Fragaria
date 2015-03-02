@@ -123,6 +123,9 @@
 /** The attributedString property represents the string in the text view as an attributed string. */
 @property (nonatomic, strong) NSAttributedString *attributedString;
 
+/** The text editor string, including temporary attributes which have been applied as attributes. */
+@property (nonatomic, strong, readonly) NSAttributedString *attributedStringWithTemporaryAttributesApplied;
+
 /**
  *  Sets the text with a string with possible options.
  *  @param text Is the string to set.

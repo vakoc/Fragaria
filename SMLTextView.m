@@ -350,6 +350,22 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
+ * @property attributedStringWithTemporaryAttributesApplied
+ */
+- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
+{
+	// recolour the entire textview content
+	NSRange wholeRange;
+	
+	wholeRange = NSMakeRange(0, self.string.length);
+	[self.syntaxColouring recolourRange:wholeRange];
+	
+	// get content with layout manager temporary attributes persisted
+	return [(SMLLayoutManager *)self.layoutManager attributedStringWithTemporaryAttributesApplied];
+}
+
+
+/*
  * - replaceCharactersInRange:withString:options
  */
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options
