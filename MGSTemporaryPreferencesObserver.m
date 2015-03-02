@@ -17,8 +17,8 @@ static NSString *VK(NSString *key)
 
 // KVO context constants
 char kcAutoSomethingChanged;
-
 char kcBackgroundColorChanged;
+char kcColoursChanged;
 char kcFragariaInvisibleCharactersColourWellChanged;
 char kcFragariaTabWidthChanged;
 char kcFragariaTextFontChanged;
@@ -29,6 +29,7 @@ char kcInvisibleCharacterValueChanged;
 char kcLineHighlightingChanged;
 char kcLineNumberPrefChanged;
 char kcLineWrapPrefChanged;
+char kcMultiLineChanged;
 char kcPageGuideChanged;
 char kcSyntaxColourPrefChanged;
 char kcTextColorChanged;
@@ -51,9 +52,10 @@ char kcTextColorChanged;
     if ((self = [super init]))
     {
         self.fragaria = fragaria;
+		[self configureLegacyDefaults];
         [self registerKVO];
     }
-
+	
     return self;
 }
 
@@ -68,11 +70,36 @@ char kcTextColorChanged;
 
 
 /*
+ * - dealloc
+ */
+-(void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self ];
+}
+
+
+/*
+ *  - configureLegacyDefaults
+ *    As Fragaria is migrated to a purely property driven system the current behavior
+ *    should be maintained as long as possible. This method is a dumping-ground for
+ *    current defaults that aren't controlled by the legacy KVO/userDefaults method.
+ */
+- (void)configureLegacyDefaults
+{
+	[self.fragaria setAutomaticDashSubstitutionEnabled:NO];
+	[self.fragaria setAutomaticQuoteSubstitutionEnabled:NO];
+	[self.fragaria setAutomaticDataDetectionEnabled:YES];
+	[self.fragaria setAutomaticTextReplacementEnabled:YES];
+}
+
+/*
  *  - registerKVO
  */
 -(void)registerKVO
 {
     NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+	
+	// SMLTextView
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsGutterWidth) options:NSKeyValueObservingOptionInitial context:&kcGutterWidthPrefChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsSyntaxColourNewDocuments) options:NSKeyValueObservingOptionInitial context:&kcSyntaxColourPrefChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowLineNumberGutter) options:NSKeyValueObservingOptionInitial context:&kcLineNumberPrefChanged];
@@ -87,15 +114,38 @@ char kcTextColorChanged;
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsGutterTextColourWell) options:NSKeyValueObservingOptionInitial context:&kcTextColorChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowPageGuide) options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowPageGuideAtColumn) options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
-
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoSpellCheck) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutomaticQuoteSubstitution) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutomaticLinkDetection) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoGrammarCheck) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsSmartInsertDelete) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
-
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightCurrentLine) options:NSKeyValueObservingOptionInitial context:&kcLineHighlightingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightLineColourWell) options:NSKeyValueObservingOptionInitial context:&kcLineHighlightingChanged];
+
+	// SMLSyntaxColouring
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommandsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommentsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsInstructionsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsKeywordsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutocompleteColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsVariablesColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsStringsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAttributesColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsNumbersColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourCommands) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourComments) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourInstructions) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourKeywords) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourAutocomplete) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourVariables) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourStrings) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourAttributes) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourNumbers) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+	
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourMultiLineStrings) options:NSKeyValueObservingOptionInitial context:&kcMultiLineChanged];
+	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsOnlyColourTillTheEndOfLine) options:NSKeyValueObservingOptionInitial context:&kcMultiLineChanged];
+
 }
 
 
@@ -149,7 +199,7 @@ char kcTextColorChanged;
     }
     else if (context == &kcFragariaTabWidthChanged)
     {
-        self.fragaria.textTabWidth = [[defaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
+        self.fragaria.tabWidth = [[defaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
     }
     else if (context == &kcAutoSomethingChanged)
     {
@@ -178,6 +228,32 @@ char kcTextColorChanged;
     {
         self.fragaria.highlightsCurrentLine = [[defaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue];
         self.fragaria.currentLineHighlightColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsHighlightLineColourWell]];
+    }
+    else if (context == &kcMultiLineChanged)
+    {
+        self.fragaria.colourMultiLineStringsEnabled = [[defaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue];
+        self.fragaria.colourOnlyUntilEndOfLineEnabled = [[defaults valueForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine] boolValue];
+    }
+    else if (context == &kcColoursChanged)
+    {   // This will recolor the document 18 times (once for each property), but this is a legacy methods any.
+        self.fragaria.coloursAttributes = [[defaults valueForKey:MGSFragariaPrefsColourAttributes] boolValue];
+        self.fragaria.coloursAutocomplete = [[defaults valueForKey:MGSFragariaPrefsColourAutocomplete] boolValue];
+        self.fragaria.coloursCommands = [[defaults valueForKey:MGSFragariaPrefsColourCommands] boolValue];
+        self.fragaria.coloursComments = [[defaults valueForKey:MGSFragariaPrefsColourComments] boolValue];
+        self.fragaria.coloursInstructions = [[defaults valueForKey:MGSFragariaPrefsColourInstructions] boolValue];
+        self.fragaria.coloursKeywords = [[defaults valueForKey:MGSFragariaPrefsColourKeywords] boolValue];
+        self.fragaria.coloursNumbers = [[defaults valueForKey:MGSFragariaPrefsColourNumbers] boolValue];
+        self.fragaria.coloursStrings = [[defaults valueForKey:MGSFragariaPrefsColourStrings] boolValue];
+        self.fragaria.coloursVariables = [[defaults valueForKey:MGSFragariaPrefsColourVariables] boolValue];
+        self.fragaria.colourForAttributes = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsAttributesColourWell]];
+        self.fragaria.colourForAutocomplete = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsAutocompleteColourWell]];
+        self.fragaria.colourForCommands = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsCommandsColourWell]];
+        self.fragaria.colourForComments = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsCommentsColourWell]];
+        self.fragaria.colourForInstructions = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsInstructionsColourWell]];
+        self.fragaria.colourForKeywords = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsKeywordsColourWell]];
+        self.fragaria.colourForNumbers = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsNumbersColourWell]];
+        self.fragaria.colourForStrings = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsStringsColourWell]];
+        self.fragaria.colourForVariables = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsVariablesColourWell]];
     }
     else
     {

@@ -39,7 +39,7 @@ Copyright 2004-2009 Peter Borg
 @interface SMLSyntaxColouring : NSObject
 
 
-/// @name Properties
+/// @name Properties - Internal
 
 /** The MGSFragaria instance to be passed to the syntax colouring delegate
  * as the fragaria document parameter. */
@@ -59,6 +59,32 @@ Copyright 2004-2009 Peter Borg
 
 /** Indicates the character ranges where colouring is valid. */
 @property (strong, readonly) NSMutableIndexSet *inspectedCharacterIndexes;
+
+
+/// @name Properties - Appearance and Behavior
+
+@property (nonatomic, strong) NSColor *colourForAttributes;               ///< Specifies the colour for attributes.
+@property (nonatomic, strong) NSColor *colourForAutocomplete;             ///< Specifies the colour for autocomplete.
+@property (nonatomic, strong) NSColor *colourForCommands;                 ///< Specifies the colour for commands.
+@property (nonatomic, strong) NSColor *colourForComments;                 ///< Specifies the colour for comments.
+@property (nonatomic, strong) NSColor *colourForInstructions;             ///< Specifies the colour for instructions.
+@property (nonatomic, strong) NSColor *colourForKeywords;                 ///< Specifies the colour for keywords.
+@property (nonatomic, strong) NSColor *colourForNumbers;                  ///< Specifies the colour for numbers.
+@property (nonatomic, strong) NSColor *colourForStrings;                  ///< Specifies the colour for strings.
+@property (nonatomic, strong) NSColor *colourForVariables;                ///< Specifies the colour for variables.
+
+@property (nonatomic, assign) BOOL coloursAttributes;                     ///< Indicates if attributes should be coloured.
+@property (nonatomic, assign) BOOL coloursAutocomplete;                   ///< Indicates if autocomplete should be coloured.
+@property (nonatomic, assign) BOOL coloursCommands;                       ///< Indicates if commands should be coloured.
+@property (nonatomic, assign) BOOL coloursComments;                       ///< Indicates if comments should be coloured.
+@property (nonatomic, assign) BOOL coloursInstructions;                   ///< Indicates if instructions should be coloured.
+@property (nonatomic, assign) BOOL coloursKeywords;                       ///< Indicates if keywords should be coloured.
+@property (nonatomic, assign) BOOL coloursNumbers;                        ///< Indicates if numbers should be coloured.
+@property (nonatomic, assign) BOOL coloursStrings;                        ///< Indicates if strings should be coloured.
+@property (nonatomic, assign) BOOL coloursVariables;                      ///< Indicates if variables should be coloured.
+
+@property (nonatomic, assign) BOOL colourMultiLineStringsEnabled;         ///< Indicates if multiline strings should be coloured.
+@property (nonatomic, assign) BOOL colourOnlyUntilEndOfLineEnabled;       ///< Indicates if coloring should end at end of line.
 
 
 /// @name Instance Methods
