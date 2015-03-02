@@ -613,7 +613,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [self.scrollView setRulersVisible:[self showsLineNumbers]];
     
     // apply default line wrapping
-    [self.textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
+    [self.textView setLineWrap:[[[[NSUserDefaultsController sharedUserDefaultsController] values] valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
     
     _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
     self.syntaxErrorController.lineNumberView = self.gutterView;

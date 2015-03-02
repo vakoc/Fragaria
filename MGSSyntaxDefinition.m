@@ -79,7 +79,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     }
     
     // colour autocomplete words is a preference
-    if ([[SMLDefaults valueForKey:MGSFragariaPrefsColourAutocomplete] boolValue] == YES) {
+    if ([[[[NSUserDefaultsController sharedUserDefaultsController] values] valueForKey:MGSFragariaPrefsColourAutocomplete] boolValue] == YES) {
         _keywords = [NSSet setWithArray:keywordsAndAutocompleteWordsTemporary];
     }
     
