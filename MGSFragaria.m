@@ -864,7 +864,11 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 	{
 		return self.textView;
 	}
-	
+    if ([syntaxColoringProperties containsObject:[NSValue valueWithPointer:aSelector]] && [self.textView.syntaxColouring respondsToSelector:aSelector])
+    {
+        return self.textView.syntaxColouring;
+    }
+
 	return nil;
 }
 
