@@ -46,7 +46,7 @@ Copyright 2004-2009 Peter Borg
 @property (weak) MGSFragaria *fragaria;
 
 /** The layout manager to be used for setting temporary attributes. */
-@property (readonly) NSLayoutManager *layoutManager;
+@property (readonly, weak) NSLayoutManager *layoutManager;
 
 /** The syntax definition that determines how to color the text. */
 @property (nonatomic, strong) MGSSyntaxDefinition *syntaxDefinition;

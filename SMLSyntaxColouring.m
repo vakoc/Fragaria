@@ -66,7 +66,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 
 @implementation SMLSyntaxColouring {
-    SMLLayoutManager *layoutManager;
+    SMLLayoutManager __weak *layoutManager;
 
     NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
     *stringsColour, *variablesColour, *attributesColour,  *numbersColour;
