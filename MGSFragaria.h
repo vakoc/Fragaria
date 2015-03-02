@@ -83,11 +83,6 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 @property (nonatomic, assign) double autoCompleteDelay;                   ///< Specifies the delay time for autocomplete, in seconds.
 @property (nonatomic, assign) BOOL autoCompleteEnabled;                   ///< Specifies whether or not auto complete is enabled.
-@property (nonatomic, assign) BOOL automaticDashSubstitutionEnabled;      ///< Specifies whether or not automatic dash substitution is enabled.
-@property (nonatomic, assign) BOOL automaticDataDetectionEnabled;         ///< Specifies whether or not automatic data detection is enabled.
-@property (nonatomic, assign) BOOL automaticLinkDetectionEnabled;         ///< Specifies whether or not automatic link detection is enabled.
-@property (nonatomic, assign) BOOL automaticQuoteSubstitutionEnabled;     ///< Specifies whether or not automatic quote substitution is enabled.
-@property (nonatomic, assign) BOOL automaticTextReplacementEnabled;       ///< Specifies whether or not automatic text replacement is enabled.
 @property (nonatomic, assign) NSColor *backgroundColor;                   ///< Indicates the text view background color.
 @property (nonatomic, strong) NSColor *colourForAttributes;               ///< Specifies the colour for attributes.
 @property (nonatomic, strong) NSColor *colourForAutocomplete;             ///< Specifies the colour for autocomplete.

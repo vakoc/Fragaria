@@ -86,10 +86,7 @@ char kcTextColorChanged;
  */
 - (void)configureLegacyDefaults
 {
-	[self.fragaria setAutomaticDashSubstitutionEnabled:NO];
-	[self.fragaria setAutomaticQuoteSubstitutionEnabled:NO];
-	[self.fragaria setAutomaticDataDetectionEnabled:YES];
-	[self.fragaria setAutomaticTextReplacementEnabled:YES];
+
 }
 
 /*
@@ -115,8 +112,9 @@ char kcTextColorChanged;
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowPageGuide) options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsShowPageGuideAtColumn) options:NSKeyValueObservingOptionInitial context:&kcPageGuideChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoSpellCheck) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
-    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutomaticQuoteSubstitution) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
+
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutomaticLinkDetection) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
+
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoGrammarCheck) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsSmartInsertDelete) options:NSKeyValueObservingOptionInitial context:&kcAutoSomethingChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsHighlightCurrentLine) options:NSKeyValueObservingOptionInitial context:&kcLineHighlightingChanged];
@@ -204,8 +202,6 @@ char kcTextColorChanged;
     else if (context == &kcAutoSomethingChanged)
     {
         self.fragaria.continuousSpellCheckingEnabled = [[defaults valueForKey:MGSFragariaPrefsAutoSpellCheck] boolValue];
-        self.fragaria.automaticQuoteSubstitutionEnabled = [[defaults valueForKey:MGSFragariaPrefsAutomaticQuoteSubstitution] boolValue];
-        self.fragaria.automaticLinkDetectionEnabled = [[defaults valueForKey:MGSFragariaPrefsAutomaticLinkDetection] boolValue];
         self.fragaria.grammarCheckingEnabled = [[defaults valueForKey:MGSFragariaPrefsAutoGrammarCheck] boolValue];
         self.fragaria.smartInsertDeleteEnabled = [[defaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue];
     }

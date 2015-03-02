@@ -468,6 +468,11 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setImportsGraphics:NO];
     [self setUsesFontPanel:NO];
 
+    [self setAutomaticDashSubstitutionEnabled:NO];
+    [self setAutomaticQuoteSubstitutionEnabled:NO];
+    [self setAutomaticDataDetectionEnabled:YES];
+    [self setAutomaticTextReplacementEnabled:YES];
+
     NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveWhenFirstResponder) owner:self userInfo:nil];
     [self addTrackingArea:trackingArea];
 
