@@ -89,6 +89,26 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) BOOL automaticQuoteSubstitutionEnabled;     ///< Specifies whether or not automatic quote substitution is enabled.
 @property (nonatomic, assign) BOOL automaticTextReplacementEnabled;       ///< Specifies whether or not automatic text replacement is enabled.
 @property (nonatomic, assign) NSColor *backgroundColor;                   ///< Indicates the text view background color.
+@property (nonatomic, strong) NSColor *colourForAttributes;               ///< Specifies the colour for attributes.
+@property (nonatomic, strong) NSColor *colourForAutocomplete;             ///< Specifies the colour for autocomplete.
+@property (nonatomic, strong) NSColor *colourForCommands;                 ///< Specifies the colour for commands.
+@property (nonatomic, strong) NSColor *colourForComments;                 ///< Specifies the colour for comments.
+@property (nonatomic, strong) NSColor *colourForInstructions;             ///< Specifies the colour for instructions.
+@property (nonatomic, strong) NSColor *colourForKeywords;                 ///< Specifies the colour for keywords.
+@property (nonatomic, strong) NSColor *colourForNumbers;                  ///< Specifies the colour for numbers.
+@property (nonatomic, strong) NSColor *colourForStrings;                  ///< Specifies the colour for strings.
+@property (nonatomic, strong) NSColor *colourForVariables;                ///< Specifies the colour for variables.
+@property (nonatomic, assign) BOOL coloursAttributes;                     ///< Indicates if attributes should be coloured.
+@property (nonatomic, assign) BOOL coloursAutocomplete;                   ///< Indicates if autocomplete should be coloured.
+@property (nonatomic, assign) BOOL coloursCommands;                       ///< Indicates if commands should be coloured.
+@property (nonatomic, assign) BOOL coloursComments;                       ///< Indicates if comments should be coloured.
+@property (nonatomic, assign) BOOL coloursInstructions;                   ///< Indicates if instructions should be coloured.
+@property (nonatomic, assign) BOOL coloursKeywords;                       ///< Indicates if keywords should be coloured.
+@property (nonatomic, assign) BOOL coloursNumbers;                        ///< Indicates if numbers should be coloured.
+@property (nonatomic, assign) BOOL coloursStrings;                        ///< Indicates if strings should be coloured.
+@property (nonatomic, assign) BOOL coloursVariables;                      ///< Indicates if variables should be coloured.
+@property (nonatomic, assign) BOOL colourMultiLineStringsEnabled;         ///< Indicates if multiline strings should be coloured.
+@property (nonatomic, assign) BOOL colourOnlyUntilEndOfLineEnabled;       ///< Indicates if coloring should end at end of line.
 @property (nonatomic, assign) BOOL continuousSpellCheckingEnabled;        ///< Specifies whether or not automatic spell checking is enabled.
 @property (nonatomic, assign) NSColor *currentLineHighlightColour;        ///< Specifies the color to use when highlighting the current line.
 @property (nonatomic, assign) BOOL hasVerticalScroller;                   ///< Indicates whether or not the vertical scroller should be displayed.

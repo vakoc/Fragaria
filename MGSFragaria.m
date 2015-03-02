@@ -56,8 +56,15 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic automaticDashSubstitutionEnabled, automaticDataDetectionEnabled, automaticLinkDetectionEnabled;
 @dynamic automaticQuoteSubstitutionEnabled, automaticTextReplacementEnabled;
 @dynamic backgroundColor, currentLineHighlightColour;
-@dynamic grammarCheckingEnabled, highlightsCurrentLine, insertionPointColor, lineWrap, pageGuideColumn;
+@dynamic grammarCheckingEnabled, highlightsCurrentLine, insertionPointColor, pageGuideColumn;
 @dynamic showsPageGuide, smartInsertDeleteEnabled, tabWidth, textColor, textCurrentLineHighlightColour;
+
+
+// SMLSyntaxColouring dynamic properties:
+@dynamic colourForAttributes, colourForAutocomplete, colourForCommands, colourForComments, colourForInstructions;
+@dynamic colourForKeywords, colourForNumbers, colourForStrings, colourForVariables, coloursAttributes;
+@dynamic coloursAutocomplete, coloursCommands, coloursComments, coloursInstructions, coloursKeywords, coloursNumbers;
+@dynamic coloursStrings, coloursVariables;
 
 
 #pragma mark - Properties - Document Properties
@@ -70,7 +77,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 {
     NSDictionary *syntaxDict;
     MGSSyntaxDefinition *syntaxDef;
-    
+	
     _syntaxDefinitionName = value;
     syntaxDict = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:value];
     syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict];
@@ -84,6 +91,37 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 #pragma mark - Properties - Overall Appearance and Display
+
+
+/*
+ * @propery colourMultiLineStringsEnabled
+ */
+- (void)setColourMultiLineStringsEnabled:(BOOL)colourMultiLineStringsEnabled
+{
+	self.textView.syntaxColouring.colourMultiLineStringsEnabled = colourMultiLineStringsEnabled;
+	[self.textView.syntaxColouring invalidateAllColouring];
+}
+
+- (BOOL)colourMultiLineStringsEnabled
+{
+	return self.textView.syntaxColouring.colourMultiLineStringsEnabled;
+	
+}
+
+/*
+ * @property colourOnlyUntilEndOfLineEnabled
+ */
+- (void)setColourOnlyUntilEndOfLineEnabled:(BOOL)colourOnlyUntilEndOfLineEnabled
+{
+	self.textView.syntaxColouring.colourOnlyUntilEndOfLineEnabled = colourOnlyUntilEndOfLineEnabled;
+	[self.textView.syntaxColouring invalidateAllColouring];
+}
+
+- (BOOL)colourOnlyUntilEndOfLineEnabled
+{
+	return self.textView.syntaxColouring.colourOnlyUntilEndOfLineEnabled;
+}
+
 
 /*
  * @property continuousSpellCheckingEnabled
@@ -167,6 +205,21 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (BOOL)isSyntaxColoured
 {
 	return [self.textView.syntaxColouring isSyntaxColoured];
+}
+
+
+/*
+ * @property lineWrap
+ */
+- (void)setLineWrap:(BOOL)lineWrap
+{
+	self.textView.lineWrap = lineWrap;
+	[self.textView.syntaxColouring invalidateAllColouring];
+}
+
+- (BOOL)lineWrap
+{
+	return self.textView.lineWrap;
 }
 
 
@@ -647,6 +700,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (id)forwardingTargetForSelector:(SEL)aSelector
 {
 	static NSSet *textViewProperties = nil;
+	static NSSet *syntaxColoringProperties = nil;
+
 	if (!textViewProperties)
 	{
 		textViewProperties = [NSSet setWithArray: @[
@@ -713,9 +768,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 		   [NSValue valueWithPointer:@selector(insertionPointColor)],
 		   [NSValue valueWithPointer:@selector(setInsertionPointColor:)],
 		   
-		   [NSValue valueWithPointer:@selector(lineWrap)],
-		   [NSValue valueWithPointer:@selector(setLineWrap:)],
-		   
 		   [NSValue valueWithPointer:@selector(pageGuideColumn)],
 		   [NSValue valueWithPointer:@selector(setPageGuideColumn:)],
 		   
@@ -743,6 +795,67 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 		   [NSValue valueWithPointer:@selector(useTabStops)],
 		   [NSValue valueWithPointer:@selector(setUseTabStops:)],
 		   
+		]];
+	}
+	
+	if (!syntaxColoringProperties)
+	{
+		syntaxColoringProperties = [NSSet setWithArray: @[
+
+		  [NSValue valueWithPointer:@selector(colourForAttributes)],
+		  [NSValue valueWithPointer:@selector(setColourForAttributes:)],
+		  
+		  [NSValue valueWithPointer:@selector(colourForAutocomplete)],
+		  [NSValue valueWithPointer:@selector(setColourForAutocomplete:)],
+		  
+		  [NSValue valueWithPointer:@selector(colourForCommands)],
+		  [NSValue valueWithPointer:@selector(setColourForCommands:)],
+		
+		  [NSValue valueWithPointer:@selector(colourForComments)],
+		  [NSValue valueWithPointer:@selector(setColourForComments:)],
+		  
+		  [NSValue valueWithPointer:@selector(colourForInstructions)],
+		  [NSValue valueWithPointer:@selector(setColourForInstructions:)],
+		  
+		  [NSValue valueWithPointer:@selector(colourForKeywords)],
+		  [NSValue valueWithPointer:@selector(setColourForKeywords:)],
+		  
+		  [NSValue valueWithPointer:@selector(colourForNumbers)],
+		  [NSValue valueWithPointer:@selector(setColourForNumbers:)],
+		  
+		  [NSValue valueWithPointer:@selector(colourForStrings)],
+		  [NSValue valueWithPointer:@selector(setColourForStrings:)],
+		  
+		  [NSValue valueWithPointer:@selector(colourForVariables)],
+		  [NSValue valueWithPointer:@selector(setColourForVariables:)],
+		  
+		  [NSValue valueWithPointer:@selector(coloursAttributes)],
+		  [NSValue valueWithPointer:@selector(setColoursAttributes:)],
+		  
+		  [NSValue valueWithPointer:@selector(coloursAutocomplete)],
+		  [NSValue valueWithPointer:@selector(setColoursAutocomplete:)],
+		  
+		  [NSValue valueWithPointer:@selector(coloursCommands)],
+		  [NSValue valueWithPointer:@selector(setColoursCommands:)],
+		  
+		  [NSValue valueWithPointer:@selector(coloursComments)],
+		  [NSValue valueWithPointer:@selector(setColoursComments:)],
+		  
+		  [NSValue valueWithPointer:@selector(coloursInstructions)],
+		  [NSValue valueWithPointer:@selector(setColoursInstructions:)],
+		  
+		  [NSValue valueWithPointer:@selector(coloursKeywords)],
+		  [NSValue valueWithPointer:@selector(setColoursKeywords:)],
+		  
+		  [NSValue valueWithPointer:@selector(coloursNumbers)],
+		  [NSValue valueWithPointer:@selector(setColoursNumbers:)],
+		  
+		  [NSValue valueWithPointer:@selector(coloursStrings)],
+		  [NSValue valueWithPointer:@selector(setColoursStrings:)],
+		  
+		  [NSValue valueWithPointer:@selector(coloursVariables)],
+		  [NSValue valueWithPointer:@selector(setColoursVariables:)],
+		  
 		]];
 	}
 	

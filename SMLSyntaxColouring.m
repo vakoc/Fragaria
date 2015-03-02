@@ -113,14 +113,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         [defaultsController addObserver:self forKeyPath:@"values.FragariaColourStrings" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
         [defaultsController addObserver:self forKeyPath:@"values.FragariaColourAttributes" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
         [defaultsController addObserver:self forKeyPath:@"values.FragariaColourNumbers" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourMultiLineStrings" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaOnlyColourTillTheEndOfLine" options:NSKeyValueObservingOptionNew context:@"MultiLineChanged"];
-        
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaLineWrapNewDocuments" options:NSKeyValueObservingOptionNew context:@"LineWrapChanged"];
-        
-        [self setSyntaxColoured:[[NSUserDefaults standardUserDefaults] boolForKey:MGSFragariaPrefsSyntaxColourNewDocuments]];
-    }
+	}
     
     return self;
 }
@@ -151,11 +144,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	if ([(__bridge NSString *)context isEqualToString:@"ColoursChanged"]) {
 		[self applyColourDefaults];
 		[self removeAllColours];
-	} else if ([(__bridge NSString *)context isEqualToString:@"MultiLineChanged"]) {
-        [self invalidateAllColouring];
-	} else if ([(__bridge NSString*)context isEqualToString:@"LineWrapChanged"]) {
-        [self removeAllColours];
-    } else {
+	}
+	else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 }
