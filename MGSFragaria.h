@@ -81,11 +81,13 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 /// @name Properties - Overall Appearance and Display
 #pragma mark - Properties - Overall Appearance and Display
 
- @property (nonatomic, assign) BOOL automaticDashSubstitutionEnabled;      ///< Specifies whether or not automatic dash substitution is enabled.
- @property (nonatomic, assign) BOOL automaticDataDetectionEnabled;         ///< Specifies whether or not automatic data detection is enabled.
+@property (nonatomic, assign) double autoCompleteDelay;                   ///< Specifies the delay time for autocomplete, in seconds.
+@property (nonatomic, assign) BOOL autoCompleteEnabled;                   ///< Specifies whether or not auto complete is enabled.
+@property (nonatomic, assign) BOOL automaticDashSubstitutionEnabled;      ///< Specifies whether or not automatic dash substitution is enabled.
+@property (nonatomic, assign) BOOL automaticDataDetectionEnabled;         ///< Specifies whether or not automatic data detection is enabled.
 @property (nonatomic, assign) BOOL automaticLinkDetectionEnabled;         ///< Specifies whether or not automatic link detection is enabled.
 @property (nonatomic, assign) BOOL automaticQuoteSubstitutionEnabled;     ///< Specifies whether or not automatic quote substitution is enabled.
- @property (nonatomic, assign) BOOL automaticTextReplacementEnabled;       ///< Specifies whether or not automatic text replacement is enabled.
+@property (nonatomic, assign) BOOL automaticTextReplacementEnabled;       ///< Specifies whether or not automatic text replacement is enabled.
 @property (nonatomic, assign) NSColor *backgroundColor;                   ///< Indicates the text view background color.
 @property (nonatomic, assign) BOOL continuousSpellCheckingEnabled;        ///< Specifies whether or not automatic spell checking is enabled.
 @property (nonatomic, assign) NSColor *currentLineHighlightColour;        ///< Specifies the color to use when highlighting the current line.
@@ -95,6 +97,12 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) NSUInteger gutterMinimumWidth;              ///< Specifies the minimum width of the line number gutter.
 @property (nonatomic, assign) NSColor *gutterTextColour;                  ///< Specifies the standard color of the line numbers in the gutter.
 @property (nonatomic, assign) BOOL highlightsCurrentLine;                 ///< Specifies whether or not the line with the cursor should be highlighted.
+@property (nonatomic, assign) BOOL indentBracesAutomatically;             ///< Indicates whether or not braces should be indented automatically.
+@property (nonatomic, assign) BOOL indentNewLinesAutomatically;           ///< Indicates whether or not new lines should be indented automatically.
+@property (nonatomic, assign) NSUInteger indentWidth;                     ///< Specifies the automatic indentation width.
+@property (nonatomic, assign) BOOL indentWithSpaces;                      ///< Specifies whether spaces should be inserted instead of tab characters when indenting.
+@property (nonatomic, assign) BOOL insertClosingParenthesisAutomatically; ///< Specifies whether or not closing paretheses are inserted automatically.
+@property (nonatomic, assign) BOOL insertClosingBraceAutomatically;       ///< Specifies whether or not closing braces are inserted automatically.
 @property (nonatomic, assign) NSColor *insertionPointColor;               ///< Indicates the color of the insertion point.
 @property (nonatomic, assign) BOOL isSyntaxColoured;                      ///< Specifies whether the document shall be syntax highlighted.
 @property (nonatomic, assign) BOOL lineWrap;                              ///< Indicates whether or not line wrap is enabled.
@@ -103,15 +111,18 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) BOOL showsLineNumbers;                      ///< Indicates whether or not line numbers are displayed when the gutter is visible.
 @property (nonatomic, assign) BOOL showsGutter;                           ///< Indicates whether or not the gutter is visible.
 @property (nonatomic, assign) BOOL showsInvisibleCharacters;              ///< Indicates whether or not invisible characters in the editor are revealed.
+@property (nonatomic, assign) BOOL showsMatchingBraces;                   ///<Specifies whether or not matching braces are shown in the editor.
 @property (nonatomic, assign) BOOL showsPageGuide;                        ///< Specifies whether or not to show the page guide.
 @property (nonatomic, assign) BOOL showsWarningsInGutter;                 ///< Indicates whether or not error warnings are displayed.
 @property (nonatomic, assign) BOOL smartInsertDeleteEnabled;              ///< Specifies whether or not smart insert and delete is enabled.
+@property (nonatomic, assign) NSUInteger spacesPerEntabDetab;             ///< Indicates the number of spaces when performing entab or detab operations.
 @property (nonatomic, assign) NSUInteger startingLineNumber;              ///< Specifies the starting line number in the text view.
 @property (nonatomic, assign) NSInteger tabWidth;                         ///< Specifies the number of spaces per tab.
 @property (nonatomic, assign) NSColor *textColor;                         ///< Indicates the base (non-highlighted) text color.
 @property (nonatomic, assign) NSColor *textCurrentLineHighlightColour;    ///< Specifies the colour to render invisible characters in the text view.
 @property (nonatomic, assign) NSFont *textFont;                           ///< Specifies the text editor font.
 @property (nonatomic, assign) NSColor *textInvisibleCharactersColour;     ///< Specifies the colour to render invisible characters in the text view.
+@property (nonatomic, assign) BOOL useTabStops;                           ///< Specifies whether or not tab stops should be used when indenting.
 
 
 /// @name Properties - Syntax Errors

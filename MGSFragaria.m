@@ -646,6 +646,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 	   
 	   [NSValue valueWithPointer:@selector(attributedStringWithTemporaryAttributesApplied)],
 
+	   [NSValue valueWithPointer:@selector(autoCompleteDelay)],
+	   [NSValue valueWithPointer:@selector(setAutoCompleteDelay:)],
+
+	   [NSValue valueWithPointer:@selector(autoCompleteEnabled)],
+	   [NSValue valueWithPointer:@selector(setAutoCompleteEnabled:)],
+
 	   [NSValue valueWithPointer:@selector(automaticDashSubstitutionEnabled)],
 	   [NSValue valueWithPointer:@selector(setAutomaticDashSubstitutionEnabled:)],
 
@@ -673,12 +679,27 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 	   [NSValue valueWithPointer:@selector(grammarCheckingEnabled)],
 	   [NSValue valueWithPointer:@selector(setGrammarCheckingEnabled:)],
 	   
+	   [NSValue valueWithPointer:@selector(indentBracesAutomatically)],
+	   [NSValue valueWithPointer:@selector(setIndentBracesAutomatically:)],
+
 	   [NSValue valueWithPointer:@selector(indentNewLinesAutomatically)],
 	   [NSValue valueWithPointer:@selector(setIndentNewLinesAutomatically:)],
+
+	   [NSValue valueWithPointer:@selector(indentWidth)],
+	   [NSValue valueWithPointer:@selector(setIndentWidth:)],
+
+	   [NSValue valueWithPointer:@selector(indentWithSpaces)],
+	   [NSValue valueWithPointer:@selector(setIndentWithSpaces:)],
 
 	   [NSValue valueWithPointer:@selector(highlightsCurrentLine)],
 	   [NSValue valueWithPointer:@selector(setHighlightsCurrentLine:)],
 	   
+	   [NSValue valueWithPointer:@selector(insertClosingBraceAutomatically)],
+	   [NSValue valueWithPointer:@selector(setInsertClosingBraceAutomatically:)],
+
+	   [NSValue valueWithPointer:@selector(insertClosingParenthesisAutomatically)],
+	   [NSValue valueWithPointer:@selector(setInsertClosingParenthesisAutomatically:)],
+
 	   [NSValue valueWithPointer:@selector(insertionPointColor)],
 	   [NSValue valueWithPointer:@selector(setInsertionPointColor:)],
 	   
@@ -688,12 +709,18 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 	   [NSValue valueWithPointer:@selector(pageGuideColumn)],
 	   [NSValue valueWithPointer:@selector(setPageGuideColumn:)],
 	   
+	   [NSValue valueWithPointer:@selector(showsMatchingBraces)],
+	   [NSValue valueWithPointer:@selector(setShowsMatchingBraces:)],
+
 	   [NSValue valueWithPointer:@selector(showsPageGuide)],
 	   [NSValue valueWithPointer:@selector(setShowsPageGuide:)],
 	   
 	   [NSValue valueWithPointer:@selector(smartInsertDeleteEnabled)],
 	   [NSValue valueWithPointer:@selector(setSmartInsertDeleteEnabled:)],
 	   
+	   [NSValue valueWithPointer:@selector(spacesPerEntabDetab)],
+	   [NSValue valueWithPointer:@selector(setSpacesPerEntabDetab:)],
+
 	   [NSValue valueWithPointer:@selector(tabWidth)],
 	   [NSValue valueWithPointer:@selector(setTabWidth:)],
 	   
@@ -702,7 +729,10 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 	   
 	   [NSValue valueWithPointer:@selector(textCurrentLineHighlightColour)],
 	   [NSValue valueWithPointer:@selector(setTextCurrentLineHighlightColour:)],
-	   	   
+	   
+	   [NSValue valueWithPointer:@selector(useTabStops)],
+	   [NSValue valueWithPointer:@selector(setUseTabStops:)],
+	   
 	]];
 	
 	
