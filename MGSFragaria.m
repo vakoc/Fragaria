@@ -53,8 +53,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 // SMLTextView dynamic properties:
 @dynamic string, attributedString, attributedStringWithTemporaryAttributesApplied;
-@dynamic automaticDashSubstitutionEnabled, automaticDataDetectionEnabled, automaticLinkDetectionEnabled;
-@dynamic automaticQuoteSubstitutionEnabled, automaticTextReplacementEnabled;
 @dynamic backgroundColor, currentLineHighlightColour;
 @dynamic grammarCheckingEnabled, highlightsCurrentLine, insertionPointColor, pageGuideColumn;
 @dynamic showsPageGuide, smartInsertDeleteEnabled, tabWidth, textColor, textCurrentLineHighlightColour;
@@ -126,14 +124,14 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 /*
  * @property continuousSpellCheckingEnabled
  */
-- (void)continuousSpellCheckingEnabled:(BOOL)value
+- (void)setContinuousSpellCheckingEnabled:(BOOL)value
 {
-	self.textView.continuousSpellCheckingEnabled = value;
+    [self.textView setContinuousSpellCheckingEnabled:value];
 }
 
 - (BOOL)continuousSpellCheckingEnabled
 {
-	return self.textView.continuousSpellCheckingEnabled;
+    return [self.textView isContinuousSpellCheckingEnabled];
 }
 
 
@@ -615,7 +613,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [self.scrollView setRulersVisible:[self showsLineNumbers]];
     
     // apply default line wrapping
-    [self.textView setLineWrap:[[SMLDefaults valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
+    [self.textView setLineWrap:[[[[NSUserDefaultsController sharedUserDefaultsController] values] valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
     
     _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
     self.syntaxErrorController.lineNumberView = self.gutterView;
@@ -720,21 +718,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 		   [NSValue valueWithPointer:@selector(autoCompleteEnabled)],
 		   [NSValue valueWithPointer:@selector(setAutoCompleteEnabled:)],
 
-		   [NSValue valueWithPointer:@selector(automaticDashSubstitutionEnabled)],
-		   [NSValue valueWithPointer:@selector(setAutomaticDashSubstitutionEnabled:)],
-
-		   [NSValue valueWithPointer:@selector(automaticDataDetectionEnabled)],
-		   [NSValue valueWithPointer:@selector(setAutomaticDataDetectionEnabled:)],
-
-		   [NSValue valueWithPointer:@selector(automaticLinkDetectionEnabled)],
-		   [NSValue valueWithPointer:@selector(setAutomaticLinkDetectionEnabled:)],
-
-		   [NSValue valueWithPointer:@selector(automaticQuoteSubstitutionEnabled)],
-		   [NSValue valueWithPointer:@selector(setAutomaticQuoteSubstitutionEnabled:)],
-		   
-		   [NSValue valueWithPointer:@selector(automaticTextReplacementEnabled)],
-		   [NSValue valueWithPointer:@selector(setAutomaticTextReplacementEnabled:)],
-		   
 		   [NSValue valueWithPointer:@selector(backgroundColor)],
 		   [NSValue valueWithPointer:@selector(setBackgroundColor:)],
 		   

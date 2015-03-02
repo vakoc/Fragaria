@@ -51,7 +51,7 @@
     method from say the preferences window controller which has been configured as the window delegate */
 	NSFontManager *fontManager = sender;
 	NSFont *panelFont = [fontManager convertFont:[fontManager selectedFont]];
-	[SMLDefaults setValue:[NSArchiver archivedDataWithRootObject:panelFont] forKey:MGSFragariaPrefsTextFont];
+	[[[NSUserDefaultsController sharedUserDefaultsController] values] setValue:[NSArchiver archivedDataWithRootObject:panelFont] forKey:MGSFragariaPrefsTextFont];
 }
 
 
