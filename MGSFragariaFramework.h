@@ -12,7 +12,6 @@
  *  components in order to simplify header dependencies.
  **/
 
-#import "SMLStandardHeader.h"
 #import "SMLLayoutManager.h"
 #import "SMLSyntaxColouring.h"
 #import "MGSExtraInterfaceController.h"
