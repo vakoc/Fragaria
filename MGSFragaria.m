@@ -47,9 +47,17 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 @synthesize syntaxErrorController = _syntaxErrorController;
-
 @synthesize autoCompleteDelegate = _autoCompleteDelegate;
 @synthesize syntaxDefinitionName = _syntaxDefinitionName;
+
+
+// SMLTextView dynamic properties:
+@dynamic string, attributedString, attributedStringWithTemporaryAttributesApplied;
+@dynamic automaticDashSubstitutionEnabled, automaticDataDetectionEnabled, automaticLinkDetectionEnabled;
+@dynamic automaticQuoteSubstitutionEnabled, automaticTextReplacementEnabled;
+@dynamic backgroundColor, continuousSpellCheckingEnabled, currentLineHighlightColour;
+@dynamic grammarCheckingEnabled, highlightsCurrentLine, insertionPointColor, lineWrap, pageGuideColumn;
+@dynamic showsPageGuide, smartInsertDeleteEnabled, tabWidth, textColor, textCurrentLineHighlightColour;
 
 
 #pragma mark - Properties - Document Properties
@@ -75,178 +83,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 
 
-/*
- * @property string:
- */
-- (void)setString:(NSString *)aString
-{
-	[self.textView setString:aString];
-}
-
-- (NSString *)string
-{
-	return self.textView.string;
-}
-
-
-/*
- * @property attributedString:
- */
-- (void)setAttributedString:(NSAttributedString *)aString
-{
-	[self.textView setAttributedString:aString];
-}
-
-- (NSAttributedString *)attributedString
-{
-	return self.textView.attributedString;
-}
-
-
-/*
- * @property attributedStringWithTemporaryAttributesApplied
- */
-- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
-{
-    // recolour the entire textview content
-    NSRange wholeRange;
-    
-    wholeRange = NSMakeRange(0, self.textView.string.length);
-    [self.textView.syntaxColouring recolourRange:wholeRange];
-
-    // get content with layout manager temporary attributes persisted
-    SMLLayoutManager *layoutManager = (SMLLayoutManager *)[self.textView layoutManager];
-
-    return [layoutManager attributedStringWithTemporaryAttributesApplied];
-}
-
-
 #pragma mark - Properties - Overall Appearance and Display
-
-/*
- * @property automaticDashSubstitutionEnabled
- */
-- (void) setAutomaticDashSubstitutionEnabled:(BOOL)automaticDashSubstitutionEnabled
-{
-    self.textView.automaticDataDetectionEnabled = automaticDashSubstitutionEnabled;
-}
-
-- (BOOL)automaticDashSubstitutionEnabled
-{
-    return self.textView.automaticDashSubstitutionEnabled;
-}
-
-
-/*
- * @property automaticDataDetectionEnabled
- */
-- (void)setAutomaticDataDetectionEnabled:(BOOL)automaticDataDetectionEnabled
-{
-    self.textView.automaticDataDetectionEnabled = automaticDataDetectionEnabled;
-}
-
-- (BOOL)automaticDataDetectionEnabled
-{
-    return self.textView.automaticDataDetectionEnabled;
-}
-
-
-/*
- * @property automaticLinkDetectionEnabled
- */
-- (void)setAutomaticLinkDetectionEnabled:(BOOL)setAutomaticLinkDetectionEnabled
-{
-    self.textView.automaticLinkDetectionEnabled = setAutomaticLinkDetectionEnabled;
-}
-
-- (BOOL)automaticLinkDetectionEnabled
-{
-    return self.textView.automaticLinkDetectionEnabled;
-}
-
-
-/*
- * @property automaticQuoteSubstitutionEnabled
- */
-- (void)setAutomaticQuoteSubstitutionEnabled:(BOOL)automaticQuoteSubstitutionEnabled
-{
-    self.textView.automaticQuoteSubstitutionEnabled = automaticQuoteSubstitutionEnabled;
-}
-
-- (BOOL)automaticQuoteSubstitutionEnabled
-{
-    return self.textView.automaticQuoteSubstitutionEnabled;
-}
-
-
-/*
- * @property automaticTextReplacementEnabled
- */
-- (void)setAutomaticTextReplacementEnabled:(BOOL)automaticTextReplacementEnabled
-{
-    self.textView.automaticTextReplacementEnabled = automaticTextReplacementEnabled;
-}
-
-- (BOOL)automaticTextReplacementEnabled
-{
-    return self.textView.automaticTextReplacementEnabled;
-}
-
-
-/*
- * @property backgroundColor
- */
-- (void)setBackgroundColor:(NSColor *)backgroundColor
-{
-    self.textView.backgroundColor = backgroundColor;
-}
-
-- (NSColor *)backgroundColor
-{
-    return self.textView.backgroundColor;
-}
-
-
-/*
- * @property continuousSpellCheckingEnabled
- */
-- (void)setContinuousSpellCheckingEnabled:(BOOL)continuousSpellCheckingEnabled
-{
-    self.textView.continuousSpellCheckingEnabled = continuousSpellCheckingEnabled;
-}
-
-- (BOOL)continuousSpellCheckingEnabled
-{
-    return self.textView.continuousSpellCheckingEnabled;
-}
-
-/*
- * @property currentLineHighlightColour
- */
-- (void)setCurrentLineHighlightColour:(NSColor *)currentLineHighlightColour
-{
-    self.textView.currentLineHighlightColour = currentLineHighlightColour;
-}
-
-- (NSColor *)currentLineHighlightColour
-{
-    return self.textView.currentLineHighlightColour;
-}
-
-
-/*
- * @property grammarCheckingEnabled
- */
-- (void)grammarCheckingEnabled:(BOOL)grammarCheckingEnabled
-{
-    self.textView.grammarCheckingEnabled = grammarCheckingEnabled;
-}
-
-- (BOOL)grammarCheckingEnabled
-{
-    return self.textView.grammarCheckingEnabled;
-}
-
 
 /*
  * @property gutterFont
@@ -306,58 +143,16 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
- * @property highlightsCurrentLine
+ * @property isSyntaxColoured
  */
-- (void)setHighlightsCurrentLine:(BOOL)highlightsCurrentLine
+- (void)setIsSyntaxColoured:(BOOL)value
 {
-    self.textView.highlightCurrentLine = highlightsCurrentLine;
+	[self.textView.syntaxColouring setSyntaxColoured:value];
 }
 
-- (BOOL)highlightsCurrentLine
+- (BOOL)isSyntaxColoured
 {
-    return self.textView.highlightCurrentLine;
-}
-
-
-/*
- * @property insertionPointColor
- */
-- (void)setInsertionPointColor:(NSColor *)insertionPointColor
-{
-    self.textView.insertionPointColor = insertionPointColor;
-}
-
-- (NSColor *)insertionPointColor
-{
-    return self.textView.insertionPointColor;
-}
-
-
-/*
- * @property lineWrap:
- */
-- (void)setLineWrap:(BOOL)value
-{
-    [self.textView setLineWrap:value];
-}
-
-- (BOOL)lineWrap
-{
-    return [self.textView lineWrap];
-}
-
-
-/*
- * @property pageGuideColumn
- */
-- (void)setPageGuideColumn:(NSInteger)pageGuideColumn
-{
-    self.textView.pageGuideColumn = pageGuideColumn;
-}
-
-- (NSInteger)pageGuideColumn
-{
-    return self.textView.pageGuideColumn;
+	return [self.textView.syntaxColouring isSyntaxColoured];
 }
 
 
@@ -409,26 +204,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
 {
-    self.textView.layoutManager.showsInvisibleCharacters = showsInvisibleCharacters;
+	self.textView.layoutManager.showsInvisibleCharacters = showsInvisibleCharacters;
 }
 
 - (BOOL)showsInvisibleCharacters
 {
-    return self.textView.layoutManager.showsInvisibleCharacters;
-}
-
-
-/*
- * @property showsPageGuide
- */
-- (void)setShowsPageGuide:(BOOL)showsPageGuide
-{
-    self.textView.showsPageGuide = showsPageGuide;
-}
-
-- (BOOL)showsPageGuide
-{
-    return self.textView.showsPageGuide;
+	return self.textView.layoutManager.showsInvisibleCharacters;
 }
 
 
@@ -447,20 +228,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
- * @property smartInsertDeleteEnabled
- */
-- (void)setSmartInsertDeleteEnabled:(BOOL)smartInsertDeleteEnabled
-{
-    self.textView.smartInsertDeleteEnabled = smartInsertDeleteEnabled;
-}
-
-- (BOOL)smartInsertDeleteEnabled
-{
-    return self.textView.smartInsertDeleteEnabled;
-}
-
-
-/*
  * @property startingLineNumber:
  */
 - (void)setStartingLineNumber:(NSUInteger)value
@@ -471,48 +238,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (NSUInteger)startingLineNumber
 {
     return [self.gutterView startingLineNumber];
-}
-
-
-/*
- * @property textColor
- */
-- (void)setTextColor:(NSColor *)textColor
-{
-    self.textView.textColor = textColor;
-}
-
-- (NSColor *)textColor
-{
-    return self.textView.textColor;
-}
-
-
-/*
- * @property textCurrentLineHighlightColor
- */
-- (void)setTextCurrentLineHighlightColour:(NSColor *)textCurrentLineHighlightColour
-{
-    self.textView.currentLineHighlightColour = textCurrentLineHighlightColour;
-}
-
-- (NSColor *)textCurrentLineHighlightColour
-{
-    return self.textView.currentLineHighlightColour;
-}
-
-
-/*
- * @property isSyntaxColoured
- */
-- (void)setIsSyntaxColoured:(BOOL)value
-{
-    [self.textView.syntaxColouring setSyntaxColoured:value];
-}
-
-- (BOOL)isSyntaxColoured
-{
-    return [self.textView.syntaxColouring isSyntaxColoured];
 }
 
 
@@ -546,20 +271,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 {
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
     return layoutManager.textInvisibleCharactersColour;
-}
-
-
-/*
- * @property textTabWidth
- */
-- (void)setTextTabWidth:(NSInteger)textTabWidth
-{
-    self.textView.tabWidth = textTabWidth;
-}
-
-- (NSInteger)textTabWidth
-{
-    return self.textView.tabWidth;
 }
 
 
@@ -917,6 +628,91 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 #pragma clang diagnostic pop
 
+
+#pragma mark - Message Forwarding
+
+/*
+ * -forwardingTargetForSelector:
+ */
+- (id)forwardingTargetForSelector:(SEL)aSelector
+{
+	NSSet *textViewProperties = [NSSet setWithArray: @[
+													   
+	   [NSValue valueWithPointer:@selector(string)],
+	   [NSValue valueWithPointer:@selector(setString:)],
+   
+	   [NSValue valueWithPointer:@selector(attributedString)],
+	   [NSValue valueWithPointer:@selector(setAttributedString:)],
+	   
+	   [NSValue valueWithPointer:@selector(attributedStringWithTemporaryAttributesApplied)],
+
+	   [NSValue valueWithPointer:@selector(automaticDashSubstitutionEnabled)],
+	   [NSValue valueWithPointer:@selector(setAutomaticDashSubstitutionEnabled:)],
+
+	   [NSValue valueWithPointer:@selector(automaticDataDetectionEnabled)],
+	   [NSValue valueWithPointer:@selector(setAutomaticDataDetectionEnabled:)],
+
+	   [NSValue valueWithPointer:@selector(automaticLinkDetectionEnabled)],
+	   [NSValue valueWithPointer:@selector(setAutomaticLinkDetectionEnabled:)],
+
+	   [NSValue valueWithPointer:@selector(automaticQuoteSubstitutionEnabled)],
+	   [NSValue valueWithPointer:@selector(setAutomaticQuoteSubstitutionEnabled:)],
+	   
+	   [NSValue valueWithPointer:@selector(automaticTextReplacementEnabled)],
+	   [NSValue valueWithPointer:@selector(setAutomaticTextReplacementEnabled:)],
+	   
+	   [NSValue valueWithPointer:@selector(backgroundColor)],
+	   [NSValue valueWithPointer:@selector(setBackgroundColor:)],
+	   
+	   [NSValue valueWithPointer:@selector(continuousSpellCheckingEnabled)],
+	   [NSValue valueWithPointer:@selector(setContinuousSpellCheckingEnabled:)],
+	   
+	   [NSValue valueWithPointer:@selector(currentLineHighlightColour)],
+	   [NSValue valueWithPointer:@selector(setCurrentLineHighlightColour:)],
+	   
+	   [NSValue valueWithPointer:@selector(grammarCheckingEnabled)],
+	   [NSValue valueWithPointer:@selector(setGrammarCheckingEnabled:)],
+	   
+	   [NSValue valueWithPointer:@selector(indentNewLinesAutomatically)],
+	   [NSValue valueWithPointer:@selector(setIndentNewLinesAutomatically:)],
+
+	   [NSValue valueWithPointer:@selector(highlightsCurrentLine)],
+	   [NSValue valueWithPointer:@selector(setHighlightsCurrentLine:)],
+	   
+	   [NSValue valueWithPointer:@selector(insertionPointColor)],
+	   [NSValue valueWithPointer:@selector(setInsertionPointColor:)],
+	   
+	   [NSValue valueWithPointer:@selector(lineWrap)],
+	   [NSValue valueWithPointer:@selector(setLineWrap:)],
+	   
+	   [NSValue valueWithPointer:@selector(pageGuideColumn)],
+	   [NSValue valueWithPointer:@selector(setPageGuideColumn:)],
+	   
+	   [NSValue valueWithPointer:@selector(showsPageGuide)],
+	   [NSValue valueWithPointer:@selector(setShowsPageGuide:)],
+	   
+	   [NSValue valueWithPointer:@selector(smartInsertDeleteEnabled)],
+	   [NSValue valueWithPointer:@selector(setSmartInsertDeleteEnabled:)],
+	   
+	   [NSValue valueWithPointer:@selector(tabWidth)],
+	   [NSValue valueWithPointer:@selector(setTabWidth:)],
+	   
+	   [NSValue valueWithPointer:@selector(textColor)],
+	   [NSValue valueWithPointer:@selector(setTextColor:)],
+	   
+	   [NSValue valueWithPointer:@selector(textCurrentLineHighlightColour)],
+	   [NSValue valueWithPointer:@selector(setTextCurrentLineHighlightColour:)],
+	   	   
+	]];
+	
+	
+	if ([textViewProperties containsObject:[NSValue valueWithPointer:aSelector]] && [self.textView respondsToSelector:aSelector])
+	{
+		return self.textView;
+	}
+	
+	return nil;
+}
 
 
 @end
