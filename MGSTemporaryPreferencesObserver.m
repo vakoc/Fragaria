@@ -35,6 +35,7 @@ char kcSyntaxColourPrefChanged;
 char kcTextColorChanged;
 char kcShowMatchingBracesChanged;
 char kcAutoInsertionPrefsChanged;
+char kcIndentingPrefsChanged;
 
 
 @interface MGSTemporaryPreferencesObserver ()
@@ -114,6 +115,11 @@ char kcAutoInsertionPrefsChanged;
     
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoInsertAClosingBrace) options:NSKeyValueObservingOptionInitial context:&kcAutoInsertionPrefsChanged];
     [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutoInsertAClosingParenthesis) options:NSKeyValueObservingOptionInitial context:&kcAutoInsertionPrefsChanged];
+    
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsIndentWithSpaces) options:NSKeyValueObservingOptionInitial context:&kcIndentingPrefsChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsUseTabStops) options:NSKeyValueObservingOptionInitial context:&kcIndentingPrefsChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsIndentNewLinesAutomatically) options:NSKeyValueObservingOptionInitial context:&kcIndentingPrefsChanged];
+    [defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsAutomaticallyIndentBraces) options:NSKeyValueObservingOptionInitial context:&kcIndentingPrefsChanged];
 
 	// SMLSyntaxColouring
 	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsCommandsColourWell) options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
@@ -138,7 +144,6 @@ char kcAutoInsertionPrefsChanged;
 	
 	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsColourMultiLineStrings) options:NSKeyValueObservingOptionInitial context:&kcMultiLineChanged];
 	[defaultsController addObserver:self forKeyPath:VK(MGSFragariaPrefsOnlyColourTillTheEndOfLine) options:NSKeyValueObservingOptionInitial context:&kcMultiLineChanged];
-
 }
 
 
@@ -208,6 +213,13 @@ char kcAutoInsertionPrefsChanged;
     {
         self.fragaria.insertClosingBraceAutomatically = [[defaults valueForKey:MGSFragariaPrefsAutoInsertAClosingBrace] boolValue];
         self.fragaria.insertClosingParenthesisAutomatically = [[defaults valueForKey:MGSFragariaPrefsAutoInsertAClosingParenthesis] boolValue];
+    }
+    else if (context == &kcIndentingPrefsChanged)
+    {
+        self.fragaria.indentWithSpaces = [[defaults valueForKey:MGSFragariaPrefsIndentWithSpaces] boolValue];
+        self.fragaria.useTabStops = [[defaults valueForKey:MGSFragariaPrefsUseTabStops] boolValue];
+        self.fragaria.indentNewLinesAutomatically = [[defaults valueForKey:MGSFragariaPrefsIndentNewLinesAutomatically] boolValue];
+        self.fragaria.indentBracesAutomatically = [[defaults valueForKey:MGSFragariaPrefsAutomaticallyIndentBraces] boolValue];
     }
     else if (context == &kcBackgroundColorChanged)
     {
