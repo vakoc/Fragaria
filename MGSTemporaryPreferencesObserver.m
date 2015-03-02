@@ -247,7 +247,7 @@ char kcIndentingPrefsChanged;
         self.fragaria.colourOnlyUntilEndOfLineEnabled = [[defaults valueForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine] boolValue];
     }
     else if (context == &kcColoursChanged)
-    {   // This will recolor the document 18 times (once for each property), but this is a legacy methods any.
+    {
         self.fragaria.coloursAttributes = [[defaults valueForKey:MGSFragariaPrefsColourAttributes] boolValue];
         self.fragaria.coloursAutocomplete = [[defaults valueForKey:MGSFragariaPrefsColourAutocomplete] boolValue];
         self.fragaria.coloursCommands = [[defaults valueForKey:MGSFragariaPrefsColourCommands] boolValue];
