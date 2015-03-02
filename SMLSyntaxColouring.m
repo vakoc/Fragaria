@@ -249,29 +249,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
 
 /*
- * - pageRecolourTextView:options:
- */
-- (void)pageRecolourTextView:(SMLTextView *)textView options:(NSDictionary *)options
-{
-	if (!textView) {
-		return;
-	}
-
-	if (!self.isSyntaxColouringRequired) {
-		return;
-	}
-	
-	// colourAll option
-	NSNumber *colourAll = [options objectForKey:@"colourAll"];
-	if (!colourAll || ![colourAll boolValue]) {
-        [self removeAllColours];
-    } else {
-        [self recolourRange:NSMakeRange(0, [[textView string] length])];
-    }
-}
-
-
-/*
  * - recolourRange:
  */
 - (NSRange)recolourChangedRange:(NSRange)rangeToRecolour

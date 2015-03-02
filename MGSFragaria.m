@@ -109,7 +109,10 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
 {
     // recolour the entire textview content
-    [self.textView.syntaxColouring pageRecolourTextView:self.textView options: @{ @"colourAll" : @(YES) }];
+    NSRange wholeRange;
+    
+    wholeRange = NSMakeRange(0, self.textView.string.length);
+    [self.textView.syntaxColouring recolourRange:wholeRange];
 
     // get content with layout manager temporary attributes persisted
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)[self.textView layoutManager];

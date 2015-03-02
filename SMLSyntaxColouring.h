@@ -80,14 +80,6 @@ Copyright 2004-2009 Peter Borg
 - (void)invalidateAllColouring;
 
 /**
- *  Recolours a view, with the option to color the entire range or only the exposed area.
- *  @param textView The view to color.
- *  @param options A dictionary of options. Currently the only option is `colourAll`, which
- *         may be `YES` or `NO`.
- **/
-- (void)pageRecolourTextView:(SMLTextView *)textView options:(NSDictionary *)options;
-
-/**
  *  Recolours on a portion of the document, specified by `rangeToRecolour`.
  *  @param rangeToRecolour Indicates the range to be recoloured.
  **/
