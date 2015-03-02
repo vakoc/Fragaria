@@ -60,6 +60,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (void)setColour:(NSDictionary *)colour range:(NSRange)range;
 - (BOOL)isSyntaxColouringRequired;
 
+@property (nonatomic, assign) BOOL coloursChanged;
+
 @end
 
 
@@ -68,6 +70,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 
     NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
     *stringsColour, *variablesColour, *attributesColour,  *numbersColour;
+
+    char kcColoursChanged;
 }
 
 
@@ -91,28 +95,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         // configure colouring
         [self applyColourDefaults];
 
-        // add NSUserDefaultsController KVO observers
-        NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
-
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaCommandsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaCommentsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaInstructionsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaKeywordsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaAutocompleteColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaVariablesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaStringsColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaAttributesColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaNumbersColourWell" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourCommands" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourComments" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourInstructions" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourKeywords" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourAutocomplete" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourVariables" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourStrings" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourAttributes" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
-        [defaultsController addObserver:self forKeyPath:@"values.FragariaColourNumbers" options:NSKeyValueObservingOptionNew context:@"ColoursChanged"];
+        // register for KVO -- observe our own properties.
+        [self addObserver:self forKeyPath:@"coloursChanged" options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
 	}
     
     return self;
@@ -137,11 +121,40 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 #pragma mark - KVO
 
 /*
+ * + keyPathsForValuesAffectingColoursChanged
+ *   Instead of writing 36 getters and setters, we'll just observe the coloursChanged property.
+ */
++ (NSSet *)keyPathsForValuesAffectingColoursChanged
+{
+    return [NSSet setWithArray:@[
+        NSStringFromSelector(@selector(colourForAttributes)),
+        NSStringFromSelector(@selector(colourForAutocomplete)),
+        NSStringFromSelector(@selector(colourForCommands)),
+        NSStringFromSelector(@selector(colourForComments)),
+        NSStringFromSelector(@selector(colourForInstructions)),
+        NSStringFromSelector(@selector(colourForKeywords)),
+        NSStringFromSelector(@selector(colourForNumbers)),
+        NSStringFromSelector(@selector(colourForStrings)),
+        NSStringFromSelector(@selector(colourForVariables)),
+
+        NSStringFromSelector(@selector(coloursAttributes)),
+        NSStringFromSelector(@selector(coloursAutocomplete)),
+        NSStringFromSelector(@selector(coloursCommands)),
+        NSStringFromSelector(@selector(coloursComments)),
+        NSStringFromSelector(@selector(coloursInstructions)),
+        NSStringFromSelector(@selector(coloursKeywords)),
+        NSStringFromSelector(@selector(coloursNumbers)),
+        NSStringFromSelector(@selector(coloursStrings)),
+        NSStringFromSelector(@selector(coloursVariables)),
+    ]];
+}
+
+/*
  * - observeValueForKeyPath:ofObject:change:context:
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([(__bridge NSString *)context isEqualToString:@"ColoursChanged"]) {
+	if (context == &kcColoursChanged) {
 		[self applyColourDefaults];
 		[self removeAllColours];
 	}
