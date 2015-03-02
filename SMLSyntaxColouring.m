@@ -275,8 +275,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	if (self.colourMultiLineStringsEnabled) {
 		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:self.syntaxDefinition.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
         if (beginFirstStringInMultiLine != NSNotFound) {
-            NSDictionary *ta = [layoutManager temporaryAttributesAtCharacterIndex:beginFirstStringInMultiLine effectiveRange:NULL];
-            if ([[ta objectForKey:NSForegroundColorAttributeName] isEqual:[stringsColour objectForKey:NSForegroundColorAttributeName]]) {
+            if ([[self syntaxColouringGroupOfCharacterAtIndex:beginFirstStringInMultiLine] isEqual:@"strings"]) {
                 NSInteger startOfLine = [documentString lineRangeForRange:NSMakeRange(beginFirstStringInMultiLine, 0)].location;
                 effectiveRange = NSMakeRange(startOfLine, rangeToRecolour.length + (rangeToRecolour.location - startOfLine));
             }
@@ -710,7 +709,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         }
         if ([keywords containsObject:keywordTestString]) {
             if (!self.syntaxDefinition.recolourKeywordIfAlreadyColoured) {
-                if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
+                if ([[self syntaxColouringGroupOfCharacterAtIndex:colourStartLocation + rangeLocation] isEqual:SMLSyntaxGroupCommand]) {
                     continue;
                 }
             }
@@ -803,7 +802,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     [regex enumerateMatchesInString:rangeString options:0 range:NSMakeRange(0, [rangeString length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
         for (NSUInteger i = 0; i < [match numberOfRanges]; i++) {
             NSRange foundRange = [match rangeAtIndex:i];
-            if ([[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) continue;
+            if ([[self syntaxColouringGroupOfCharacterAtIndex:foundRange.location + rangeLocation] isEqual:@"strings"])
+                continue;
             [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
         }
     }];
@@ -827,7 +827,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         } else {
             break;
         }
-        if (![[layoutManager temporaryAttributesAtCharacterIndex:(colourStartLocation + rangeLocation) effectiveRange:NULL] isEqualToDictionary:commandsColour]) {
+        if (![[self syntaxColouringGroupOfCharacterAtIndex:(colourStartLocation + rangeLocation)] isEqual:SMLSyntaxGroupCommand]) {
             continue;
         }
         
@@ -901,7 +901,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                 
                 // If the comment is within an already coloured string then disregard it
                 if (colourStartLocation + rangeLocation + searchSyntaxLength < documentStringLength) {
-                    if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
+                    if ([[self syntaxColouringGroupOfCharacterAtIndex:colourStartLocation + rangeLocation] isEqual:@"strings"]) {
                         [rangeScanner mgs_setScanLocation:colourStartLocation + 1];
                         continue;
                     }
@@ -977,7 +977,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
                     [documentScanner mgs_setScanLocation:colourStartLocation + 1];
                     
                     // If the comment is within a string disregard it
-                    if ([[layoutManager temporaryAttributesAtCharacterIndex:colourStartLocation effectiveRange:NULL] isEqualToDictionary:stringsColour]) {
+                    if ([[self syntaxColouringGroupOfCharacterAtIndex:colourStartLocation] isEqual:@"strings"]) {
                         beginLocationInMultiLine++;
                         continue;
                     }
@@ -1053,7 +1053,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     [regex enumerateMatchesInString:rangeString options:0 range:NSMakeRange(0, [rangeString length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
         for (NSUInteger i = 0; i < [match numberOfRanges]; i++) {
             NSRange foundRange = [match rangeAtIndex:i];
-            if ([[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:stringsColour] || [[layoutManager temporaryAttributesAtCharacterIndex:foundRange.location + rangeLocation effectiveRange:NULL] isEqualToDictionary:commentsColour]) continue;
+            if ([[self syntaxColouringGroupOfCharacterAtIndex:foundRange.location + rangeLocation] isEqual:@"strings"] || [[self syntaxColouringGroupOfCharacterAtIndex:foundRange.location + rangeLocation] isEqual:@"comments"]) continue;
             [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
         }
     }];
@@ -1083,6 +1083,15 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         i = NSMaxRange(effectiveRange);
     }
 	[layoutManager addTemporaryAttributes:colourDictionary forCharacterRange:range];
+}
+
+
+/*
+ * - syntaxColouringGroupOfCharacterAtIndex:
+ */
+- (NSString*)syntaxColouringGroupOfCharacterAtIndex:(NSUInteger)index
+{
+    return [layoutManager temporaryAttribute:SMLSyntaxGroup atCharacterIndex:index effectiveRange:NULL];
 }
 
 
