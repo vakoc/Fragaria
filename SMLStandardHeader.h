@@ -18,21 +18,6 @@ Unless required by applicable law or agreed to in writing, software distributed 
 */
 
 
-typedef enum : NSUInteger
-{
-	SMLDefaultsLineEndings = 0,
-	SMLUnixLineEndings = 1,
-	SMLMacLineEndings = 2,
-	SMLDarkSideLineEndings = 3,
-	SMLLeaveLineEndingsUnchanged = 6
-} SMLLineEndings;
-
-
-#define NAME_FOR_UNDO_CHANGE_LINE_ENDINGS NSLocalizedString(@"Change Line Endings", @"Name for undo Change Line Endings")
-
-#define COMMAND_RESULT_WINDOW_TITLE NSLocalizedStringFromTable(@"Command Result - Smultron", @"Localizable3", @"Command Result - Smultron")
-
-
 #define SMLDefaults [[NSUserDefaultsController sharedUserDefaultsController] values]
 
 
