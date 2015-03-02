@@ -39,14 +39,21 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordStartCharacterSet = @"includeInKeyw
 NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywordEndCharacterSet";
 
 
+@interface MGSSyntaxDefinition ()
+
+@property (nonatomic, weak) MGSFragaria *fragaria;
+
+@end
+
+
 @implementation MGSSyntaxDefinition
 
-
-- (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary
+- (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary fragaria:(MGSFragaria *)fragaria
 {
     self = [super init];
     [self setDefaults];
-    
+
+    self.fragaria = fragaria;
     _syntaxDictionary = syntaxDictionary;
     NSMutableArray *keywordsAndAutocompleteWordsTemporary = [NSMutableArray array];
     
@@ -79,7 +86,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     }
     
     // colour autocomplete words is a preference
-    if ([[[[NSUserDefaultsController sharedUserDefaultsController] values] valueForKey:MGSFragariaPrefsColourAutocomplete] boolValue] == YES) {
+    if (self.fragaria.coloursAutocomplete) {
         _keywords = [NSSet setWithArray:keywordsAndAutocompleteWordsTemporary];
     }
     

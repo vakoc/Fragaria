@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "SMLAutoCompleteDelegate.h"
 
+@class MGSFragaria;
+
 /**
  *  This class defines a single instance of a syntax definition.
  **/
@@ -60,7 +62,7 @@
  *  read from a plist in the framework bundle.
  *  @param syntaxDictionary The dictionary representation of the plist file that
  *  defines the syntax. */
-- (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary;
+- (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary fragaria:(MGSFragaria *)fragaria;
 
 /** Autocomplete delegate main method. Returns as autocomplete words the 
  * keywordsAndAutocompleteWords array. */

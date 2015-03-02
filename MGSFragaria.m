@@ -78,7 +78,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 	
     _syntaxDefinitionName = value;
     syntaxDict = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:value];
-    syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict];
+    syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict fragaria:(MGSFragaria *)self];
     [self.textView.syntaxColouring setSyntaxDefinition:syntaxDef];
     
     /* Update the default autocomplete delegate with the new
@@ -611,9 +611,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     
     // update the gutter view
     [self.scrollView setRulersVisible:[self showsLineNumbers]];
-    
-    // apply default line wrapping
-    [self.textView setLineWrap:[[[[NSUserDefaultsController sharedUserDefaultsController] values] valueForKey:MGSFragariaPrefsLineWrapNewDocuments] boolValue]];
     
     _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
     self.syntaxErrorController.lineNumberView = self.gutterView;
