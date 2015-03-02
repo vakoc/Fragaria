@@ -404,6 +404,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         _fragaria = fragaria;
         _interfaceController = [[MGSExtraInterfaceController alloc] init];
         [_interfaceController setCompletionTarget:self];
+        
+        _syntaxColouring = [[SMLSyntaxColouring alloc] initWithLayoutManager:layoutManager];
 
         [self setDefaults];
 
@@ -534,11 +536,11 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     for (i=0; i<rectCount; i++) {
         recolourRange = [[self layoutManager] glyphRangeForBoundingRect:dirtyRects[i] inTextContainer:[self textContainer]];
         recolourRange = [[self layoutManager] characterRangeForGlyphRange:recolourRange actualGlyphRange:NULL];
-        [self.fragaria.syntaxColouring recolourRange:recolourRange];
+        [self.syntaxColouring recolourRange:recolourRange];
     }
     
     [super drawRect:rect];
-
+    
     if (self.showsPageGuide == YES) {
         NSRect bounds = [self bounds];
         if ([self needsToDrawRect:NSMakeRect(pageGuideX, 0, 1, bounds.size.height)] == YES) { // So that it doesn't draw the line if only e.g. the cursor updates
@@ -558,6 +560,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 - (void)drawViewBackgroundInRect:(NSRect)rect
 {
     [super drawViewBackgroundInRect:rect];
+    
     if ([self needsToDrawRect:currentLineRect]) {
         [self.currentLineHighlightColour set];
         [NSBezierPath fillRect:currentLineRect];
@@ -828,7 +831,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     NSMutableIndexSet *insp;
 
     res = [super shouldChangeTextInRanges:affectedRanges replacementStrings:replacementStrings];
-    insp = self.fragaria.syntaxColouring.inspectedCharacterIndexes;
+    insp = self.syntaxColouring.inspectedCharacterIndexes;
     
     if (!affectedRanges)
         [insp removeAllIndexes];
@@ -851,7 +854,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
             range = [[self string] lineRangeForRange:[rangeVal rangeValue]];
             [insp removeIndexesInRange:range];
             [insp shiftIndexesStartingAtIndex:range.location by:(newLen - range.length)];
-            [self.fragaria.syntaxColouring invalidateVisibleRange];
+            [self.syntaxColouring invalidateVisibleRangeOfTextView:self];
         }
     }
     return res;

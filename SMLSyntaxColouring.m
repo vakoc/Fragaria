@@ -71,28 +71,21 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 }
 
 
+@synthesize layoutManager;
+
+
 #pragma mark - Instance methods
 
 
 /*
  * - initWithFragaria
  */
-- (instancetype)initWithFragaria:(MGSFragaria *)fragaria
+- (instancetype)initWithLayoutManager:(SMLLayoutManager *)lm
 {
-    // @todo: We're still using the docSpec indirectly, but at least we're not longer dependent
-    //        upon it for initialization. As some of these properties are internally exposed,
-    //        we can start to eliminate getting them from the docSpec.
-
     if ((self = [super init])) {
 
-        _fragaria = fragaria;
-
-        // configure the document text view
-        NSTextView *textView = self.fragaria.textView;
-        NSAssert([textView isKindOfClass:[NSTextView class]], @"bad textview");
-
         // configure layout managers
-        layoutManager = (SMLLayoutManager *)[textView layoutManager];
+        layoutManager = lm;
         _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] init];
 
         // configure colouring
@@ -184,7 +177,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
  */
 - (NSString *)completeString
 {
-	return self.fragaria.textView.string;
+	return self.layoutManager.textStorage.string;
 }
 
 
@@ -224,10 +217,9 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 /*
  * - invalidateVisibleRange
  */
-- (void)invalidateVisibleRange
+- (void)invalidateVisibleRangeOfTextView:(SMLTextView *)textView
 {
     NSMutableIndexSet *validRanges;
-    SMLTextView *textView = self.fragaria.textView;
 
     validRanges = self.inspectedCharacterIndexes;
     NSRect visibleRect = [[[textView enclosingScrollView] contentView] documentVisibleRect];

@@ -23,5 +23,8 @@
  * view. */
 @property (readonly) MGSExtraInterfaceController *interfaceController;
 
+/** Instances of this class will perform syntax highlighting in text views. */
+@property (readonly) SMLSyntaxColouring *syntaxColouring;
+
 
 @end

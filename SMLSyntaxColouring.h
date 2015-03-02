@@ -42,7 +42,9 @@ Copyright 2004-2009 Peter Borg
 /// @name Properties
 
 /** The owning controller for instances of this class. */
-@property (nonatomic, weak, readonly) MGSFragaria *fragaria;
+@property (nonatomic, weak) MGSFragaria *fragaria;
+
+@property (readonly) NSLayoutManager *layoutManager;
 
 /** The syntax definition that determines how to color the text. */
 @property (nonatomic, strong) MGSSyntaxDefinition *syntaxDefinition;
@@ -63,14 +65,14 @@ Copyright 2004-2009 Peter Borg
  *  Initialize a new instance using a reference to an owning Fragaria..
  *  @param fragaria The instance of fragaria associated with this instance.
  **/
-- (id)initWithFragaria:(MGSFragaria *)fragaria;
+- (id)initWithLayoutManager:(NSLayoutManager *)lm;
 
-/**
- *  Recolor the range that is visible.
- **/
+/** Recolors the invalid lines in the specified range. */
 - (void)recolourRange:(NSRange)range;
 
-- (void)invalidateVisibleRange;
+/** Marks as invalid the colouring in the range currently visible (not clipped)
+ * in the specified text view. */
+- (void)invalidateVisibleRangeOfTextView:(SMLTextView *)textView;
 
 /**
  *  Invalidates the coloring of the entire document.

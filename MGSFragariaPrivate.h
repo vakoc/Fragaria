@@ -26,9 +26,6 @@
  * text view and gutter view. */
 @property (nonatomic, strong, readonly) MGSSyntaxErrorController *syntaxErrorController;
 
-/** Instances of this class will perform syntax highlighting in text views. */
-@property (nonatomic, strong, readwrite) SMLSyntaxColouring *syntaxColouring;
-
 /** The observer which manages the properties of MGSLineNumberView. Will be
  * removed in the near future. */
 @property MGSLineNumberDefaultsObserver *lineNumberDefObserv;

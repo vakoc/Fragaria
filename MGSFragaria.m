@@ -47,7 +47,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 @synthesize syntaxErrorController = _syntaxErrorController;
-@synthesize syntaxColouring = _syntaxColouring;
 
 @synthesize autoCompleteDelegate = _autoCompleteDelegate;
 @synthesize syntaxDefinitionName = _syntaxDefinitionName;
@@ -67,7 +66,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     _syntaxDefinitionName = value;
     syntaxDict = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:value];
     syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict];
-    [self.syntaxColouring setSyntaxDefinition:syntaxDef];
+    [self.textView.syntaxColouring setSyntaxDefinition:syntaxDef];
     
     /* Update the default autocomplete delegate with the new
      * syntax definition, if needed. */
@@ -110,7 +109,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
 {
     // recolour the entire textview content
-    [self.syntaxColouring pageRecolourTextView:self.textView options: @{ @"colourAll" : @(YES) }];
+    [self.textView.syntaxColouring pageRecolourTextView:self.textView options: @{ @"colourAll" : @(YES) }];
 
     // get content with layout manager temporary attributes persisted
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)[self.textView layoutManager];
@@ -505,12 +504,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setIsSyntaxColoured:(BOOL)value
 {
-    [self.syntaxColouring setSyntaxColoured:value];
+    [self.textView.syntaxColouring setSyntaxColoured:value];
 }
 
 - (BOOL)isSyntaxColoured
 {
-    return [self.syntaxColouring isSyntaxColoured];
+    return [self.textView.syntaxColouring isSyntaxColoured];
 }
 
 
@@ -586,12 +585,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setSyntaxColouringDelegate:(id<SMLSyntaxColouringDelegate>)syntaxColouringDelegate
 {
-    [self.syntaxColouring setSyntaxColouringDelegate:syntaxColouringDelegate];
+    [self.textView.syntaxColouring setSyntaxColouringDelegate:syntaxColouringDelegate];
 }
 
 - (id<SMLSyntaxColouringDelegate>)syntaxColouringDelegate
 {
-    return [self.syntaxColouring syntaxColouringDelegate];
+    return [self.textView.syntaxColouring syntaxColouringDelegate];
 }
 
 
@@ -632,7 +631,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     if (autoCompleteDelegate)
         [self.textView setAutocompleteDelegate:autoCompleteDelegate];
     else
-        [self.textView setAutocompleteDelegate:self.syntaxColouring.syntaxDefinition];
+        [self.textView setAutocompleteDelegate:self.textView.syntaxColouring.syntaxDefinition];
 }
 
 - (id<SMLAutoCompleteDelegate>)autoCompleteDelegate
@@ -642,23 +641,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 #pragma mark - Properties - System Components
-
-
-/*
- * @property syntaxColouring
- */
-- (void)setSyntaxColouring:(SMLSyntaxColouring *)syntaxColouring
-{
-    _syntaxColouring = syntaxColouring;
-}
-
-- (SMLSyntaxColouring *)syntaxColouring
-{
-    if (!_syntaxColouring)
-        _syntaxColouring = [[SMLSyntaxColouring alloc] initWithFragaria:self];
-    return _syntaxColouring;
-}
-
 
 /*
  * @property textView
@@ -847,6 +829,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     
     // carryover default syntaxDefinition name from old docSpec
     self.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
+    self.textView.syntaxColouring.fragaria = self;
     
     // add scroll view to content view
     [contentView addSubview:self.scrollView];
