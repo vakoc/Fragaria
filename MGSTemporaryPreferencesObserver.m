@@ -51,9 +51,10 @@ char kcTextColorChanged;
     if ((self = [super init]))
     {
         self.fragaria = fragaria;
+		[self configureLegacyDefaults];
         [self registerKVO];
     }
-
+	
     return self;
 }
 
@@ -66,6 +67,19 @@ char kcTextColorChanged;
     return [self initWithFragaria:nil];
 }
 
+/*
+ *  - configureLegacyDefaults
+ *    As Fragaria is migrated to a purely property driven system the current behavior
+ *    should be maintained as long as possible. This method is a dumping-ground for
+ *    current defaults that aren't controlled by the legacy KVO/userDefaults method.
+ */
+- (void)configureLegacyDefaults
+{
+	[self.fragaria setAutomaticDashSubstitutionEnabled:NO];
+	[self.fragaria setAutomaticQuoteSubstitutionEnabled:NO];
+	[self.fragaria setAutomaticDataDetectionEnabled:YES];
+	[self.fragaria setAutomaticTextReplacementEnabled:YES];
+}
 
 /*
  *  - registerKVO

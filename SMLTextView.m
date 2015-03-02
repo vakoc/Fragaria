@@ -454,15 +454,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setImportsGraphics:NO];
     [self setUsesFontPanel:NO];
 
-    /// @todo: (jsd) These now have properties, but are NOT linked in the
-    ///        temporary defaults observer, as they've never been observed.
-    ///        Add suitable defaults in the current registerUserDefaults,
-    ///        and then delete these lines.
-    [self setAutomaticDashSubstitutionEnabled:NO];
-    [self setAutomaticQuoteSubstitutionEnabled:NO];
-    [self setAutomaticDataDetectionEnabled:YES];
-    [self setAutomaticTextReplacementEnabled:YES];
-
     NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveWhenFirstResponder) owner:self userInfo:nil];
     [self addTrackingArea:trackingArea];
 
