@@ -525,6 +525,18 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)drawRect:(NSRect)rect
 {
+    const NSRect *dirtyRects;
+    NSRange recolourRange;
+    NSInteger rectCount, i;
+    
+    [self getRectsBeingDrawn:&dirtyRects count:&rectCount];
+    
+    for (i=0; i<rectCount; i++) {
+        recolourRange = [[self layoutManager] glyphRangeForBoundingRect:dirtyRects[i] inTextContainer:[self textContainer]];
+        recolourRange = [[self layoutManager] characterRangeForGlyphRange:recolourRange actualGlyphRange:NULL];
+        [self.fragaria.syntaxColouring recolourRange:recolourRange];
+    }
+    
     [super drawRect:rect];
 
     if (self.showsPageGuide == YES) {
@@ -821,18 +833,17 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     if (!affectedRanges)
         [insp removeAllIndexes];
     else {
-        sortedRanges = [affectedRanges sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2)
-                        {
-                            NSRange r1, r2;
-                            r1 = [obj1 rangeValue];
-                            r2 = [obj2 rangeValue];
-                            /* reverse sorting */
-                            if (r1.location > r2.location)
-                                return NSOrderedAscending;
-                            if (r1.location == r2.location)
-                                return NSOrderedSame;
-                            return NSOrderedDescending;
-                        }];
+        sortedRanges = [affectedRanges sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            NSRange r1, r2;
+            r1 = [obj1 rangeValue];
+            r2 = [obj2 rangeValue];
+            /* reverse sorting */
+            if (r1.location > r2.location)
+                return NSOrderedAscending;
+            if (r1.location == r2.location)
+                return NSOrderedSame;
+            return NSOrderedDescending;
+        }];
         for (rangeVal in sortedRanges) {
             i = [affectedRanges indexOfObject:rangeVal];
             newLen = [[replacementStrings objectAtIndex:i] length];
@@ -840,6 +851,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
             range = [[self string] lineRangeForRange:[rangeVal rangeValue]];
             [insp removeIndexesInRange:range];
             [insp shiftIndexesStartingAtIndex:range.location by:(newLen - range.length)];
+            [self.fragaria.syntaxColouring invalidateVisibleRange];
         }
     }
     return res;

@@ -91,20 +91,12 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
         NSTextView *textView = self.fragaria.textView;
         NSAssert([textView isKindOfClass:[NSTextView class]], @"bad textview");
 
-        NSScrollView *scrollView = self.fragaria.scrollView;
-        [[scrollView contentView] setPostsBoundsChangedNotifications:YES];
-
         // configure layout managers
         layoutManager = (SMLLayoutManager *)[textView layoutManager];
         _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] init];
 
         // configure colouring
         [self applyColourDefaults];
-
-        // add text view notification observers
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:textView];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recolourExposedRange) name:NSViewBoundsDidChangeNotification object:[scrollView contentView]];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(recolourExposedRange) name:NSViewFrameDidChangeNotification object:textView];
 
         // add NSUserDefaultsController KVO observers
         NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
@@ -148,7 +140,7 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 {
     if (!_syntaxColoured && syntaxColoured) {
         _syntaxColoured = YES;
-        [self recolourExposedRange];
+        [self removeAllColours];
     } else if (_syntaxColoured && !syntaxColoured) {
         _syntaxColoured = NO;
         [self removeAllColours];
@@ -165,11 +157,11 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 {
 	if ([(__bridge NSString *)context isEqualToString:@"ColoursChanged"]) {
 		[self applyColourDefaults];
-		[self recolourExposedRange];
+		[self removeAllColours];
 	} else if ([(__bridge NSString *)context isEqualToString:@"MultiLineChanged"]) {
         [self invalidateAllColouring];
 	} else if ([(__bridge NSString*)context isEqualToString:@"LineWrapChanged"]) {
-        [self recolourExposedRange];
+        [self removeAllColours];
     } else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
@@ -203,7 +195,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 {
     _syntaxDefinition = syntaxDefinition;
     [self removeAllColours];
-    [self recolourExposedRange];
 }
 
 
@@ -227,7 +218,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (void)invalidateAllColouring
 {
     [self removeAllColours];
-    [self recolourExposedRange];
 }
 
 
@@ -243,32 +233,24 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
     NSRect visibleRect = [[[textView enclosingScrollView] contentView] documentVisibleRect];
     NSRange visibleRange = [[textView layoutManager] glyphRangeForBoundingRect:visibleRect inTextContainer:[textView textContainer]];
     [validRanges removeIndexesInRange:visibleRange];
-    [self recolourExposedRange];
 }
 
 
 /*
  * - recolourExposedRange
  */
-- (void)recolourExposedRange
+- (void)recolourRange:(NSRange)range
 {
-    NSMutableIndexSet __block *validRanges;
     NSMutableIndexSet *invalidRanges;
     
-	if (!self.isSyntaxColouringRequired) {
-		return;
-	}
-    validRanges = self.inspectedCharacterIndexes;
-    
-    NSRect visibleRect = [[[self.fragaria.textView enclosingScrollView] contentView] documentVisibleRect];
-    NSRange visibleRange = [[self.fragaria.textView layoutManager] glyphRangeForBoundingRect:visibleRect inTextContainer:[self.fragaria.textView textContainer]];
+	if (!self.isSyntaxColouringRequired) return;
 
-    invalidRanges = [NSMutableIndexSet indexSetWithIndexesInRange:visibleRange];
-    [invalidRanges removeIndexes:validRanges];
+    invalidRanges = [NSMutableIndexSet indexSetWithIndexesInRange:range];
+    [invalidRanges removeIndexes:self.inspectedCharacterIndexes];
     [invalidRanges enumerateRangesUsingBlock:^(NSRange range, BOOL *stop){
-        if (![validRanges containsIndexesInRange:range]) {
+        if (![self.inspectedCharacterIndexes containsIndexesInRange:range]) {
             NSRange nowValid = [self recolourChangedRange:range];
-            [validRanges addIndexesInRange:nowValid];
+            [self.inspectedCharacterIndexes addIndexesInRange:nowValid];
         }
     }];
 }
@@ -290,10 +272,9 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 	// colourAll option
 	NSNumber *colourAll = [options objectForKey:@"colourAll"];
 	if (!colourAll || ![colourAll boolValue]) {
-        [self recolourExposedRange];
-    } else {
         [self removeAllColours];
-        [self recolourExposedRange];
+    } else {
+        [self recolourRange:NSMakeRange(0, [[textView string] length])];
     }
 }
 
@@ -1184,22 +1165,6 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 - (BOOL)isSyntaxColouringRequired
 {
     return self.isSyntaxColoured && self.syntaxDefinition && self.syntaxDefinition.syntaxDefinitionAllowsColouring;
-}
-
-
-#pragma mark - Text change observation
-
-
-/*
- * - textDidChange:
- */
-- (void)textDidChange:(NSNotification *)notification
-{
-	if ([self isSyntaxColouringRequired]) {
-        /* We could call pageRecolour, but invalidating the entire page makes 
-         * our bugs less visible */
-		[self invalidateVisibleRange];
-	}
 }
 
 

@@ -68,7 +68,9 @@ Copyright 2004-2009 Peter Borg
 /**
  *  Recolor the range that is visible.
  **/
-- (void)recolourExposedRange;
+- (void)recolourRange:(NSRange)range;
+
+- (void)invalidateVisibleRange;
 
 /**
  *  Invalidates the coloring of the entire document.

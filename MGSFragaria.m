@@ -848,9 +848,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     // carryover default syntaxDefinition name from old docSpec
     self.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
     
-    // add syntax colouring
-    [self.syntaxColouring recolourExposedRange];
-    
     // add scroll view to content view
     [contentView addSubview:self.scrollView];
     
