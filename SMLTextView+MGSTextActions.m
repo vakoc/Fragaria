@@ -489,8 +489,12 @@
             NSString *replStr;
             
             lineRange = [completeString lineRangeForRange:tempRange];
-            phase = (tempRange.location - lineRange.location) % numberOfSpaces;
-            replStr = [spaces substringFromIndex:phase];
+            if (numberOfSpaces) {
+                phase = (tempRange.location - lineRange.location) % numberOfSpaces;
+                replStr = [spaces substringFromIndex:phase];
+            } else {
+                replStr = @"";
+            }
             [completeString replaceCharactersInRange:tempRange withString:replStr];
             
             selectedRange.length += [replStr length] - 1;
