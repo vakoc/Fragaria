@@ -76,7 +76,7 @@ char kcIndentingPrefsChanged;
  */
 -(void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self ];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 
@@ -179,93 +179,93 @@ char kcIndentingPrefsChanged;
     }
     else if (context == &kcGutterGutterTextColourWell)
     {
-        self.fragaria.gutterTextColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsGutterTextColourWell]];
+        self.fragaria.gutterTextColour = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsGutterTextColourWell]];
     }
     else if (context == &kcInvisibleCharacterValueChanged)
     {
-        self.fragaria.showsInvisibleCharacters = [[defaults valueForKey:MGSFragariaPrefsShowInvisibleCharacters] boolValue];
+        self.fragaria.showsInvisibleCharacters = [defaults boolForKey:MGSFragariaPrefsShowInvisibleCharacters];
     }
     else if (context == &kcFragariaTextFontChanged)
     {
-        fontValue = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextFont]];
+        fontValue = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsTextFont]];
         self.fragaria.textFont = fontValue;   // these won't always be tied together, but this is current behavior.
         self.fragaria.gutterFont = fontValue; // these won't always be tied together, but this is current behavior.
     }
     else if (context == &kcFragariaInvisibleCharactersColourWellChanged)
     {
-        self.fragaria.textInvisibleCharactersColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsInvisibleCharactersColourWell]];
+        self.fragaria.textInvisibleCharactersColour = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsInvisibleCharactersColourWell]];
     }
     else if (context == &kcFragariaTabWidthChanged)
     {
-        self.fragaria.tabWidth = [[defaults valueForKey:MGSFragariaPrefsTabWidth] integerValue];
+        self.fragaria.tabWidth = [defaults integerForKey:MGSFragariaPrefsTabWidth];
     }
     else if (context == &kcAutoSomethingChanged)
     {
-        self.fragaria.continuousSpellCheckingEnabled = [[defaults valueForKey:MGSFragariaPrefsAutoSpellCheck] boolValue];
-        self.fragaria.grammarCheckingEnabled = [[defaults valueForKey:MGSFragariaPrefsAutoGrammarCheck] boolValue];
-        self.fragaria.smartInsertDeleteEnabled = [[defaults valueForKey:MGSFragariaPrefsSmartInsertDelete] boolValue];
+        self.fragaria.continuousSpellCheckingEnabled = [defaults integerForKey:MGSFragariaPrefsAutoSpellCheck];
+        self.fragaria.grammarCheckingEnabled = [defaults integerForKey:MGSFragariaPrefsAutoGrammarCheck];
+        self.fragaria.smartInsertDeleteEnabled = [defaults integerForKey:MGSFragariaPrefsSmartInsertDelete];
     }
     else if (context == &kcShowMatchingBracesChanged)
     {
-        self.fragaria.showsMatchingBraces = [[defaults valueForKey:MGSFragariaPrefsShowMatchingBraces] boolValue];
+        self.fragaria.showsMatchingBraces = [defaults boolForKey:MGSFragariaPrefsShowMatchingBraces];
     }
     else if (context == &kcAutoInsertionPrefsChanged)
     {
-        self.fragaria.insertClosingBraceAutomatically = [[defaults valueForKey:MGSFragariaPrefsAutoInsertAClosingBrace] boolValue];
-        self.fragaria.insertClosingParenthesisAutomatically = [[defaults valueForKey:MGSFragariaPrefsAutoInsertAClosingParenthesis] boolValue];
+        self.fragaria.insertClosingBraceAutomatically = [defaults boolForKey:MGSFragariaPrefsAutoInsertAClosingBrace];
+        self.fragaria.insertClosingParenthesisAutomatically = [defaults boolForKey:MGSFragariaPrefsAutoInsertAClosingParenthesis];
     }
     else if (context == &kcIndentingPrefsChanged)
     {
-        self.fragaria.indentWithSpaces = [[defaults valueForKey:MGSFragariaPrefsIndentWithSpaces] boolValue];
-        self.fragaria.useTabStops = [[defaults valueForKey:MGSFragariaPrefsUseTabStops] boolValue];
-        self.fragaria.indentNewLinesAutomatically = [[defaults valueForKey:MGSFragariaPrefsIndentNewLinesAutomatically] boolValue];
-        self.fragaria.indentBracesAutomatically = [[defaults valueForKey:MGSFragariaPrefsAutomaticallyIndentBraces] boolValue];
+        self.fragaria.indentWithSpaces = [defaults boolForKey:MGSFragariaPrefsIndentWithSpaces];
+        self.fragaria.useTabStops = [defaults boolForKey:MGSFragariaPrefsUseTabStops] ;
+        self.fragaria.indentNewLinesAutomatically = [defaults boolForKey:MGSFragariaPrefsIndentNewLinesAutomatically];
+        self.fragaria.indentBracesAutomatically = [defaults boolForKey:MGSFragariaPrefsAutomaticallyIndentBraces];
     }
     else if (context == &kcBackgroundColorChanged)
     {
-        self.fragaria.textView.backgroundColor = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsBackgroundColourWell]];
+        self.fragaria.textView.backgroundColor = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsBackgroundColourWell]];
     }
     else if (context == &kcInsertionPointColorChanged || context == &kcTextColorChanged)
     {
-        colorValue = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsTextColourWell]];
+        colorValue = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsTextColourWell]];
         self.fragaria.textView.insertionPointColor = colorValue;
         self.fragaria.textView.textColor = colorValue;
     }
     else if (context == &kcPageGuideChanged)
     {
-        self.fragaria.pageGuideColumn = [[defaults valueForKey:MGSFragariaPrefsShowPageGuideAtColumn] integerValue];
-        self.fragaria.showsPageGuide = [[defaults valueForKey:MGSFragariaPrefsShowPageGuide] boolValue];
+        self.fragaria.pageGuideColumn = [defaults integerForKey:MGSFragariaPrefsShowPageGuideAtColumn];
+        self.fragaria.showsPageGuide = [defaults boolForKey:MGSFragariaPrefsShowPageGuide];
     }
     else if (context == &kcLineHighlightingChanged)
     {
-        self.fragaria.highlightsCurrentLine = [[defaults valueForKey:MGSFragariaPrefsHighlightCurrentLine] boolValue];
-        self.fragaria.currentLineHighlightColour = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsHighlightLineColourWell]];
+        self.fragaria.highlightsCurrentLine = [defaults boolForKey:MGSFragariaPrefsHighlightCurrentLine];
+        self.fragaria.currentLineHighlightColour = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsHighlightLineColourWell]];
     }
     else if (context == &kcMultiLineChanged)
     {
-        self.fragaria.colourMultiLineStringsEnabled = [[defaults valueForKey:MGSFragariaPrefsColourMultiLineStrings] boolValue];
-        self.fragaria.colourOnlyUntilEndOfLineEnabled = [[defaults valueForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine] boolValue];
+        self.fragaria.colourMultiLineStringsEnabled = [defaults boolForKey:MGSFragariaPrefsColourMultiLineStrings];
+        self.fragaria.colourOnlyUntilEndOfLineEnabled = [defaults boolForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine];
     }
     else if (context == &kcColoursChanged)
     {
-        self.fragaria.coloursAttributes = [[defaults valueForKey:MGSFragariaPrefsColourAttributes] boolValue];
-        self.fragaria.coloursAutocomplete = [[defaults valueForKey:MGSFragariaPrefsColourAutocomplete] boolValue];
-        self.fragaria.coloursCommands = [[defaults valueForKey:MGSFragariaPrefsColourCommands] boolValue];
-        self.fragaria.coloursComments = [[defaults valueForKey:MGSFragariaPrefsColourComments] boolValue];
-        self.fragaria.coloursInstructions = [[defaults valueForKey:MGSFragariaPrefsColourInstructions] boolValue];
-        self.fragaria.coloursKeywords = [[defaults valueForKey:MGSFragariaPrefsColourKeywords] boolValue];
-        self.fragaria.coloursNumbers = [[defaults valueForKey:MGSFragariaPrefsColourNumbers] boolValue];
-        self.fragaria.coloursStrings = [[defaults valueForKey:MGSFragariaPrefsColourStrings] boolValue];
-        self.fragaria.coloursVariables = [[defaults valueForKey:MGSFragariaPrefsColourVariables] boolValue];
-        self.fragaria.colourForAttributes = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsAttributesColourWell]];
-        self.fragaria.colourForAutocomplete = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsAutocompleteColourWell]];
-        self.fragaria.colourForCommands = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsCommandsColourWell]];
-        self.fragaria.colourForComments = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsCommentsColourWell]];
-        self.fragaria.colourForInstructions = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsInstructionsColourWell]];
-        self.fragaria.colourForKeywords = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsKeywordsColourWell]];
-        self.fragaria.colourForNumbers = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsNumbersColourWell]];
-        self.fragaria.colourForStrings = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsStringsColourWell]];
-        self.fragaria.colourForVariables = [NSUnarchiver unarchiveObjectWithData:[defaults valueForKey:MGSFragariaPrefsVariablesColourWell]];
+        self.fragaria.coloursAttributes = [defaults boolForKey:MGSFragariaPrefsColourAttributes];
+        self.fragaria.coloursAutocomplete = [defaults boolForKey:MGSFragariaPrefsColourAutocomplete];
+        self.fragaria.coloursCommands = [defaults boolForKey:MGSFragariaPrefsColourCommands];
+        self.fragaria.coloursComments = [defaults boolForKey:MGSFragariaPrefsColourComments];
+        self.fragaria.coloursInstructions = [defaults boolForKey:MGSFragariaPrefsColourInstructions];
+        self.fragaria.coloursKeywords = [defaults boolForKey:MGSFragariaPrefsColourKeywords];
+        self.fragaria.coloursNumbers = [defaults boolForKey:MGSFragariaPrefsColourNumbers];
+        self.fragaria.coloursStrings = [defaults boolForKey:MGSFragariaPrefsColourStrings];
+        self.fragaria.coloursVariables = [defaults boolForKey:MGSFragariaPrefsColourVariables];
+        self.fragaria.colourForAttributes = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsAttributesColourWell]];
+        self.fragaria.colourForAutocomplete = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsAutocompleteColourWell]];
+        self.fragaria.colourForCommands = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsCommandsColourWell]];
+        self.fragaria.colourForComments = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsCommentsColourWell]];
+        self.fragaria.colourForInstructions = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsInstructionsColourWell]];
+        self.fragaria.colourForKeywords = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsKeywordsColourWell]];
+        self.fragaria.colourForNumbers = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsNumbersColourWell]];
+        self.fragaria.colourForStrings = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsStringsColourWell]];
+        self.fragaria.colourForVariables = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsVariablesColourWell]];
     }
     else
     {
