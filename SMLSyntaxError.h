@@ -62,21 +62,13 @@ extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCateg
 
 /// @name Instance Methods
 
+
 /**
  *  This initializer receives a dictionary of keys and values, where the dictionary
  *  keys correspond to property names of this class.
  *  @param dictionary indicates the dictionary from which to initialize this class.
  **/
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
-
-/// @name Deprecated Class Methods
-
-/**
- *  This class method is a synonym for imageForWarningLevel.
- *  @deprecated Use defaultImageForWarningLevel: instead.
- *  @param style indicates the level of this error.
- **/
-+ (NSImage *)imageForWarningStyle:(float)style __deprecated_msg("Use defaultImageForWarningLevel: instead.");
 
 
 /// @name Properties
