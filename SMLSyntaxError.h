@@ -28,14 +28,17 @@ extern float const kMGSErrorCategoryPanic;    ///< warningLevel > 600.0
 extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCategoryWarning
 
 
-/**
- *  SMLSyntaxError describes a class that stores syntaxErrors to be handled by Fragaria.
+/** 
+ *  SMLSyntaxError is a model class that stores the syntax errors to be
+ *  shown in Fragaria's text view and gutter.
  *
- *  @discussion Components using this class are not currently KVO compliant and do not observe changes
- *  to instances of this class. They expect an NSArray of this class for which they will respond to
- *  changes. Do not modify instances of this class once assigned to your instance of Fragaria; instead
- *  assign a new copy of your syntaxErrors array.
- **/
+ *  @discussion Components using this class are not currently KVO compliant and
+ *              do not observe changes to instances of this class. They expect
+ *              an NSArray of this class for which they will respond to changes.
+ *              Do not modify instances of this class once assigned to your
+ *              instance of Fragaria; instead assign a new copy of your
+ *              syntaxErrors array.
+ */
 
 @interface SMLSyntaxError : NSObject
 
@@ -78,21 +81,28 @@ extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCateg
 
 /// @name Properties
 
-/**
- * The line at which this error occurs.
- * @discussion the line number is always one-based. Although Fragaria can display
- * line numbers starting with any value, but errors are always on lines 1...n.
- **/
-@property (nonatomic,assign) int line;
-@property (nonatomic,assign) int character;                        ///< The character position at which this error begins.
-@property (nonatomic,assign) int length;                           ///< The character length of this error.
-@property (nonatomic,copy) NSString* description;                  ///< A description of this error.
-@property (nonatomic,assign) BOOL hidden;                          ///< Indicates whether or not this error is hidden from display.
 
-@property (nonatomic,copy) NSColor *errorLineHighlightColor;       ///< The color to use to highlight lines that have syntax errors.
-@property (nonatomic,copy) NSColor *errorBackgroundHighlightColor; ///< The color to use to highlight the background of specific errors.
-@property (nonatomic,copy) NSColor *errorForegroundHighlightColor; ///< The color to use to highlight the foreground of specific errors.
-@property (nonatomic,assign) float warningLevel;                   ///< The warning level or severity of this syntax error.
+/** The line at which this error occurs.
+ * @discussion the line number is always one-based. Although Fragaria can display
+ * line numbers starting with any value, but errors are always on lines 1...n. */
+@property (nonatomic,assign) NSUInteger line;
+/** The one-based character position at which this error begins. */
+@property (nonatomic,assign) NSUInteger character;
+/** The length of this error, in characters. */
+@property (nonatomic,assign) NSUInteger length;
+/** A description for this error. */
+@property (nonatomic,copy) NSString* description;
+/** Indicates whether or not this error is hidden from display. */
+@property (nonatomic,assign) BOOL hidden;
+
+/** The color to use to highlight lines that have syntax errors. */
+@property (nonatomic,copy) NSColor *errorLineHighlightColor;
+/** The color to use to highlight the background of specific errors. */
+@property (nonatomic,copy) NSColor *errorBackgroundHighlightColor;
+/** The color to use to highlight the foreground of specific errors. */
+@property (nonatomic,copy) NSColor *errorForegroundHighlightColor;
+/** The warning level or severity of this syntax error. */
+@property (nonatomic,assign) float warningLevel;
 
 /**
  *  Specifies an image that should be associated with this syntax error.

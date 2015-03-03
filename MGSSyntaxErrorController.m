@@ -17,18 +17,20 @@
 #define kSMLAlwaysShowBadgesInBalloon 0
 
 
-static NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSString* str)
+static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger character, NSString* str)
 {
     NSScanner* scanner = [NSScanner scannerWithString:str];
     [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@""]];
     
-    int currentLine = 1;
+    character -= character ? 1 : 0;
+    
+    NSUInteger currentLine = 1;
     while (![scanner isAtEnd])
     {
         if (currentLine == line)
         {
             // Found the right line
-            NSInteger location = [scanner scanLocation] + character-1;
+            NSInteger location = [scanner scanLocation] + character;
             if (location >= (NSInteger)str.length) location = str.length - 1;
             return location;
         }
@@ -148,10 +150,10 @@ static NSInteger CharacterIndexFromRowAndColumn(int line, int character, NSStrin
         NSRange lineRange = [text lineRangeForRange:NSMakeRange(location, 0)];
         
         // Highlight row if it is not already highlighted
-        if (![highlightedRows containsObject:[NSNumber numberWithInt:err.line]])
+        if (![highlightedRows containsObject:[NSNumber numberWithUnsignedInteger:err.line]])
         {
             // Remember that we are highlighting this row
-            [highlightedRows addObject:[NSNumber numberWithInt:err.line]];
+            [highlightedRows addObject:[NSNumber numberWithUnsignedInteger:err.line]];
             
             // Add highlight for background
             [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
