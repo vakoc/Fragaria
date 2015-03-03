@@ -65,26 +65,19 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 }
 
 
-#pragma mark - Class Extension
-@interface SMLTextView()
-
-@property (strong) NSColor *pageGuideColour;
-
-@end
-
-
 static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 #pragma mark - Implementation
 
-@implementation SMLTextView {
 
+@implementation SMLTextView {
     BOOL isDragging;
     NSPoint startPoint;
     NSPoint startOrigin;
 
     CGFloat pageGuideX;
+    NSColor *pageGuideColor;
 
     NSRect currentLineRect;
 
@@ -92,7 +85,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 @synthesize lineWrap = _lineWrap;
-@synthesize pageGuideColour = _pageGuideColour;
 @synthesize showsPageGuide = _showsPageGuide;
 
 
@@ -408,38 +400,28 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 #pragma mark - Instance methods - Intializers and Setup
 
-/*
- * - initWithFrame:fragaria:
- */
-
-- (id)initWithFrame:(NSRect)frame fragaria:(MGSFragaria *)fragaria
-{
-    if ((self = [super initWithFrame:frame])) {
-        SMLLayoutManager *layoutManager = [[SMLLayoutManager alloc] init];
-        [[self textContainer] replaceLayoutManager:layoutManager];
-
-        _fragaria = fragaria;
-        _interfaceController = [[MGSExtraInterfaceController alloc] init];
-        
-        _syntaxColouring = [[SMLSyntaxColouring alloc] initWithLayoutManager:layoutManager];
-
-        [self setDefaults];
-
-        // set initial line wrapping
-        _lineWrap = YES;
-        isDragging = NO;
-        [self updateLineWrap];
-    }
-    return self;
-}
-
 
 /*
  * - initWithFrame:
  */
 - (id)initWithFrame:(NSRect)frame
 {
-    return [self initWithFrame:frame fragaria:nil];
+    if ((self = [super initWithFrame:frame])) {
+        SMLLayoutManager *layoutManager = [[SMLLayoutManager alloc] init];
+        [[self textContainer] replaceLayoutManager:layoutManager];
+        
+        _interfaceController = [[MGSExtraInterfaceController alloc] init];
+        
+        _syntaxColouring = [[SMLSyntaxColouring alloc] initWithLayoutManager:layoutManager];
+        
+        [self setDefaults];
+        
+        // set initial line wrapping
+        _lineWrap = YES;
+        isDragging = NO;
+        [self updateLineWrap];
+    }
+    return self;
 }
 
 
@@ -554,7 +536,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     if (self.showsPageGuide == YES) {
         NSRect bounds = [self bounds];
         if ([self needsToDrawRect:NSMakeRect(pageGuideX, 0, 1, bounds.size.height)] == YES) { // So that it doesn't draw the line if only e.g. the cursor updates
-            [self.pageGuideColour set];
+            [pageGuideColor set];
             [NSBezierPath strokeRect:NSMakeRect(pageGuideX, 0, 0, bounds.size.height)];
         }
     }
@@ -1372,7 +1354,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     pageGuideX = floor(sizeOfCharacter * (self.pageGuideColumn + 1)) - 1.5f; // -1.5 to put it between the two characters and draw only on one pixel and not two (as the system draws it in a special way), and that's also why the width above is set to zero
 
     NSColor *color = self.textColor;
-    self.pageGuideColour = [color colorWithAlphaComponent:([color alphaComponent] / 4)]; // Use the same colour as the text but with more transparency
+    pageGuideColor = [color colorWithAlphaComponent:([color alphaComponent] / 4)]; // Use the same colour as the text but with more transparency
 
     [self display]; // To reflect the new values in the view
 }

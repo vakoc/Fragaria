@@ -582,7 +582,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     self.hasVerticalScroller = YES;
     
     // create textview
-    self.textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height) fragaria:self];
+    self.textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
     [self.scrollView setDocumentView:self.textView];
     
     // create line numbers

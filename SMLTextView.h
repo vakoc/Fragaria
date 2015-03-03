@@ -35,13 +35,6 @@
 @interface SMLTextView : NSTextView
 
 
-/// @name Properties - Internal
-#pragma mark - Properties - Internal
-
-/** A reference to the owning Fragaria instance. */
-@property (nonatomic,assign,readonly) MGSFragaria *fragaria;
-
-
 /// @name Properties - Appearance and Behaviours
 #pragma mark - Properties - Appearance and Behaviours
 
@@ -149,14 +142,8 @@
 
 
 /// @name Instance Methods - Initializers and Setup
-#pragma mark - Instance Methods - Intializers and Setup
+#pragma mark - Instance Methods - Setup
 
-/**
- *  Standard initWithFrame, also allowing `fragaria` assignment at same time.
- *  @param frame The frame for the view.
- *  @param fragaria The instance of Fragaria to associate with this view.
- **/
-- (id)initWithFrame:(NSRect)frame fragaria:(MGSFragaria *)fragaria;
 
 - (void)setDefaults;                                                  ///< Sets the initial defaults for the text view.
 
