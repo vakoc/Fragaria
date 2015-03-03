@@ -354,7 +354,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	[self.syntaxColouring recolourRange:wholeRange];
 	
 	// get content with layout manager temporary attributes persisted
-	return [(SMLLayoutManager *)self.layoutManager attributedStringWithTemporaryAttributesApplied];
+	return [self.layoutManager attributedStringWithTemporaryAttributesApplied];
 }
 
 
