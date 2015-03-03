@@ -630,6 +630,23 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 
 
+/*
+ * - replaceTextStorage:
+ */
+- (void)replaceTextStorage:(NSTextStorage*)textStorage
+{
+    [self.gutterView layoutManagerWillChangeTextStorage];
+    [self.syntaxErrorController layoutManagerWillChangeTextStorage];
+    [self.textView.syntaxColouring layoutManagerWillChangeTextStorage];
+    
+    [self.textView.layoutManager replaceTextStorage:textStorage];
+    
+    [self.gutterView layoutManagerDidChangeTextStorage];
+    [self.syntaxErrorController layoutManagerDidChangeTextStorage];
+    [self.textView.syntaxColouring layoutManagerDidChangeTextStorage];
+}
+
+
 #pragma mark - Instance Methods (deprecated)
 
 

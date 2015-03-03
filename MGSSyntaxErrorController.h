@@ -47,14 +47,12 @@
  **/
 - (NSArray *)linesWithErrors;
 
-
 /**
  *  Returns the number of errors assigned to line `line`.
  *  Syntax errors that have hidden == true will not be counted.
  *  @param line is the line number to check.
  **/
 - (NSUInteger)errorCountForLine:(NSInteger)line;
-
 
 /**
  *  Returns the first error with the highest warningLevel for line `line`.
@@ -63,7 +61,6 @@
  **/
 - (SMLSyntaxError *)errorForLine:(NSInteger)line;
 
-
 /**
  *  Returns an array of all of the errors assigned to line `line`.
  *  Syntax errors that have hidden == true will not be counted.
@@ -71,13 +68,11 @@
  **/
 - (NSArray*)errorsForLine:(NSInteger)line;
 
-
 /**
  *  Returns an array of all of the non-hidden errors in `errorArray`.
  *  Syntax errors that have hidden == true will not be returned.
  **/
 - (NSArray *)nonHiddenErrors;
-
 
 /**
  *  Returns an NSDictionary of key-value pairs indicating decorations
@@ -88,7 +83,6 @@
  *  highest warningLevel for that line.
  **/
 - (NSDictionary *)errorDecorations;
-
 
 /**
  *  Returns an NSDictionary of key-value pairs indicating decorations
@@ -101,7 +95,6 @@
  **/
 - (NSDictionary *)errorDecorationsHavingSize:(NSSize)size;
 
-
 /**
  *  Displays an NSPopover indicating the error(s).
  *  @param line indicates the line number from which errors should be shown.
@@ -109,6 +102,10 @@
  *  @param view indicates the view that the popover is relative to.
  **/
 - (void)showErrorsForLine:(NSUInteger)line relativeToRect:(NSRect)rect ofView:(NSView*)view;
+
+
+- (void)layoutManagerWillChangeTextStorage;
+- (void)layoutManagerDidChangeTextStorage;
 
 
 @end

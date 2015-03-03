@@ -79,7 +79,6 @@ static char kcColoursChanged;
 - (instancetype)initWithLayoutManager:(SMLLayoutManager *)lm
 {
     if ((self = [super init])) {
-        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         layoutManager = lm;
         
         _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] init];
@@ -90,8 +89,7 @@ static char kcColoursChanged;
 
         // register for KVO -- observe our own properties.
         [self addObserver:self forKeyPath:@"coloursChanged" options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
-        
-        [nc addObserver:self selector:@selector(textStorageDidProcessEditing:) name:NSTextStorageDidProcessEditingNotification object:layoutManager.textStorage];
+        [self layoutManagerDidChangeTextStorage];
 	}
     
     return self;
@@ -191,6 +189,22 @@ static char kcColoursChanged;
 
 
 #pragma mark - Property getters/setters
+
+
+- (void)layoutManagerWillChangeTextStorage
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:NSTextStorageDidProcessEditingNotification
+                object:layoutManager.textStorage];
+}
+
+
+- (void)layoutManagerDidChangeTextStorage
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(textStorageDidProcessEditing:)
+               name:NSTextStorageDidProcessEditingNotification object:layoutManager.textStorage];
+}
 
 
 /*

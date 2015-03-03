@@ -94,6 +94,9 @@ Copyright 2004-2009 Peter Borg
  * @param lm The layout manager associated with this instance. */
 - (id)initWithLayoutManager:(NSLayoutManager *)lm;
 
+- (void)layoutManagerWillChangeTextStorage;
+- (void)layoutManagerDidChangeTextStorage;
+
 /** Recolors the invalid characters in the specified range.
  * @param range A character range where, when this method returns, all syntax
  *              colouring will be guaranteed to be up-to-date. */

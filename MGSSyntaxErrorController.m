@@ -98,16 +98,28 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 }
 
 
+- (void)layoutManagerWillChangeTextStorage
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:NSTextStorageDidProcessEditingNotification
+      object:self.textView.textStorage];
+}
+
+
+- (void)layoutManagerDidChangeTextStorage
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(highlightErrors)
+      name:NSTextStorageDidProcessEditingNotification object:self.textView.textStorage];
+    [self updateSyntaxErrorsDisplay];
+}
+
+
 - (void)setTextView:(SMLTextView *)textView
 {
-    if (_textView) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSTextDidChangeNotification object:_textView];
-    }
+    [self layoutManagerWillChangeTextStorage];
     _textView = textView;
-    if (_textView) {
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(highlightErrors) name:NSTextDidChangeNotification object:_textView];
-    }
-    [self updateSyntaxErrorsDisplay];
+    [self layoutManagerDidChangeTextStorage];
 }
 
 

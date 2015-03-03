@@ -285,6 +285,9 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 - (void)reloadString;
 
 
+- (void)replaceTextStorage:(NSTextStorage*)textStorage;
+
+
 /// @name Instance Methods (deprecated)
 #pragma mark - Instance Methods (deprecated)
 

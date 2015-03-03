@@ -199,29 +199,40 @@
 }
 
 
-- (void)setClientView:(NSView *)aView
+- (void)layoutManagerWillChangeTextStorage
 {
-	NSView *oldClientView;
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-	
-    if (aView && ![aView isKindOfClass:[NSTextView class]])
-        [NSException raise:@"MGSLineNumberViewNotTextViewClient"
-                    format:@"MGSLineNumberView's client view must be a NSTextView."];
+    [nc removeObserver:self name:NSTextStorageDidProcessEditingNotification
+      object:self.clientView.textStorage];
+}
+
+
+- (void)layoutManagerDidChangeTextStorage
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(textStorageDidProcessEditing:)
+      name:NSTextStorageDidProcessEditingNotification object:self.clientView.textStorage];
+    [self invalidateLineIndicesFromCharacterIndex:0];
+}
+
+
+- (void)setClientView:(SMLTextView *)aView
+{
+	SMLTextView *oldClientView;
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
 	oldClientView = [self clientView];
 	
     if (oldClientView && (oldClientView != aView))
     {
-		[nc removeObserver:self name:NSTextStorageDidProcessEditingNotification object:[(NSTextView *)oldClientView textStorage]];
+        [self layoutManagerWillChangeTextStorage];
         [nc removeObserver:self name:NSViewFrameDidChangeNotification object:oldClientView];
     }
     [super setClientView:aView];
     if (aView)
     {
-		[nc addObserver:self selector:@selector(textStorageDidProcessEditing:) name:NSTextStorageDidProcessEditingNotification object:[(NSTextView *)aView textStorage]];
         [nc addObserver:self selector:@selector(textViewFrameDidChange:) name:NSViewFrameDidChangeNotification object:aView];
-
-		[self invalidateLineIndicesFromCharacterIndex:0];
+        [self layoutManagerDidChangeTextStorage];
     }
 }
 

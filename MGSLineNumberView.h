@@ -62,6 +62,8 @@
 
 /** A reference to the owning Fragaria instance. */
 @property (nonatomic, weak, readonly) MGSFragaria *fragaria;
+/** The text view client of this ruler. */
+@property (assign) SMLTextView *clientView;
 
 /** The display font for the text editor. */
 @property (nonatomic) NSFont *font;
@@ -117,6 +119,10 @@
  * the specified line is drawn.
  * @param line A zero-based line number. */
 - (NSRect)decorationRectOfLine:(NSUInteger)line;
+
+
+- (void)layoutManagerWillChangeTextStorage;
+- (void)layoutManagerDidChangeTextStorage;
 
 
 @end

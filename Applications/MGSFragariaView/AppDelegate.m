@@ -76,7 +76,7 @@
 	self.viewTop.showsLineNumbers = YES;
 
     /* Make the lower view interesting. */
-    self.self.viewBottom.string = fileContent;
+    [self.viewBottom.fragaria replaceTextStorage:self.viewTop.textView.textStorage];
 	self.viewBottom.showsLineNumbers = YES;
 
 
