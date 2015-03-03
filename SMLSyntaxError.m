@@ -87,12 +87,9 @@ float const kMGSErrorCategoryDefault = 500;
 }
 
 
-#pragma mark - Deprecated Class Methods
-
-
-+ (NSImage *)imageForWarningStyle:(float)style
+- (instancetype)init
 {
-    return [[self class] defaultImageForWarningLevel:style];
+    
 }
 
 
