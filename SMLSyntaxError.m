@@ -79,12 +79,7 @@ float const kMGSErrorCategoryDefault = 500;
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if ((self = [self init])) {
-        NSMutableDictionary *temp;
-        
-        temp = [dictionary mutableCopy];
-        [temp setObject:[temp objectForKey:@"description"] forKey:@"errorDescription"];
-        [temp removeObjectForKey:@"description"];
-        [self setValuesForKeysWithDictionary:temp];
+        [self setValuesForKeysWithDictionary:dictionary];
     }
     return self;
 }
