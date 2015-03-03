@@ -208,7 +208,7 @@
 - (NSArray *)makeSyntaxErrors
 {
     SMLSyntaxError *error1 = [SMLSyntaxError errorWithDictionary:@{
-                                                                   @"description" : @"Syntax errors can be defined",
+                                                                   @"errorDescription" : @"Syntax errors can be defined",
                                                                    @"line" : @(4),
                                                                    @"character" : @(3),
                                                                    @"length" : @(5),
@@ -217,7 +217,7 @@
                                                                    }];
 
     SMLSyntaxError *error2 = [[SMLSyntaxError alloc] initWithDictionary:@{
-                                                                          @"description" : @"Multiple syntax errors can be defined for the same line, too.",
+                                                                          @"errorDescription" : @"Multiple syntax errors can be defined for the same line, too.",
                                                                           @"line" : @(4),
                                                                           @"character" : @(12),
                                                                           @"length" : @(7),
@@ -226,7 +226,7 @@
                                                                           }];
 
     SMLSyntaxError *error3 = [[SMLSyntaxError alloc] init];
-    error3.description = @"This error will appear on top of a line break.";
+    error3.errorDescription = @"This error will appear on top of a line break.";
     error3.line = 6;
     error3.character = 1;
     error3.length = 2;
@@ -234,7 +234,7 @@
     error3.warningLevel = kMGSErrorCategoryConfig;
 
     SMLSyntaxError *error4 = [SMLSyntaxError new];
-    error4.description = @"This error will not be hidden.";
+    error4.errorDescription = @"This error will not be hidden.";
     error4.line = 10;
     error4.character = 12;
     error4.length = 7;
