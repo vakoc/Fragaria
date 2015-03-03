@@ -49,9 +49,8 @@
 - (void)showWindow:(id)sender
 {
     // load view controllers
-    textEditingPrefsViewController = [MGSFragariaPreferences sharedInstance].textEditingPrefsViewController;
-
-    fontsAndColoursPrefsViewController = [MGSFragariaPreferences sharedInstance].fontsAndColoursPrefsViewController;
+    textEditingPrefsViewController = [[MGSFragariaTextEditingPrefsViewController alloc] init];
+    fontsAndColoursPrefsViewController = [[MGSFragariaFontsAndColoursPrefsViewController alloc] init];
 
     [super showWindow:sender];
 }

@@ -350,10 +350,10 @@
 		01BB1BEA1A795EFD006C0056 /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				D08359DD1AA0875E001B7B50 /* MGSPreferencesObserver.h */,
-				D08359DE1AA0875E001B7B50 /* MGSPreferencesObserver.m */,
 				ABD0FE581193543600E6AFE6 /* MGSFragariaPreferences.h */,
 				ABC578D2160350240040B3FB /* MGSFragariaPreferences.m */,
+				D08359DD1AA0875E001B7B50 /* MGSPreferencesObserver.h */,
+				D08359DE1AA0875E001B7B50 /* MGSPreferencesObserver.m */,
 				01BB1BEF1A7966E7006C0056 /* Standard UI */,
 			);
 			name = Preferences;
