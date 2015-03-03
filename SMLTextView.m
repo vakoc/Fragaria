@@ -225,13 +225,14 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)setTextColor:(NSColor *)textColor
 {
+    /* setFont: also updates our typing attributes */
     [super setTextColor:textColor];
     [self configurePageGuide];
 }
 
 - (NSColor *)textColor
 {
-    return [super textColor];
+    return [[self typingAttributes] objectForKey:NSForegroundColorAttributeName];
 }
 
 
