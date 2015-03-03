@@ -54,14 +54,8 @@ NSString *SMLSyntaxGroupSecondStringPass2 = @"secondStringPass2";
 static char kcColoursChanged;
 
 
-// class extension
-@interface SMLSyntaxColouring()
 
-- (NSString *)completeString;
-- (void)applyColourDefaults;
-- (void)removeAllColours;
-- (void)setColour:(NSDictionary *)colour range:(NSRange)range;
-- (BOOL)isSyntaxColouringRequired;
+@interface SMLSyntaxColouring()
 
 @property (nonatomic, assign) BOOL coloursChanged;
 
@@ -71,8 +65,9 @@ static char kcColoursChanged;
 @implementation SMLSyntaxColouring {
     SMLLayoutManager __weak *layoutManager;
 
-    NSDictionary *commandsColour, *commentsColour, *instructionsColour, *keywordsColour, *autocompleteWordsColour,
-    *stringsColour, *variablesColour, *attributesColour,  *numbersColour;
+    NSDictionary *commandsColour, *commentsColour, *instructionsColour;
+    NSDictionary *keywordsColour, *autocompleteWordsColour, *stringsColour;
+    NSDictionary *variablesColour, *attributesColour, *numbersColour;
 }
 
 
@@ -94,7 +89,7 @@ static char kcColoursChanged;
         _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] init];
 
         // configure colouring
-        [self applyColourDefaults];
+        [self rebuildAttributesCache];
 
         // register for KVO -- observe our own properties.
         [self addObserver:self forKeyPath:@"coloursChanged" options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
@@ -105,6 +100,7 @@ static char kcColoursChanged;
 
 
 #pragma mark - KVO
+
 
 /*
  * + keyPathsForValuesAffectingColoursChanged
@@ -141,10 +137,9 @@ static char kcColoursChanged;
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if (context == &kcColoursChanged) {
-		[self applyColourDefaults];
-		[self removeAllColours];
-	}
-	else {
+		[self rebuildAttributesCache];
+		[self invalidateAllColouring];
+	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 }
@@ -159,15 +154,7 @@ static char kcColoursChanged;
 }
 
 
-#pragma mark - Accessors
-
-/*
- * - completeString
- */
-- (NSString *)completeString
-{
-	return self.layoutManager.textStorage.string;
-}
+#pragma mark - Property getters/setters
 
 
 /*
@@ -177,10 +164,10 @@ static char kcColoursChanged;
 {
     if (!_syntaxColoured && syntaxColoured) {
         _syntaxColoured = YES;
-        [self removeAllColours];
+        [self invalidateAllColouring];
     } else if (_syntaxColoured && !syntaxColoured) {
         _syntaxColoured = NO;
-        [self removeAllColours];
+        [self invalidateAllColouring];
     }
 }
 
@@ -190,7 +177,7 @@ static char kcColoursChanged;
 - (void)setSyntaxDefinition:(MGSSyntaxDefinition *)syntaxDefinition
 {
     _syntaxDefinition = syntaxDefinition;
-    [self removeAllColours];
+    [self invalidateAllColouring];
 }
 
 /*
@@ -212,17 +199,42 @@ static char kcColoursChanged;
 }
 
 
+/*
+ * - isSyntaxColouringRequired
+ */
+- (BOOL)isSyntaxColouringRequired
+{
+    return self.isSyntaxColoured && self.syntaxDefinition && self.syntaxDefinition.syntaxDefinitionAllowsColouring;
+}
+
+
 #pragma mark - Colouring
 
+
 /*
- * - removeAllColours
+ * - rebuildAttributesCache
  */
-- (void)removeAllColours
+- (void)rebuildAttributesCache
 {
-	NSRange wholeRange = NSMakeRange(0, [[self completeString] length]);
-	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:wholeRange];
-    [layoutManager removeTemporaryAttribute:SMLSyntaxGroup forCharacterRange:wholeRange];
-    [self.inspectedCharacterIndexes removeAllIndexes];
+    commandsColour = @{NSForegroundColorAttributeName: self.colourForCommands ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupCommand};
+    
+    commentsColour = @{NSForegroundColorAttributeName: self.colourForComments ? : [NSNull null], SMLSyntaxGroup: @"comments"};
+    
+    instructionsColour = @{NSForegroundColorAttributeName: self.colourForInstructions ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupInstruction};
+    
+    keywordsColour = @{NSForegroundColorAttributeName: self.colourForKeywords ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupKeyword};
+    
+    autocompleteWordsColour = @{NSForegroundColorAttributeName: self.colourForAutocomplete ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupAutoComplete};
+    
+    stringsColour = @{NSForegroundColorAttributeName: self.colourForStrings ? : [NSNull null], SMLSyntaxGroup: @"strings"};
+    
+    variablesColour = @{NSForegroundColorAttributeName: self.colourForVariables ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupVariable};
+    
+    attributesColour = @{NSForegroundColorAttributeName: self.colourForAttributes ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupAttribute};
+    
+    numbersColour = @{NSForegroundColorAttributeName: self.colourForNumbers ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupNumber};
+    
+    [self invalidateAllColouring];
 }
 
 
@@ -231,7 +243,14 @@ static char kcColoursChanged;
  */
 - (void)invalidateAllColouring
 {
-    [self removeAllColours];
+    NSString *string;
+    
+    string = self.layoutManager.textStorage.string;
+	NSRange wholeRange = NSMakeRange(0, [string length]);
+    
+	[layoutManager removeTemporaryAttribute:NSForegroundColorAttributeName forCharacterRange:wholeRange];
+    [layoutManager removeTemporaryAttribute:SMLSyntaxGroup forCharacterRange:wholeRange];
+    [self.inspectedCharacterIndexes removeAllIndexes];
 }
 
 
@@ -250,7 +269,7 @@ static char kcColoursChanged;
 
 
 /*
- * - recolourExposedRange
+ * - recolourRange:
  */
 - (void)recolourRange:(NSRange)range
 {
@@ -270,12 +289,12 @@ static char kcColoursChanged;
 
 
 /*
- * - recolourRange:
+ * - recolourChangedRange:
  */
 - (NSRange)recolourChangedRange:(NSRange)rangeToRecolour
 {
     // setup
-    NSString *documentString = [self completeString];
+    NSString *documentString = self.layoutManager.textStorage.string;
 	NSRange effectiveRange = [documentString lineRangeForRange:rangeToRecolour];
 
     // trace
@@ -398,6 +417,9 @@ static char kcColoursChanged;
 
     return effectiveRange;
 }
+
+
+#pragma mark - Coloring passes
 
 
 - (void)colourGroupWithIdentifier:(NSInteger)group inRange:(NSRange)effectiveRange withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner queryingDelegate:(id)colouringDelegate colouringBlock:(BOOL(^)(NSDictionary *, NSRange))colourRangeBlock
@@ -1082,6 +1104,9 @@ static char kcColoursChanged;
 }
 
 
+#pragma mark - Coloring primitives
+
+
 /*
  * - setColour:range:
  */
@@ -1114,42 +1139,6 @@ static char kcColoursChanged;
 - (NSString*)syntaxColouringGroupOfCharacterAtIndex:(NSUInteger)index
 {
     return [layoutManager temporaryAttribute:SMLSyntaxGroup atCharacterIndex:index effectiveRange:NULL];
-}
-
-
-/*
- * - applyColourDefaults
- */
-- (void)applyColourDefaults
-{
-    commandsColour = @{NSForegroundColorAttributeName: self.colourForCommands ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupCommand};
-	
-    commentsColour = @{NSForegroundColorAttributeName: self.colourForComments ? : [NSNull null], SMLSyntaxGroup: @"comments"};
-	
-    instructionsColour = @{NSForegroundColorAttributeName: self.colourForInstructions ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupInstruction};
-	
-    keywordsColour = @{NSForegroundColorAttributeName: self.colourForKeywords ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupKeyword};
-	
-    autocompleteWordsColour = @{NSForegroundColorAttributeName: self.colourForAutocomplete ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupAutoComplete};
-	
-    stringsColour = @{NSForegroundColorAttributeName: self.colourForStrings ? : [NSNull null], SMLSyntaxGroup: @"strings"};
-	
-    variablesColour = @{NSForegroundColorAttributeName: self.colourForVariables ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupVariable};
-	
-    attributesColour = @{NSForegroundColorAttributeName: self.colourForAttributes ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupAttribute};
-
-    numbersColour = @{NSForegroundColorAttributeName: self.colourForNumbers ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupNumber};
-
-    [self removeAllColours];
-}
-
-
-/*
- * - isSyntaxColouringRequired
- */
-- (BOOL)isSyntaxColouringRequired
-{
-    return self.isSyntaxColoured && self.syntaxDefinition && self.syntaxDefinition.syntaxDefinitionAllowsColouring;
 }
 
 
