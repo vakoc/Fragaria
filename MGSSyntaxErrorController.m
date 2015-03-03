@@ -109,7 +109,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 - (void)layoutManagerDidChangeTextStorage
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(highlightErrors)
+    [nc addObserver:self selector:@selector(textStorageDidProcessEditing:)
       name:NSTextStorageDidProcessEditingNotification object:self.textView.textStorage];
     [self updateSyntaxErrorsDisplay];
 }
@@ -137,6 +137,17 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 }
 
 
+- (void)textStorageDidProcessEditing:(NSNotification*)note
+{
+    /* Defer to the end of this run loop because when this notification is
+     * received, the layout manager is not yet updated with the new contents
+     * of the text storage. */
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self highlightErrors];
+    });
+}
+
+
 - (void)highlightErrors
 {
     SMLTextView* textView = self.textView;
@@ -149,7 +160,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     
     if (!self.showSyntaxErrors) return;
     
-    // Highlight all errors and add buttons
+    // Highlight all errors and add buttjskaons
     NSMutableSet* highlightedRows = [NSMutableSet set];
     
     for (SMLSyntaxError* err in self.syntaxErrors)
