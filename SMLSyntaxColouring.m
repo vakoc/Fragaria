@@ -199,20 +199,20 @@ static char kcColoursChanged;
 }
 
 /*
- *  @property colourMultiLineStringsEnabled
+ *  @property colourMultiLineStrings
  */
-- (void)setColourMultiLineStringsEnabled:(BOOL)colourMultiLineStringsEnabled
+- (void)setColourMultiLineStrings:(BOOL)colourMultiLineStrings
 {
-    _colourMultiLineStringsEnabled = colourMultiLineStringsEnabled;
+    _colourMultiLineStrings = colourMultiLineStrings;
     [self invalidateAllColouring];
 }
 
 /*
- *  @property colourOnlyUntilEndOfLineEnabled
+ *  @property colourOnlyUntilEndOfLine
  */
-- (void)setColourOnlyUntilEndOfLineEnabled:(BOOL)colourOnlyUntilEndOfLineEnabled
+- (void)setColourOnlyUntilEndOfLine:(BOOL)colourOnlyUntilEndOfLine
 {
-    _colourOnlyUntilEndOfLineEnabled = colourOnlyUntilEndOfLineEnabled;
+    _colourOnlyUntilEndOfLine = colourOnlyUntilEndOfLine;
     [self invalidateAllColouring];
 }
 
@@ -328,7 +328,7 @@ static char kcColoursChanged;
     //
     // This is not always correct but it's better than nothing.
     //
-	if (self.colourMultiLineStringsEnabled) {
+	if (self.colourMultiLineStrings) {
 		NSInteger beginFirstStringInMultiLine = [documentString rangeOfString:self.syntaxDefinition.firstString options:NSBackwardsSearch range:NSMakeRange(0, effectiveRange.location)].location;
         if (beginFirstStringInMultiLine != NSNotFound) {
             if ([[self syntaxColouringGroupOfCharacterAtIndex:beginFirstStringInMultiLine] isEqual:@"strings"]) {
@@ -710,7 +710,7 @@ static char kcColoursChanged;
         }
         [documentScanner mgs_setScanLocation:colourStartLocation];
         if (![documentScanner scanUpToString:self.syntaxDefinition.endInstruction intoString:nil] || [documentScanner scanLocation] >= documentStringLength) {
-            if (self.colourOnlyUntilEndOfLineEnabled) {
+            if (self.colourOnlyUntilEndOfLine) {
                 [documentScanner mgs_setScanLocation:NSMaxRange([documentString lineRangeForRange:NSMakeRange(colourStartLocation, 0)])];
             } else {
                 [documentScanner mgs_setScanLocation:documentStringLength];
@@ -826,7 +826,7 @@ static char kcColoursChanged;
     NSString *rangeString = [rangeScanner string];
     NSInteger rangeLocation = rangeToRecolour.location;
     
-    if (!self.colourMultiLineStringsEnabled)
+    if (!self.colourMultiLineStrings)
         stringPattern = [self.syntaxDefinition secondStringPattern];
     else
         stringPattern = [self.syntaxDefinition secondMultilineStringPattern];
@@ -854,7 +854,7 @@ static char kcColoursChanged;
     NSString *rangeString = [rangeScanner string];
     NSInteger rangeLocation = rangeToRecolour.location;
     
-    if (!self.colourMultiLineStringsEnabled)
+    if (!self.colourMultiLineStrings)
         stringPattern = [self.syntaxDefinition firstStringPattern];
     else
         stringPattern = [self.syntaxDefinition firstMultilineStringPattern];
@@ -1052,7 +1052,7 @@ static char kcColoursChanged;
                 if (![documentScanner scanUpToString:endMultiLineComment intoString:nil] || [documentScanner scanLocation] >= documentStringLength) {
                     
                     // Comment end not found
-                    if (self.colourOnlyUntilEndOfLineEnabled) {
+                    if (self.colourOnlyUntilEndOfLine) {
                         [documentScanner mgs_setScanLocation:NSMaxRange([documentString lineRangeForRange:NSMakeRange(colourStartLocation, 0)])];
                     } else {
                         [documentScanner mgs_setScanLocation:documentStringLength];
@@ -1105,7 +1105,7 @@ static char kcColoursChanged;
     NSString *rangeString = [rangeScanner string];
     NSInteger rangeLocation = rangeToRecolour.location;
     
-    if (!self.colourMultiLineStringsEnabled)
+    if (!self.colourMultiLineStrings)
         stringPattern = [self.syntaxDefinition secondStringPattern];
     else
         stringPattern = [self.syntaxDefinition secondMultilineStringPattern];

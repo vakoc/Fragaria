@@ -64,8 +64,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic colourForAttributes, colourForAutocomplete, colourForCommands, colourForComments, colourForInstructions;
 @dynamic colourForKeywords, colourForNumbers, colourForStrings, colourForVariables, coloursAttributes;
 @dynamic coloursAutocomplete, coloursCommands, coloursComments, coloursInstructions, coloursKeywords, coloursNumbers;
-@dynamic coloursStrings, coloursVariables, syntaxColouringDelegate, colourMultiLineStringsEnabled;
-@dynamic colourOnlyUntilEndOfLineEnabled;
+@dynamic coloursStrings, coloursVariables, syntaxColouringDelegate, colourMultiLineStrings;
+@dynamic colourOnlyUntilEndOfLine;
 
 
 #pragma mark - Properties - Document Properties

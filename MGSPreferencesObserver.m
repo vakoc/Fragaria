@@ -247,8 +247,8 @@ static char kcIndentingPrefsChanged;
     }
     else if (context == &kcMultiLineChanged)
     {
-        self.fragaria.colourMultiLineStringsEnabled = [defaults boolForKey:MGSFragariaPrefsColourMultiLineStrings];
-        self.fragaria.colourOnlyUntilEndOfLineEnabled = [defaults boolForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine];
+        self.fragaria.colourMultiLineStrings = [defaults boolForKey:MGSFragariaPrefsColourMultiLineStrings];
+        self.fragaria.colourOnlyUntilEndOfLine = [defaults boolForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine];
     }
     else if (context == &kcColoursChanged)
     {
