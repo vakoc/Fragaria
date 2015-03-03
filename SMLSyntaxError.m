@@ -103,53 +103,6 @@ float const kMGSErrorCategoryDefault = 500;
 
 #pragma mark - Property Accessors
 
-- (void)setErrorLineHighlightColor:(NSColor *)errorLineHighlightColor
-{
-    _errorLineHighlightColor = errorLineHighlightColor;
-}
-
-- (NSColor *)errorLineHighlightColor
-{
-    if (!_errorLineHighlightColor)
-    {
-        _errorLineHighlightColor = [NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1];
-    }
-
-    return _errorLineHighlightColor;
-}
-
-
--(void)setErrorBackgroundHighlightColor:(NSColor *)errorBackgroundHighlightColor
-{
-    _errorBackgroundHighlightColor = errorBackgroundHighlightColor;
-}
-
-- (NSColor *)errorBackgroundHighlightColor
-{
-    if (!_errorBackgroundHighlightColor)
-    {
-        _errorBackgroundHighlightColor = [NSColor orangeColor];
-    }
-
-    return _errorBackgroundHighlightColor;
-}
-
-
--(void)setErrorForegroundHighlightColor:(NSColor *)errorForegroundHighlightColor
-{
-    errorForegroundHighlightColor = errorForegroundHighlightColor;
-}
-
-- (NSColor *)errorForegroundHighlightColor
-{
-    if (!_errorForegroundHighlightColor)
-    {
-        _errorForegroundHighlightColor = [NSColor whiteColor];
-    }
-
-    return _errorForegroundHighlightColor;
-}
-
 
 - (void)setWarningImage:(NSImage *)warningImage
 {
