@@ -105,6 +105,14 @@ float const kMGSErrorCategoryDefault = 500;
 }
 
 
+- (NSString*)description
+{
+    return [NSString stringWithFormat:@"(description: \"%@\", line: %ld, "
+      "column: %ld, length: %ld, level: %f)", self.errorDescription, self.line,
+      self.character, self.length, self.warningLevel];
+}
+
+
 #pragma mark - Property Accessors
 
 
