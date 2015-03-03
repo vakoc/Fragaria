@@ -212,11 +212,29 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 /// @name Instance Methods
 #pragma mark - Instance Methods
 
-/** Designated Initializer
- *  Adds Fragaria and its components to the specified empty view. This method
- *  now replaces embedInView.
+
+/** Adds Fragaria and its components to the specified empty view. This method
+ *  replaces embedInView, and is equivalent to calling
+ *  -initWithView:useStandardPreferences: with the autopref parameter set to
+ *  YES.
+ *
  *  @param view The parent view for Fragaria's components. */
-- (id)initWithView:(NSView*)view;
+- (instancetype)initWithView:(NSView*)view;
+
+/** Designated Initializer
+ *
+ *  Adds Fragaria and its components to the specified empty view. If the
+ *  autopref parameter is YES, Fragaria will automatically register for
+ *  observation of the NSUserDefaults preference keys listed in
+ *  MGSFragariaPreferences.h, otherwise, Fragaria will not observe any
+ *  preference.
+ *
+ *  @param view     The parent view for Fragaria's components.
+ *  @param autopref Set to NO if you don't want to use Fragaria's standard
+ *                  preference panels.
+ */
+- (instancetype)initWithView:(NSView*)view useStandardPreferences:(BOOL)autopref;
+
 
 /**
  *  Sets the value `object` identified by `key`.

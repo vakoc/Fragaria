@@ -36,7 +36,7 @@
 
 /** Fragaria's preferences obsever, used for supporting the default preference
  * panels.  */
-@property (nonatomic, strong) MGSPreferencesObserver *preferencesObserver;
+@property (strong, readonly) MGSPreferencesObserver *preferencesObserver;
 
 
 @end

@@ -472,8 +472,23 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (instancetype)initWithView:(NSView *)view
 {
+    return [self initWithView:view useStandardPreferences:YES];
+}
+
+
+/*
+ * - initWithView:useStandardPreferences:
+ */
+- (instancetype)initWithView:(NSView*)view useStandardPreferences:(BOOL)autopref
+{
     self = [super init];
+    
     [self embedInView:view];
+    if (autopref) {
+        // create the temporary preferences observer
+        _preferencesObserver = [[MGSPreferencesObserver alloc] initWithFragaria:self];
+    }
+    
     return self;
 }
 
@@ -607,9 +622,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [self setShowsWarningsInGutter:YES];
     
     [self setAutoCompleteDelegate:nil];
-
-    // create the temporary preferences observer
-    self.preferencesObserver = [[MGSPreferencesObserver alloc] initWithFragaria:self];
 }
 
 
@@ -636,7 +648,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 /*
  * - setString:options:
-*/
+ */
 - (void)setString:(NSString *)aString options:(NSDictionary *)options
 {
 	[self.textView setString:aString options:options];
