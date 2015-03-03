@@ -159,7 +159,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
             // Add highlight for background
             [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
             
-            if ([err.description length] > 0)
+            if ([err.errorDescription length] > 0)
                 [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
         }
     }
@@ -250,7 +250,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     NSSize balloonSize;
     NSInteger i, c;
     
-    errors = [[self errorsForLine:line] valueForKey:@"description"];
+    errors = [[self errorsForLine:line] valueForKey:@"errorDescription"];
     images = [[self errorsForLine:line] valueForKey:@"warningImage"];
     if (!(c = [errors count])) return;
 

@@ -83,7 +83,7 @@ extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCateg
 /** The length of this error, in characters. */
 @property (nonatomic,assign) NSUInteger length;
 /** A description for this error. */
-@property (nonatomic,copy) NSString* description;
+@property (nonatomic,copy) NSString* errorDescription;
 /** Indicates whether or not this error is hidden from display. */
 @property (nonatomic,assign) BOOL hidden;
 

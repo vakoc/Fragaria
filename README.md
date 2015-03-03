@@ -132,7 +132,7 @@ To add clickable syntax error highlights define an `NSArray` of SMLSyntaxErrors.
 
     // define a syntax error
     SMLSyntaxError *syntaxError = [[SMLSyntaxError new] autorelease];
-    syntaxError.description = @"Syntax errors can be defined";
+    syntaxError.errorDescription = @"Syntax errors can be defined";
     syntaxError.line = 1;
     syntaxError.character = 1;
     syntaxError.length = 10;

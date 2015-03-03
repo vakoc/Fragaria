@@ -64,7 +64,8 @@
                                                            @"warningLevel" : @(kMGSErrorCategoryPanic)
                                                            }],
                      ];
-    self.errorController = [[MGSSyntaxErrorController alloc] initWithArray:tmp];
+    self.errorController = [[MGSSyntaxErrorController alloc] init];
+    [self.errorController setSyntaxErrors:tmp];
 }
 
 - (void)tearDown
@@ -99,7 +100,7 @@
     float result4 = [[self.errorController errorForLine:4] warningLevel];
 
     // We should get @"Sample error 3." because error level is the same, and this is the first one.
-    NSString *result37 = [[self.errorController errorForLine:37] description];
+    NSString *result37 = [[self.errorController errorForLine:37] errorDescription];
 
     XCTAssert(result4 == kMGSErrorCategoryAccess && [result37 isEqualToString:@"Sample error 3."]);
 
@@ -111,7 +112,7 @@
     SMLSyntaxError *testContent = [[self.errorController errorsForLine:4] objectAtIndex:0];
     NSInteger testQuantity = [[self.errorController errorsForLine:37] count];
 
-    XCTAssert([testContent.description isEqualToString:@"Sample error 1."] && testQuantity == 2);
+    XCTAssert([testContent.errorDescription isEqualToString:@"Sample error 1."] && testQuantity == 2);
 }
 
 

@@ -21,19 +21,16 @@ float const kMGSErrorCategoryDefault = 500;
 
 @implementation SMLSyntaxError
 
-// automatic
-@synthesize line, character, length, description, hidden, warningLevel;
 
 // manual
-@synthesize errorLineHighlightColor = _errorLineHighlightColor;
-@synthesize errorBackgroundHighlightColor = _errorBackgroundHighlightColor;
-@synthesize errorForegroundHighlightColor = _errorForegroundHighlightColor;
 @synthesize warningImage = _warningImage;
 
 // to be deprecated
 @synthesize code; // deprecated; separate line as reminder to remove.
 
+
 #pragma mark - Class Methods
+
 
 + (NSImage *)defaultImageForWarningLevel:(float)level
 {
@@ -69,6 +66,7 @@ float const kMGSErrorCategoryDefault = 500;
     return warningImage;
 }
 
+
 + (instancetype) errorWithDictionary:(NSDictionary *)dictionary
 {
     return [[[self class] alloc] initWithDictionary:dictionary];
@@ -77,10 +75,16 @@ float const kMGSErrorCategoryDefault = 500;
 
 #pragma mark - Instance Methods
 
+
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
     if ((self = [self init])) {
-        [self setValuesForKeysWithDictionary:dictionary];
+        NSMutableDictionary *temp;
+        
+        temp = [dictionary mutableCopy];
+        [temp setObject:[temp objectForKey:@"description"] forKey:@"errorDescription"];
+        [temp removeObjectForKey:@"description"];
+        [self setValuesForKeysWithDictionary:temp];
     }
     return self;
 }
@@ -154,5 +158,6 @@ float const kMGSErrorCategoryDefault = 500;
 {
     return self.errorLineHighlightColor;
 }
+
 
 @end
