@@ -60,8 +60,9 @@ typedef enum : NSUInteger
 {
     self = [super init];
 	if (self) {
-		
         invisibleGlyphs = NULL;
+        _textFont = [NSFont userFontOfSize:0];
+        _textInvisibleCharactersColour = [NSColor blackColor];
         
         [self resetAttributesAndGlyphs];
         
@@ -244,20 +245,20 @@ typedef enum : NSUInteger
 
 #pragma mark - Class extension
 
+
 /*
  * - resetAttributesAndGlyphs
  */
 - (void)resetAttributesAndGlyphs
 {
     // assemble our default attributes
-    defAttributes = [[NSDictionary alloc] initWithObjectsAndKeys: self.textFont, NSFontAttributeName, self.textInvisibleCharactersColour, NSForegroundColorAttributeName, nil];
+    defAttributes = @{NSFontAttributeName: self.textFont,
+      NSForegroundColorAttributeName: self.textInvisibleCharactersColour};
 
     // define substitute characters for whitespace chars
-    unichar tabUnichar = 0x00AC;
-    tabCharacter = [[NSString alloc] initWithCharacters:&tabUnichar length:1];
-    unichar newLineUnichar = 0x00B6;
-    newLineCharacter = [[NSString alloc] initWithCharacters:&newLineUnichar length:1];
-    spaceCharacter = @".";
+    tabCharacter = @"\u21E2";
+    newLineCharacter = @"\u00B6";
+    spaceCharacter = @"\u22C5";
     
     // all CFTypes can be added to NS collections
     // http://www.mikeash.com/pyblog/friday-qa-2010-01-22-toll-free-bridging-internals.html
