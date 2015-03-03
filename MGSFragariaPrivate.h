@@ -34,12 +34,6 @@
  * syntax error badges. */
 @property MGSLineNumberView *gutterView;
 
-/** Fragaria's scroll view. */
-@property (nonatomic, strong) NSScrollView *scrollView;
-
-/** Fragaria's text view. */
-@property (nonatomic, strong) SMLTextView *textView;
-
 /** Fragaria's preferences obsever, used for supporting the default preference
  * panels.  */
 @property (nonatomic, strong) MGSPreferencesObserver *preferencesObserver;

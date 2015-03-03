@@ -572,7 +572,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     NSAssert(contentView != nil, @"A content view must be provided.");
 
     // create text scrollview
-    self.scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
+    _scrollView = [[NSScrollView alloc] initWithFrame:NSMakeRect(0, 0, [contentView bounds].size.width, [contentView bounds].size.height)];
     NSSize contentSize = [self.scrollView contentSize];
     [self.scrollView setBorderType:NSNoBorder];
     
@@ -582,7 +582,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     self.hasVerticalScroller = YES;
     
     // create textview
-    self.textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
+    _textView = [[SMLTextView alloc] initWithFrame:NSMakeRect(0, 0, contentSize.width, contentSize.height)];
     [self.scrollView setDocumentView:self.textView];
     
     // create line numbers

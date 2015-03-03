@@ -181,10 +181,11 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 #pragma mark - Properties - System Components
 
 
-/**
- *  Fragaria's text view.
- **/
+/** Fragaria's text view. */
 @property (nonatomic, strong, readonly) SMLTextView *textView;
+
+/** Fragaria's scroll view. */
+@property (nonatomic, strong, readonly) NSScrollView *scrollView;
 
 
 /// @name Class Methods (deprecated)
