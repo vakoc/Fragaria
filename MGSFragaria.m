@@ -10,7 +10,7 @@
 #import "MGSFragaria.h"
 #import "MGSFragariaPrivate.h"
 #import "SMLTextViewPrivate.h"
-#import "MGSTemporaryPreferencesObserver.h"
+#import "MGSPreferencesObserver.h"
 
 
 // BOOL
@@ -105,8 +105,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (BOOL)colourMultiLineStringsEnabled
 {
 	return self.textView.syntaxColouring.colourMultiLineStringsEnabled;
-	
 }
+
 
 /*
  * @property colourOnlyUntilEndOfLineEnabled
@@ -609,7 +609,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [self setAutoCompleteDelegate:nil];
 
     // create the temporary preferences observer
-    self.temporaryPreferencesObserver = [[MGSTemporaryPreferencesObserver alloc] initWithFragaria:self];
+    self.preferencesObserver = [[MGSPreferencesObserver alloc] initWithFragaria:self];
 }
 
 

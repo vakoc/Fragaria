@@ -11,7 +11,7 @@
 @class SMLSyntaxColouring;
 @class MGSLineNumberDefaultsObserver;
 @class MGSLineNumberView;
-@class MGSTemporaryPreferencesObserver;
+@class MGSPreferencesObserver;
 
 #pragma mark - Class Extension
 
@@ -37,12 +37,13 @@
 /** Fragaria's scroll view. */
 @property (nonatomic, strong) NSScrollView *scrollView;
 
-/** Fragaria's scroll view. */
+/** Fragaria's text view. */
 @property (nonatomic, strong) SMLTextView *textView;
 
+/** Fragaria's preferences obsever, used for supporting the default preference
+ * panels.  */
+@property (nonatomic, strong) MGSPreferencesObserver *preferencesObserver;
 
-/** Fragaria's *temporary* preferences obsever. */
-@property (nonatomic, strong) MGSTemporaryPreferencesObserver *temporaryPreferencesObserver;
 
 @end
 

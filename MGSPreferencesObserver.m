@@ -6,7 +6,7 @@
 //
 //
 
-#import "MGSTemporaryPreferencesObserver.h"
+#import "MGSPreferencesObserver.h"
 #import "MGSFragaria.h"
 
 
@@ -32,14 +32,14 @@ static char kcAutoInsertionPrefsChanged;
 static char kcIndentingPrefsChanged;
 
 
-@interface MGSTemporaryPreferencesObserver ()
+@interface MGSPreferencesObserver ()
 
 @property (nonatomic, weak) MGSFragaria *fragaria;
 
 @end
 
 
-@implementation MGSTemporaryPreferencesObserver {
+@implementation MGSPreferencesObserver {
     NSMutableArray *registeredKeyPaths;
 }
 
@@ -73,12 +73,18 @@ static char kcIndentingPrefsChanged;
 }
 
 
+/*
+ * - observeDefault: context:
+ */
 - (void)observeDefault:(NSString*)prop context:(void*)ctxt
 {
     [self observeDefaults:@[prop] context:ctxt];
 }
 
 
+/* 
+ * - observeDefaults: context:
+ */
 - (void)observeDefaults:(NSArray*)arry context:(void*)ctxt
 {
     NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
