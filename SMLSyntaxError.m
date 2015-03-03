@@ -21,7 +21,6 @@ float const kMGSErrorCategoryDefault = 500;
 
 @implementation SMLSyntaxError
 
-
 // automatic
 @synthesize line, character, length, description, hidden, warningLevel;
 
@@ -34,9 +33,41 @@ float const kMGSErrorCategoryDefault = 500;
 // to be deprecated
 @synthesize code; // deprecated; separate line as reminder to remove.
 
-
 #pragma mark - Class Methods
 
++ (NSImage *)defaultImageForWarningLevel:(float)level
+{
+	NSString *imageName;
+
+    switch ((int)ceil(level/100.0))
+	{
+		case 1:
+			imageName  = @"messagesAccess";
+			break;
+		case 2:
+			imageName  = @"messagesConfig";
+			break;
+		case 3:
+			imageName  = @"messagesDocument";
+			break;
+		case 4:
+			imageName  = @"messagesInfo";
+			break;
+		case 0:
+		case 5:
+			imageName  = @"messagesWarning";
+			break;
+		case 6:
+			imageName  = @"messagesError";
+			break;
+		default:
+			imageName  = @"messagesPanic";
+			break;
+	}
+
+    NSImage *warningImage = [[NSBundle bundleForClass:[self class]] imageForResource:imageName];
+    return warningImage;
+}
 
 + (instancetype) errorWithDictionary:(NSDictionary *)dictionary
 {
@@ -45,7 +76,6 @@ float const kMGSErrorCategoryDefault = 500;
 
 
 #pragma mark - Instance Methods
-
 
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary
 {
@@ -62,28 +92,7 @@ float const kMGSErrorCategoryDefault = 500;
 
 + (NSImage *)imageForWarningStyle:(float)style
 {
-    NSString *imageName;
-    
-    switch ((int)ceil(style/100.0)) {
-        case 1:
-            imageName  = @"messagesAccess"; break;
-        case 2:
-            imageName  = @"messagesConfig"; break;
-        case 3:
-            imageName  = @"messagesDocument"; break;
-        case 4:
-            imageName  = @"messagesInfo"; break;
-        case 0:
-        case 5:
-            imageName  = @"messagesWarning"; break;
-        case 6:
-            imageName  = @"messagesError"; break;
-        default:
-            imageName  = @"messagesPanic";
-    }
-    
-    NSImage *warningImage = [[NSBundle bundleForClass:[self class]] imageForResource:imageName];
-    return warningImage;
+    return [[self class] defaultImageForWarningLevel:style];
 }
 
 
