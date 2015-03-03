@@ -24,6 +24,7 @@
 #import "MGSFragariaFramework.h"
 #import "SMLLayoutManager.h"
 
+
 typedef enum : NSUInteger
 {
     kTabLine = 0,
@@ -31,12 +32,13 @@ typedef enum : NSUInteger
     kNewLineLine = 2
 } MGSLineCacheIndex;
 
+
 @interface SMLLayoutManager()
 - (void)resetAttributesAndGlyphs;
 @end
 
-@implementation SMLLayoutManager {
 
+@implementation SMLLayoutManager {
     NSDictionary *defAttributes;
     NSString *tabCharacter;
     NSString *newLineCharacter;
@@ -46,6 +48,7 @@ typedef enum : NSUInteger
     BOOL drawInvisibleGlyphsUsingCoreText;
     NSMutableArray *lineRefs;
 }
+
 
 @synthesize showsInvisibleCharacters = _showsInvisibleCharacters;
 @synthesize textFont = _textFont;
@@ -79,7 +82,6 @@ typedef enum : NSUInteger
  */
 - (void)drawGlyphsForGlyphRange:(NSRange)glyphRange atPoint:(NSPoint)containerOrigin
 {
-
     if (self.showsInvisibleCharacters) {
         
 		NSPoint pointToDrawAt;
@@ -113,35 +115,37 @@ typedef enum : NSUInteger
                 continue;
             }
             
-            pointToDrawAt = [self locationForGlyphAtIndex:idx];
-            glyphFragment = [self lineFragmentRectForGlyphAtIndex:idx effectiveRange:NULL];
-            
-            
-            // for some fonts the invisible characters are lower on the line than expected
-            // when drawing with  -drawAtPoint:withAttributes:
-            //
-            // experimental glyph substitution is available with useGlyphSubstitutionForInvisibleGlyphs = YES;
-            //[outputChar drawAtPoint:pointToDrawAt withAttributes:defAttributes];
-            //
-            // see thread
-            //
             // http://lists.apple.com/archives/cocoa-dev/2012/Sep/msg00531.html
             //
             // Draw profiling indicated that the CoreText approach on 10.8 is an order of magnitude
             // faster that using the NSStringDrawing methods.
-                
-            // draw with cached core text line ref
-            pointToDrawAt.x += glyphFragment.origin.x;
-            pointToDrawAt.y += glyphFragment.origin.y;
+        
+            pointToDrawAt = [self locationForGlyphAtIndex:idx];
+            glyphFragment = [self lineFragmentRectForGlyphAtIndex:idx effectiveRange:NULL];
             
             // get our text line object
             CTLineRef line = (__bridge CTLineRef)[lineRefs objectAtIndex:lineRefIndex];
             
+            pointToDrawAt.x += glyphFragment.origin.x;
+            
+            /* Some control glyphs have zero size (newlines), and if they are
+             * not placed before a non-zero-sized glyph the typesetter simply
+             * sticks them at the bottom of the line fragment rect. In these
+             * cases we have to correct the location where we draw, otherwise
+             * the visible character will be placed too low on the line. */
+            if (pointToDrawAt.y >= glyphFragment.size.height) {
+                CGFloat descent, leading;
+                CTLineGetTypographicBounds(line, NULL, &descent, &leading);
+                pointToDrawAt.y = NSMaxY(glyphFragment) - floor(descent+0.5) - floor(leading+0.5);
+            } else {
+                pointToDrawAt.y += glyphFragment.origin.y;
+            }
+            
+            // draw with cached core text line ref
             CGContextSetTextPosition(gcContext, pointToDrawAt.x, pointToDrawAt.y);
             CTLineDraw(line, gcContext);
 		}
     }
-    
     
     // the following causes glyph generation to occur if required
     [super drawGlyphsForGlyphRange:glyphRange atPoint:containerOrigin];
@@ -149,6 +153,7 @@ typedef enum : NSUInteger
 
 
 #pragma mark - Accessors
+
 
 /*
  * - attributedStringWithTemporaryAttributesApplied
