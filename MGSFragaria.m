@@ -569,6 +569,10 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
         return @(self.scrollElasticityDisabled);
     else if ([key isEqual:MGSFOLineWrap])
         return @(self.lineWrap);
+    else if ([key isEqual:ro_MGSFOScrollView])
+        return self.scrollView;
+    else if ([key isEqual:ro_MGSFOTextView])
+        return self.textView;
     
     return nil;
 }
