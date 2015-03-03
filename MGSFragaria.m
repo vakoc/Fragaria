@@ -64,7 +64,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic colourForAttributes, colourForAutocomplete, colourForCommands, colourForComments, colourForInstructions;
 @dynamic colourForKeywords, colourForNumbers, colourForStrings, colourForVariables, coloursAttributes;
 @dynamic coloursAutocomplete, coloursCommands, coloursComments, coloursInstructions, coloursKeywords, coloursNumbers;
-@dynamic coloursStrings, coloursVariables;
+@dynamic coloursStrings, coloursVariables, syntaxColouringDelegate, colourMultiLineStringsEnabled;
+@dynamic colourOnlyUntilEndOfLineEnabled;
 
 
 #pragma mark - Properties - Document Properties
@@ -91,36 +92,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 #pragma mark - Properties - Overall Appearance and Display
-
-
-/*
- * @propery colourMultiLineStringsEnabled
- */
-- (void)setColourMultiLineStringsEnabled:(BOOL)colourMultiLineStringsEnabled
-{
-	self.textView.syntaxColouring.colourMultiLineStringsEnabled = colourMultiLineStringsEnabled;
-	[self.textView.syntaxColouring invalidateAllColouring];
-}
-
-- (BOOL)colourMultiLineStringsEnabled
-{
-	return self.textView.syntaxColouring.colourMultiLineStringsEnabled;
-}
-
-
-/*
- * @property colourOnlyUntilEndOfLineEnabled
- */
-- (void)setColourOnlyUntilEndOfLineEnabled:(BOOL)colourOnlyUntilEndOfLineEnabled
-{
-	self.textView.syntaxColouring.colourOnlyUntilEndOfLineEnabled = colourOnlyUntilEndOfLineEnabled;
-	[self.textView.syntaxColouring invalidateAllColouring];
-}
-
-- (BOOL)colourOnlyUntilEndOfLineEnabled
-{
-	return self.textView.syntaxColouring.colourOnlyUntilEndOfLineEnabled;
-}
 
 
 /*
@@ -342,20 +313,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 #pragma mark - Properties - Delegates
-
-
-/*
- * @property syntaxColouringDelegate
- */
-- (void)setSyntaxColouringDelegate:(id<SMLSyntaxColouringDelegate>)syntaxColouringDelegate
-{
-    [self.textView.syntaxColouring setSyntaxColouringDelegate:syntaxColouringDelegate];
-}
-
-- (id<SMLSyntaxColouringDelegate>)syntaxColouringDelegate
-{
-    return [self.textView.syntaxColouring syntaxColouringDelegate];
-}
 
 
 /*

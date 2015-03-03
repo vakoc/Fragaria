@@ -104,21 +104,6 @@ static char kcColoursChanged;
 }
 
 
-/*
- * - setSyntaxColoured:
- */
-- (void)setSyntaxColoured:(BOOL)syntaxColoured
-{
-    if (!_syntaxColoured && syntaxColoured) {
-        _syntaxColoured = YES;
-        [self removeAllColours];
-    } else if (_syntaxColoured && !syntaxColoured) {
-        _syntaxColoured = NO;
-        [self removeAllColours];
-    }
-}
-
-
 #pragma mark - KVO
 
 /*
@@ -186,12 +171,44 @@ static char kcColoursChanged;
 
 
 /*
+ * - setSyntaxColoured:
+ */
+- (void)setSyntaxColoured:(BOOL)syntaxColoured
+{
+    if (!_syntaxColoured && syntaxColoured) {
+        _syntaxColoured = YES;
+        [self removeAllColours];
+    } else if (_syntaxColoured && !syntaxColoured) {
+        _syntaxColoured = NO;
+        [self removeAllColours];
+    }
+}
+
+/*
  *  @property syntaxDefinition
  */
 - (void)setSyntaxDefinition:(MGSSyntaxDefinition *)syntaxDefinition
 {
     _syntaxDefinition = syntaxDefinition;
     [self removeAllColours];
+}
+
+/*
+ *  @property colourMultiLineStringsEnabled
+ */
+- (void)setColourMultiLineStringsEnabled:(BOOL)colourMultiLineStringsEnabled
+{
+    _colourMultiLineStringsEnabled = colourMultiLineStringsEnabled;
+    [self invalidateAllColouring];
+}
+
+/*
+ *  @property colourOnlyUntilEndOfLineEnabled
+ */
+- (void)setColourOnlyUntilEndOfLineEnabled:(BOOL)colourOnlyUntilEndOfLineEnabled
+{
+    _colourOnlyUntilEndOfLineEnabled = colourOnlyUntilEndOfLineEnabled;
+    [self invalidateAllColouring];
 }
 
 
