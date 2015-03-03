@@ -43,15 +43,25 @@ static char kcIndentingPrefsChanged;
     NSMutableArray *registeredKeyPaths;
 }
 
+
 /*
  *  - initWithFragaria:
  */
 - (instancetype)initWithFragaria:(MGSFragaria *)fragaria
 {
+    static dispatch_once_t onceToken;
+
     if ((self = [super init]))
     {
         self.fragaria = fragaria;
         registeredKeyPaths = [[NSMutableArray alloc] init];
+        
+        /* Avoid registering Fragaria's standard defaults if this class
+         * is not used */
+        dispatch_once(&onceToken, ^{
+            [self registerFragariaDefaults];
+        });
+        
         [self registerKVO];
     }
 	
@@ -64,13 +74,110 @@ static char kcIndentingPrefsChanged;
  */
 -(void)dealloc
 {
-    NSUserDefaultsController *defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
+    NSUserDefaultsController *defaultsController;
     NSString *keyPath;
     
+    defaultsController = [NSUserDefaultsController sharedUserDefaultsController];
     for (keyPath in registeredKeyPaths) {
         [defaultsController removeObserver:self forKeyPath:keyPath];
     }
 }
+
+
+#pragma mark - Standard defaults
+
+
+- (void)registerFragariaDefaults
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSUserDefaultsController *udc = [NSUserDefaultsController sharedUserDefaultsController];
+    NSDictionary *defaults;
+    NSMutableDictionary *tmp;
+    
+    defaults = [MGSPreferencesObserver fragariaDefaultsDictionary];
+    
+    tmp = [[udc initialValues] mutableCopy];
+    if (tmp) {
+        [tmp addEntriesFromDictionary:defaults];
+        [udc setInitialValues:tmp];
+    } else {
+        [udc setInitialValues:defaults];
+    }
+    
+    [ud registerDefaults:defaults];
+}
+
+
+#define ARCHIVED_COLOR(rd, gr, bl) [NSArchiver archivedDataWithRootObject:\
+  [NSColor colorWithCalibratedRed:rd green:gr blue:bl alpha:1.0f]]
+#define ARCHIVED_OBJECT(obj) [NSArchiver archivedDataWithRootObject:obj]
+
+/*
+ *  @property fragariaDefaultsDictionary
+ */
++ (NSDictionary *)fragariaDefaultsDictionary
+{
+    return @{
+        MGSFragariaPrefsCommandsColourWell: ARCHIVED_COLOR(0.031f, 0.0f, 0.855f),
+        MGSFragariaPrefsCommentsColourWell: ARCHIVED_COLOR(0.0f, 0.45f, 0.0f),
+        MGSFragariaPrefsInstructionsColourWell: ARCHIVED_COLOR(0.45f, 0.45f, 0.45f),
+        MGSFragariaPrefsKeywordsColourWell: ARCHIVED_COLOR(0.737f, 0.0f, 0.647f),
+        MGSFragariaPrefsAutocompleteColourWell: ARCHIVED_COLOR(0.84f, 0.41f, 0.006f),
+        MGSFragariaPrefsVariablesColourWell: ARCHIVED_COLOR(0.73f, 0.0f, 0.74f),
+        MGSFragariaPrefsStringsColourWell: ARCHIVED_COLOR(0.804f, 0.071f, 0.153f),
+        MGSFragariaPrefsAttributesColourWell: ARCHIVED_COLOR(0.50f, 0.5f, 0.2f),
+        MGSFragariaPrefsNumbersColourWell: ARCHIVED_COLOR(0.031f, 0.0f, 0.855f),
+        MGSFragariaPrefsColourNumbers: @(YES),
+        MGSFragariaPrefsColourCommands: @(YES),
+        MGSFragariaPrefsColourInstructions: @(YES),
+        MGSFragariaPrefsColourKeywords: @(YES),
+        MGSFragariaPrefsColourAutocomplete: @(NO),
+        MGSFragariaPrefsColourVariables: @(YES),
+        MGSFragariaPrefsColourStrings: @(YES),
+        MGSFragariaPrefsColourAttributes: @(YES),
+        MGSFragariaPrefsColourComments: @(YES),
+        MGSFragariaPrefsBackgroundColourWell: ARCHIVED_OBJECT([NSColor whiteColor]),
+        MGSFragariaPrefsTextColourWell: ARCHIVED_OBJECT([NSColor textColor]),
+        MGSFragariaPrefsGutterTextColourWell: ARCHIVED_OBJECT([NSColor colorWithCalibratedWhite:0.42f alpha:1.0f]),
+        MGSFragariaPrefsInvisibleCharactersColourWell: ARCHIVED_OBJECT([NSColor orangeColor]),
+        MGSFragariaPrefsHighlightLineColourWell: ARCHIVED_COLOR(0.96f, 0.96f, 0.71f),
+        MGSFragariaPrefsGutterWidth: @(40),
+        MGSFragariaPrefsTabWidth: @(4),
+        MGSFragariaPrefsIndentWidth: @(4),
+        MGSFragariaPrefsShowPageGuide: @(NO),
+        MGSFragariaPrefsShowPageGuideAtColumn: @(80),
+        MGSFragariaPrefsAutocompleteAfterDelay: @(1.0),
+        MGSFragariaPrefsTextFont: ARCHIVED_OBJECT([NSFont fontWithName:@"Menlo" size:11]),
+        MGSFragariaPrefsShowFullPathInWindowTitle: @(YES),
+        MGSFragariaPrefsShowLineNumberGutter: @(YES),
+        MGSFragariaPrefsSyntaxColourNewDocuments: @(YES),
+        MGSFragariaPrefsLineWrapNewDocuments: @(YES),
+        MGSFragariaPrefsIndentNewLinesAutomatically: @(YES),
+        MGSFragariaPrefsOnlyColourTillTheEndOfLine: @(YES),
+        MGSFragariaPrefsShowMatchingBraces: @(YES),
+        MGSFragariaPrefsShowInvisibleCharacters: @(NO),
+        MGSFragariaPrefsIndentWithSpaces: @(NO),
+        MGSFragariaPrefsColourMultiLineStrings: @(NO),
+        MGSFragariaPrefsAutocompleteSuggestAutomatically: @(NO),
+        MGSFragariaPrefsAutocompleteIncludeStandardWords: @(NO),
+        MGSFragariaPrefsAutoSpellCheck: @(NO),
+        MGSFragariaPrefsAutoGrammarCheck: @(NO),
+        MGSFragariaPrefsSmartInsertDelete: @(NO),
+        MGSFragariaPrefsAutomaticLinkDetection: @(YES),
+        MGSFragariaPrefsAutomaticQuoteSubstitution: @(NO),
+        MGSFragariaPrefsUseTabStops: @(YES),
+        MGSFragariaPrefsHighlightCurrentLine: @(NO),
+        MGSFragariaPrefsSpacesPerTabEntabDetab: @(4),
+        MGSFragariaPrefsAutomaticallyIndentBraces: @(YES),
+        MGSFragariaPrefsAutoInsertAClosingParenthesis: @(NO),
+        MGSFragariaPrefsAutoInsertAClosingBrace: @(NO),
+        MGSFragariaPrefsSyntaxColouringPopUpString: @"Standard",
+        MGSFragariaPrefsInvisibleCharactersColourWell: ARCHIVED_OBJECT([NSColor controlTextColor])
+    };
+}
+
+
+#pragma mark - Defaults observing
 
 
 /*

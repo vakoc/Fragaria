@@ -103,11 +103,6 @@ extern NSString * const MGSFragariaPrefsSyntaxColouringPopUpString;
 
 /// @name Class Methods
 
-/**
- *  Uses registerUserDefaults to add all of Fragaria's defaults to the defaults database.
- **/
-+ (void)initializeValues DEPRECATED_MSG_ATTRIBUTE("Deprecated, do not use. Use the fragariaDefaultsDictionary property instead.");
-
 
 /**
  *  Provides a singleton instance of MGSFragariaPreferences.
