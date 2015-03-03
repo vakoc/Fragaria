@@ -160,7 +160,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
             [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
             
             if ([err.errorDescription length] > 0)
-                [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.description forCharacterRange:lineRange];
+                [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.errorDescription forCharacterRange:lineRange];
         }
     }
 }
