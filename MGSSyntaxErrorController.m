@@ -133,6 +133,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     
     // Clear all highlights
     [layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:NSMakeRange(0, text.length)];
+    [layoutManager removeTemporaryAttribute:NSToolTipAttributeName forCharacterRange:NSMakeRange(0, text.length)];
     
     if (!self.showSyntaxErrors) return;
     
