@@ -39,13 +39,6 @@ typedef enum : NSUInteger
 
 
 @implementation SMLLayoutManager {
-    NSDictionary *defAttributes;
-    NSString *tabCharacter;
-    NSString *newLineCharacter;
-    NSString *spaceCharacter;
-    NSGlyph *invisibleGlyphs;
-    BOOL useGlyphSubstitutionForInvisibleGlyphs;
-    BOOL drawInvisibleGlyphsUsingCoreText;
     NSMutableArray *lineRefs;
 }
 
@@ -53,6 +46,7 @@ typedef enum : NSUInteger
 @synthesize showsInvisibleCharacters = _showsInvisibleCharacters;
 @synthesize textFont = _textFont;
 @synthesize textInvisibleCharactersColour = _textInvisibleCharactersColour;
+
 
 #pragma mark - Instance methods
 
@@ -63,7 +57,6 @@ typedef enum : NSUInteger
 {
     self = [super init];
 	if (self) {
-        invisibleGlyphs = NULL;
         _textFont = [NSFont userFontOfSize:0];
         _textInvisibleCharactersColour = [NSColor blackColor];
         
@@ -234,11 +227,6 @@ typedef enum : NSUInteger
 - (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
 {
     _showsInvisibleCharacters = showsInvisibleCharacters;
-    if (useGlyphSubstitutionForInvisibleGlyphs)
-    {
-        // we need to regenerate the glyph cache
-        [self replaceTextStorage:[self textStorage]];
-    }
     [[self firstTextView] setNeedsDisplay:YES];
 }
 
@@ -256,6 +244,11 @@ typedef enum : NSUInteger
  */
 - (void)resetAttributesAndGlyphs
 {
+    NSDictionary *defAttributes;
+    NSString *tabCharacter;
+    NSString *newLineCharacter;
+    NSString *spaceCharacter;
+    
     // assemble our default attributes
     defAttributes = @{NSFontAttributeName: self.textFont,
       NSForegroundColorAttributeName: self.textInvisibleCharactersColour};
