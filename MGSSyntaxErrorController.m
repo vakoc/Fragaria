@@ -101,7 +101,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 - (void)setTextView:(SMLTextView *)textView
 {
     if (_textView) {
-        [[NSNotificationCenter defaultCenter] removeObserver:self forKeyPath:NSTextDidChangeNotification];
+        [[NSNotificationCenter defaultCenter] removeObserver:self name:NSTextDidChangeNotification object:_textView];
     }
     _textView = textView;
     if (_textView) {
