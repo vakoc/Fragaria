@@ -25,17 +25,12 @@
 #import "SMLLayoutManager.h"
 
 
-typedef enum : NSUInteger
-{
+typedef enum : NSUInteger {
     kTabLine = 0,
     kSpaceLine = 1,
     kNewLineLine = 2
 } MGSLineCacheIndex;
 
-
-@interface SMLLayoutManager()
-- (void)resetAttributesAndGlyphs;
-@end
 
 
 @implementation SMLLayoutManager {
@@ -44,8 +39,6 @@ typedef enum : NSUInteger
 
 
 @synthesize showsInvisibleCharacters = _showsInvisibleCharacters;
-@synthesize textFont = _textFont;
-@synthesize textInvisibleCharactersColour = _textInvisibleCharactersColour;
 
 
 #pragma mark - Instance methods
@@ -57,8 +50,8 @@ typedef enum : NSUInteger
 {
     self = [super init];
 	if (self) {
-        _textFont = [NSFont userFontOfSize:0];
-        _textInvisibleCharactersColour = [NSColor blackColor];
+        _invisibleCharactersFont = [NSFont userFontOfSize:0];
+        _invisibleCharactersColour = [NSColor blackColor];
         
         [self resetAttributesAndGlyphs];
         
@@ -191,33 +184,23 @@ typedef enum : NSUInteger
 /*
  * @property textFont
  */
--(void)setTextFont:(NSFont *)textFont
+-(void)setInvisibleCharactersFont:(NSFont *)textFont
 {
-    _textFont = textFont;
+    _invisibleCharactersFont = textFont;
     [self resetAttributesAndGlyphs];
     [[self firstTextView] setNeedsDisplay:YES];
 
-}
-
--(NSFont *)textFont
-{
-    return _textFont;
 }
 
 
 /*
  * @property textInvisibleCharactersColor
  */
-- (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
+- (void)setInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
 {
-    _textInvisibleCharactersColour = textInvisibleCharactersColour;
+    _invisibleCharactersColour = textInvisibleCharactersColour;
     [self resetAttributesAndGlyphs];
     [[self firstTextView] setNeedsDisplay:YES];
-}
-
-- (NSColor *)textInvisibleCharactersColour
-{
-    return _textInvisibleCharactersColour;
 }
 
 
@@ -250,8 +233,8 @@ typedef enum : NSUInteger
     NSString *spaceCharacter;
     
     // assemble our default attributes
-    defAttributes = @{NSFontAttributeName: self.textFont,
-      NSForegroundColorAttributeName: self.textInvisibleCharactersColour};
+    defAttributes = @{NSFontAttributeName: self.invisibleCharactersFont,
+      NSForegroundColorAttributeName: self.invisibleCharactersColour};
 
     // define substitute characters for whitespace chars
     tabCharacter = @"\u21E2";

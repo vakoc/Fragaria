@@ -243,6 +243,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     /* setFont: also updates our typing attributes */
     [self setFont:textFont];
+    [self.layoutManager setInvisibleCharactersFont:textFont];
     [self configurePageGuide];
     [self setTabWidth:_tabWidth];
 }

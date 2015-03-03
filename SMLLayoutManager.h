@@ -35,19 +35,20 @@
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied;
 
 /**
- *  A reference to the text editor font.
+ *  Specifies the font for drawing invisible characters.
  **/
-@property (nonatomic, assign) NSFont *textFont;
+@property (nonatomic) NSFont *invisibleCharactersFont;
 
 /**
- *  Specifies the color to draw invisible characters.
+ *  Specifies the color for drawing invisible characters.
  **/
-@property (nonatomic, strong) NSColor *textInvisibleCharactersColour;
+@property (nonatomic) NSColor *invisibleCharactersColour;
 
 /**
  *  Indicates whether or not glyphs for invisible characters will
  *  appear in the text editor.
  **/
-@property (atomic, assign) BOOL showsInvisibleCharacters;
+@property BOOL showsInvisibleCharacters;
+
 
 @end

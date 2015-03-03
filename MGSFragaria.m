@@ -53,7 +53,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 // SMLTextView dynamic properties:
 @dynamic string, attributedString, attributedStringWithTemporaryAttributesApplied;
-@dynamic backgroundColor, currentLineHighlightColour;
+@dynamic backgroundColor, currentLineHighlightColour, textFont;
 @dynamic grammarCheckingEnabled, highlightsCurrentLine, insertionPointColor, pageGuideColumn;
 @dynamic showsPageGuide, smartInsertDeleteEnabled, tabWidth, textColor;
 @dynamic showsMatchingBraces, insertClosingParenthesisAutomatically, insertClosingBraceAutomatically;
@@ -309,35 +309,18 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
- * @property textFont
- */
-- (void)setTextFont:(NSFont *)textFont
-{
-    SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
-
-    layoutManager.textFont =textFont;
-    self.textView.textFont = textFont;
-}
-
-- (NSFont *)textFont
-{
-    return self.textView.textFont;
-}
-
-
-/*
  * @property textInvisibleCharactersColor
  */
 - (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
 {
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
-    layoutManager.textInvisibleCharactersColour = textInvisibleCharactersColour;
+    layoutManager.invisibleCharactersColour = textInvisibleCharactersColour;
 }
 
 - (NSColor *)textInvisibleCharactersColour
 {
     SMLLayoutManager *layoutManager = (SMLLayoutManager *)self.textView.layoutManager;
-    return layoutManager.textInvisibleCharactersColour;
+    return layoutManager.invisibleCharactersColour;
 }
 
 

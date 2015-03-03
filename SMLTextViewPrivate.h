@@ -26,5 +26,9 @@
 /** Instances of this class will perform syntax highlighting in text views. */
 @property (readonly) SMLSyntaxColouring *syntaxColouring;
 
+/** SMLTextView's layout manager is an SMLLayoutManager internally, but that
+ * class is not exposed. */
+@property (assign, readonly) SMLLayoutManager *layoutManager;
+
 
 @end
