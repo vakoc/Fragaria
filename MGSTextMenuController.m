@@ -25,6 +25,7 @@
 #import "MGSFragaria.h"
 #import "MGSFragariaFramework.h"
 #import "SMLTextView+MGSTextActions.h"
+#import "SMLTextViewPrivate.h"
 
 
 @implementation MGSTextMenuController
@@ -113,6 +114,7 @@ static id sharedInstance = nil;
 	if (![responder isKindOfClass:[SMLTextView class]]) {
 		return NO;
 	}
+    SMLTextView *textView = responder;
 	
 	// All items who should only be active if something is selected
 	if (action == @selector(removeNeedlessWhitespaceAction:) ||
@@ -129,7 +131,7 @@ static id sharedInstance = nil;
 	}
     // Comment Or Uncomment
     else if (action == @selector(commentOrUncommentAction:) ) {
-		if ([[[[[responder fragaria] valueForKey:@"syntaxColouring"] syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
+		if ([[textView.syntaxColouring.syntaxDefinition firstSingleLineComment] isEqualToString:@""]) {
 			enableMenuItem = NO;
 		}
 	} 
