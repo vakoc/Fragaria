@@ -810,47 +810,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 #pragma mark - Text handling
 
-/*
- * - shouldChangeTextInRanges:replacementStrings
- */
-- (BOOL)shouldChangeTextInRanges:(NSArray *)affectedRanges replacementStrings:(NSArray *)replacementStrings
-{
-    BOOL res;
-    NSArray *sortedRanges;
-    NSValue *rangeVal;
-    NSRange range;
-    NSInteger i, newLen;
-    NSMutableIndexSet *insp;
-
-    res = [super shouldChangeTextInRanges:affectedRanges replacementStrings:replacementStrings];
-    insp = self.syntaxColouring.inspectedCharacterIndexes;
-    
-    if (!affectedRanges)
-        [insp removeAllIndexes];
-    else {
-        sortedRanges = [affectedRanges sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-            NSRange r1, r2;
-            r1 = [obj1 rangeValue];
-            r2 = [obj2 rangeValue];
-            /* reverse sorting */
-            if (r1.location > r2.location)
-                return NSOrderedAscending;
-            if (r1.location == r2.location)
-                return NSOrderedSame;
-            return NSOrderedDescending;
-        }];
-        for (rangeVal in sortedRanges) {
-            i = [affectedRanges indexOfObject:rangeVal];
-            newLen = [[replacementStrings objectAtIndex:i] length];
-            /* This is not really needed, but it allows for better edit coalescing */
-            range = [[self string] lineRangeForRange:[rangeVal rangeValue]];
-            [insp removeIndexesInRange:range];
-            [insp shiftIndexesStartingAtIndex:range.location by:(newLen - range.length)];
-        }
-    }
-    return res;
-}
-
 
 /*
  * - insertText:

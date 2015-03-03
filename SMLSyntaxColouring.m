@@ -1,7 +1,3 @@
-
-
-/* This class syntax-colours and line-highlights. */
-
 /*
 
  MGSFragaria
@@ -83,6 +79,7 @@ static char kcColoursChanged;
 - (instancetype)initWithLayoutManager:(SMLLayoutManager *)lm
 {
     if ((self = [super init])) {
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
         layoutManager = lm;
         
         _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] init];
@@ -93,6 +90,8 @@ static char kcColoursChanged;
 
         // register for KVO -- observe our own properties.
         [self addObserver:self forKeyPath:@"coloursChanged" options:NSKeyValueObservingOptionInitial context:&kcColoursChanged];
+        
+        [nc addObserver:self selector:@selector(textStorageDidProcessEditing:) name:NSTextStorageDidProcessEditingNotification object:layoutManager.textStorage];
 	}
     
     return self;
@@ -169,6 +168,25 @@ static char kcColoursChanged;
 -(void)dealloc
 {
     [self removeObserver:self forKeyPath:@"coloursChanged"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+#pragma mark - Text change notification
+
+
+- (void)textStorageDidProcessEditing:(NSNotification*)notification
+{
+    NSTextStorage *ts = [notification object];
+    NSRange newRange = [ts editedRange];
+    NSRange oldRange = newRange;
+    NSInteger changeInLength = [ts changeInLength];
+    NSMutableIndexSet *insp = self.inspectedCharacterIndexes;
+    
+    oldRange.length -= changeInLength;
+    [insp shiftIndexesStartingAtIndex:NSMaxRange(oldRange) by:changeInLength];
+    newRange = [[ts string] lineRangeForRange:newRange];
+    [insp removeIndexesInRange:newRange];
 }
 
 
