@@ -83,12 +83,12 @@ static char kcColoursChanged;
 - (instancetype)initWithLayoutManager:(SMLLayoutManager *)lm
 {
     if ((self = [super init])) {
-
-        // configure layout managers
         layoutManager = lm;
+        
         _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] init];
 
         // configure colouring
+        [self setColourDefaults];
         [self rebuildAttributesCache];
 
         // register for KVO -- observe our own properties.
@@ -96,6 +96,24 @@ static char kcColoursChanged;
 	}
     
     return self;
+}
+
+
+- (void)setColourDefaults
+{
+    _colourForCommands = [NSColor colorWithCalibratedRed:0.031f green:0.0f blue:0.855f alpha:1.0f];
+    _colourForComments = [NSColor colorWithCalibratedRed:0.0f green:0.45f blue:0.0f alpha:1.0f];
+    _colourForInstructions = [NSColor colorWithCalibratedRed:0.45f green:0.45f blue:0.45f alpha:1.0f];
+    _colourForKeywords = [NSColor colorWithCalibratedRed:0.737f green:0.0f blue:0.647f alpha:1.0f];
+    _colourForAutocomplete = [NSColor colorWithCalibratedRed:0.84f green:0.41f blue:0.006f alpha:1.0f];
+    _colourForVariables = [NSColor colorWithCalibratedRed:0.73f green:0.0f blue:0.74f alpha:1.0f];
+    _colourForStrings = [NSColor colorWithCalibratedRed:0.804f green:0.071f blue:0.153f alpha:1.0f];
+    _colourForAttributes = [NSColor colorWithCalibratedRed:0.50f green:0.5f blue:0.2f alpha:1.0f];
+    _colourForNumbers = [NSColor colorWithCalibratedRed:0.031f green:0.0f blue:0.855f alpha:1.0f];
+    _coloursAttributes = _coloursCommands = _coloursInstructions = YES;
+    _coloursInstructions = _coloursKeywords = _coloursNumbers = YES;
+    _coloursStrings = _coloursVariables = YES;
+    _coloursAutocomplete = NO;
 }
 
 
@@ -138,7 +156,7 @@ static char kcColoursChanged;
 {
 	if (context == &kcColoursChanged) {
 		[self rebuildAttributesCache];
-		[self invalidateAllColouring];
+        [self invalidateAllColouring];
 	} else {
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
@@ -216,23 +234,24 @@ static char kcColoursChanged;
  */
 - (void)rebuildAttributesCache
 {
-    commandsColour = @{NSForegroundColorAttributeName: self.colourForCommands ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupCommand};
-    
-    commentsColour = @{NSForegroundColorAttributeName: self.colourForComments ? : [NSNull null], SMLSyntaxGroup: @"comments"};
-    
-    instructionsColour = @{NSForegroundColorAttributeName: self.colourForInstructions ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupInstruction};
-    
-    keywordsColour = @{NSForegroundColorAttributeName: self.colourForKeywords ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupKeyword};
-    
-    autocompleteWordsColour = @{NSForegroundColorAttributeName: self.colourForAutocomplete ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupAutoComplete};
-    
-    stringsColour = @{NSForegroundColorAttributeName: self.colourForStrings ? : [NSNull null], SMLSyntaxGroup: @"strings"};
-    
-    variablesColour = @{NSForegroundColorAttributeName: self.colourForVariables ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupVariable};
-    
-    attributesColour = @{NSForegroundColorAttributeName: self.colourForAttributes ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupAttribute};
-    
-    numbersColour = @{NSForegroundColorAttributeName: self.colourForNumbers ? : [NSNull null], SMLSyntaxGroup: SMLSyntaxGroupNumber};
+    commandsColour = @{NSForegroundColorAttributeName: self.colourForCommands,
+                       SMLSyntaxGroup: SMLSyntaxGroupCommand};
+    commentsColour = @{NSForegroundColorAttributeName: self.colourForComments,
+                       SMLSyntaxGroup: @"comments"};
+    instructionsColour = @{NSForegroundColorAttributeName: self.colourForInstructions,
+                           SMLSyntaxGroup: SMLSyntaxGroupInstruction};
+    keywordsColour = @{NSForegroundColorAttributeName: self.colourForKeywords,
+                       SMLSyntaxGroup: SMLSyntaxGroupKeyword};
+    autocompleteWordsColour = @{NSForegroundColorAttributeName: self.colourForAutocomplete,
+                                SMLSyntaxGroup: SMLSyntaxGroupAutoComplete};
+    stringsColour = @{NSForegroundColorAttributeName: self.colourForStrings,
+                      SMLSyntaxGroup: @"strings"};
+    variablesColour = @{NSForegroundColorAttributeName: self.colourForVariables,
+                        SMLSyntaxGroup: SMLSyntaxGroupVariable};
+    attributesColour = @{NSForegroundColorAttributeName: self.colourForAttributes,
+                         SMLSyntaxGroup: SMLSyntaxGroupAttribute};
+    numbersColour = @{NSForegroundColorAttributeName: self.colourForNumbers,
+                      SMLSyntaxGroup: SMLSyntaxGroupNumber};
     
     [self invalidateAllColouring];
 }
