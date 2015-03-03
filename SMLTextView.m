@@ -126,7 +126,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 /*
  * @property highlightCurrentLine
  */
-- (void)setHighlightCurrentLine:(BOOL)highlightCurrentLine
+- (void)setHighlightsCurrentLine:(BOOL)highlightCurrentLine
 {
     [self setNeedsDisplayInRect:currentLineRect];
     _highlightsCurrentLine = highlightCurrentLine;
