@@ -121,7 +121,17 @@
 - (NSRect)decorationRectOfLine:(NSUInteger)line;
 
 
+/** Inform this line number view that its client text view's text storage
+ *  will change.
+ *  @discussion In response to this message, the line number view must
+ *              remove itself as observer of any notifications from the old
+ *              text storage. */
 - (void)layoutManagerWillChangeTextStorage;
+
+/** Inform this line number view that its client text view's text storage
+ *  has changed.
+ *  @discussion In this method the line number view can register as observer
+ *              of any of the new text storage's notificaitons. */
 - (void)layoutManagerDidChangeTextStorage;
 
 

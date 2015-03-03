@@ -42,16 +42,34 @@
 
 /// @name Action Methods
 
-- (IBAction)entabButtonEntabWindowAction:(id)sender;                  ///< @param sender Object sending the action.
-- (IBAction)detabButtonDetabWindowAction:(id)sender;                  ///< @param sender Object sending the action.
-- (IBAction)cancelButtonEntabDetabGoToLineWindowsAction:(id)sender;   ///< @param sender Object sending the action.
-- (IBAction)goButtonGoToLineWindowAction:(id)sender;                  ///< @param sender Object sending the action.
+
+/** @param sender Object sending the action. */
+- (IBAction)entabButtonEntabWindowAction:(id)sender;
+/**  @param sender Object sending the action. */
+- (IBAction)detabButtonDetabWindowAction:(id)sender;
+/**  @param sender Object sending the action. */
+- (IBAction)cancelButtonEntabDetabGoToLineWindowsAction:(id)sender;
+/**  @param sender Object sending the action. */
+- (IBAction)goButtonGoToLineWindowAction:(id)sender;                 
+
 
 /// @name Implementers
 
-- (void)displayEntabForTarget:(SMLTextView *)target;                                                 ///< Displays the entab sheet.
-- (void)displayDetabForTarget:(SMLTextView *)target;                                                 ///< Displays the detab sheet.
-- (void)displayGoToLineForTarget:(SMLTextView *)target;                                              ///< Displays the go to line sheet.
+
+/** Displays the entab sheet.
+ *  @param target The text view to send a performEntab message to if the user
+ *                confirmed the action. */
+- (void)displayEntabForTarget:(SMLTextView *)target;
+
+/** Displays the detab sheet.
+ *  @param target The text view to send a performDetab message to if the user
+ *                confirmed the action. */
+- (void)displayDetabForTarget:(SMLTextView *)target;
+
+/** Displays the go to line sheet.
+ *  @param target The text view to send a performGoToLine:setSelected: message
+ *                to if the user confirmed the action. */
+- (void)displayGoToLineForTarget:(SMLTextView *)target;                                             
 
 
 @end

@@ -94,8 +94,19 @@ Copyright 2004-2009 Peter Borg
  * @param lm The layout manager associated with this instance. */
 - (id)initWithLayoutManager:(NSLayoutManager *)lm;
 
+/** Inform this syntax colourer that its layout manager's text storage
+ *  will change.
+ *  @discussion In response to this message, the syntax colourer view must
+ *              remove itself as observer of any notifications from the old
+ *              text storage. */
 - (void)layoutManagerWillChangeTextStorage;
+
+/** Inform this syntax colourer that its layout manager's text storage
+ *  has changed.
+ *  @discussion In this method the syntax colourer can register as observer
+ *              of any of the new text storage's notificaitons. */
 - (void)layoutManagerDidChangeTextStorage;
+
 
 /** Recolors the invalid characters in the specified range.
  * @param range A character range where, when this method returns, all syntax

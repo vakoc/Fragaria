@@ -104,7 +104,17 @@
 - (void)showErrorsForLine:(NSUInteger)line relativeToRect:(NSRect)rect ofView:(NSView*)view;
 
 
+/** Inform this syntax error controller that its text view's text storage
+ *  will change.
+ *  @discussion In response to this message, the syntax error controller must
+ *              remove itself as observer of any notifications from the old
+ *              text storage. */
 - (void)layoutManagerWillChangeTextStorage;
+
+/** Inform this syntax error controller that its text view's text storage
+ *  has changed.
+ *  @discussion In this method the syntax error controller can register as
+ *              observer of any of the new text storage's notificaitons. */
 - (void)layoutManagerDidChangeTextStorage;
 
 
