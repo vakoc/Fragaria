@@ -227,7 +227,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     [super setTextColor:textColor];
     [self configurePageGuide];
-
 }
 
 - (NSColor *)textColor

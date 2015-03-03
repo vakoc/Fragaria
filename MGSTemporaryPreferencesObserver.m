@@ -17,7 +17,6 @@ static char kcColoursChanged;
 static char kcFragariaInvisibleCharactersColourWellChanged;
 static char kcFragariaTabWidthChanged;
 static char kcFragariaTextFontChanged;
-static char kcInsertionPointColorChanged;
 static char kcGutterGutterTextColourWell;
 static char kcGutterWidthPrefChanged;
 static char kcInvisibleCharacterValueChanged;
@@ -115,8 +114,7 @@ static char kcIndentingPrefsChanged;
     [self observeDefault:MGSFragariaPrefsShowInvisibleCharacters context:&kcInvisibleCharacterValueChanged];
     [self observeDefault:MGSFragariaPrefsTabWidth context:&kcFragariaTabWidthChanged];
     [self observeDefault:MGSFragariaPrefsBackgroundColourWell context:&kcBackgroundColorChanged];
-    [self observeDefault:MGSFragariaPrefsGutterTextColourWell context:&kcInsertionPointColorChanged];
-    [self observeDefault:MGSFragariaPrefsGutterTextColourWell context:&kcTextColorChanged];
+    [self observeDefault:MGSFragariaPrefsTextColourWell context:&kcTextColorChanged];
     
     [self observeDefaults:@[MGSFragariaPrefsShowPageGuide, MGSFragariaPrefsShowPageGuideAtColumn] context:&kcPageGuideChanged];
     
@@ -225,7 +223,7 @@ static char kcIndentingPrefsChanged;
     {
         self.fragaria.textView.backgroundColor = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsBackgroundColourWell]];
     }
-    else if (context == &kcInsertionPointColorChanged || context == &kcTextColorChanged)
+    else if (context == &kcTextColorChanged)
     {
         colorValue = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsTextColourWell]];
         self.fragaria.textView.insertionPointColor = colorValue;
