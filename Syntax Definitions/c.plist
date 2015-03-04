@@ -35,7 +35,7 @@
 	<key>removeFromFunction</key>
 	<string></string>
 	<key>keywordsCaseSensitive</key>
-	<false/>
+	<true/>
 	<key>recolourKeywordIfAlreadyColoured</key>
 	<true/>
 	<key>keywords</key>
