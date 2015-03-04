@@ -19,8 +19,8 @@
 
 @end
 
-@implementation SMLSyntaxErrorTests
 
+@implementation SMLSyntaxErrorTests
 
 /*
  *  - setup
