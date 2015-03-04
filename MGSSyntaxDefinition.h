@@ -24,10 +24,8 @@
 /**  Determines if colouring for this syntax definition is allowed. */
 @property (readonly) BOOL syntaxDefinitionAllowsColouring;
 
-/**  A regular expression that defines what a function is. */
+/** A regular expression that defines what a function is. */
 @property (readonly) NSString *functionDefinition;
-/**  Content that should be removed from a function. */
-@property (readonly) NSString *removeFromFunction;
 
 /**  Secondary string delimiter. */
 @property (readonly) NSString *secondString;
