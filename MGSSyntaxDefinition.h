@@ -31,14 +31,6 @@
 @property (readonly) NSString *secondString;
 /**  Primary string delimiter. */
 @property (readonly) NSString *firstString;
-/** A regex pattern for identifying strings. */
-@property (readonly) NSString *firstStringPattern;
-/** Another regex pattern for identifying strings. */
-@property (readonly) NSString *secondStringPattern;
-/** A regex pattern for identifying multiline strings. */
-@property (readonly) NSString *firstMultilineStringPattern;
-/** Another regex pattern for identifying multiline strings. */
-@property (readonly) NSString *secondMultilineStringPattern;
 
 /**  Delimiter for the start of a command. */
 @property (readonly) NSString *beginCommand;

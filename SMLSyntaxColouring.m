@@ -64,6 +64,9 @@ static char kcColoursChanged;
     NSDictionary *commandsColour, *commentsColour, *instructionsColour;
     NSDictionary *keywordsColour, *autocompleteWordsColour, *stringsColour;
     NSDictionary *variablesColour, *attributesColour, *numbersColour;
+    
+    NSString *firstStringPattern, *secondStringPattern;
+    NSString *firstMultilineStringPattern, *secondMultilineStringPattern;
 }
 
 
@@ -227,6 +230,7 @@ static char kcColoursChanged;
 - (void)setSyntaxDefinition:(MGSSyntaxDefinition *)syntaxDefinition
 {
     _syntaxDefinition = syntaxDefinition;
+    [self prepareRegularExpressions];
     [self invalidateAllColouring];
 }
 
@@ -286,6 +290,21 @@ static char kcColoursChanged;
                       SMLSyntaxGroup: SMLSyntaxGroupNumber};
     
     [self invalidateAllColouring];
+}
+
+
+- (void)prepareRegularExpressions
+{
+    NSString *firstString = self.syntaxDefinition.firstString;
+    NSString *secondString = self.syntaxDefinition.secondString;
+    
+    firstStringPattern = [NSString stringWithFormat:@"\\W%@[^%@\\\\\\r\\n]*+(?:\\\\(?:.|$)[^%@\\\\\\r\\n]*+)*+%@", firstString, firstString, firstString, firstString];
+    
+    secondStringPattern = [NSString stringWithFormat:@"\\W%@[^%@\\\\\\r\\n]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", secondString, secondString, secondString, secondString];
+    
+    firstMultilineStringPattern = [NSString stringWithFormat:@"\\W%@[^%@\\\\]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", firstString, firstString, firstString, firstString];
+    
+    secondMultilineStringPattern = [NSString stringWithFormat:@"\\W%@[^%@\\\\]*+(?:\\\\(?:.|$)[^%@\\\\]*+)*+%@", secondString, secondString, secondString, secondString];
 }
 
 
@@ -859,9 +878,9 @@ static char kcColoursChanged;
     NSInteger rangeLocation = rangeToRecolour.location;
     
     if (!self.coloursMultiLineStrings)
-        stringPattern = [self.syntaxDefinition secondStringPattern];
+        stringPattern = secondStringPattern;
     else
-        stringPattern = [self.syntaxDefinition secondMultilineStringPattern];
+        stringPattern = secondMultilineStringPattern;
     
     regex = [NSRegularExpression regularExpressionWithPattern:stringPattern options:0 error:&error];
     if (error) return;
@@ -887,9 +906,9 @@ static char kcColoursChanged;
     NSInteger rangeLocation = rangeToRecolour.location;
     
     if (!self.coloursMultiLineStrings)
-        stringPattern = [self.syntaxDefinition firstStringPattern];
+        stringPattern = firstStringPattern;
     else
-        stringPattern = [self.syntaxDefinition firstMultilineStringPattern];
+        stringPattern = firstMultilineStringPattern;
     
     regex = [NSRegularExpression regularExpressionWithPattern:stringPattern options:0 error:&error];
     if (error) return;
@@ -1138,9 +1157,9 @@ static char kcColoursChanged;
     NSInteger rangeLocation = rangeToRecolour.location;
     
     if (!self.coloursMultiLineStrings)
-        stringPattern = [self.syntaxDefinition secondStringPattern];
+        stringPattern = secondStringPattern;
     else
-        stringPattern = [self.syntaxDefinition secondMultilineStringPattern];
+        stringPattern = secondMultilineStringPattern;
     
     regex = [NSRegularExpression regularExpressionWithPattern:stringPattern options:0 error:&error];
     if (error) return;
