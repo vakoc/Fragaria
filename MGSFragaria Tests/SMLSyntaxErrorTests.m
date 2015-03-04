@@ -10,6 +10,9 @@
 #import "SMLSyntaxError.h"
 #import <XCTest/XCTest.h>
 
+/**
+ *  Provides some testing for SMLSyntaxError class.
+ **/
 @interface SMLSyntaxErrorTests : XCTestCase
 
 @property (nonatomic,strong) NSArray *syntaxErrors;
@@ -18,52 +21,67 @@
 
 @implementation SMLSyntaxErrorTests
 
+
+/*
+ *  - setup
+ *    Populate self.sytnax errors with sample errors for each test.
+ */
 - (void)setUp {
     [super setUp];
 	self.syntaxErrors = @[
 						  [SMLSyntaxError errorWithDictionary:@{
-																@"description" : @"Sample error 1.",
+																@"errorDescription" : @"Sample error 1.",
 																@"line" : @(4),
 																@"hidden" : @(NO),
 																@"warningLevel" : @(kMGSErrorCategoryAccess)
 																}],
 						  
 						  [SMLSyntaxError errorWithDictionary:@{
-																@"description" : @"Sample error 2.",
+																@"errorDescription" : @"Sample error 2.",
 																@"line" : @(4),
 																@"hidden" : @(YES),
 																@"warningLevel" : @(601.223) // panic
 																}],
 						  [SMLSyntaxError errorWithDictionary:@{
-																@"description" : @"Sample error 3.",
+																@"errorDescription" : @"Sample error 3.",
 																@"line" : @(37),
 																@"hidden" : @(NO),
 																@"warningLevel" : @(kMGSErrorCategoryDocument)
 																}],
 						  [SMLSyntaxError errorWithDictionary:@{
-																@"description" : @"Sample error 4.",
+																@"errorDescription" : @"Sample error 4.",
 																@"line" : @(37),
 																@"hidden" : @(NO),
 																@"warningLevel" : @(kMGSErrorCategoryDocument)
 																}],
 						  [SMLSyntaxError errorWithDictionary:@{
-																@"description" : @"Sample error 5.",
+																@"errorDescription" : @"Sample error 5.",
 																@"line" : @(189),
 																@"hidden" : @(NO),
 																@"warningLevel" : @(522.2)
 																}],
 						  [SMLSyntaxError errorWithDictionary:@{
-																@"description" : @"Sample error 6.",
+																@"errorDescription" : @"Sample error 6.",
 																@"line" : @(212),
 																@"hidden" : @(YES),
 																}],
 						  ];
 }
 
+
+/*
+ *  - teardown
+ */
 - (void)tearDown {
     [super tearDown];
 }
 
+
+/*
+ *  - test_defaultImagesForWarningLevel
+ *    Here wer want to ensure that if an image isn't specified, the correct
+ *    default image is supplied based on the warningLevel property.
+ */
 - (void)test_defaultImageForWarningLevel
 {
 	SMLSyntaxError *test;
