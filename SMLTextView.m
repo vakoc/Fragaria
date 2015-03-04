@@ -1024,6 +1024,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 /*
  * - selectionRangeForProposedRange:granularity:
+ *
+ *  If the user double-clicks an opening/closing brace, select the whole block
+ *  enclosed by the corresponding brace pair.
  */
 - (NSRange)selectionRangeForProposedRange:(NSRange)proposedSelRange granularity:(NSSelectionGranularity)granularity
 {
@@ -1072,7 +1075,12 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     if (triedToMatchBrace) {
         return [super selectionRangeForProposedRange:NSMakeRange(proposedSelRange.location, 1) granularity:NSSelectByCharacter];
     } else {
-
+        
+        /* Hack for Objective-C, C and C++. If a dot or a colon is found inside
+         * the range that Cocoa would select, the range is trimmed to the left
+         * and/or to the right to exclude the things that are before and after
+         * the dot/colon. */
+        
         NSInteger startLocation = originalLocation;
         NSInteger stopLocation = originalLocation;
         NSInteger minLocation = [super selectionRangeForProposedRange:proposedSelRange granularity:NSSelectByWord].location;
