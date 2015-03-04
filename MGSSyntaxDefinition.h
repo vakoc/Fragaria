@@ -9,62 +9,130 @@
 #import <Foundation/Foundation.h>
 #import "SMLAutoCompleteDelegate.h"
 
+
 @class MGSFragaria;
 
-/**
- *  This class defines a single instance of a syntax definition.
- **/
+
+/** An MGSSyntaxDefinition is a model object that describes how
+ *  SMLSyntaxColouring should behave. Also, it provides information on the
+ *  current syntax definition to allow editing functions such as commenting
+ *  and un-commenting. */
+
 @interface MGSSyntaxDefinition : NSObject <SMLAutoCompleteDelegate>
 
 
-@property (readonly) NSString *functionDefinition;              ///< An expression that defines what a function is.
-@property (readonly) NSString *removeFromFunction;              ///< Content that should be removed from a function.
-@property (readonly) NSString *secondString;                    ///< Secondary string delimiter.
-@property (readonly) NSString *firstString;                     ///< Primary string delimiter.
-@property (readonly) NSString *beginCommand;                    ///< Delimiter for the start of a command.
-@property (readonly) NSString *endCommand;                      ///< Delimiter for the end of a command.
-@property (readonly) NSSet *keywords;                           ///< An set of words that are considered keywords.
-@property (readonly) NSSet *autocompleteWords;                  ///< A set of words that can be used for autocompletion.
-@property (readonly) NSString *beginInstruction;                ///< Delimiter for the start of an instruction.
-@property (readonly) NSString *endInstruction;                  ///< Delimiter for the end of an instruction.
-@property (readonly) NSCharacterSet *beginVariableCharacterSet; ///< Characters that may start a variable.
-@property (readonly) NSCharacterSet *endVariableCharacterSet;   ///< Characters that may terminate a variable.
-@property (readonly) NSString *firstSingleLineComment;          ///< Primary starting delimiter for single line comments.
-@property (readonly) NSString *secondSingleLineComment;         ///< Secondary starting delimiter for single line comments.
-@property (readonly) NSMutableArray *singleLineComments;        ///< The collection of single line comments.
-@property (readonly) NSMutableArray *multiLineComments;         ///< The collection of multiline comments.
-@property (readonly) NSString *beginFirstMultiLineComment;      ///< Primary starting delimiter for multiline comments.
-@property (readonly) NSString*endFirstMultiLineComment;         ///< Primary ending delimiter for multiline comments.
-@property (readonly) NSString*beginSecondMultiLineComment;      ///< Secondary starting delimiter for multiline comments.
-@property (readonly) NSString*endSecondMultiLineComment;        ///< Secondary ending delimiter for multiline comments.
-@property (readonly) NSCharacterSet *keywordStartCharacterSet;  ///< Characters that may start a keyword.
-@property (readonly) NSCharacterSet *keywordEndCharacterSet;    ///< Characters that may terminate a keyword.
-@property (readonly) NSCharacterSet *attributesCharacterSet;    ///< Characters that attributes may used.
-@property (readonly) NSCharacterSet *letterCharacterSet;        ///< Characters that constitute letters.
-@property (readonly) NSCharacterSet *numberCharacterSet;        ///< Characters that constitute numbers.
-@property (readonly) NSCharacterSet *nameCharacterSet;          ///< Characters that may be used in a name.
-@property (readonly) BOOL syntaxDefinitionAllowsColouring;      ///< Determines if colouring for this syntax definition is allowed.
-@property (readonly) BOOL recolourKeywordIfAlreadyColoured;     ///< Indicates whether or not keywords should be recolored.
-@property (readonly) BOOL keywordsCaseSensitive;                ///< Indicates whether or not keywords are case-sensitive.
-@property (readonly) NSString *firstStringPattern;              ///< The regex pattern for identifying primary strings.
-@property (readonly) NSString *secondStringPattern;             ///< The regex pattern for identifying secondary strings.
-@property (readonly) NSString *firstMultilineStringPattern;     ///< The regex pattern for identifying multiline strings (primary).
-@property (readonly) NSString *secondMultilineStringPattern;    ///< The regex pattern for identifying multiline strings (secondary).
-@property (readonly) unichar decimalPointCharacter;             ///< The character considered as a decimal separator.
+/**  Determines if colouring for this syntax definition is allowed. */
+@property (readonly) BOOL syntaxDefinitionAllowsColouring;
 
-/** A dictionary which describes this syntax definition. */
+/**  A regular expression that defines what a function is. */
+@property (readonly) NSString *functionDefinition;
+/**  Content that should be removed from a function. */
+@property (readonly) NSString *removeFromFunction;
+
+/**  Secondary string delimiter. */
+@property (readonly) NSString *secondString;
+/**  Primary string delimiter. */
+@property (readonly) NSString *firstString;
+
+/**  Delimiter for the start of a command. */
+@property (readonly) NSString *beginCommand;
+/**  Delimiter for the end of a command. */
+@property (readonly) NSString *endCommand;
+
+/** A set of words that are considered keywords. If keywordsCaseSensitive is
+ *  YES, this set will contain lowercase strings only. */
+@property (readonly) NSSet *keywords;
+/** A set of words that can be used for autocompletion. If
+ *  keywordsCaseSensitive is YES, this set will contain lowercase strings
+ *  only. */
+@property (readonly) NSSet *autocompleteWords;
+/** A set of all the characters that can be at the beginning of a keyword.
+ *  By default, this set contains all the latin letters (uppercase and
+ *  lowercase) plus the characters _, :, @, #, and comma. */
+@property (readonly) NSCharacterSet *keywordStartCharacterSet;
+/** A set of all the characters that can be at the end of a keyword.
+ *  By default, this set contains whitespaces, newlines, punctuation and 
+ *  symbols, with the exclusion of the characters _, dash and dot. */
+@property (readonly) NSCharacterSet *keywordEndCharacterSet;
+/** Indicates if keywords should have higher priority than commands. Set to
+ * YES when you want keywords to be nested inside commands. */
+@property (readonly) BOOL recolourKeywordIfAlreadyColoured;
+/** Indicates whether or not keywords are case-sensitive. */
+@property (readonly) BOOL keywordsCaseSensitive;
+
+/**  Delimiter for the start of an instruction. */
+@property (readonly) NSString *beginInstruction;
+/**  Delimiter for the end of an instruction. */
+@property (readonly) NSString *endInstruction;
+
+/**  Characters that may start a variable. */
+@property (readonly) NSCharacterSet *beginVariableCharacterSet;
+/**  Characters that may terminate a variable. */
+@property (readonly) NSCharacterSet *endVariableCharacterSet;
+
+/** Primary starting delimiter for single line comments.*/
+@property (readonly) NSString *firstSingleLineComment;
+/** Secondary starting delimiter for single line comments. */
+@property (readonly) NSString *secondSingleLineComment;
+/** An array of strings that should mark the beginning of a single-line comment.
+ *  This kind of comments extends from the characters that mark its start
+ *  to the end of its line. */
+@property (readonly) NSMutableArray *singleLineComments;
+/** An array of strings that should delimit a multiline comment. Even items
+ *  in the array are opening strings, odd items are closing strings. */
+@property (readonly) NSMutableArray *multiLineComments;
+/**  Primary starting delimiter for multiline comments. */
+@property (readonly) NSString *beginFirstMultiLineComment;
+/**  Primary ending delimiter for multiline comments. */
+@property (readonly) NSString*endFirstMultiLineComment;
+/**  Secondary starting delimiter for multiline comments. */
+@property (readonly) NSString*beginSecondMultiLineComment;
+/**  Secondary ending delimiter for multiline comments. */
+@property (readonly) NSString*endSecondMultiLineComment;
+/**  Characters that constitute letters. */
+@property (readonly) NSCharacterSet *letterCharacterSet;
+
+/** Characters to be coloured as attributes. Fragaria colours as "attributes"
+ *  structures that consist of one or more alphanumeric characters followed by
+ *  an equal sign, like 56=. In this example, only 56 is considered an
+ *  attribute and will be coloured as such. */
+@property (readonly) NSCharacterSet *attributesCharacterSet;
+
+/** Characters to be coloured as numbers. This includes eventual decimal
+ *  separators. */
+@property (readonly) NSCharacterSet *numberCharacterSet;
+/** Characters that should not precede a number for it to be coloured. */
+@property (readonly) NSCharacterSet *nameCharacterSet;
+/** A character that will not be coloured as a number - even if included in
+ *  numberCharacterSet - if it is the last character of the number. */
+@property (readonly) unichar decimalPointCharacter;
+
+/** A regex pattern for identifying strings. */
+@property (readonly) NSString *firstStringPattern;
+/** Another regex pattern for identifying strings. */
+@property (readonly) NSString *secondStringPattern;
+/** A regex pattern for identifying multiline strings. */
+@property (readonly) NSString *firstMultilineStringPattern;
+/** Another regex pattern for identifying multiline strings. */
+@property (readonly) NSString *secondMultilineStringPattern;
+
+
+/** A dictionary which describes this syntax definition. This method returns
+ *  a representation of this syntax definition suitable as a parameter to
+ *  -initFromSyntaxDictionary: to make a syntax defintion equal to this
+ *  one. */
 @property (readonly) NSDictionary *syntaxDictionary;
 
 
 /** Designated initializer.
- *  Initializes a new syntax definition object from a dictionary object, usually
- *  read from a plist in the framework bundle.
- *  @param syntaxDictionary The dictionary representation of the plist file that
- *  defines the syntax. */
+ *  Initializes a new syntax definition object from a dictionary object,
+ *  usually read from a plist in the framework bundle.
+ *  @param syntaxDictionary A dictionary representation of the plist file that
+ *                          defines the syntax. */
 - (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary;
 
-/** Autocomplete delegate main method. Returns as autocomplete words the 
- * keywordsAndAutocompleteWords array. */
+/** Autocomplete delegate main method. Returns a lexicographically ordered
+ *  array of the objects in the autocompleteWords set. */
 - (NSArray*)completions;
 
 
