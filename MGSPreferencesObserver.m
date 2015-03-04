@@ -172,8 +172,7 @@ static char kcAutoCompletePrefsChanged;
         MGSFragariaPrefsAutomaticallyIndentBraces: @(YES),
         MGSFragariaPrefsAutoInsertAClosingParenthesis: @(NO),
         MGSFragariaPrefsAutoInsertAClosingBrace: @(NO),
-        MGSFragariaPrefsSyntaxColouringPopUpString: @"Standard",
-        MGSFragariaPrefsInvisibleCharactersColourWell: ARCHIVED_OBJECT([NSColor controlTextColor])
+        MGSFragariaPrefsSyntaxColouringPopUpString: @"Standard"
     };
 }
 
