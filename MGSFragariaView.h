@@ -41,8 +41,6 @@
 
 @property (assign) NSString *string;                     ///< The content of the text editor as a plain string.
 
-@property (assign) NSAttributedString *attributedString; ///< The content of the text editor as an attributed string.
-
 @property (assign) NSString *syntaxDefinitionName;       ///< Indicates the syntax definition name, which indicates how to highlight the text.
 
 @property (assign) NSArray *syntaxErrors;                ///< Contains an array of MGSSyntaxError objects, which can be displayed in the editor.

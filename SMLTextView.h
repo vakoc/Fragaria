@@ -114,36 +114,10 @@
 /// @name Strings - Properties and Methods
 #pragma mark - Strings - Properties and Methods
 
-/** The string property represents the string in the text view. */
-@property (nonatomic, strong) NSString *string;
 
-/** The attributedString property represents the string in the text view as an attributed string. */
-@property (nonatomic, strong) NSAttributedString *attributedString;
-
-/** The text editor string, including temporary attributes which have been applied as attributes. */
-@property (nonatomic, strong, readonly) NSAttributedString *attributedStringWithTemporaryAttributesApplied;
-
-/**
- *  Sets the text with a string with possible options.
- *  @param text Is the string to set.
- *  @param options is a dictionary of options. Currently `undo` can be `YES` or `NO`.
- **/
-- (void)setString:(NSString *)text options:(NSDictionary *)options;
-
-/**
- *  Sets the text with an attributed string with possible options.
- *  @param text Is the string to set.
- *  @param options is a dictionary of options. Currently `undo` can be `YES` or `NO`.
- **/
-- (void)setAttributedString:(NSAttributedString *)text options:(NSDictionary *)options;
-
-/**
- *  Replaces the characters in a given range with a string, with possible options.
- *  @param range The range of text to replace.
- *  @param text The new text to be inserted.
- *  @param options A dictionary of options. Currently `undo` can be `YES` or `NO`.
- **/
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options;
+/** The text editor string, including temporary attributes which have been
+ *  applied by the syntax colourer. */
+- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied;
 
 
 /// @name Instance Methods - Initializers and Setup

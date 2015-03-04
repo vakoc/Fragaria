@@ -69,7 +69,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 @property (nonatomic) NSString *syntaxDefinitionName;         ///< Specifies the current syntax definition name.
 @property (nonatomic, assign) NSString * string;                      ///< The plain text string of the text editor.
-@property (nonatomic, assign) NSAttributedString *attributedString;   ///< The text editor string with attributes.
+
 
 /**
  *  The text editor string, including temporary attributes which
@@ -252,40 +252,12 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 - (id)objectForKey:(id)key;
 
 /**
- *  Replaces the characters specified in a range with new text, with options.
- *  @param range The range to be replaced.
- *  @param text The replacement text.
- *  @param options A dictionary of options. Currently `undo` can be `YES` or `NO`.
- **/
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options;
-
-/**
  *  Moves the view to a specific line, possibly centering it and/or highlighting it.
  *  @param lineToGoTo Indicates the line the view should attempt to move to.
  *  @param centered Indicates whether the desired line should be centered, if possible.
  *  @param highlight Indicates whether or not the target line should be highlighted.
  **/
 - (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight;
-
-/**
- *  Sets the string, with options.
- *  @param aString The string to set.
- *  @param options A dictionary of options. Currently `undo` can be `YES` or `NO`.
- **/
-- (void)setString:(NSString *)aString options:(NSDictionary *)options;
-
-/**
- *  Set the string using an attributed string, with options.
- *  @param aString The attributed string to set.
- *  @param options A dictionary of options. Currently `undo` can be `YES` or `NO`.
- **/
-- (void)setAttributedString:(NSAttributedString *)aString options:(NSDictionary *)options;
-
-/**
- *  Forces the text view to reload its string.
- **/
-- (void)reloadString;
-
 
 /** Replaces the text storage object of this Fragaria instance's text view to
  *  the specified text storage.

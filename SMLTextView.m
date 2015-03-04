@@ -262,90 +262,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
- * @property string:
- */
-- (void)setString:(NSString *)aString
-{
-    [super setString:aString];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification object:self];
-}
-
-
-/*
- * @property attributedString:
- */
-- (void)setAttributedString:(NSAttributedString *)attrString
-{
-    NSTextStorage *textStorage = [self textStorage];
-    [textStorage setAttributedString:attrString];
-}
-
-/*
- * - setString:options:
- */
-- (void)setString:(NSString *)aString options:(NSDictionary *)options
-{
-    NSRange all = NSMakeRange(0, [self.textStorage length]);
-    [self replaceCharactersInRange:all withString:aString options:options];
-}
-
-
-/*
- * - setAttributedString:options:
- */
-- (void)setAttributedString:(NSAttributedString *)text options:(NSDictionary *)options
-{
-    BOOL undo = [[options objectForKey:@"undo"] boolValue];
-
-    NSTextStorage *textStorage = [self textStorage];
-
-    if ([self isEditable] && undo) {
-
-        /*
-
-         see http://www.cocoabuilder.com/archive/cocoa/179875-exponent-action-in-nstextview-subclass.html
-         entitled: Re: "exponent" action in NSTextView subclass (SOLVED)
-
-         This details how to make programmatic changes to the textStorage object.
-
-         */
-
-        /*
-
-         code here reflects what occurs in - setString:options:
-
-         may be over complicated
-
-         */
-        NSRange all = NSMakeRange(0, [textStorage length]);
-        BOOL textIsEmpty = ([textStorage length] == 0 ? YES : NO);
-
-        if ([self shouldChangeTextInRange:all replacementString:[text string]]) {
-            [textStorage beginEditing];
-            [textStorage setAttributedString:text];
-            [textStorage endEditing];
-
-            // reset the default font if text was empty as the font gets reset to system default.
-            if (textIsEmpty) {
-                [self setFont:self.textFont];
-            }
-
-            [self didChangeText];
-
-            NSUndoManager *undoManager = [self undoManager];
-
-            // TODO: this doesn't seem to be having the desired effect
-            [undoManager setActionName:NSLocalizedString(@"Content Change", @"undo content change")];
-
-        }
-    } else {
-        [self setAttributedString:text];
-    }
-}
-
-
-/*
- * @property attributedStringWithTemporaryAttributesApplied
+ * - attributedStringWithTemporaryAttributesApplied
  */
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
 {
@@ -357,46 +274,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 	
 	// get content with layout manager temporary attributes persisted
 	return [self.layoutManager attributedStringWithTemporaryAttributesApplied];
-}
-
-
-/*
- * - replaceCharactersInRange:withString:options
- */
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options
-{
-    BOOL undo = [[options objectForKey:@"undo"] boolValue];
-    BOOL textViewWasEmpty = ([self.textStorage length] == 0 ? YES : NO);
-
-    if ([self isEditable] && undo) {
-
-        // this sequence will be registered with the undo manager
-        if ([self shouldChangeTextInRange:range replacementString:text]) {
-
-            // modify he text storage
-            [self.textStorage beginEditing];
-            [self.textStorage replaceCharactersInRange:range withString:text];
-            [self.textStorage endEditing];
-
-            // reset the default font if text was empty as the font gets reset to system default.
-            if (textViewWasEmpty) {
-                [self setFont:self.textFont];
-            }
-
-            // TODO: this doesn't seem to be having the desired effect
-            NSUndoManager *undoManager = [self undoManager];
-            [undoManager setActionName:NSLocalizedString(@"Content Change", @"undo content change")];
-
-            // complete the text change operation
-            [self didChangeText];
-        }
-    } else if (textViewWasEmpty) {
-        // this operation will not be registered with the undo manager
-        [self setString:text];
-    } else {
-        // this operation will not be registered with the undo manager
-        [self.textStorage replaceCharactersInRange:range withString:text];;
-    }
 }
 
 

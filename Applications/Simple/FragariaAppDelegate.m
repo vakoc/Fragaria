@@ -90,8 +90,6 @@
  */
 - (IBAction)showPreferencesWindow:(id)sender
 {
-    #pragma unused(sender)
-    
     [[MGSPreferencesController sharedPrefsWindowController] showWindow:self];
 }
 
@@ -101,9 +99,7 @@
  */
 - (IBAction)reloadString:(id)sender
 {
-    #pragma unused(sender)
-
-    [fragaria reloadString];
+    [fragaria setString:[fragaria string]];
 }
 
 
@@ -114,9 +110,7 @@
  */
 - (IBAction)copyToPasteBoard:(id)sender
 {
-	#pragma unused(sender)
-	
-	NSAttributedString *attString = [fragaria attributedString];
+	NSAttributedString *attString = fragaria.textView.attributedString;
 	NSData *data = [attString RTFFromRange:NSMakeRange(0, [attString length]) documentAttributes:nil];
 	NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
 	[pasteboard clearContents];

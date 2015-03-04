@@ -136,20 +136,6 @@
 
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	attributedString
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setAttributedString:(NSAttributedString *)attributedString
-{
-	[self.fragaria setAttributedString:attributedString];
-}
-
-- (NSAttributedString *)attributedString
-{
-	return [self.fragaria attributedString];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	syntaxDefinitionName
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName

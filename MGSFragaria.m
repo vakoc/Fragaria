@@ -52,7 +52,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 // SMLTextView dynamic properties:
-@dynamic string, attributedString, attributedStringWithTemporaryAttributesApplied;
+@dynamic string, attributedStringWithTemporaryAttributesApplied;
 @dynamic backgroundColor, currentLineHighlightColour, textFont;
 @dynamic grammarCheckingEnabled, highlightsCurrentLine, insertionPointColor, pageGuideColumn;
 @dynamic showsPageGuide, smartInsertDeleteEnabled, tabWidth, textColor;
@@ -564,16 +564,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
- * - replaceCharactersInRange:withString:options
- */
-- (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)text options:(NSDictionary *)options
-{
-    SMLTextView *textView = [self textView];
-    [textView replaceCharactersInRange:range withString:text options:options];
-}
-
-
-/*
  * - goToLine:centered:highlight:
  */
 - (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight
@@ -581,33 +571,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     if (centered)
         NSLog(@"Warning: centered option is ignored.");
     [self.textView performGoToLine:lineToGoTo setSelected:highlight];
-}
-
-
-/*
- * - setString:options:
- */
-- (void)setString:(NSString *)aString options:(NSDictionary *)options
-{
-	[self.textView setString:aString options:options];
-}
-
-
-/*
- * - setAttributedString:options:
- */
-- (void)setAttributedString:(NSAttributedString *)aString options:(NSDictionary *)options
-{
-	[self.textView setAttributedString:aString options:options];
-}
-
-
-/*
- * - reloadString
- */
-- (void)reloadString
-{
-    [self setString:[self string]];
 }
 
 
