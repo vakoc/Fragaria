@@ -83,8 +83,8 @@ Copyright 2004-2009 Peter Borg
 @property (nonatomic, assign) BOOL coloursStrings;           ///< Indicates if strings should be coloured.
 @property (nonatomic, assign) BOOL coloursVariables;         ///< Indicates if variables should be coloured.
 
-@property (nonatomic, assign) BOOL colourMultiLineStrings;   ///< Indicates if multiline strings should be coloured.
-@property (nonatomic, assign) BOOL colourOnlyUntilEndOfLine; ///< Indicates if coloring should end at end of line.
+@property (nonatomic, assign) BOOL coloursMultiLineStrings;   ///< Indicates if multiline strings should be coloured.
+@property (nonatomic, assign) BOOL coloursOnlyUntilEndOfLine; ///< Indicates if coloring should end at end of line.
 
 
 /// @name Instance Methods

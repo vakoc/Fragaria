@@ -356,8 +356,8 @@ static char kcAutoCompletePrefsChanged;
     }
     else if (context == &kcMultiLineChanged)
     {
-        self.fragaria.colourMultiLineStrings = [defaults boolForKey:MGSFragariaPrefsColourMultiLineStrings];
-        self.fragaria.colourOnlyUntilEndOfLine = [defaults boolForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine];
+        self.fragaria.coloursMultiLineStrings = [defaults boolForKey:MGSFragariaPrefsColourMultiLineStrings];
+        self.fragaria.coloursOnlyUntilEndOfLine = [defaults boolForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine];
     }
     else if (context == &kcAutoCompletePrefsChanged)
     {

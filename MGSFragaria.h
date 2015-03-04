@@ -104,8 +104,8 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) BOOL coloursNumbers;                        ///< Indicates if numbers should be coloured.
 @property (nonatomic, assign) BOOL coloursStrings;                        ///< Indicates if strings should be coloured.
 @property (nonatomic, assign) BOOL coloursVariables;                      ///< Indicates if variables should be coloured.
-@property (nonatomic, assign) BOOL colourMultiLineStrings;                ///< Indicates if multiline strings should be coloured.
-@property (nonatomic, assign) BOOL colourOnlyUntilEndOfLine;              ///< Indicates if coloring should end at end of line.
+@property (nonatomic, assign) BOOL coloursMultiLineStrings;               ///< Indicates if multiline strings should be coloured.
+@property (nonatomic, assign) BOOL coloursOnlyUntilEndOfLine;             ///< Indicates if coloring should end at end of line.
 @property (nonatomic, assign) BOOL continuousSpellCheckingEnabled;        ///< Specifies whether or not automatic spell checking is enabled.
 @property (nonatomic, assign) NSColor *currentLineHighlightColour;        ///< Specifies the color to use when highlighting the current line.
 @property (nonatomic, assign) BOOL hasVerticalScroller;                   ///< Indicates whether or not the vertical scroller should be displayed.
