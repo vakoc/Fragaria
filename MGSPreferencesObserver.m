@@ -242,7 +242,7 @@ static char kcAutoCompletePrefsChanged;
     
     [self observeDefaults:@[MGSFragariaPrefsIndentWithSpaces, MGSFragariaPrefsUseTabStops, MGSFragariaPrefsIndentNewLinesAutomatically, MGSFragariaPrefsAutomaticallyIndentBraces] context:&kcIndentingPrefsChanged];
     
-    [self observeDefaults:@[MGSFragariaPrefsAutocompleteSuggestAutomatically, MGSFragariaPrefsAutocompleteAfterDelay] context:&kcAutoCompletePrefsChanged];
+    [self observeDefaults:@[MGSFragariaPrefsAutocompleteSuggestAutomatically, MGSFragariaPrefsAutocompleteAfterDelay, MGSFragariaPrefsAutocompleteIncludeStandardWords] context:&kcAutoCompletePrefsChanged];
 
 	// SMLSyntaxColouring
 	[self observeDefaults:@[
@@ -364,6 +364,7 @@ static char kcAutoCompletePrefsChanged;
     {
         self.fragaria.autoCompleteEnabled = [defaults boolForKey:MGSFragariaPrefsAutocompleteSuggestAutomatically];
         self.fragaria.autoCompleteDelay = [defaults doubleForKey:MGSFragariaPrefsAutocompleteAfterDelay];
+        self.fragaria.autoCompleteWithKeywords = [defaults boolForKey:MGSFragariaPrefsAutocompleteIncludeStandardWords];
     }
     else if (context == &kcColoursChanged)
     {

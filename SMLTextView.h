@@ -39,10 +39,15 @@
 #pragma mark - Properties - Appearance and Behaviours
 
 /** Specifies the delay time for autocomplete, in seconds. */
-@property (nonatomic, assign) double autoCompleteDelay;
+@property double autoCompleteDelay;
 
 /** Specifies whether or not auto complete is enabled. */
-@property (nonatomic, assign) BOOL autoCompleteEnabled;
+@property BOOL autoCompleteEnabled;
+
+/** If set to YES, the autocomplete list will contain all the keywords of
+ * the current syntax definition, in addition to the list provided by the
+ * autocomplete delegate. */
+@property BOOL autoCompleteWithKeywords;
 
 /** Indicates the color to use for current line highlighting. */
 @property (nonatomic, strong) NSColor *currentLineHighlightColour;

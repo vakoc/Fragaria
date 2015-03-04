@@ -39,7 +39,9 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordStartCharacterSet = @"includeInKeyw
 NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywordEndCharacterSet";
 
 
-@implementation MGSSyntaxDefinition
+@implementation MGSSyntaxDefinition {
+    NSArray *sortedAutocompleteWords;
+}
 
 
 - (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary
@@ -48,7 +50,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     [self setDefaults];
 
     _syntaxDictionary = syntaxDictionary;
-    NSMutableArray *keywordsAndAutocompleteWordsTemporary = [NSMutableArray array];
     
     // If the plist file is malformed be sure to set the values to something
     
@@ -67,7 +68,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     if (value) {
         NSAssert([value isKindOfClass:[NSArray class]], @"NSArray expected");
         _keywords = [[NSSet alloc] initWithArray:value];
-        [keywordsAndAutocompleteWordsTemporary addObjectsFromArray:value];
     }
     
     // autocomplete words
@@ -75,11 +75,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     if (value) {
         NSAssert([value isKindOfClass:[NSArray class]], @"NSArray expected");
         _autocompleteWords = [[NSSet alloc] initWithArray:value];
-        [keywordsAndAutocompleteWordsTemporary addObjectsFromArray:value];
     }
-    
-    // keywords and autocomplete words
-    _keywordsAndAutocompleteWords = [keywordsAndAutocompleteWordsTemporary sortedArrayUsingSelector:@selector(compare:)];
     
     // recolour keywords
     value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionRecolourKeywordIfAlreadyColoured];
@@ -345,7 +341,13 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 
 - (NSArray*)completions
 {
-    return self.keywordsAndAutocompleteWords;
+    if (!sortedAutocompleteWords) {
+        NSArray *tmp;
+        
+        tmp = [self.autocompleteWords allObjects];
+        sortedAutocompleteWords = [tmp sortedArrayUsingSelector:@selector(compare:)];
+    }
+    return sortedAutocompleteWords;
 }
 
 

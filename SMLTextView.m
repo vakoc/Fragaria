@@ -82,6 +82,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     NSRect currentLineRect;
 
     NSTimer *autocompleteWordsTimer;
+    NSArray *cachedKeywords;
+    id __weak syntaxDefOfCachedKeywords;
 }
 
 @synthesize lineWrap = _lineWrap;
@@ -1213,24 +1215,35 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (NSArray*)completionsForPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
 {
+    if (!self.autocompleteDelegate) return @[];
+    
     NSMutableArray* matchArray = [NSMutableArray array];
 
-    // use handler
-    if (self.autocompleteDelegate) {
+    // get all completions
+    NSMutableArray* allCompletions = [[self.autocompleteDelegate completions] mutableCopy];
+    
+    if (!allCompletions)
+        allCompletions = [NSMutableArray array];
+    
+    /* Add the keywords, if the option to add keywords is on. */
+    if (self.autoCompleteWithKeywords) {
+        if (syntaxDefOfCachedKeywords != self.syntaxColouring.syntaxDefinition || !cachedKeywords) {
+            NSArray *tmp = [self.syntaxColouring.syntaxDefinition.keywords allObjects];
+            cachedKeywords = [tmp sortedArrayUsingSelector:@selector(compare:)];
+            syntaxDefOfCachedKeywords = self.syntaxColouring.syntaxDefinition;
+        }
+        [allCompletions addObjectsFromArray:cachedKeywords];
+    }
 
-        // get all completions
-        NSArray* allCompletions = [self.autocompleteDelegate completions];
+    // get string to match
+    NSString *matchString = [[self string] substringWithRange:charRange];
 
-        // get string to match
-        NSString *matchString = [[self string] substringWithRange:charRange];
-
-        // build array of suitable suggestions
-        for (NSString* completeWord in allCompletions)
+    // build array of suitable suggestions
+    for (NSString* completeWord in allCompletions)
+    {
+        if ([completeWord rangeOfString:matchString options:NSCaseInsensitiveSearch range:NSMakeRange(0, [completeWord length])].location == 0)
         {
-            if ([completeWord rangeOfString:matchString options:NSCaseInsensitiveSearch range:NSMakeRange(0, [completeWord length])].location == 0)
-            {
-                [matchArray addObject:completeWord];
-            }
+            [matchArray addObject:completeWord];
         }
     }
 
@@ -1303,6 +1316,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 #pragma mark - Page Guide
+
 
 - (void)configurePageGuide
 {

@@ -25,7 +25,6 @@
 @property (readonly) NSString *endCommand;                      ///< Delimiter for the end of a command.
 @property (readonly) NSSet *keywords;                           ///< An set of words that are considered keywords.
 @property (readonly) NSSet *autocompleteWords;                  ///< A set of words that can be used for autocompletion.
-@property (readonly) NSArray *keywordsAndAutocompleteWords;     ///< The combination of all keywords and autocomplete words.
 @property (readonly) NSString *beginInstruction;                ///< Delimiter for the start of an instruction.
 @property (readonly) NSString *endInstruction;                  ///< Delimiter for the end of an instruction.
 @property (readonly) NSCharacterSet *beginVariableCharacterSet; ///< Characters that may start a variable.
