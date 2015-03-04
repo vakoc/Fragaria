@@ -22,6 +22,11 @@
 
 /* Begin PBXBuildFile section */
 		0105F3E31A8681430045BDD3 /* SMLSyntaxColouring.m in Resources */ = {isa = PBXBuildFile; fileRef = 0105F3E11A86811C0045BDD3 /* SMLSyntaxColouring.m */; };
+		01098F111AA7BCF200ED4CFD /* MGSPreferencesTextEditing.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F131AA7BCF200ED4CFD /* MGSPreferencesTextEditing.xib */; };
+		01098F141AA7BCF800ED4CFD /* MGSPreferencesFontsAndColours.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F161AA7BCF800ED4CFD /* MGSPreferencesFontsAndColours.xib */; };
+		01098F171AA7BD0400ED4CFD /* SMLGoToLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F191AA7BD0400ED4CFD /* SMLGoToLine.xib */; };
+		01098F1A1AA7BD0900ED4CFD /* SMLEntab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F1C1AA7BD0900ED4CFD /* SMLEntab.xib */; };
+		01098F1D1AA7BD0D00ED4CFD /* SMLDetab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F1F1AA7BD0D00ED4CFD /* SMLDetab.xib */; };
 		0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */; };
 		017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 017FD5861A7A992700B305FB /* MGSLineNumberView.h */; };
 		017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FD5871A7A992700B305FB /* MGSLineNumberView.m */; };
@@ -42,9 +47,6 @@
 		AB41C1051191FFCB004F0CB5 /* MGSFragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = AB41C1041191FFCB004F0CB5 /* MGSFragaria.m */; };
 		AB472B6F129972E400202CB5 /* MGSTextMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB472B6E129972E400202CB5 /* MGSTextMenuController.m */; };
 		AB472BF41299BBB100202CB5 /* MGSExtraInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */; };
-		AB472C851299C33100202CB5 /* SMLGoToLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C841299C33100202CB5 /* SMLGoToLine.xib */; };
-		AB472C881299C34500202CB5 /* SMLDetab.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C861299C34500202CB5 /* SMLDetab.xib */; };
-		AB472C891299C34500202CB5 /* SMLEntab.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB472C871299C34500202CB5 /* SMLEntab.xib */; };
 		AB648E3311FB386E00AEF7BD /* MGSFragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* MGSFragaria.framework */; };
 		AB648E4011FB38E700AEF7BD /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = AB648E3F11FB38E700AEF7BD /* MyDocument.m */; };
 		AB648E4111FB390300AEF7BD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -53,8 +55,6 @@
 		AB69B6CA118B7D2100903D1D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 		AB69B6DA118B7F2A00903D1D /* SMLLayoutManager.m in Sources */ = {isa = PBXBuildFile; fileRef = AB69B6D9118B7F2A00903D1D /* SMLLayoutManager.m */; };
 		AB69B754118B830700903D1D /* MGSFragaria.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B753118B830700903D1D /* MGSFragaria.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AB8386D91719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */; };
-		AB8386DA1719E3D3004408F4 /* MGSPreferencesTextEditing.xib in Resources */ = {isa = PBXBuildFile; fileRef = AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */; };
 		AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = AB8387A9171B4505004408F4 /* SMLSyntaxColouringDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB8387C5171D6115004408F4 /* SMLSyntaxDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = AB8387C4171D6115004408F4 /* SMLSyntaxDefinition.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABA1C12316144EFD00C8723F /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = ABA1C12116144D3F00C8723F /* README.md */; };
@@ -165,6 +165,11 @@
 		0105F3E11A86811C0045BDD3 /* SMLSyntaxColouring.m */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = SMLSyntaxColouring.m; sourceTree = "<group>"; };
 		01098F0E1AA7BB3B00ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		01098F101AA7BB4F00ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/Lorem.html; sourceTree = "<group>"; };
+		01098F121AA7BCF200ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MGSPreferencesTextEditing.xib; sourceTree = "<group>"; };
+		01098F151AA7BCF800ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MGSPreferencesFontsAndColours.xib; sourceTree = "<group>"; };
+		01098F181AA7BD0400ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMLGoToLine.xib; sourceTree = "<group>"; };
+		01098F1B1AA7BD0900ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMLEntab.xib; sourceTree = "<group>"; };
+		01098F1E1AA7BD0D00ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMLDetab.xib; sourceTree = "<group>"; };
 		013278661A81614500D2DCA5 /* MGSSyntaxDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSyntaxDefinition.h; sourceTree = "<group>"; };
 		013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxDefinition.m; sourceTree = "<group>"; };
 		0166D9971A9FC3B20099AB81 /* SMLTextViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMLTextViewPrivate.h; sourceTree = "<group>"; };
@@ -195,9 +200,6 @@
 		AB472B7B1299732F00202CB5 /* MGSTextMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSTextMenuController.h; sourceTree = "<group>"; };
 		AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSExtraInterfaceController.m; sourceTree = "<group>"; };
 		AB472BF51299BBBA00202CB5 /* MGSExtraInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSExtraInterfaceController.h; sourceTree = "<group>"; };
-		AB472C841299C33100202CB5 /* SMLGoToLine.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLGoToLine.xib; sourceTree = "<group>"; };
-		AB472C861299C34500202CB5 /* SMLDetab.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLDetab.xib; sourceTree = "<group>"; };
-		AB472C871299C34500202CB5 /* SMLEntab.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SMLEntab.xib; sourceTree = "<group>"; };
 		AB648E2A11FB385700AEF7BD /* Fragaria Doc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fragaria Doc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB648E3E11FB38E700AEF7BD /* MyDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MyDocument.h; path = Applications/Doc/MyDocument.h; sourceTree = "<group>"; };
 		AB648E3F11FB38E700AEF7BD /* MyDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MyDocument.m; path = Applications/Doc/MyDocument.m; sourceTree = "<group>"; };
@@ -212,8 +214,6 @@
 		AB69B753118B830700903D1D /* MGSFragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragaria.h; sourceTree = "<group>"; tabWidth = 4; };
 		AB69B809118B8D0400903D1D /* MGSPreferencesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSPreferencesController.h; path = Applications/Simple/MGSPreferencesController.h; sourceTree = "<group>"; };
 		AB69B80A118B8D0400903D1D /* MGSPreferencesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; name = MGSPreferencesController.m; path = Applications/Simple/MGSPreferencesController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MGSPreferencesFontsAndColours.xib; sourceTree = "<group>"; };
-		AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MGSPreferencesTextEditing.xib; sourceTree = "<group>"; };
 		AB8387A9171B4505004408F4 /* SMLSyntaxColouringDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLSyntaxColouringDelegate.h; sourceTree = "<group>"; };
 		AB8387C4171D6115004408F4 /* SMLSyntaxDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLSyntaxDefinition.h; sourceTree = "<group>"; };
 		AB8387CC171D7F1D004408F4 /* TODO.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = TODO.md; sourceTree = "<group>"; };
@@ -365,9 +365,9 @@
 				AB472B6E129972E400202CB5 /* MGSTextMenuController.m */,
 				AB472BF51299BBBA00202CB5 /* MGSExtraInterfaceController.h */,
 				AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */,
-				AB472C861299C34500202CB5 /* SMLDetab.xib */,
-				AB472C871299C34500202CB5 /* SMLEntab.xib */,
-				AB472C841299C33100202CB5 /* SMLGoToLine.xib */,
+				01098F1F1AA7BD0D00ED4CFD /* SMLDetab.xib */,
+				01098F1C1AA7BD0900ED4CFD /* SMLEntab.xib */,
+				01098F191AA7BD0400ED4CFD /* SMLGoToLine.xib */,
 			);
 			name = "Text Editing UI";
 			sourceTree = "<group>";
@@ -410,10 +410,10 @@
 				ABC5799616047B4E0040B3FB /* FRAFontTransformer.m */,
 				ABC578E71603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h */,
 				ABC578E81603D5FF0040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.m */,
-				AB8386D71719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib */,
+				01098F161AA7BCF800ED4CFD /* MGSPreferencesFontsAndColours.xib */,
 				ABC578EB1603D7EB0040B3FB /* MGSFragariaTextEditingPrefsViewController.h */,
 				ABC578EC1603D7EC0040B3FB /* MGSFragariaTextEditingPrefsViewController.m */,
-				AB8386D81719E3D3004408F4 /* MGSPreferencesTextEditing.xib */,
+				01098F131AA7BCF200ED4CFD /* MGSPreferencesTextEditing.xib */,
 			);
 			name = "Standard UI";
 			sourceTree = "<group>";
@@ -844,12 +844,12 @@
 				AB3972E5118C28E700AEF388 /* Syntax Definitions in Resources */,
 				ABA1C12316144EFD00C8723F /* README.md in Resources */,
 				ABA812DC11B6855200A29990 /* LICENSE-2.0.txt in Resources */,
-				AB472C851299C33100202CB5 /* SMLGoToLine.xib in Resources */,
-				AB472C881299C34500202CB5 /* SMLDetab.xib in Resources */,
+				01098F171AA7BD0400ED4CFD /* SMLGoToLine.xib in Resources */,
+				01098F1D1AA7BD0D00ED4CFD /* SMLDetab.xib in Resources */,
 				01AC7E721AA341AA00DF7620 /* ErrorBadges.xcassets in Resources */,
-				AB472C891299C34500202CB5 /* SMLEntab.xib in Resources */,
-				AB8386D91719E3D3004408F4 /* MGSPreferencesFontsAndColours.xib in Resources */,
-				AB8386DA1719E3D3004408F4 /* MGSPreferencesTextEditing.xib in Resources */,
+				01098F1A1AA7BD0900ED4CFD /* SMLEntab.xib in Resources */,
+				01098F141AA7BCF800ED4CFD /* MGSPreferencesFontsAndColours.xib in Resources */,
+				01098F111AA7BCF200ED4CFD /* MGSPreferencesTextEditing.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -997,6 +997,46 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		01098F131AA7BCF200ED4CFD /* MGSPreferencesTextEditing.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01098F121AA7BCF200ED4CFD /* en */,
+			);
+			name = MGSPreferencesTextEditing.xib;
+			sourceTree = "<group>";
+		};
+		01098F161AA7BCF800ED4CFD /* MGSPreferencesFontsAndColours.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01098F151AA7BCF800ED4CFD /* en */,
+			);
+			name = MGSPreferencesFontsAndColours.xib;
+			sourceTree = "<group>";
+		};
+		01098F191AA7BD0400ED4CFD /* SMLGoToLine.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01098F181AA7BD0400ED4CFD /* en */,
+			);
+			name = SMLGoToLine.xib;
+			sourceTree = "<group>";
+		};
+		01098F1C1AA7BD0900ED4CFD /* SMLEntab.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01098F1B1AA7BD0900ED4CFD /* en */,
+			);
+			name = SMLEntab.xib;
+			sourceTree = "<group>";
+		};
+		01098F1F1AA7BD0D00ED4CFD /* SMLDetab.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				01098F1E1AA7BD0D00ED4CFD /* en */,
+			);
+			name = SMLDetab.xib;
+			sourceTree = "<group>";
+		};
 		D0C146571A87196200DDE90A /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

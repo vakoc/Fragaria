@@ -807,7 +807,7 @@
 								</object>
 								<object class="NSMenuItem" id="970732693">
 									<reference key="NSMenu" ref="76394476"/>
-									<string key="NSTitle">Capitalise First Letter of Every Word</string>
+									<string key="NSTitle">Capitalize First Letter of Every Word</string>
 									<string key="NSKeyEquiv">c</string>
 									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>

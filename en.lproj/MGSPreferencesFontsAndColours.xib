@@ -27,8 +27,8 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="411">
-                                        <rect key="frame" x="275" y="216" width="79" height="17"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Text Colour:" id="422">
+                                        <rect key="frame" x="283" y="216" width="71" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Text Color:" id="422">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -64,8 +64,8 @@
                                         </connections>
                                     </colorWell>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="414">
-                                        <rect key="frame" x="226" y="182" width="128" height="17"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Background Colour:" id="421">
+                                        <rect key="frame" x="234" y="182" width="120" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Background Color:" id="421">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -143,16 +143,16 @@
                                         </connections>
                                     </colorWell>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="241">
-                                        <rect key="frame" x="179" y="148" width="175" height="17"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Invisible Characters Colour:" id="270">
+                                        <rect key="frame" x="187" y="148" width="167" height="17"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Invisible Characters Color:" id="270">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="242">
-                                        <rect key="frame" x="128" y="113" width="226" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Highlight current line, with colour" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="271">
+                                        <rect key="frame" x="136" y="113" width="218" height="18"/>
+                                        <buttonCell key="cell" type="check" title="Highlight current line, with color" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="271">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -190,7 +190,7 @@
                                 </constraints>
                             </view>
                         </tabViewItem>
-                        <tabViewItem label="Syntax Colours" identifier="" id="43">
+                        <tabViewItem label="Syntax Colors" identifier="" id="43">
                             <view key="view" id="45">
                                 <rect key="frame" x="10" y="33" width="554" height="313"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -357,8 +357,8 @@
                                         </connections>
                                     </colorWell>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="66">
-                                        <rect key="frame" x="195" y="290" width="37" height="13"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Colour" id="281">
+                                        <rect key="frame" x="198" y="290" width="31" height="13"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Color" id="281">
                                             <font key="font" metaFont="label"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -373,14 +373,14 @@
                                         </textFieldCell>
                                     </textField>
                                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="68">
-                                        <rect key="frame" x="118" y="283" width="132" height="5"/>
+                                        <rect key="frame" x="118" y="283" width="129" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="456">
-                                        <rect key="frame" x="468" y="290" width="37" height="13"/>
-                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Colour" id="460">
+                                        <rect key="frame" x="471" y="290" width="31" height="13"/>
+                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Color" id="460">
                                             <font key="font" metaFont="label"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -395,15 +395,15 @@
                                         </textFieldCell>
                                     </textField>
                                     <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="458">
-                                        <rect key="frame" x="391" y="283" width="132" height="5"/>
+                                        <rect key="frame" x="391" y="283" width="129" height="5"/>
                                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="70">
-                                        <rect key="frame" x="142" y="255" width="22" height="18"/>
+                                        <rect key="frame" x="144" y="255" width="18" height="18"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="18" id="Npi-iV-weA"/>
+                                            <constraint firstAttribute="width" constant="14" id="Npi-iV-weA"/>
                                         </constraints>
                                         <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="283">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -414,9 +414,9 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="71">
-                                        <rect key="frame" x="142" y="221" width="22" height="18"/>
+                                        <rect key="frame" x="144" y="221" width="18" height="18"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="18" id="NJg-f5-5FM"/>
+                                            <constraint firstAttribute="width" constant="14" id="NJg-f5-5FM"/>
                                         </constraints>
                                         <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="284">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -515,9 +515,9 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="76">
-                                        <rect key="frame" x="142" y="153" width="22" height="18"/>
+                                        <rect key="frame" x="144" y="153" width="18" height="18"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="18" id="UD6-Wh-M6q"/>
+                                            <constraint firstAttribute="width" constant="14" id="UD6-Wh-M6q"/>
                                         </constraints>
                                         <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="289">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -551,9 +551,9 @@
                                         </connections>
                                     </colorWell>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="80">
-                                        <rect key="frame" x="142" y="187" width="22" height="18"/>
+                                        <rect key="frame" x="144" y="187" width="18" height="18"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="18" id="dF7-u5-a2P"/>
+                                            <constraint firstAttribute="width" constant="14" id="dF7-u5-a2P"/>
                                         </constraints>
                                         <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="291">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
@@ -570,8 +570,8 @@
                                         <font key="titleFont" metaFont="system"/>
                                     </box>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="62">
-                                        <rect key="frame" x="58" y="18" width="429" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Only colour till the end of the line if the closing tag can’t be found " bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="278">
+                                        <rect key="frame" x="58" y="18" width="433" height="18"/>
+                                        <buttonCell key="cell" type="check" title="Only color until the end of the line if the closing tag can’t be found " bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="278">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -580,8 +580,8 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="63">
-                                        <rect key="frame" x="58" y="38" width="170" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Colour multi-line strings" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="279">
+                                        <rect key="frame" x="58" y="38" width="162" height="18"/>
+                                        <buttonCell key="cell" type="check" title="Color multi-line strings" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="279">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -590,8 +590,8 @@
                                         </connections>
                                     </button>
                                     <button translatesAutoresizingMaskIntoConstraints="NO" id="423">
-                                        <rect key="frame" x="58" y="58" width="108" height="18"/>
-                                        <buttonCell key="cell" type="check" title="Colour syntax" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="424">
+                                        <rect key="frame" x="58" y="58" width="100" height="18"/>
+                                        <buttonCell key="cell" type="check" title="Color syntax" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="424">
                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>

@@ -663,7 +663,7 @@
                             <menuItem isSeparatorItem="YES" id="Pli-Tc-ssg">
                                 <modifierMask key="keyEquivalentModifierMask" command="YES"/>
                             </menuItem>
-                            <menuItem title="Capitalise First Letter Of Every Word" tag="102" keyEquivalent="c" id="H9Q-k8-B5y">
+                            <menuItem title="Capitalize First Letter Of Every Word" tag="102" keyEquivalent="c" id="H9Q-k8-B5y">
                                 <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                 <connections>
                                     <action selector="capitalizeWord:" target="-1" id="9Q4-fa-5ME"/>
@@ -752,7 +752,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
