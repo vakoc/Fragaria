@@ -163,6 +163,8 @@
 
 /* Begin PBXFileReference section */
 		0105F3E11A86811C0045BDD3 /* SMLSyntaxColouring.m */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = SMLSyntaxColouring.m; sourceTree = "<group>"; };
+		01098F0E1AA7BB3B00ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		01098F101AA7BB4F00ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = en; path = en.lproj/Lorem.html; sourceTree = "<group>"; };
 		013278661A81614500D2DCA5 /* MGSSyntaxDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSyntaxDefinition.h; sourceTree = "<group>"; };
 		013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxDefinition.m; sourceTree = "<group>"; };
 		0166D9971A9FC3B20099AB81 /* SMLTextViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMLTextViewPrivate.h; sourceTree = "<group>"; };
@@ -258,10 +260,8 @@
 		D0C146501A87196200DDE90A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Applications/MGSFragariaView/AppDelegate.h; sourceTree = "<group>"; };
 		D0C146511A87196200DDE90A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Applications/MGSFragariaView/AppDelegate.m; sourceTree = "<group>"; };
 		D0C146531A87196200DDE90A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Applications/MGSFragariaView/main.m; sourceTree = "<group>"; };
-		D0C146581A87196200DDE90A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		D0C146731A871A0B00DDE90A /* MGSFragariaView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaView.h; sourceTree = "<group>"; };
 		D0C146741A871A0B00DDE90A /* MGSFragariaView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragariaView.m; sourceTree = "<group>"; };
-		D0C146781A871AF300DDE90A /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = Base; path = Base.lproj/Lorem.html; sourceTree = "<group>"; };
 		D0E520F21A88E577005CB80B /* Fragaria_Document-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Fragaria_Document-Info.plist"; path = "Applications/Doc/Fragaria_Document-Info.plist"; sourceTree = "<group>"; };
 		D0E521031A90DC02005CB80B /* MGSSyntaxErrorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSyntaxErrorController.h; sourceTree = "<group>"; };
 		D0E521041A90DC02005CB80B /* MGSSyntaxErrorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxErrorController.m; sourceTree = "<group>"; };
@@ -810,6 +810,7 @@
 				French,
 				German,
 				Base,
+				en,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* KosmicEditor */;
 			projectDirPath = "";
@@ -999,7 +1000,7 @@
 		D0C146571A87196200DDE90A /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D0C146581A87196200DDE90A /* Base */,
+				01098F0E1AA7BB3B00ED4CFD /* en */,
 			);
 			name = MainMenu.xib;
 			path = Applications/MGSFragariaView;
@@ -1008,7 +1009,7 @@
 		D0C146771A871AF300DDE90A /* Lorem.html */ = {
 			isa = PBXVariantGroup;
 			children = (
-				D0C146781A871AF300DDE90A /* Base */,
+				01098F101AA7BB4F00ED4CFD /* en */,
 			);
 			name = Lorem.html;
 			path = Applications/MGSFragariaView;
