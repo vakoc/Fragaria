@@ -11,7 +11,6 @@
 
 
 // KVO context constants
-static char kcAutoSomethingChanged;
 static char kcBackgroundColorChanged;
 static char kcColoursChanged;
 static char kcFragariaInvisibleCharactersColourWellChanged;
@@ -149,7 +148,6 @@ static char kcAutoCompletePrefsChanged;
         MGSFragariaPrefsShowPageGuideAtColumn: @(80),
         MGSFragariaPrefsAutocompleteAfterDelay: @(1.0),
         MGSFragariaPrefsTextFont: ARCHIVED_OBJECT([NSFont fontWithName:@"Menlo" size:11]),
-        MGSFragariaPrefsShowFullPathInWindowTitle: @(YES),
         MGSFragariaPrefsShowLineNumberGutter: @(YES),
         MGSFragariaPrefsSyntaxColourNewDocuments: @(YES),
         MGSFragariaPrefsLineWrapNewDocuments: @(YES),
@@ -161,18 +159,11 @@ static char kcAutoCompletePrefsChanged;
         MGSFragariaPrefsColourMultiLineStrings: @(NO),
         MGSFragariaPrefsAutocompleteSuggestAutomatically: @(NO),
         MGSFragariaPrefsAutocompleteIncludeStandardWords: @(NO),
-        MGSFragariaPrefsAutoSpellCheck: @(NO),
-        MGSFragariaPrefsAutoGrammarCheck: @(NO),
-        MGSFragariaPrefsSmartInsertDelete: @(NO),
-        MGSFragariaPrefsAutomaticLinkDetection: @(YES),
-        MGSFragariaPrefsAutomaticQuoteSubstitution: @(NO),
         MGSFragariaPrefsUseTabStops: @(YES),
         MGSFragariaPrefsHighlightCurrentLine: @(NO),
-        MGSFragariaPrefsSpacesPerTabEntabDetab: @(4),
         MGSFragariaPrefsAutomaticallyIndentBraces: @(YES),
         MGSFragariaPrefsAutoInsertAClosingParenthesis: @(NO),
-        MGSFragariaPrefsAutoInsertAClosingBrace: @(NO),
-        MGSFragariaPrefsSyntaxColouringPopUpString: @"Standard"
+        MGSFragariaPrefsAutoInsertAClosingBrace: @(NO)
     };
 }
 
@@ -230,8 +221,6 @@ static char kcAutoCompletePrefsChanged;
     [self observeDefault:MGSFragariaPrefsTextColourWell context:&kcTextColorChanged];
     
     [self observeDefaults:@[MGSFragariaPrefsShowPageGuide, MGSFragariaPrefsShowPageGuideAtColumn] context:&kcPageGuideChanged];
-    
-    [self observeDefaults:@[MGSFragariaPrefsAutoSpellCheck, MGSFragariaPrefsAutomaticLinkDetection, MGSFragariaPrefsAutoGrammarCheck, MGSFragariaPrefsSmartInsertDelete] context:&kcAutoSomethingChanged];
     
     [self observeDefaults:@[MGSFragariaPrefsHighlightCurrentLine, MGSFragariaPrefsHighlightLineColourWell] context:&kcLineHighlightingChanged];
     
@@ -311,12 +300,6 @@ static char kcAutoCompletePrefsChanged;
     else if (context == &kcFragariaTabWidthChanged)
     {
         self.fragaria.tabWidth = [defaults integerForKey:MGSFragariaPrefsTabWidth];
-    }
-    else if (context == &kcAutoSomethingChanged)
-    {
-        self.fragaria.continuousSpellCheckingEnabled = [defaults integerForKey:MGSFragariaPrefsAutoSpellCheck];
-        self.fragaria.grammarCheckingEnabled = [defaults integerForKey:MGSFragariaPrefsAutoGrammarCheck];
-        self.fragaria.smartInsertDeleteEnabled = [defaults integerForKey:MGSFragariaPrefsSmartInsertDelete];
     }
     else if (context == &kcShowMatchingBracesChanged)
     {

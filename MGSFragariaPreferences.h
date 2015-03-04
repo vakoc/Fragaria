@@ -43,8 +43,8 @@ extern NSString * const MGSFragariaPrefsColourKeywords;
 extern NSString * const MGSFragariaPrefsColourAutocomplete;
 extern NSString * const MGSFragariaPrefsColourVariables;
 extern NSString * const MGSFragariaPrefsColourStrings;	
-extern NSString * const MGSFragariaPrefsColourAttributes;	
-extern NSString * const MGSFragariaPrefsShowFullPathInWindowTitle;
+extern NSString * const MGSFragariaPrefsColourAttributes;
+
 extern NSString * const MGSFragariaPrefsShowLineNumberGutter;
 extern NSString * const MGSFragariaPrefsSyntaxColourNewDocuments;            // Despite the name, this never affected only new documents, but also the current document.
 extern NSString * const MGSFragariaPrefsLineWrapNewDocuments;                // Desptie the name, this never affected only new documents, but also the current document.
@@ -56,11 +56,6 @@ extern NSString * const MGSFragariaPrefsIndentWithSpaces;
 extern NSString * const MGSFragariaPrefsColourMultiLineStrings;
 extern NSString * const MGSFragariaPrefsAutocompleteSuggestAutomatically;
 extern NSString * const MGSFragariaPrefsAutocompleteIncludeStandardWords;
-extern NSString * const MGSFragariaPrefsAutoSpellCheck;
-extern NSString * const MGSFragariaPrefsAutoGrammarCheck;
-extern NSString * const MGSFragariaPrefsSmartInsertDelete;
-extern NSString * const MGSFragariaPrefsAutomaticLinkDetection;
-extern NSString * const MGSFragariaPrefsAutomaticQuoteSubstitution;
 extern NSString * const MGSFragariaPrefsUseTabStops;
 extern NSString * const MGSFragariaPrefsHighlightCurrentLine;
 extern NSString * const MGSFragariaPrefsAutomaticallyIndentBraces;
@@ -72,8 +67,7 @@ extern NSString * const MGSFragariaPrefsShowPageGuide;
 extern NSString * const MGSFragariaPrefsGutterWidth;
 extern NSString * const MGSFragariaPrefsTabWidth;
 extern NSString * const MGSFragariaPrefsIndentWidth;
-extern NSString * const MGSFragariaPrefsShowPageGuideAtColumn;	
-extern NSString * const MGSFragariaPrefsSpacesPerTabEntabDetab;
+extern NSString * const MGSFragariaPrefsShowPageGuideAtColumn;
 
 // float
 extern NSString * const MGSFragariaPrefsAutocompleteAfterDelay;	
@@ -81,9 +75,6 @@ extern NSString * const MGSFragariaPrefsAutocompleteAfterDelay;
 // font data
 // [NSArchiver archivedDataWithRootObject:[NSFont fontWithName:@"Menlo" size:11]]
 extern NSString * const MGSFragariaPrefsTextFont;
-
-// string
-extern NSString * const MGSFragariaPrefsSyntaxColouringPopUpString;
 
 
 #import "MGSFragariaPrefsViewController.h"

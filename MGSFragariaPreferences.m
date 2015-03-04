@@ -37,7 +37,6 @@ NSString * const MGSFragariaPrefsColourAutocomplete = @"FragariaColourAutocomple
 NSString * const MGSFragariaPrefsColourVariables = @"FragariaColourVariables";
 NSString * const MGSFragariaPrefsColourStrings = @"FragariaColourStrings";
 NSString * const MGSFragariaPrefsColourAttributes = @"FragariaColourAttributes";
-NSString * const MGSFragariaPrefsShowFullPathInWindowTitle = @"FragariaShowFullPathInWindowTitle";
 NSString * const MGSFragariaPrefsShowLineNumberGutter = @"FragariaShowLineNumberGutter";
 NSString * const MGSFragariaPrefsSyntaxColourNewDocuments = @"FragariaSyntaxColourNewDocuments";
 NSString * const MGSFragariaPrefsLineWrapNewDocuments = @"FragariaLineWrapNewDocuments";
@@ -49,11 +48,6 @@ NSString * const MGSFragariaPrefsIndentWithSpaces = @"FragariaIndentWithSpaces";
 NSString * const MGSFragariaPrefsColourMultiLineStrings = @"FragariaColourMultiLineStrings";
 NSString * const MGSFragariaPrefsAutocompleteSuggestAutomatically = @"FragariaAutocompleteSuggestAutomatically";
 NSString * const MGSFragariaPrefsAutocompleteIncludeStandardWords = @"FragariaAutocompleteIncludeStandardWords";
-NSString * const MGSFragariaPrefsAutoSpellCheck = @"FragariaAutoSpellCheck";
-NSString * const MGSFragariaPrefsAutoGrammarCheck = @"FragariaAutoGrammarCheck";
-NSString * const MGSFragariaPrefsSmartInsertDelete = @"FragariaSmartInsertDelete";
-NSString * const MGSFragariaPrefsAutomaticLinkDetection = @"FragariaAutomaticLinkDetection";
-NSString * const MGSFragariaPrefsAutomaticQuoteSubstitution = @"FragariaAutomaticQuoteSubstitution";
 NSString * const MGSFragariaPrefsUseTabStops = @"FragariaUseTabStops";
 NSString * const MGSFragariaPrefsHighlightCurrentLine = @"FragariaHighlightCurrentLine";
 NSString * const MGSFragariaPrefsAutomaticallyIndentBraces = @"FragariaAutomaticallyIndentBraces";
@@ -66,7 +60,6 @@ NSString * const MGSFragariaPrefsGutterWidth = @"FragariaGutterWidth";
 NSString * const MGSFragariaPrefsTabWidth = @"FragariaTabWidth";
 NSString * const MGSFragariaPrefsIndentWidth = @"FragariaIndentWidth";
 NSString * const MGSFragariaPrefsShowPageGuideAtColumn = @"FragariaShowPageGuideAtColumn";
-NSString * const MGSFragariaPrefsSpacesPerTabEntabDetab = @"FragariaSpacesPerTabEntabDetab";
 
 // float
 NSString * const MGSFragariaPrefsAutocompleteAfterDelay = @"FragariaAutocompleteAfterDelay";
@@ -74,9 +67,6 @@ NSString * const MGSFragariaPrefsAutocompleteAfterDelay = @"FragariaAutocomplete
 // font
 // persisted as [NSArchiver archivedDataWithRootObject:[NSFont fontWithName:@"Menlo" size:11]]
 NSString * const MGSFragariaPrefsTextFont = @"FragariaTextFont";
-
-// string
-NSString * const MGSFragariaPrefsSyntaxColouringPopUpString = @"FragariaSyntaxColouringPopUpString";
 
 
 
