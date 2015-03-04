@@ -334,9 +334,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setAutomaticDataDetectionEnabled:YES];
     [self setAutomaticTextReplacementEnabled:YES];
 
-    NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:[self frame] options:(NSTrackingMouseEnteredAndExited | NSTrackingActiveWhenFirstResponder) owner:self userInfo:nil];
-    [self addTrackingArea:trackingArea];
-
     [self configurePageGuide];
 }
 
