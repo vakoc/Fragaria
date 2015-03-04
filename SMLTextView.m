@@ -314,15 +314,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
     [self setAutoresizingMask:NSViewWidthSizable];
     [self setAllowsUndo:YES];
-    if ([self respondsToSelector:@selector(setUsesFindBar:)])
-    {
-        [self setUsesFindBar:YES];
-        [self setIncrementalSearchingEnabled:NO];
-    }
-    else
-    {
-        [self setUsesFindPanel:YES];
-    }
+
+    [self setUsesFindBar:YES];
+    [self setIncrementalSearchingEnabled:NO];
 
     [self setAllowsDocumentBackgroundColorChange:NO];
     [self setRichText:NO];
