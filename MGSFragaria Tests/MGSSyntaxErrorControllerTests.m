@@ -12,53 +12,62 @@
 #import "MGSSyntaxErrorController.h"
 #import "SMLSyntaxError.h"
 
+
+/**
+ *  Performs some basic testing on MGSSyntaxErrorController.
+ **/
 @interface MGSSyntaxErrorControllerTests : XCTestCase
 
 @property (nonatomic,strong) MGSSyntaxErrorController *errorController;
 
 @end
 
+
 @implementation MGSSyntaxErrorControllerTests
 
+/*
+ *  - setup
+ *    Provide sample data for self.errorController.
+ */
 - (void)setUp
 {
     [super setUp];
 
     NSArray *tmp = @[
                      [SMLSyntaxError errorWithDictionary:@{
-                                                           @"description" : @"Sample error 1.",
+                                                           @"errorDescription" : @"Sample error 1.",
                                                            @"line" : @(4),
                                                            @"hidden" : @(NO),
                                                            @"warningLevel" : @(kMGSErrorCategoryAccess)
                                                            }],
 
                      [SMLSyntaxError errorWithDictionary:@{
-                                                           @"description" : @"Sample error 2.",
+                                                           @"errorDescription" : @"Sample error 2.",
                                                            @"line" : @(4),
                                                            @"hidden" : @(YES),
                                                            @"warningLevel" : @(kMGSErrorCategoryPanic)
                                                            }],
                      [SMLSyntaxError errorWithDictionary:@{
-                                                           @"description" : @"Sample error 3.",
+                                                           @"errorDescription" : @"Sample error 3.",
                                                            @"line" : @(37),
                                                            @"hidden" : @(NO),
                                                            @"warningLevel" : @(kMGSErrorCategoryDocument)
                                                            }],
                      [SMLSyntaxError errorWithDictionary:@{
-                                                           @"description" : @"Sample error 4.",
+                                                           @"errorDescription" : @"Sample error 4.",
                                                            @"line" : @(37),
                                                            @"hidden" : @(NO),
                                                            @"warningLevel" : @(kMGSErrorCategoryDocument)
                                                            }],
                      [NSString stringWithFormat:@"%@", @"I don't belong here."],
                      [SMLSyntaxError errorWithDictionary:@{
-                                                           @"description" : @"Sample error 5.",
+                                                           @"errorDescription" : @"Sample error 5.",
                                                            @"line" : @(189),
                                                            @"hidden" : @(NO),
                                                            @"warningLevel" : @(kMGSErrorCategoryError)
                                                            }],
                      [SMLSyntaxError errorWithDictionary:@{
-                                                           @"description" : @"Sample error 6.",
+                                                           @"errorDescription" : @"Sample error 6.",
                                                            @"line" : @(212),
                                                            @"hidden" : @(YES),
                                                            @"warningLevel" : @(kMGSErrorCategoryPanic)
@@ -68,11 +77,19 @@
     [self.errorController setSyntaxErrors:tmp];
 }
 
+
+/*
+ *  - tearDown
+ */
 - (void)tearDown
 {
     [super tearDown];
 }
 
+
+/*
+ *  - test_linesWithErrors
+ */
 - (void)test_linesWithErrors
 {
     NSArray *result = [[self.errorController linesWithErrors] sortedArrayUsingSelector:@selector(compare:)];
@@ -82,7 +99,9 @@
 }
 
 
-
+/*
+ *  - test_errorCountForLine
+ */
 - (void)test_errorCountForLine
 {
     NSInteger result4 = [self.errorController errorCountForLine:4];
@@ -94,6 +113,9 @@
 }
 
 
+/*
+ *  - test_errorForLine
+ */
 - (void)test_errorForLine
 {
     // We should get kMGSErrorAccess, because the other error is hidden.
@@ -107,6 +129,9 @@
 }
 
 
+/*
+ *  - test_errorsForLine
+ */
 - (void)test_errorsForLine
 {
     SMLSyntaxError *testContent = [[self.errorController errorsForLine:4] objectAtIndex:0];
@@ -116,6 +141,9 @@
 }
 
 
+/*
+ *  - test_nonHiddenErrors
+ */
 - (void)test_nonHiddenErrors
 {
     NSInteger testQuantity = [[self.errorController nonHiddenErrors] count];
@@ -124,6 +152,9 @@
 }
 
 
+/*
+ *  - test_errorDecorations
+ */
 - (void)test_errorDecorations
 {
     NSDictionary *resultDict = [self.errorController errorDecorations];
@@ -137,6 +168,9 @@
 }
 
 
+/*
+ *  - test_errorDecorationsHavingSize
+ */
 - (void)test_errorDecorationsHavingSize
 {
     NSDictionary *resultDict = [self.errorController errorDecorationsHavingSize:NSMakeSize(123.0, 119.4)];
