@@ -30,6 +30,7 @@ static char kcTextColorChanged;
 static char kcShowMatchingBracesChanged;
 static char kcAutoInsertionPrefsChanged;
 static char kcIndentingPrefsChanged;
+static char kcAutoCompletePrefsChanged;
 
 
 @interface MGSPreferencesObserver ()
@@ -240,6 +241,8 @@ static char kcIndentingPrefsChanged;
     [self observeDefaults:@[MGSFragariaPrefsAutoInsertAClosingBrace, MGSFragariaPrefsAutoInsertAClosingParenthesis] context:&kcAutoInsertionPrefsChanged];
     
     [self observeDefaults:@[MGSFragariaPrefsIndentWithSpaces, MGSFragariaPrefsUseTabStops, MGSFragariaPrefsIndentNewLinesAutomatically, MGSFragariaPrefsAutomaticallyIndentBraces] context:&kcIndentingPrefsChanged];
+    
+    [self observeDefaults:@[MGSFragariaPrefsAutocompleteSuggestAutomatically, MGSFragariaPrefsAutocompleteAfterDelay] context:&kcAutoCompletePrefsChanged];
 
 	// SMLSyntaxColouring
 	[self observeDefaults:@[
@@ -356,6 +359,11 @@ static char kcIndentingPrefsChanged;
     {
         self.fragaria.colourMultiLineStrings = [defaults boolForKey:MGSFragariaPrefsColourMultiLineStrings];
         self.fragaria.colourOnlyUntilEndOfLine = [defaults boolForKey:MGSFragariaPrefsOnlyColourTillTheEndOfLine];
+    }
+    else if (context == &kcAutoCompletePrefsChanged)
+    {
+        self.fragaria.autoCompleteEnabled = [defaults boolForKey:MGSFragariaPrefsAutocompleteSuggestAutomatically];
+        self.fragaria.autoCompleteDelay = [defaults doubleForKey:MGSFragariaPrefsAutocompleteAfterDelay];
     }
     else if (context == &kcColoursChanged)
     {

@@ -58,6 +58,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic showsPageGuide, smartInsertDeleteEnabled, tabWidth, textColor;
 @dynamic showsMatchingBraces, insertClosingParenthesisAutomatically, insertClosingBraceAutomatically;
 @dynamic indentWithSpaces, indentBracesAutomatically, indentNewLinesAutomatically, useTabStops;
+@dynamic autoCompleteDelay, autoCompleteEnabled;
 
 
 // SMLSyntaxColouring dynamic properties:

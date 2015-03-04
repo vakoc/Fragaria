@@ -85,7 +85,6 @@
 		D034C81D1A9984A1003D3A41 /* PrefsTextEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034C81B1A9984A1003D3A41 /* PrefsTextEditingViewController.m */; };
 		D08359DB1A9F0446001B7B50 /* FeaturesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08359D91A9F0446001B7B50 /* FeaturesWindowController.m */; };
 		D08359DC1A9F0446001B7B50 /* Features.xib in Resources */ = {isa = PBXBuildFile; fileRef = D08359DA1A9F0446001B7B50 /* Features.xib */; };
-		D08359E01AA0875E001B7B50 /* MGSPreferencesObserver.h in Headers */ = {isa = PBXBuildFile; fileRef = D08359DD1AA0875E001B7B50 /* MGSPreferencesObserver.h */; };
 		D08359E11AA0875E001B7B50 /* MGSPreferencesObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = D08359DE1AA0875E001B7B50 /* MGSPreferencesObserver.m */; };
 		D0AB50F01A91CDC200A6DF58 /* SMLSyntaxErrorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AB50EF1A91CDC200A6DF58 /* SMLSyntaxErrorTests.m */; };
 		D0C145C71A85F2C900DDE90A /* SMLTextView+MGSDragging.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C145C31A85E1FD00DDE90A /* SMLTextView+MGSDragging.m */; };
@@ -672,7 +671,6 @@
 				AB257FE2129B1CE300A3FF76 /* MGSFragariaPreferences.h in Headers */,
 				ABE25D0A1635CA7C00F23718 /* MGSFragariaPrefsViewController.h in Headers */,
 				ABC578ED1603D7ED0040B3FB /* MGSFragariaTextEditingPrefsViewController.h in Headers */,
-				D08359E01AA0875E001B7B50 /* MGSPreferencesObserver.h in Headers */,
 				AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */,
 				AB257FE4129B1CE300A3FF76 /* MGSTextMenuController.h in Headers */,
 				AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */,
