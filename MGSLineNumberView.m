@@ -70,8 +70,15 @@
         _markerImagesSize = NSMakeSize(0,0);
         _markerImages = [[NSMutableDictionary alloc] init];
         _fragaria = fragaria;
+        
         _drawsLineNumbers = YES;
-        [self setBackgroundColor:[NSColor colorWithCalibratedWhite:0.94f alpha:1.0f]];
+        _backgroundColor = [NSColor colorWithCalibratedWhite:0.94 alpha:1.0];
+        _minimumWidth = 40;
+        _font = [NSFont fontWithName:@"Menlo" size:11];
+        _textColor = [NSColor colorWithCalibratedWhite:0.42 alpha:1.0];
+        _alternateTextColor = [NSColor whiteColor];
+        _markerColor = [NSColor colorWithCalibratedRed:1.0 green:0.78 blue:0.98 alpha:1.0];
+        
         [self setClientView:[aScrollView documentView]];
     }
     return self;
@@ -81,45 +88,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-
-#pragma mark - Default property values
-
-
-- (NSFont *)defaultFont
-{
-    return [NSFont controlContentFontOfSize:0];
-}
-
-
-- (NSColor *)defaultTextColor
-{
-    return [NSColor blackColor];
-}
-
-
-- (NSColor *)defaultAlternateTextColor
-{
-    return [NSColor whiteColor];
-}
-
-
-- (NSColor *)defaultErrorTextColor
-{
-    return [NSColor blackColor];
-}
-
-
-- (NSColor *)defaultMarkerColor
-{
-    return [NSColor colorWithCalibratedRed:254.0/255.0 green:199.0/255.0 blue:249.0/255.0 alpha:1];
-}
-
-
-- (NSColor *)defaultBackgroundColor
-{
-    return [NSColor colorWithCalibratedWhite:0.94f alpha:1.0f];
 }
 
 
@@ -183,12 +151,6 @@
 {
     _markerColor = markerColor;
     [self setNeedsDisplay:YES];
-}
-
-
-- (NSColor *)markerColor
-{
-    return _markerColor ? _markerColor : [self defaultMarkerColor];
 }
 
 
@@ -372,43 +334,15 @@
 
 - (NSDictionary *)textAttributes
 {
-    NSFont  *font;
-    NSColor *color;
-    
-    font = [self font];    
-    if (font == nil)
-    {
-        font = [self defaultFont];
-    }
-    
-    color = [self textColor];
-    if (color == nil)
-    {
-        color = [self defaultTextColor];
-    }
-    
-    return [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, nil];
+    return @{           NSFontAttributeName: self.font,
+             NSForegroundColorAttributeName: self.textColor};
 }
 
 
 - (NSDictionary *)markerTextAttributes
 {
-    NSFont  *font;
-    NSColor *color;
-    
-    font = [self font];    
-    if (font == nil)
-    {
-        font = [self defaultFont];
-    }
-    
-    color = [self alternateTextColor];
-    if (color == nil)
-    {
-        color = [self defaultAlternateTextColor];
-    }
-    
-    return [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, color, NSForegroundColorAttributeName, nil];
+    return @{           NSFontAttributeName: self.font,
+             NSForegroundColorAttributeName: self.alternateTextColor};
 }
 
 
@@ -510,11 +444,7 @@
     view = [self clientView];
     visibleRect = [[[self scrollView] contentView] bounds];
 
-	if (_backgroundColor != nil) {
-		[_backgroundColor set];
-    } else {
-        [[self defaultBackgroundColor] set];
-    }
+	[self.backgroundColor set];
     NSRectFill(bounds);
     
     [[NSColor lightGrayColor] set];

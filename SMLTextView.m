@@ -295,10 +295,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         
         [self setDefaults];
         
-        // set initial line wrapping
-        _lineWrap = YES;
         isDragging = NO;
-        [self updateLineWrap];
     }
     return self;
 }
@@ -309,7 +306,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (void)setDefaults
 {
-
     [self setVerticallyResizable:YES];
     [self setMaxSize:NSMakeSize(FLT_MAX, FLT_MAX)];
     [self setAutoresizingMask:NSViewWidthSizable];
@@ -327,15 +323,33 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     [self setAutomaticQuoteSubstitutionEnabled:NO];
     [self setAutomaticDataDetectionEnabled:YES];
     [self setAutomaticTextReplacementEnabled:YES];
+    [self setAutomaticLinkDetectionEnabled:YES];
+    [self setContinuousSpellCheckingEnabled:NO];
+    [self setGrammarCheckingEnabled:NO];
 
+    _lineWrap = YES;
+    [self updateLineWrap];
+    
+    self.currentLineHighlightColour = [NSColor colorWithCalibratedRed:0.96 green:0.96 blue:0.71 alpha:1.0];
+    self.indentWidth = 4;
+    self.tabWidth = 4;
+    self.pageGuideColumn = 80;
+    self.autoCompleteDelay = 1.0;
+    self.textFont = [NSFont fontWithName:@"Menlo" size:11];
+    self.indentNewLinesAutomatically = YES;
+    self.showsMatchingBraces = YES;
+    self.useTabStops = YES;
+    self.indentBracesAutomatically = YES;
+    
     [self configurePageGuide];
 }
 
 
 #pragma mark - Menu Item Validation
 
+
 /*
- * - validateMenuItems
+ * - validateMenuItem
  */
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {

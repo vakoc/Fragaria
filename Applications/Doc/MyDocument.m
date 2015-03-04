@@ -49,7 +49,7 @@
     [super windowControllerDidLoadNib:aController];
 
 	// create an instance
-	fragaria = [[MGSFragaria alloc] initWithView:self.editView];
+	fragaria = [[MGSFragaria alloc] initWithView:self.editView useStandardPreferences:NO];
 	
     fragaria.textViewDelegate = self;
 	

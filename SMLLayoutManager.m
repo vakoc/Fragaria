@@ -50,8 +50,8 @@ typedef enum : NSUInteger {
 {
     self = [super init];
 	if (self) {
-        _invisibleCharactersFont = [NSFont userFontOfSize:0];
-        _invisibleCharactersColour = [NSColor blackColor];
+        _invisibleCharactersFont = [NSFont fontWithName:@"Menlo" size:11];
+        _invisibleCharactersColour = [NSColor orangeColor];
         
         [self resetAttributesAndGlyphs];
         

@@ -552,7 +552,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [contentView addSubview:self.scrollView];
     
     // update the gutter view
-    [self.scrollView setRulersVisible:[self showsLineNumbers]];
+    self.showsGutter = YES;
     
     _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
     self.syntaxErrorController.lineNumberView = self.gutterView;

@@ -87,6 +87,8 @@ static char kcColoursChanged;
         _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] init];
 
         // configure colouring
+        _syntaxColoured = YES;
+        _coloursOnlyUntilEndOfLine = YES;
         [self setColourDefaults];
         [self rebuildAttributesCache];
 
@@ -111,7 +113,7 @@ static char kcColoursChanged;
     _colourForAttributes = [NSColor colorWithCalibratedRed:0.50f green:0.5f blue:0.2f alpha:1.0f];
     _colourForNumbers = [NSColor colorWithCalibratedRed:0.031f green:0.0f blue:0.855f alpha:1.0f];
     _coloursAttributes = _coloursCommands = _coloursInstructions = YES;
-    _coloursInstructions = _coloursKeywords = _coloursNumbers = YES;
+    _coloursComments = _coloursKeywords = _coloursNumbers = YES;
     _coloursStrings = _coloursVariables = YES;
     _coloursAutocomplete = NO;
 }
