@@ -172,67 +172,50 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
         _secondString = @"";
     }
     
+    _singleLineComments = [NSMutableArray arrayWithCapacity:2];
+    
     // first single line comment
     value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionFirstSingleLineComment];
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _firstSingleLineComment = value;
-    } else {
-        _firstSingleLineComment = @"";
+        if (![value isEqual:@""])
+            [_singleLineComments addObject:value];
     }
-    
-    _singleLineComments = [NSMutableArray arrayWithCapacity:2];
-    [_singleLineComments addObject:self.firstSingleLineComment];
     
     // second single line comment
     value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionSecondSingleLineComment];
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _secondSingleLineComment = value;
-    } else {
-        _secondSingleLineComment = @"";
-    }
-    [_singleLineComments addObject:self.secondSingleLineComment];
-    
-    // begin first multi line comment
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginFirstMultiLineComment];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _beginFirstMultiLineComment = value;
-    } else {
-        _beginFirstMultiLineComment = @"";
-    }
-    
-    // end first multi line comment
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndFirstMultiLineComment];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _endFirstMultiLineComment = value;
-    } else {
-        _endFirstMultiLineComment = @"";
+        if (![value isEqual:@""])
+            [_singleLineComments addObject:value];
     }
     
     _multiLineComments = [NSMutableArray arrayWithCapacity:2];
-    [_multiLineComments addObject:[NSArray arrayWithObjects:self.beginFirstMultiLineComment, self.endFirstMultiLineComment, nil]];
+    id pairedValue;
     
-    // begin second multi line comment
+    // first multi line comment
+    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginFirstMultiLineComment];
+    if (value) {
+        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
+        if (![value isEqual:@""]) {
+            pairedValue = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndFirstMultiLineComment];
+            NSAssert([pairedValue isKindOfClass:[NSString class]], @"NSString expected");
+            if (![pairedValue isEqual:@""])
+                [_multiLineComments addObject:@[value, pairedValue]];
+        }
+    }
+    
+    // second multi line comment
     value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginSecondMultiLineComment];
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _beginSecondMultiLineComment = value;
-    } else {
-        _beginSecondMultiLineComment = @"";
+        if (![value isEqual:@""]) {
+            pairedValue = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndSecondMultiLineComment];
+            NSAssert([pairedValue isKindOfClass:[NSString class]], @"NSString expected");
+            if (![pairedValue isEqual:@""])
+                [_multiLineComments addObject:@[value, pairedValue]];
+        }
     }
-    
-    // end second multi line comment
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndSecondMultiLineComment];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _endSecondMultiLineComment = value;
-    } else {
-        _endSecondMultiLineComment = @"";
-    }
-    [self.multiLineComments addObject:[NSArray arrayWithObjects:self.beginSecondMultiLineComment, self.endSecondMultiLineComment, nil]];
     
     // function definition
     value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionFunctionDefinition];
@@ -297,9 +280,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 
 
 - (void)setDefaults {
-    // letter character set
-    _letterCharacterSet = [NSCharacterSet letterCharacterSet];
-    
     // name character set
     NSMutableCharacterSet *temporaryCharacterSet = [[NSCharacterSet letterCharacterSet] mutableCopy];
     [temporaryCharacterSet addCharactersInString:@"_"];

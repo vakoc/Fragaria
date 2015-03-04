@@ -827,7 +827,7 @@ static char kcColoursChanged;
         [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.beginVariableCharacterSet intoString:nil];
         colourStartLocation = [rangeScanner scanLocation];
         if (colourStartLocation + 1 < rangeStringLength) {
-            if ([self.syntaxDefinition.firstSingleLineComment isEqualToString:@"%"] && [rangeString characterAtIndex:colourStartLocation + 1] == '%') { // To avoid a problem in LaTex with \%
+            if ([[self.syntaxDefinition.singleLineComments firstObject] isEqual:@"%"] && [rangeString characterAtIndex:colourStartLocation + 1] == '%') { // To avoid a problem in LaTex with \%
                 if ([rangeScanner scanLocation] < rangeStringLength) {
                     [rangeScanner mgs_setScanLocation:colourStartLocation + 1];
                 }
@@ -1102,7 +1102,7 @@ static char kcColoursChanged;
                     
                     // HTML specific
                     if ([endMultiLineComment isEqualToString:@"-->"]) {
-                        [documentScanner scanUpToCharactersFromSet:self.syntaxDefinition.letterCharacterSet intoString:nil]; // Search for the first letter after -->
+                        [documentScanner scanUpToCharactersFromSet:[NSCharacterSet letterCharacterSet] intoString:nil]; // Search for the first letter after -->
                         if ([documentScanner scanLocation] + 6 < documentStringLength) {// Check if there's actually room for a </script>
                             if ([documentString rangeOfString:@"</script>" options:NSCaseInsensitiveSearch range:NSMakeRange([documentScanner scanLocation] - 2, 9)].location != NSNotFound || [documentString rangeOfString:@"</style>" options:NSCaseInsensitiveSearch range:NSMakeRange([documentScanner scanLocation] - 2, 8)].location != NSNotFound) {
                                 beginLocationInMultiLine = [documentScanner scanLocation];

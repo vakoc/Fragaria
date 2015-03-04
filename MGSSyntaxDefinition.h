@@ -31,6 +31,14 @@
 @property (readonly) NSString *secondString;
 /**  Primary string delimiter. */
 @property (readonly) NSString *firstString;
+/** A regex pattern for identifying strings. */
+@property (readonly) NSString *firstStringPattern;
+/** Another regex pattern for identifying strings. */
+@property (readonly) NSString *secondStringPattern;
+/** A regex pattern for identifying multiline strings. */
+@property (readonly) NSString *firstMultilineStringPattern;
+/** Another regex pattern for identifying multiline strings. */
+@property (readonly) NSString *secondMultilineStringPattern;
 
 /**  Delimiter for the start of a command. */
 @property (readonly) NSString *beginCommand;
@@ -68,27 +76,13 @@
 /**  Characters that may terminate a variable. */
 @property (readonly) NSCharacterSet *endVariableCharacterSet;
 
-/** Primary starting delimiter for single line comments.*/
-@property (readonly) NSString *firstSingleLineComment;
-/** Secondary starting delimiter for single line comments. */
-@property (readonly) NSString *secondSingleLineComment;
 /** An array of strings that should mark the beginning of a single-line comment.
  *  This kind of comments extends from the characters that mark its start
  *  to the end of its line. */
 @property (readonly) NSMutableArray *singleLineComments;
-/** An array of strings that should delimit a multiline comment. Even items
- *  in the array are opening strings, odd items are closing strings. */
+/** An array of arrays containing an opening and a closing string for each
+ *  multiline comment kind. */
 @property (readonly) NSMutableArray *multiLineComments;
-/**  Primary starting delimiter for multiline comments. */
-@property (readonly) NSString *beginFirstMultiLineComment;
-/**  Primary ending delimiter for multiline comments. */
-@property (readonly) NSString*endFirstMultiLineComment;
-/**  Secondary starting delimiter for multiline comments. */
-@property (readonly) NSString*beginSecondMultiLineComment;
-/**  Secondary ending delimiter for multiline comments. */
-@property (readonly) NSString*endSecondMultiLineComment;
-/**  Characters that constitute letters. */
-@property (readonly) NSCharacterSet *letterCharacterSet;
 
 /** Characters to be coloured as attributes. Fragaria colours as "attributes"
  *  structures that consist of one or more alphanumeric characters followed by
@@ -104,15 +98,6 @@
 /** A character that will not be coloured as a number - even if included in
  *  numberCharacterSet - if it is the last character of the number. */
 @property (readonly) unichar decimalPointCharacter;
-
-/** A regex pattern for identifying strings. */
-@property (readonly) NSString *firstStringPattern;
-/** Another regex pattern for identifying strings. */
-@property (readonly) NSString *secondStringPattern;
-/** A regex pattern for identifying multiline strings. */
-@property (readonly) NSString *firstMultilineStringPattern;
-/** Another regex pattern for identifying multiline strings. */
-@property (readonly) NSString *secondMultilineStringPattern;
 
 
 /** A dictionary which describes this syntax definition. This method returns

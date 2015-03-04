@@ -39,7 +39,7 @@
         }
     } else if (action == @selector(commentOrUncomment:) ) {
         // Comment Or Uncomment
-        if ([[[self.syntaxColouring syntaxDefinition] firstSingleLineComment] isEqualToString:@""]) {
+        if ([self.syntaxColouring.syntaxDefinition.singleLineComments count] == 0) {
             enableItem = NO;
         }
     } else {
@@ -745,7 +745,7 @@
 - (IBAction)commentOrUncomment:(id)sender
 {
     NSString *completeString = [self string];
-    NSString *commentString = [[self.syntaxColouring syntaxDefinition] firstSingleLineComment];
+    NSString *commentString = self.syntaxColouring.syntaxDefinition.singleLineComments[0];
     NSUInteger commentStringLength = [commentString length];
     if ([commentString isEqualToString:@""] || [completeString length] < commentStringLength) {
         NSBeep();

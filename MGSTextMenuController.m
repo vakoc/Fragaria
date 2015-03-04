@@ -131,7 +131,7 @@ static id sharedInstance = nil;
 	}
     // Comment Or Uncomment
     else if (action == @selector(commentOrUncommentAction:) ) {
-		if ([[textView.syntaxColouring.syntaxDefinition firstSingleLineComment] isEqualToString:@""]) {
+		if ([textView.syntaxColouring.syntaxDefinition.singleLineComments count] == 0) {
 			enableMenuItem = NO;
 		}
 	} 
