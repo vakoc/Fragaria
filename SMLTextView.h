@@ -87,9 +87,6 @@
 
 /** Specifies whether or not to show the page guide. */
 @property (nonatomic, assign) BOOL showsPageGuide;
-
-/** Indicates the number of spaces when performing entab or detab operations. */
-@property (nonatomic, assign) NSUInteger spacesPerEntabDetab;
  
 /** Indicates the number of spaces per tab character. **/
 @property (nonatomic, assign) NSInteger tabWidth;

@@ -86,7 +86,7 @@
 	[NSApp endSheet:[wnd attachedSheet]];
 	[[wnd attachedSheet] close];
 	
-    [_completionTarget performEntab];
+    [_completionTarget performEntabWithNumberOfSpaces:[spacesTextFieldEntabWindow integerValue]];
     _completionTarget = nil;
 }
 
@@ -101,9 +101,10 @@
     [NSApp endSheet:[wnd attachedSheet]];
     [[wnd attachedSheet] close];
 	
-	[_completionTarget performDetab];
+	[_completionTarget performDetabWithNumberOfSpaces:[spacesTextFieldDetabWindow integerValue]];
     _completionTarget = nil;
 }
+
 
 #pragma mark -
 #pragma mark Goto 

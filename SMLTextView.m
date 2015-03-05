@@ -597,7 +597,6 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     NSMenu *menu = [super menuForEvent:theEvent];
     NSMenu *extraMenu = [self.interfaceController contextMenu];
     NSMenuItem *item, *newItem;
-    BOOL addSeparator;
     
     /* We want to add our new menu items after cut-copy-paste, but before
      * the standard NSTextView useless stuff (spelling checker, character

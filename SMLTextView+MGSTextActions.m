@@ -398,13 +398,12 @@
  - performEntab
  
  */
-- (void)performEntab
+- (void)performEntabWithNumberOfSpaces:(NSInteger)numberOfSpaces
 {
     NSRange selectedRange;
     NSRange savedRange = [self selectedRange];
     
     NSArray *array = [self selectedRanges];
-    NSInteger numberOfSpaces = self.spacesPerEntabDetab;
     NSMutableString *completeString = [NSMutableString stringWithString:[self string]];
     NSInteger sumOfRemovedCharacters = 0;
     for (id item in array) {
@@ -464,7 +463,7 @@
  - performDetab
  
  */
-- (void)performDetab
+- (void)performDetabWithNumberOfSpaces:(NSInteger)numberOfSpaces
 {
     NSInteger i;
     NSRange selectedRange;
@@ -472,7 +471,6 @@
     
     NSArray *array = [self selectedRanges];
     NSMutableString *spaces = [NSMutableString string];
-    NSInteger numberOfSpaces = self.spacesPerEntabDetab;
     for (i=0; i<numberOfSpaces; i++) {
         [spaces appendString:@" "];
     }

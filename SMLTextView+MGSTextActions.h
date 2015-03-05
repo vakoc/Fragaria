@@ -36,12 +36,12 @@
 /**
  *  Perform entab.
  **/
-- (void)performEntab;
+- (void)performEntabWithNumberOfSpaces:(NSInteger)numberOfSpaces;
 
 /**
  *  Perform detab.
  **/
-- (void)performDetab;
+- (void)performDetabWithNumberOfSpaces:(NSInteger)numberOfSpaces;
 
 /**
  *  Sender wants to shift the text left.

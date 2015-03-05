@@ -132,7 +132,6 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) BOOL showsPageGuide;                        ///< Specifies whether or not to show the page guide.
 @property (nonatomic, assign) BOOL showsWarningsInGutter;                 ///< Indicates whether or not error warnings are displayed.
 @property (nonatomic, assign) BOOL smartInsertDeleteEnabled;              ///< Specifies whether or not smart insert and delete is enabled.
-@property (nonatomic, assign) NSUInteger spacesPerEntabDetab;             ///< Indicates the number of spaces when performing entab or detab operations.
 @property (nonatomic, assign) NSUInteger startingLineNumber;              ///< Specifies the starting line number in the text view.
 @property (nonatomic, assign) NSInteger tabWidth;                         ///< Specifies the number of spaces per tab.
 @property (nonatomic, assign) NSColor *textColor;                         ///< Indicates the base (non-highlighted) text color.
