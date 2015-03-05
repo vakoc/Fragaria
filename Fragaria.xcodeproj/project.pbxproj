@@ -28,7 +28,7 @@
 		01098F1A1AA7BD0900ED4CFD /* SMLEntab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F1C1AA7BD0900ED4CFD /* SMLEntab.xib */; };
 		01098F1D1AA7BD0D00ED4CFD /* SMLDetab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F1F1AA7BD0D00ED4CFD /* SMLDetab.xib */; };
 		0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */; };
-		01493B8B1AA8B5C40012395D /* MGSContextMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01493B8A1AA8B5C40012395D /* MGSContextMenu.xib */; };
+		013A79191AA8C715008ADFA1 /* MGSContextMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 013A791B1AA8C715008ADFA1 /* MGSContextMenu.xib */; };
 		017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 017FD5861A7A992700B305FB /* MGSLineNumberView.h */; };
 		017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FD5871A7A992700B305FB /* MGSLineNumberView.m */; };
 		0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0191FA7C1A881F280099B50D /* MGSDragOperationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -171,7 +171,8 @@
 		01098F1E1AA7BD0D00ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMLDetab.xib; sourceTree = "<group>"; };
 		013278661A81614500D2DCA5 /* MGSSyntaxDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSyntaxDefinition.h; sourceTree = "<group>"; };
 		013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxDefinition.m; sourceTree = "<group>"; };
-		01493B8A1AA8B5C40012395D /* MGSContextMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MGSContextMenu.xib; sourceTree = "<group>"; };
+		013A791A1AA8C715008ADFA1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MGSContextMenu.xib; sourceTree = "<group>"; };
+		013A791C1AA8C719008ADFA1 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/MGSContextMenu.xib"; sourceTree = "<group>"; };
 		0166D9971A9FC3B20099AB81 /* SMLTextViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMLTextViewPrivate.h; sourceTree = "<group>"; };
 		017FD5861A7A992700B305FB /* MGSLineNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberView.h; sourceTree = "<group>"; };
 		017FD5871A7A992700B305FB /* MGSLineNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLineNumberView.m; sourceTree = "<group>"; };
@@ -375,7 +376,7 @@
 				01098F1F1AA7BD0D00ED4CFD /* SMLDetab.xib */,
 				01098F1C1AA7BD0900ED4CFD /* SMLEntab.xib */,
 				01098F191AA7BD0400ED4CFD /* SMLGoToLine.xib */,
-				01493B8A1AA8B5C40012395D /* MGSContextMenu.xib */,
+				013A791B1AA8C715008ADFA1 /* MGSContextMenu.xib */,
 			);
 			name = "Text Editing UI";
 			sourceTree = "<group>";
@@ -853,7 +854,7 @@
 				01AC7E721AA341AA00DF7620 /* ErrorBadges.xcassets in Resources */,
 				01098F1A1AA7BD0900ED4CFD /* SMLEntab.xib in Resources */,
 				01098F141AA7BCF800ED4CFD /* MGSPreferencesFontsAndColours.xib in Resources */,
-				01493B8B1AA8B5C40012395D /* MGSContextMenu.xib in Resources */,
+				013A79191AA8C715008ADFA1 /* MGSContextMenu.xib in Resources */,
 				01098F111AA7BCF200ED4CFD /* MGSPreferencesTextEditing.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1045,6 +1046,15 @@
 				01BEF2A31AA7E761005F11B4 /* en-GB */,
 			);
 			name = SMLDetab.xib;
+			sourceTree = "<group>";
+		};
+		013A791B1AA8C715008ADFA1 /* MGSContextMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				013A791A1AA8C715008ADFA1 /* en */,
+				013A791C1AA8C719008ADFA1 /* en-GB */,
+			);
+			name = MGSContextMenu.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
