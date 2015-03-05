@@ -41,7 +41,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @implementation MGSFragaria
 
 
-@synthesize syntaxErrorController = _syntaxErrorController;
 @synthesize autoCompleteDelegate = _autoCompleteDelegate;
 @synthesize syntaxDefinitionName = _syntaxDefinitionName;
 
@@ -534,7 +533,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [self.scrollView setDocumentView:self.textView];
     
     // create line numbers
-    self.gutterView = [[MGSLineNumberView alloc] initWithScrollView:self.scrollView fragaria:self];
+    _gutterView = [[MGSLineNumberView alloc] initWithScrollView:self.scrollView fragaria:self];
     [self.scrollView setVerticalRulerView:self.gutterView];
     [self.scrollView setHasVerticalRuler:YES];
     [self.scrollView setHasHorizontalRuler:NO];

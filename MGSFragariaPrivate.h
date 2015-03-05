@@ -9,9 +9,9 @@
 @class MGSExtraInterfaceController;
 @class MGSSyntaxErrorController;
 @class SMLSyntaxColouring;
-@class MGSLineNumberDefaultsObserver;
 @class MGSLineNumberView;
 @class MGSPreferencesObserver;
+
 
 #pragma mark - Class Extension
 
@@ -23,20 +23,16 @@
 
 
 /** The controller which manages and displays the syntax errors in Fragaria's
- * text view and gutter view. */
-@property (nonatomic, strong, readonly) MGSSyntaxErrorController *syntaxErrorController;
-
-/** The observer which manages the properties of MGSLineNumberView. Will be
- * removed in the near future. */
-@property MGSLineNumberDefaultsObserver *lineNumberDefObserv;
+ *  text view and gutter view. */
+@property (readonly) MGSSyntaxErrorController *syntaxErrorController;
 
 /** Fragaria's left ruler. Handles display of line numbers, breakpoints and
- * syntax error badges. */
-@property MGSLineNumberView *gutterView;
+ *  syntax error badges. */
+@property (readonly) MGSLineNumberView *gutterView;
 
 /** Fragaria's preferences obsever, used for supporting the default preference
- * panels.  */
-@property (strong, readonly) MGSPreferencesObserver *preferencesObserver;
+ *  panels.  */
+@property (readonly) MGSPreferencesObserver *preferencesObserver;
 
 
 @end
