@@ -181,6 +181,11 @@
 		01AC7E711AA341AA00DF7620 /* ErrorBadges.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ErrorBadges.xcassets; sourceTree = "<group>"; };
 		01BB1BF11A79AA15006C0056 /* MGSSimpleBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSSimpleBreakpointDelegate.h; path = Applications/Simple/MGSSimpleBreakpointDelegate.h; sourceTree = "<group>"; };
 		01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSSimpleBreakpointDelegate.m; path = Applications/Simple/MGSSimpleBreakpointDelegate.m; sourceTree = "<group>"; };
+		01BEF2A31AA7E761005F11B4 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/SMLDetab.xib"; sourceTree = "<group>"; };
+		01BEF2A41AA7E761005F11B4 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/SMLEntab.xib"; sourceTree = "<group>"; };
+		01BEF2A51AA7E761005F11B4 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/SMLGoToLine.xib"; sourceTree = "<group>"; };
+		01BEF2A61AA7E761005F11B4 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/MGSPreferencesFontsAndColours.xib"; sourceTree = "<group>"; };
+		01BEF2A71AA7E761005F11B4 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/MGSPreferencesTextEditing.xib"; sourceTree = "<group>"; };
 		01D81ACF1AA7E37E006DF8B8 /* Features.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Features.xib; path = Applications/MGSFragariaView/Features.xib; sourceTree = "<group>"; };
 		01D81AD01AA7E37E006DF8B8 /* Lorem.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Lorem.html; path = Applications/MGSFragariaView/Lorem.html; sourceTree = "<group>"; };
 		01D81AD11AA7E37E006DF8B8 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = Applications/MGSFragariaView/MainMenu.xib; sourceTree = "<group>"; };
@@ -806,6 +811,7 @@
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
+				"en-GB",
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* KosmicEditor */;
 			projectDirPath = "";
@@ -996,6 +1002,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				01098F121AA7BCF200ED4CFD /* en */,
+				01BEF2A71AA7E761005F11B4 /* en-GB */,
 			);
 			name = MGSPreferencesTextEditing.xib;
 			sourceTree = "<group>";
@@ -1004,6 +1011,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				01098F151AA7BCF800ED4CFD /* en */,
+				01BEF2A61AA7E761005F11B4 /* en-GB */,
 			);
 			name = MGSPreferencesFontsAndColours.xib;
 			sourceTree = "<group>";
@@ -1012,6 +1020,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				01098F181AA7BD0400ED4CFD /* en */,
+				01BEF2A51AA7E761005F11B4 /* en-GB */,
 			);
 			name = SMLGoToLine.xib;
 			sourceTree = "<group>";
@@ -1020,6 +1029,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				01098F1B1AA7BD0900ED4CFD /* en */,
+				01BEF2A41AA7E761005F11B4 /* en-GB */,
 			);
 			name = SMLEntab.xib;
 			sourceTree = "<group>";
@@ -1028,6 +1038,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				01098F1E1AA7BD0D00ED4CFD /* en */,
+				01BEF2A31AA7E761005F11B4 /* en-GB */,
 			);
 			name = SMLDetab.xib;
 			sourceTree = "<group>";
