@@ -165,19 +165,6 @@
 
 #pragma mark - Properties - Overall Appearance and Display
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	autoSpellCheck
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setAutoSpellCheck:(BOOL)autoSpellCheck
-{
-    self.fragaria.continuousSpellCheckingEnabled = autoSpellCheck;
-}
-
-- (BOOL)autoSpellCheck
-{
-    return self.fragaria.continuousSpellCheckingEnabled;
-}
-
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	hasVerticalScroller

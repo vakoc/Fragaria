@@ -46,10 +46,10 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 // SMLTextView dynamic properties:
-@dynamic string, attributedStringWithTemporaryAttributesApplied;
+@dynamic string;
 @dynamic backgroundColor, currentLineHighlightColour, textFont;
-@dynamic grammarCheckingEnabled, highlightsCurrentLine, insertionPointColor, pageGuideColumn;
-@dynamic showsPageGuide, smartInsertDeleteEnabled, tabWidth, textColor;
+@dynamic highlightsCurrentLine, insertionPointColor, pageGuideColumn;
+@dynamic showsPageGuide, tabWidth, textColor;
 @dynamic showsMatchingBraces, insertClosingParenthesisAutomatically, insertClosingBraceAutomatically;
 @dynamic indentWithSpaces, indentBracesAutomatically, indentNewLinesAutomatically, useTabStops;
 @dynamic autoCompleteDelay, autoCompleteEnabled, autoCompleteWithKeywords;
@@ -86,21 +86,13 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 
 
+- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
+{
+    return [self.textView attributedStringWithTemporaryAttributesApplied];
+}
+
+
 #pragma mark - Properties - Overall Appearance and Display
-
-
-/*
- * @property continuousSpellCheckingEnabled
- */
-- (void)setContinuousSpellCheckingEnabled:(BOOL)value
-{
-    [self.textView setContinuousSpellCheckingEnabled:value];
-}
-
-- (BOOL)continuousSpellCheckingEnabled
-{
-    return [self.textView isContinuousSpellCheckingEnabled];
-}
 
 
 /*

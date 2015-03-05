@@ -48,8 +48,6 @@
 
 #pragma mark - Properties - Overall Appearance and Display
 
-@property (assign) BOOL autoSpellCheck;                                ///< Specifies whether or not automatic spell checking is enabled.
-
 @property (assign) BOOL hasVerticalScroller;                           ///< Indicates whether or not the vertical scroller is always present.
 
 @property (assign) NSUInteger gutterMinimumWidth;                      ///< Specifies the minimum width of the line number gutter.
