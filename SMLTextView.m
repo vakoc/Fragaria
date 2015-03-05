@@ -594,55 +594,40 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (NSMenu *)menuForEvent:(NSEvent *)theEvent
 {
-
     NSMenu *menu = [super menuForEvent:theEvent];
+    NSMenu *extraMenu = [self.interfaceController contextMenu];
+    NSMenuItem *item, *newItem;
+    BOOL addSeparator;
+    
+    /* We want to add our new menu items after cut-copy-paste, but before
+     * the standard NSTextView useless stuff (spelling checker, character
+     * substitution, ...). These items are separated from cut-copy-paste by
+     * a separator, and this usually is the last separator in the menu.
+     * So we find this separator and we add our new items after it. */
+    
+    /* Find the last separator in the menu */
+    NSInteger i = [menu numberOfItems] - 1;
+    for (; i>=0; i--) {
+        NSMenuItem *tmp = [menu itemAtIndex:i];
+        if ([tmp isSeparatorItem])
+            break;
+    }
+    
+    /* If no separators found, append to the end of the menu. Otherwise,
+     * add the new items after this last separator. */
+    i = i < 0 ? [menu numberOfItems] : i + 1;
+    
+    for (item in [extraMenu itemArray]) {
+        newItem = [item copy];
+        [menu insertItem:newItem atIndex:i++];
+    }
+    
+    /* We add another separator after our new stuff, if it's not at the end
+     * of the menu. */
+    if (i < [menu numberOfItems])
+        [menu insertItem:[NSMenuItem separatorItem] atIndex:i];
 
     return menu;
-
-    // TODO: consider what menu behaviour is appropriate
-    /*
-     NSArray *array = [menu itemArray];
-     for (id oldMenuItem in array) {
-     if ([oldMenuItem tag] == -123457) {
-     [menu removeItem:oldMenuItem];
-     }
-     }
-
-     [menu insertItem:[NSMenuItem separatorItem] atIndex:0];
-
-     NSEnumerator *collectionEnumerator = [[SMLBasic fetchAll:@"SnippetCollectionSortKeyName"] reverseObjectEnumerator];
-     for (id collection in collectionEnumerator) {
-     if ([collection valueForKey:@"name"] == nil) {
-     continue;
-     }
-     NSMenuItem *menuItem = [[NSMenuItem alloc] initWithTitle:[collection valueForKey:@"name"] action:nil keyEquivalent:@""];
-     [menuItem setTag:-123457];
-     NSMenu *subMenu = [[NSMenu alloc] init];
-
-     NSMutableArray *array = [NSMutableArray arrayWithArray:[[collection mutableSetValueForKey:@"snippets"] allObjects]];
-     [array sortUsingSelector:@selector(localizedCaseInsensitiveCompare:)];
-     for (id snippet in array) {
-     if ([snippet valueForKey:@"name"] == nil) {
-     continue;
-     }
-     NSString *keyString;
-     if ([snippet valueForKey:@"shortcutMenuItemKeyString"] != nil) {
-     keyString = [snippet valueForKey:@"shortcutMenuItemKeyString"];
-     } else {
-     keyString = @"";
-     }
-     NSMenuItem *subMenuItem = [[NSMenuItem alloc] initWithTitle:[snippet valueForKey:@"name"] action:@selector(snippetShortcutFired:) keyEquivalent:@""];
-     [subMenuItem setTarget:[SMLToolsMenuController sharedInstance]];
-     [subMenuItem setRepresentedObject:snippet];
-     [subMenu insertItem:subMenuItem atIndex:0];
-     }
-
-     [menuItem setSubmenu:subMenu];
-     [menu insertItem:menuItem atIndex:0];
-     }
-
-     return menu;
-     */
 }
 
 

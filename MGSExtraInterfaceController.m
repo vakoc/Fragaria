@@ -30,6 +30,14 @@
 }
 
 
+- (NSMenu*)contextMenu
+{
+    if (!_contextMenu)
+        [NSBundle loadNibNamed:@"MGSContextMenu" owner:self];
+    return _contextMenu;
+}
+
+
 #pragma mark -
 #pragma mark Tabbing
 /*

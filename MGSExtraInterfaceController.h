@@ -40,6 +40,9 @@
 }
 
 
+@property (nonatomic) IBOutlet NSMenu *contextMenu;
+
+
 /// @name Action Methods
 
 
