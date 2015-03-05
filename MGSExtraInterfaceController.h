@@ -22,13 +22,13 @@
  specific language governing permissions and limitations under the License.
 */
 
-
 #import <Cocoa/Cocoa.h>
 #import "SMLTextView+MGSTextActions.h"
 
 
-/** MGSExtraInterfaceController displays and controls the NSPanels used
- *  by SMLTextView's methods which require an interaction with the user. */
+/** MGSExtraInterfaceController displays and controls the NSPanels and the
+ *  NSMenus used by SMLTextView's methods which require an interaction with
+ *  the user. */
 
 @interface MGSExtraInterfaceController : NSObject {
 	IBOutlet NSTextField *spacesTextFieldEntabWindow;
@@ -40,24 +40,29 @@
 }
 
 
-@property (nonatomic) IBOutlet NSMenu *contextMenu;
-
-
 /// @name Action Methods
 
 
-/** @param sender Object sending the action. */
+/** Action sent by the entab button in the entab window.
+ *  @param sender Object sending the action. */
 - (IBAction)entabButtonEntabWindowAction:(id)sender;
-/**  @param sender Object sending the action. */
+/** Action sent by the detab button in the detab window.
+ *  @param sender Object sending the action. */
 - (IBAction)detabButtonDetabWindowAction:(id)sender;
-/**  @param sender Object sending the action. */
+/** Action sent by the goto button in the goto window.
+ *  @param sender Object sending the action. */
+- (IBAction)goButtonGoToLineWindowAction:(id)sender;
+
+/** Action sent by the cancel button in the entab, detab, and goto windows.
+ *  @param sender Object sending the action. */
 - (IBAction)cancelButtonEntabDetabGoToLineWindowsAction:(id)sender;
-/**  @param sender Object sending the action. */
-- (IBAction)goButtonGoToLineWindowAction:(id)sender;                 
 
 
-/// @name Implementers
+/// @name Accessing the user interface
 
+
+/** A context menu for use by SMLTextView. */
+@property (nonatomic) IBOutlet NSMenu *contextMenu;
 
 /** Displays the entab sheet.
  *  @param target The text view to send a performEntab message to if the user

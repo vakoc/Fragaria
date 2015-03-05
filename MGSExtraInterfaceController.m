@@ -40,12 +40,11 @@
 
 #pragma mark -
 #pragma mark Tabbing
-/*
- 
- - displayEntab
- 
- */
 
+
+/*
+ * - displayEntab
+ */
 - (void)displayEntabForTarget:(SMLTextView *)target
 {
     NSWindow *wnd;
@@ -59,10 +58,9 @@
 	[NSApp beginSheet:entabWindow modalForWindow:wnd modalDelegate:self didEndSelector:nil contextInfo:nil];
 }
 
+
 /*
- 
- - displayDetab
- 
+ * - displayDetab
  */
 - (void)displayDetabForTarget:(SMLTextView *)target
 {
@@ -79,9 +77,7 @@
 
 
 /*
- 
- - entabButtonEntabWindowAction:
- 
+ * - entabButtonEntabWindowAction:
  */
 - (IBAction)entabButtonEntabWindowAction:(id)sender
 {
@@ -94,10 +90,9 @@
     _completionTarget = nil;
 }
 
+
 /*
- 
- - detabButtonDetabWindowAction
- 
+ * - detabButtonDetabWindowAction
  */
 - (IBAction)detabButtonDetabWindowAction:(id)sender
 {
@@ -113,10 +108,9 @@
 #pragma mark -
 #pragma mark Goto 
 
+
 /*
- 
- - cancelButtonEntabDetabGoToLineWindowsAction:
- 
+ * - cancelButtonEntabDetabGoToLineWindowsAction:
  */
 - (IBAction)cancelButtonEntabDetabGoToLineWindowsAction:(id)sender
 {
@@ -129,9 +123,7 @@
 
 
 /*
- 
- - displayGoToLine
- 
+ * - displayGoToLine
  */
 - (void)displayGoToLineForTarget:(SMLTextView *)target
 {
@@ -145,10 +137,9 @@
 	[NSApp beginSheet:goToLineWindow modalForWindow:wnd modalDelegate:self didEndSelector:nil contextInfo:nil];
 }
 
+
 /*
- 
- - goButtonGoToLineWindowAction
- 
+ * - goButtonGoToLineWindowAction
  */
 - (IBAction)goButtonGoToLineWindowAction:(id)sender
 {
