@@ -35,11 +35,6 @@ NSString * const MGSFOSyntaxColouringDelegate = @"syntaxColouringDelegate";
 NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
-@interface MGSFragaria ()
-
-@end
-
-
 #pragma mark - Implementation
 
 
