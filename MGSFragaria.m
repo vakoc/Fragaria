@@ -45,22 +45,23 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 // SMLTextView dynamic properties:
-@dynamic string;
-@dynamic backgroundColor, currentLineHighlightColour, textFont;
-@dynamic highlightsCurrentLine, insertionPointColor, lineWrap, pageGuideColumn;
-@dynamic syntaxColouring, showsInvisibleCharacters, showsPageGuide, tabWidth, textColor;
-@dynamic showsMatchingBraces, insertClosingParenthesisAutomatically, insertClosingBraceAutomatically;
-@dynamic indentWithSpaces, indentBracesAutomatically, indentNewLinesAutomatically, useTabStops;
+@dynamic attributedStringWithTemporaryAttributesApplied;
 @dynamic autoCompleteDelay, autoCompleteEnabled, autoCompleteWithKeywords;
-@dynamic textInvisibleCharactersColour, attributedStringWithTemporaryAttributesApplied;
-
+@dynamic backgroundColor, currentLineHighlightColour, highlightsCurrentLine;
+@dynamic indentBracesAutomatically, indentNewLinesAutomatically, indentWithSpaces;
+@dynamic insertClosingBraceAutomatically, insertClosingParenthesisAutomatically;
+@dynamic insertionPointColor, lineWrap, pageGuideColumn;
+@dynamic showsInvisibleCharacters, showsMatchingBraces, showsPageGuide;
+@dynamic string, syntaxColouring, tabWidth, textColor, textFont, textInvisibleCharactersColour;
+@dynamic useTabStops;
 
 // SMLSyntaxColouring dynamic properties:
 @dynamic colourForAttributes, colourForAutocomplete, colourForCommands, colourForComments, colourForInstructions;
-@dynamic colourForKeywords, colourForNumbers, colourForStrings, colourForVariables, coloursAttributes;
-@dynamic coloursAutocomplete, coloursCommands, coloursComments, coloursInstructions, coloursKeywords, coloursNumbers;
-@dynamic coloursStrings, coloursVariables, syntaxColouringDelegate, coloursMultiLineStrings;
-@dynamic coloursOnlyUntilEndOfLine, syntaxDefinitionName;
+@dynamic colourForKeywords, colourForNumbers, colourForStrings, colourForVariables;
+@dynamic coloursAttributes, coloursAutocomplete, coloursCommands, coloursComments, coloursInstructions;
+@dynamic coloursKeywords, coloursNumbers, coloursStrings, coloursVariables;
+@dynamic coloursMultiLineStrings, coloursOnlyUntilEndOfLine;
+@dynamic syntaxDefinitionName, syntaxColouringDelegate;
 
 // MGSLineNumberView dynamic properties:
 @dynamic startingLineNumber;
