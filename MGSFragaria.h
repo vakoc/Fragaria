@@ -148,7 +148,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic) BOOL isSyntaxColoured;
 
 /** Specifies the current syntax definition name.*/
-@property (nonatomic) NSString *syntaxDefinitionName;
+@property (nonatomic, assign) NSString *syntaxDefinitionName;
 /** The syntax colouring delegate for this instance of Fragaria. The syntax
  * colouring delegate gets notified of the start and end of each colouring pass
  * so that it can modify the default syntax colouring provided by Fragaria. */

@@ -75,24 +75,18 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setSyntaxDefinitionName:(NSString *)value
 {
-	// @todo: (jsd) Perhaps this should move to SMLSytaxColouring?
-	// SMLSyntaxColouring has a reference to its Fragaria, so
-	// should be okay to set the delegate there.
-    NSDictionary *syntaxDict;
-    MGSSyntaxDefinition *syntaxDef;
-	
-    _syntaxDefinitionName = value;
-    syntaxDict = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:value];
-    syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict];
-    [self.textView.syntaxColouring setSyntaxDefinition:syntaxDef];
-    
-    /* Update the default autocomplete delegate with the new
-     * syntax definition, if needed. */
-    if (!self.autoCompleteDelegate)
-        [self setAutoCompleteDelegate:nil];
+	self.syntaxColouring.syntaxDefinitionName = value;
+}
+
+- (NSString *)syntaxDefinitionName
+{
+	return self.syntaxColouring.syntaxDefinitionName;
 }
 
 
+/*
+ * @property attributedStringWithTemporaryAttributesApplied
+ */
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
 {
     return [self.textView attributedStringWithTemporaryAttributesApplied];

@@ -237,6 +237,25 @@ static char kcColoursChanged;
 }
 
 /*
+ *  @property syntaxDefinitionName
+ */
+- (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
+{
+	NSDictionary *syntaxDict;
+	MGSSyntaxDefinition *syntaxDef;
+	
+	_syntaxDefinitionName = syntaxDefinitionName;
+	syntaxDict = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:syntaxDefinitionName];
+	syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict];
+	[self setSyntaxDefinition:syntaxDef];
+	
+	/* Update the default autocomplete delegate with the new
+	 * syntax definition, if needed. */
+	if (!self.fragaria.autoCompleteDelegate)
+		[self.fragaria setAutoCompleteDelegate:nil];
+}
+
+/*
  *  @property colourMultiLineStrings
  */
 - (void)setColoursMultiLineStrings:(BOOL)coloursMultiLineStrings
