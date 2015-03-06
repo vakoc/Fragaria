@@ -121,7 +121,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 /** The text editor string, including temporary attributes which
  *  have been applied by the syntax highlighter. */
-- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied;
+@property (nonatomic, readonly) NSAttributedString *attributedStringWithTemporaryAttributesApplied;
 
 
 #pragma mark - Creating Split Panels

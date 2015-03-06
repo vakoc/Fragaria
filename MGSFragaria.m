@@ -53,7 +53,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic showsMatchingBraces, insertClosingParenthesisAutomatically, insertClosingBraceAutomatically;
 @dynamic indentWithSpaces, indentBracesAutomatically, indentNewLinesAutomatically, useTabStops;
 @dynamic autoCompleteDelay, autoCompleteEnabled, autoCompleteWithKeywords;
-@dynamic textInvisibleCharactersColour;
+@dynamic textInvisibleCharactersColour, attributedStringWithTemporaryAttributesApplied;
 
 
 // SMLSyntaxColouring dynamic properties:
@@ -81,15 +81,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (NSString *)syntaxDefinitionName
 {
 	return self.syntaxColouring.syntaxDefinitionName;
-}
-
-
-/*
- * @property attributedStringWithTemporaryAttributesApplied
- */
-- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
-{
-    return [self.textView attributedStringWithTemporaryAttributesApplied];
 }
 
 
