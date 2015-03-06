@@ -82,6 +82,9 @@
 /** Specifies the column position to draw the page guide. */
 @property (nonatomic, assign) NSInteger pageGuideColumn;
 
+/** Indicates whether or not invisible characters in the editor are revealed.*/
+@property (nonatomic, assign) BOOL showsInvisibleCharacters;
+
 /** Specifies whether or not matching braces are shown in the editor. */
 @property (nonatomic, assign) BOOL showsMatchingBraces;
 
@@ -96,6 +99,9 @@
 
 /** Indicates the current editor font. */
 @property (nonatomic, strong) NSFont *textFont;
+
+/** Specifies the colour to render invisible characters in the text view.*/
+@property (nonatomic, assign) NSColor *textInvisibleCharactersColour;
 
 /** Specifies whether or not tab stops should be used when indenting. */
 @property (nonatomic, assign) BOOL useTabStops;

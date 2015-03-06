@@ -71,6 +71,9 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setSyntaxDefinitionName:(NSString *)value
 {
+	// @todo: (jsd) Perhaps this should move to SMLSytaxColouring?
+	// SMLSyntaxColouring has a reference to its Fragaria, so
+	// should be okay to set the delegate there.
     NSDictionary *syntaxDict;
     MGSSyntaxDefinition *syntaxDef;
 	
@@ -153,6 +156,11 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setHasVerticalScroller:(BOOL)value
 {
+	// @todo: (jsd) Should we override NSScrollView simply
+	//        in order to achieve this affect? Or leave it
+	//        to the developer to set autoHidesScrollers
+	//        himself? If using KVC on the scrollView then
+	//        there's going to be a differerence.
     self.scrollView.hasVerticalScroller = value;
     self.scrollView.autohidesScrollers = value;
 }
@@ -183,7 +191,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (void)setLineWrap:(BOOL)lineWrap
 {
 	self.textView.lineWrap = lineWrap;
-	[self.textView.syntaxColouring invalidateAllColouring];
 }
 
 - (BOOL)lineWrap
@@ -197,6 +204,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setScrollElasticityDisabled:(BOOL)value
 {
+	//@todo: (jsd) Here is another argument for subclassing
+	//       NSScrollView. It would allow a simple BOOL setter.
     NSScrollElasticity setting = value ? NSScrollElasticityNone : NSScrollElasticityAutomatic;
     [self.scrollView setVerticalScrollElasticity:setting];
 }
@@ -212,6 +221,9 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setShowsLineNumbers:(BOOL)value
 {
+	// @todo: (jsd) Changing the property name in MGSLineNumberView
+	//        would allow making this property dynamic without
+	//        breaking the current API.
     self.gutterView.drawsLineNumbers = value;
 }
 
@@ -226,6 +238,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setShowsGutter:(BOOL)showsGutter
 {
+	// @todo: Again subclass the scrollView. Add a synonym for
+	// `rulersVisible` called showsGutter and make this dynamic.
     self.scrollView.rulersVisible = showsGutter;
 }
 
@@ -240,12 +254,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
 {
-	self.textView.layoutManager.showsInvisibleCharacters = showsInvisibleCharacters;
+	self.textView.showsInvisibleCharacters = showsInvisibleCharacters;
 }
 
 - (BOOL)showsInvisibleCharacters
 {
-	return self.textView.layoutManager.showsInvisibleCharacters;
+	return self.textView.showsInvisibleCharacters;
 }
 
 
@@ -282,14 +296,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
 {
-    SMLLayoutManager *layoutManager = self.textView.layoutManager;
-    layoutManager.invisibleCharactersColour = textInvisibleCharactersColour;
+    self.textView.textInvisibleCharactersColour = textInvisibleCharactersColour;
 }
 
 - (NSColor *)textInvisibleCharactersColour
 {
-    SMLLayoutManager *layoutManager = self.textView.layoutManager;
-    return layoutManager.invisibleCharactersColour;
+    return self.textView.textInvisibleCharactersColour;
 }
 
 
