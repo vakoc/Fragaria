@@ -51,13 +51,21 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 #import "MGSFragariaView.h"                 // Justification: external users require it.
 #import "SMLTextView.h"                     // Justification: external users require it / textView property is exposed.
 
+@class MGSLineNumberView;
+@class SMLSyntaxColouring;
 
 /**
- *  MGSFragaria is the main controller class for all of the individual
- *  components that constitute the MGSFragaria framework. As the main
- *  controller it owns the helper components that allow it to function, such as
- *  the custom text view, the gutter view, and so on.
- */
+ * MGSFragaria is the main controller class for all of the individual components
+ * that constitute the MGSFragaria framework. As the main controller it owns the
+ * helper components that allow it to function, such as the custom text view, the
+ * gutter view, and so on.
+ *
+ * @discuss Many of the properties are dynamic, meaning they don't work with
+ * KVC. Fortunately most of them simply wrap properties for Fragaria's
+ * components, which are KVC-compliant. You might consider updating your code
+ * in order to access these properties directly, too, as these property
+ * wrappers may be deprecated in the future.
+ **/
 
 @interface MGSFragaria : NSObject
 
@@ -96,6 +104,10 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, strong, readonly) SMLTextView *textView;
 /** Fragaria's scroll view. */
 @property (nonatomic, strong, readonly) NSScrollView *scrollView;
+/** Fragaria's gutter view. */
+@property (nonatomic, strong, readonly) MGSLineNumberView *gutterView;
+/** Fragaria's syntax colouring object. */
+@property  (nonatomic, assign, readonly) SMLSyntaxColouring *syntaxColouring;
 
 
 #pragma mark - Accessing Text Content
@@ -107,7 +119,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 /** The text editor string, including temporary attributes which
  *  have been applied by the syntax highlighter. */
-- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied;
+@property (nonatomic, readonly) NSAttributedString *attributedStringWithTemporaryAttributesApplied;
 
 
 #pragma mark - Creating Split Panels
@@ -134,7 +146,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic) BOOL isSyntaxColoured;
 
 /** Specifies the current syntax definition name.*/
-@property (nonatomic) NSString *syntaxDefinitionName;
+@property (nonatomic, assign) NSString *syntaxDefinitionName;
 /** The syntax colouring delegate for this instance of Fragaria. The syntax
  * colouring delegate gets notified of the start and end of each colouring pass
  * so that it can modify the default syntax colouring provided by Fragaria. */

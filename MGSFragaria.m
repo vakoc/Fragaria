@@ -42,54 +42,29 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 @synthesize autoCompleteDelegate = _autoCompleteDelegate;
-@synthesize syntaxDefinitionName = _syntaxDefinitionName;
 
 
 // SMLTextView dynamic properties:
-@dynamic string;
-@dynamic backgroundColor, currentLineHighlightColour, textFont;
-@dynamic highlightsCurrentLine, insertionPointColor, pageGuideColumn;
-@dynamic showsPageGuide, tabWidth, textColor;
-@dynamic showsMatchingBraces, insertClosingParenthesisAutomatically, insertClosingBraceAutomatically;
-@dynamic indentWithSpaces, indentBracesAutomatically, indentNewLinesAutomatically, useTabStops;
+@dynamic attributedStringWithTemporaryAttributesApplied;
 @dynamic autoCompleteDelay, autoCompleteEnabled, autoCompleteWithKeywords;
-
+@dynamic backgroundColor, currentLineHighlightColour, highlightsCurrentLine;
+@dynamic indentBracesAutomatically, indentNewLinesAutomatically, indentWithSpaces;
+@dynamic insertClosingBraceAutomatically, insertClosingParenthesisAutomatically;
+@dynamic insertionPointColor, lineWrap, pageGuideColumn;
+@dynamic showsInvisibleCharacters, showsMatchingBraces, showsPageGuide;
+@dynamic string, syntaxColouring, tabWidth, textColor, textFont, textInvisibleCharactersColour;
+@dynamic useTabStops;
 
 // SMLSyntaxColouring dynamic properties:
 @dynamic colourForAttributes, colourForAutocomplete, colourForCommands, colourForComments, colourForInstructions;
-@dynamic colourForKeywords, colourForNumbers, colourForStrings, colourForVariables, coloursAttributes;
-@dynamic coloursAutocomplete, coloursCommands, coloursComments, coloursInstructions, coloursKeywords, coloursNumbers;
-@dynamic coloursStrings, coloursVariables, syntaxColouringDelegate, coloursMultiLineStrings;
-@dynamic coloursOnlyUntilEndOfLine;
+@dynamic colourForKeywords, colourForNumbers, colourForStrings, colourForVariables;
+@dynamic coloursAttributes, coloursAutocomplete, coloursCommands, coloursComments, coloursInstructions;
+@dynamic coloursKeywords, coloursNumbers, coloursStrings, coloursVariables;
+@dynamic coloursMultiLineStrings, coloursOnlyUntilEndOfLine;
+@dynamic syntaxDefinitionName, syntaxColouringDelegate;
 
-
-#pragma mark - Properties - Document Properties
-
-
-/*
- * @property syntaxDefinitionName:
- */
-- (void)setSyntaxDefinitionName:(NSString *)value
-{
-    NSDictionary *syntaxDict;
-    MGSSyntaxDefinition *syntaxDef;
-	
-    _syntaxDefinitionName = value;
-    syntaxDict = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:value];
-    syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict];
-    [self.textView.syntaxColouring setSyntaxDefinition:syntaxDef];
-    
-    /* Update the default autocomplete delegate with the new
-     * syntax definition, if needed. */
-    if (!self.autoCompleteDelegate)
-        [self setAutoCompleteDelegate:nil];
-}
-
-
-- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
-{
-    return [self.textView attributedStringWithTemporaryAttributesApplied];
-}
+// MGSLineNumberView dynamic properties:
+@dynamic startingLineNumber;
 
 
 #pragma mark - Properties - Overall Appearance and Display
@@ -100,6 +75,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 -(void)setGutterFont:(NSFont *)gutterFont
 {
+	// @todo: (jsd) Property name harmonization?
     [self.gutterView setFont:gutterFont];
 }
 
@@ -114,6 +90,10 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setGutterMinimumWidth:(NSUInteger)gutterMinimumWidth
 {
+	// @todo: (jsd) This is a candidate for harmonizing the
+	// property names and making dynamic (or deleting), too.
+	// Would also have to decide to keep CGFloat or force it
+	// to NSUInteger.
     self.gutterView.minimumWidth = (CGFloat)gutterMinimumWidth;
 }
 
@@ -128,6 +108,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 -(void)setGutterTextColour:(NSColor *)gutterTextColour
 {
+	// @todo: (jsd) property name harmonization?
     [self.gutterView setTextColor:gutterTextColour];
 }
 
@@ -142,6 +123,11 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setHasVerticalScroller:(BOOL)value
 {
+	// @todo: (jsd) Should we override NSScrollView simply
+	//        in order to achieve this affect? Or leave it
+	//        to the developer to set autoHidesScrollers
+	//        himself? If using KVC on the scrollView then
+	//        there's going to be a differerence.
     self.scrollView.hasVerticalScroller = value;
     self.scrollView.autohidesScrollers = value;
 }
@@ -157,6 +143,9 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setIsSyntaxColoured:(BOOL)value
 {
+	// @todo: this one's hard to abstract away and make dynamic
+	// because forwarding doesn't automatically use KVO's method
+	// of checking for _is_ setters and getters. 
 	[self.textView.syntaxColouring setSyntaxColoured:value];
 }
 
@@ -167,25 +156,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
- * @property lineWrap
- */
-- (void)setLineWrap:(BOOL)lineWrap
-{
-	self.textView.lineWrap = lineWrap;
-	[self.textView.syntaxColouring invalidateAllColouring];
-}
-
-- (BOOL)lineWrap
-{
-	return self.textView.lineWrap;
-}
-
-
-/*
  * @property scrollElasticityDisabled:
  */
 - (void)setScrollElasticityDisabled:(BOOL)value
 {
+	//@todo: (jsd) Here is another argument for subclassing
+	//       NSScrollView. It would allow a simple BOOL setter.
     NSScrollElasticity setting = value ? NSScrollElasticityNone : NSScrollElasticityAutomatic;
     [self.scrollView setVerticalScrollElasticity:setting];
 }
@@ -201,6 +177,9 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setShowsLineNumbers:(BOOL)value
 {
+	// @todo: (jsd) Changing the property name in MGSLineNumberView
+	//        would allow making this property dynamic without
+	//        breaking the current API.
     self.gutterView.drawsLineNumbers = value;
 }
 
@@ -215,6 +194,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setShowsGutter:(BOOL)showsGutter
 {
+	// @todo: Again subclass the scrollView. Add a synonym for
+	// `rulersVisible` called showsGutter and make this dynamic.
     self.scrollView.rulersVisible = showsGutter;
 }
 
@@ -225,60 +206,22 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
- * @property showsInvisibleCharacters
- */
-- (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
-{
-	self.textView.layoutManager.showsInvisibleCharacters = showsInvisibleCharacters;
-}
-
-- (BOOL)showsInvisibleCharacters
-{
-	return self.textView.layoutManager.showsInvisibleCharacters;
-}
-
-
-/*
  * @property showsWarningsInGutter
  */
 - (void)setShowsWarningsInGutter:(BOOL)value
 {
+	// @todo: (jsd) We can practically eliminate ALL
+	// of the Fragaria level properties for things that
+	// have components doing the work. As there's no
+	// plan to expose this (no should there be), I wonder
+	// if we should move this property to MGSLineNumberView,
+	// and set the syntaxErrorController there.
     self.syntaxErrorController.showSyntaxErrors = value;
 }
 
 - (BOOL)showsWarningsInGutter
 {
     return self.syntaxErrorController.showSyntaxErrors;
-}
-
-
-/*
- * @property startingLineNumber:
- */
-- (void)setStartingLineNumber:(NSUInteger)value
-{
-    [self.gutterView setStartingLineNumber:value];
-}
-
-- (NSUInteger)startingLineNumber
-{
-    return [self.gutterView startingLineNumber];
-}
-
-
-/*
- * @property textInvisibleCharactersColor
- */
-- (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
-{
-    SMLLayoutManager *layoutManager = self.textView.layoutManager;
-    layoutManager.invisibleCharactersColour = textInvisibleCharactersColour;
-}
-
-- (NSColor *)textInvisibleCharactersColour
-{
-    SMLLayoutManager *layoutManager = self.textView.layoutManager;
-    return layoutManager.invisibleCharactersColour;
 }
 
 
@@ -531,7 +474,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [self.scrollView setHasHorizontalRuler:NO];
     
     // carryover default syntaxDefinition name from old docSpec
-    self.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
+    self.syntaxColouring.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
     self.textView.syntaxColouring.fragaria = self;
     
     // add scroll view to content view
@@ -604,6 +547,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
         return self.textView.syntaxColouring;
     else if ([self.textView respondsToSelector:aSelector])
         return self.textView;
+	else if ([self.gutterView respondsToSelector:aSelector])
+		return self.gutterView;
     return nil;
 }
 

@@ -48,6 +48,9 @@ Copyright 2004-2009 Peter Borg
 /** The layout manager to be used for setting temporary attributes. */
 @property (readonly, weak) NSLayoutManager *layoutManager;
 
+/** Specifies the current syntax definition name.*/
+@property (nonatomic) NSString *syntaxDefinitionName;
+
 /** The syntax definition that determines how to color the text. */
 @property (nonatomic, strong) MGSSyntaxDefinition *syntaxDefinition;
 

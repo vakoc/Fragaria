@@ -153,6 +153,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     _lineWrap = value;
     [self updateLineWrap];
+	[self.syntaxColouring invalidateAllColouring];
 }
 
 
@@ -163,6 +164,20 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     _pageGuideColumn = pageGuideColumn;
     [self configurePageGuide];
+}
+
+
+/*
+ * @property showsInvisibleCharacters
+ */
+- (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
+{
+	self.layoutManager.showsInvisibleCharacters = showsInvisibleCharacters;
+}
+
+- (BOOL)showsInvisibleCharacters
+{
+	return self.layoutManager.showsInvisibleCharacters;
 }
 
 
@@ -247,6 +262,20 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     return [[self typingAttributes] objectForKey:NSFontAttributeName];
 }
 
+
+/*
+ * @property textInvisibleCharactersColour
+ */
+- (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
+{
+	self.layoutManager.invisibleCharactersColour = textInvisibleCharactersColour;
+
+}
+
+- (NSColor *)textInvisibleCharactersColour
+{
+	return self.layoutManager.invisibleCharactersColour;
+}
 
 /*
  * -(void)setLayoutOrientation:
