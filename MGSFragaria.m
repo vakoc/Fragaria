@@ -42,7 +42,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 @synthesize autoCompleteDelegate = _autoCompleteDelegate;
-@synthesize syntaxDefinitionName = _syntaxDefinitionName;
 
 
 // SMLTextView dynamic properties:
@@ -61,27 +60,10 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic colourForKeywords, colourForNumbers, colourForStrings, colourForVariables, coloursAttributes;
 @dynamic coloursAutocomplete, coloursCommands, coloursComments, coloursInstructions, coloursKeywords, coloursNumbers;
 @dynamic coloursStrings, coloursVariables, syntaxColouringDelegate, coloursMultiLineStrings;
-@dynamic coloursOnlyUntilEndOfLine;
+@dynamic coloursOnlyUntilEndOfLine, syntaxDefinitionName;
 
 // MGSLineNumberView dynamic properties:
 @dynamic startingLineNumber;
-
-
-#pragma mark - Properties - Document Properties
-
-
-/*
- * @property syntaxDefinitionName:
- */
-- (void)setSyntaxDefinitionName:(NSString *)value
-{
-	self.syntaxColouring.syntaxDefinitionName = value;
-}
-
-- (NSString *)syntaxDefinitionName
-{
-	return self.syntaxColouring.syntaxDefinitionName;
-}
 
 
 #pragma mark - Properties - Overall Appearance and Display
@@ -491,7 +473,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [self.scrollView setHasHorizontalRuler:NO];
     
     // carryover default syntaxDefinition name from old docSpec
-    self.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
+    self.syntaxColouring.syntaxDefinitionName = [MGSSyntaxController standardSyntaxDefinitionName];
     self.textView.syntaxColouring.fragaria = self;
     
     // add scroll view to content view
