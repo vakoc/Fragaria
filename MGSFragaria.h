@@ -61,6 +61,12 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
  * that constitute the MGSFragaria framework. As the main controller it owns the
  * helper components that allow it to function, such as the custom text view, the
  * gutter view, and so on.
+ *
+ * @discuss Many of the properties are dynamic, meaning they don't work with
+ * KVC. Fortunately most of them simply wrap properties for Fragaria's
+ * components, which are KVC-compliant. You might consider updating your code
+ * in order to access these properties directly, too, as these property
+ * wrappers may be deprecated in the future.
  **/
 
 @interface MGSFragaria : NSObject
