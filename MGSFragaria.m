@@ -48,11 +48,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 // SMLTextView dynamic properties:
 @dynamic string;
 @dynamic backgroundColor, currentLineHighlightColour, textFont;
-@dynamic highlightsCurrentLine, insertionPointColor, pageGuideColumn;
-@dynamic showsPageGuide, tabWidth, textColor;
+@dynamic highlightsCurrentLine, insertionPointColor, lineWrap, pageGuideColumn;
+@dynamic syntaxColouring, showsInvisibleCharacters, showsPageGuide, tabWidth, textColor;
 @dynamic showsMatchingBraces, insertClosingParenthesisAutomatically, insertClosingBraceAutomatically;
 @dynamic indentWithSpaces, indentBracesAutomatically, indentNewLinesAutomatically, useTabStops;
 @dynamic autoCompleteDelay, autoCompleteEnabled, autoCompleteWithKeywords;
+@dynamic textInvisibleCharactersColour;
 
 
 // SMLSyntaxColouring dynamic properties:
@@ -94,17 +95,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     return [self.textView attributedStringWithTemporaryAttributesApplied];
 }
 
-
-#pragma mark - Expose Components
-
-
-/*
- * @property syntaxColouring
- */
-- (SMLSyntaxColouring *)syntaxColouring
-{
-	return self.textView.syntaxColouring;
-}
 
 #pragma mark - Properties - Overall Appearance and Display
 
@@ -186,20 +176,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
- * @property lineWrap
- */
-- (void)setLineWrap:(BOOL)lineWrap
-{
-	self.textView.lineWrap = lineWrap;
-}
-
-- (BOOL)lineWrap
-{
-	return self.textView.lineWrap;
-}
-
-
-/*
  * @property scrollElasticityDisabled:
  */
 - (void)setScrollElasticityDisabled:(BOOL)value
@@ -250,20 +226,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
- * @property showsInvisibleCharacters
- */
-- (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
-{
-	self.textView.showsInvisibleCharacters = showsInvisibleCharacters;
-}
-
-- (BOOL)showsInvisibleCharacters
-{
-	return self.textView.showsInvisibleCharacters;
-}
-
-
-/*
  * @property showsWarningsInGutter
  */
 - (void)setShowsWarningsInGutter:(BOOL)value
@@ -290,19 +252,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     return [self.gutterView startingLineNumber];
 }
 
-
-/*
- * @property textInvisibleCharactersColor
- */
-- (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
-{
-    self.textView.textInvisibleCharactersColour = textInvisibleCharactersColour;
-}
-
-- (NSColor *)textInvisibleCharactersColour
-{
-    return self.textView.textInvisibleCharactersColour;
-}
 
 
 #pragma mark - Properties - Syntax Errors
