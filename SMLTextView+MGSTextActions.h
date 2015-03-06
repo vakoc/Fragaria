@@ -33,14 +33,12 @@
  **/
 - (IBAction)entab:(id)sender;
 
-/**
- *  Perform entab.
- **/
+/** Convert spaces to tabs.
+ *  @param numberOfSpaces The maximum width of a tabulation, in spaces. */
 - (void)performEntabWithNumberOfSpaces:(NSInteger)numberOfSpaces;
 
-/**
- *  Perform detab.
- **/
+/** Convert tabs to spaces.
+ *  @param numberOfSpaces The maximum width of a tabulation, in spaces. */
 - (void)performDetabWithNumberOfSpaces:(NSInteger)numberOfSpaces;
 
 /**

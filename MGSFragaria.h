@@ -8,13 +8,11 @@
  */
 
 
-/**
- *  The following keys are valid keys for:
+/** The following keys are valid keys for:
  *   - (void)setObject:(id)object forKey:(id)key;
  *   - (id)objectForKey:(id)key;
  *  Note that this usage is going away with the elimination of the
- *  docSpec in favor of the use of properties.
- */
+ *  docSpec in favor of the use of properties. */
 #pragma mark - externs
 
 // BOOL
@@ -55,11 +53,11 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 
 /**
- * MGSFragaria is the main controller class for all of the individual components
- * that constitute the MGSFragaria framework. As the main controller it owns the
- * helper components that allow it to function, such as the custom text view, the
- * gutter view, and so on.
- **/
+ *  MGSFragaria is the main controller class for all of the individual
+ *  components that constitute the MGSFragaria framework. As the main
+ *  controller it owns the helper components that allow it to function, such as
+ *  the custom text view, the gutter view, and so on.
+ */
 
 @interface MGSFragaria : NSObject
 
