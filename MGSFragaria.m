@@ -63,6 +63,9 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic coloursStrings, coloursVariables, syntaxColouringDelegate, coloursMultiLineStrings;
 @dynamic coloursOnlyUntilEndOfLine;
 
+// MGSLineNumberView dynamic properties:
+@dynamic startingLineNumber;
+
 
 #pragma mark - Properties - Document Properties
 
@@ -104,6 +107,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 -(void)setGutterFont:(NSFont *)gutterFont
 {
+	// @todo: (jsd) Property name harmonization?
     [self.gutterView setFont:gutterFont];
 }
 
@@ -118,6 +122,10 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setGutterMinimumWidth:(NSUInteger)gutterMinimumWidth
 {
+	// @todo: (jsd) This is a candidate for harmonizing the
+	// property names and making dynamic (or deleting), too.
+	// Would also have to decide to keep CGFloat or force it
+	// to NSUInteger.
     self.gutterView.minimumWidth = (CGFloat)gutterMinimumWidth;
 }
 
@@ -132,6 +140,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 -(void)setGutterTextColour:(NSColor *)gutterTextColour
 {
+	// @todo: (jsd) property name harmonization?
     [self.gutterView setTextColor:gutterTextColour];
 }
 
@@ -166,6 +175,9 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setIsSyntaxColoured:(BOOL)value
 {
+	// @todo: this one's hard to abstract away and make dynamic
+	// because forwarding doesn't automatically use KVO's method
+	// of checking for _is_ setters and getters. 
 	[self.textView.syntaxColouring setSyntaxColoured:value];
 }
 
@@ -230,6 +242,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setShowsWarningsInGutter:(BOOL)value
 {
+	// @todo: (jsd) We can practically eliminate ALL
+	// of the Fragaria level properties for things that
+	// have components doing the work. As there's no
+	// plan to expose this (no should there be), I wonder
+	// if we should move this property to MGSLineNumberView,
+	// and set the syntaxErrorController there.
     self.syntaxErrorController.showSyntaxErrors = value;
 }
 
@@ -237,21 +255,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 {
     return self.syntaxErrorController.showSyntaxErrors;
 }
-
-
-/*
- * @property startingLineNumber:
- */
-- (void)setStartingLineNumber:(NSUInteger)value
-{
-    [self.gutterView setStartingLineNumber:value];
-}
-
-- (NSUInteger)startingLineNumber
-{
-    return [self.gutterView startingLineNumber];
-}
-
 
 
 #pragma mark - Properties - Syntax Errors
@@ -576,6 +579,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
         return self.textView.syntaxColouring;
     else if ([self.textView respondsToSelector:aSelector])
         return self.textView;
+	else if ([self.gutterView respondsToSelector:aSelector])
+		return self.gutterView;
     return nil;
 }
 
