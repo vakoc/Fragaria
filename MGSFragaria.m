@@ -92,6 +92,17 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 
 
+#pragma mark - Expose Components
+
+
+/*
+ * @property syntaxColouring
+ */
+- (SMLSyntaxColouring *)syntaxColouring
+{
+	return self.textView.syntaxColouring;
+}
+
 #pragma mark - Properties - Overall Appearance and Display
 
 

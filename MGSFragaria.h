@@ -53,6 +53,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 #import "MGSFragariaView.h"                 // Justification: external users require it.
 #import "SMLTextView.h"                     // Justification: external users require it / textView property is exposed.
 
+@class SMLSyntaxColouring;
 
 /**
  * MGSFragaria is the main controller class for all of the individual components
@@ -98,6 +99,8 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, strong, readonly) SMLTextView *textView;
 /** Fragaria's scroll view. */
 @property (nonatomic, strong, readonly) NSScrollView *scrollView;
+/** Fragaria's syntax colouring object. */
+@property  (nonatomic, assign, readonly) SMLSyntaxColouring *syntaxColouring;
 
 
 #pragma mark - Accessing Text Content
