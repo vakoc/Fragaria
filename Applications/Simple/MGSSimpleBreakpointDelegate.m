@@ -19,6 +19,24 @@
 }
 
 
+- (NSColor *)breakpointColourForLine:(NSUInteger)line ofFragaria:(MGSFragaria *)sender
+{
+    /* This is just a demo! A real app would have a more sophisticated way
+     * of deciding a breakpoint's color. */
+    
+    if (line % 2 == 0)
+        /* Non-standard-color breakpoint */
+        return [NSColor orangeColor];
+    
+    if (line % 3 == 0)
+        /* Transparent breakpoint */
+        return [[NSColor greenColor] colorWithAlphaComponent:0.25];
+    
+    /* Standard color breakpoint */
+    return nil;
+}
+
+
 - (void)toggleBreakpointForFile:(NSString*)file onLine:(int)line {
     NSNumber *lineNumber;
     

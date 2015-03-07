@@ -53,12 +53,12 @@
     
     NSUInteger _mouseDownLineTracking;
     NSRect     _mouseDownRectTracking;
+    
     NSMutableDictionary *_markerImages;
     NSSize _markerImagesSize;
+    
+    NSDictionary *_breakpointData;
 }
-
-
-@synthesize markerColor = _markerColor;
 
 
 - (id)initWithScrollView:(NSScrollView *)aScrollView
@@ -83,7 +83,7 @@
         _font = [NSFont fontWithName:@"Menlo" size:11];
         _textColor = [NSColor colorWithCalibratedWhite:0.42 alpha:1.0];
         _alternateTextColor = [NSColor whiteColor];
-        _markerColor = [NSColor colorWithCalibratedRed:1.0 green:0.78 blue:0.98 alpha:1.0];
+        _breakpointData = [[NSDictionary alloc] init];
         
         [self setClientView:[aScrollView documentView]];
     }
@@ -153,13 +153,6 @@
 }
 
 
-- (void)setMarkerColor:(NSColor *)markerColor
-{
-    _markerColor = markerColor;
-    [self setNeedsDisplay:YES];
-}
-
-
 - (void)setBackgroundColor:(NSColor *)backgroundColor
 {
     _backgroundColor = backgroundColor;
@@ -202,6 +195,13 @@
         [nc addObserver:self selector:@selector(textViewFrameDidChange:) name:NSViewFrameDidChangeNotification object:aView];
         [self layoutManagerDidChangeTextStorage];
     }
+}
+
+
+- (void)setBreakpointDelegate:(id<MGSBreakpointDelegate>)breakpointDelegate
+{
+    _breakpointDelegate = breakpointDelegate;
+    [self reloadBreakpointData];
 }
 
 
@@ -471,7 +471,7 @@
     NSMutableArray			*lines;
     NSAttributedString      *drawingAttributedString;
     CGContextRef            drawingContext;
-    NSSet                   *linesWithBreakpoints;
+    NSColor *markerColor;
 
     layoutManager = [view layoutManager];
 
@@ -481,18 +481,6 @@
     CGContextSetTextMatrix(drawingContext, flipTransform);
     
     lines = [self lineIndices];
-	
-	if (_breakpointDelegate) {
-		
-		if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFragaria:)]) {
-			linesWithBreakpoints = [_breakpointDelegate breakpointsForFragaria:self.fragaria];
-		} else if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFile:)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-			linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
-#pragma clang diagnostic pop
-		}
-	}
 
     // Find the characters that are currently visible, make a range,  then fudge the range a tad in case
     // there is an extra new line at end. It doesn't show up in the glyphs so would not be accounted for.
@@ -514,8 +502,8 @@
 
             currentTextAttributes = textAttributes;
 
-            if ([linesWithBreakpoints containsObject:@(line + 1)]) {
-                [self drawMarkerInRect:wholeLineRect];
+            if ((markerColor = [_breakpointData objectForKey:@(line + 1)])) {
+                [self drawMarkerInRect:wholeLineRect withColor:markerColor];
                 currentTextAttributes = [self markerTextAttributes];
             }
 
@@ -636,7 +624,7 @@
 
 
 /// @param line uses zero-based indexing.
-- (void)drawMarkerInRect:(NSRect)rect
+- (void)drawMarkerInRect:(NSRect)rect withColor:(NSColor *)markerColor
 {
     NSRect centeredRect, alignedRect;
     CGFloat height;
@@ -650,7 +638,7 @@
     
     alignedRect = [self backingAlignedRect:centeredRect options:NSAlignAllEdgesOutward];
 
-    NSImage *defaultImage = [self defaultMarkerImageWithSize:centeredRect.size color:self.markerColor];
+    NSImage *defaultImage = [self defaultMarkerImageWithSize:centeredRect.size color:markerColor];
     [defaultImage drawInRect:alignedRect fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:YES hints:nil];
 }
 
@@ -801,6 +789,54 @@
 #pragma mark - Delegate handling
 
 
+- (void)reloadBreakpointData
+{
+    NSMutableDictionary *data;
+    NSSet *linesWithBreakpoints;
+    NSNumber *line;
+    
+    if (!_breakpointDelegate) {
+        _breakpointData = [[NSDictionary alloc] init];
+        return;
+    }
+        
+    if ([_breakpointDelegate respondsToSelector:@selector(colouredBreakpointsForFragaria:)]) {
+        _breakpointData = [_breakpointDelegate colouredBreakpointsForFragaria:self.fragaria];
+        return;
+    }
+    
+    data = [NSMutableDictionary dictionary];
+    
+    if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFragaria:)]) {
+        linesWithBreakpoints = [_breakpointDelegate breakpointsForFragaria:self.fragaria];
+    } else if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFile:)]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
+#pragma clang diagnostic pop
+    }
+    
+    NSColor *defaultMarkerColor = [NSColor colorWithCalibratedRed:1.0 green:0.78 blue:0.98 alpha:1.0];
+    
+    if ([_breakpointDelegate respondsToSelector:@selector(breakpointColourForLine:ofFragaria:)]) {
+        for (line in linesWithBreakpoints) {
+            NSColor *markerColor = [_breakpointDelegate breakpointColourForLine:[line integerValue] ofFragaria:self.fragaria];
+            if (markerColor)
+                [data setObject:markerColor forKey:line];
+            else
+                [data setObject:defaultMarkerColor forKey:line];
+        }
+    } else {
+        for (line in linesWithBreakpoints) {
+            [data setObject:defaultMarkerColor forKey:line];
+        }
+    }
+
+    _breakpointData = [data copy];
+    [self setNeedsDisplay:YES];
+}
+
+
 - (void)breakpointClickedOnLine:(NSUInteger)line
 {
     _selectedLineNumber = line;
@@ -814,7 +850,7 @@
 #pragma clang diagnostic pop
     }
 
-    [self setNeedsDisplay:YES];
+    [self reloadBreakpointData];
 }
 
 

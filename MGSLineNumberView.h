@@ -86,10 +86,6 @@
 /** Indicates whether or not line numbers should be drawn. */
 @property (nonatomic) BOOL *drawsLineNumbers;
 
-/** Indicates the default color to be used for breakpoint markers when
- * not specified by the delegate. */
-@property (nonatomic) NSColor *markerColor;
-
 
 /// @name Instance Methods
 
@@ -104,6 +100,7 @@
  * @param aScrollView Indicates the scroll view associated with this instance. */
 - (id)initWithScrollView:(NSScrollView *)aScrollView;
 
+
 /** Returns the zero-based number of the line located at the specified vertical
  * offset from the top of the text view.
  * @param location A location (in points) from the top of the text view. */
@@ -113,6 +110,15 @@
  * the specified line is drawn.
  * @param line A zero-based line number. */
 - (NSRect)decorationRectOfLine:(NSUInteger)line;
+
+
+/** Forces the line number view to reload the the breakpoint data from the
+ *  breakpoint delegate.
+ *  @discussion This method should be called when you want to update the
+ *              shown breakpoints without an input from the user. It's not
+ *              necessary to call this method in response to a
+ *              toggleBreakpointForFragaria:onLine: message. */
+- (void)reloadBreakpointData;
 
 
 /** Inform this line number view that its client text view's text storage
