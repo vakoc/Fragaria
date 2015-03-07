@@ -56,10 +56,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic useTabStops;
 
 // SMLSyntaxColouring dynamic properties:
-@dynamic colourForAttributes, colourForAutocomplete, colourForCommands, colourForComments, colourForInstructions;
-@dynamic colourForKeywords, colourForNumbers, colourForStrings, colourForVariables;
-@dynamic coloursAttributes, coloursAutocomplete, coloursCommands, coloursComments, coloursInstructions;
-@dynamic coloursKeywords, coloursNumbers, coloursStrings, coloursVariables;
 @dynamic coloursMultiLineStrings, coloursOnlyUntilEndOfLine;
 @dynamic syntaxDefinitionName, syntaxColouringDelegate;
 

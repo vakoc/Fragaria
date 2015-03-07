@@ -152,45 +152,6 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
  * so that it can modify the default syntax colouring provided by Fragaria. */
 @property (nonatomic, weak) id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
 
-/** Indicates the text view background color.*/
-@property NSColor *backgroundColor;
-/** Specifies the colour for attributes.*/
-@property NSColor *colourForAttributes;
-/** Specifies the colour for autocomplete.*/
-@property NSColor *colourForAutocomplete;
-/** Specifies the colour for commands.*/
-@property NSColor *colourForCommands;
-/** Specifies the colour for comments.*/
-@property NSColor *colourForComments;
-/** Specifies the colour for instructions.*/
-@property NSColor *colourForInstructions;
-/** Specifies the colour for keywords.*/
-@property NSColor *colourForKeywords;
-/** Specifies the colour for numbers.*/
-@property NSColor *colourForNumbers;
-/** Specifies the colour for strings.*/
-@property NSColor *colourForStrings;
-/** Specifies the colour for variables.*/
-@property NSColor *colourForVariables;
-/** Indicates if attributes should be coloured.*/
-@property BOOL coloursAttributes;
-/** Indicates if autocomplete should be coloured.*/
-@property BOOL coloursAutocomplete;
-/** Indicates if commands should be coloured.*/
-@property BOOL coloursCommands;
-/** Indicates if comments should be coloured.*/
-@property BOOL coloursComments;
-/** Indicates if instructions should be coloured.*/
-@property BOOL coloursInstructions;
-/** Indicates if keywords should be coloured.*/
-@property BOOL coloursKeywords;
-/** Indicates if numbers should be coloured.*/
-@property BOOL coloursNumbers;
-/** Indicates if strings should be coloured.*/
-@property BOOL coloursStrings;
-/** Indicates if variables should be coloured.*/
-@property BOOL coloursVariables;
-
 /** Indicates if multiline strings should be coloured.*/
 @property BOOL coloursMultiLineStrings;
 /** Indicates if coloring should end at end of line.*/
@@ -330,6 +291,8 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 /** Indicates the base (non-highlighted) text color.*/
 @property (nonatomic, assign) NSColor *textColor;
+/** Indicates the text view background color.*/
+@property NSColor *backgroundColor;
 /** Specifies the text editor font.*/
 @property (nonatomic, assign) NSFont *textFont;
 

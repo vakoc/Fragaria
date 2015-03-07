@@ -8,6 +8,7 @@
 
 #import "MGSPreferencesObserver.h"
 #import "MGSFragaria.h"
+#import "SMLSyntaxColouring.h"
 
 
 // KVO context constants
@@ -350,24 +351,26 @@ static char kcAutoCompletePrefsChanged;
     }
     else if (context == &kcColoursChanged)
     {
-        self.fragaria.coloursAttributes = [defaults boolForKey:MGSFragariaPrefsColourAttributes];
-        self.fragaria.coloursAutocomplete = [defaults boolForKey:MGSFragariaPrefsColourAutocomplete];
-        self.fragaria.coloursCommands = [defaults boolForKey:MGSFragariaPrefsColourCommands];
-        self.fragaria.coloursComments = [defaults boolForKey:MGSFragariaPrefsColourComments];
-        self.fragaria.coloursInstructions = [defaults boolForKey:MGSFragariaPrefsColourInstructions];
-        self.fragaria.coloursKeywords = [defaults boolForKey:MGSFragariaPrefsColourKeywords];
-        self.fragaria.coloursNumbers = [defaults boolForKey:MGSFragariaPrefsColourNumbers];
-        self.fragaria.coloursStrings = [defaults boolForKey:MGSFragariaPrefsColourStrings];
-        self.fragaria.coloursVariables = [defaults boolForKey:MGSFragariaPrefsColourVariables];
-        self.fragaria.colourForAttributes = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsAttributesColourWell]];
-        self.fragaria.colourForAutocomplete = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsAutocompleteColourWell]];
-        self.fragaria.colourForCommands = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsCommandsColourWell]];
-        self.fragaria.colourForComments = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsCommentsColourWell]];
-        self.fragaria.colourForInstructions = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsInstructionsColourWell]];
-        self.fragaria.colourForKeywords = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsKeywordsColourWell]];
-        self.fragaria.colourForNumbers = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsNumbersColourWell]];
-        self.fragaria.colourForStrings = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsStringsColourWell]];
-        self.fragaria.colourForVariables = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsVariablesColourWell]];
+        SMLSyntaxColouring *sc = self.fragaria.syntaxColouring;
+        
+        sc.coloursAttributes = [defaults boolForKey:MGSFragariaPrefsColourAttributes];
+        sc.coloursAutocomplete = [defaults boolForKey:MGSFragariaPrefsColourAutocomplete];
+        sc.coloursCommands = [defaults boolForKey:MGSFragariaPrefsColourCommands];
+        sc.coloursComments = [defaults boolForKey:MGSFragariaPrefsColourComments];
+        sc.coloursInstructions = [defaults boolForKey:MGSFragariaPrefsColourInstructions];
+        sc.coloursKeywords = [defaults boolForKey:MGSFragariaPrefsColourKeywords];
+        sc.coloursNumbers = [defaults boolForKey:MGSFragariaPrefsColourNumbers];
+        sc.coloursStrings = [defaults boolForKey:MGSFragariaPrefsColourStrings];
+        sc.coloursVariables = [defaults boolForKey:MGSFragariaPrefsColourVariables];
+        sc.colourForAttributes = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsAttributesColourWell]];
+        sc.colourForAutocomplete = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsAutocompleteColourWell]];
+        sc.colourForCommands = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsCommandsColourWell]];
+        sc.colourForComments = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsCommentsColourWell]];
+        sc.colourForInstructions = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsInstructionsColourWell]];
+        sc.colourForKeywords = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsKeywordsColourWell]];
+        sc.colourForNumbers = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsNumbersColourWell]];
+        sc.colourForStrings = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsStringsColourWell]];
+        sc.colourForVariables = [NSUnarchiver unarchiveObjectWithData:[defaults objectForKey:MGSFragariaPrefsVariablesColourWell]];
     }
     else
     {
