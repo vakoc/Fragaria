@@ -19,9 +19,24 @@
  *  - init
  */
 - (id)init {
-    self = [super initWithNibName:@"MGSPreferencesFontsAndColours" bundle:[NSBundle bundleForClass:[MGSFragariaFontsAndColoursPrefsViewController class]]];
+    NSBundle *bundle;
+    NSView *v;
+    id nextResp;
+    
+    bundle = [NSBundle bundleForClass:[MGSFragariaFontsAndColoursPrefsViewController class]];
+    self = [super initWithNibName:@"MGSPreferencesFontsAndColours" bundle:bundle];
+    
     if (self) {
-        
+        /* Install this view controller in the responder chain so that it will
+         * receive the changeFont message. */
+        v = [self view];
+        nextResp = [v nextResponder];
+        /* Yosemite already does this for us, so don't do it if it is not
+         * needed. */
+        if (nextResp != self) {
+            [v setNextResponder:self];
+            [self setNextResponder:nextResp];
+        }
     }
     return self;
 }
@@ -47,8 +62,6 @@
  */
 - (void)changeFont:(id)sender
 {
-    /* changeFont: is sent up the responder chain by the fontManager so we have to call this
-    method from say the preferences window controller which has been configured as the window delegate */
 	NSFontManager *fontManager = sender;
 	NSFont *panelFont = [fontManager convertFont:[fontManager selectedFont]];
 	[[[NSUserDefaultsController sharedUserDefaultsController] values] setValue:[NSArchiver archivedDataWithRootObject:panelFont] forKey:MGSFragariaPrefsTextFont];
