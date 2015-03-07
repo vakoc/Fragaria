@@ -76,17 +76,6 @@
 
 /*
  
- - changeFont:
- 
- */
-- (void)changeFont:(id)sender
-{
-    /* NSFontManager will send this method up the responder chain */
-    [fontsAndColoursPrefsViewController changeFont:sender];
-}
-
-/*
- 
  - revertToStandardSettings:
  
  */

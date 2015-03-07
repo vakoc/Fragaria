@@ -40,8 +40,6 @@
  */
 - (BOOL)tabView:(NSTabView *)tabView shouldSelectTabViewItem:(NSTabViewItem *)tabViewItem
 {
-#pragma unused(tabView)
-#pragma unused(tabViewItem)
     BOOL select = YES;
     
     // if we have un committed edits then disallow tab item selection
