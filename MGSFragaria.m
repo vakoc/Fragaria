@@ -123,13 +123,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setHasVerticalScroller:(BOOL)value
 {
-	// @todo: (jsd) Should we override NSScrollView simply
-	//        in order to achieve this affect? Or leave it
-	//        to the developer to set autoHidesScrollers
-	//        himself? If using KVC on the scrollView then
-	//        there's going to be a differerence.
     self.scrollView.hasVerticalScroller = value;
-    self.scrollView.autohidesScrollers = value;
 }
 
 - (BOOL)hasVerticalScroller
