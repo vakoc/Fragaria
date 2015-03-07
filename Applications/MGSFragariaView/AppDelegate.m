@@ -135,20 +135,18 @@
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	breakpointsForView:
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSSet*) breakpointsForView:(id)sender
+- (NSSet*) breakpointsForFragaria:(id)sender
 {
-	#pragma unused(sender)
     return [NSSet setWithArray:self.breakpoints];
 }
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	toggleBreakpointForView:onLine
+	toggleBreakpointForFragaria:onLine
         This simple demonstration simply toggles breakpoints every
         time the line number is clicked.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)toggleBreakpointForView:(id)sender onLine:(int)line;
+- (void)toggleBreakpointForFragaria:(id)sender onLine:(NSUInteger)line;
 {
-	#pragma unused(sender)
 	if ([self.breakpoints containsObject:@(line)])
 	{
 		self.breakpoints = [self.breakpoints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {

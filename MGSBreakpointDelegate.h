@@ -6,7 +6,10 @@
 //
 //
 
-#import <Foundation/Foundation.h>
+#import <Cocoa/Cocoa.h>
+
+
+@class MGSFragaria;
 
 
 /** The <MGSBreakpointDelegate> protocol specifies methods for delegates
@@ -24,21 +27,21 @@
  *                originating this message belongs.
  *  @return A set of NSNumber indicating the line numbers that have
  *          breakpoints. */
-- (NSSet*)breakpointsForView:(id)sender;
+- (NSSet *)breakpointsForFragaria:(MGSFragaria *)sender;
 
 /** This message is sent to a delegate when Fragaria indicates that a request
  *  to toggle a breakpoint was made.
  *  @param sender A reference to the MGSFragaria instance to which the gutter
  *                originating this message belongs.
  *  @param line The line number which the user clicked on. */
-- (void)toggleBreakpointForView:(id)sender onLine:(NSUInteger)line;
+- (void)toggleBreakpointForFragaria:(MGSFragaria *)sender onLine:(NSUInteger)line;
 
 
-/** @deprecated Use breakpointsForView: instead.
+/** @deprecated Use breakpointsForFragaria: instead.
  *  @param file Deprecated parameter. */
 - (NSSet*) breakpointsForFile:(NSString*)file DEPRECATED_ATTRIBUTE;
 
-/** @deprecated Use toggleBreakpointForView:onLine: instead.
+/** @deprecated Use toggleBreakpointForFragaria:onLine: instead.
  *  @param file Deprecated parameter.
  *  @param line Deprecated parameter. */
 - (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line DEPRECATED_ATTRIBUTE;

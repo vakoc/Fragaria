@@ -484,8 +484,8 @@
 	
 	if (_breakpointDelegate) {
 		
-		if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForView:)]) {
-			linesWithBreakpoints = [_breakpointDelegate breakpointsForView:self.fragaria];
+		if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFragaria:)]) {
+			linesWithBreakpoints = [_breakpointDelegate breakpointsForFragaria:self.fragaria];
 		} else if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFile:)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
@@ -805,8 +805,8 @@
 {
     _selectedLineNumber = line;
     
-    if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForView:onLine:)]) {
-        [_breakpointDelegate toggleBreakpointForView:self.fragaria onLine:line];
+    if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFragaria:onLine:)]) {
+        [_breakpointDelegate toggleBreakpointForFragaria:self.fragaria onLine:line];
     } else if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
