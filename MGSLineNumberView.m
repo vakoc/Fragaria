@@ -82,7 +82,6 @@
         _minimumWidth = 40;
         _font = [NSFont fontWithName:@"Menlo" size:11];
         _textColor = [NSColor colorWithCalibratedWhite:0.42 alpha:1.0];
-        _alternateTextColor = [NSColor whiteColor];
         _breakpointData = [[NSDictionary alloc] init];
         
         [self setClientView:[aScrollView documentView]];
@@ -142,13 +141,6 @@
 - (void)setTextColor:(NSColor *)textColor
 {
     _textColor = textColor;
-    [self setNeedsDisplay:YES];
-}
-
-
-- (void)setAlternateTextColor:(NSColor *)alternateTextColor
-{
-    _alternateTextColor = alternateTextColor;
     [self setNeedsDisplay:YES];
 }
 
@@ -335,23 +327,6 @@
 }
 
 
-#pragma mark - Drawing utility functions
-
-
-- (NSDictionary *)textAttributes
-{
-    return @{           NSFontAttributeName: self.font,
-             NSForegroundColorAttributeName: self.textColor};
-}
-
-
-- (NSDictionary *)markerTextAttributes
-{
-    return @{           NSFontAttributeName: self.font,
-             NSForegroundColorAttributeName: self.alternateTextColor};
-}
-
-
 #pragma mark - Automatic thickness control
 
 
@@ -426,6 +401,25 @@
 }
 
 
+#pragma mark - Drawing utilities
+
+
+- (NSDictionary*)textAttributes
+{
+    return @{ NSFontAttributeName: self.font,
+              NSForegroundColorAttributeName: self.textColor };
+}
+
+
+- (NSDictionary*)highlightTextAttributesForLine:(NSUInteger)line
+{
+    NSColor *markerColor = [_breakpointData objectForKey:@(line + 1)];
+    NSColor *textCol = [self.textColor highlightWithLevel:[markerColor alphaComponent]];
+    return @{ NSFontAttributeName: self.font,
+              NSForegroundColorAttributeName: textCol };
+}
+
+
 #pragma mark - Main draw methods
 
 
@@ -442,9 +436,20 @@
 
 - (void)drawRect:(NSRect)dirtyRect
 {
-    id			view;
-	NSRect		bounds;
+    SMLTextView	*view;
+	NSRect bounds;
     NSRect visibleRect;
+    NSLayoutManager	*layoutManager;
+    NSRange range, glyphRange;
+    NSString *labelText;
+    NSUInteger index, line;
+    NSRect wholeLineRect;
+    CGFloat ypos;
+    NSDictionary *currentTextAttributes;
+    NSMutableArray *lines;
+    NSAttributedString *drawingAttributedString;
+    CGContextRef drawingContext;
+    NSColor *markerColor;
 
 	bounds = [self bounds];
     view = [self clientView];
@@ -460,22 +465,9 @@
     dash[1] = 2.0f;
     [dottedLine setLineDash:dash count:2 phase:visibleRect.origin.y];
     [dottedLine stroke];
-	
-    NSLayoutManager			*layoutManager;
-    NSRange					range, glyphRange;
-    NSString				*labelText;
-    NSUInteger				index, line;
-    NSRect                  wholeLineRect;
-    CGFloat					ypos;
-    NSDictionary			*textAttributes, *currentTextAttributes;
-    NSMutableArray			*lines;
-    NSAttributedString      *drawingAttributedString;
-    CGContextRef            drawingContext;
-    NSColor *markerColor;
 
     layoutManager = [view layoutManager];
 
-    textAttributes = [self textAttributes];
     drawingContext = [[NSGraphicsContext currentContext] graphicsPort];
     CGAffineTransform flipTransform = {1, 0, 0, -1, 0, 0};
     CGContextSetTextMatrix(drawingContext, flipTransform);
@@ -500,11 +492,11 @@
             // portion. Need to compensate for the clipview's coordinates.
             ypos = wholeLineRect.origin.y;
 
-            currentTextAttributes = textAttributes;
-
             if ((markerColor = [_breakpointData objectForKey:@(line + 1)])) {
                 [self drawMarkerInRect:wholeLineRect withColor:markerColor];
-                currentTextAttributes = [self markerTextAttributes];
+                currentTextAttributes = [self highlightTextAttributesForLine:line];
+            } else {
+                currentTextAttributes = [self textAttributes];
             }
 
             if (self.drawsLineNumbers)
@@ -546,7 +538,7 @@
     NSUInteger        index, stringLength;
     NSRect            rect;
     NSMutableArray    *lines;
-    NSRect            wholeLineRect = NSMakeRect(0.0,0.0,0.0,0.0);
+    NSRect            wholeLineRect = NSZeroRect;
 
     view = [self clientView];
     layoutManager = [view layoutManager];
@@ -696,12 +688,22 @@
     
     markerImage = [NSImage.alloc initWithSize:size];
     NSCustomImageRep *rep = [NSCustomImageRep.alloc initWithSize:size flipped:NO drawingHandler:^BOOL(NSRect dstRect) {
+        BOOL yosemite = floor(NSAppKitVersionNumber) > NSAppKitVersionNumber10_9;
         NSRect rect;
         NSBezierPath *path;
         CGFloat lineWidth = (dstRect.size.height < 12.0 ? 1 : (dstRect.size.height / 12.0));
-        CGFloat cornerRadius = 3.0;
+        CGFloat cornerRadius = yosemite ? 0 : 3.0;
         
-        rect = NSMakeRect(lineWidth/2.0, lineWidth/2.0, dstRect.size.width-lineWidth, dstRect.size.height-lineWidth);
+        if (yosemite) {
+            rect.origin = NSZeroPoint;
+            rect.size = dstRect.size;
+            rect.size.height--;
+            rect.origin.y++;
+        } else {
+            rect.origin = NSMakePoint(lineWidth/2.0, lineWidth/2.0);
+            rect.size = NSMakeSize(dstRect.size.width-lineWidth, dstRect.size.height-lineWidth);
+        }
+        
         NSPoint tip = NSMakePoint(NSMaxX(rect), NSMinY(rect) + NSHeight(rect)/2);
         CGFloat arrowEndX = NSMaxX(rect)-NSHeight(rect)/2.6;
         
@@ -713,19 +715,31 @@
         [path lineToPoint:NSMakePoint(arrowEndX, NSMinY(rect))];
         [path closePath];
         
-        NSColor *colorFill1 = [colorBase colorUsingColorSpaceName:NSDeviceRGBColorSpace];
-        CGFloat gradientTo = colorFill1.brightnessComponent - 0.1;
-        NSColor *colorFill2 = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:gradientTo alpha:colorBase.alphaComponent];
+        if (yosemite) {
+            [colorBase setFill];
+            [path fill];
+        } else {
+            NSColor *colorFill1, *colorFill2, *colorStroke, *tmp;
+            CGFloat h, s, b, a;
+            
+            tmp = [colorBase colorUsingColorSpaceName:NSDeviceRGBColorSpace];
+            h = tmp.hueComponent;
+            s = tmp.saturationComponent;
+            b = tmp.brightnessComponent;
+            a = tmp.alphaComponent;
+            
+            colorFill1 = [[colorBase highlightWithLevel:0.6] colorWithAlphaComponent:a];
+            colorFill2 = [[colorBase highlightWithLevel:0.1] colorWithAlphaComponent:a];
+            
+            NSGradient *fill = [[NSGradient alloc] initWithColors:@[colorFill1, colorFill2]];
+            [fill drawInBezierPath:path angle:-90.0];
+            
+            colorStroke = [[colorBase shadowWithLevel:0.3] colorWithAlphaComponent:a];
+            [colorStroke set];
+            [path setLineWidth:lineWidth];
+            [path stroke];
+        }
         
-        CGFloat strokeTo = colorFill2.brightnessComponent - 0.35;
-        NSColor *colorStroke = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:strokeTo alpha:colorBase.alphaComponent];
-        
-        NSGradient *fill = [[NSGradient alloc] initWithColors:@[colorFill1, colorFill2]];
-        [fill drawInBezierPath:path angle:-90.0];
-        
-        [colorStroke set];
-        [path setLineWidth:lineWidth];
-        [path stroke];
         return YES;
     }];
     
@@ -816,7 +830,7 @@
 #pragma clang diagnostic pop
     }
     
-    NSColor *defaultMarkerColor = [NSColor colorWithCalibratedRed:1.0 green:0.78 blue:0.98 alpha:1.0];
+    NSColor *defaultMarkerColor = [NSColor colorWithCalibratedRed:1.0 green:0.5 blue:1.0 alpha:1.0];
     
     if ([_breakpointDelegate respondsToSelector:@selector(breakpointColourForLine:ofFragaria:)]) {
         for (line in linesWithBreakpoints) {

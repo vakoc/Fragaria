@@ -62,8 +62,6 @@
 @property (nonatomic) NSFont *font;
 /** Primary text color for the text editor. */
 @property (nonatomic) NSColor *textColor;
-/** Alternate text color for the text editor. */
-@property (nonatomic) NSColor *alternateTextColor;
 /** Text editor background color. */
 @property (nonatomic) NSColor *backgroundColor;
 /** Minimum width of the gutter. */
