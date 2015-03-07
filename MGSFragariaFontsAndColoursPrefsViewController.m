@@ -13,7 +13,9 @@
 
 @end
 
-@implementation MGSFragariaFontsAndColoursPrefsViewController
+@implementation MGSFragariaFontsAndColoursPrefsViewController {
+    NSFont *editorFont;
+}
 
 /*
  *  - init
@@ -37,6 +39,9 @@
             [v setNextResponder:self];
             [self setNextResponder:nextResp];
         }
+        
+        NSData *fontData = [[NSUserDefaults standardUserDefaults] objectForKey:MGSFragariaPrefsTextFont];
+        editorFont = [NSUnarchiver unarchiveObjectWithData:fontData];
     }
     return self;
 }
@@ -47,12 +52,8 @@
  */
 - (IBAction)setFontAction:(id)sender
 {
-#pragma unused(sender)
-    
-	NSFontManager *fontManager = [NSFontManager sharedFontManager];
-    NSData *fontData = [[[NSUserDefaultsController sharedUserDefaultsController] values] valueForKey:MGSFragariaPrefsTextFont];
-    NSFont *font = [NSUnarchiver unarchiveObjectWithData:fontData];
-	[fontManager setSelectedFont:font isMultiple:NO];
+    NSFontManager *fontManager = [NSFontManager sharedFontManager];
+    [fontManager setSelectedFont:editorFont isMultiple:NO];
 	[fontManager orderFrontFontPanel:nil];
 }
 
@@ -63,7 +64,7 @@
 - (void)changeFont:(id)sender
 {
 	NSFontManager *fontManager = sender;
-	NSFont *panelFont = [fontManager convertFont:[fontManager selectedFont]];
+	NSFont *panelFont = [fontManager convertFont:editorFont];
 	[[[NSUserDefaultsController sharedUserDefaultsController] values] setValue:[NSArchiver archivedDataWithRootObject:panelFont] forKey:MGSFragariaPrefsTextFont];
 }
 
