@@ -760,8 +760,7 @@
     NSRect imageRect;
     BOOL errorHit = NO;
 
-    if (line != NSNotFound)
-    {
+    if (line != NSNotFound) {
         _mouseDownLineTracking = line + 1; // now has 1-based index.
         _mouseDownRectTracking = NSMakeRect(0.0, 0.0, 0.0, 0.0);
 
@@ -772,13 +771,10 @@
                 errorHit = YES;
         }
 
-        if (errorHit)
-        {
+        if (errorHit) {
             _mouseDownRectTracking = imageRect;
-        }
-        else
-        {
-            [self handleBreakpoint];
+        } else {
+            [self breakpointClickedOnLine:_mouseDownLineTracking];
         }
     }
 }
@@ -789,16 +785,11 @@
     NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
     NSUInteger line = [self lineNumberForLocation:location.y]; // method returns 0-based index.
 
-    if ( (line != _mouseDownLineTracking -1) || (location.x > self.frame.size.width) )
-    {
-        [self handleBreakpoint];
-    }
-    else
-    {
-        if ([_decorations objectForKey:@(_mouseDownLineTracking)])
-        {
-            if (CGRectContainsPoint(_mouseDownRectTracking, location))
-            {
+    if (line != _mouseDownLineTracking - 1 || location.x > self.frame.size.width) {
+        [self breakpointClickedOnLine:_mouseDownLineTracking];
+    } else {
+        if ([_decorations objectForKey:@(_mouseDownLineTracking)]) {
+            if (CGRectContainsPoint(_mouseDownRectTracking, location)) {
                 _selectedLineNumber = line;
                 [NSApp sendAction:_decorationActionSelector to:_decorationActionTarget from:self];
             }
@@ -807,17 +798,19 @@
 }
 
 
-- (void)handleBreakpoint
+#pragma mark - Delegate handling
+
+
+- (void)breakpointClickedOnLine:(NSUInteger)line
 {
-    if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForView:onLine:)])
-    {
-        [_breakpointDelegate toggleBreakpointForView:self.fragaria onLine:(int)_mouseDownLineTracking];
-    }
-    else if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)])
-    {
+    _selectedLineNumber = line;
+    
+    if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForView:onLine:)]) {
+        [_breakpointDelegate toggleBreakpointForView:self.fragaria onLine:line];
+    } else if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)]) {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)_mouseDownLineTracking];
+        [_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)line];
 #pragma clang diagnostic pop
     }
 
