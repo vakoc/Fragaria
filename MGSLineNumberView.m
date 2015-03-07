@@ -727,10 +727,10 @@
         
         NSColor *colorFill1 = [colorBase colorUsingColorSpaceName:NSDeviceRGBColorSpace];
         CGFloat gradientTo = colorFill1.brightnessComponent - 0.1;
-        NSColor *colorFill2 = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:gradientTo alpha:1];
+        NSColor *colorFill2 = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:gradientTo alpha:colorBase.alphaComponent];
         
         CGFloat strokeTo = colorFill2.brightnessComponent - 0.35;
-        NSColor *colorStroke = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:strokeTo alpha:1];
+        NSColor *colorStroke = [NSColor colorWithCalibratedHue:colorBase.hueComponent saturation:colorBase.saturationComponent brightness:strokeTo alpha:colorBase.alphaComponent];
         
         NSGradient *fill = [[NSGradient alloc] initWithColors:@[colorFill1, colorFill2]];
         [fill drawInBezierPath:path angle:-90.0];
