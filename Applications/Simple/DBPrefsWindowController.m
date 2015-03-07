@@ -354,8 +354,8 @@ static id _sharedPrefsWindowController = nil;
 	// at this point there are two. One is visible and one is hidden.
 	NSEnumerator *subviewsEnum = [[contentSubview subviews] reverseObjectEnumerator];
 	
-	// This is our visible view. Just get past it.
-	[subviewsEnum nextObject];
+    // This is our visible view. Just get past it and make it the 1st responder
+    [[self window] makeFirstResponder:[subviewsEnum nextObject]];
 
 	// Remove everything else. There should be just one, but
 	// if the user does a lot of fast clicking, we might have
@@ -363,12 +363,6 @@ static id _sharedPrefsWindowController = nil;
 	while ((subview = [subviewsEnum nextObject]) != nil) {
 		[subview removeFromSuperviewWithoutNeedingDisplay];
 	}
-
-	// This is a work-around that prevents the first
-	// toolbar icon from becoming highlighted.
-	[[self window] makeFirstResponder:nil];
-
-	(void)animation;
 }
 
 
