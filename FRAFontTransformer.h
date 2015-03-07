@@ -20,10 +20,9 @@ specific language governing permissions and limitations under the License.
 #import <Cocoa/Cocoa.h>
 
 
-/**
- *  This NSValueTransformer transforms font information in an Interface
- *  Builder bindings compatible manner.
- **/
+/** This NSValueTransformer transforms an NSFont to an NSString suitable for
+ *  display in a font picker. */
+
 @interface FRAFontTransformer : NSValueTransformer
 
 @end
