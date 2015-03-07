@@ -45,6 +45,12 @@
 
 
 @implementation MGSLineNumberView {
+    // Array of character indices for the beginning of each line
+    NSMutableArray      *_lineIndices;
+    // When text is edited, this is the start of the editing region. All line
+    // calculations after this point are invalid and need to be recalculated.
+    NSUInteger          _invalidCharacterIndex;
+    
     NSUInteger _mouseDownLineTracking;
     NSRect     _mouseDownRectTracking;
     NSMutableDictionary *_markerImages;

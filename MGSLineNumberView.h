@@ -45,13 +45,6 @@
 
 
 @interface MGSLineNumberView : NSRulerView
-{
-    // Array of character indices for the beginning of each line
-    NSMutableArray      *_lineIndices;
-    // When text is edited, this is the start of the editing region. All line
-    // calculations after this point are invalid and need to be recalculated.
-    NSUInteger          _invalidCharacterIndex;
-}
 
 
 /// @name Properties
@@ -111,8 +104,9 @@
  * @param aScrollView Indicates the scroll view associated with this instance. */
 - (id)initWithScrollView:(NSScrollView *)aScrollView;
 
-/** Returns the line number for a character position.
- * @param location The character position being checked. */
+/** Returns the zero-based number of the line located at the specified vertical
+ * offset from the top of the text view.
+ * @param location A location (in points) from the top of the text view. */
 - (NSUInteger)lineNumberForLocation:(CGFloat)location;
 
 /** The rectangle (relative to this view's origin) where the decoration of
