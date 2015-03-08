@@ -136,12 +136,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 	// @todo: this one's hard to abstract away and make dynamic
 	// because forwarding doesn't automatically use KVO's method
 	// of checking for _is_ setters and getters. 
-	[self.textView.syntaxColouring setSyntaxColoured:value];
+	[self.textView setSyntaxColoured:value];
 }
 
 - (BOOL)isSyntaxColoured
 {
-	return [self.textView.syntaxColouring isSyntaxColoured];
+	return [self.textView isSyntaxColoured];
 }
 
 

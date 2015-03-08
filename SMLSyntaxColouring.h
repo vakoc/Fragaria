@@ -57,9 +57,6 @@ Copyright 2004-2009 Peter Borg
 /** The syntax colouring delegate */
 @property (weak) id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
 
-/** Specifies if the syntax colourer has to be disabled or not. */
-@property (nonatomic, getter=isSyntaxColoured) BOOL syntaxColoured;
-
 /** Indicates the character ranges where colouring is valid. */
 @property (strong, readonly) NSMutableIndexSet *inspectedCharacterIndexes;
 
@@ -117,11 +114,12 @@ Copyright 2004-2009 Peter Borg
 - (void)recolourRange:(NSRange)range;
 
 /** Marks as invalid the colouring in the range currently visible (not clipped)
- * in the specified text view.
- * @param textView The text view from which to get a character range. */
+ *  in the specified text view.
+ *  @param textView The text view from which to get a character range. */
 - (void)invalidateVisibleRangeOfTextView:(SMLTextView *)textView;
 
-/** Marks the entire colouring attributes as invalid. */
+/** Marks the entire text's colouring as invalid and removes all coloring
+ *  attributes applied. */
 - (void)invalidateAllColouring;
 
 /** Forces a recolouring of the character range specified. The recolouring will

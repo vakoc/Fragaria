@@ -287,6 +287,17 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - setSyntaxColoured:
+ */
+- (void)setSyntaxColoured:(BOOL)syntaxColoured
+{
+    if (_syntaxColoured != syntaxColoured)
+        [self.syntaxColouring invalidateAllColouring];
+    _syntaxColoured = syntaxColoured;
+}
+
+
 #pragma mark - Strings - Properties and Methods
 
 
@@ -321,6 +332,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         _interfaceController = [[MGSExtraInterfaceController alloc] init];
         
         _syntaxColouring = [[SMLSyntaxColouring alloc] initWithLayoutManager:layoutManager];
+        _syntaxColoured = YES;
         
         [self setDefaults];
         
@@ -438,10 +450,12 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     
     [self getRectsBeingDrawn:&dirtyRects count:&rectCount];
     
-    for (i=0; i<rectCount; i++) {
-        recolourRange = [[self layoutManager] glyphRangeForBoundingRect:dirtyRects[i] inTextContainer:[self textContainer]];
-        recolourRange = [[self layoutManager] characterRangeForGlyphRange:recolourRange actualGlyphRange:NULL];
-        [self.syntaxColouring recolourRange:recolourRange];
+    if (self.isSyntaxColoured) {
+        for (i=0; i<rectCount; i++) {
+            recolourRange = [[self layoutManager] glyphRangeForBoundingRect:dirtyRects[i] inTextContainer:[self textContainer]];
+            recolourRange = [[self layoutManager] characterRangeForGlyphRange:recolourRange actualGlyphRange:NULL];
+            [self.syntaxColouring recolourRange:recolourRange];
+        }
     }
     
     [super drawRect:rect];

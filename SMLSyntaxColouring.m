@@ -87,7 +87,6 @@ static char kcColoursChanged;
         _inspectedCharacterIndexes = [[NSMutableIndexSet alloc] init];
 
         // configure colouring
-        _syntaxColoured = YES;
         _coloursOnlyUntilEndOfLine = YES;
         [self setColourDefaults];
         [self rebuildAttributesCache];
@@ -213,20 +212,6 @@ static char kcColoursChanged;
 
 
 /*
- * - setSyntaxColoured:
- */
-- (void)setSyntaxColoured:(BOOL)syntaxColoured
-{
-    if (!_syntaxColoured && syntaxColoured) {
-        _syntaxColoured = YES;
-        [self invalidateAllColouring];
-    } else if (_syntaxColoured && !syntaxColoured) {
-        _syntaxColoured = NO;
-        [self invalidateAllColouring];
-    }
-}
-
-/*
  *  @property syntaxDefinition
  */
 - (void)setSyntaxDefinition:(MGSSyntaxDefinition *)syntaxDefinition
@@ -279,7 +264,7 @@ static char kcColoursChanged;
  */
 - (BOOL)isSyntaxColouringRequired
 {
-    return self.isSyntaxColoured && self.syntaxDefinition && self.syntaxDefinition.syntaxDefinitionAllowsColouring;
+    return self.syntaxDefinition && self.syntaxDefinition.syntaxDefinitionAllowsColouring;
 }
 
 

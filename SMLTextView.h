@@ -106,6 +106,9 @@
 /** Specifies whether or not tab stops should be used when indenting. */
 @property (nonatomic, assign) BOOL useTabStops;
 
+/** Specifies if the syntax colourer has to be disabled or not. */
+@property (nonatomic, getter=isSyntaxColoured) BOOL syntaxColoured;
+
 
 /// @name Properties - Delegates
 #pragma mark - Properties - Delegates
