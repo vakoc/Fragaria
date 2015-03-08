@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>numberDefinition</key>
-	<string>(?&lt;=[ #])([0123456789]+|(\$([0123456789ABCDEF]+)))</string>
+	<string>(?&lt;=\W)((-?[0-9]+)|(\$([0-9A-Fa-f]+)))</string>
 	<key>beginCommand</key>
 	<string></string>
 	<key>endCommand</key>
