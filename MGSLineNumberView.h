@@ -82,7 +82,7 @@
 @property (readonly) NSUInteger selectedLineNumber;
 
 /** Indicates whether or not line numbers should be drawn. */
-@property (nonatomic) BOOL *drawsLineNumbers;
+@property (nonatomic) BOOL *showsLineNumbers;
 
 
 /// @name Instance Methods

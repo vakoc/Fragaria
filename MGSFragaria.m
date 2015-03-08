@@ -58,7 +58,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic syntaxDefinitionName, syntaxColouringDelegate;
 
 // MGSLineNumberView dynamic properties:
-@dynamic startingLineNumber;
+@dynamic startingLineNumber, showsLineNumbers;
 
 
 #pragma mark - Properties - Overall Appearance and Display
@@ -138,23 +138,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (BOOL)scrollElasticityDisabled
 {
     return (self.scrollView.verticalScrollElasticity == NSScrollElasticityNone);
-}
-
-
-/*
- * @property showsLineNumbers:
- */
-- (void)setShowsLineNumbers:(BOOL)value
-{
-	// @todo: (jsd) Changing the property name in MGSLineNumberView
-	//        would allow making this property dynamic without
-	//        breaking the current API.
-    self.gutterView.drawsLineNumbers = value;
-}
-
-- (BOOL)showsLineNumbers
-{
-    return self.gutterView.drawsLineNumbers;
 }
 
 

@@ -77,7 +77,7 @@
         _markerImages = [[NSMutableDictionary alloc] init];
         _fragaria = fragaria;
         
-        _drawsLineNumbers = YES;
+        _showsLineNumbers = YES;
         _backgroundColor = [NSColor colorWithCalibratedWhite:0.94 alpha:1.0];
         _minimumWidth = 40;
         _font = [NSFont fontWithName:@"Menlo" size:11];
@@ -122,9 +122,9 @@
 }
 
 
-- (void)setDrawsLineNumbers:(BOOL *)drawsLineNumbers
+- (void)setShowsLineNumbers:(BOOL *)drawsLineNumbers
 {
-    _drawsLineNumbers = drawsLineNumbers;
+    _showsLineNumbers = drawsLineNumbers;
     [self setRuleThickness:[self requiredThickness]];
     [self setNeedsDisplay:YES];
 }
@@ -337,7 +337,7 @@
     NSSize              stringSize;
     CGFloat decorationsWidth;
     
-    if (_drawsLineNumbers) {
+    if (_showsLineNumbers) {
         lineCount = [[self lineIndices] count] + (_startingLineNumber - 1);
         digits = 1;
         if (lineCount > 0)
@@ -499,7 +499,7 @@
                 currentTextAttributes = [self textAttributes];
             }
 
-            if (self.drawsLineNumbers)
+            if (self.showsLineNumbers)
             {
                 // Draw line numbers first so that error images won't be buried underneath long line numbers.
                 // Line numbers are internally stored starting at 0
