@@ -131,8 +131,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setScrollElasticityDisabled:(BOOL)value
 {
-	//@todo: (jsd) Here is another argument for subclassing
-	//       NSScrollView. It would allow a simple BOOL setter.
     NSScrollElasticity setting = value ? NSScrollElasticityNone : NSScrollElasticityAutomatic;
     [self.scrollView setVerticalScrollElasticity:setting];
 }
@@ -165,8 +163,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setShowsGutter:(BOOL)showsGutter
 {
-	// @todo: Again subclass the scrollView. Add a synonym for
-	// `rulersVisible` called showsGutter and make this dynamic.
     self.scrollView.rulersVisible = showsGutter;
 }
 
