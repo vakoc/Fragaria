@@ -282,7 +282,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     temporaryCharacterSet = [[NSCharacterSet whitespaceAndNewlineCharacterSet] mutableCopy];
     [temporaryCharacterSet formUnionWithCharacterSet:[NSCharacterSet symbolCharacterSet]];
     [temporaryCharacterSet formUnionWithCharacterSet:[NSCharacterSet punctuationCharacterSet]];
-    [temporaryCharacterSet removeCharactersInString:@"._-"]; // common separators in variable names
+    [temporaryCharacterSet removeCharactersInString:@"_-"]; // common separators in variable names
     _keywordEndCharacterSet = [temporaryCharacterSet copy];
     
     // number character set

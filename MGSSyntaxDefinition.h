@@ -50,7 +50,7 @@
 @property (readonly) NSCharacterSet *keywordStartCharacterSet;
 /** A set of all the characters that can be at the end of a keyword.
  *  By default, this set contains whitespaces, newlines, punctuation and 
- *  symbols, with the exclusion of the characters _, dash and dot. */
+ *  symbols, with the exclusion of the characters _ and dash. */
 @property (readonly) NSCharacterSet *keywordEndCharacterSet;
 /** Indicates if keywords should have higher priority than commands. Set to
  * YES when you want keywords to be nested inside commands. */

@@ -632,6 +632,9 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+#pragma mark - Contextual Menu
+
+
 /*
  * - menuForEvent:
  */
