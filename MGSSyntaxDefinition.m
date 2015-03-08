@@ -43,12 +43,13 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
 }
 
 
-- (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary
+- (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary name:(NSString *)name
 {
     self = [super init];
     [self setDefaults];
 
     _syntaxDictionary = syntaxDictionary;
+    _name = name;
     
     // If the plist file is malformed be sure to set the values to something
     

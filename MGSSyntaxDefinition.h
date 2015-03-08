@@ -97,14 +97,17 @@
  *  -initFromSyntaxDictionary: to make a syntax defintion equal to this
  *  one. */
 @property (readonly) NSDictionary *syntaxDictionary;
+/** A name associated with this syntax definition. Might be nil. */
+@property (readonly) NSString *name;
 
 
 /** Designated initializer.
  *  Initializes a new syntax definition object from a dictionary object,
  *  usually read from a plist in the framework bundle.
  *  @param syntaxDictionary A dictionary representation of the plist file that
- *                          defines the syntax. */
-- (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary;
+ *                          defines the syntax.
+ *  @param name An optional name for this syntax dictionary. */
+- (instancetype)initFromSyntaxDictionary:(NSDictionary *)syntaxDictionary name:(NSString*)name;
 
 /** Autocomplete delegate main method. Returns a lexicographically ordered
  *  array of the objects in the autocompleteWords set. */
