@@ -152,12 +152,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setShowsSyntaxErrors:(BOOL)value
 {
-    self.syntaxErrorController.showSyntaxErrors = value;
+    self.syntaxErrorController.showsSyntaxErrors = value;
 }
 
 - (BOOL)showsSyntaxErrors
 {
-    return self.syntaxErrorController.showSyntaxErrors;
+    return self.syntaxErrorController.showsSyntaxErrors;
 }
 
 

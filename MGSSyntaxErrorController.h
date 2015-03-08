@@ -29,7 +29,7 @@
 
 /** Set to YES when syntax errors should be visible both in the line number
  * view and the text view, set to NO to make all syntax errors invisible. */
-@property (nonatomic) BOOL showSyntaxErrors;
+@property (nonatomic) BOOL showsSyntaxErrors;
 
 /** The MGSLineNumberView where to show the error decorations (icons) */
 @property (nonatomic) MGSLineNumberView *lineNumberView;

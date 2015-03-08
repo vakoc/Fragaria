@@ -81,9 +81,9 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 }
 
 
-- (void)setShowSyntaxErrors:(BOOL)showSyntaxErrors
+- (void)setShowsSyntaxErrors:(BOOL)showSyntaxErrors
 {
-    _showSyntaxErrors = showSyntaxErrors;
+    _showsSyntaxErrors = showSyntaxErrors;
     [self updateSyntaxErrorsDisplay];
 }
 
@@ -129,7 +129,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 - (void)updateSyntaxErrorsDisplay
 {
     if (_textView) [self highlightErrors];
-    if (!_showSyntaxErrors) {
+    if (!_showsSyntaxErrors) {
         [self.lineNumberView setDecorations:[NSDictionary dictionary]];
         return;
     }
@@ -158,7 +158,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     [layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:NSMakeRange(0, text.length)];
     [layoutManager removeTemporaryAttribute:NSToolTipAttributeName forCharacterRange:NSMakeRange(0, text.length)];
     
-    if (!self.showSyntaxErrors) return;
+    if (!self.showsSyntaxErrors) return;
     
     // Highlight all errors and add buttjskaons
     NSMutableSet* highlightedRows = [NSMutableSet set];
