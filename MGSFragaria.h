@@ -162,7 +162,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 /** The autocomplete delegate for this instance of Fragaria. The autocomplete
  * delegate provides a list of words that can be used by the autocomplete
- * feature. If this property is nil, then the list of autocomple words will
+ * feature. If this property is nil, then the list of autocomplete words will
  * be read from the current syntax highlighting dictionary. */
 @property (nonatomic, weak) id<SMLAutoCompleteDelegate> autoCompleteDelegate;
 

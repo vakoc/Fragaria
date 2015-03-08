@@ -24,6 +24,7 @@
 #import <Cocoa/Cocoa.h>
 #import "MGSFragariaTextViewDelegate.h"
 #import "MGSDragOperationDelegate.h"
+#import "SMLAutoCompleteDelegate.h"
 
 
 @class MGSFragaria;
@@ -113,8 +114,12 @@
 /// @name Properties - Delegates
 #pragma mark - Properties - Delegates
 
+
 /** The text view's delegate */
 @property (nonatomic, assign) id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> delegate;
+
+/** The autocomplete delegate for this text view. */
+@property (weak) id<SMLAutoCompleteDelegate> autoCompleteDelegate;
 
 
 /// @name Strings - Properties and Methods

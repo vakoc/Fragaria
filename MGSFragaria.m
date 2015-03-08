@@ -39,9 +39,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @implementation MGSFragaria
 
 
-@synthesize autoCompleteDelegate = _autoCompleteDelegate;
-
-
 // SMLTextView dynamic properties:
 @dynamic attributedStringWithTemporaryAttributesApplied;
 @dynamic autoCompleteDelay, autoCompleteEnabled, autoCompleteWithKeywords;
@@ -52,6 +49,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic showsInvisibleCharacters, showsMatchingBraces, showsPageGuide;
 @dynamic string, syntaxColouring, tabWidth, textColor, textFont;
 @dynamic textInvisibleCharactersColour, useTabStops, syntaxColoured;
+@dynamic autoCompleteDelegate;
 
 // SMLSyntaxColouring dynamic properties:
 @dynamic coloursMultiLineStrings, coloursOnlyUntilEndOfLine;
@@ -208,24 +206,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (id<MGSFragariaTextViewDelegate>)textViewDelegate
 {
     return self.textView.delegate;
-}
-
-
-/*
- * @property autoCompleteDelegate
- */
-- (void)setAutoCompleteDelegate:(id<SMLAutoCompleteDelegate>)autoCompleteDelegate
-{
-    _autoCompleteDelegate = autoCompleteDelegate;
-    if (autoCompleteDelegate)
-        [self.textView setAutocompleteDelegate:autoCompleteDelegate];
-    else
-        [self.textView setAutocompleteDelegate:self.textView.syntaxColouring.syntaxDefinition];
-}
-
-- (id<SMLAutoCompleteDelegate>)autoCompleteDelegate
-{
-    return _autoCompleteDelegate;
 }
 
 

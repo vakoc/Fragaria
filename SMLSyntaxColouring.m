@@ -232,11 +232,6 @@ static char kcColoursChanged;
 	syntaxDict = [[MGSSyntaxController sharedInstance] syntaxDictionaryWithName:syntaxDefinitionName];
     syntaxDef = [[MGSSyntaxDefinition alloc] initFromSyntaxDictionary:syntaxDict name:syntaxDefinitionName];
 	[self setSyntaxDefinition:syntaxDef];
-	
-	/* Update the default autocomplete delegate with the new
-	 * syntax definition, if needed. */
-	if (!self.fragaria.autoCompleteDelegate)
-		[self.fragaria setAutoCompleteDelegate:nil];
 }
 
 - (NSString*)syntaxDefinitionName

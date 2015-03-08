@@ -1135,12 +1135,18 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
  */
 - (NSArray*)completionsForPartialWordRange:(NSRange)charRange indexOfSelectedItem:(NSInteger *)index
 {
-    if (!self.autocompleteDelegate) return @[];
+    id <SMLAutoCompleteDelegate> delegate;
+    
+    if (!self.autoCompleteDelegate)
+        delegate = self.syntaxColouring.syntaxDefinition;
+    else
+        delegate = self.autoCompleteDelegate;
+    if (!delegate) return @[];
     
     NSMutableArray* matchArray = [NSMutableArray array];
 
     // get all completions
-    NSMutableArray* allCompletions = [[self.autocompleteDelegate completions] mutableCopy];
+    NSMutableArray* allCompletions = [[delegate completions] mutableCopy];
     
     if (!allCompletions)
         allCompletions = [NSMutableArray array];
