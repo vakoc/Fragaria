@@ -82,13 +82,21 @@
  *  attribute and will be coloured as such. */
 @property (readonly) NSCharacterSet *attributesCharacterSet;
 
-/** Characters to be coloured as numbers. This includes eventual decimal
- *  separators. */
+/** A regular expression that matches numbers.
+ *  @discuss This property supercedes numberCharacterSet, nameCharacterSet and
+ *           decimalPointCharacter. If this property is nil, a syntax
+ *           colourer should use those properties instead, otherwise they are
+ *           ignored. */
+@property (readonly) NSString *numberDefinition;
+/** Characters to be coloured as numbers, if numberDefinition is nil. This
+ *  includes eventual decimal separators. */
 @property (readonly) NSCharacterSet *numberCharacterSet;
-/** Characters that should not precede a number for it to be coloured. */
+/** Characters that should not precede a number for it to be coloured.
+ *  @discuss This property has no effect if numberDefinition is non-nil. */
 @property (readonly) NSCharacterSet *nameCharacterSet;
 /** A character that will not be coloured as a number - even if included in
- *  numberCharacterSet - if it is the last character of the number. */
+ *  numberCharacterSet - if it is the last character of the number.
+ *  @discuss This property has no effect if numberDefinition is non-nil. */
 @property (readonly) unichar decimalPointCharacter;
 
 

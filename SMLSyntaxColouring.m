@@ -638,6 +638,19 @@ static char kcColoursChanged;
     NSString *documentString = [documentScanner string];
     NSString *rangeString = [rangeScanner string];
     
+    
+    if (self.syntaxDefinition.numberDefinition) {
+        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:self.syntaxDefinition.numberDefinition options:0 error:nil];
+        if (!regex) return;
+        
+        [regex enumerateMatchesInString:documentString options:0 range:colouringRange usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+            [self setColour:numbersColour range:[match range]];
+        }];
+        
+        return;
+    }
+    
+    
     // scan range to end
     while (![rangeScanner isAtEnd]) {
         

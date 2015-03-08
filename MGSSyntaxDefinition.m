@@ -13,29 +13,40 @@
 // syntax definition dictionary keys
 
 NSString *SMLSyntaxDefinitionAllowSyntaxColouring = @"allowSyntaxColouring";
+
+NSString *SMLSyntaxDefinitionAlternativeNumberRegex = @"numberDefinition";
+
 NSString *SMLSyntaxDefinitionKeywords = @"keywords";
 NSString *SMLSyntaxDefinitionAutocompleteWords = @"autocompleteWords";
 NSString *SMLSyntaxDefinitionRecolourKeywordIfAlreadyColoured = @"recolourKeywordIfAlreadyColoured";
 NSString *SMLSyntaxDefinitionKeywordsCaseSensitive = @"keywordsCaseSensitive";
+
 NSString *SMLSyntaxDefinitionBeginCommand = @"beginCommand";
 NSString *SMLSyntaxDefinitionEndCommand = @"endCommand";
+
 NSString *SMLSyntaxDefinitionBeginInstruction = @"beginInstruction";
 NSString *SMLSyntaxDefinitionEndInstruction = @"endInstruction";
+
 NSString *SMLSyntaxDefinitionBeginVariable = @"beginVariable";
 NSString *SMLSyntaxDefinitionEndVariable = @"endVariable";
+
 NSString *SMLSyntaxDefinitionFirstString = @"firstString";
 NSString *SMLSyntaxDefinitionSecondString = @"secondString";
+
 NSString *SMLSyntaxDefinitionFirstSingleLineComment = @"firstSingleLineComment";
 NSString *SMLSyntaxDefinitionSecondSingleLineComment = @"secondSingleLineComment";
 NSString *SMLSyntaxDefinitionBeginFirstMultiLineComment = @"beginFirstMultiLineComment";
 NSString *SMLSyntaxDefinitionEndFirstMultiLineComment = @"endFirstMultiLineComment";
 NSString *SMLSyntaxDefinitionBeginSecondMultiLineComment = @"beginSecondMultiLineComment";
 NSString *SMLSyntaxDefinitionEndSecondMultiLineComment = @"endSecondMultiLineComment";
+
 NSString *SMLSyntaxDefinitionFunctionDefinition = @"functionDefinition";
+
 NSString *SMLSyntaxDefinitionExcludeFromKeywordStartCharacterSet = @"excludeFromKeywordStartCharacterSet";
 NSString *SMLSyntaxDefinitionExcludeFromKeywordEndCharacterSet = @"excludeFromKeywordEndCharacterSet";
 NSString *SMLSyntaxDefinitionIncludeInKeywordStartCharacterSet = @"includeInKeywordStartCharacterSet";
 NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywordEndCharacterSet";
+
 
 
 @implementation MGSSyntaxDefinition {
@@ -61,6 +72,13 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     } else {
         // default to YES
         _syntaxDefinitionAllowsColouring = YES;
+    }
+    
+    value = [syntaxDictionary objectForKey:SMLSyntaxDefinitionAlternativeNumberRegex];
+    if (value) {
+        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
+        if (![value isEqual:@""])
+            _numberDefinition = value;
     }
     
     // keywords
