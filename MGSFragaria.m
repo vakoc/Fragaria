@@ -19,7 +19,6 @@ NSString * const MGSFOShowLineNumberGutter = @"showLineNumberGutter";
 NSString * const MGSFOHasVerticalScroller = @"hasVerticalScroller";
 NSString * const MGSFODisableScrollElasticity = @"disableScrollElasticity";
 NSString * const MGSFOLineWrap = @"lineWrap";
-NSString * const MGSFOShowsWarningsInGutter = @"showsWarningsInGutter";
 
 // string
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
@@ -181,18 +180,12 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 /*
  * @property showsWarningsInGutter
  */
-- (void)setShowsWarningsInGutter:(BOOL)value
+- (void)setShowsSyntaxErrors:(BOOL)value
 {
-	// @todo: (jsd) We can practically eliminate ALL
-	// of the Fragaria level properties for things that
-	// have components doing the work. As there's no
-	// plan to expose this (no should there be), I wonder
-	// if we should move this property to MGSLineNumberView,
-	// and set the syntaxErrorController there.
     self.syntaxErrorController.showSyntaxErrors = value;
 }
 
-- (BOOL)showsWarningsInGutter
+- (BOOL)showsSyntaxErrors
 {
     return self.syntaxErrorController.showSyntaxErrors;
 }
@@ -343,12 +336,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 - (void)setObject:(id)object forKey:(id)key
 {
-    if ([key isEqual:MGSFOShowsWarningsInGutter]) {
-        NSLog(@"Using setObject:forKey: with the MGSFOShowsWarningsInGutter "
-              "property is not supported and has no effect. Please use "
-              "setShowsWarningsInGutter:");
-        return;
-    } else if ([key isEqual:MGSFOSyntaxColouringDelegate]) {
+    if ([key isEqual:MGSFOSyntaxColouringDelegate]) {
         [self setSyntaxColouringDelegate:object];
         return;
     } else if ([key isEqual:MGSFOBreakpointDelegate]) {
@@ -459,7 +447,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     _syntaxErrorController = [[MGSSyntaxErrorController alloc] init];
     self.syntaxErrorController.lineNumberView = self.gutterView;
     self.syntaxErrorController.textView = self.textView;
-    [self setShowsWarningsInGutter:YES];
+    [self setShowsSyntaxErrors:YES];
     
     [self setAutoCompleteDelegate:nil];
 }

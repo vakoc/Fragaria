@@ -269,12 +269,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setShowsWarningsInGutter:(BOOL)showsWarningsInGutter
 {
-    [self.fragaria setShowsWarningsInGutter:showsWarningsInGutter];
+    [self.fragaria setShowsSyntaxErrors:showsWarningsInGutter];
 }
 
 - (BOOL)showsWarningsInGutter
 {
-    return [self.fragaria showsWarningsInGutter];
+    return [self.fragaria showsSyntaxErrors];
 }
 
 

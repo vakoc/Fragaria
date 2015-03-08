@@ -21,7 +21,6 @@ extern NSString * const MGSFOShowLineNumberGutter DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOHasVerticalScroller DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFODisableScrollElasticity DEPRECATED_ATTRIBUTE;
 extern NSString * const MGSFOLineWrap DEPRECATED_ATTRIBUTE;
-extern NSString * const MGSFOShowsWarningsInGutter DEPRECATED_ATTRIBUTE;
 
 // string
 extern NSString * const MGSFOSyntaxDefinitionName DEPRECATED_ATTRIBUTE;
@@ -218,7 +217,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 @property (nonatomic, assign) NSArray *syntaxErrors;
 
 /** Indicates whether or not error warnings are displayed.*/
-@property (nonatomic, assign) BOOL showsWarningsInGutter;
+@property (nonatomic, assign) BOOL showsSyntaxErrors;
 
 
 #pragma mark - Showing Breakpoints
