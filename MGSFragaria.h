@@ -143,7 +143,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 
 /** Specifies whether the document shall be syntax highlighted.*/
-@property (nonatomic) BOOL isSyntaxColoured;
+@property (nonatomic, getter=isSyntaxColoured) BOOL syntaxColoured;
 
 /** Specifies the current syntax definition name.*/
 @property (nonatomic, assign) NSString *syntaxDefinitionName;

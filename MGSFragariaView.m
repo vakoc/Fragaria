@@ -199,7 +199,7 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setIsSyntaxColoured:(BOOL)syntaxColoured
 {
-	[self.fragaria setIsSyntaxColoured:syntaxColoured];
+	[self.fragaria setSyntaxColoured:syntaxColoured];
 }
 
 - (BOOL)isSyntaxColoured

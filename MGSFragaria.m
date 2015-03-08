@@ -52,8 +52,8 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic insertClosingBraceAutomatically, insertClosingParenthesisAutomatically;
 @dynamic insertionPointColor, lineWrap, pageGuideColumn;
 @dynamic showsInvisibleCharacters, showsMatchingBraces, showsPageGuide;
-@dynamic string, syntaxColouring, tabWidth, textColor, textFont, textInvisibleCharactersColour;
-@dynamic useTabStops;
+@dynamic string, syntaxColouring, tabWidth, textColor, textFont;
+@dynamic textInvisibleCharactersColour, useTabStops, syntaxColoured;
 
 // SMLSyntaxColouring dynamic properties:
 @dynamic coloursMultiLineStrings, coloursOnlyUntilEndOfLine;
@@ -125,23 +125,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (BOOL)hasVerticalScroller
 {
     return self.scrollView.hasVerticalScroller;
-}
-
-
-/*
- * @property isSyntaxColoured
- */
-- (void)setIsSyntaxColoured:(BOOL)value
-{
-	// @todo: this one's hard to abstract away and make dynamic
-	// because forwarding doesn't automatically use KVO's method
-	// of checking for _is_ setters and getters. 
-	[self.textView setSyntaxColoured:value];
-}
-
-- (BOOL)isSyntaxColoured
-{
-	return [self.textView isSyntaxColoured];
 }
 
 
@@ -378,7 +361,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
         [self setAutoCompleteDelegate:object];
         return;
     } else if ([key isEqual:MGSFOIsSyntaxColoured]) {
-        [self setIsSyntaxColoured:[object boolValue]];
+        [self setSyntaxColoured:[object boolValue]];
         return;
     } else if ([key isEqual:MGSFOSyntaxDefinitionName]) {
         [self setSyntaxDefinitionName:object];

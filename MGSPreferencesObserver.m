@@ -273,7 +273,7 @@ static char kcAutoCompletePrefsChanged;
     else if (context == &kcSyntaxColourPrefChanged)
     {
         boolValue = [defaults boolForKey:MGSFragariaPrefsSyntaxColourNewDocuments];
-        self.fragaria.isSyntaxColoured = boolValue;
+        self.fragaria.syntaxColoured = boolValue;
     }
     else if (context == &kcLineWrapPrefChanged)
     {
