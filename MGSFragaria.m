@@ -18,7 +18,6 @@ NSString * const MGSFOIsSyntaxColoured = @"isSyntaxColoured";
 NSString * const MGSFOShowLineNumberGutter = @"showLineNumberGutter";
 NSString * const MGSFOHasVerticalScroller = @"hasVerticalScroller";
 NSString * const MGSFODisableScrollElasticity = @"disableScrollElasticity";
-NSString * const MGSFOLineWrap = @"lineWrap";
 
 // string
 NSString * const MGSFOSyntaxDefinitionName = @"syntaxDefinition";
@@ -363,9 +362,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     } else if ([key isEqual:MGSFODisableScrollElasticity]) {
         [self setScrollElasticityDisabled:[object boolValue]];
         return;
-    } else if ([key isEqual:MGSFOLineWrap]) {
-        [self setLineWrap:[object boolValue]];
-        return;
     }
 }
 
@@ -393,8 +389,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
         return @(self.hasVerticalScroller);
     else if ([key isEqual:MGSFODisableScrollElasticity])
         return @(self.scrollElasticityDisabled);
-    else if ([key isEqual:MGSFOLineWrap])
-        return @(self.lineWrap);
     else if ([key isEqual:ro_MGSFOScrollView])
         return self.scrollView;
     else if ([key isEqual:ro_MGSFOTextView])
