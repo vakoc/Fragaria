@@ -69,7 +69,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 -(void)setGutterFont:(NSFont *)gutterFont
 {
-	// @todo: (jsd) Property name harmonization?
     [self.gutterView setFont:gutterFont];
 }
 
@@ -84,8 +83,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (void)setMinimumGutterWidth:(CGFloat)gutterMinimumWidth
 {
-	// @todo: (jsd) This is a candidate for harmonizing the
-	// property names and making dynamic (or deleting), too.
     self.gutterView.minimumWidth = gutterMinimumWidth;
 }
 
@@ -100,7 +97,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 -(void)setGutterTextColour:(NSColor *)gutterTextColour
 {
-	// @todo: (jsd) property name harmonization?
     [self.gutterView setTextColor:gutterTextColour];
 }
 
