@@ -263,7 +263,7 @@ static char kcAutoCompletePrefsChanged;
 
     if (context == &kcGutterWidthPrefChanged)
     {
-        self.fragaria.gutterMinimumWidth = [defaults integerForKey:MGSFragariaPrefsGutterWidth];
+        self.fragaria.minimumGutterWidth = [defaults doubleForKey:MGSFragariaPrefsGutterWidth];
     }
     else if (context == &kcLineNumberPrefChanged)
     {

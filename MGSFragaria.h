@@ -191,7 +191,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 /** Indicates whether or not the gutter is visible.*/
 @property (nonatomic, assign) BOOL showsGutter;
 /** Specifies the minimum width of the line number gutter.*/
-@property (nonatomic, assign) NSUInteger gutterMinimumWidth;
+@property (nonatomic, assign) CGFloat minimumGutterWidth;
 
 /** Indicates whether or not line numbers are displayed when the gutter is visible.*/
 @property (nonatomic, assign) BOOL showsLineNumbers;

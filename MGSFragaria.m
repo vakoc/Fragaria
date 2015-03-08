@@ -82,18 +82,16 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 /*
  * @property gutterMinimumWidth
  */
-- (void)setGutterMinimumWidth:(NSUInteger)gutterMinimumWidth
+- (void)setMinimumGutterWidth:(CGFloat)gutterMinimumWidth
 {
 	// @todo: (jsd) This is a candidate for harmonizing the
 	// property names and making dynamic (or deleting), too.
-	// Would also have to decide to keep CGFloat or force it
-	// to NSUInteger.
-    self.gutterView.minimumWidth = (CGFloat)gutterMinimumWidth;
+    self.gutterView.minimumWidth = gutterMinimumWidth;
 }
 
-- (NSUInteger)gutterMinimumWidth
+- (CGFloat)minimumGutterWidth
 {
-    return (NSUInteger)self.gutterView.minimumWidth;
+    return self.gutterView.minimumWidth;
 }
 
 

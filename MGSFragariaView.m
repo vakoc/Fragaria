@@ -185,12 +185,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)setGutterMinimumWidth:(NSUInteger)gutterMinimumWidth
 {
-    self.fragaria.gutterMinimumWidth = gutterMinimumWidth;
+    self.fragaria.minimumGutterWidth = gutterMinimumWidth;
 }
 
 - (NSUInteger)gutterMinimumWidth
 {
-    return self.fragaria.gutterMinimumWidth;
+    return self.fragaria.minimumGutterWidth;
 }
 
 
