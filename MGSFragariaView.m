@@ -10,7 +10,7 @@
 //
 
 #import "MGSFragariaView.h"
-
+#import "SMLSyntaxColouring.h"
 
 #pragma mark - PRIVATE INTERFACE
 
@@ -784,46 +784,127 @@
 /*
  * @property colourForAutocomplete
  */
+- (void)setColourForAutocomplete:(NSColor *)colourForAutocomplete
+{
+    self.fragaria.syntaxColouring.colourForAutocomplete = colourForAutocomplete;
+}
+
+- (NSColor *)colourForAutocomplete
+{
+    return self.fragaria.syntaxColouring.colourForAutocomplete;
+}
 
 
 /*
  * @property colourForAttributes
  */
+- (void)setColourForAttributes:(NSColor *)colourForAttributes
+{
+    self.fragaria.syntaxColouring.colourForAttributes = colourForAttributes;
+}
+
+- (NSColor *)colourForAttributes
+{
+    return self.fragaria.syntaxColouring.colourForAttributes;
+}
 
 
 /*
  * @property colourForCommands
  */
+- (void)setColourForCommands:(NSColor *)colourForCommands
+{
+    self.fragaria.syntaxColouring.colourForCommands = colourForCommands;
+}
+
+- (NSColor *)colourForCommands
+{
+    return self.fragaria.syntaxColouring.colourForCommands;
+}
 
 
 /*
  * @property colourForComments
  */
+- (void)setColourForComments:(NSColor *)colourForComments
+{
+    self.fragaria.syntaxColouring.colourForComments = colourForComments;
+}
+
+- (NSColor *)colourForComments
+{
+    return self.fragaria.syntaxColouring.colourForComments;
+}
 
 
 /*
  * @property colourForInstructions
  */
+- (void)setColourForInstructions:(NSColor *)colourForInstructions
+{
+    self.fragaria.syntaxColouring.colourForInstructions = colourForInstructions;
+}
+
+- (NSColor *)colourForInstructions
+{
+    return self.fragaria.syntaxColouring.colourForInstructions;
+}
 
 
 /*
  * @property colourForKeywords
  */
+- (void)setColourForKeywords:(NSColor *)colourForKeywords
+{
+    self.fragaria.syntaxColouring.colourForKeywords = colourForKeywords;
+}
+
+- (NSColor *)colourForKeywords
+{
+    return self.fragaria.syntaxColouring.colourForKeywords;
+}
 
 
 /*
  * @property colourForNumbers
  */
+- (void)setColourForNumbers:(NSColor *)colourForNumbers
+{
+    self.fragaria.syntaxColouring.colourForNumbers = colourForNumbers;
+}
+
+- (NSColor *)colourForNumbers
+{
+    return self.fragaria.syntaxColouring.colourForNumbers;
+}
 
 
 /*
  * @property colourForStrings
  */
+- (void)setColourForStrings:(NSColor *)colourForStrings
+{
+    self.fragaria.syntaxColouring.colourForStrings = colourForStrings;
+}
+
+- (NSColor *)colourForStrings
+{
+    return self.fragaria.syntaxColouring.colourForStrings;
+}
 
 
 /*
  * @property colourForVariables
  */
+- (void)setColourForVariables:(NSColor *)colourForVariables
+{
+    self.fragaria.syntaxColouring.colourForVariables = colourForVariables;
+}
+
+- (NSColor *)colourForVariables
+{
+    return self.fragaria.syntaxColouring.colourForVariables;
+}
 
 
 #pragma mark - Syntax Highlighter Colouring Options
@@ -832,46 +913,126 @@
 /*
  * @property coloursAttributes
  */
+- (void)setColoursAttributes:(BOOL)coloursAttributes
+{
+    self.fragaria.syntaxColouring.coloursAttributes = coloursAttributes;
+}
 
+- (BOOL)coloursAttributes
+{
+    return self.fragaria.syntaxColouring.coloursAttributes;
+}
 
 /*
  * @property coloursAutocomplete
  */
+- (void)setColoursAutocomplete:(BOOL)coloursAutocomplete
+{
+    self.fragaria.syntaxColouring.coloursAutocomplete = coloursAutocomplete;
+}
+
+- (BOOL)coloursAutocomplete
+{
+    return self.fragaria.syntaxColouring.coloursAutocomplete;
+}
 
 
 /*
  * @property coloursCommands
  */
+- (void)setColoursCommands:(BOOL)coloursCommands
+{
+    self.fragaria.syntaxColouring.coloursCommands = coloursCommands;
+}
+
+- (BOOL)coloursCommands
+{
+    return self.fragaria.syntaxColouring.coloursCommands;
+}
 
 
 /*
  * @property coloursComments
  */
+- (void)setColoursComments:(BOOL)coloursComments
+{
+    self.fragaria.syntaxColouring.coloursComments = coloursComments;
+}
+
+- (BOOL)coloursComments
+{
+    return self.fragaria.syntaxColouring.coloursComments;
+}
 
 
 /*
  * @property coloursInstructions
  */
+- (void)setColoursInstructions:(BOOL)coloursInstructions
+{
+    self.fragaria.syntaxColouring.coloursInstructions = coloursInstructions;
+}
+
+- (BOOL)coloursInstructions
+{
+    return self.fragaria.syntaxColouring.coloursInstructions;
+}
 
 
 /*
  * @property coloursKeywords
  */
+- (void)setColoursKeywords:(BOOL)coloursKeywords
+{
+    self.fragaria.syntaxColouring.coloursKeywords = coloursKeywords;
+}
+
+- (BOOL)coloursKeywords
+{
+    return self.fragaria.syntaxColouring.coloursKeywords;
+}
 
 
 /*
  * @property coloursNumbers
  */
+- (void)setColoursNumbers:(BOOL)coloursNumbers
+{
+    self.fragaria.syntaxColouring.coloursNumbers = coloursNumbers;
+}
+
+- (BOOL)coloursNumbers
+{
+    return self.fragaria.syntaxColouring.coloursNumbers;
+}
 
 
 /*
  * @property coloursStrings
  */
+- (void)setColoursStrings:(BOOL)coloursStrings
+{
+    self.fragaria.syntaxColouring.coloursStrings = coloursStrings;
+}
+
+- (BOOL)coloursStrings
+{
+    return self.fragaria.syntaxColouring.coloursStrings;
+}
 
 
 /*
  * @property coloursVariables
 */
+- (void)setColoursVariables:(BOOL)coloursVariables
+{
+    self.fragaria.syntaxColouring.coloursVariables = coloursVariables;
+}
+
+- (BOOL)coloursVariables
+{
+    return self.fragaria.syntaxColouring.coloursVariables;
+}
 
 
 @end
