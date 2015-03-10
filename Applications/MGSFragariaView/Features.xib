@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
     </dependencies>
     <objects>
@@ -33,7 +34,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewTop.isSyntaxColoured" id="OKd-Bs-Jjw">
+                                        <binding destination="-2" name="value" keyPath="self.viewTop.syntaxColoured" id="sd1-5m-Oey">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEnabled" value="NO"/>
@@ -81,7 +82,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewTop.showsWarningsInGutter" id="nlo-Mo-T1h">
+                                        <binding destination="-2" name="value" keyPath="self.viewTop.showsSyntaxErrors" id="SqS-Gd-u55">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEnabled" value="NO"/>
@@ -125,7 +126,7 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewTop.gutterMinimumWidth" id="gRU-Qs-wS2">
+                                        <binding destination="-2" name="value" keyPath="self.viewTop.minimumGutterWidth" id="xVR-aM-C4m">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEditable" value="NO"/>
@@ -190,22 +191,6 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Txw-Ti-hMm">
-                                    <rect key="frame" x="16" y="21" width="129" height="18"/>
-                                    <buttonCell key="cell" type="check" title="Auto Spell Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="We2-2u-6sN">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewTop.autoSpellCheck" id="oUJ-qd-KaL">
-                                            <dictionary key="options">
-                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                                <bool key="NSConditionallySetsEnabled" value="NO"/>
-                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
-                                            </dictionary>
-                                        </binding>
-                                    </connections>
-                                </button>
                             </subviews>
                         </view>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
@@ -256,7 +241,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewBottom.showsWarningsInGutter" id="s5o-KJ-pLP">
+                                        <binding destination="-2" name="value" keyPath="self.viewBottom.showsSyntaxErrors" id="b07-XA-94C">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEnabled" value="NO"/>
@@ -272,7 +257,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewBottom.isSyntaxColoured" id="Okn-Dw-r2G">
+                                        <binding destination="-2" name="value" keyPath="self.viewBottom.syntaxColoured" id="rJ4-4b-Dol">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEnabled" value="NO"/>
@@ -364,7 +349,7 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewBottom.gutterMinimumWidth" id="gk1-fb-LiG">
+                                        <binding destination="-2" name="value" keyPath="self.viewBottom.minimumGutterWidth" id="5wd-NZ-EZG">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEditable" value="NO"/>
@@ -381,22 +366,6 @@
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QRi-tU-qs1">
-                                    <rect key="frame" x="16" y="20" width="129" height="18"/>
-                                    <buttonCell key="cell" type="check" title="Auto Spell Check" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="GV8-BF-ZQj">
-                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewBottom.autoSpellCheck" id="td4-kB-eEP">
-                                            <dictionary key="options">
-                                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                                <bool key="NSConditionallySetsEnabled" value="NO"/>
-                                                <bool key="NSRaisesForNotApplicableKeys" value="NO"/>
-                                            </dictionary>
-                                        </binding>
-                                    </connections>
-                                </button>
                             </subviews>
                         </view>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
