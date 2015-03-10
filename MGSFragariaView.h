@@ -25,5 +25,16 @@
 /** Provides direct access to the view's instance of MGSFragaria. */
 @property (nonatomic, strong, readonly) MGSFragaria *fragaria;
 
+/** The same as in the protocol, but IBOutlet added. */
+@property (nonatomic, weak) IBOutlet id<SMLAutoCompleteDelegate> autoCompleteDelegate;
+
+/** The same as in the protocol, but IBOutlet added. */
+@property (nonatomic, weak) IBOutlet id<MGSBreakpointDelegate> breakpointDelegate;
+
+/** The same as in the protocol, but IBOutlet added. */
+@property (nonatomic, weak) IBOutlet id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> textViewDelegate;
+
+/** The same as in the protocol, but IBOutlet added. */
+@property (nonatomic, weak) IBOutlet id<SMLSyntaxColouringDelegate> syntaxColouringDelegate;
 
 @end
