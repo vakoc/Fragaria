@@ -1086,7 +1086,7 @@
 
     id boundObject = [bindingInfo objectForKey:NSObservedObjectKey];
 
-    if(!boundObject || boundObject == [NSNull null])
+    if (!boundObject || boundObject == [NSNull null])
     {
         NSLog(@"ERROR: NSObservedObjectKey was nil for binding \"%@\" in %s", binding, __PRETTY_FUNCTION__);
         return;
@@ -1094,7 +1094,7 @@
 
     NSString* boundKeyPath = [bindingInfo objectForKey:NSObservedKeyPathKey];
 
-    if(!boundKeyPath || (id)boundKeyPath == [NSNull null])
+    if (!boundKeyPath || (id)boundKeyPath == [NSNull null])
     {
         NSLog(@"ERROR: NSObservedKeyPathKey was nil for binding \"%@\" in %s", binding, __PRETTY_FUNCTION__);
         return;
