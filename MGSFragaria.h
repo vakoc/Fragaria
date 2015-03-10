@@ -301,7 +301,7 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 
 /** The text view delegate of this instance of Fragaria. This is an utility
  * accessor and setter for textView.delegate. */
-@property (nonatomic, weak) id<MGSFragariaTextViewDelegate> textViewDelegate;
+@property (nonatomic, weak) id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> textViewDelegate;
 
 /** Indicates whether or not the vertical scroller should be displayed.*/
 @property (nonatomic, assign) BOOL hasVerticalScroller;
