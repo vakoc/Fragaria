@@ -19,9 +19,6 @@
 
 @property (nonatomic, strong, readwrite) MGSFragaria *fragaria;
 
-/* Protocol defines this as strong, but it's a reference, not a copy. */
-@property (nonatomic, strong, readwrite) SMLTextView *textView;
-
 @end
 
 
@@ -29,6 +26,10 @@
 
 
 @implementation MGSFragariaView
+
+// Silence XCode warning, as it doesn't see the properties
+// are indeed implemented.
+@dynamic breakpointDelegate, syntaxColouringDelegate;
 
 
 #pragma mark - Initialization and Setup
@@ -48,7 +49,6 @@
 		   be honored.
 		 */
 		self.fragaria = [[MGSFragaria alloc] initWithView:self];
-        self.textView = self.fragaria.textView;
 	}
 	return self;
 }
@@ -68,7 +68,6 @@
 		   be honored.
 		 */
 		self.fragaria = [[MGSFragaria alloc] initWithView:self];
-        self.textView = self.fragaria.textView;
     }
     return self;
 }
@@ -91,21 +90,37 @@
 /*
  * @property textView
  */
+-(SMLTextView *)textView
+{
+    return self.fragaria.textView;
+}
 
 
 /*
  * @property scrollView
  */
+- (NSScrollView*)scrollView
+{
+    return self.fragaria.scrollView;
+}
 
 
 /*
  * @property gutterView
  */
+- (MGSLineNumberView *)gutterView
+{
+    return self.fragaria.gutterView;
+}
 
  
 /*
  * @property syntaxColouring
  */
+- (SMLSyntaxColouring *)syntaxColouring
+{
+    return self.fragaria.syntaxColouring;
+}
 
 
 #pragma mark - Accessing Text Content
@@ -116,18 +131,22 @@
  */
 - (void)setString:(NSString *)string
 {
-	[self.fragaria setString:string];
+	self.fragaria.string = string;
 }
 
 - (NSString *)string
 {
-	return [self.fragaria string];
+	return self.fragaria.string;
 }
 
 
 /*
  * @property attributedStringWithTemporaryAttributesApplied
  */
+- (NSAttributedString *)attributedStringWithTemporaryAttributesApplied
+{
+    return self.fragaria.attributedStringWithTemporaryAttributesApplied;
+}
 
 
 #pragma mark - Creating Split Panels
@@ -136,6 +155,9 @@
 /*
  * - replaceTextStorage:
  */
+- (void)replaceTextStorage:(NSTextStorage *)textStorage{
+    [self.fragaria replaceTextStorage:textStorage];
+}
 
 
 #pragma mark - Configuring Syntax Highlighting
@@ -172,25 +194,43 @@
 /*
  * @property syntaxColouringDelegate
  */
-- (void)setSyntaxColoringDelegate:(id<SMLSyntaxColouringDelegate>)syntaxColoringDelegate
+- (void)setSyntaxColouringDelegate:(id<SMLSyntaxColouringDelegate>)syntaxColouringDelegate
 {
-	[self.fragaria setSyntaxColouringDelegate:syntaxColoringDelegate];
+    self.fragaria.syntaxColouringDelegate = syntaxColouringDelegate;
 }
 
 - (id<SMLSyntaxColouringDelegate>)syntaxColoringDelegate
 {
-	return [self.fragaria syntaxColouringDelegate];
+    return self.fragaria.syntaxColouringDelegate;
 }
 
 
 /*
  * @property BOOL coloursMultiLineStrings
  */
+- (void)setColoursMultiLineStrings:(BOOL)coloursMultiLineStrings
+{
+    self.fragaria.coloursMultiLineStrings = coloursMultiLineStrings;
+}
+
+- (BOOL)coloursMultiLineStrings
+{
+    return self.fragaria.coloursMultiLineStrings;
+}
 
 
 /*
  * @property BOOL coloursOnlyUntilEndOfLine
  */
+- (void)setColoursOnlyUntilEndOfLine:(BOOL)coloursOnlyUntilEndOfLine
+{
+    self.fragaria.coloursOnlyUntilEndOfLine = coloursOnlyUntilEndOfLine;
+}
+
+- (BOOL)coloursOnlyUntilEndOfLine
+{
+    return self.fragaria.coloursOnlyUntilEndOfLine;
+}
 
 
 #pragma mark - Configuring Autocompletion
@@ -199,21 +239,57 @@
 /*
  * @property autoCompleteDelegate
  */
+- (void)setAutoCompleteDelegate:(id<SMLAutoCompleteDelegate>)autoCompleteDelegate
+{
+    self.fragaria.autoCompleteDelegate = autoCompleteDelegate;
+}
+
+- (id<SMLAutoCompleteDelegate>)autoCompleteDelegate
+{
+    return self.fragaria.autoCompleteDelegate;
+}
 
 
 /*
  * @property double autoCompleteDelay
  */
+- (void)setAutoCompleteDelay:(double)autoCompleteDelay
+{
+    self.fragaria.autoCompleteDelay = autoCompleteDelay;
+}
+
+- (double)autoCompleteDelay
+{
+    return self.fragaria.autoCompleteDelay;
+}
 
  
 /*
  * @property BOOL autoCompleteEnabled
  */
+- (void)setAutoCompleteEnabled:(BOOL)autoCompleteEnabled
+{
+    self.fragaria.autoCompleteEnabled = autoCompleteEnabled;
+}
+
+- (BOOL)autoCompleteEnabled
+{
+    return self.fragaria.autoCompleteEnabled;
+}
 
  
 /*
  * @property BOOL autoCompleteWithKeywords
  */
+- (void)setAutoCompleteWithKeywords:(BOOL)autoCompleteWithKeywords
+{
+    self.fragaria.autoCompleteWithKeywords = autoCompleteWithKeywords;
+}
+
+- (BOOL)autoCompleteWithKeywords
+{
+    return self.fragaria.autoCompleteWithKeywords;
+}
 
 
 #pragma mark - Highlighting the current line
@@ -222,11 +298,29 @@
 /*
  * @property currentLineHighlightColour
  */
+- (void)setCurrentLineHighlightColour:(NSColor *)currentLineHighlightColour
+{
+    self.fragaria.currentLineHighlightColour = currentLineHighlightColour;
+}
+
+- (NSColor *)currentLineHighlightColour
+{
+    return self.fragaria.currentLineHighlightColour;
+}
 
 
 /*
  * @property highlightsCurrentLine
  */
+- (void)setHighlightsCurrentLine:(BOOL)highlightsCurrentLine
+{
+    self.fragaria.highlightsCurrentLine = highlightsCurrentLine;
+}
+
+- (BOOL)highlightsCurrentLine
+{
+    return self.fragaria.highlightsCurrentLine;
+}
 
 
 #pragma mark - Configuring the Gutter
@@ -249,7 +343,7 @@
 /*
  * @property minimumGutterWidth
  */
-- (void)setMinimumWGutteridth:(NSUInteger)minimumGutterWidth
+- (void)setMinimumGutterWidth:(CGFloat)minimumGutterWidth
 {
 	self.fragaria.minimumGutterWidth = minimumGutterWidth;
 }
@@ -291,11 +385,28 @@
 /*
  * @property gutterFont
  */
+- (void)setGutterFont:(NSFont *)gutterFont
+{
+    self.fragaria.gutterFont = gutterFont;
+}
 
+- (NSFont *)gutterFont
+{
+    return self.fragaria.gutterFont;
+}
 
 /*
  * @property gutterTextColour
  */
+- (void)setGutterTextColour:(NSColor *)gutterTextColour
+{
+    self.fragaria.gutterTextColour = gutterTextColour;
+}
+
+- (NSColor *)gutterTextColour
+{
+    return self.fragaria.gutterTextColour;
+}
 
 
 #pragma mark - Showing Syntax Errors
@@ -335,9 +446,9 @@
 /*
  * @property breakpointDelegate
  */
-- (void)setBreakPointDelegate:(id<MGSBreakpointDelegate>)breakPointDelegate
+- (void)setBreakpointDelegate:(id<MGSBreakpointDelegate>)breakpointDelegate
 {
-	[self.fragaria setBreakpointDelegate:breakPointDelegate];
+	[self.fragaria setBreakpointDelegate:breakpointDelegate];
 }
 
 - (id<MGSBreakpointDelegate>)breakPointDelegate
@@ -352,31 +463,85 @@
 /*
  * @property tabWidth
  */
+- (void)setTabWidth:(NSInteger)tabWidth
+{
+    self.fragaria.tabWidth = tabWidth;
+}
+
+- (NSInteger)tabWidth
+{
+    return self.fragaria.tabWidth;
+}
 
 
 /*
  * @property indentWidth
  */
+- (void)setIndentWidth:(NSUInteger)indentWidth
+{
+    self.fragaria.indentWidth = indentWidth;
+}
+
+- (NSUInteger)indentWidth
+{
+    return self.fragaria.indentWidth;
+}
 
 
 /*
  * @property indentWithSpaces
  */
+- (void)setIndentWithSpaces:(BOOL)indentWithSpaces
+{
+    self.fragaria.indentWithSpaces = indentWithSpaces;
+}
+
+- (BOOL)indentWithSpaces
+{
+    return self.fragaria.indentWithSpaces;
+}
 
 
 /*
  * @property useTabStops
  */
+- (void)setUseTabStops:(BOOL)useTabStops
+{
+    self.fragaria.useTabStops = useTabStops;
+}
+
+- (BOOL)useTabStops
+{
+    return self.fragaria.useTabStops;
+}
 
 
 /*
  * @property indentBracesAutomatically
  */
+- (void)setIndentBracesAutomatically:(BOOL)indentBracesAutomatically
+{
+    self.fragaria.indentBracesAutomatically = indentBracesAutomatically;
+}
+
+- (BOOL)indentBracesAutomatically
+{
+    return self.fragaria.indentBracesAutomatically;
+}
 
 
 /*
  * @property indentNewLinesAutomatically
  */
+- (void)setIndentNewLinesAutomatically:(BOOL)indentNewLinesAutomatically
+{
+    self.fragaria.indentNewLinesAutomatically = indentNewLinesAutomatically;
+}
+
+- (BOOL)indentNewLinesAutomatically
+{
+    return self.fragaria.indentNewLinesAutomatically;
+}
 
 
 #pragma mark - Automatic Bracing
@@ -385,16 +550,43 @@
 /*
  * @property insertClosingParenthesisAutomatically
  */
+- (void)setInsertClosingParenthesisAutomatically:(BOOL)insertClosingParenthesisAutomatically
+{
+    self.fragaria.insertClosingParenthesisAutomatically = insertClosingParenthesisAutomatically;
+}
+
+- (BOOL)insertClosingParenthesisAutomatically
+{
+    return self.fragaria.insertClosingParenthesisAutomatically;
+}
 
 
 /*
  * @property insertClosingBraceAutomatically
  */
+- (void)setInsertClosingBraceAutomatically:(BOOL)insertClosingBraceAutomatically
+{
+    self.fragaria.insertClosingBraceAutomatically = insertClosingBraceAutomatically;
+}
+
+- (BOOL)insertClosingBraceAutomatically
+{
+    return self.fragaria.insertClosingBraceAutomatically;
+}
 
 
 /*
  * @property showsMatchingBraces
  */
+- (void)setShowsMatchingBraces:(BOOL)showsMatchingBraces
+{
+    self.fragaria.showsMatchingBraces = showsMatchingBraces;
+}
+
+- (BOOL)showsMatchingBraces
+{
+    return self.fragaria.showsMatchingBraces;
+}
 
 
 #pragma mark - Page Guide and Line Wrap
@@ -403,11 +595,29 @@
 /*
  * @property pageGuideColumn
  */
+- (void)setPageGuideColumn:(NSInteger)pageGuideColumn
+{
+    self.fragaria.pageGuideColumn = pageGuideColumn;
+}
+
+- (NSInteger)pageGuideColumn
+{
+    return self.fragaria.pageGuideColumn;
+}
 
 
 /*
  * @property showsPageGuide
  */
+-(void)setShowsPageGuide:(BOOL)showsPageGuide
+{
+    self.fragaria.showsPageGuide = showsPageGuide;
+}
+
+- (BOOL)showsPageGuide
+{
+    return self.fragaria.showsPageGuide;
+}
 
 
 /*
@@ -430,6 +640,15 @@
 /*
  * @property showsInvisibleCharacters
  */
+- (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
+{
+    self.fragaria.showsInvisibleCharacters = showsInvisibleCharacters;
+}
+
+- (BOOL)showsInvisibleCharacters
+{
+    return self.fragaria.showsInvisibleCharacters;
+}
 
 
 /*
@@ -452,11 +671,29 @@
 /*
  * @property textColor
  */
+- (void)setTextColor:(NSColor *)textColor
+{
+    self.fragaria.textColor = textColor;
+}
+
+- (NSColor *)textColor
+{
+    return self.fragaria.textColor;
+}
 
 
 /*
  * @property backgroundColor
  */
+- (void)setBackgroundColor:(NSColor *)backgroundColor
+{
+    self.fragaria.backgroundColor = backgroundColor;
+}
+
+- (NSColor *)backgroundColor
+{
+    return self.fragaria.backgroundColor;
+}
 
 
 /*
@@ -479,12 +716,12 @@
 /*
  * @property textViewDelegate
  */
-- (void)setTextViewDelegate:(id<MGSFragariaTextViewDelegate>)textViewDelegate
+- (void)setTextViewDelegate:(id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate>)textViewDelegate
 {
 	[self.fragaria setTextViewDelegate:textViewDelegate];
 }
 
-- (id<MGSFragariaTextViewDelegate>)textViewDelegate
+- (id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate>)textViewDelegate
 {
 	return self.fragaria.textViewDelegate;
 }
@@ -507,6 +744,15 @@
 /*
  * @property insertionPointColor
  */
+- (void)setInsertionPointColor:(NSColor *)insertionPointColor
+{
+    self.fragaria.insertionPointColor = insertionPointColor;
+}
+
+- (NSColor *)insertionPointColor
+{
+    return self.fragaria.insertionPointColor;
+}
 
 
 /*
