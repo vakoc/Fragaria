@@ -17,7 +17,10 @@
 
 @interface MGSFragariaView ()
 
-@property (strong) MGSFragaria *fragaria;
+@property (nonatomic, strong, readwrite) MGSFragaria *fragaria;
+
+/* Protocol defines this as strong, but it's a reference, not a copy. */
+@property (nonatomic, strong, readwrite) SMLTextView *textView;
 
 @end
 
@@ -31,10 +34,10 @@
 #pragma mark - Initialization and Setup
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	initWithCoder:
-        called when unarchived from the nib linking directly.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+/*
+ * - initWithCoder:
+ *   Called when unarchived from a nib.
+ */
 - (instancetype)initWithCoder:(NSCoder *)coder
 {
 	if ((self = [super initWithCoder:coder]))
@@ -50,10 +53,11 @@
 	return self;
 }
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	initWithFrame:
-        called when used in a framework.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+
+/*
+ * - initWithFrame:
+ *   Called when used in a framework.
+ */
 - (instancetype)initWithFrame:(NSRect)frameRect
 {
     if ((self = [super initWithFrame:frameRect]))
@@ -70,60 +74,46 @@
 }
 
 
-#pragma mark - Delegate Setters and Getters
+/*
+ * Note: while it would be trivial to bypass Fragaria's setters for most of
+ * these properties and use the system components properties directly, using
+ * the MGSFragaria properties directly provides some limited testing against
+ * MGSFragaria's interface. An extra message for a property setter is
+ * negligible.
+ * @todo: (jsd) MGSFragaria should use the MGSFragariaAPI, too, then these
+ *              accessors can access the component propery directly.
+ */
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	delegate
-		Expose the embedded NSTextView's delegate.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setDelegate:(id<MGSFragariaTextViewDelegate>)delegate
-{
-	[self.fragaria setTextViewDelegate:delegate];
-}
-
-- (id<MGSFragariaTextViewDelegate>)delegate
-{
-	return self.fragaria.textViewDelegate;
-}
+#pragma mark - Accessing Fragaria's Views
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	breakPointDelegate
-		Expose Fregaria's <MGSBreakpointDelegate> delegate.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setBreakPointDelegate:(id<MGSBreakpointDelegate>)breakPointDelegate
-{
-	[self.fragaria setBreakpointDelegate:breakPointDelegate];
-}
-
-- (id<MGSBreakpointDelegate>)breakPointDelegate
-{
-	return self.fragaria.breakpointDelegate;
-}
+/*
+ * @property textView
+ */
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	syntaxColoringDelegate
-		Expose Fregaria's <SMLSyntaxColouringDelegate> delegate.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setSyntaxColoringDelegate:(id<SMLSyntaxColouringDelegate>)syntaxColoringDelegate
-{
-	[self.fragaria setSyntaxColouringDelegate:syntaxColoringDelegate];
-}
-
-- (id<SMLSyntaxColouringDelegate>)syntaxColoringDelegate
-{
-	return [self.fragaria syntaxColouringDelegate];
-}
+/*
+ * @property scrollView
+ */
 
 
-#pragma mark - Properties - Document Support
+/*
+ * @property gutterView
+ */
+
+ 
+/*
+ * @property syntaxColouring
+ */
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	string
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+#pragma mark - Accessing Text Content
+
+
+/*
+ * @property string
+ */
 - (void)setString:(NSString *)string
 {
 	[self.fragaria setString:string];
@@ -135,69 +125,26 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	syntaxDefinitionName
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
-{
-    self.fragaria.syntaxDefinitionName = syntaxDefinitionName;
-}
-
-- (NSString *)syntaxDefinitionName
-{
-    return self.fragaria.syntaxDefinitionName;
-}
+/*
+ * @property attributedStringWithTemporaryAttributesApplied
+ */
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	syntaxErrors
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setSyntaxErrors:(NSArray *)syntaxErrors
-{
-    self.fragaria.syntaxErrors = syntaxErrors;
-}
-
-- (NSArray *)syntaxErrors
-{
-    return self.fragaria.syntaxErrors;
-}
+#pragma mark - Creating Split Panels
 
 
-#pragma mark - Properties - Overall Appearance and Display
+/*
+ * - replaceTextStorage:
+ */
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	hasVerticalScroller
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setHasVerticalScroller:(BOOL)hasVerticalScroller
-{
-    [self.fragaria setHasVerticalScroller:hasVerticalScroller];
-}
-
-- (BOOL)hasVerticalScroller
-{
-    return [self.fragaria hasVerticalScroller];
-}
+#pragma mark - Configuring Syntax Highlighting
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	gutterMinimumWidth
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setGutterMinimumWidth:(NSUInteger)gutterMinimumWidth
-{
-    self.fragaria.minimumGutterWidth = gutterMinimumWidth;
-}
-
-- (NSUInteger)gutterMinimumWidth
-{
-    return self.fragaria.minimumGutterWidth;
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	isSyntaxColoured
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setIsSyntaxColoured:(BOOL)syntaxColoured
+/*
+ * @property syntaxColoured
+ */
+- (void)setSyntaxColoured:(BOOL)syntaxColoured
 {
 	[self.fragaria setSyntaxColoured:syntaxColoured];
 }
@@ -208,37 +155,114 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	lineWrap
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setLineWrap:(BOOL)lineWrap
+/*
+ * @property syntaxDefinitionName
+ */
+- (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
 {
-    [self.fragaria setLineWrap:lineWrap];
+	self.fragaria.syntaxDefinitionName = syntaxDefinitionName;
 }
 
-- (BOOL)lineWrap
+- (NSString *)syntaxDefinitionName
 {
-    return [self.fragaria lineWrap];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	scrollElasticityDisabled
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setScrollElasticityDisabled:(BOOL)scrollElasticityDisabled
-{
-    [self.fragaria setScrollElasticityDisabled:scrollElasticityDisabled];
-}
-
-- (BOOL)scrollElasticityDisabled
-{
-    return [self.fragaria scrollElasticityDisabled];
+	return self.fragaria.syntaxDefinitionName;
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	showsLineNumbers
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+/*
+ * @property syntaxColouringDelegate
+ */
+- (void)setSyntaxColoringDelegate:(id<SMLSyntaxColouringDelegate>)syntaxColoringDelegate
+{
+	[self.fragaria setSyntaxColouringDelegate:syntaxColoringDelegate];
+}
+
+- (id<SMLSyntaxColouringDelegate>)syntaxColoringDelegate
+{
+	return [self.fragaria syntaxColouringDelegate];
+}
+
+
+/*
+ * @property BOOL coloursMultiLineStrings
+ */
+
+
+/*
+ * @property BOOL coloursOnlyUntilEndOfLine
+ */
+
+
+#pragma mark - Configuring Autocompletion
+
+
+/*
+ * @property autoCompleteDelegate
+ */
+
+
+/*
+ * @property double autoCompleteDelay
+ */
+
+ 
+/*
+ * @property BOOL autoCompleteEnabled
+ */
+
+ 
+/*
+ * @property BOOL autoCompleteWithKeywords
+ */
+
+
+#pragma mark - Highlighting the current line
+
+
+/*
+ * @property currentLineHighlightColour
+ */
+
+
+/*
+ * @property highlightsCurrentLine
+ */
+
+
+#pragma mark - Configuring the Gutter
+
+
+/*
+ * @property showsGutter
+ */
+- (void)setShowsGutter:(BOOL)showsGutter
+{
+	[self.fragaria setShowsGutter:showsGutter];
+}
+
+- (BOOL)showsGutter
+{
+	return [self.fragaria showsGutter];
+}
+
+
+/*
+ * @property minimumGutterWidth
+ */
+- (void)setMinimumWGutteridth:(NSUInteger)minimumGutterWidth
+{
+	self.fragaria.minimumGutterWidth = minimumGutterWidth;
+}
+
+- (CGFloat)minimumGutterWidth
+{
+	return self.fragaria.minimumGutterWidth;
+}
+
+
+/*
+ * @property showsLineNumbers
+ */
 - (void)setShowsLineNumbers:(BOOL)showsLineNumbers
 {
 	[self.fragaria setShowsLineNumbers:showsLineNumbers];
@@ -250,37 +274,9 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	showsGutter
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setShowsGutter:(BOOL)showsGutter
-{
-    [self.fragaria setShowsGutter:showsGutter];
-}
-
-- (BOOL)showsGutter
-{
-    return [self.fragaria showsGutter];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	showsWarningsInGutter
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setShowsWarningsInGutter:(BOOL)showsWarningsInGutter
-{
-    [self.fragaria setShowsSyntaxErrors:showsWarningsInGutter];
-}
-
-- (BOOL)showsWarningsInGutter
-{
-    return [self.fragaria showsSyntaxErrors];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	startingLineNumber
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+/*
+ * @property startingLineNumber
+ */
 - (void)setStartingLineNumber:(NSUInteger)startingLineNumber
 {
 	[self.fragaria setStartingLineNumber:startingLineNumber];
@@ -292,42 +288,344 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	textFont
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)setTextFont:(NSFont *)textFont
+/*
+ * @property gutterFont
+ */
+
+
+/*
+ * @property gutterTextColour
+ */
+
+
+#pragma mark - Showing Syntax Errors
+
+
+/*
+ * @property syntaxErrors
+ */
+- (void)setSyntaxErrors:(NSArray *)syntaxErrors
 {
-    self.fragaria.textFont = textFont;
+	self.fragaria.syntaxErrors = syntaxErrors;
 }
 
-- (NSFont *)textFont
+- (NSArray *)syntaxErrors
 {
-    return self.fragaria.textFont;
+	return self.fragaria.syntaxErrors;
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	textInvisibleCharactersColour
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+/*
+ * @property showsSyntaxErrors
+ */
+- (void)setShowsSyntaxErrors:(BOOL)showsSyntaxErrors
+{
+	[self.fragaria setShowsSyntaxErrors:showsSyntaxErrors];
+}
+
+- (BOOL)showsSyntaxErrors
+{
+	return [self.fragaria showsSyntaxErrors];
+}
+
+
+#pragma mark - Showing Breakpoints
+
+
+/*
+ * @property breakpointDelegate
+ */
+- (void)setBreakPointDelegate:(id<MGSBreakpointDelegate>)breakPointDelegate
+{
+	[self.fragaria setBreakpointDelegate:breakPointDelegate];
+}
+
+- (id<MGSBreakpointDelegate>)breakPointDelegate
+{
+	return self.fragaria.breakpointDelegate;
+}
+
+
+#pragma mark - Tabulation and Indentation
+
+
+/*
+ * @property tabWidth
+ */
+
+
+/*
+ * @property indentWidth
+ */
+
+
+/*
+ * @property indentWithSpaces
+ */
+
+
+/*
+ * @property useTabStops
+ */
+
+
+/*
+ * @property indentBracesAutomatically
+ */
+
+
+/*
+ * @property indentNewLinesAutomatically
+ */
+
+
+#pragma mark - Automatic Bracing
+
+
+/*
+ * @property insertClosingParenthesisAutomatically
+ */
+
+
+/*
+ * @property insertClosingBraceAutomatically
+ */
+
+
+/*
+ * @property showsMatchingBraces
+ */
+
+
+#pragma mark - Page Guide and Line Wrap
+
+
+/*
+ * @property pageGuideColumn
+ */
+
+
+/*
+ * @property showsPageGuide
+ */
+
+
+/*
+ * @property lineWrap
+ */
+- (void)setLineWrap:(BOOL)lineWrap
+{
+	[self.fragaria setLineWrap:lineWrap];
+}
+
+- (BOOL)lineWrap
+{
+	return [self.fragaria lineWrap];
+}
+
+
+#pragma mark - Showing Invisible Characters
+
+
+/*
+ * @property showsInvisibleCharacters
+ */
+
+
+/*
+ * @property textInvisibleCharactersColour
+ */
 - (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColor
 {
-    self.fragaria.textInvisibleCharactersColour = textInvisibleCharactersColor;
+	self.fragaria.textInvisibleCharactersColour = textInvisibleCharactersColor;
 }
 
 - (NSColor *)textInvisibleCharactersColour
 {
-    return self.fragaria.textInvisibleCharactersColour;
+	return self.fragaria.textInvisibleCharactersColour;
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	goToLine
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+#pragma mark - Configuring Text Appearance
+
+
+/*
+ * @property textColor
+ */
+
+
+/*
+ * @property backgroundColor
+ */
+
+
+/*
+ * @property textFont
+ */
+- (void)setTextFont:(NSFont *)textFont
+{
+	self.fragaria.textFont = textFont;
+}
+
+- (NSFont *)textFont
+{
+	return self.fragaria.textFont;
+}
+
+
+#pragma mark - Configuring Additional Text View Behavior
+
+
+/*
+ * @property textViewDelegate
+ */
+- (void)setTextViewDelegate:(id<MGSFragariaTextViewDelegate>)textViewDelegate
+{
+	[self.fragaria setTextViewDelegate:textViewDelegate];
+}
+
+- (id<MGSFragariaTextViewDelegate>)textViewDelegate
+{
+	return self.fragaria.textViewDelegate;
+}
+
+
+/*
+ * @property hasVerticalScroller
+ */
+- (void)setHasVerticalScroller:(BOOL)hasVerticalScroller
+{
+	[self.fragaria setHasVerticalScroller:hasVerticalScroller];
+}
+
+- (BOOL)hasVerticalScroller
+{
+	return [self.fragaria hasVerticalScroller];
+}
+
+
+/*
+ * @property insertionPointColor
+ */
+
+
+/*
+ * @property scrollElasticityDisabled
+ */
+- (void)setScrollElasticityDisabled:(BOOL)scrollElasticityDisabled
+{
+	[self.fragaria setScrollElasticityDisabled:scrollElasticityDisabled];
+}
+
+- (BOOL)scrollElasticityDisabled
+{
+	return [self.fragaria scrollElasticityDisabled];
+}
+
+
+/*
+ * - goToLine:centered:highlight
+ */
 - (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight
 {
 	[self.fragaria goToLine:lineToGoTo centered:centered highlight:highlight];
 }
 
+
+#pragma mark - Syntax Highlighting Colours
+
+
+/*
+ * @property colourForAutocomplete
+ */
+
+
+/*
+ * @property colourForAttributes
+ */
+
+
+/*
+ * @property colourForCommands
+ */
+
+
+/*
+ * @property colourForComments
+ */
+
+
+/*
+ * @property colourForInstructions
+ */
+
+
+/*
+ * @property colourForKeywords
+ */
+
+
+/*
+ * @property colourForNumbers
+ */
+
+
+/*
+ * @property colourForStrings
+ */
+
+
+/*
+ * @property colourForVariables
+ */
+
+
+#pragma mark - Syntax Highlighter Colouring Options
+
+
+/*
+ * @property coloursAttributes
+ */
+
+
+/*
+ * @property coloursAutocomplete
+ */
+
+
+/*
+ * @property coloursCommands
+ */
+
+
+/*
+ * @property coloursComments
+ */
+
+
+/*
+ * @property coloursInstructions
+ */
+
+
+/*
+ * @property coloursKeywords
+ */
+
+
+/*
+ * @property coloursNumbers
+ */
+
+
+/*
+ * @property coloursStrings
+ */
+
+
+/*
+ * @property coloursVariables
+*/
 
 
 @end
