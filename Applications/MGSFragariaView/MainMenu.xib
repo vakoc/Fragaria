@@ -752,7 +752,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -763,8 +763,8 @@
                             <userDefinedRuntimeAttribute type="string" keyPath="self.syntaxDefinitionName" value="html"/>
                         </userDefinedRuntimeAttributes>
                         <connections>
-                            <outlet property="breakPointDelegate" destination="Voe-Tx-rLC" id="aeY-qe-8QV"/>
-                            <outlet property="delegate" destination="Voe-Tx-rLC" id="O5d-GF-XaD"/>
+                            <outlet property="breakpointDelegate" destination="Voe-Tx-rLC" id="JO2-VS-Gb0"/>
+                            <outlet property="textViewDelegate" destination="Voe-Tx-rLC" id="PK0-P8-GZJ"/>
                         </connections>
                     </customView>
                     <customView translatesAutoresizingMaskIntoConstraints="NO" id="5Ef-Wd-Tpu" userLabel="Bottom View" customClass="MGSFragariaView">
@@ -773,7 +773,7 @@
                             <userDefinedRuntimeAttribute type="string" keyPath="self.syntaxDefinitionName" value="html"/>
                         </userDefinedRuntimeAttributes>
                         <connections>
-                            <outlet property="delegate" destination="Voe-Tx-rLC" id="Gcz-EN-niR"/>
+                            <outlet property="textViewDelegate" destination="Voe-Tx-rLC" id="KeG-m4-eKs"/>
                         </connections>
                     </customView>
                 </subviews>
