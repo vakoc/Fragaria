@@ -79,6 +79,10 @@
  * the MGSFragaria properties directly provides some limited testing against
  * MGSFragaria's interface. An extra message for a property setter is
  * negligible.
+ *
+ * When using propagateValue:forBinding we can help ensure type safety by using
+ * NSStringFromSelector(@selector(string))] instead of passing a string.
+ *
  * @todo: (jsd) MGSFragaria should use the MGSFragariaAPI, too, then these
  *              accessors can access the component propery directly.
  */
@@ -170,6 +174,7 @@
 - (void)setSyntaxColoured:(BOOL)syntaxColoured
 {
 	[self.fragaria setSyntaxColoured:syntaxColoured];
+	[self propagateValue:@(syntaxColoured) forBinding:NSStringFromSelector(@selector(isSyntaxColoured))];
 }
 
 - (BOOL)isSyntaxColoured
@@ -184,6 +189,7 @@
 - (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
 {
 	self.fragaria.syntaxDefinitionName = syntaxDefinitionName;
+	[self propagateValue:syntaxDefinitionName forBinding:NSStringFromSelector(@selector(syntaxDefinitionName))];
 }
 
 - (NSString *)syntaxDefinitionName
@@ -212,6 +218,7 @@
 - (void)setColoursMultiLineStrings:(BOOL)coloursMultiLineStrings
 {
     self.fragaria.coloursMultiLineStrings = coloursMultiLineStrings;
+	[self propagateValue:@(coloursMultiLineStrings) forBinding:NSStringFromSelector(@selector(coloursMultiLineStrings))];
 }
 
 - (BOOL)coloursMultiLineStrings
@@ -226,6 +233,7 @@
 - (void)setColoursOnlyUntilEndOfLine:(BOOL)coloursOnlyUntilEndOfLine
 {
     self.fragaria.coloursOnlyUntilEndOfLine = coloursOnlyUntilEndOfLine;
+	[self propagateValue:@(coloursOnlyUntilEndOfLine) forBinding:NSStringFromSelector(@selector(coloursOnlyUntilEndOfLine))];
 }
 
 - (BOOL)coloursOnlyUntilEndOfLine
@@ -257,6 +265,7 @@
 - (void)setAutoCompleteDelay:(double)autoCompleteDelay
 {
     self.fragaria.autoCompleteDelay = autoCompleteDelay;
+	[self propagateValue:@(autoCompleteDelay) forBinding:NSStringFromSelector(@selector(autoCompleteDelay))];
 }
 
 - (double)autoCompleteDelay
@@ -271,6 +280,7 @@
 - (void)setAutoCompleteEnabled:(BOOL)autoCompleteEnabled
 {
     self.fragaria.autoCompleteEnabled = autoCompleteEnabled;
+	[self propagateValue:@(autoCompleteEnabled) forBinding:NSStringFromSelector(@selector(autoCompleteEnabled))];
 }
 
 - (BOOL)autoCompleteEnabled
@@ -285,6 +295,7 @@
 - (void)setAutoCompleteWithKeywords:(BOOL)autoCompleteWithKeywords
 {
     self.fragaria.autoCompleteWithKeywords = autoCompleteWithKeywords;
+	[self propagateValue:@(autoCompleteWithKeywords) forBinding:NSStringFromSelector(@selector(autoCompleteWithKeywords))];
 }
 
 - (BOOL)autoCompleteWithKeywords
@@ -302,6 +313,7 @@
 - (void)setCurrentLineHighlightColour:(NSColor *)currentLineHighlightColour
 {
     self.fragaria.currentLineHighlightColour = currentLineHighlightColour;
+	[self propagateValue:currentLineHighlightColour forBinding:NSStringFromSelector(@selector(currentLineHighlightColour))];
 }
 
 - (NSColor *)currentLineHighlightColour
@@ -316,6 +328,7 @@
 - (void)setHighlightsCurrentLine:(BOOL)highlightsCurrentLine
 {
     self.fragaria.highlightsCurrentLine = highlightsCurrentLine;
+	[self propagateValue:@(highlightsCurrentLine) forBinding:NSStringFromSelector(@selector(highlightsCurrentLine))];
 }
 
 - (BOOL)highlightsCurrentLine
@@ -333,6 +346,7 @@
 - (void)setShowsGutter:(BOOL)showsGutter
 {
 	[self.fragaria setShowsGutter:showsGutter];
+	[self propagateValue:@(showsGutter) forBinding:NSStringFromSelector(@selector(showsGutter))];
 }
 
 - (BOOL)showsGutter
@@ -347,6 +361,7 @@
 - (void)setMinimumGutterWidth:(CGFloat)minimumGutterWidth
 {
 	self.fragaria.minimumGutterWidth = minimumGutterWidth;
+	[self propagateValue:@(minimumGutterWidth) forBinding:NSStringFromSelector(@selector(minimumGutterWidth))];
 }
 
 - (CGFloat)minimumGutterWidth
@@ -361,6 +376,7 @@
 - (void)setShowsLineNumbers:(BOOL)showsLineNumbers
 {
 	[self.fragaria setShowsLineNumbers:showsLineNumbers];
+	[self propagateValue:@(showsLineNumbers) forBinding:NSStringFromSelector(@selector(showsLineNumbers))];
 }
 
 - (BOOL)showsLineNumbers
@@ -375,6 +391,7 @@
 - (void)setStartingLineNumber:(NSUInteger)startingLineNumber
 {
 	[self.fragaria setStartingLineNumber:startingLineNumber];
+	[self propagateValue:@(startingLineNumber) forBinding:NSStringFromSelector(@selector(startingLineNumber))];
 }
 
 - (NSUInteger)startingLineNumber
@@ -389,6 +406,7 @@
 - (void)setGutterFont:(NSFont *)gutterFont
 {
     self.fragaria.gutterFont = gutterFont;
+	[self propagateValue:gutterFont forBinding:NSStringFromSelector(@selector(gutterFont))];
 }
 
 - (NSFont *)gutterFont
@@ -402,6 +420,7 @@
 - (void)setGutterTextColour:(NSColor *)gutterTextColour
 {
     self.fragaria.gutterTextColour = gutterTextColour;
+	[self propagateValue:gutterTextColour forBinding:NSStringFromSelector(@selector(gutterTextColour))];
 }
 
 - (NSColor *)gutterTextColour
@@ -433,6 +452,7 @@
 - (void)setShowsSyntaxErrors:(BOOL)showsSyntaxErrors
 {
 	[self.fragaria setShowsSyntaxErrors:showsSyntaxErrors];
+	[self propagateValue:@(showsSyntaxErrors) forBinding:NSStringFromSelector(@selector(showsSyntaxErrors))];
 }
 
 - (BOOL)showsSyntaxErrors
@@ -467,6 +487,7 @@
 - (void)setTabWidth:(NSInteger)tabWidth
 {
     self.fragaria.tabWidth = tabWidth;
+	[self propagateValue:@(tabWidth) forBinding:NSStringFromSelector(@selector(tabWidth))];
 }
 
 - (NSInteger)tabWidth
@@ -481,6 +502,7 @@
 - (void)setIndentWidth:(NSUInteger)indentWidth
 {
     self.fragaria.indentWidth = indentWidth;
+	[self propagateValue:@(indentWidth) forBinding:NSStringFromSelector(@selector(indentWidth))];
 }
 
 - (NSUInteger)indentWidth
@@ -495,6 +517,7 @@
 - (void)setIndentWithSpaces:(BOOL)indentWithSpaces
 {
     self.fragaria.indentWithSpaces = indentWithSpaces;
+	[self propagateValue:@(indentWithSpaces) forBinding:NSStringFromSelector(@selector(indentWithSpaces))];
 }
 
 - (BOOL)indentWithSpaces
@@ -509,6 +532,7 @@
 - (void)setUseTabStops:(BOOL)useTabStops
 {
     self.fragaria.useTabStops = useTabStops;
+	[self propagateValue:@(useTabStops) forBinding:NSStringFromSelector(@selector(useTabStops))];
 }
 
 - (BOOL)useTabStops
@@ -523,6 +547,7 @@
 - (void)setIndentBracesAutomatically:(BOOL)indentBracesAutomatically
 {
     self.fragaria.indentBracesAutomatically = indentBracesAutomatically;
+	[self propagateValue:@(indentBracesAutomatically) forBinding:NSStringFromSelector(@selector(indentBracesAutomatically))];
 }
 
 - (BOOL)indentBracesAutomatically
@@ -537,6 +562,7 @@
 - (void)setIndentNewLinesAutomatically:(BOOL)indentNewLinesAutomatically
 {
     self.fragaria.indentNewLinesAutomatically = indentNewLinesAutomatically;
+	[self propagateValue:@(indentNewLinesAutomatically) forBinding:NSStringFromSelector(@selector(indentNewLinesAutomatically))];
 }
 
 - (BOOL)indentNewLinesAutomatically
@@ -554,6 +580,7 @@
 - (void)setInsertClosingParenthesisAutomatically:(BOOL)insertClosingParenthesisAutomatically
 {
     self.fragaria.insertClosingParenthesisAutomatically = insertClosingParenthesisAutomatically;
+	[self propagateValue:@(insertClosingParenthesisAutomatically) forBinding:NSStringFromSelector(@selector(insertClosingParenthesisAutomatically))];
 }
 
 - (BOOL)insertClosingParenthesisAutomatically
@@ -568,6 +595,7 @@
 - (void)setInsertClosingBraceAutomatically:(BOOL)insertClosingBraceAutomatically
 {
     self.fragaria.insertClosingBraceAutomatically = insertClosingBraceAutomatically;
+	[self propagateValue:@(insertClosingBraceAutomatically) forBinding:NSStringFromSelector(@selector(insertClosingBraceAutomatically))];
 }
 
 - (BOOL)insertClosingBraceAutomatically
@@ -582,6 +610,7 @@
 - (void)setShowsMatchingBraces:(BOOL)showsMatchingBraces
 {
     self.fragaria.showsMatchingBraces = showsMatchingBraces;
+	[self propagateValue:@(showsMatchingBraces) forBinding:NSStringFromSelector(@selector(showsMatchingBraces))];
 }
 
 - (BOOL)showsMatchingBraces
@@ -599,6 +628,7 @@
 - (void)setPageGuideColumn:(NSInteger)pageGuideColumn
 {
     self.fragaria.pageGuideColumn = pageGuideColumn;
+	[self propagateValue:@(pageGuideColumn) forBinding:NSStringFromSelector(@selector(pageGuideColumn))];
 }
 
 - (NSInteger)pageGuideColumn
@@ -613,6 +643,7 @@
 -(void)setShowsPageGuide:(BOOL)showsPageGuide
 {
     self.fragaria.showsPageGuide = showsPageGuide;
+	[self propagateValue:@(showsPageGuide) forBinding:NSStringFromSelector(@selector(showsPageGuide))];
 }
 
 - (BOOL)showsPageGuide
@@ -627,6 +658,7 @@
 - (void)setLineWrap:(BOOL)lineWrap
 {
 	[self.fragaria setLineWrap:lineWrap];
+	[self propagateValue:@(lineWrap) forBinding:NSStringFromSelector(@selector(lineWrap))];
 }
 
 - (BOOL)lineWrap
@@ -644,6 +676,7 @@
 - (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
 {
     self.fragaria.showsInvisibleCharacters = showsInvisibleCharacters;
+	[self propagateValue:@(showsInvisibleCharacters) forBinding:NSStringFromSelector(@selector(showsInvisibleCharacters))];
 }
 
 - (BOOL)showsInvisibleCharacters
@@ -655,9 +688,10 @@
 /*
  * @property textInvisibleCharactersColour
  */
-- (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColor
+- (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
 {
-	self.fragaria.textInvisibleCharactersColour = textInvisibleCharactersColor;
+	self.fragaria.textInvisibleCharactersColour = textInvisibleCharactersColour;
+	[self propagateValue:textInvisibleCharactersColour forBinding:NSStringFromSelector(@selector(textInvisibleCharactersColour))];
 }
 
 - (NSColor *)textInvisibleCharactersColour
@@ -675,6 +709,7 @@
 - (void)setTextColor:(NSColor *)textColor
 {
     self.fragaria.textColor = textColor;
+	[self propagateValue:textColor forBinding:NSStringFromSelector(@selector(textColor))];
 }
 
 - (NSColor *)textColor
@@ -689,6 +724,7 @@
 - (void)setBackgroundColor:(NSColor *)backgroundColor
 {
     self.fragaria.backgroundColor = backgroundColor;
+	[self propagateValue:backgroundColor forBinding:NSStringFromSelector(@selector(backgroundColor))];
 }
 
 - (NSColor *)backgroundColor
@@ -703,6 +739,7 @@
 - (void)setTextFont:(NSFont *)textFont
 {
 	self.fragaria.textFont = textFont;
+	[self propagateValue:textFont forBinding:NSStringFromSelector(@selector(textFont))];
 }
 
 - (NSFont *)textFont
@@ -734,6 +771,7 @@
 - (void)setHasVerticalScroller:(BOOL)hasVerticalScroller
 {
 	[self.fragaria setHasVerticalScroller:hasVerticalScroller];
+	[self propagateValue:@(hasVerticalScroller) forBinding:NSStringFromSelector(@selector(hasVerticalScroller))];
 }
 
 - (BOOL)hasVerticalScroller
@@ -748,6 +786,7 @@
 - (void)setInsertionPointColor:(NSColor *)insertionPointColor
 {
     self.fragaria.insertionPointColor = insertionPointColor;
+	[self propagateValue:insertionPointColor forBinding:NSStringFromSelector(@selector(insertionPointColor))];
 }
 
 - (NSColor *)insertionPointColor
@@ -762,6 +801,7 @@
 - (void)setScrollElasticityDisabled:(BOOL)scrollElasticityDisabled
 {
 	[self.fragaria setScrollElasticityDisabled:scrollElasticityDisabled];
+	[self propagateValue:@(scrollElasticityDisabled) forBinding:NSStringFromSelector(@selector(scrollElasticityDisabled))];
 }
 
 - (BOOL)scrollElasticityDisabled
@@ -788,6 +828,7 @@
 - (void)setColourForAutocomplete:(NSColor *)colourForAutocomplete
 {
     self.fragaria.syntaxColouring.colourForAutocomplete = colourForAutocomplete;
+	[self propagateValue:colourForAutocomplete forBinding:NSStringFromSelector(@selector(colourForAutocomplete))];
 }
 
 - (NSColor *)colourForAutocomplete
@@ -802,6 +843,7 @@
 - (void)setColourForAttributes:(NSColor *)colourForAttributes
 {
     self.fragaria.syntaxColouring.colourForAttributes = colourForAttributes;
+	[self propagateValue:colourForAttributes forBinding:NSStringFromSelector(@selector(colourForAttributes))];
 }
 
 - (NSColor *)colourForAttributes
@@ -816,6 +858,7 @@
 - (void)setColourForCommands:(NSColor *)colourForCommands
 {
     self.fragaria.syntaxColouring.colourForCommands = colourForCommands;
+	[self propagateValue:colourForCommands forBinding:NSStringFromSelector(@selector(colourForCommands))];
 }
 
 - (NSColor *)colourForCommands
@@ -830,6 +873,7 @@
 - (void)setColourForComments:(NSColor *)colourForComments
 {
     self.fragaria.syntaxColouring.colourForComments = colourForComments;
+	[self propagateValue:colourForComments forBinding:NSStringFromSelector(@selector(colourForComments))];
 }
 
 - (NSColor *)colourForComments
@@ -844,6 +888,7 @@
 - (void)setColourForInstructions:(NSColor *)colourForInstructions
 {
     self.fragaria.syntaxColouring.colourForInstructions = colourForInstructions;
+	[self propagateValue:colourForInstructions forBinding:NSStringFromSelector(@selector(colourForInstructions))];
 }
 
 - (NSColor *)colourForInstructions
@@ -858,6 +903,7 @@
 - (void)setColourForKeywords:(NSColor *)colourForKeywords
 {
     self.fragaria.syntaxColouring.colourForKeywords = colourForKeywords;
+	[self propagateValue:colourForKeywords forBinding:NSStringFromSelector(@selector(colourForKeywords))];
 }
 
 - (NSColor *)colourForKeywords
@@ -872,6 +918,7 @@
 - (void)setColourForNumbers:(NSColor *)colourForNumbers
 {
     self.fragaria.syntaxColouring.colourForNumbers = colourForNumbers;
+	[self propagateValue:colourForNumbers forBinding:NSStringFromSelector(@selector(colourForNumbers))];
 }
 
 - (NSColor *)colourForNumbers
@@ -886,6 +933,7 @@
 - (void)setColourForStrings:(NSColor *)colourForStrings
 {
     self.fragaria.syntaxColouring.colourForStrings = colourForStrings;
+	[self propagateValue:colourForStrings forBinding:NSStringFromSelector(@selector(colourForStrings))];
 }
 
 - (NSColor *)colourForStrings
@@ -900,6 +948,7 @@
 - (void)setColourForVariables:(NSColor *)colourForVariables
 {
     self.fragaria.syntaxColouring.colourForVariables = colourForVariables;
+	[self propagateValue:colourForVariables forBinding:NSStringFromSelector(@selector(colourForVariables))];
 }
 
 - (NSColor *)colourForVariables
@@ -917,6 +966,7 @@
 - (void)setColoursAttributes:(BOOL)coloursAttributes
 {
     self.fragaria.syntaxColouring.coloursAttributes = coloursAttributes;
+	[self propagateValue:@(coloursAttributes) forBinding:NSStringFromSelector(@selector(coloursAttributes))];
 }
 
 - (BOOL)coloursAttributes
@@ -930,6 +980,7 @@
 - (void)setColoursAutocomplete:(BOOL)coloursAutocomplete
 {
     self.fragaria.syntaxColouring.coloursAutocomplete = coloursAutocomplete;
+	[self propagateValue:@(coloursAutocomplete) forBinding:NSStringFromSelector(@selector(coloursAutocomplete))];
 }
 
 - (BOOL)coloursAutocomplete
@@ -944,6 +995,7 @@
 - (void)setColoursCommands:(BOOL)coloursCommands
 {
     self.fragaria.syntaxColouring.coloursCommands = coloursCommands;
+	[self propagateValue:@(coloursCommands) forBinding:NSStringFromSelector(@selector(coloursCommands))];
 }
 
 - (BOOL)coloursCommands
@@ -958,6 +1010,7 @@
 - (void)setColoursComments:(BOOL)coloursComments
 {
     self.fragaria.syntaxColouring.coloursComments = coloursComments;
+	[self propagateValue:@(coloursComments) forBinding:NSStringFromSelector(@selector(coloursComments))];
 }
 
 - (BOOL)coloursComments
@@ -972,6 +1025,7 @@
 - (void)setColoursInstructions:(BOOL)coloursInstructions
 {
     self.fragaria.syntaxColouring.coloursInstructions = coloursInstructions;
+	[self propagateValue:@(coloursInstructions) forBinding:NSStringFromSelector(@selector(coloursInstructions))];
 }
 
 - (BOOL)coloursInstructions
@@ -986,6 +1040,7 @@
 - (void)setColoursKeywords:(BOOL)coloursKeywords
 {
     self.fragaria.syntaxColouring.coloursKeywords = coloursKeywords;
+	[self propagateValue:@(coloursKeywords) forBinding:NSStringFromSelector(@selector(coloursKeywords))];
 }
 
 - (BOOL)coloursKeywords
@@ -1000,6 +1055,7 @@
 - (void)setColoursNumbers:(BOOL)coloursNumbers
 {
     self.fragaria.syntaxColouring.coloursNumbers = coloursNumbers;
+	[self propagateValue:@(coloursNumbers) forBinding:NSStringFromSelector(@selector(coloursNumbers))];
 }
 
 - (BOOL)coloursNumbers
@@ -1014,6 +1070,7 @@
 - (void)setColoursStrings:(BOOL)coloursStrings
 {
     self.fragaria.syntaxColouring.coloursStrings = coloursStrings;
+	[self propagateValue:@(coloursStrings) forBinding:NSStringFromSelector(@selector(coloursStrings))];
 }
 
 - (BOOL)coloursStrings
@@ -1028,6 +1085,7 @@
 - (void)setColoursVariables:(BOOL)coloursVariables
 {
     self.fragaria.syntaxColouring.coloursVariables = coloursVariables;
+	[self propagateValue:@(coloursVariables) forBinding:NSStringFromSelector(@selector(coloursVariables))];
 }
 
 - (BOOL)coloursVariables
