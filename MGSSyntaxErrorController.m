@@ -76,7 +76,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     NSPredicate *filter = [NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
         return [evaluatedObject isKindOfClass:[SMLSyntaxError class]];
     }];
-    _syntaxErrors = [syntaxErrors filteredArrayUsingPredicate:filter];;
+    _syntaxErrors = [syntaxErrors filteredArrayUsingPredicate:filter];
     [self updateSyntaxErrorsDisplay];
 }
 
