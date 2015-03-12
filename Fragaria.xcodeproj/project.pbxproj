@@ -80,6 +80,7 @@
 		ABE25D0A1635CA7C00F23718 /* MGSFragariaPrefsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = ABE25D081635CA7C00F23718 /* MGSFragariaPrefsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ABE25D0B1635CA7C00F23718 /* MGSFragariaPrefsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE25D091635CA7C00F23718 /* MGSFragariaPrefsViewController.m */; };
 		ABF28AF014C075D400ECAD48 /* NSScanner+Fragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */; };
+		D01F51721AAF1D35006A3A90 /* MGSFragariaViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F51701AAF1D35006A3A90 /* MGSFragariaViewTests.m */; };
 		D034C8081A997FA8003D3A41 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C8071A997FA8003D3A41 /* MainMenu.xib */; };
 		D034C80B1A99807F003D3A41 /* MainMenu-Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C8091A99807F003D3A41 /* MainMenu-Document.xib */; };
 		D034C80C1A99807F003D3A41 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C80A1A99807F003D3A41 /* MyDocument.xib */; };
@@ -87,6 +88,7 @@
 		D034C8161A998324003D3A41 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034C8121A998324003D3A41 /* MASPreferencesWindowController.m */; };
 		D034C81C1A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034C8191A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m */; };
 		D034C81D1A9984A1003D3A41 /* PrefsTextEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034C81B1A9984A1003D3A41 /* PrefsTextEditingViewController.m */; };
+		D04A0DF81AAEAD7C00667E4D /* MGSFragariaAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D04A0DF71AAEAD7C00667E4D /* MGSFragariaAPI.h */; };
 		D08359DB1A9F0446001B7B50 /* FeaturesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08359D91A9F0446001B7B50 /* FeaturesWindowController.m */; };
 		D08359E11AA0875E001B7B50 /* MGSPreferencesObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = D08359DE1AA0875E001B7B50 /* MGSPreferencesObserver.m */; };
 		D0AB50F01A91CDC200A6DF58 /* SMLSyntaxErrorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AB50EF1A91CDC200A6DF58 /* SMLSyntaxErrorTests.m */; };
@@ -245,6 +247,7 @@
 		ABE25D091635CA7C00F23718 /* MGSFragariaPrefsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragariaPrefsViewController.m; sourceTree = "<group>"; };
 		ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSScanner+Fragaria.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		ABF28AEF14C075D400ECAD48 /* NSScanner+Fragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScanner+Fragaria.h"; sourceTree = "<group>"; };
+		D01F51701AAF1D35006A3A90 /* MGSFragariaViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragariaViewTests.m; sourceTree = "<group>"; };
 		D034C8071A997FA8003D3A41 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = Applications/Simple/MainMenu.xib; sourceTree = "<group>"; };
 		D034C8091A99807F003D3A41 /* MainMenu-Document.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "MainMenu-Document.xib"; path = "Applications/Doc/MainMenu-Document.xib"; sourceTree = "<group>"; };
 		D034C80A1A99807F003D3A41 /* MyDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyDocument.xib; path = Applications/Doc/MyDocument.xib; sourceTree = "<group>"; };
@@ -256,6 +259,7 @@
 		D034C8191A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrefsFontsAndColorsViewController.m; path = Applications/MGSFragariaView/PrefsFontsAndColorsViewController.m; sourceTree = "<group>"; };
 		D034C81A1A9984A1003D3A41 /* PrefsTextEditingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefsTextEditingViewController.h; path = Applications/MGSFragariaView/PrefsTextEditingViewController.h; sourceTree = "<group>"; };
 		D034C81B1A9984A1003D3A41 /* PrefsTextEditingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrefsTextEditingViewController.m; path = Applications/MGSFragariaView/PrefsTextEditingViewController.m; sourceTree = "<group>"; };
+		D04A0DF71AAEAD7C00667E4D /* MGSFragariaAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaAPI.h; sourceTree = "<group>"; };
 		D08359D81A9F0446001B7B50 /* FeaturesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeaturesWindowController.h; path = Applications/MGSFragariaView/FeaturesWindowController.h; sourceTree = "<group>"; };
 		D08359D91A9F0446001B7B50 /* FeaturesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeaturesWindowController.m; path = Applications/MGSFragariaView/FeaturesWindowController.m; sourceTree = "<group>"; };
 		D08359DD1AA0875E001B7B50 /* MGSPreferencesObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPreferencesObserver.h; sourceTree = "<group>"; };
@@ -579,6 +583,7 @@
 				E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */,
 				0191FA7C1A881F280099B50D /* MGSDragOperationDelegate.h */,
 				019B80181A9E77330007D234 /* MGSFragariaTextViewDelegate.h */,
+				D04A0DF71AAEAD7C00667E4D /* MGSFragariaAPI.h */,
 				D0C146731A871A0B00DDE90A /* MGSFragariaView.h */,
 				D0C146741A871A0B00DDE90A /* MGSFragariaView.m */,
 				AB69B753118B830700903D1D /* MGSFragaria.h */,
@@ -649,6 +654,7 @@
 		D0E5210E1A90E34F005CB80B /* MGSFragaria Tests */ = {
 			isa = PBXGroup;
 			children = (
+				D01F51701AAF1D35006A3A90 /* MGSFragariaViewTests.m */,
 				D0E521071A90E307005CB80B /* MGSSyntaxErrorControllerTests.m */,
 				D0AB50EF1A91CDC200A6DF58 /* SMLSyntaxErrorTests.m */,
 				D0E5210F1A90E34F005CB80B /* Supporting Files */,
@@ -687,6 +693,7 @@
 				D0C146751A871A0B00DDE90A /* MGSFragariaView.h in Headers */,
 				017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */,
 				E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */,
+				D04A0DF81AAEAD7C00667E4D /* MGSFragariaAPI.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
 				AB8387C5171D6115004408F4 /* SMLSyntaxDefinition.h in Headers */,
 				0191FA811A8829930099B50D /* SMLTextView+MGSTextActions.h in Headers */,
@@ -974,6 +981,7 @@
 			files = (
 				D0AB50F01A91CDC200A6DF58 /* SMLSyntaxErrorTests.m in Sources */,
 				D0E5211A1A90E399005CB80B /* MGSSyntaxErrorControllerTests.m in Sources */,
+				D01F51721AAF1D35006A3A90 /* MGSFragariaViewTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
