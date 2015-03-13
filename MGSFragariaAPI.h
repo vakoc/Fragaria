@@ -23,8 +23,8 @@
 
 /**
  *  The MGSFragariaAPI protocol defines the properties and methods that are
- *  used to control and configure an instance of MGSFragaria. It is adopted
- *  by MGSFragariaView and MGSFragaria so that the API's are identical.
+ *  used to control and configure an instance of MGSFragaria. It contains
+ *  only those APIs which are shared between MGSFragaria and MGSFragariaView.
  */
 
 @protocol MGSFragariaAPI <NSObject>
@@ -257,73 +257,6 @@
 - (void)goToLine:(NSInteger)lineToGoTo centered:(BOOL)centered highlight:(BOOL)highlight;
 
 
-#pragma mark - Optional Properties and Methods
-/// @name Optional Properties and Methods
-@optional
-
-
-#pragma mark - Syntax Highlighting Colours
-/// @name Syntax Highlighting Colours
-
-
-/** Specifies the autocomplete color **/
-@property (nonatomic, assign) NSColor *colourForAutocomplete;
-
-/** Specifies the attributes color **/
-@property (nonatomic, assign) NSColor *colourForAttributes;
-
-/** Specifies the commands color **/
-@property (nonatomic, assign) NSColor *colourForCommands;
-
-/** Specifies the comments color **/
-@property (nonatomic, assign) NSColor *colourForComments;
-
-/** Specifies the instructions color **/
-@property (nonatomic, assign) NSColor *colourForInstructions;
-
-/** Specifies the keywords color **/
-@property (nonatomic, assign) NSColor *colourForKeywords;
-
-/** Specifies the numbers color **/
-@property (nonatomic, assign) NSColor *colourForNumbers;
-
-/** Specifies the strings color **/
-@property (nonatomic, assign) NSColor *colourForStrings;
-
-/** Specifies the variables color **/
-@property (nonatomic, assign) NSColor *colourForVariables;
-
-
-#pragma mark - Syntax Highlighter Colouring Options
-/// @name Syntax Highlighter Colouring Options
-
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursAttributes;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursAutocomplete;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursCommands;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursComments;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursInstructions;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursKeywords;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursNumbers;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursStrings;
-
-/** Specifies whether or not attributes should be syntax coloured. */
-@property (nonatomic, assign) BOOL coloursVariables;
-
-
 @end
+
+
