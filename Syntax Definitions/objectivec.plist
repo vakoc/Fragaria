@@ -40,6 +40,8 @@
 	<true/>
 	<key>recolourKeywordIfAlreadyColoured</key>
 	<true/>
+	<key>excludeFromKeywordStartCharacterSet</key>
+	<string>:</string>
 	<key>keywords</key>
 	<array>
 		<string>#import</string>
