@@ -7,19 +7,25 @@
 //
 
 
-#import <Foundation/Foundation.h>
-#import "MGSFragaria.h"
+#import <Cocoa/Cocoa.h>
 
 
 @class SMLTextView;
 @class MGSLineNumberView;
 @class SMLSyntaxColouring;
 
+@protocol SMLSyntaxColouringDelegate;
+@protocol SMLAutoCompleteDelegate;
+@protocol MGSBreakpointDelegate;
+@protocol MGSFragariaTextViewDelegate;
+@protocol MGSDragOperationDelegate;
+
+
 /**
  *  The MGSFragariaAPI protocol defines the properties and methods that are
  *  used to control and configure an instance of MGSFragaria. It is adopted
- *  by MGSFragariaView so that the API's are identical.
- **/
+ *  by MGSFragariaView and MGSFragaria so that the API's are identical.
+ */
 
 @protocol MGSFragariaAPI <NSObject>
 
