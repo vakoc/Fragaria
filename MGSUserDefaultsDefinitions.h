@@ -71,6 +71,7 @@ extern NSString * const MGSFragariaDefaultsShowsMatchingBraces;                 
 extern NSString * const MGSFragariaDefaultsPageGuideColumn;                       // NSInteger  pageGuideColumn
 extern NSString * const MGSFragariaDefaultsShowsPageGuide;                        // BOOL       showsPageGuide
 extern NSString * const MGSFragariaDefaultsLineWrap;                              // BOOL       lineWrap
+extern NSString * const MGSFragariaDefaultsLineWrapsAtPageGuide;                  // BOOL       lineWrapsAtPageGuide
 
 // Showing Invisible Characters
 extern NSString * const MGSFragariaDefaultsShowsInvisibleCharacters;              // BOOL    showsInvisibleCharacters
