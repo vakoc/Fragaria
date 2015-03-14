@@ -158,12 +158,25 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
+ * @property lineWrapsAtPageGuide
+ */
+- (void)setLineWrapsAtPageGuide:(BOOL)lineWrapsAtPageGuide
+{
+    _lineWrapsAtPageGuide = lineWrapsAtPageGuide;
+    [self updateLineWrap];
+    [self.syntaxColouring invalidateAllColouring];
+}
+
+
+/*
  * @property pageGuideColumn
  */
 - (void)setPageGuideColumn:(NSInteger)pageGuideColumn
 {
     _pageGuideColumn = pageGuideColumn;
     [self configurePageGuide];
+    [self updateLineWrap];
+    [self.syntaxColouring invalidateAllColouring];
 }
 
 
@@ -1200,20 +1213,45 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     }
 
     if (self.lineWrap) {
-        // setup text container
-        [textContainer setContainerSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
-        [textContainer setWidthTracksTextView:YES];
-        [textContainer setHeightTracksTextView:NO];
 
-        // setup text view
-        [self setFrameSize:contentSize];
-        [self setHorizontallyResizable: NO];
-        [self setVerticallyResizable: YES];
-        [self setMinSize:NSMakeSize(10, contentSize.height)];
-        [self setMaxSize:NSMakeSize(10, CGFLOAT_MAX)];
+        if (self.lineWrapsAtPageGuide) {
 
-        // setup scroll view
-        [textScrollView setHasHorizontalScroller:NO];
+            float initialWidth = textScrollView.frame.size.width;
+
+            // set modified contentsize
+            contentSize = NSMakeSize(pageGuideX, contentSize.height);
+
+            // setup text container
+            [textContainer setWidthTracksTextView:NO];
+            [textContainer setHeightTracksTextView:NO];
+            [textContainer setContainerSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
+
+            // setup text view
+            [self setFrameSize:contentSize];
+            [self setHorizontallyResizable: YES];
+            [self setVerticallyResizable: YES];
+            [self setMinSize:contentSize];
+            [self setMaxSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
+
+            // setup scroll view
+            [textScrollView setHasHorizontalScroller:pageGuideX > initialWidth];
+        } else {
+
+            // setup text view
+            [self setFrameSize:contentSize];
+            [self setHorizontallyResizable: NO];
+            [self setVerticallyResizable: YES];
+            [self setMinSize:NSMakeSize(10, contentSize.height)];
+            [self setMaxSize:NSMakeSize(10, CGFLOAT_MAX)];
+
+            // setup text container
+            [textContainer setWidthTracksTextView:YES];
+            [textContainer setHeightTracksTextView:NO];
+            [textContainer setContainerSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
+
+            // setup scroll view
+            [textScrollView setHasHorizontalScroller:NO];
+        }
     } else {
 
         // setup text container
@@ -1241,9 +1279,22 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - viewDidEndLiveResize
+ */
+- (void)viewDidEndLiveResize
+{
+    [super viewDidEndLiveResize];
+    BOOL needsScroller = self.lineWrapsAtPageGuide && pageGuideX > self.enclosingScrollView.frame.size.width;
+    self.enclosingScrollView.hasHorizontalScroller = needsScroller;
+}
+
 #pragma mark - Page Guide
 
 
+/*
+ * - configurePageGuide
+ */
 - (void)configurePageGuide
 {
     NSDictionary *sizeAttribute = [self typingAttributes];

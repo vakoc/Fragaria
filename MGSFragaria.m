@@ -45,7 +45,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic backgroundColor, currentLineHighlightColour, highlightsCurrentLine;
 @dynamic indentBracesAutomatically, indentNewLinesAutomatically, indentWithSpaces;
 @dynamic insertClosingBraceAutomatically, insertClosingParenthesisAutomatically;
-@dynamic insertionPointColor, lineWrap, pageGuideColumn;
+@dynamic insertionPointColor, lineWrap, lineWrapsAtPageGuide, pageGuideColumn;
 @dynamic showsInvisibleCharacters, showsMatchingBraces, showsPageGuide;
 @dynamic string, syntaxColouring, tabWidth, textColor, textFont;
 @dynamic textInvisibleCharactersColour, useTabStops, syntaxColoured;

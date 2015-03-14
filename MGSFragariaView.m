@@ -667,6 +667,19 @@
 }
 
 
+/*
+ * @property lineWrapsAtPageGuide
+ */
+- (void)setLineWrapsAtPageGuide:(BOOL)lineWrapsAtPageGuide
+{
+    [self.fragaria setLineWrapsAtPageGuide:lineWrapsAtPageGuide];
+}
+
+- (BOOL)lineWrapsAtPageGuide
+{
+    return self.fragaria.lineWrapsAtPageGuide;
+}
+
 #pragma mark - Showing Invisible Characters
 
 

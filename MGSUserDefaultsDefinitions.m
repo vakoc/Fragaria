@@ -49,9 +49,10 @@ NSString * const MGSFragariaDefaultsInsertClosingParenthesisAutomatically = @"in
 NSString * const MGSFragariaDefaultsShowsMatchingBraces =                   @"showsMatchingBraces";
 
 // Page Guide and Line Wrap
-NSString * const MGSFragariaDefaultsPageGuideColumn = @"pageGuideColumn";
-NSString * const MGSFragariaDefaultsShowsPageGuide =  @"showsPageGuide";
-NSString * const MGSFragariaDefaultsLineWrap =        @"lineWrap";
+NSString * const MGSFragariaDefaultsPageGuideColumn =      @"pageGuideColumn";
+NSString * const MGSFragariaDefaultsShowsPageGuide =       @"showsPageGuide";
+NSString * const MGSFragariaDefaultsLineWrap =             @"lineWrap";
+NSString * const MGSFragariaDefaultsLineWrapsAtPageGuide = @"lineWrapsAtPageGuide";
 
 // Showing Invisible Characters
 NSString * const MGSFragariaDefaultsShowsInvisibleCharacters =      @"showsInvisibleCharacters";

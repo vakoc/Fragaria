@@ -204,13 +204,17 @@
 /// @name Showing the Page Guide
 
 
-/** Indicates the column number at which the page guide appears.*/
+/** Specifies the column position to draw the page guide. Independently of
+ whether or not showsPageGuide is enabled, also indicates the line wrap
+ column when both lineWrap and lineWrapsAtPageGuide are enabled.*/
 @property (nonatomic, assign) NSInteger pageGuideColumn;
 /** Specifies whether or not to show the page guide.*/
 @property (nonatomic, assign) BOOL showsPageGuide;
 
 /** Indicates whether or not line wrap is enabled.*/
 @property (nonatomic, assign) BOOL lineWrap;
+/** If lineWrap is enabled, this indicates whether the line should wrap at the page guide column. */
+@property (nonatomic, assign) BOOL lineWrapsAtPageGuide;
 
 
 #pragma mark - Showing Invisible Characters
