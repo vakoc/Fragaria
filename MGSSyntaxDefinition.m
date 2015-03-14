@@ -24,6 +24,7 @@ NSString *SMLSyntaxDefinitionKeywordsCaseSensitive = @"keywordsCaseSensitive";
 NSString *SMLSyntaxDefinitionBeginCommand = @"beginCommand";
 NSString *SMLSyntaxDefinitionEndCommand = @"endCommand";
 
+NSString *SMLSyntaxDefinitionInstructions = @"instructions";
 NSString *SMLSyntaxDefinitionBeginInstruction = @"beginInstruction";
 NSString *SMLSyntaxDefinitionEndInstruction = @"endInstruction";
 
@@ -64,8 +65,15 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     
     // If the plist file is malformed be sure to set the values to something
     
+    // keywords case sensitive
+    id value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionKeywordsCaseSensitive];
+    if (value) {
+        NSAssert([value isKindOfClass:[NSNumber class]], @"NSNumber expected");
+        _keywordsCaseSensitive = [value boolValue];
+    }
+    
     // syntax colouring
-    id value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionAllowSyntaxColouring];
+    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionAllowSyntaxColouring];
     if (value) {
         NSAssert([value isKindOfClass:[NSNumber class]], @"NSNumber expected");
         _syntaxDefinitionAllowsColouring = [value boolValue];
@@ -85,7 +93,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionKeywords];
     if (value) {
         NSAssert([value isKindOfClass:[NSArray class]], @"NSArray expected");
-        _keywords = [[NSSet alloc] initWithArray:value];
+        _keywords = [self caseAdjustedSetFromKeywordArray:value];
     }
     
     // autocomplete words
@@ -100,23 +108,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     if (value) {
         NSAssert([value isKindOfClass:[NSNumber class]], @"NSNumber expected");
         _recolourKeywordIfAlreadyColoured = [value boolValue];
-    }
-    
-    // keywords case sensitive
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionKeywordsCaseSensitive];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSNumber class]], @"NSNumber expected");
-        _keywordsCaseSensitive = [value boolValue];
-    }
-    
-    if (self.keywordsCaseSensitive == NO) {
-        NSMutableArray *lowerCaseKeywords = [[NSMutableArray alloc] init];
-        for (id item in self.keywords) {
-            [lowerCaseKeywords addObject:[item lowercaseString]];
-        }
-        
-        NSSet *lowerCaseKeywordsSet = [[NSSet alloc] initWithArray:lowerCaseKeywords];
-        _keywords = lowerCaseKeywordsSet;
     }
     
     // begin command
@@ -137,22 +128,29 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
         _endCommand = @"";
     }
     
-    // begin instruction
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginInstruction];
+    // instructions
+    value = [syntaxDictionary objectForKey:SMLSyntaxDefinitionInstructions];
     if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _beginInstruction = value;
+        NSAssert([value isKindOfClass:[NSArray class]], @"NSString expected");
+        _instructions = [self caseAdjustedSetFromKeywordArray:value];
     } else {
-        _beginInstruction = @"";
-    }
-    
-    // end instruction
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndInstruction];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _endInstruction = value;
-    } else {
-        _endInstruction = @"";
+        // begin instruction
+        value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginInstruction];
+        if (value) {
+            NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
+            _beginInstruction = value;
+        } else {
+            _beginInstruction = @"";
+        }
+        
+        // end instruction
+        value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndInstruction];
+        if (value) {
+            NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
+            _endInstruction = value;
+        } else {
+            _endInstruction = @"";
+        }
     }
     
     // begin variable
@@ -312,6 +310,19 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     temporaryCharacterSet = [[NSCharacterSet alphanumericCharacterSet] mutableCopy];
     [temporaryCharacterSet addCharactersInString:@" -"]; // If there are two spaces before an attribute
     _attributesCharacterSet = [temporaryCharacterSet copy];
+}
+
+
+- (NSSet*)caseAdjustedSetFromKeywordArray:(NSArray*)array
+{
+    if (self.keywordsCaseSensitive == NO) {
+        NSMutableArray *lowerCaseKeywords = [[NSMutableArray alloc] init];
+        for (id item in array) {
+            [lowerCaseKeywords addObject:[item lowercaseString]];
+        }
+        return [NSSet setWithArray:lowerCaseKeywords];
+    }
+    return [NSSet setWithArray:array];
 }
 
 

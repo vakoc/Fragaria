@@ -58,9 +58,14 @@
 /** Indicates whether or not keywords are case-sensitive. */
 @property (readonly) BOOL keywordsCaseSensitive;
 
-/**  Delimiter for the start of an instruction. */
+/** A set of words that are considered instructions. If keywordsCaseSensitive
+ *  is YES, this set will contain lowercase strings only. If this property
+ *  is nil, instructions should be detected using beginInstruction and
+ *  endInstruction. */
+@property (readonly) NSSet *instructions;
+/**  Delimiter for the start of an instruction iff instructions == nil. */
 @property (readonly) NSString *beginInstruction;
-/**  Delimiter for the end of an instruction. */
+/**  Delimiter for the end of an instruction iff instructions == nil. */
 @property (readonly) NSString *endInstruction;
 
 /**  Characters that may start a variable. */

@@ -519,7 +519,7 @@ static char kcColoursChanged;
             break;
         case kSMLSyntaxGroupInstruction:
             groupName = SMLSyntaxGroupInstruction;
-            doColouring = self.coloursInstructions && ![self.syntaxDefinition.beginInstruction isEqual:@""];
+            doColouring = self.coloursInstructions && (![self.syntaxDefinition.beginInstruction isEqual:@""] || self.syntaxDefinition.instructions);
             attributes = instructionsColour;
             break;
         case kSMLSyntaxGroupKeyword:
@@ -757,6 +757,11 @@ static char kcColoursChanged;
     NSUInteger documentStringLength = [documentString length];
     NSUInteger maxRangeLocation = NSMaxRange(rangeToRecolour);
     
+    if (self.syntaxDefinition.instructions) {
+        [self colourKeywordsFromSet:self.syntaxDefinition.instructions withAttributes:instructionsColour inRange:rangeToRecolour withRangeScanner:rangeScanner documentScanner:documentScanner];
+        return;
+    }
+    
     // It takes too long to scan the whole document if it's large, so for instructions, first multi-line comment and second multi-line comment search backwards and begin at the start of the first beginInstruction etc. that it finds from the present position and, below, break the loop if it has passed the scanned range (i.e. after the end instruction)
     
     beginLocationInMultiLine = [documentString rangeOfString:self.syntaxDefinition.beginInstruction options:NSBackwardsSearch range:NSMakeRange(0, rangeLocation)].location;
@@ -809,46 +814,6 @@ static char kcColoursChanged;
 - (void)colourAutocompleteInRange:(NSRange)rangeToRecolour withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner
 {
     [self colourKeywordsFromSet:self.syntaxDefinition.autocompleteWords withAttributes:autocompleteWordsColour inRange:rangeToRecolour withRangeScanner:rangeScanner documentScanner:documentScanner];
-}
-
-
-- (void)colourKeywordsFromSet:(NSSet*)keywords withAttributes:(NSDictionary*)attributes inRange:(NSRange)rangeToRecolour withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner
-{
-    NSUInteger colourStartLocation, colourEndLocation;
-    NSInteger rangeLocation = rangeToRecolour.location;
-    NSString *documentString = [documentScanner string];
-    NSString *rangeString = [rangeScanner string];
-    NSUInteger rangeStringLength = [rangeString length];
-    
-    // scan range to end
-    while (![rangeScanner isAtEnd]) {
-        [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.keywordStartCharacterSet intoString:nil];
-        colourStartLocation = [rangeScanner scanLocation];
-        if ((colourStartLocation + 1) < rangeStringLength) {
-            [rangeScanner mgs_setScanLocation:(colourStartLocation + 1)];
-        }
-        [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.keywordEndCharacterSet intoString:nil];
-        
-        colourEndLocation = [rangeScanner scanLocation];
-        if (colourEndLocation > rangeStringLength || colourStartLocation == colourEndLocation) {
-            break;
-        }
-        
-        NSString *keywordTestString = nil;
-        if (!self.syntaxDefinition.keywordsCaseSensitive) {
-            keywordTestString = [[documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)] lowercaseString];
-        } else {
-            keywordTestString = [documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)];
-        }
-        if ([keywords containsObject:keywordTestString]) {
-            if (!self.syntaxDefinition.recolourKeywordIfAlreadyColoured) {
-                if ([[self syntaxColouringGroupOfCharacterAtIndex:colourStartLocation + rangeLocation] isEqual:SMLSyntaxGroupCommand]) {
-                    continue;
-                }
-            }
-            [self setColour:attributes range:NSMakeRange(colourStartLocation + rangeLocation, [rangeScanner scanLocation] - colourStartLocation)];
-        }
-    }
 }
 
 
@@ -1190,6 +1155,49 @@ static char kcColoursChanged;
             [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
         }
     }];
+}
+
+
+#pragma mark - Common colouring methods
+
+
+- (void)colourKeywordsFromSet:(NSSet*)keywords withAttributes:(NSDictionary*)attributes inRange:(NSRange)rangeToRecolour withRangeScanner:(NSScanner*)rangeScanner documentScanner:(NSScanner*)documentScanner
+{
+    NSUInteger colourStartLocation, colourEndLocation;
+    NSInteger rangeLocation = rangeToRecolour.location;
+    NSString *documentString = [documentScanner string];
+    NSString *rangeString = [rangeScanner string];
+    NSUInteger rangeStringLength = [rangeString length];
+    
+    // scan range to end
+    while (![rangeScanner isAtEnd]) {
+        [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.keywordStartCharacterSet intoString:nil];
+        colourStartLocation = [rangeScanner scanLocation];
+        if ((colourStartLocation + 1) < rangeStringLength) {
+            [rangeScanner mgs_setScanLocation:(colourStartLocation + 1)];
+        }
+        [rangeScanner scanUpToCharactersFromSet:self.syntaxDefinition.keywordEndCharacterSet intoString:nil];
+        
+        colourEndLocation = [rangeScanner scanLocation];
+        if (colourEndLocation > rangeStringLength || colourStartLocation == colourEndLocation) {
+            break;
+        }
+        
+        NSString *keywordTestString = nil;
+        if (!self.syntaxDefinition.keywordsCaseSensitive) {
+            keywordTestString = [[documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)] lowercaseString];
+        } else {
+            keywordTestString = [documentString substringWithRange:NSMakeRange(colourStartLocation + rangeLocation, colourEndLocation - colourStartLocation)];
+        }
+        if ([keywords containsObject:keywordTestString]) {
+            if (!self.syntaxDefinition.recolourKeywordIfAlreadyColoured) {
+                if ([[self syntaxColouringGroupOfCharacterAtIndex:colourStartLocation + rangeLocation] isEqual:SMLSyntaxGroupCommand]) {
+                    continue;
+                }
+            }
+            [self setColour:attributes range:NSMakeRange(colourStartLocation + rangeLocation, [rangeScanner scanLocation] - colourStartLocation)];
+        }
+    }
 }
 
 
