@@ -34,6 +34,7 @@ NSString *SMLSyntaxDefinitionEndVariable = @"endVariable";
 NSString *SMLSyntaxDefinitionFirstString = @"firstString";
 NSString *SMLSyntaxDefinitionSecondString = @"secondString";
 
+NSString *SMLSyntaxDefinitionSingleLineCommentRegex = @"singleLineCommentRegex";
 NSString *SMLSyntaxDefinitionFirstSingleLineComment = @"firstSingleLineComment";
 NSString *SMLSyntaxDefinitionSecondSingleLineComment = @"secondSingleLineComment";
 NSString *SMLSyntaxDefinitionBeginFirstMultiLineComment = @"beginFirstMultiLineComment";
@@ -189,22 +190,28 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
         _secondString = @"";
     }
     
-    _singleLineComments = [NSMutableArray arrayWithCapacity:2];
-    
-    // first single line comment
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionFirstSingleLineComment];
+    value = [syntaxDictionary objectForKey:SMLSyntaxDefinitionSingleLineCommentRegex];
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        if (![value isEqual:@""])
-            [_singleLineComments addObject:value];
-    }
-    
-    // second single line comment
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionSecondSingleLineComment];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        if (![value isEqual:@""])
-            [_singleLineComments addObject:value];
+        _singleLineCommentRegex = value;
+    } else {
+        _singleLineComments = [NSMutableArray arrayWithCapacity:2];
+        
+        // first single line comment
+        value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionFirstSingleLineComment];
+        if (value) {
+            NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
+            if (![value isEqual:@""])
+                [_singleLineComments addObject:value];
+        }
+        
+        // second single line comment
+        value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionSecondSingleLineComment];
+        if (value) {
+            NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
+            if (![value isEqual:@""])
+                [_singleLineComments addObject:value];
+        }
     }
     
     _multiLineComments = [NSMutableArray arrayWithCapacity:2];

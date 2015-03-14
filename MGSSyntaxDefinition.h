@@ -59,9 +59,9 @@
 @property (readonly) BOOL keywordsCaseSensitive;
 
 /** A set of words that are considered instructions. If keywordsCaseSensitive
- *  is YES, this set will contain lowercase strings only. If this property
- *  is nil, instructions should be detected using beginInstruction and
- *  endInstruction. */
+ *  is YES, this set will contain lowercase strings only.
+ *  @discuss If this property is nil, instructions must be detected using
+ *           beginInstruction and endInstruction, otherwise they are ignored. */
 @property (readonly) NSSet *instructions;
 /**  Delimiter for the start of an instruction iff instructions == nil. */
 @property (readonly) NSString *beginInstruction;
@@ -73,6 +73,11 @@
 /**  Characters that may terminate a variable. */
 @property (readonly) NSCharacterSet *endVariableCharacterSet;
 
+/** A regular expression that matches a single line comment.
+ *  @discuss This property supercedes singleLineComments. If this property is
+ *           nil, a syntax colourer should use singleLineComments instead,
+ *           otherwise it is ignored. */
+@property (readonly) NSString *singleLineCommentRegex;
 /** An array of strings that should mark the beginning of a single-line comment.
  *  This kind of comments extends from the characters that mark its start
  *  to the end of its line. */

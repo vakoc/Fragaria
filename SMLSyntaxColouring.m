@@ -640,13 +640,7 @@ static char kcColoursChanged;
     
     
     if (self.syntaxDefinition.numberDefinition) {
-        NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:self.syntaxDefinition.numberDefinition options:0 error:nil];
-        if (!regex) return;
-        
-        [regex enumerateMatchesInString:documentString options:0 range:colouringRange usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
-            [self setColour:numbersColour range:[match range]];
-        }];
-        
+        [self colourMatchesOfPattern:self.syntaxDefinition.numberDefinition withAttributes:numbersColour inRange:colouringRange];
         return;
     }
     
@@ -954,6 +948,11 @@ static char kcColoursChanged;
     NSUInteger documentStringLength = [documentString length];
     NSUInteger searchSyntaxLength;
     
+    if (self.syntaxDefinition.singleLineCommentRegex) {
+        [self colourMatchesOfPattern:self.syntaxDefinition.singleLineCommentRegex withAttributes:commentsColour inRange:rangeToRecolour];
+        return;
+    }
+    
     for (NSString *singleLineComment in self.syntaxDefinition.singleLineComments) {
         if (![singleLineComment isEqualToString:@""]) {
             
@@ -1198,6 +1197,19 @@ static char kcColoursChanged;
             [self setColour:attributes range:NSMakeRange(colourStartLocation + rangeLocation, [rangeScanner scanLocation] - colourStartLocation)];
         }
     }
+}
+
+
+- (void)colourMatchesOfPattern:(NSString*)pattern withAttributes:(NSDictionary*)attributes inRange:(NSRange)colouringRange
+{
+    NSString *documentString = self.layoutManager.textStorage.string;
+    
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+    if (!regex) return;
+    
+    [regex enumerateMatchesInString:documentString options:0 range:colouringRange usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
+        [self setColour:attributes range:[match range]];
+    }];
 }
 
 
