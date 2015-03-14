@@ -34,7 +34,7 @@
 	<string></string>
 	<key>includeInKeywordStartCharacterSet</key>
 	<string>.</string>
-	<key>keywords</key>
+	<key>instructions</key>
 	<array>
 		<string>ABS</string>
 		<string>ADD</string>

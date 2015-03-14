@@ -8,10 +8,6 @@
 	<string></string>
 	<key>endCommand</key>
 	<string></string>
-	<key>beginInstruction</key>
-	<string></string>
-	<key>endInstruction</key>
-	<string></string>
 	<key>beginVariable</key>
 	<string></string>
 	<key>endVariable</key>
@@ -146,6 +142,9 @@
 		<string>ttl</string>
 		<string>xdef</string>
 		<string>xref</string>
+  </array>
+  <key>instructions</key>
+  <array>
 		<string>ABCD</string>
 		<string>ABCD.B</string>
 		<string>ADD</string>

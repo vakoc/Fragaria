@@ -348,6 +348,9 @@
 		<string>TR5</string>
 		<string>TR6</string>
 		<string>TR7</string>
+  </array>
+  <key>instructions</key>
+  <array>
 		<string>AAA</string>
 		<string>AAD</string>
 		<string>AAM</string>
