@@ -1214,25 +1214,42 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
     if (self.lineWrap) {
 
-        // set modified contentsize
         if (self.lineWrapsAtPageGuide) {
+
+            // set modified contentsize
             contentSize = NSMakeSize(pageGuideX, contentSize.height);
+
+            // setup text container
+            [textContainer setWidthTracksTextView:NO];
+            [textContainer setHeightTracksTextView:NO];
+            [textContainer setContainerSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
+
+            // setup text view
+            [self setFrameSize:contentSize];
+            [self setHorizontallyResizable: YES];
+            [self setVerticallyResizable: YES];
+            [self setMinSize:contentSize];
+            [self setMaxSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
+
+            // setup scroll view
+            [textScrollView setHasHorizontalScroller:NO];
+        } else {
+
+            // setup text view
+            [self setFrameSize:contentSize];
+            [self setHorizontallyResizable: NO];
+            [self setVerticallyResizable: YES];
+            [self setMinSize:NSMakeSize(10, contentSize.height)];
+            [self setMaxSize:NSMakeSize(10, CGFLOAT_MAX)];
+
+            // setup text container
+            [textContainer setWidthTracksTextView:YES];
+            [textContainer setHeightTracksTextView:NO];
+            [textContainer setContainerSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
+
+            // setup scroll view
+            [textScrollView setHasHorizontalScroller:NO];
         }
-
-        // setup text container
-        [textContainer setContainerSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
-        [textContainer setWidthTracksTextView:!self.lineWrapsAtPageGuide];
-        [textContainer setHeightTracksTextView:NO];
-
-        // setup text view
-        [self setFrameSize:contentSize];
-        [self setHorizontallyResizable: NO];
-        [self setVerticallyResizable: YES];
-        [self setMinSize:NSMakeSize(10, contentSize.height)];
-        [self setMaxSize:NSMakeSize(10, CGFLOAT_MAX)];
-
-        // setup scroll view
-        [textScrollView setHasHorizontalScroller:NO];
     } else {
 
         // setup text container
