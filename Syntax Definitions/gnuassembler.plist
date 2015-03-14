@@ -42,6 +42,8 @@
 	<true/>
 	<key>includeInKeywordStartCharacterSet</key>
 	<string>.</string>
+	<key>excludeFromKeywordEndCharacterSet</key>
+	<string>:</string>
 	<key>keywords</key>
 	<array>
 		<string>.abort</string>

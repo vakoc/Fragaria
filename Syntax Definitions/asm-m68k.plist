@@ -37,7 +37,7 @@
 	<key>recolourKeywordIfAlreadyColoured</key>
 	<true/>
 	<key>excludeFromKeywordEndCharacterSet</key>
-	<string>.</string>
+	<string>.:</string>
 	<key>keywords</key>
 	<array>
 		<string>align</string>
@@ -142,9 +142,9 @@
 		<string>ttl</string>
 		<string>xdef</string>
 		<string>xref</string>
-  </array>
-  <key>instructions</key>
-  <array>
+	</array>
+	<key>instructions</key>
+	<array>
 		<string>ABCD</string>
 		<string>ABCD.B</string>
 		<string>ADD</string>

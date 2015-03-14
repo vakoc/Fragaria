@@ -137,5 +137,7 @@
 	<string></string>
 	<key>secondString</key>
 	<string>&apos;</string>
+	<key>excludeFromKeywordEndCharacterSet</key>
+	<string>:</string>
 </dict>
 </plist>

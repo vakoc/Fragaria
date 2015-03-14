@@ -40,6 +40,8 @@
 	<true/>
 	<key>recolourKeywordIfAlreadyColoured</key>
 	<true/>
+	<key>excludeFromKeywordEndCharacterSet</key>
+	<string>:</string>
 	<key>keywords</key>
 	<array>
 		<string>char</string>
