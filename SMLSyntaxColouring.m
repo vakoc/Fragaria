@@ -864,13 +864,8 @@ static char kcColoursChanged;
     if (error) return;
     
     [regex enumerateMatchesInString:rangeString options:0 range:NSMakeRange(0, [rangeString length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
-        // While we should only receive one match with the original regex, let's
-        // protect for the possibility that the regex changes in the future,
-        // and handle all matches.
-        for (NSUInteger i = 0; i < [match numberOfRanges]; i++) {
-            NSRange foundRange = [match rangeAtIndex:i];
-            [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
-        }
+        NSRange foundRange = [match range];
+        [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
     }];
 }
 
@@ -892,12 +887,10 @@ static char kcColoursChanged;
     if (error) return;
     
     [regex enumerateMatchesInString:rangeString options:0 range:NSMakeRange(0, [rangeString length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
-        for (NSUInteger i = 0; i < [match numberOfRanges]; i++) {
-            NSRange foundRange = [match rangeAtIndex:i];
-            if ([[self syntaxColouringGroupOfCharacterAtIndex:foundRange.location + rangeLocation] isEqual:@"strings"])
-                continue;
-            [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
-        }
+        NSRange foundRange = [match range];
+        if ([[self syntaxColouringGroupOfCharacterAtIndex:foundRange.location + rangeLocation] isEqual:@"strings"])
+            return;
+        [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
     }];
 }
 
@@ -1148,11 +1141,9 @@ static char kcColoursChanged;
     if (error) return;
     
     [regex enumerateMatchesInString:rangeString options:0 range:NSMakeRange(0, [rangeString length]) usingBlock:^(NSTextCheckingResult *match, NSMatchingFlags flags, BOOL *stop) {
-        for (NSUInteger i = 0; i < [match numberOfRanges]; i++) {
-            NSRange foundRange = [match rangeAtIndex:i];
-            if ([[self syntaxColouringGroupOfCharacterAtIndex:foundRange.location + rangeLocation] isEqual:@"strings"] || [[self syntaxColouringGroupOfCharacterAtIndex:foundRange.location + rangeLocation] isEqual:@"comments"]) continue;
-            [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
-        }
+        NSRange foundRange = [match range];
+        if ([[self syntaxColouringGroupOfCharacterAtIndex:foundRange.location + rangeLocation] isEqual:@"strings"] || [[self syntaxColouringGroupOfCharacterAtIndex:foundRange.location + rangeLocation] isEqual:@"comments"]) return;
+        [self setColour:stringsColour range:NSMakeRange(foundRange.location + rangeLocation + 1, foundRange.length - 1)];
     }];
 }
 
