@@ -1219,8 +1219,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
             float initialWidth = textScrollView.frame.size.width;
 
             // set modified contentsize
-            contentSize = NSMakeSize(pageGuideX, contentSize.height);
-
+            contentSize.width = pageGuideX+.5+textContainer.lineFragmentPadding;
+            
             // setup text container
             [textContainer setWidthTracksTextView:NO];
             [textContainer setHeightTracksTextView:NO];
