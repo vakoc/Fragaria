@@ -1216,6 +1216,8 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
         if (self.lineWrapsAtPageGuide) {
 
+            float initialWidth = textScrollView.frame.size.width;
+
             // set modified contentsize
             contentSize = NSMakeSize(pageGuideX, contentSize.height);
 
@@ -1232,7 +1234,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
             [self setMaxSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
 
             // setup scroll view
-            [textScrollView setHasHorizontalScroller:NO];
+            [textScrollView setHasHorizontalScroller:pageGuideX > initialWidth];
         } else {
 
             // setup text view
@@ -1277,9 +1279,22 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
+/*
+ * - viewDidEndLiveResize
+ */
+- (void)viewDidEndLiveResize
+{
+    [super viewDidEndLiveResize];
+    BOOL needsScroller = self.lineWrapsAtPageGuide && pageGuideX > self.enclosingScrollView.frame.size.width;
+    self.enclosingScrollView.hasHorizontalScroller = needsScroller;
+}
+
 #pragma mark - Page Guide
 
 
+/*
+ * - configurePageGuide
+ */
 - (void)configurePageGuide
 {
     NSDictionary *sizeAttribute = [self typingAttributes];
