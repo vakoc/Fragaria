@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
+#import "MGSMutableDictionary.h"
 #import "MGSUserDefaultsDefinitions.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSUserDefaults.h"
@@ -22,8 +23,8 @@
 @property MGSFragariaView *view1;
 @property MGSFragariaView *view2;
 
-@property NSMutableDictionary *dict1;
-@property NSMutableDictionary *dict2;
+@property MGSMutableDictionary *dict1;
+@property MGSMutableDictionary *dict2;
 
 @end
 
@@ -41,8 +42,8 @@
 	self.view1 = [[MGSFragariaView alloc] initWithFrame:NSMakeRect(1.0, 1.0, 1.0, 1.0)];
 	self.view2 = [[MGSFragariaView alloc] initWithFrame:NSMakeRect(1.0, 1.0, 1.0, 1.0)];
 	
-	self.dict1 = [NSMutableDictionary dictionaryWithDictionary:@{ @"name" : @"jim" }];
-	self.dict2 = [NSMutableDictionary dictionaryWithDictionary:@{ @"name" : @"john" }];
+	self.dict1 = [MGSMutableDictionary dictionaryWithDictionary:@{ @"name" : @"jim" }];
+	self.dict2 = [MGSMutableDictionary dictionaryWithDictionary:@{ @"name" : @"john" }];
 }
 
 
@@ -58,10 +59,8 @@
 
 /*
  *  - test_binding_dictionaries
- *    Test our assumption that two bound dictionaries' values will
- *    stay in sync. This test works, so it's a useful reference, but
- *    it's odd that binding to the dictionary in NSUserDefaultsController
- *    fails.
+ *    Test our assumption that two bound MGSMutableDictionary values will
+ *    stay in sync. The subclass doesn't break bindings.
  */
 - (void)test_binding_dictionaries
 {

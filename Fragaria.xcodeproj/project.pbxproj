@@ -99,6 +99,8 @@
 		D071883D1AB3CDFA0073493A /* MGSUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188371AB3CDFA0073493A /* MGSUserDefaultsController.m */; };
 		D071883E1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188381AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h */; };
 		D071883F1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188391AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m */; };
+		D07188431AB3D2220073493A /* MGSMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188411AB3D2220073493A /* MGSMutableDictionary.h */; };
+		D07188441AB3D2220073493A /* MGSMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188421AB3D2220073493A /* MGSMutableDictionary.m */; };
 		D08359DB1A9F0446001B7B50 /* FeaturesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08359D91A9F0446001B7B50 /* FeaturesWindowController.m */; };
 		D08359E11AA0875E001B7B50 /* MGSPreferencesObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = D08359DE1AA0875E001B7B50 /* MGSPreferencesObserver.m */; };
 		D0AB50F01A91CDC200A6DF58 /* SMLSyntaxErrorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AB50EF1A91CDC200A6DF58 /* SMLSyntaxErrorTests.m */; };
@@ -281,6 +283,8 @@
 		D07188371AB3CDFA0073493A /* MGSUserDefaultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSUserDefaultsController.m; sourceTree = "<group>"; };
 		D07188381AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSUserDefaultsDefinitions.h; sourceTree = "<group>"; };
 		D07188391AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSUserDefaultsDefinitions.m; sourceTree = "<group>"; };
+		D07188411AB3D2220073493A /* MGSMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSMutableDictionary.h; sourceTree = "<group>"; };
+		D07188421AB3D2220073493A /* MGSMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSMutableDictionary.m; sourceTree = "<group>"; };
 		D08359D81A9F0446001B7B50 /* FeaturesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeaturesWindowController.h; path = Applications/MGSFragariaView/FeaturesWindowController.h; sourceTree = "<group>"; };
 		D08359D91A9F0446001B7B50 /* FeaturesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeaturesWindowController.m; path = Applications/MGSFragariaView/FeaturesWindowController.m; sourceTree = "<group>"; };
 		D08359DD1AA0875E001B7B50 /* MGSPreferencesObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPreferencesObserver.h; sourceTree = "<group>"; };
@@ -642,6 +646,8 @@
 				D07188371AB3CDFA0073493A /* MGSUserDefaultsController.m */,
 				D07188341AB3CDFA0073493A /* MGSUserDefaults.h */,
 				D07188351AB3CDFA0073493A /* MGSUserDefaults.m */,
+				D07188411AB3D2220073493A /* MGSMutableDictionary.h */,
+				D07188421AB3D2220073493A /* MGSMutableDictionary.m */,
 			);
 			name = "Defaults Coordinator";
 			sourceTree = "<group>";
@@ -689,13 +695,13 @@
 		D0E5210E1A90E34F005CB80B /* MGSFragaria Tests */ = {
 			isa = PBXGroup;
 			children = (
+				D01F51701AAF1D35006A3A90 /* MGSFragariaViewTests.m */,
+				D0E521071A90E307005CB80B /* MGSSyntaxErrorControllerTests.m */,
 				D071882B1AB3CDDC0073493A /* MGSUserDefaultsControllerTests.m */,
 				D071882C1AB3CDDC0073493A /* MGSUserDefaultsDefinitionsTests.m */,
 				D071882D1AB3CDDC0073493A /* MGSUserDefaultsTests.m */,
 				D071882E1AB3CDDC0073493A /* MGSUserDefaultsUtilities.h */,
 				D071882F1AB3CDDC0073493A /* MGSUserDefaultsUtilities.m */,
-				D01F51701AAF1D35006A3A90 /* MGSFragariaViewTests.m */,
-				D0E521071A90E307005CB80B /* MGSSyntaxErrorControllerTests.m */,
 				D0AB50EF1A91CDC200A6DF58 /* SMLSyntaxErrorTests.m */,
 				D0E5210F1A90E34F005CB80B /* Supporting Files */,
 			);
@@ -736,6 +742,7 @@
 				017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */,
 				D071883A1AB3CDFA0073493A /* MGSUserDefaults.h in Headers */,
 				E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */,
+				D07188431AB3D2220073493A /* MGSMutableDictionary.h in Headers */,
 				D04A0DF81AAEAD7C00667E4D /* MGSFragariaAPI.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
 				AB8387C5171D6115004408F4 /* SMLSyntaxDefinition.h in Headers */,
@@ -987,6 +994,7 @@
 				D0C146761A871A0B00DDE90A /* MGSFragariaView.m in Sources */,
 				D071883B1AB3CDFA0073493A /* MGSUserDefaults.m in Sources */,
 				D071883F1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m in Sources */,
+				D07188441AB3D2220073493A /* MGSMutableDictionary.m in Sources */,
 				D071883D1AB3CDFA0073493A /* MGSUserDefaultsController.m in Sources */,
 				ABC5799816047B4E0040B3FB /* FRAFontTransformer.m in Sources */,
 				ABE25D0B1635CA7C00F23718 /* MGSFragariaPrefsViewController.m in Sources */,

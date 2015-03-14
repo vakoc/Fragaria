@@ -6,75 +6,11 @@
 //
 //
 
-#import <objc/runtime.h>
+#import "MGSMutableDictionary.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSUserDefaultsDefinitions.h"
 #import "MGSUserDefaults.h"
 #import "MGSFragariaView.h"
-
-
-#pragma mark - NSMutableDictionary (MGSFragariaDict) - Interface
-
-/*
- *  A category for NSMutableDictionary so that we can persist keys, if required.
- *  Uses KVC-compliant setValue:forKey: and valueForKey: to work.
- */
-@interface NSMutableDictionary (MGSFragariaDict)
-
-@property (nonatomic, assign) MGSUserDefaultsController *controller;
-
-@end
-
-
-#pragma mark - NSMutableDictionary (MGSFragariaDict) - Implementation
-
-
-@implementation NSMutableDictionary (MGSFragariaDict)
-
-/*
- *  @property controller
- */
-- (void)setController:(MGSUserDefaultsController *)controller
-{
-	objc_setAssociatedObject(self, @selector(controller), controller, OBJC_ASSOCIATION_ASSIGN);
-}
-
-- (MGSUserDefaultsController *)controller
-{
-	return objc_getAssociatedObject(self, @selector(controller));
-}
-
-
-
-/*
- *  - setValue:forKey:
- */
-- (void)setValue:(id)value forKey:(NSString *)key
-{
-    [self setObject:value forKey:key];
-
-    if (self.controller.persistent)
-    {
-        [[MGSUserDefaults sharedUserDefaultsForGroupID:self.controller.groupID] setObject:value forKey:key];
-    }
-}
-
-
-/*
- *  - valueForKey:
- */
-- (id)valueForKey:(NSString *)key
-{
-    if (self.controller.persistent)
-    {
-        return [[MGSUserDefaults sharedUserDefaultsForGroupID:self.controller.groupID] objectForKey:key];
-    }
-
-    return [self objectForKey:key];
-}
-
-@end
-
 
 
 #pragma mark - CATEGORY MGSUserDefaultsController
@@ -87,6 +23,7 @@
 
 
 #pragma mark - CLASS MGSUserDefaultsController - Implementation
+
 
 static NSMutableDictionary *controllerInstances;
 
@@ -237,8 +174,7 @@ static NSMutableDictionary *controllerInstances;
 		NSDictionary *defaults = [[MGSUserDefaultsDefinitions class] fragariaDefaultsDictionary];
 		
 		[[MGSUserDefaults sharedUserDefaultsForGroupID:groupID] registerDefaults:defaults];
-		_values = [[NSMutableDictionary alloc] initWithDictionary:defaults];
-		[(NSMutableDictionary *)_values setController:self];
+		self.values = [[MGSMutableDictionary alloc] initWithController:self dictionary:defaults];
 	}
 	
 	return self;
