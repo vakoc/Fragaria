@@ -158,12 +158,25 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
+ * @property lineWrapsAtPageGuide
+ */
+- (void)setLineWrapsAtPageGuide:(BOOL)lineWrapsAtPageGuide
+{
+    _lineWrapsAtPageGuide = lineWrapsAtPageGuide;
+    [self updateLineWrap];
+    [self.syntaxColouring invalidateAllColouring];
+}
+
+
+/*
  * @property pageGuideColumn
  */
 - (void)setPageGuideColumn:(NSInteger)pageGuideColumn
 {
     _pageGuideColumn = pageGuideColumn;
     [self configurePageGuide];
+    [self updateLineWrap];
+    [self.syntaxColouring invalidateAllColouring];
 }
 
 
@@ -1200,9 +1213,15 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     }
 
     if (self.lineWrap) {
+
+        // set modified contentsize
+        if (self.lineWrapsAtPageGuide) {
+            contentSize = NSMakeSize(pageGuideX, contentSize.height);
+        }
+
         // setup text container
         [textContainer setContainerSize:NSMakeSize(contentSize.width, CGFLOAT_MAX)];
-        [textContainer setWidthTracksTextView:YES];
+        [textContainer setWidthTracksTextView:!self.lineWrapsAtPageGuide];
         [textContainer setHeightTracksTextView:NO];
 
         // setup text view

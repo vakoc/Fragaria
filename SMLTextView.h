@@ -80,7 +80,12 @@
 /** Indicates whether or not line wrap (word wrap) is enabled. */
 @property (nonatomic, assign) BOOL lineWrap;
 
-/** Specifies the column position to draw the page guide. */
+/** If lineWrap is enabled, this indicates whether the line should wrap at the page guide column. */
+@property (nonatomic, assign) BOOL lineWrapsAtPageGuide;
+
+/** Specifies the column position to draw the page guide. Independently of
+    whether or not showsPageGuide is enabled, also indicates the line wrap
+    column when both lineWrap and lineWrapsAtPageGuide are enabled.*/
 @property (nonatomic, assign) NSInteger pageGuideColumn;
 
 /** Indicates whether or not invisible characters in the editor are revealed.*/
