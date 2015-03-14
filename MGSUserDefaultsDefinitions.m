@@ -1,0 +1,241 @@
+//
+//  MGSUserDefaultsDefinitions.m
+//  Fragaria
+//
+//  Created by Jim Derry on 3/3/15.
+//
+//
+
+
+#pragma mark - Property User Defaults Keys
+
+// Configuring Syntax Highlighting
+NSString * const MGSFragariaDefaultsIsSyntaxColoured =          @"syntaxColoured";
+NSString * const MGSFragariaDefaultsSyntaxDefinitionName =      @"syntaxDefinitionName";
+NSString * const MGSFragariaDefaultsColoursMultiLineStrings =   @"coloursMultiLineStrings";
+NSString * const MGSFragariaDefaultsColoursOnlyUntilEndOfLine = @"coloursOnlyUntilEndOfLine";
+
+// Configuring Autocompletion
+NSString * const MGSFragariaDefaultsAutoCompleteDelay =        @"autoCompleteDelay";
+NSString * const MGSFragariaDefaultsAutoCompleteEnabled =      @"autoCompleteEnabled";
+NSString * const MGSFragariaDefaultsAutoCompleteWithKeywords = @"autoCompleteWithKeywords";
+
+// Highlighting the current line
+NSString * const MGSFragariaDefaultsCurrentLineHighlightColour = @"currentLineHighlightColour";
+NSString * const MGSFragariaDefaultsHighlightsCurrentLine =      @"highlightsCurrentLine";
+
+// Configuring the Gutter
+NSString * const MGSFragariaDefaultsShowsGutter =        @"showsGutter";
+NSString * const MGSFragariaDefaultsMinimumGutterWidth = @"minimumGutterWidth";
+NSString * const MGSFragariaDefaultsShowsLineNumbers =   @"showsLineNumbers";
+NSString * const MGSFragariaDefaultsStartingLineNumber = @"startingLineNumber";
+NSString * const MGSFragariaDefaultsGutterFont =         @"gutterFont";
+NSString * const MGSFragariaDefaultsGutterTextColour =   @"gutterTextColour";
+
+// Showing Syntax Errors
+NSString * const MGSFragariaDefaultsShowsSyntaxErrors = @"showsSyntaxErrors";
+
+// Tabulation and Indentation
+NSString * const MGSFragariaDefaultsTabWidth =                    @"tabWidth";
+NSString * const MGSFragariaDefaultsIndentWidth =                 @"indentWidth";
+NSString * const MGSFragariaDefaultsIndentWithSpaces =            @"indentWithSpaces";
+NSString * const MGSFragariaDefaultsUseTabStops =                 @"useTabStops";
+NSString * const MGSFragariaDefaultsIndentBracesAutomatically =   @"indentBracesAutomatically";
+NSString * const MGSFragariaDefaultsIndentNewLinesAutomatically = @"indentNewLinesAutomatically";
+
+// Automatic Bracing
+NSString * const MGSFragariaDefaultsInsertClosingBraceAutomatically =       @"insertClosingBraceAutomatically";
+NSString * const MGSFragariaDefaultsInsertClosingParenthesisAutomatically = @"insertClosingParenthesisAutomatically";
+NSString * const MGSFragariaDefaultsShowsMatchingBraces =                   @"showsMatchingBraces";
+
+// Page Guide and Line Wrap
+NSString * const MGSFragariaDefaultsPageGuideColumn = @"pageGuideColumn";
+NSString * const MGSFragariaDefaultsShowsPageGuide =  @"showsPageGuide";
+NSString * const MGSFragariaDefaultsLineWrap =        @"lineWrap";
+
+// Showing Invisible Characters
+NSString * const MGSFragariaDefaultsShowsInvisibleCharacters =      @"showsInvisibleCharacters";
+NSString * const MGSFragariaDefaultsTextInvisibleCharactersColour = @"textInvisibleCharactersColour";
+
+// Configuring Text Appearance
+NSString * const MGSFragariaDefaultsTextColor =       @"textColor";
+NSString * const MGSFragariaDefaultsBackgroundColor = @"backgroundColor";
+NSString * const MGSFragariaDefaultsTextFont =        @"textFont";
+
+// Configuring Additional Text View Behavior
+NSString * const MGSFragariaDefaultsHasVerticalScroller =      @"hasVerticalScroller";
+NSString * const MGSFragariaDefaultsInsertionPointColor =      @"insertionPointColor";
+NSString * const MGSFragariaDefaultsScrollElasticityDisabled = @"scrollElasticityDisabled";
+
+// Syntax Highlighting Colours
+NSString * const MGSFragariaDefaultsColourForAutocomplete = @"colourForAutocomplete";
+NSString * const MGSFragariaDefaultsColourForAttributes =   @"colourForAttributes";
+NSString * const MGSFragariaDefaultsColourForCommands =     @"colourForCommands";
+NSString * const MGSFragariaDefaultsColourForComments =     @"colourForComments";
+NSString * const MGSFragariaDefaultsColourForInstructions = @"colourForInstructions";
+NSString * const MGSFragariaDefaultsColourForKeywords =     @"colourForKeywords";
+NSString * const MGSFragariaDefaultsColourForNumbers =      @"colourForNumbers";
+NSString * const MGSFragariaDefaultsColourForStrings =      @"colourForStrings";
+NSString * const MGSFragariaDefaultsColourForVariables =    @"colourForVariables";
+
+// Syntax Highlighter Colouring Options
+NSString * const MGSFragariaDefaultsColoursAttributes =   @"coloursAttributes";
+NSString * const MGSFragariaDefaultsColoursAutocomplete = @"coloursAutocomplete";
+NSString * const MGSFragariaDefaultsColoursCommands =     @"coloursCommands";
+NSString * const MGSFragariaDefaultsColoursComments =     @"coloursComments";
+NSString * const MGSFragariaDefaultsColoursInstructions = @"coloursInstructions";
+NSString * const MGSFragariaDefaultsColoursKeywords =     @"coloursKeywords";
+NSString * const MGSFragariaDefaultsColoursNumbers =      @"coloursNumbers";
+NSString * const MGSFragariaDefaultsColoursStrings =      @"coloursStrings";
+NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
+
+
+
+#import <MGSFragaria/MGSFragariaView.h>
+#import "MGSUserDefaultsDefinitions.h"
+#import "MGSSyntaxController.h"
+
+#pragma mark - Implementation
+
+@implementation MGSUserDefaultsDefinitions
+
+
+#pragma mark - Defaults Dictionaries
+
+#define ARCHIVED_COLOR(rd, gr, bl) [NSArchiver archivedDataWithRootObject:\
+[NSColor colorWithCalibratedRed:rd green:gr blue:bl alpha:1.0f]]
+#define ARCHIVED_OBJECT(obj) [NSArchiver archivedDataWithRootObject:obj]
+
+/*
+ *  + fragariaDefaultsDictionary
+ */
++ (NSDictionary *)fragariaDefaultsDictionary
+{
+	__block NSMutableDictionary *dictionary;
+	
+	dictionary = [NSMutableDictionary dictionaryWithDictionary:@{
+		 MGSFragariaDefaultsIsSyntaxColoured : @YES,
+		 MGSFragariaDefaultsSyntaxDefinitionName : [[MGSSyntaxController class] standardSyntaxDefinitionName],
+		 MGSFragariaDefaultsColoursMultiLineStrings : @NO,
+		 MGSFragariaDefaultsColoursOnlyUntilEndOfLine : @YES,
+
+ 		 MGSFragariaDefaultsAutoCompleteDelay : @1.0f,
+		 MGSFragariaDefaultsAutoCompleteEnabled : @NO,
+		 MGSFragariaDefaultsAutoCompleteWithKeywords : @YES,
+
+		 MGSFragariaDefaultsCurrentLineHighlightColour : ARCHIVED_COLOR(0.96f,0.96f,0.71f),
+		 MGSFragariaDefaultsHighlightsCurrentLine : @NO,
+
+		 MGSFragariaDefaultsShowsGutter : @YES,
+		 MGSFragariaDefaultsMinimumGutterWidth : @40,
+		 MGSFragariaDefaultsShowsLineNumbers : @YES,
+		 MGSFragariaDefaultsStartingLineNumber : @1,
+		 MGSFragariaDefaultsGutterFont : ARCHIVED_OBJECT([NSFont fontWithName:@"Menlo" size:11]),
+		 MGSFragariaDefaultsGutterTextColour : ARCHIVED_OBJECT([NSColor colorWithCalibratedWhite:0.42f alpha:1.0f]),
+
+		 MGSFragariaDefaultsShowsSyntaxErrors : @YES,
+
+		 MGSFragariaDefaultsTabWidth : @4,
+		 MGSFragariaDefaultsIndentWidth : @4,
+		 MGSFragariaDefaultsUseTabStops : @YES,
+		 MGSFragariaDefaultsIndentWithSpaces : @NO,
+		 MGSFragariaDefaultsIndentBracesAutomatically : @YES,
+		 MGSFragariaDefaultsIndentNewLinesAutomatically : @YES,
+
+		 
+		 MGSFragariaDefaultsInsertClosingBraceAutomatically : @NO,
+		 MGSFragariaDefaultsInsertClosingParenthesisAutomatically : @NO,
+		 MGSFragariaDefaultsShowsMatchingBraces : @YES,
+		 
+		 MGSFragariaDefaultsPageGuideColumn : @80,
+		 MGSFragariaDefaultsShowsPageGuide : @NO,
+		 MGSFragariaDefaultsLineWrap : @YES,
+
+		 MGSFragariaDefaultsShowsInvisibleCharacters : @NO,
+		 MGSFragariaDefaultsTextInvisibleCharactersColour : ARCHIVED_OBJECT([NSColor controlTextColor]),
+
+		 MGSFragariaDefaultsTextColor : ARCHIVED_OBJECT([NSColor textColor]),
+		 MGSFragariaDefaultsBackgroundColor : ARCHIVED_OBJECT([NSColor whiteColor]),
+		 MGSFragariaDefaultsTextFont : ARCHIVED_OBJECT([NSFont fontWithName:@"Menlo" size:11]),
+
+		 MGSFragariaDefaultsHasVerticalScroller : @YES,
+		 MGSFragariaDefaultsInsertionPointColor : ARCHIVED_OBJECT([NSColor textColor]),
+		 MGSFragariaDefaultsScrollElasticityDisabled : @NO,
+	
+		 MGSFragariaDefaultsColourForAutocomplete : ARCHIVED_COLOR(0.84f,0.41f,0.006f),
+		 MGSFragariaDefaultsColourForAttributes : ARCHIVED_COLOR(0.50f,0.5f,0.2f),
+		 MGSFragariaDefaultsColourForCommands : ARCHIVED_COLOR(0.031f,0.0f,0.855f),
+		 MGSFragariaDefaultsColourForComments : ARCHIVED_COLOR(0.0f,0.45f,0.0f),
+		 MGSFragariaDefaultsColourForInstructions : ARCHIVED_COLOR(0.45f,0.45f,0.45f),
+		 MGSFragariaDefaultsColourForKeywords : ARCHIVED_COLOR(0.737f,0.0f,0.647f),
+		 MGSFragariaDefaultsColourForNumbers : ARCHIVED_COLOR(0.031f,0.0f,0.855f),
+		 MGSFragariaDefaultsColourForStrings : ARCHIVED_COLOR(0.804f,0.071f,0.153f),
+		 MGSFragariaDefaultsColourForVariables : ARCHIVED_COLOR(0.73f,0.0f,0.74f),
+		 
+		 MGSFragariaDefaultsColoursAttributes : @YES,
+		 MGSFragariaDefaultsColoursAutocomplete : @NO,
+		 MGSFragariaDefaultsColoursCommands : @YES,
+		 MGSFragariaDefaultsColoursComments : @YES,
+		 MGSFragariaDefaultsColoursInstructions : @YES,
+		 MGSFragariaDefaultsColoursKeywords : @YES,
+		 MGSFragariaDefaultsColoursNumbers : @YES,
+		 MGSFragariaDefaultsColoursStrings : @YES,
+		 MGSFragariaDefaultsColoursVariables : @YES,
+	 }];
+	
+	[[[self class] fragariaSupplementalDefaultsDictionary] enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+		[dictionary setObject:object forKey:key];
+	}];
+	
+	return dictionary;
+}
+
+
+/*
+ *  + fragariaSupplementalDefaultsDictionary
+ */
++ (NSDictionary *)fragariaSupplementalDefaultsDictionary
+{
+	return @{ };
+}
+
+
+#pragma mark - Manual Management Support
+
+/*
+ *  + fragariaNamespacedKeyForKey:
+ */
++ (NSString *)fragariaNamespacedKeyForKey:(NSString *)aString
+{
+	NSString *character = [[aString substringToIndex:1] uppercaseString];
+	NSMutableString *changedString = [NSMutableString stringWithString:aString];
+	[changedString replaceCharactersInRange:NSMakeRange(0, 1) withString:character];
+	return [NSString stringWithFormat:@"MGSFragariaDefaults%@", changedString];
+}
+
+
+/*
+ *  + fragariaDefaultsDictionaryWithNamespace
+ */
++ (NSDictionary *)fragariaDefaultsDictionaryWithNamespace
+{
+	__block NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+	[[[self class] fragariaDefaultsDictionary] enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+		dictionary[[[self class] fragariaNamespacedKeyForKey:key]] = object;
+	}];
+	return dictionary;
+}
+
+
+/*
+ *  + applyDefaultsToFragariaView
+ */
++ (void)applyDefaultsToFragariaView:(MGSFragariaView *)fragaria
+{
+	for (NSString *key in [[self class] fragariaDefaultsDictionary])
+	{
+		[fragaria setValue:[[self class] fragariaDefaultsDictionary][key] forKey:key];
+	}
+}
+
+@end
