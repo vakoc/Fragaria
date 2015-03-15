@@ -121,7 +121,7 @@ static char kcAutoCompletePrefsChanged;
     return @{
         MGSFragariaPrefsCommandsColourWell: ARCHIVED_COLOR(0.031f, 0.0f, 0.855f),
         MGSFragariaPrefsCommentsColourWell: ARCHIVED_COLOR(0.0f, 0.45f, 0.0f),
-        MGSFragariaPrefsInstructionsColourWell: ARCHIVED_COLOR(0.45f, 0.45f, 0.45f),
+        MGSFragariaPrefsInstructionsColourWell: ARCHIVED_COLOR(0.737f, 0.0f, 0.647f),
         MGSFragariaPrefsKeywordsColourWell: ARCHIVED_COLOR(0.737f, 0.0f, 0.647f),
         MGSFragariaPrefsAutocompleteColourWell: ARCHIVED_COLOR(0.84f, 0.41f, 0.006f),
         MGSFragariaPrefsVariablesColourWell: ARCHIVED_COLOR(0.73f, 0.0f, 0.74f),

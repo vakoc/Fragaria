@@ -167,7 +167,7 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 		 MGSFragariaDefaultsColourForAttributes : ARCHIVED_COLOR(0.50f,0.5f,0.2f),
 		 MGSFragariaDefaultsColourForCommands : ARCHIVED_COLOR(0.031f,0.0f,0.855f),
 		 MGSFragariaDefaultsColourForComments : ARCHIVED_COLOR(0.0f,0.45f,0.0f),
-		 MGSFragariaDefaultsColourForInstructions : ARCHIVED_COLOR(0.45f,0.45f,0.45f),
+		 MGSFragariaDefaultsColourForInstructions : ARCHIVED_COLOR(0.737f,0.0f,0.647f),
 		 MGSFragariaDefaultsColourForKeywords : ARCHIVED_COLOR(0.737f,0.0f,0.647f),
 		 MGSFragariaDefaultsColourForNumbers : ARCHIVED_COLOR(0.031f,0.0f,0.855f),
 		 MGSFragariaDefaultsColourForStrings : ARCHIVED_COLOR(0.804f,0.071f,0.153f),

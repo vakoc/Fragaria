@@ -104,7 +104,7 @@ static char kcColoursChanged;
 {
     _colourForCommands = [NSColor colorWithCalibratedRed:0.031f green:0.0f blue:0.855f alpha:1.0f];
     _colourForComments = [NSColor colorWithCalibratedRed:0.0f green:0.45f blue:0.0f alpha:1.0f];
-    _colourForInstructions = [NSColor colorWithCalibratedRed:0.45f green:0.45f blue:0.45f alpha:1.0f];
+    _colourForInstructions = [NSColor colorWithCalibratedRed:0.737f green:0.0f blue:0.647f alpha:1.0f];
     _colourForKeywords = [NSColor colorWithCalibratedRed:0.737f green:0.0f blue:0.647f alpha:1.0f];
     _colourForAutocomplete = [NSColor colorWithCalibratedRed:0.84f green:0.41f blue:0.006f alpha:1.0f];
     _colourForVariables = [NSColor colorWithCalibratedRed:0.73f green:0.0f blue:0.74f alpha:1.0f];
