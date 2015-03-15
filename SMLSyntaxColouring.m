@@ -568,7 +568,7 @@ static char kcColoursChanged;
             attributes = stringsColour;
             break;
         default:
-            @throw [NSString stringWithFormat:@"Unrecognized syntax group identifier %ld", (long)group];
+            [NSException raise:@"Bug" format:@"Unrecognized syntax group identifier %ld", (long)group];
     }
     
     if ([colouringDelegate respondsToSelector:@selector(fragariaDocument:shouldColourGroupWithBlock:string:range:info:)]) {
