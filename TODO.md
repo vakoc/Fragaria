@@ -19,8 +19,5 @@
 1. Would SMLTextView subclassing be beneficial? The client could pass in the required subclass name in the document
    spec.
 
-1. Pull in syntax colouring changes from https://github.com/faceleg/Fragaria. This adds additional regex based colouring
-   and support for Markdown.
-
 1. Syntax definitions are currently loaded from the framework bundle. It would be useful if the client app could supply
    an externally defined syntax definition dictionary to provide custom language support.
