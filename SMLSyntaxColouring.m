@@ -534,7 +534,7 @@ static char kcColoursChanged;
             break;
         case kSMLSyntaxGroupVariable:
             groupName = SMLSyntaxGroupVariable;
-            doColouring = self.coloursVariables && self.syntaxDefinition.beginVariableCharacterSet != nil;
+            doColouring = self.coloursVariables && (self.syntaxDefinition.beginVariableCharacterSet || self.syntaxDefinition.variableRegex);
             attributes = variablesColour;
             break;
         case kSMLSyntaxGroupSecondString:
@@ -818,6 +818,11 @@ static char kcColoursChanged;
     NSUInteger endOfLine, colourLength;
     NSString *rangeString = [rangeScanner string];
     NSUInteger rangeStringLength = [rangeString length];
+    
+    if (self.syntaxDefinition.variableRegex) {
+        [self colourMatchesOfPattern:self.syntaxDefinition.variableRegex withAttributes:variablesColour inRange:rangeToRecolour];
+        return;
+    }
     
     // scan range to end
     while (![rangeScanner isAtEnd]) {

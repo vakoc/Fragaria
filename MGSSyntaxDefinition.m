@@ -28,6 +28,7 @@ NSString *SMLSyntaxDefinitionInstructions = @"instructions";
 NSString *SMLSyntaxDefinitionBeginInstruction = @"beginInstruction";
 NSString *SMLSyntaxDefinitionEndInstruction = @"endInstruction";
 
+NSString *SMLSyntaxDefinitionVariableRegex = @"variableRegex";
 NSString *SMLSyntaxDefinitionBeginVariable = @"beginVariable";
 NSString *SMLSyntaxDefinitionEndVariable = @"endVariable";
 
@@ -83,11 +84,11 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
         _syntaxDefinitionAllowsColouring = YES;
     }
     
+    // number regex
     value = [syntaxDictionary objectForKey:SMLSyntaxDefinitionAlternativeNumberRegex];
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        if (![value isEqual:@""])
-            _numberDefinition = value;
+        _numberDefinition = value;
     }
     
     // keywords
@@ -132,7 +133,7 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
     // instructions
     value = [syntaxDictionary objectForKey:SMLSyntaxDefinitionInstructions];
     if (value) {
-        NSAssert([value isKindOfClass:[NSArray class]], @"NSString expected");
+        NSAssert([value isKindOfClass:[NSArray class]], @"NSArray expected");
         _instructions = [self caseAdjustedSetFromKeywordArray:value];
     } else {
         // begin instruction
@@ -154,22 +155,29 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
         }
     }
     
-    // begin variable
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginVariable];
+    // variables
+    value = [syntaxDictionary objectForKey:SMLSyntaxDefinitionVariableRegex];
     if (value) {
         NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _beginVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:value];
+        _variableRegex = value;
     } else {
-        _beginVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@""];
-    }
-    
-    // end variable
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndVariable];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _endVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:value];
-    } else {
-        _endVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@""];
+        // begin variable
+        value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionBeginVariable];
+        if (value) {
+            NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
+            _beginVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:value];
+        } else {
+            _beginVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@""];
+        }
+        
+        // end variable
+        value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionEndVariable];
+        if (value) {
+            NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
+            _endVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:value];
+        } else {
+            _endVariableCharacterSet = [NSCharacterSet characterSetWithCharactersInString:@""];
+        }
     }
     
     // first string

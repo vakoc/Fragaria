@@ -60,14 +60,21 @@
 
 /** A set of words that are considered instructions. If keywordsCaseSensitive
  *  is YES, this set will contain lowercase strings only.
- *  @discuss If this property is nil, instructions must be detected using
- *           beginInstruction and endInstruction, otherwise they are ignored. */
+ *  @discuss If this property is nil, instructions should be detected using
+ *           beginInstruction and endInstruction, otherwise they should be
+ *           ignored. */
 @property (readonly) NSSet *instructions;
 /**  Delimiter for the start of an instruction iff instructions == nil. */
 @property (readonly) NSString *beginInstruction;
 /**  Delimiter for the end of an instruction iff instructions == nil. */
 @property (readonly) NSString *endInstruction;
 
+/** A regular expression that matches a variable.
+ *  @discuss This property supercedes beginVariableCharacterSet and
+ *           endVariableCharacterSet. If this property is nil, a syntax
+ *           colourer should use these properties instead, otherwise they
+ *           should be ignored. */
+@property (readonly) NSString *variableRegex;
 /**  Characters that may start a variable. */
 @property (readonly) NSCharacterSet *beginVariableCharacterSet;
 /**  Characters that may terminate a variable. */
