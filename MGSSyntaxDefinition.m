@@ -43,8 +43,6 @@ NSString *SMLSyntaxDefinitionEndFirstMultiLineComment = @"endFirstMultiLineComme
 NSString *SMLSyntaxDefinitionBeginSecondMultiLineComment = @"beginSecondMultiLineComment";
 NSString *SMLSyntaxDefinitionEndSecondMultiLineComment = @"endSecondMultiLineComment";
 
-NSString *SMLSyntaxDefinitionFunctionDefinition = @"functionDefinition";
-
 NSString *SMLSyntaxDefinitionExcludeFromKeywordStartCharacterSet = @"excludeFromKeywordStartCharacterSet";
 NSString *SMLSyntaxDefinitionExcludeFromKeywordEndCharacterSet = @"excludeFromKeywordEndCharacterSet";
 NSString *SMLSyntaxDefinitionIncludeInKeywordStartCharacterSet = @"includeInKeywordStartCharacterSet";
@@ -247,15 +245,6 @@ NSString *SMLSyntaxDefinitionIncludeInKeywordEndCharacterSet = @"includeInKeywor
             if (![pairedValue isEqual:@""])
                 [_multiLineComments addObject:@[value, pairedValue]];
         }
-    }
-    
-    // function definition
-    value = [syntaxDictionary valueForKey:SMLSyntaxDefinitionFunctionDefinition];
-    if (value) {
-        NSAssert([value isKindOfClass:[NSString class]], @"NSString expected");
-        _functionDefinition = value;
-    } else {
-        _functionDefinition = @"";
     }
     
     // exclude characters from keyword start character set
