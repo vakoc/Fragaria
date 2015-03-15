@@ -1221,7 +1221,8 @@ static char kcColoursChanged;
     NSRange bounds = NSMakeRange(0, [[layoutManager textStorage] length]);
     NSUInteger i = range.location;
     NSString *attr;
-    NSSet *overlapSet = [NSSet setWithObjects:SMLSyntaxGroupCommand, nil];
+    NSSet *overlapSet = [NSSet setWithObjects:SMLSyntaxGroupCommand,
+                         SMLSyntaxGroupInstruction, nil];
     
     while (NSLocationInRange(i, range)) {
         attr = [layoutManager temporaryAttribute:SMLSyntaxGroup atCharacterIndex:i
