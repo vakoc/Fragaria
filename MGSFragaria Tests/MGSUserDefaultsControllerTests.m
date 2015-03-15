@@ -301,7 +301,21 @@
 }
 
 
+/*
+ * - test_all_properties
+ *   Demonstrate:
+ *   - We can handle all properties, some of which require special archiving.
+ */
+- (void)test_all_properties
+{
+    MGSUserDefaultsController *controller = [MGSUserDefaultsController sharedControllerForGroupID:@"test_all_properties"];
+    NSArray *managedProperties = [[MGSUserDefaultsDefinitions fragariaDefaultsDictionary] allKeys];
 
+    controller.managedInstances = [NSSet setWithObject:self.view1];
+    controller.managedProperties = [NSSet setWithArray:managedProperties];
+
+    XCTAssert(YES, @"Did not pass without an error.");
+}
 
 
 @end

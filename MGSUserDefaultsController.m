@@ -40,8 +40,6 @@ static NSMutableDictionary *controllerInstances;
  */
 + (instancetype)sharedControllerForGroupID:(NSString *)groupID
 {
-    //static NSMutableDictionary *controllerInstances;
-	
 	@synchronized(self) {
 
         if (!controllerInstances)
@@ -129,7 +127,8 @@ static NSMutableDictionary *controllerInstances;
 
 	if (persistent)
 	{
-        [[NSUserDefaults standardUserDefaults] setObject:self.values forKey:self.groupID];
+        NSDictionary *defaultsDict = [self archiveForDefaultsDictionary:self.values];
+        [[NSUserDefaults standardUserDefaults] setObject:defaultsDict forKey:self.groupID];
         
 		[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
 																  forKeyPath:[NSString stringWithFormat:@"values.%@", self.groupID]
@@ -142,8 +141,8 @@ static NSMutableDictionary *controllerInstances;
                                                                      forKeyPath:[NSString stringWithFormat:@"values.%@", self.groupID]
                                                                         context:(__bridge void *)(self.groupID)];
 
-        NSDictionary *defaultsValues = [[NSUserDefaults standardUserDefaults] objectForKey:self.groupID];
-
+        NSDictionary *currentDict = [[NSUserDefaults standardUserDefaults] objectForKey:self.groupID];
+        NSDictionary *defaultsValues = [self unarchiveFromDefaultsDictionary:currentDict];
         for (NSString *key in self.values)
         {
             if (![[self.values valueForKey:key] isEqualTo:[defaultsValues valueForKey:key]])
@@ -174,7 +173,7 @@ static NSMutableDictionary *controllerInstances;
 		NSDictionary *defaults = [[MGSUserDefaultsDefinitions class] fragariaDefaultsDictionary];
 		
 		[[MGSUserDefaults sharedUserDefaultsForGroupID:groupID] registerDefaults:defaults];
-		self.values = [[MGSMutableDictionary alloc] initWithController:self dictionary:defaults];
+		self.values = [[MGSMutableDictionary alloc] initWithController:self dictionary:[self unarchiveFromDefaultsDictionary:defaults]];
 	}
 	
 	return self;
@@ -201,12 +200,13 @@ static NSMutableDictionary *controllerInstances;
 - (void)registerBindings:(NSSet *)propertySet
 {
 	// Bind all relevant properties of each instance to `values` dictionary.
-	[propertySet enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id key, BOOL *stop) {
-		for (MGSFragariaView *fragaria in self.managedInstances)
-		{
-			[fragaria bind:key toObject:self.values withKeyPath:key options:nil];
-		}
-	}];
+    for (NSString *key in propertySet)
+    {
+        for (MGSFragariaView *fragaria in self.managedInstances)
+        {
+            [fragaria bind:key toObject:self.values withKeyPath:key options:nil];
+        }
+    }
 }
 
 
@@ -216,12 +216,13 @@ static NSMutableDictionary *controllerInstances;
 - (void)unregisterBindings:(NSSet *)propertySet
 {
     // Stop observing properties
-    [propertySet enumerateObjectsWithOptions:NSEnumerationConcurrent usingBlock:^(id key, BOOL *stop) {
+    for (NSString *key in propertySet)
+    {
         for (MGSFragariaView *fragaria in self.managedInstances)
         {
             [fragaria unbind:key];
         }
-    }];
+    }
 }
 
 
@@ -233,7 +234,8 @@ static NSMutableDictionary *controllerInstances;
 	// The only keypath we've registered, but let's check in case we accidentally something.
 	if ([[NSString stringWithFormat:@"values.%@", self.groupID] isEqualToString:keyPath])
 	{
-        NSDictionary *defaultsValues = [[NSUserDefaults standardUserDefaults] objectForKey:self.groupID];
+        NSDictionary *currentDict = [[NSUserDefaults standardUserDefaults] objectForKey:self.groupID];
+        NSDictionary *defaultsValues = [self unarchiveFromDefaultsDictionary:currentDict];
         for (NSString *key in defaultsValues)
         {
             // If we use self.value valueForKey: here, we will get the value from defaults.
@@ -245,5 +247,54 @@ static NSMutableDictionary *controllerInstances;
 	}
 }
 
+
+#pragma mark - Utilities
+
+
+/*
+ *  - unarchiveFromDefaultsDictionary:
+ *    The fragariaDefaultsDictionary is meant to be written to userDefaults as
+ *    is, but it's not good for internal storage, where we want real instances,
+ *    and not archived data.
+ */
+- (NSDictionary *)unarchiveFromDefaultsDictionary:(NSDictionary *)source
+{
+    NSMutableDictionary *destination = [[NSMutableDictionary alloc] initWithCapacity:source.count];
+    for (NSString *key in source)
+    {
+        id object = [source objectForKey:key];
+        if ([object isKindOfClass:[NSData class]])
+        {
+            object = [NSUnarchiver unarchiveObjectWithData:object];
+        }
+        [destination setObject:object forKey:key];
+    }
+
+    return destination;
+}
+
+
+/*
+ * - archiveForDefaultsDictionary:
+ *   If we're copying things to user defaults, we have to make sure that any
+ *   objects the requiring archiving are archived.
+ */
+- (NSDictionary *)archiveForDefaultsDictionary:(NSDictionary *)source
+{
+    NSMutableDictionary *destination = [[NSMutableDictionary alloc] initWithCapacity:source.count];
+    for (NSString *key in source)
+    {
+        id object = [source objectForKey:key];
+        if ([object isKindOfClass:[NSFont class]] || [object isKindOfClass:[NSColor class]])
+        {
+            object = [NSArchiver archivedDataWithRootObject:object];
+        }
+
+        [destination setObject:object forKey:key];
+    }
+
+    return destination;
+
+}
 
 @end
