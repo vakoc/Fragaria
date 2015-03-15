@@ -94,6 +94,7 @@
 		<string>endif</string>
 		<string>endm</string>
 		<string>endr</string>
+		<string>equ</string>
 		<string>erem</string>
 		<string>even</string>
 		<string>fail</string>
