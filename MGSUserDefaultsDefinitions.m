@@ -151,7 +151,7 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 		 MGSFragariaDefaultsPageGuideColumn : @80,
 		 MGSFragariaDefaultsShowsPageGuide : @NO,
 		 MGSFragariaDefaultsLineWrap : @YES,
-
+         MGSFragariaDefaultsLineWrapsAtPageGuide : @NO,
 		 MGSFragariaDefaultsShowsInvisibleCharacters : @NO,
 		 MGSFragariaDefaultsTextInvisibleCharactersColour : ARCHIVED_OBJECT([NSColor controlTextColor]),
 

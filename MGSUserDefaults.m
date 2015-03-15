@@ -110,7 +110,14 @@
 	
 	if (value)
 	{
-		[groupDict setValue:value forKey:defaultName];
+        if ([value isKindOfClass:[NSFont class]] || [value isKindOfClass:[NSColor class]])
+        {
+            [groupDict setObject:[NSArchiver archivedDataWithRootObject:value] forKey:defaultName];
+        }
+        else
+        {
+            [groupDict setObject:value forKey:defaultName];
+        }
 	}
 	else
 	{
@@ -131,7 +138,13 @@
 	
 	if ([[groupDict allKeys] containsObject:defaultName])
 	{
-		return [groupDict valueForKey:defaultName];
+        id object = [groupDict valueForKey:defaultName];
+        if ([object isKindOfClass:[NSData class]])
+        {
+            object = [NSUnarchiver unarchiveObjectWithData:object];
+        }
+
+        return object;
 	}
 	
 	return nil;

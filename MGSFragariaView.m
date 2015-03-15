@@ -673,6 +673,7 @@
 - (void)setLineWrapsAtPageGuide:(BOOL)lineWrapsAtPageGuide
 {
     [self.fragaria setLineWrapsAtPageGuide:lineWrapsAtPageGuide];
+    [self propagateValue:@(lineWrapsAtPageGuide) forBinding:NSStringFromSelector(@selector(lineWrapsAtPageGuide))];
 }
 
 - (BOOL)lineWrapsAtPageGuide
