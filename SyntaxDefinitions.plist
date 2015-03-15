@@ -388,6 +388,14 @@
 	</dict>
 	<dict>
 		<key>name</key>
+		<string>Markdown</string>
+		<key>file</key>
+		<string>markdown</string>
+		<key>extensions</key>
+		<string>md</string>
+	</dict>
+	<dict>
+		<key>name</key>
 		<string>MetaPost</string>
 		<key>file</key>
 		<string>metapost</string>
