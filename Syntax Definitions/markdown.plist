@@ -30,8 +30,6 @@
 	<string></string>
 	<key>functionDefinition</key>
 	<string>(\n\s?(=|-|\*\s|\+\s)*\n|((?&lt;=&gt;\s)|(?&lt;!-))[0-9]+\.\s|\n?(?&lt;![\*\+-])[\*\+-]{1}\s)</string>
-	<key>keywordRegex</key>
-	<string>(\s{4}[^\n]+)</string>
 	<key>keywords</key>
 	<array>
 		<string>#</string>
