@@ -23,6 +23,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+
+enum {
+    MGSUnderlineStyleSquiggly = 0x0F
+};
+
+
 /**
  *  SMLLayoutManager handles the layout of all of the glyphs in the text editor.
  **/
