@@ -461,6 +461,21 @@
 }
 
 
+/*
+ * @propertyShowsIndividualErrors
+ */
+- (void)setShowsIndividualErrors:(BOOL)showsIndividualErrors
+{
+	self.fragaria.showsIndividualErrors = showsIndividualErrors;
+	[self propagateValue:@(showsIndividualErrors) forBinding:NSStringFromSelector(@selector(showsIndividualErrors))];
+}
+
+- (BOOL)showsIndividualErrors
+{
+	return self.fragaria.showsIndividualErrors;
+}
+
+
 #pragma mark - Showing Breakpoints
 
 

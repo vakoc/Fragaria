@@ -89,10 +89,6 @@ extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCateg
 
 /** The color to use to highlight lines that have syntax errors. */
 @property (nonatomic,copy) NSColor *errorLineHighlightColor;
-/** The color to use to highlight the background of specific errors. */
-@property (nonatomic,copy) NSColor *errorBackgroundHighlightColor;
-/** The color to use to highlight the foreground of specific errors. */
-@property (nonatomic,copy) NSColor *errorForegroundHighlightColor;
 /** The warning level or severity of this syntax error. */
 @property (nonatomic,assign) float warningLevel;
 
