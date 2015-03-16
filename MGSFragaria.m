@@ -152,7 +152,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
- * @property showsWarningsInGutter
+ * @property showsSyntaxErrors
  */
 - (void)setShowsSyntaxErrors:(BOOL)value
 {
