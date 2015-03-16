@@ -87,6 +87,12 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     [self updateSyntaxErrorsDisplay];
 }
 
+- (void)setShowsIndividualErrors:(BOOL)showsIndividualErrors
+{
+	_showsIndividualErrors = showsIndividualErrors;
+	[self updateSyntaxErrorsDisplay];
+}
+
 
 - (void)setLineNumberView:(MGSLineNumberView *)lineNumberView
 {
@@ -159,33 +165,63 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     [layoutManager removeTemporaryAttribute:NSToolTipAttributeName forCharacterRange:NSMakeRange(0, text.length)];
     
     if (!self.showsSyntaxErrors) return;
-    
-    // Highlight all errors
-    NSMutableSet* highlightedRows = [NSMutableSet set];
-    
-    for (SMLSyntaxError* err in self.syntaxErrors)
-    {
-        // Highlight an erroneous line
-        NSInteger location = CharacterIndexFromRowAndColumn(err.line, err.character, text);
-        
-        // Skip lines we cannot identify in the text
-        if (location == -1) continue;
-        
-        NSRange lineRange = [text lineRangeForRange:NSMakeRange(location, 0)];
-        
-        // Highlight row if it is not already highlighted
-        if (![highlightedRows containsObject:[NSNumber numberWithUnsignedInteger:err.line]])
-        {
-            // Remember that we are highlighting this row
-            [highlightedRows addObject:[NSNumber numberWithUnsignedInteger:err.line]];
-            
-            // Add highlight for background
-            [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
-            
-            if ([err.errorDescription length] > 0)
-                [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.errorDescription forCharacterRange:lineRange];
-        }
-    }
+	
+	if (!self.showsIndividualErrors)
+	{
+		// Highlight all lines with errors
+		NSMutableSet* highlightedRows = [NSMutableSet set];
+		
+		for (SMLSyntaxError* err in self.nonHiddenErrors)
+		{
+			// Highlight an erroneous line
+			NSInteger location = CharacterIndexFromRowAndColumn(err.line, err.character, text);
+			
+			// Skip lines we cannot identify in the text
+			if (location == -1) continue;
+			
+			NSRange lineRange = [text lineRangeForRange:NSMakeRange(location, 0)];
+			
+			// Highlight row if it is not already highlighted
+			if (![highlightedRows containsObject:[NSNumber numberWithUnsignedInteger:err.line]])
+			{
+				// Remember that we are highlighting this row
+				[highlightedRows addObject:[NSNumber numberWithUnsignedInteger:err.line]];
+				
+				// Add highlight for background
+				[layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
+				
+				if ([err.errorDescription length] > 0)
+					[layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.errorDescription forCharacterRange:lineRange];
+			}
+		}
+	}
+	else
+	{
+		// Highlight errors individually
+		for (NSNumber *line in self.linesWithErrors)
+		{
+			// Find the erroneous line
+			NSInteger location = CharacterIndexFromRowAndColumn([line integerValue], 0, text);
+
+			// Skip lines we cannot identify in the text
+			if (location == -1) continue;
+			
+			// Highlight each individual error
+			for (SMLSyntaxError *err in [self errorsForLine:[line integerValue]])
+			{
+				// Add highlight for background
+				NSRange characterRange = NSMakeRange(location + err.character - 1, err.length);
+				
+				[layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:characterRange];
+
+				if ([err.errorDescription length] > 0)
+				{
+					[layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.errorDescription forCharacterRange:characterRange];
+				}
+			}
+
+		}
+	}
 }
 
 
