@@ -160,7 +160,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     
     if (!self.showsSyntaxErrors) return;
     
-    // Highlight all errors and add buttjskaons
+    // Highlight all errors
     NSMutableSet* highlightedRows = [NSMutableSet set];
     
     for (SMLSyntaxError* err in self.syntaxErrors)
