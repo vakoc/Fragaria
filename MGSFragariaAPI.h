@@ -158,6 +158,10 @@
 /** Indicates whether or not error warnings are displayed.*/
 @property (nonatomic, assign) BOOL showsSyntaxErrors;
 
+/** If showing syntax errors, highlights individual errors instead of
+ * highlighting the full line. */
+@property (nonatomic, assign) BOOL showsIndividualErrors;
+
 
 #pragma mark - Showing Breakpoints
 /// @name Showing Breakpoints

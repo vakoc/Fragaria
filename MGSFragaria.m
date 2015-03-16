@@ -165,6 +165,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 
 
+/*
+ * @propertyShowsIndividualErrors
+ */
+- (void)setShowsIndividualErrors:(BOOL)showsIndividualErrors
+{
+	self.syntaxErrorController.showsIndividualErrors = showsIndividualErrors;
+}
+
+- (BOOL)showsIndividualErrors
+{
+	return self.syntaxErrorController.showsIndividualErrors;
+}
+
+
 #pragma mark - Properties - Syntax Errors
 
 
