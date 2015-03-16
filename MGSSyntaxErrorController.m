@@ -190,14 +190,15 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
             
             // Add highlight for background
             [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
-            
-            if ([err.errorDescription length] > 0)
-                [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.errorDescription forCharacterRange:lineRange];
         }
         
+        NSRange errorRange = NSMakeRange(location, err.length);
+        if (!errorRange.length) errorRange = lineRange;
+        
+        if ([err.errorDescription length] > 0)
+            [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.errorDescription forCharacterRange:errorRange];
+        
         if (self.showsIndividualErrors && err.length) {
-            NSRange errorRange = NSMakeRange(location, err.length);
-            
             [layoutManager addTemporaryAttribute:NSUnderlineStyleAttributeName value:@(MGSUnderlineStyleSquiggly) forCharacterRange:errorRange];
         }
     }
