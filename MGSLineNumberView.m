@@ -733,12 +733,9 @@
             [path fill];
         } else {
             NSColor *colorFill1, *colorFill2, *colorStroke, *tmp;
-            CGFloat h, s, b, a;
+            CGFloat a;
             
             tmp = [colorBase colorUsingColorSpaceName:NSDeviceRGBColorSpace];
-            h = tmp.hueComponent;
-            s = tmp.saturationComponent;
-            b = tmp.brightnessComponent;
             a = tmp.alphaComponent;
             
             colorFill1 = [[colorBase highlightWithLevel:0.6] colorWithAlphaComponent:a];
