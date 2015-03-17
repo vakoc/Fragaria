@@ -472,7 +472,9 @@
     NSRectFill(bounds);
     
     [[NSColor lightGrayColor] set];
-    NSBezierPath *dottedLine = [NSBezierPath bezierPathWithRect:NSMakeRect(bounds.size.width, 0, 0, bounds.size.height)];
+    NSBezierPath *dottedLine = [NSBezierPath bezierPath];
+    [dottedLine moveToPoint:NSMakePoint(bounds.size.width-0.5, 0)];
+    [dottedLine lineToPoint:NSMakePoint(bounds.size.width-0.5, bounds.size.height)];
     CGFloat dash[2];
     dash[0] = 1.0f;
     dash[1] = 2.0f;
