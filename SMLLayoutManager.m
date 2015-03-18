@@ -32,6 +32,21 @@ typedef enum : NSUInteger {
 } MGSLineCacheIndex;
 
 
+#define kSMLSquiggleAmplitude (3.0)
+#define kSMLSquigglePeriod    (6.0)
+#define kSMLSquigglePhase     (-1.5)
+
+
+static CGFloat SquiggleFunction(CGFloat x) {
+    CGFloat px, ix;
+    CGFloat y;
+    
+    px = modf((x + kSMLSquigglePhase) / kSMLSquigglePeriod, &ix);
+    y = px < 0.5 ? px : 1.0 - px;
+    return (y - 0.25) * 2.0 * kSMLSquiggleAmplitude;
+}
+
+
 
 @implementation SMLLayoutManager {
     NSMutableArray *lineRefs;
@@ -216,6 +231,49 @@ typedef enum : NSUInteger {
 - (BOOL)showsInvisibleCharacters
 {
     return _showsInvisibleCharacters;
+}
+
+
+#pragma mark - Syntax Error Underlining
+
+
+- (void)drawUnderlineForGlyphRange:(NSRange)glyphRange underlineType:(NSInteger)underlineVal
+  baselineOffset:(CGFloat)baselineOffset lineFragmentRect:(NSRect)lineRect
+  lineFragmentGlyphRange:(NSRange)lineGlyphRange containerOrigin:(NSPoint)containerOrigin
+{
+    NSRect gr;
+    NSTextContainer *tc;
+    CGFloat yzero;
+    NSPoint pos;
+    NSBezierPath *bp;
+    
+    if ((underlineVal & 0x0F) != MGSUnderlineStyleSquiggly) {
+        [super drawUnderlineForGlyphRange:glyphRange underlineType:underlineVal baselineOffset:baselineOffset lineFragmentRect:lineRect lineFragmentGlyphRange:lineGlyphRange containerOrigin:containerOrigin];
+        return;
+    }
+    
+    tc = [self textContainerForGlyphAtIndex:glyphRange.location effectiveRange:NULL];
+    gr = [self boundingRectForGlyphRange:glyphRange inTextContainer:tc];
+    bp = [NSBezierPath bezierPath];
+    
+    yzero = NSMaxY(gr) - baselineOffset / 2.0;
+    pos.x = gr.origin.x;
+    pos.y = SquiggleFunction(pos.x) + yzero;
+    [bp moveToPoint:pos];
+    
+    pos.x = ceil((pos.x + kSMLSquigglePhase) / (kSMLSquigglePeriod / 2));
+    pos.x = pos.x * (kSMLSquigglePeriod / 2) - kSMLSquigglePhase;
+    while (pos.x < NSMaxX(gr)) {
+        pos.y = SquiggleFunction(pos.x) + yzero;
+        [bp lineToPoint:pos];
+        pos.x += kSMLSquigglePeriod / 2;
+    }
+    pos.x = NSMaxX(gr);
+    pos.y = SquiggleFunction(pos.x) + yzero;
+    [bp lineToPoint:pos];
+    
+    [[NSColor redColor] setStroke];
+    [bp stroke];
 }
 
 

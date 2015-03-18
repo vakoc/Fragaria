@@ -152,7 +152,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 
 
 /*
- * @property showsWarningsInGutter
+ * @property showsSyntaxErrors
  */
 - (void)setShowsSyntaxErrors:(BOOL)value
 {
@@ -162,6 +162,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 - (BOOL)showsSyntaxErrors
 {
     return self.syntaxErrorController.showsSyntaxErrors;
+}
+
+
+/*
+ * @propertyShowsIndividualErrors
+ */
+- (void)setShowsIndividualErrors:(BOOL)showsIndividualErrors
+{
+	self.syntaxErrorController.showsIndividualErrors = showsIndividualErrors;
+}
+
+- (BOOL)showsIndividualErrors
+{
+	return self.syntaxErrorController.showsIndividualErrors;
 }
 
 

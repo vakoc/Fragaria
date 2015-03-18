@@ -31,6 +31,10 @@
  * view and the text view, set to NO to make all syntax errors invisible. */
 @property (nonatomic) BOOL showsSyntaxErrors;
 
+/** If showing syntax errors, highlights individual errors instead of
+ * highlighting the full line. */
+@property (nonatomic, assign) BOOL showsIndividualErrors;
+
 /** The MGSLineNumberView where to show the error decorations (icons) */
 @property (nonatomic) MGSLineNumberView *lineNumberView;
 

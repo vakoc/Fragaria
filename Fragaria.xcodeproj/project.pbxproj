@@ -36,7 +36,7 @@
 		0191FA821A8829930099B50D /* SMLTextView+MGSTextActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0191FA801A8829930099B50D /* SMLTextView+MGSTextActions.m */; };
 		019B80191A9E77330007D234 /* MGSFragariaTextViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 019B80181A9E77330007D234 /* MGSFragariaTextViewDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		019F56D51A9D3511009F9DCD /* SMLTextView+MGSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = D0C145C21A85E1FD00DDE90A /* SMLTextView+MGSDragging.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		01AC7E721AA341AA00DF7620 /* ErrorBadges.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01AC7E711AA341AA00DF7620 /* ErrorBadges.xcassets */; };
+		01AC7E721AA341AA00DF7620 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01AC7E711AA341AA00DF7620 /* Images.xcassets */; };
 		01BB1BF41A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */; };
 		01D81AD21AA7E37E006DF8B8 /* Features.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D81ACF1AA7E37E006DF8B8 /* Features.xib */; };
 		01D81AD31AA7E37E006DF8B8 /* Lorem.html in Resources */ = {isa = PBXBuildFile; fileRef = 01D81AD01AA7E37E006DF8B8 /* Lorem.html */; };
@@ -195,7 +195,7 @@
 		0191FA801A8829930099B50D /* SMLTextView+MGSTextActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMLTextView+MGSTextActions.m"; sourceTree = "<group>"; };
 		019B80181A9E77330007D234 /* MGSFragariaTextViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaTextViewDelegate.h; sourceTree = "<group>"; };
 		019F56D41A9D297F009F9DCD /* MGSFragariaPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGSFragariaPrivate.h; sourceTree = "<group>"; };
-		01AC7E711AA341AA00DF7620 /* ErrorBadges.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = ErrorBadges.xcassets; sourceTree = "<group>"; };
+		01AC7E711AA341AA00DF7620 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		01BB1BF11A79AA15006C0056 /* MGSSimpleBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSSimpleBreakpointDelegate.h; path = Applications/Simple/MGSSimpleBreakpointDelegate.h; sourceTree = "<group>"; };
 		01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSSimpleBreakpointDelegate.m; path = Applications/Simple/MGSSimpleBreakpointDelegate.m; sourceTree = "<group>"; };
 		01BEF2A31AA7E761005F11B4 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/SMLDetab.xib"; sourceTree = "<group>"; };
@@ -532,7 +532,7 @@
 		AB3972FC118C2A5D00AEF388 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				01AC7E711AA341AA00DF7620 /* ErrorBadges.xcassets */,
+				01AC7E711AA341AA00DF7620 /* Images.xcassets */,
 				ABA812DB11B6855200A29990 /* LICENSE-2.0.txt */,
 				AB69B62C118B745700903D1D /* MGSFragaria-Info.plist */,
 				AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */,
@@ -908,7 +908,7 @@
 				ABA812DC11B6855200A29990 /* LICENSE-2.0.txt in Resources */,
 				01098F171AA7BD0400ED4CFD /* SMLGoToLine.xib in Resources */,
 				01098F1D1AA7BD0D00ED4CFD /* SMLDetab.xib in Resources */,
-				01AC7E721AA341AA00DF7620 /* ErrorBadges.xcassets in Resources */,
+				01AC7E721AA341AA00DF7620 /* Images.xcassets in Resources */,
 				01098F1A1AA7BD0900ED4CFD /* SMLEntab.xib in Resources */,
 				01098F141AA7BCF800ED4CFD /* MGSPreferencesFontsAndColours.xib in Resources */,
 				013A79191AA8C715008ADFA1 /* MGSContextMenu.xib in Resources */,

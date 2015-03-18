@@ -7,6 +7,7 @@
 //
 
 #import "MGSSyntaxErrorController.h"
+#import "SMLLayoutManager.h"
 
 
 #define kSMLErrorPopOverMargin        6.0
@@ -87,6 +88,12 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     [self updateSyntaxErrorsDisplay];
 }
 
+- (void)setShowsIndividualErrors:(BOOL)showsIndividualErrors
+{
+	_showsIndividualErrors = showsIndividualErrors;
+	[self updateSyntaxErrorsDisplay];
+}
+
 
 - (void)setLineNumberView:(MGSLineNumberView *)lineNumberView
 {
@@ -153,17 +160,19 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     SMLTextView* textView = self.textView;
     NSString* text = [textView string];
     NSLayoutManager *layoutManager = [textView layoutManager];
+    NSRange wholeRange = NSMakeRange(0, text.length);
     
     // Clear all highlights
-    [layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:NSMakeRange(0, text.length)];
-    [layoutManager removeTemporaryAttribute:NSToolTipAttributeName forCharacterRange:NSMakeRange(0, text.length)];
+    [layoutManager removeTemporaryAttribute:NSBackgroundColorAttributeName forCharacterRange:wholeRange];
+    [layoutManager removeTemporaryAttribute:NSToolTipAttributeName forCharacterRange:wholeRange];
+    [layoutManager removeTemporaryAttribute:NSUnderlineStyleAttributeName forCharacterRange:wholeRange];
     
     if (!self.showsSyntaxErrors) return;
-    
-    // Highlight all errors and add buttjskaons
+	
+    // Highlight all lines with errors
     NSMutableSet* highlightedRows = [NSMutableSet set];
     
-    for (SMLSyntaxError* err in self.syntaxErrors)
+    for (SMLSyntaxError* err in self.nonHiddenErrors)
     {
         // Highlight an erroneous line
         NSInteger location = CharacterIndexFromRowAndColumn(err.line, err.character, text);
@@ -181,9 +190,16 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
             
             // Add highlight for background
             [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
-            
-            if ([err.errorDescription length] > 0)
-                [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.errorDescription forCharacterRange:lineRange];
+        }
+        
+        NSRange errorRange = NSMakeRange(location, err.length);
+        if (!errorRange.length) errorRange = lineRange;
+        
+        if ([err.errorDescription length] > 0)
+            [layoutManager addTemporaryAttribute:NSToolTipAttributeName value:err.errorDescription forCharacterRange:errorRange];
+        
+        if (self.showsIndividualErrors && err.length) {
+            [layoutManager addTemporaryAttribute:NSUnderlineStyleAttributeName value:@(MGSUnderlineStyleSquiggly) forCharacterRange:errorRange];
         }
     }
 }
