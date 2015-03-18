@@ -38,6 +38,8 @@
 	<true/>
 	<key>excludeFromKeywordEndCharacterSet</key>
 	<string>.:</string>
+	<key>includeInKeywordStartCharacterSet</key>
+	<string>.</string>
 	<key>keywords</key>
 	<array>
 		<string>align</string>
