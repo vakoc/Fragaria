@@ -501,6 +501,22 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
+ * - viewWillDraw
+ */
+- (void)viewWillDraw
+{
+    NSRect lineRect;
+    
+    lineRect = [self lineHighlightingRect];
+    if (!NSEqualRects(lineRect, currentLineRect)) {
+        [self setNeedsDisplayInRect:currentLineRect];
+        currentLineRect = lineRect;
+        [self setNeedsDisplayInRect:currentLineRect];
+    }
+}
+
+
+/*
  * - lineHighlightingRect
  */
 - (NSRect)lineHighlightingRect
