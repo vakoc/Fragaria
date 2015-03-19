@@ -523,17 +523,23 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 {
     NSMutableString *ms;
     NSRange selRange, lineRange, multipleLineRange;
+    NSUInteger sm, em, s, e;
     NSRect lineRect;
+    NSLayoutManager *lm = [self layoutManager];
 
     if (!_highlightsCurrentLine) return NSZeroRect;
 
     selRange = [self selectedRange];
     ms = [[self textStorage] mutableString];
-    multipleLineRange = [ms lineRangeForRange:selRange];
-    lineRange = [ms lineRangeForRange:NSMakeRange(selRange.location, 0)];
+    
+    [ms getLineStart:&sm end:NULL contentsEnd:&em forRange:selRange];
+    multipleLineRange = NSMakeRange(sm, em - sm);
+    [ms getLineStart:&s end:NULL contentsEnd:&e forRange:selRange];
+    lineRange = NSMakeRange(s, e - s);
+    
     if (NSEqualRanges(lineRange, multipleLineRange)) {
-        lineRange = [[self layoutManager] glyphRangeForCharacterRange:lineRange actualCharacterRange:NULL];
-        lineRect = [[self layoutManager] boundingRectForGlyphRange:lineRange inTextContainer:[self textContainer]];
+        lineRange = [lm glyphRangeForCharacterRange:lineRange actualCharacterRange:NULL];
+        lineRect = [lm boundingRectForGlyphRange:lineRange inTextContainer:[self textContainer]];
         lineRect.origin.x = 0;
         lineRect.size.width = [self bounds].size.width;
         return lineRect;
