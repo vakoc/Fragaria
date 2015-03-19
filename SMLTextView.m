@@ -534,7 +534,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     
     [ms getLineStart:&sm end:NULL contentsEnd:&em forRange:selRange];
     multipleLineRange = NSMakeRange(sm, em - sm);
-    [ms getLineStart:&s end:NULL contentsEnd:&e forRange:selRange];
+    [ms getLineStart:&s end:NULL contentsEnd:&e forRange:NSMakeRange(selRange.location, 0)];
     lineRange = NSMakeRange(s, e - s);
     
     if (NSEqualRanges(lineRange, multipleLineRange)) {
