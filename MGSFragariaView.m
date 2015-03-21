@@ -48,7 +48,7 @@
 		   IB User Defined Runtime Attributes won't
 		   be honored.
 		 */
-		self.fragaria = [[MGSFragaria alloc] initWithView:self];
+		self.fragaria = [[MGSFragaria alloc] initWithView:self useStandardPreferences:NO];
 	}
 	return self;
 }
@@ -67,7 +67,7 @@
 		   IB User Defined Runtime Attributes won't
 		   be honored.
 		 */
-		self.fragaria = [[MGSFragaria alloc] initWithView:self];
+		self.fragaria = [[MGSFragaria alloc] initWithView:self useStandardPreferences:NO];
     }
     return self;
 }
