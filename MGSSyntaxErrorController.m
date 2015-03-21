@@ -68,6 +68,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 
 @implementation MGSSyntaxErrorController
 
+@synthesize defaultSyntaxErrorHighlightingColour = _defaultSyntaxErrorHighlightingColour;
 
 #pragma mark - Property Accessors
 
@@ -94,6 +95,20 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 	[self updateSyntaxErrorsDisplay];
 }
 
+- (void)setDefaultSyntaxErrorHighlightingColour:(NSColor *)defaultSyntaxErrorHighlightingColour
+{
+    _defaultSyntaxErrorHighlightingColour = defaultSyntaxErrorHighlightingColour;
+}
+
+- (NSColor *)defaultSyntaxErrorHighlightingColour
+{
+    if (!_defaultSyntaxErrorHighlightingColour)
+    {
+        _defaultSyntaxErrorHighlightingColour = [NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1];
+    }
+
+    return _defaultSyntaxErrorHighlightingColour;
+}
 
 - (void)setLineNumberView:(MGSLineNumberView *)lineNumberView
 {
@@ -189,7 +204,8 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
             [highlightedRows addObject:[NSNumber numberWithUnsignedInteger:err.line]];
             
             // Add highlight for background
-            [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:err.errorLineHighlightColor forCharacterRange:lineRange];
+            NSColor *highlightColor = err.errorLineHighlightColor ? err.errorLineHighlightColor : self.defaultSyntaxErrorHighlightingColour;
+            [layoutManager addTemporaryAttribute:NSBackgroundColorAttributeName value:highlightColor forCharacterRange:lineRange];
         }
         
         NSRange errorRange = NSMakeRange(location, err.length);

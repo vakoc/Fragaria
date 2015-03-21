@@ -476,6 +476,21 @@
 }
 
 
+/*
+ * @property defaultSyntaxErrorHighlightingColour
+ */
+- (void)setDefaultSyntaxErrorHighlightingColour:(NSColor *)defaultSyntaxErrorHighlightingColour
+{
+    self.fragaria.defaultSyntaxErrorHighlightingColour = defaultSyntaxErrorHighlightingColour;
+    [self propagateValue:defaultSyntaxErrorHighlightingColour forBinding:NSStringFromSelector(@selector(defaultSyntaxErrorHighlightingColour))];
+}
+
+-(NSColor *)defaultSyntaxErrorHighlightingColour
+{
+    return self.fragaria.defaultSyntaxErrorHighlightingColour;
+}
+
+
 #pragma mark - Showing Breakpoints
 
 

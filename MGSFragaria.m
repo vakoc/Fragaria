@@ -196,6 +196,20 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 }
 
 
+/*
+ * @property defaultSyntaxErrorHighlightingColour
+ */
+- (void)setDefaultSyntaxErrorHighlightingColour:(NSColor *)defaultSyntaxErrorHighlightingColour
+{
+    self.syntaxErrorController.defaultSyntaxErrorHighlightingColour = defaultSyntaxErrorHighlightingColour;
+}
+
+-(NSColor *)defaultSyntaxErrorHighlightingColour
+{
+    return self.syntaxErrorController.defaultSyntaxErrorHighlightingColour;
+}
+
+
 #pragma mark - Properties - Delegates
 
 

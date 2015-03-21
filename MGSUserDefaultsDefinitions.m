@@ -33,8 +33,9 @@ NSString * const MGSFragariaDefaultsGutterFont =         @"gutterFont";
 NSString * const MGSFragariaDefaultsGutterTextColour =   @"gutterTextColour";
 
 // Showing Syntax Errors
-NSString * const MGSFragariaDefaultsShowsSyntaxErrors =     @"showsSyntaxErrors";
-NSString * const MGSFragariaDefaultsShowsIndividualErrors = @"showsIndividualErrors";
+NSString * const MGSFragariaDefaultsShowsSyntaxErrors =             @"showsSyntaxErrors";
+NSString * const MGSFragariaDefaultsShowsIndividualErrors =         @"showsIndividualErrors";
+NSString * const MGSFragariaDefaultsDefaultErrorHighlightingColor = @"defaultSyntaxErrorHighlightingColour";
 
 // Tabulation and Indentation
 NSString * const MGSFragariaDefaultsTabWidth =                    @"tabWidth";
@@ -137,6 +138,7 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 
 		 MGSFragariaDefaultsShowsSyntaxErrors : @YES,
 		 MGSFragariaDefaultsShowsIndividualErrors : @NO,
+         MGSFragariaDefaultsDefaultErrorHighlightingColor : ARCHIVED_COLOR(1.0f, 1.0f, 0.7f),
 
 		 MGSFragariaDefaultsTabWidth : @4,
 		 MGSFragariaDefaultsIndentWidth : @4,

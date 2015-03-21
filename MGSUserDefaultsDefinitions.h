@@ -54,6 +54,7 @@ extern NSString * const MGSFragariaDefaultsGutterTextColour;                    
 // Showing Syntax Errors
 extern NSString * const MGSFragariaDefaultsShowsSyntaxErrors;                     // BOOL       showsSyntaxErrors
 extern NSString * const MGSFragariaDefaultsShowsIndividualErrors;                 // BOOL       showsIndividualErrors
+extern NSString * const MGSFragariaDefaultsDefaultErrorHighlightingColor;         // NSColor    defaultSyntaxErrorHighlightingColour
 
 // Tabulation and Indentation
 extern NSString * const MGSFragariaDefaultsTabWidth;                              // NSInteger  tabWidth
