@@ -35,6 +35,9 @@
  * highlighting the full line. */
 @property (nonatomic, assign) BOOL showsIndividualErrors;
 
+/** The default syntax error line highlighting colour. */
+@property (nonatomic, strong) NSColor *defaultSyntaxErrorHighlightingColour;
+
 /** The MGSLineNumberView where to show the error decorations (icons) */
 @property (nonatomic) MGSLineNumberView *lineNumberView;
 

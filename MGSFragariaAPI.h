@@ -162,6 +162,8 @@
  * highlighting the full line. */
 @property (nonatomic, assign) BOOL showsIndividualErrors;
 
+/** The default syntax error line highlighting colour. */
+@property (nonatomic, assign) NSColor *defaultSyntaxErrorHighlightingColour;
 
 #pragma mark - Showing Breakpoints
 /// @name Showing Breakpoints

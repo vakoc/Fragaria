@@ -89,7 +89,6 @@ float const kMGSErrorCategoryDefault = 500;
 {
     self = [super init];
     
-    self.errorLineHighlightColor = [NSColor colorWithCalibratedRed:1 green:1 blue:0.7 alpha:1];
     self.line = 1;
     self.character = 1;
     self.warningLevel = kMGSErrorCategoryWarning;
