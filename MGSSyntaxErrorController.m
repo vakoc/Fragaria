@@ -98,6 +98,7 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 - (void)setDefaultSyntaxErrorHighlightingColour:(NSColor *)defaultSyntaxErrorHighlightingColour
 {
     _defaultSyntaxErrorHighlightingColour = defaultSyntaxErrorHighlightingColour;
+    [self updateSyntaxErrorsDisplay];
 }
 
 - (NSColor *)defaultSyntaxErrorHighlightingColour
