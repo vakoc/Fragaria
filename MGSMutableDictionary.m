@@ -31,11 +31,11 @@
     [self willChangeValueForKey:key];
     if (value)
     {
-        [self.storage setObject:value forKey:key];
+        [self setObject:value forKey:key];
     }
     else
     {
-        [self.storage removeObjectForKey:key];
+        [self removeObjectForKey:key];
     }
     
     if (self.controller.persistent)
@@ -56,7 +56,7 @@
         return [[MGSUserDefaults sharedUserDefaultsForGroupID:self.controller.groupID] objectForKey:key];
     }
 
-    return [self.storage objectForKey:key];
+    return [self objectForKey:key];
 }
 
 
@@ -161,7 +161,13 @@
  */
 - (id)objectForKey:(id)aKey
 {
-    return [self.storage objectForKey:aKey];
+    id object = [self.storage objectForKey:aKey];
+    if ([object isKindOfClass:[NSData class]])
+    {
+        object = [NSUnarchiver unarchiveObjectWithData:object];
+    }
+
+    return object;
 }
 
 
@@ -179,7 +185,14 @@
  */
 - (void)setObject:(id)anObject forKey:(id)aKey
 {
-    [self.storage setObject:anObject forKey:aKey];
+    if ([anObject isKindOfClass:[NSFont class]] || [anObject isKindOfClass:[NSColor class]])
+    {
+        [self.storage setObject:[NSArchiver archivedDataWithRootObject:anObject] forKey:aKey];
+    }
+    else
+    {
+        [self.storage setObject:anObject forKey:aKey];
+    }
 }
 
 
