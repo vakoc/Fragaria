@@ -173,7 +173,8 @@ static NSMutableDictionary *controllerInstances;
 		NSDictionary *defaults = [[MGSUserDefaultsDefinitions class] fragariaDefaultsDictionary];
 		
 		[[MGSUserDefaults sharedUserDefaultsForGroupID:groupID] registerDefaults:defaults];
-		self.values = [[MGSMutableDictionary alloc] initWithController:self dictionary:[self unarchiveFromDefaultsDictionary:defaults]];
+        defaults = [[NSUserDefaults standardUserDefaults] valueForKey:groupID];
+        self.values = [[MGSMutableDictionary alloc] initWithController:self dictionary:[self unarchiveFromDefaultsDictionary:defaults]];
 	}
 	
 	return self;
