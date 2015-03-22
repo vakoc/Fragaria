@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>backgroundColor</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZgEBhg==</data>
+	<key>colourForAttributes</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgwAAAD+DAAAAP4PNzEw+AYY=</data>
+	<key>colourForAutocomplete</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgz0KVz+DhevRPoOmm8Q7AYY=</data>
+	<key>colourForCommands</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg7bz/TwAg0jhWj8Bhg==</data>
+	<key>colourForComments</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmAINmZuY+AAGG</data>
+	<key>colourForInstructions</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgwisPD8Ag8uhJT8Bhg==</data>
+	<key>colourForKeywords</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgwisPD8Ag8uhJT8Bhg==</data>
+	<key>colourForNumbers</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg7bz/TwAg0jhWj8Bhg==</data>
+	<key>colourForStrings</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg/LSTT+Dc2iRPYMIrBw+AYY=</data>
+	<key>colourForVariables</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg0jhOj8Ag6RwPT8Bhg==</data>
+	<key>coloursAttributes</key>
+	<integer>1</integer>
+	<key>coloursAutocomplete</key>
+	<integer>0</integer>
+	<key>coloursCommands</key>
+	<integer>1</integer>
+	<key>coloursComments</key>
+	<integer>1</integer>
+	<key>coloursInstructions</key>
+	<integer>1</integer>
+	<key>coloursKeywords</key>
+	<integer>1</integer>
+	<key>coloursNumbers</key>
+	<integer>1</integer>
+	<key>coloursStrings</key>
+	<integer>1</integer>
+	<key>coloursVariables</key>
+	<integer>1</integer>
+	<key>currentLineHighlightColour</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg4/CdT+Dj8J1P4OPwjU/AYY=</data>
+	<key>defaultSyntaxErrorHighlightingColour</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmAQGDMzMzPwGG</data>
+	<key>displayName</key>
+	<string>Classic Fragaria</string>
+	<key>insertionPointColor</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMGhANAQECEhIQITlNTdHJpbmcBlIQBKwZTeXN0ZW2GhJaYCXRleHRDb2xvcoaEk5UDhAJmZgABhoY=</data>
+	<key>textColor</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMGhANAQECEhIQITlNTdHJpbmcBlIQBKwZTeXN0ZW2GhJaYCXRleHRDb2xvcoaEk5UDhAJmZgABhoY=</data>
+	<key>textInvisibleCharactersColour</key>
+	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMGhANAQECEhIQITlNTdHJpbmcBlIQBKwZTeXN0ZW2GhJaYEGNvbnRyb2xUZXh0Q29sb3KGhJOVA4QCZmYAAYaG</data>
+</dict>
+</plist>
