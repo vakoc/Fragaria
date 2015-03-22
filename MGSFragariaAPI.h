@@ -71,7 +71,9 @@
  *              split view, for example. Replacing the text storage directly
  *              on the text view's layout manager is not supported, and will
  *              not work properly. The two Fragaria instances will not share
- *              their syntax definition or syntax errors.
+ *              their syntax definition or syntax errors. Also, if the two
+ *              instances use different coloring settings, the resulting
+ *              colors will be undefined.
  *  @param textStorage The new text storage for this instance of Fragaria. */
 - (void)replaceTextStorage:(NSTextStorage*)textStorage;
 

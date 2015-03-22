@@ -82,9 +82,8 @@
     self.viewTop.syntaxDefinitionName = @"html";
 
     /* Make the lower view interesting. */
-    /* Note that the views act as a split view via replaceTextStorage. */
     self.viewBottom.syntaxDefinitionName = @"html";
-    [self.viewBottom.fragaria replaceTextStorage:self.viewTop.textView.textStorage];
+    self.viewBottom.textView.string = fileContent;
 }
 
 
