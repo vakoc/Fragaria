@@ -244,6 +244,35 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 
 
 /*
+ * @property lineSpacing
+ */
+- (void)setLineHeightMultiple:(CGFloat)lineHeightMultiple
+{
+    NSMutableDictionary *ta;
+    NSMutableParagraphStyle *ps;
+    NSRange wholeRange = NSMakeRange(0, self.string.length);
+    
+    ta = [self.typingAttributes mutableCopy];
+    ps = [[ta objectForKey:NSParagraphStyleAttributeName] mutableCopy];
+    if (!ps) ps = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    [ps setLineHeightMultiple:lineHeightMultiple];
+    
+    [self.textStorage addAttribute:NSParagraphStyleAttributeName value:ps range:wholeRange];
+    
+    [ta setObject:ps forKey:NSParagraphStyleAttributeName];
+    [self setTypingAttributes:ta];
+}
+
+- (CGFloat)lineHeightMultiple
+{
+    NSParagraphStyle *ps;
+    
+    ps = [self.typingAttributes objectForKey:NSParagraphStyleAttributeName];
+    return ps.lineHeightMultiple;
+}
+
+
+/*
  * @property textColor
  */
 - (void)setTextColor:(NSColor *)textColor

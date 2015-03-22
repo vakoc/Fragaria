@@ -100,6 +100,10 @@
 /** Indicates the number of spaces per tab character. **/
 @property (nonatomic, assign) NSInteger tabWidth;
 
+/** The natural line height of the receiver is multiplied by this factor to
+ *  get the real line height. The default value is 0.0. */
+@property (nonatomic) CGFloat lineHeightMultiple;
+
 /** Indicates the current text color. */
 @property (nonatomic, assign) NSColor *textColor;
 
