@@ -30,4 +30,15 @@
  **/
 @property (nonatomic, weak) MGSUserDefaultsController *propertiesController;
 
+
+/**
+ *  Returns whether or not a property is a managed property. This is a KVC
+ *  structure that returns @(YES) or @(NO) for keyPaths in the form of
+ *  this_controller.managedProperties.propertyName.
+ *  @discuss Useful for user interface enabled bindings to disable elements
+ *  that the propertiesController doesn't manage.
+ **/
+@property (nonatomic, assign, readonly) id managedProperties;
+
+
 @end

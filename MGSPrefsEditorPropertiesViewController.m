@@ -9,31 +9,6 @@
 #import "MGSPrefsEditorPropertiesViewController.h"
 #import "MGSUserDefaultsController.h"
 
-@interface MGSPrefsEditorPropertiesViewController ()
-
-
-@property (nonatomic, assign) NSFont *editorFont;
-
-@property (nonatomic, assign, readonly) NSColor *disabledLabelColour;
-
-@property (nonatomic, weak) IBOutlet NSTextField *friendColourLabelPageGuide;
-@property (nonatomic, assign, readonly) NSColor *colourLabelPageGuide;
-
-@property (nonatomic, weak) IBOutlet NSTextField *friendColourLabelMinimumGutterWidth;
-@property (nonatomic, assign, readonly) NSColor *colourLabelMinimumGutterWidth;
-
-@property (nonatomic, weak) IBOutlet NSTextField *friendColourLabelDelay;
-@property (nonatomic, assign, readonly) NSColor *colourLabelDelay;
-
-@property (nonatomic, weak) IBOutlet NSTextField *friendColourLabelTabWidth;
-@property (nonatomic, assign, readonly) NSColor *colourLabelTabWidth;
-
-@property (nonatomic, weak) IBOutlet NSTextField *friendColourLabelIndentWidth;
-@property (nonatomic, assign, readonly) NSColor *colourLabelIndentWidth;
-
-
-@end
-
 
 @implementation MGSPrefsEditorPropertiesViewController
 
@@ -98,88 +73,6 @@
 - (NSFont *)editorFont
 {
     return [self.propertiesController.values valueForKey:MGSFragariaDefaultsTextFont];
-}
-
-
-/*
- *  @property disabledLabelColour
- *  Labels don't have a disabled appearance and there's no boolean value
- *  transformer, so get the label color here.
- */
-- (NSColor *)disabledLabelColour
-{
-	// return [NSColor secondarySelectedControlColor];
-	return [[NSColor controlTextColor] colorWithAlphaComponent:0.25];
-}
-
-
-/*
- *  @property colourLabelPageGuide
- */
-+ (NSSet *)keyPathsForValuesAffectingColourLabelPageGuide
-{
-	return [NSSet setWithArray:@[@"self.friendColourLabelPageGuide.enabled"]];
-}
-
-- (NSColor *)colourLabelPageGuide
-{
-    return self.friendColourLabelPageGuide.enabled ? [NSColor controlTextColor] : self.disabledLabelColour;
-}
-
-
-/*
- *  @property colourLabelMinimumGutterWidth
- */
-+ (NSSet *)keyPathsForValuesAffectingColourLabelMinimumGutterWidth
-{
-	return [NSSet setWithArray:@[@"self.friendColourLabelMinimumGutterWidth.enabled"]];
-}
-
-- (NSColor *)colourLabelMinimumGutterWidth
-{
-    return self.friendColourLabelMinimumGutterWidth.enabled ? [NSColor controlTextColor] : self.disabledLabelColour;
-}
-
-
-/*
- *  @property colourLabelDelay
- */
-+ (NSSet *)keyPathsForValuesAffectingColourLabelDelay
-{
-	return [NSSet setWithArray:@[@"self.friendColourLabelDelay.enabled"]];
-}
-
-- (NSColor *)colourLabelDelay
-{
-    return self.friendColourLabelDelay.enabled ? [NSColor controlTextColor] : self.disabledLabelColour;
-}
-
-
-/*
- *  @property colourLabelTabWidth
- */
-+ (NSSet *)keyPathsForValuesAffectingColourLabelTabWidth
-{
-	return [NSSet setWithArray:@[@"self.friendColourLabelTabWidth.enabled"]];
-}
-
-- (NSColor *)colourLabelTabWidth
-{
-    return self.friendColourLabelTabWidth.enabled ? [NSColor controlTextColor] : self.disabledLabelColour;
-}
-
-
-/*
- *  @property colourLabelIndentWidth
- */
-+ (NSSet *)keyPathsForValuesAffectingColourLabelIndentWidth
-{
-	return [NSSet setWithArray:@[@"self.friendColourLabelIndentWidth.enabled"]];
-}
-
-- (NSColor *)colourLabelIndentWidth
-{
-    return self.friendColourLabelIndentWidth.enabled ? [NSColor controlTextColor] : self.disabledLabelColour;
 }
 
 

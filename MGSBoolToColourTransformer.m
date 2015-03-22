@@ -6,9 +6,9 @@
 //
 //
 
-#import "MGSPropertyAvailableTransformer.h"
+#import "MGSBoolToColourTransformer.h"
 
-@implementation MGSPropertyAvailableTransformer
+@implementation MGSBoolToColourTransformer
 
 + (Class)transformedValueClass
 {
@@ -24,7 +24,8 @@
 
 - (id)transformedValue:(id)value
 {
-    return @(value != nil);
+//    return [NSColor controlTextColor];
+    return [value boolValue] == YES ? [NSColor controlTextColor] : [[NSColor controlTextColor] colorWithAlphaComponent:0.25];
 }
 
 @end

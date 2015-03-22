@@ -40,6 +40,11 @@ static NSMutableDictionary *controllerInstances;
  */
 + (instancetype)sharedControllerForGroupID:(NSString *)groupID
 {
+    if (!groupID || [groupID length] == 0)
+    {
+        groupID = MGSUSERDEFAULTS_GLOBAL_ID;
+    }
+
 	@synchronized(self) {
 
         if (!controllerInstances)
@@ -110,7 +115,7 @@ static NSMutableDictionary *controllerInstances;
  */
 - (void)setManagedProperties:(NSSet *)managedProperties
 {
-	[self unregisterBindings:_managedProperties];
+    [self unregisterBindings:_managedProperties];
     _managedProperties = managedProperties;
 	[self registerBindings:_managedProperties];
 }
@@ -297,5 +302,6 @@ static NSMutableDictionary *controllerInstances;
     return destination;
 
 }
+
 
 @end

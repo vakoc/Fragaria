@@ -5,10 +5,10 @@
 //  Created by Jim Derry on 2015/02/22.
 //
 
-#import "PrefsColorsViewController.h"
+#import "ColorSettingsViewController.h"
 
 
-@implementation PrefsColorsViewController
+@implementation ColorSettingsViewController
 
 #pragma mark - MASPreferencesViewController
 
