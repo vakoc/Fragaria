@@ -223,18 +223,19 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     while (numberOfSpaces--) {
         [sizeString appendString:@" "];
     }
-    NSDictionary *sizeAttribute = [self typingAttributes];
-    CGFloat sizeOfTab = [sizeString sizeWithAttributes:sizeAttribute].width;
+    NSDictionary *ta = [self typingAttributes];
+    CGFloat sizeOfTab = [sizeString sizeWithAttributes:ta].width;
 
-    NSMutableParagraphStyle *style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-
+    NSMutableParagraphStyle *style = [[ta objectForKey:NSParagraphStyleAttributeName] mutableCopy];
+    if (!style) style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    
     NSArray *array = [style tabStops];
     for (id item in array) {
         [style removeTabStop:item];
     }
     [style setDefaultTabInterval:sizeOfTab];
     
-    NSMutableDictionary *attributes = [[self typingAttributes] mutableCopy];
+    NSMutableDictionary *attributes = [ta mutableCopy];
     [attributes setObject:style forKey:NSParagraphStyleAttributeName];
     [self setTypingAttributes:attributes];
     
