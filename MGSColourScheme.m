@@ -211,7 +211,8 @@
 
     self.textColor = [NSUnarchiver unarchiveObjectWithData:defaults[MGSFragariaDefaultsTextColor]];
     self.backgroundColor = [NSUnarchiver unarchiveObjectWithData:defaults[MGSFragariaDefaultsBackgroundColor]];
-	
+    self.defaultSyntaxErrorHighlightingColour = [NSUnarchiver unarchiveObjectWithData:defaults[MGSFragariaDefaultsDefaultErrorHighlightingColor]];
+
 	self.textInvisibleCharactersColour = [NSUnarchiver unarchiveObjectWithData:defaults[MGSFragariaDefaultsTextInvisibleCharactersColour]];
 	self.currentLineHighlightColour = [NSUnarchiver unarchiveObjectWithData:defaults[MGSFragariaDefaultsCurrentLineHighlightColour]];
 	self.insertionPointColor = [NSUnarchiver unarchiveObjectWithData:defaults[MGSFragariaDefaultsInsertionPointColor]];
