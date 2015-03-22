@@ -40,6 +40,11 @@ static NSMutableDictionary *controllerInstances;
  */
 + (instancetype)sharedControllerForGroupID:(NSString *)groupID
 {
+    if (!groupID || [groupID length] == 0)
+    {
+        groupID = MGSUSERDEFAULTS_GLOBAL_ID;
+    }
+
 	@synchronized(self) {
 
         if (!controllerInstances)
@@ -110,7 +115,7 @@ static NSMutableDictionary *controllerInstances;
  */
 - (void)setManagedProperties:(NSSet *)managedProperties
 {
-	[self unregisterBindings:_managedProperties];
+    [self unregisterBindings:_managedProperties];
     _managedProperties = managedProperties;
 	[self registerBindings:_managedProperties];
 }
@@ -173,7 +178,8 @@ static NSMutableDictionary *controllerInstances;
 		NSDictionary *defaults = [[MGSUserDefaultsDefinitions class] fragariaDefaultsDictionary];
 		
 		[[MGSUserDefaults sharedUserDefaultsForGroupID:groupID] registerDefaults:defaults];
-		self.values = [[MGSMutableDictionary alloc] initWithController:self dictionary:[self unarchiveFromDefaultsDictionary:defaults]];
+        defaults = [[NSUserDefaults standardUserDefaults] valueForKey:groupID];
+        self.values = [[MGSMutableDictionary alloc] initWithController:self dictionary:[self unarchiveFromDefaultsDictionary:defaults]];
 	}
 	
 	return self;
@@ -296,5 +302,6 @@ static NSMutableDictionary *controllerInstances;
     return destination;
 
 }
+
 
 @end
