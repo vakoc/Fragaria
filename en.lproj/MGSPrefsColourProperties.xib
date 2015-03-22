@@ -7,21 +7,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MGSPrefsColourPropertiesViewController">
             <connections>
-                <outlet property="friendColourLabelAttributes" destination="R4h-6u-cVw" id="nWg-Hg-721"/>
-                <outlet property="friendColourLabelAutoComplete" destination="6iM-S9-3yf" id="6kZ-sO-0iX"/>
-                <outlet property="friendColourLabelBG" destination="26C-X9-giG" id="HnT-Pp-yOj"/>
-                <outlet property="friendColourLabelCommands" destination="3Xn-UK-klk" id="QYO-6y-c1A"/>
-                <outlet property="friendColourLabelComments" destination="Anu-T0-SbV" id="vga-Le-Qlk"/>
-                <outlet property="friendColourLabelCurrentLine" destination="gwB-1T-w5e" id="xwE-2R-LSW"/>
-                <outlet property="friendColourLabelErrorHighlight" destination="0ws-Xa-iLK" id="ZBN-Ik-e9E"/>
-                <outlet property="friendColourLabelInsertionPoint" destination="b5F-Us-gsv" id="36D-e4-iph"/>
-                <outlet property="friendColourLabelInstructions" destination="CJD-aj-m43" id="OOa-3H-pfs"/>
-                <outlet property="friendColourLabelInvisibles" destination="V8C-Iz-4On" id="QTr-NU-Par"/>
-                <outlet property="friendColourLabelKeywords" destination="Lmo-hm-qeg" id="bRM-NA-0lx"/>
-                <outlet property="friendColourLabelNumbers" destination="2yi-A9-Gp6" id="E7Z-2s-div"/>
-                <outlet property="friendColourLabelStrings" destination="CgQ-g1-pQZ" id="22Q-Dv-vFq"/>
-                <outlet property="friendColourLabelText" destination="YDf-yh-NPb" id="6mh-80-Ap4"/>
-                <outlet property="friendColourLabelVariables" destination="Nfh-le-X6c" id="cpg-Jv-nG5"/>
                 <outlet property="objectController" destination="x5m-Ak-VJo" id="WxV-Xs-tOK"/>
                 <outlet property="view" destination="c22-O7-iKe" id="R1o-cw-2Gg"/>
             </connections>
@@ -114,7 +99,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelText" id="s7j-VV-diZ"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.textColor" id="rh1-dF-XJ4">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="26C-X9-giG">
@@ -130,11 +119,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.backgroundColor" id="cEl-89-zjC">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.backgroundColor" id="JVw-tR-xZW"/>
                             </connections>
                         </colorWell>
                         <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="0ws-Xa-iLK">
@@ -145,16 +130,12 @@
                             </constraints>
                             <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.backgroundColor" id="NGW-3h-Xyd">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.defaultSyntaxErrorHighlightingColour" id="L58-qc-pVV">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.defaultSyntaxErrorHighlightingColour" id="iJa-UH-kof"/>
                             </connections>
                         </colorWell>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Xq7-24-fYB">
@@ -165,7 +146,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelBG" id="DGW-mA-8Nz"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.backgroundColor" id="NZl-wK-GzM">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ohg-cE-z0V">
@@ -176,7 +161,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelInvisibles" id="acL-72-nFY"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.textInvisibleCharactersColour" id="UR7-gx-fvJ">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="b5F-Us-gsv">
@@ -187,16 +176,12 @@
                             </constraints>
                             <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.insertionPointColor" id="aoE-8i-2ul">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.insertionPointColor" id="lup-eO-bsU">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.insertionPointColor" id="Ibx-9E-SRs"/>
                             </connections>
                         </colorWell>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="W0x-0N-9kD">
@@ -207,7 +192,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelInsertionPoint" id="9V3-lL-ckU"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.insertionPointColor" id="cdE-JY-RRO">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="gwB-1T-w5e">
@@ -218,16 +207,12 @@
                             </constraints>
                             <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.currentLineHighlightColour" id="8HL-xE-Uuz">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.currentLineHighlightColour" id="pkh-t9-FVy">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.currentLineHighlightColour" id="uaV-7n-5ZF"/>
                             </connections>
                         </colorWell>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="dNx-bb-167">
@@ -241,7 +226,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelCurrentLine" id="jYo-Pr-Tcy"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.currentLineHighlightColour" id="0tY-au-ox8">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="bx6-hL-JOT">
@@ -268,12 +257,8 @@
                             </constraints>
                             <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.textColor" id="d36-WU-NuO">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.textColor" id="dZe-GI-hq3"/>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.textColor" id="pO4-BQ-Met"/>
                             </connections>
                         </colorWell>
                         <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="V8C-Iz-4On">
@@ -284,16 +269,12 @@
                             </constraints>
                             <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.textInvisibleCharactersColour" id="4c0-lI-Uja">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.textInvisibleCharactersColour" id="ufP-3x-Cju">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.textInvisibleCharactersColour" id="Yo3-PS-F8w"/>
                             </connections>
                         </colorWell>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="nw5-L7-LzE">
@@ -304,7 +285,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelErrorHighlight" id="re7-fH-NSZ"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.defaultSyntaxErrorHighlightingColour" id="dAr-fi-0gz">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                     </subviews>
@@ -383,12 +368,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.colourForKeywords" id="6ns-7U-Oit">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursKeywords" previousBinding="6ns-7U-Oit" id="RrU-YU-CK0">
+                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursKeywords" previousBinding="7eS-bh-Ghk" id="Ofk-RR-AGl">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -396,13 +376,13 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled3" keyPath="selection.coloursKeywords" previousBinding="RrU-YU-CK0" id="mOK-kY-Bxe">
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.colourForKeywords" id="7eS-bh-Ghk"/>
+                                <binding destination="-2" name="enabled3" keyPath="self.managedProperties.coloursKeywords" previousBinding="Ofk-RR-AGl" id="bn0-w4-yKR">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                         <integer key="NSNullPlaceholder" value="-1"/>
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -420,21 +400,16 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.colourForComments" id="irV-7X-OIb">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled3" keyPath="selection.coloursComments" previousBinding="xYM-bo-uP2" id="mur-WZ-2Vs">
+                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursComments" previousBinding="M8T-CD-GGi" id="XBA-U3-Z90">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                         <integer key="NSNullPlaceholder" value="-1"/>
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursComments" previousBinding="irV-7X-OIb" id="xYM-bo-uP2">
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.colourForComments" id="M8T-CD-GGi"/>
+                                <binding destination="-2" name="enabled3" keyPath="self.managedProperties.coloursComments" previousBinding="XBA-U3-Z90" id="Pjd-5O-RSC">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -457,21 +432,16 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.colourForVariables" id="Myr-gH-7i6">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled3" keyPath="selection.coloursVariables" previousBinding="z8h-ex-v4k" id="UHq-Rd-9fC">
+                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursVariables" previousBinding="hc4-PZ-Pkd" id="58o-Ty-jYq">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                         <integer key="NSNullPlaceholder" value="-1"/>
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursVariables" previousBinding="Myr-gH-7i6" id="z8h-ex-v4k">
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.colourForVariables" id="hc4-PZ-Pkd"/>
+                                <binding destination="-2" name="enabled3" keyPath="self.managedProperties.coloursVariables" previousBinding="58o-Ty-jYq" id="jMD-6e-0gp">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -489,7 +459,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelKeywords" id="IXR-bg-L3J"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursKeywords" id="JV6-qt-J5Z">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="xIm-q5-TgG">
@@ -500,7 +474,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelVariables" id="6GB-Fp-0OW"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursVariables" id="INg-2h-jNd">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="nfD-xh-8sc">
@@ -511,7 +489,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelAutoComplete" id="03T-Je-Hrm"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursAutocomplete" id="HPI-Vu-iVf">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="6iM-S9-3yf">
@@ -522,17 +504,12 @@
                             </constraints>
                             <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.colourForAutocomplete" id="Cae-4K-JYM">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForAutocomplete" id="QlK-ol-H3Q">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursAutocomplete" previousBinding="Cae-4K-JYM" id="4YA-Ur-Xuv">
+                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursAutocomplete" previousBinding="S20-M1-z6h" id="73Z-wz-qG3">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -540,13 +517,13 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled3" keyPath="selection.coloursAutocomplete" previousBinding="4YA-Ur-Xuv" id="eLD-yo-OWk">
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.colourForAutocomplete" id="S20-M1-z6h"/>
+                                <binding destination="-2" name="enabled3" keyPath="self.managedProperties.coloursAutocomplete" previousBinding="73Z-wz-qG3" id="eSu-r4-enP">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                         <integer key="NSNullPlaceholder" value="-1"/>
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -563,11 +540,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursKeywords" id="vdy-A0-ZY6">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursKeywords" id="XoT-2X-DAf"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="A2X-3X-k5x">
@@ -577,16 +550,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursComments" id="9bv-Mv-rCp">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.coloursComments" id="cR6-s4-syJ">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursComments" id="esh-rT-aB4"/>
                             </connections>
                         </button>
                         <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="2yi-A9-Gp6">
@@ -602,12 +571,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.colourForNumbers" id="TlK-sR-XZ3">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursNumbers" previousBinding="TlK-sR-XZ3" id="awa-2g-f2i">
+                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursNumbers" previousBinding="vSo-Yj-NJc" id="DGf-kp-rP4">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -615,13 +579,13 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled3" keyPath="selection.coloursNumbers" previousBinding="awa-2g-f2i" id="yew-zc-MxZ">
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.colourForNumbers" id="vSo-Yj-NJc"/>
+                                <binding destination="-2" name="enabled3" keyPath="self.managedProperties.coloursNumbers" previousBinding="DGf-kp-rP4" id="lki-pj-B3e">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                         <integer key="NSNullPlaceholder" value="-1"/>
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -634,7 +598,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelNumbers" id="T7i-Sc-A9G"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursNumbers" id="5gc-Rs-SY8">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="v4T-e7-yZh">
@@ -645,7 +613,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelInstructions" id="g0b-gq-ebM"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursInstructions" id="YLi-np-rJ1">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="CJD-aj-m43">
@@ -656,26 +628,21 @@
                             </constraints>
                             <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.colourForInstructions" id="N5X-Nd-9ND">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForInstructions" id="l06-3m-7pN">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled3" keyPath="selection.coloursInstructions" previousBinding="MqF-x1-TBS" id="11v-Gh-lKu">
+                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursInstructions" previousBinding="MAb-KK-V8f" id="CpO-ZX-69j">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                         <integer key="NSNullPlaceholder" value="-1"/>
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursInstructions" previousBinding="N5X-Nd-9ND" id="MqF-x1-TBS">
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.colourForInstructions" id="MAb-KK-V8f"/>
+                                <binding destination="-2" name="enabled3" keyPath="self.managedProperties.coloursInstructions" previousBinding="CpO-ZX-69j" id="ysg-u4-fMf">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -698,21 +665,16 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.colourForStrings" id="uWv-Pw-sBg">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled3" keyPath="selection.coloursStrings" previousBinding="snj-gb-vSD" id="Ioz-Ga-btg">
+                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursStrings" previousBinding="OOz-QO-Dhb" id="9sj-zR-oJe">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                         <integer key="NSNullPlaceholder" value="-1"/>
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursStrings" previousBinding="uWv-Pw-sBg" id="snj-gb-vSD">
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.colourForStrings" id="OOz-QO-Dhb"/>
+                                <binding destination="-2" name="enabled3" keyPath="self.managedProperties.coloursStrings" previousBinding="9sj-zR-oJe" id="wkR-ic-X3M">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -730,7 +692,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelCommands" id="1tN-CA-7AU"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursCommands" id="1Uo-9K-UP1">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ydh-pU-Nug">
@@ -741,7 +707,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelStrings" id="NVw-P6-CWG"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursStrings" id="9LF-uA-mTH">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="3Xn-UK-klk">
@@ -757,12 +727,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.colourForCommands" id="mUv-Gz-VK4">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursCommands" previousBinding="mUv-Gz-VK4" id="nf9-YF-OxR">
+                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursCommands" previousBinding="pf2-a7-jxy" id="FJS-pV-KLk">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -770,13 +735,13 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled3" keyPath="selection.coloursCommands" previousBinding="nf9-YF-OxR" id="vQ7-D0-iio">
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.colourForCommands" id="pf2-a7-jxy"/>
+                                <binding destination="-2" name="enabled3" keyPath="self.managedProperties.coloursCommands" previousBinding="FJS-pV-KLk" id="N5P-CK-1wC">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                         <integer key="NSNullPlaceholder" value="-1"/>
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -788,16 +753,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursStrings" id="NPh-LJ-n2y">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.coloursStrings" id="aCE-Y3-HL8">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursStrings" id="Kyu-YA-oCn"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="Mfq-Sx-rmh">
@@ -812,11 +773,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursCommands" id="rhZ-8n-5RI">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursCommands" id="VRB-7m-TcX"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="g7l-tc-0ix">
@@ -826,16 +783,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursInstructions" id="MWq-Y6-jip">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.coloursInstructions" id="pvP-4b-IFo">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursInstructions" id="CtU-Em-zHW"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="5LH-va-u1D">
@@ -846,7 +799,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelAttributes" id="rbf-hS-iOn"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursAttributes" id="k8p-KE-wvN">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <colorWell translatesAutoresizingMaskIntoConstraints="NO" id="R4h-6u-cVw">
@@ -862,21 +819,16 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.colourForAttributes" id="XGb-yj-Hct">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled3" keyPath="selection.coloursAttributes" previousBinding="zgF-TF-Whg" id="VNR-rz-d4l">
+                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursAttributes" previousBinding="q0E-pZ-6ra" id="ff2-kU-eq8">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
                                         <integer key="NSNotApplicablePlaceholder" value="-1"/>
                                         <integer key="NSNullPlaceholder" value="-1"/>
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled2" keyPath="selection.coloursAttributes" previousBinding="XGb-yj-Hct" id="zgF-TF-Whg">
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.colourForAttributes" id="q0E-pZ-6ra"/>
+                                <binding destination="-2" name="enabled3" keyPath="self.managedProperties.coloursAttributes" previousBinding="ff2-kU-eq8" id="loa-Ih-r6k">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -898,11 +850,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursAttributes" id="rSF-OF-vzR">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursAttributes" id="Iiw-Fe-lZ7"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hbu-0o-gw6">
@@ -913,7 +861,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelComments" id="alE-qG-7Kj"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursComments" id="47n-Da-ECl">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="XXd-0N-XX1">
@@ -928,11 +880,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursNumbers" id="ghv-0L-B8F">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursNumbers" id="XMg-sD-fch"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="K5Q-js-K0g">
@@ -942,16 +890,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursAutocomplete" id="YYY-Y0-YnJ">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.coloursAutocomplete" id="dZe-GZ-FS7">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursAutocomplete" id="T1M-xJ-JdR"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="gza-Ks-6v6">
@@ -961,16 +905,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursVariables" id="UOf-2O-leb">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.coloursVariables" id="rQC-3F-Yh5">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursVariables" id="VI7-zb-nOS"/>
                             </connections>
                         </button>
                     </subviews>
@@ -1057,11 +997,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursOnlyUntilEndOfLine" id="W8h-qr-80v">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursOnlyUntilEndOfLine" id="Vnj-Gk-bYc"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="tEB-mt-DKY">
@@ -1071,16 +1007,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="x5m-Ak-VJo" name="enabled" keyPath="selection.coloursMultiLineStrings" id="kEg-vN-qLa">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.coloursMultiLineStrings" id="x4e-Jp-X3v">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursMultiLineStrings" id="T3d-eY-zJ0"/>
                             </connections>
                         </button>
                     </subviews>

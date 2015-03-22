@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
@@ -8,11 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MGSPrefsEditorPropertiesViewController">
             <connections>
-                <outlet property="friendColourLabelDelay" destination="qVG-TA-QQW" id="GaV-a7-9YR"/>
-                <outlet property="friendColourLabelIndentWidth" destination="9Em-Lk-rB9" id="geV-ug-MZ2"/>
-                <outlet property="friendColourLabelMinimumGutterWidth" destination="gY4-90-HrU" id="0vC-sW-u7H"/>
-                <outlet property="friendColourLabelPageGuide" destination="kTZ-vB-uuT" id="d6e-tf-8nu"/>
-                <outlet property="friendColourLabelTabWidth" destination="f9G-4F-muL" id="UiZ-gF-4gE"/>
                 <outlet property="objectController" destination="nB4-Iz-pOA" id="lFh-Sd-HQy"/>
                 <outlet property="view" destination="c22-O7-iKe" id="hnh-4i-3hR"/>
             </connections>
@@ -46,11 +41,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.showsInvisibleCharacters" id="d68-2u-aul">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsInvisibleCharacters" id="Cfv-dB-ezf"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="J1G-DE-nBK">
@@ -65,11 +56,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.showsSyntaxErrors" id="u7W-vU-mCR">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsMatchingBraces" id="4Tf-Xf-9F7"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="5ao-7b-jBq">
@@ -79,16 +66,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.showsMatchingBraces" id="0Fj-cK-ujv">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsMatchingBraces" id="Iab-51-rac">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsMatchingBraces" id="eUE-0E-Yy3"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="CJI-81-uJZ">
@@ -101,16 +84,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.lineWrap" id="fkH-g3-dnV">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.lineWrap" id="qr2-IQ-GFw">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineWrap" id="fqD-3E-LLd"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="oCx-lB-Pp7">
@@ -123,16 +102,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.showsPageGuide" id="0I7-am-OrF">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsPageGuide" id="LpB-wE-Iog">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsPageGuide" id="Cdg-Pp-i1n"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="GJ0-vQ-rM3">
@@ -142,16 +117,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.highlightsCurrentLine" id="VHy-I7-1n7">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.highlightsCurrentLine" id="ucy-A2-Iis">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.highlightsCurrentLine" id="Nub-Q6-ldW"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kTZ-vB-uuT">
@@ -175,11 +146,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.pageGuideColumn" id="Leb-sU-DEu">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.pageGuideColumn" id="zE6-Eg-YJk"/>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="64O-Ve-mBa">
@@ -190,7 +157,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelPageGuide" id="yxT-gc-s5M"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.pageGuideColumn" id="k6a-W1-4CY">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="Ott-wa-8PV">
@@ -203,7 +174,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled2" keyPath="selection.lineWrap" previousBinding="JAZ-yF-SP2" id="R23-R5-S8e">
+                                <binding destination="nB4-Iz-pOA" name="enabled2" keyPath="selection.lineWrap" previousBinding="4JS-Q1-e31" id="7lr-3S-lRv">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -211,16 +182,12 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.lineWrapsAtPageGuide" id="JAZ-yF-SP2">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.lineWrapsAtPageGuide" id="Mdf-UA-F6y">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineWrapsAtPageGuide" id="4JS-Q1-e31"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="qF8-AN-CYR">
@@ -233,16 +200,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.syntaxColoured" id="IFk-QU-dIc">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.syntaxColoured" id="nRR-hs-I4T">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.syntaxColoured" id="ypD-2D-51P"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="7tI-Nb-Shf">
@@ -252,7 +215,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled2" keyPath="selection.showsSyntaxErrors" previousBinding="yiN-Ga-F6M" id="J4d-zX-ut4">
+                                <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsIndividualErrors" id="H4G-fT-QoG">
+                                    <dictionary key="options">
+                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="nB4-Iz-pOA" name="enabled2" keyPath="selection.showsSyntaxErrors" previousBinding="L1j-Nm-3zC" id="fLc-Yy-Z3G">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -260,16 +228,7 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.showsIndividualErrors" id="yiN-Ga-F6M">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsIndividualErrors" id="H4G-fT-QoG">
-                                    <dictionary key="options">
-                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsIndividualErrors" id="L1j-Nm-3zC"/>
                             </connections>
                         </button>
                     </subviews>
@@ -338,11 +297,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.showsGutter" id="dNP-96-7Er">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsGutter" id="egB-ln-fTG"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Nn8-Cg-QG4">
@@ -353,7 +308,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelMinimumGutterWidth" id="Lx3-O8-l72"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.minimumGutterWidth" id="ao3-CO-frT">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="h8x-Ji-ezN">
@@ -363,7 +322,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled2" keyPath="selection.showsGutter" previousBinding="Q55-Ad-AYP" id="djQ-8T-ADH">
+                                <binding destination="nB4-Iz-pOA" name="enabled2" keyPath="selection.showsGutter" previousBinding="yA5-p6-5dS" id="QPn-fs-JW8">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -371,16 +330,12 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.showsLineNumbers" id="Q55-Ad-AYP">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsLineNumbers" id="Uv3-wM-iBQ">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsLineNumbers" id="yA5-p6-5dS"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gY4-90-HrU">
@@ -404,12 +359,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.minimumGutterWidth" id="nwa-eR-iWf">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled2" keyPath="selection.showsGutter" previousBinding="nwa-eR-iWf" id="zS6-vc-7z1">
+                                <binding destination="nB4-Iz-pOA" name="enabled2" keyPath="selection.showsGutter" previousBinding="ZXV-cL-Pg4" id="wuL-wm-O5N">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
                                         <integer key="NSNoSelectionPlaceholder" value="-1"/>
@@ -417,6 +367,7 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.minimumGutterWidth" id="ZXV-cL-Pg4"/>
                             </connections>
                         </textField>
                     </subviews>
@@ -452,7 +403,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelDelay" id="fqU-tW-UoR"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.autoCompleteDelay" id="DaI-aj-DNM">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qVG-TA-QQW">
@@ -475,7 +430,15 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.autoCompleteEnabled" id="wXM-kp-Meo"/>
+                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.autoCompleteEnabled" id="0mm-hs-zmi"/>
+                                <binding destination="-2" name="enabled2" keyPath="self.managedProperties.autoCompleteDelay" previousBinding="0mm-hs-zmi" id="g1g-EY-UUB">
+                                    <dictionary key="options">
+                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                        <integer key="NSNullPlaceholder" value="-1"/>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="zp4-KL-GPt">
@@ -493,11 +456,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.autoCompleteEnabled" id="WTb-Rn-2Sc">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.autoCompleteEnabled" id="uxj-9h-1dr"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="zdv-D4-Xw4">
@@ -512,11 +471,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.insertClosingBraceAutomatically" id="rYe-pd-elm">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.insertClosingBraceAutomatically" id="NhO-SM-9aH"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="JKN-Q8-Olx">
@@ -529,16 +484,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.autoCompleteWithKeywords" id="C3m-EX-CHv">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.autoCompleteWithKeywords" id="UpE-uj-mdf">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.autoCompleteWithKeywords" id="caJ-yP-LOP"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="soq-1p-DIJ">
@@ -559,16 +510,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.insertClosingParenthesisAutomatically" id="INu-EB-ESp">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.insertClosingParenthesisAutomatically" id="ksg-sf-s7o">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.autoCompleteWithKeywords" id="ef9-JL-hV1"/>
                             </connections>
                         </button>
                     </subviews>
@@ -614,11 +561,7 @@
                             </buttonCell>
                             <connections>
                                 <action selector="setFontAction:" target="-2" id="4G3-ZF-ftW"/>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.textFont" id="7w7-T4-GLC">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.textFont" id="ru6-BL-rYT"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="5gZ-ci-ZgZ">
@@ -647,11 +590,7 @@
                                     </dictionary>
                                 </binding>
                                 <binding destination="nB4-Iz-pOA" name="font" keyPath="selection.textFont" id="lLp-1D-ck1"/>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.textFont" id="lxb-Mm-FDb">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.textFont" id="Gem-i3-8tV"/>
                             </connections>
                         </textField>
                     </subviews>
@@ -676,16 +615,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.indentNewLinesAutomatically" id="UTB-vc-xGB">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.indentNewLinesAutomatically" id="iC3-V6-Y8t">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.indentNewLinesAutomatically" id="RXu-WO-mEX"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="M9y-Ym-86h">
@@ -703,16 +638,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.indentWithSpaces" id="2W6-vJ-jW7">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.indentWithSpaces" id="tK8-tC-ENV">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.indentWithSpaces" id="FyS-ff-Cqu"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="8RM-vf-eWV">
@@ -727,11 +658,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.useTabStops" id="Iaj-bA-y11">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.useTabStops" id="pel-BM-GFL"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="1Ua-x8-chS">
@@ -742,7 +669,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelIndentWidth" id="jtc-uY-ENW"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.indentWidth" id="bkW-z9-eln">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f9G-4F-muL">
@@ -768,11 +699,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.tabWidth" id="vHX-Cb-tQq">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.tabWidth" id="IX2-MM-OkV"/>
                             </connections>
                         </textField>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="3jU-gT-dEz">
@@ -782,16 +709,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.indentBracesAutomatically" id="Hmb-oi-Red">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.indentBracesAutomatically" id="sdf-V6-8wP">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.indentBracesAutomatically" id="Y9T-hd-DUR"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hlh-nz-Zl4">
@@ -802,7 +725,12 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.colourLabelTabWidth" id="ZgW-ix-big"/>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.tabWidth" id="LVv-H6-i9R"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.tabWidth" id="f7q-77-lAE">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Em-Lk-rB9">
@@ -828,11 +756,7 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.indentWidth" id="VUv-JJ-wf8">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSPropertyAvailableTransformer</string>
-                                    </dictionary>
-                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.indentWidth" id="eCS-i1-DqM"/>
                             </connections>
                         </textField>
                     </subviews>
