@@ -5,10 +5,10 @@
 //  Created by Jim Derry on 2015/02/22.
 //
 
-#import "PrefsEditorViewController.h"
+#import "EditorSettingsViewController.h"
 
 
-@implementation PrefsEditorViewController
+@implementation EditorSettingsViewController
 
 #pragma mark - MASPreferencesViewController
 
@@ -17,10 +17,12 @@
     return @"MGSPrefsEditorProperties";
 }
 
+
 - (NSImage *)toolbarItemImage
 {
     return [NSImage imageNamed:NSImageNameAdvanced];
 }
+
 
 - (NSString *)toolbarItemLabel
 {
