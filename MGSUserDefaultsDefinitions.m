@@ -64,6 +64,7 @@ NSString * const MGSFragariaDefaultsTextInvisibleCharactersColour = @"textInvisi
 NSString * const MGSFragariaDefaultsTextColor =       @"textColor";
 NSString * const MGSFragariaDefaultsBackgroundColor = @"backgroundColor";
 NSString * const MGSFragariaDefaultsTextFont =        @"textFont";
+NSString * const MGSFragariaDefaultsLineHeightMultiple = @"lineHeightMultiple";
 
 // Configuring Additional Text View Behavior
 NSString * const MGSFragariaDefaultsHasVerticalScroller =      @"hasVerticalScroller";
@@ -146,7 +147,8 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 		 MGSFragariaDefaultsIndentWithSpaces : @NO,
 		 MGSFragariaDefaultsIndentBracesAutomatically : @YES,
 		 MGSFragariaDefaultsIndentNewLinesAutomatically : @YES,
-
+         MGSFragariaDefaultsLineHeightMultiple : @(0.0),
+         
 		 
 		 MGSFragariaDefaultsInsertClosingBraceAutomatically : @NO,
 		 MGSFragariaDefaultsInsertClosingParenthesisAutomatically : @NO,
