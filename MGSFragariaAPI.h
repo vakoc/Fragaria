@@ -245,6 +245,9 @@
 @property NSColor *backgroundColor;
 /** Specifies the text editor font.*/
 @property (nonatomic, assign) NSFont *textFont;
+/** The real line height as a multiple of the natural line height for the
+ *  current font. */
+@property (nonatomic) CGFloat lineHeightMultiple;
 
 
 #pragma mark - Configuring Additional Text View Behavior

@@ -49,7 +49,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 @dynamic showsInvisibleCharacters, showsMatchingBraces, showsPageGuide;
 @dynamic string, syntaxColouring, tabWidth, textColor, textFont;
 @dynamic textInvisibleCharactersColour, useTabStops, syntaxColoured;
-@dynamic autoCompleteDelegate;
+@dynamic autoCompleteDelegate, lineHeightMultiple;
 
 // SMLSyntaxColouring dynamic properties:
 @dynamic coloursMultiLineStrings, coloursOnlyUntilEndOfLine;

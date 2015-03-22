@@ -792,6 +792,21 @@
 }
 
 
+/*
+ * @property lineHeightMultiple
+ */
+- (void)setLineHeightMultiple:(CGFloat)lineHeightMultiple
+{
+    self.fragaria.lineHeightMultiple = lineHeightMultiple;
+    [self propagateValue:@(lineHeightMultiple) forBinding:NSStringFromSelector(@selector(lineHeightMultiple))];
+}
+
+- (CGFloat)lineHeightMultiple
+{
+    return self.fragaria.textView.lineHeightMultiple;
+}
+
+
 #pragma mark - Configuring Additional Text View Behavior
 
 
