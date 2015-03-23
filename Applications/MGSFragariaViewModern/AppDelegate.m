@@ -319,11 +319,12 @@
 
     /* For fun, let's say that the global controller should manage these
        properties, and take away the power to do so from the groups. */
-    NSMutableArray *globalProperties = [NSMutableArray arrayWithArray:@[ MGSFragariaDefaultsBackgroundColor,
-                                                                         MGSFragariaDefaultsTextFont,
-                                                                         MGSFragariaDefaultsShowsGutter,
-                                                                         MGSFragariaDefaultsMinimumGutterWidth,
-                                                                         MGSFragariaDefaultsColoursAttributes]];
+	NSArray *colourProperties = [[[MGSUserDefaultsDefinitions class] propertyGroupThemeColours] allObjects];
+	NSMutableArray *globalProperties = [NSMutableArray arrayWithArray:colourProperties];
+	[globalProperties addObjectsFromArray:@[
+											MGSFragariaDefaultsTextFont,
+											MGSFragariaDefaultsShowsGutter,
+											]];
 
     /* And the groups' properties will simply be the remaining properties. */
     [groupProperties removeObjectsInArray:globalProperties];
