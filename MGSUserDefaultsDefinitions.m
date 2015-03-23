@@ -245,4 +245,149 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 	}
 }
 
+
+#pragma mark - Class Methods - Convenience Sets of Properties
+
+
+/*
+ * + propertyGroupEditing
+ */
++ (NSSet *)propertyGroupEditing
+{
+	return [NSSet setWithArray:@[
+								 MGSFragariaDefaultsIsSyntaxColoured,
+								 MGSFragariaDefaultsHighlightsCurrentLine,
+								 MGSFragariaDefaultsPageGuideColumn,
+								 MGSFragariaDefaultsShowsSyntaxErrors,
+								 MGSFragariaDefaultsShowsIndividualErrors,
+								 MGSFragariaDefaultsShowsPageGuide,
+								 MGSFragariaDefaultsLineWrap,
+								 MGSFragariaDefaultsLineWrapsAtPageGuide,
+								 MGSFragariaDefaultsShowsInvisibleCharacters,
+								 MGSFragariaDefaultsLineHeightMultiple,
+								 MGSFragariaDefaultsShowsMatchingBraces,
+								 ]];
+}
+
+
+/*
+ * + propertyGroupGutter
+ */
++ (NSSet *)propertyGroupGutter
+{
+return [NSSet setWithArray:@[
+							 MGSFragariaDefaultsMinimumGutterWidth,
+							 MGSFragariaDefaultsShowsGutter,
+							 MGSFragariaDefaultsShowsLineNumbers,
+							 ]];
+}
+
+/*
+ * + propertyGroupAutocomplete
+ */
++ (NSSet *)propertyGroupAutocomplete
+{
+	return [NSSet setWithArray:@[
+								 MGSFragariaDefaultsAutoCompleteDelay,
+								 MGSFragariaDefaultsAutoCompleteEnabled,
+								 MGSFragariaDefaultsAutoCompleteWithKeywords,
+								 MGSFragariaDefaultsInsertClosingBraceAutomatically,
+								 MGSFragariaDefaultsInsertClosingParenthesisAutomatically,
+								 ]];
+}
+
+
+/*
+ * + propertyGroupIndenting
+ */
++ (NSSet *)propertyGroupIndenting
+{
+	return [NSSet setWithArray:@[
+								 MGSFragariaDefaultsTabWidth,
+								 MGSFragariaDefaultsIndentWidth,
+								 MGSFragariaDefaultsIndentWithSpaces,
+								 MGSFragariaDefaultsUseTabStops,
+								 MGSFragariaDefaultsIndentBracesAutomatically,
+								 MGSFragariaDefaultsIndentNewLinesAutomatically,
+								 ]];
+}
+
+
+/*
+ * + propertyGroupTextFont
+ */
++ (NSSet *)propertyGroupTextFont
+{
+	return [NSSet setWithArray:@[
+								 MGSFragariaDefaultsTextFont,
+								 ]];
+}
+
+
+/*
+ * + propertyGroupEditorColours
+ */
++ (NSSet *)propertyGroupEditorColours
+{
+	return [NSSet setWithArray:@[
+								 MGSFragariaDefaultsInsertionPointColor,
+								 MGSFragariaDefaultsCurrentLineHighlightColour,
+								 MGSFragariaDefaultsDefaultErrorHighlightingColor,
+								 MGSFragariaDefaultsTextColor,
+								 MGSFragariaDefaultsBackgroundColor,
+								 MGSFragariaDefaultsTextInvisibleCharactersColour,
+								 ]];
+}
+
+
+/*
+ * + propertyGroupSyntaxHighlightingColours
+ */
++ (NSSet *)propertyGroupSyntaxHighlightingColours
+{
+	return [NSSet setWithArray:@[
+								 MGSFragariaDefaultsColourForAutocomplete,
+								 MGSFragariaDefaultsColourForAttributes,
+								 MGSFragariaDefaultsColourForCommands,
+								 MGSFragariaDefaultsColourForComments,
+								 MGSFragariaDefaultsColourForInstructions,
+								 MGSFragariaDefaultsColourForKeywords,
+								 MGSFragariaDefaultsColourForNumbers,
+								 MGSFragariaDefaultsColourForStrings,
+								 MGSFragariaDefaultsColourForVariables,
+								 MGSFragariaDefaultsColoursAttributes,
+								 MGSFragariaDefaultsColoursAutocomplete,
+								 MGSFragariaDefaultsColoursCommands,
+								 MGSFragariaDefaultsColoursComments,
+								 MGSFragariaDefaultsColoursInstructions,
+								 MGSFragariaDefaultsColoursKeywords,
+								 MGSFragariaDefaultsColoursNumbers,
+								 MGSFragariaDefaultsColoursStrings,
+								 MGSFragariaDefaultsColoursVariables,
+								 ]];
+}
+
+
+/*
+ * + propertyGroupThemeColours
+ */
++ (NSSet *)propertyGroupThemeColours
+{
+	return [[[self class] propertyGroupEditorColours]
+			setByAddingObjectsFromSet:[[self class] propertyGroupSyntaxHighlightingColours]];
+}
+
+
+/*
+ * + propertyGroupColouringExtraOptions
+ */
++ (NSSet *)propertyGroupColouringExtraOptions
+{
+	return [NSSet setWithArray:@[
+								 MGSFragariaDefaultsColoursMultiLineStrings,
+								 MGSFragariaDefaultsColoursOnlyUntilEndOfLine,
+								 ]];
+}
+
+
 @end
