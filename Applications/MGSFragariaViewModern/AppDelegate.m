@@ -171,6 +171,7 @@
 	/* We'll tell the panels to hide property groups that have no enabled items.
 	   Items are only enabled if the propertiesController is managing them. */
 	editorSettingsController.hidesUselessPanels = YES;
+	colorSettingsController.hidesUselessPanels = YES;
 
     NSArray *controllers = @[editorSettingsController, colorSettingsController];
 

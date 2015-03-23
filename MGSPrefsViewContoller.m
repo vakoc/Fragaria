@@ -106,6 +106,10 @@
 /*
  * @property areAllColourPropertiesAvailable
  */
++ (NSSet *)keyPathsForValuesAffectingAreAllColourPropertiesAvailable
+{
+	return [NSSet setWithArray:@[ @"managedProperties" ]];
+}
 - (BOOL)areAllColourPropertiesAvailable
 {
 	NSSet *propertiesAvailable = self.propertiesController.managedProperties;
