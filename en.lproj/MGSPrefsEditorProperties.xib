@@ -98,7 +98,7 @@
                                 <constraint firstAttribute="width" constant="40" id="dDD-uD-cSW"/>
                             </constraints>
                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="40" drawsBackground="YES" id="z5a-gI-3dC">
-                                <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" minimumIntegerDigits="0" maximumIntegerDigits="42" id="f9e-e8-noM">
+                                <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" lenient="YES" minimumIntegerDigits="0" maximumIntegerDigits="42" id="f9e-e8-noM">
                                     <real key="minimum" value="25"/>
                                     <real key="maximum" value="99"/>
                                 </numberFormatter>
@@ -159,37 +159,6 @@
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.autoCompleteDelay" id="DaI-aj-DNM">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </textField>
-                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qVG-TA-QQW">
-                            <rect key="frame" x="357" y="47" width="40" height="19"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="40" id="nRX-DH-3c2"/>
-                            </constraints>
-                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" drawsBackground="YES" id="Wxb-23-JA1">
-                                <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" minimumIntegerDigits="0" maximumIntegerDigits="42" id="L1e-Zq-o37">
-                                    <decimal key="minimum" value="0.1"/>
-                                    <decimal key="maximum" value="99"/>
-                                </numberFormatter>
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.autoCompleteDelay" id="9AI-jZ-5CE">
-                                    <dictionary key="options">
-                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.autoCompleteEnabled" id="0mm-hs-zmi"/>
-                                <binding destination="-2" name="enabled2" keyPath="self.managedProperties.autoCompleteDelay" previousBinding="0mm-hs-zmi" id="g1g-EY-UUB">
-                                    <dictionary key="options">
-                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
-                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
-                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
-                                        <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -271,6 +240,37 @@
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.autoCompleteWithKeywords" id="ef9-JL-hV1"/>
                             </connections>
                         </button>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qVG-TA-QQW">
+                            <rect key="frame" x="357" y="47" width="40" height="19"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="nRX-DH-3c2"/>
+                            </constraints>
+                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" drawsBackground="YES" id="Wxb-23-JA1">
+                                <numberFormatter key="formatter" formatterBehavior="default10_4" usesGroupingSeparator="NO" lenient="YES" minimumIntegerDigits="0" maximumIntegerDigits="42" id="L1e-Zq-o37">
+                                    <decimal key="minimum" value="0.1"/>
+                                    <decimal key="maximum" value="99"/>
+                                </numberFormatter>
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.autoCompleteDelay" id="9AI-jZ-5CE">
+                                    <dictionary key="options">
+                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="nB4-Iz-pOA" name="enabled" keyPath="selection.autoCompleteEnabled" id="0mm-hs-zmi"/>
+                                <binding destination="-2" name="enabled2" keyPath="self.managedProperties.autoCompleteDelay" previousBinding="0mm-hs-zmi" id="g1g-EY-UUB">
+                                    <dictionary key="options">
+                                        <integer key="NSMultipleValuesPlaceholder" value="-1"/>
+                                        <integer key="NSNoSelectionPlaceholder" value="-1"/>
+                                        <integer key="NSNotApplicablePlaceholder" value="-1"/>
+                                        <integer key="NSNullPlaceholder" value="-1"/>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
                     </subviews>
                     <constraints>
                         <constraint firstItem="JKN-Q8-Olx" firstAttribute="top" secondItem="zp4-KL-GPt" secondAttribute="bottom" constant="6" symbolic="YES" id="1LL-9R-bV5"/>
@@ -429,32 +429,6 @@
                                 </binding>
                             </connections>
                         </textField>
-                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f9G-4F-muL">
-                            <rect key="frame" x="311" y="11" width="40" height="19"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="40" id="F3r-hI-KcO"/>
-                            </constraints>
-                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="4" drawsBackground="YES" id="ewT-Cw-F0s">
-                                <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" minimumIntegerDigits="0" maximumIntegerDigits="42" id="8Tv-jP-TUx">
-                                    <real key="minimum" value="1"/>
-                                    <real key="maximum" value="16"/>
-                                    <metadata>
-                                        <real key="inspectorSampleValue" value="1"/>
-                                    </metadata>
-                                </numberFormatter>
-                                <font key="font" metaFont="smallSystem"/>
-                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.tabWidth" id="Cs7-qe-vwQ">
-                                    <dictionary key="options">
-                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.tabWidth" id="IX2-MM-OkV"/>
-                            </connections>
-                        </textField>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="3jU-gT-dEz">
                             <rect key="frame" x="309" y="35" width="173" height="18"/>
                             <buttonCell key="cell" type="check" title="Treat { and } intelligently" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="oHd-eW-srq">
@@ -492,7 +466,7 @@
                                 <constraint firstAttribute="width" constant="40" id="o7Z-ky-lji"/>
                             </constraints>
                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="4" drawsBackground="YES" id="EAP-hi-gyj">
-                                <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" minimumIntegerDigits="0" maximumIntegerDigits="42" id="Izm-6T-Tz7">
+                                <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" lenient="YES" minimumIntegerDigits="0" maximumIntegerDigits="42" id="Izm-6T-Tz7">
                                     <real key="minimum" value="1"/>
                                     <real key="maximum" value="16"/>
                                     <metadata>
@@ -510,6 +484,32 @@
                                     </dictionary>
                                 </binding>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.indentWidth" id="eCS-i1-DqM"/>
+                            </connections>
+                        </textField>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f9G-4F-muL">
+                            <rect key="frame" x="311" y="11" width="40" height="19"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="F3r-hI-KcO"/>
+                            </constraints>
+                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="4" drawsBackground="YES" id="ewT-Cw-F0s">
+                                <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" lenient="YES" minimumIntegerDigits="0" maximumIntegerDigits="42" id="8Tv-jP-TUx">
+                                    <real key="minimum" value="1"/>
+                                    <real key="maximum" value="16"/>
+                                    <metadata>
+                                        <real key="inspectorSampleValue" value="1"/>
+                                    </metadata>
+                                </numberFormatter>
+                                <font key="font" metaFont="smallSystem"/>
+                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.tabWidth" id="Cs7-qe-vwQ">
+                                    <dictionary key="options">
+                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.tabWidth" id="IX2-MM-OkV"/>
                             </connections>
                         </textField>
                     </subviews>
@@ -570,12 +570,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsSyntaxErrors" id="JvK-1F-fMc"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsSyntaxErrors" id="QEf-Yr-rtv">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsSyntaxErrors" id="JvK-1F-fMc"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="5ao-7b-jBq">
@@ -636,7 +636,7 @@
                                 <constraint firstAttribute="height" constant="19" id="WvG-Fh-fze"/>
                             </constraints>
                             <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="80" drawsBackground="YES" id="UmR-vu-sp0">
-                                <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" minimumIntegerDigits="0" maximumIntegerDigits="42" id="vKj-9r-mHM">
+                                <numberFormatter key="formatter" formatterBehavior="default10_4" localizesFormat="NO" usesGroupingSeparator="NO" lenient="YES" minimumIntegerDigits="0" maximumIntegerDigits="42" id="vKj-9r-mHM">
                                     <real key="minimum" value="8"/>
                                     <decimal key="maximum" value="999"/>
                                 </numberFormatter>
@@ -735,20 +735,17 @@
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsIndividualErrors" id="L1j-Nm-3zC"/>
                             </connections>
                         </button>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Cyx-qP-Uc1">
-                            <rect key="frame" x="86" y="12" width="74" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Line Height" id="LwL-PK-1Es">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineHeightMultiple" id="SSK-Tf-CDe"/>
-                            </connections>
-                        </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i9B-Jn-s8k">
                             <rect key="frame" x="40" y="10" width="40" height="19"/>
-                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" drawsBackground="YES" id="s2X-rQ-DKy">
+                            <textFieldCell key="cell" controlSize="small" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" title="0%" drawsBackground="YES" id="s2X-rQ-DKy">
+                                <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="percent" usesGroupingSeparator="NO" lenient="YES" minimumIntegerDigits="0" maximumIntegerDigits="42" id="oIc-TV-qOb">
+                                    <integer key="multiplier" value="100"/>
+                                    <real key="minimum" value="0.0"/>
+                                    <real key="maximum" value="2"/>
+                                    <metadata>
+                                        <real key="inspectorSampleValue" value="0.45000000000000001"/>
+                                    </metadata>
+                                </numberFormatter>
                                 <font key="font" metaFont="smallSystem"/>
                                 <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -774,6 +771,22 @@
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.highlightsCurrentLine" id="Nub-Q6-ldW"/>
                             </connections>
                         </button>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Cyx-qP-Uc1">
+                            <rect key="frame" x="86" y="12" width="74" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Line Height" id="LwL-PK-1Es">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineHeightMultiple" id="SSK-Tf-CDe"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.lineHeightMultiple" id="0zd-cG-oDZ">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
                     </subviews>
                     <constraints>
                         <constraint firstItem="oCx-lB-Pp7" firstAttribute="top" secondItem="Ott-wa-8PV" secondAttribute="bottom" constant="6" symbolic="YES" id="0Tw-8D-471"/>
