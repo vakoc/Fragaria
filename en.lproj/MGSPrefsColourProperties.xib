@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
@@ -64,6 +64,7 @@
                             <connections>
                                 <binding destination="z8u-bs-3l4" name="content" keyPath="arrangedObjects" id="mAV-MF-WW5"/>
                                 <binding destination="z8u-bs-3l4" name="contentValues" keyPath="arrangedObjects.displayName" previousBinding="mAV-MF-WW5" id="cFh-YD-za7"/>
+                                <binding destination="-2" name="enabled" keyPath="self.areAllColourPropertiesAvailable" id="SpL-He-5WO"/>
                                 <binding destination="z8u-bs-3l4" name="selectedIndex" keyPath="selectionIndex" previousBinding="cFh-YD-za7" id="Pbr-gW-tdc"/>
                             </connections>
                         </popUpButton>

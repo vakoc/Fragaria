@@ -41,4 +41,11 @@
 @property (nonatomic, assign, readonly) id managedProperties;
 
 
+/**
+ *  Bindable property indicating whether or not the scheme menu should be
+ *  enabled. If the instance does not have available every property for a
+ *  scheme, then using the scheme selector can be quite messy.
+ **/
+@property (nonatomic, assign, readonly) BOOL areAllColourPropertiesAvailable;
+
 @end

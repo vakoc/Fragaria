@@ -96,4 +96,15 @@
 }
 
 
+/*
+ * @property areAllColourPropertiesAvailable
+ */
+- (BOOL)areAllColourPropertiesAvailable
+{
+	NSSet *propertiesAvailable = self.propertiesController.managedProperties;
+	NSSet *propertiesRequired = [[MGSUserDefaultsDefinitions class] propertyGroupThemeColours];
+	return [propertiesRequired isSubsetOfSet:propertiesAvailable];
+}
+
+
 @end
