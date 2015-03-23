@@ -8,6 +8,7 @@
 
 #import "MGSColourScheme.h"
 #import "MGSUserDefaultsDefinitions.h"
+#import "MGSColourToPlainTextTransformer.h"
 
 
 @interface MGSColourScheme ()
@@ -99,6 +100,7 @@
 - (void)setPropertyListRepresentation:(NSDictionary *)propertyListRepresentation
 {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+	NSValueTransformer *xformer = [NSValueTransformer valueTransformerForName:@"MGSColourToPlainTextTransformer"];
 
     for (NSString *key in [propertyListRepresentation allKeys])
     {
@@ -109,7 +111,7 @@
         }
         if ([[[self class] propertiesOfTypeColor] containsObject:key])
         {
-            NSColor *object = (NSColor *)[NSUnarchiver unarchiveObjectWithData:[propertyListRepresentation objectForKey:key]];
+			NSColor *object = [xformer reverseTransformedValue:[propertyListRepresentation objectForKey:key]];
             [dictionary setObject:object forKey:key];
         }
         if ([[[self class] propertiesOfTypeBool] containsObject:key])
@@ -125,6 +127,7 @@
 - (NSDictionary *)propertyListRepresentation
 {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+	NSValueTransformer *xformer = [NSValueTransformer valueTransformerForName:@"MGSColourToPlainTextTransformer"];
 
     for (NSString *key in [self.dictionaryRepresentation allKeys])
     {
@@ -134,7 +137,7 @@
         }
         if ([[[self class] propertiesOfTypeColor] containsObject:key])
         {
-			[dictionary setObject:[NSArchiver archivedDataWithRootObject:[self.dictionaryRepresentation objectForKey:key]] forKey:key];
+			[dictionary setObject:[xformer transformedValue:[self.dictionaryRepresentation objectForKey:key]] forKey:key];
         }
         if ([[[self class] propertiesOfTypeBool] containsObject:key])
         {
