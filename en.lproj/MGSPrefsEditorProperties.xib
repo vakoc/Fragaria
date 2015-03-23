@@ -570,12 +570,12 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsSyntaxErrors" id="JvK-1F-fMc"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsSyntaxErrors" id="QEf-Yr-rtv">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsMatchingBraces" id="4Tf-Xf-9F7"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="5ao-7b-jBq">
@@ -627,21 +627,6 @@
                                     </dictionary>
                                 </binding>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsPageGuide" id="Cdg-Pp-i1n"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="GJ0-vQ-rM3">
-                            <rect key="frame" x="302" y="118" width="180" height="18"/>
-                            <buttonCell key="cell" type="check" title="Highlight the current line" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="l0g-hS-2YY">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.highlightsCurrentLine" id="ucy-A2-Iis">
-                                    <dictionary key="options">
-                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                    </dictionary>
-                                </binding>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.highlightsCurrentLine" id="Nub-Q6-ldW"/>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kTZ-vB-uuT">
@@ -774,6 +759,21 @@
                                 <outlet property="formatter" destination="73M-TH-ya7" id="y6V-Jl-1fo"/>
                             </connections>
                         </textField>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="GJ0-vQ-rM3">
+                            <rect key="frame" x="302" y="118" width="180" height="18"/>
+                            <buttonCell key="cell" type="check" title="Highlight the current line" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="l0g-hS-2YY">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.highlightsCurrentLine" id="ucy-A2-Iis">
+                                    <dictionary key="options">
+                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.highlightsCurrentLine" id="Nub-Q6-ldW"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
                         <constraint firstItem="oCx-lB-Pp7" firstAttribute="top" secondItem="Ott-wa-8PV" secondAttribute="bottom" constant="6" symbolic="YES" id="0Tw-8D-471"/>
