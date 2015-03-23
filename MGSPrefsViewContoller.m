@@ -169,6 +169,8 @@
 		}
 		
 		NSSet *propertiesRequired = [[self hideableViews] objectForKey:key];
+
+		[self.view layoutSubtreeIfNeeded];
 		
 		if (![propertiesAvailable intersectsSet:propertiesRequired] && self.hidesUselessPanels)
 		{
@@ -178,6 +180,8 @@
 		{
 			[[self valueForKey:key] removeConstraint:hiddenConstraint];
 		}
+		 
+		[self.view layoutSubtreeIfNeeded];
 	}
 }
 
