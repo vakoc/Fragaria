@@ -16,6 +16,7 @@
 #import "EditorSettingsViewController.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSUserDefaultsDefinitions.h"
+#import "MGSSyntaxController.h"
 
 
 #pragma mark - PRIVATE INTERFACE
@@ -29,11 +30,9 @@
 
 @property (weak) IBOutlet MGSFragariaView *viewBottom;
 
-
 @property (nonatomic, strong) NSWindowController *preferencesWindowController;
 @property (nonatomic, strong) NSWindowController *viewTopSettingsWindowController;
 @property (nonatomic, strong) NSWindowController *viewBottomSettingsWindowController;
-
 
 @property (strong) NSArray *breakpoints;
 
@@ -79,15 +78,24 @@
 
     /* Make the upper view interesting. */
     self.viewTop.textView.string = fileContent;
-    self.viewTop.syntaxDefinitionName = @"html";
+    self.viewTop.syntaxDefinitionName = @"HTML";
 
     /* Make the lower view interesting. */
-    self.viewBottom.syntaxDefinitionName = @"html";
+    self.viewBottom.syntaxDefinitionName = @"HTML";
     self.viewBottom.textView.string = fileContent;
 }
 
 
 #pragma mark - Property Accessors
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	@availableSyntaxDefinitions
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSArray *)availableSyntaxDefinitions
+{
+	return [[MGSSyntaxController sharedInstance] syntaxDefinitionNames];
+}
+
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	@preferencesWindowController
