@@ -8,6 +8,18 @@
 
 #import "MGSColourToPlainTextTransformer.h"
 
+/*
+ *	There is precision loss for colors, of course, but we can control it
+ *  a little bit. Using 8 bits is probably fine and gives nice 2 character
+ *  hex codes that users are familiar with, but 16 and 32 could be used, too.
+ *
+ *  The system named colors require 32 bits for two-way transformations to be
+ *  reliable, though, so see also NSColor+RGBCompare for a safe alternative
+ *  for comparing colors via RGB value.
+ */
+#define COLOR_PRECISION (pow(2, 8)-1)
+
+
 @implementation MGSColourToPlainTextTransformer
 
 
@@ -86,7 +98,7 @@
  */
 - (NSString *)hexValueForComponentValue:(CGFloat)color
 {
-	NSString *result = [NSString stringWithFormat:@"%lx", (NSUInteger)(color * 255.0)];
+	NSString *result = [NSString stringWithFormat:@"%lx", (NSUInteger)(color * COLOR_PRECISION )];
 	
 	return result;
 }
@@ -102,7 +114,7 @@
 	CGFloat floatVal;
 	NSScanner *scanner = [NSScanner scannerWithString:hex];
 	[scanner scanHexInt:&intVal];
-	floatVal =  (CGFloat)((CGFloat)intVal / 255);
+	floatVal =  (CGFloat)((CGFloat)intVal / COLOR_PRECISION );
 	floatVal = floatVal > 1.0 ? 1.0 : floatVal;
 	floatVal = floatVal < 0.0 ? 0.0 : floatVal;
 	return floatVal;
