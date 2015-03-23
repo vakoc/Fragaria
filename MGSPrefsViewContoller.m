@@ -55,11 +55,15 @@
 
 @property (nonatomic, strong) MGSManagedPropertiesProxy *propertiesProxy;
 
+@property (nonatomic, strong) NSMutableDictionary *constraintsDict;
+
 @end
 
 
 @implementation MGSPrefsViewContoller
 
+
+#pragma mark - Initialization
 
 /*
  * - init
@@ -75,6 +79,8 @@
 }
 
 
+#pragma mark - Property Accessors
+
 /*
  *  @property propertiesController
  */
@@ -84,6 +90,7 @@
     _propertiesController = propertiesController;
     self.propertiesProxy.propertiesController = propertiesController;
     [self didChangeValueForKey:@"managedProperties"];
+	[self showOrHideViews];
 }
 
 
@@ -104,6 +111,85 @@
 	NSSet *propertiesAvailable = self.propertiesController.managedProperties;
 	NSSet *propertiesRequired = [[MGSUserDefaultsDefinitions class] propertyGroupThemeColours];
 	return [propertiesRequired isSubsetOfSet:propertiesAvailable];
+}
+
+
+/*
+ * @property hidesUselessPanels
+ */
+- (void)setHidesUselessPanels:(BOOL)hidesUselessPanels
+{
+	_hidesUselessPanels = hidesUselessPanels;
+	[self showOrHideViews];
+}
+
+
+#pragma mark - Instance Methods
+
+/*
+ * - hideableViews
+ *   Subclasses wishing to support automatic view hiding should override this.
+ */
+- (NSDictionary *)hideableViews;
+{
+	return @{};
+}
+
+
+#pragma mark - Supporting Methods
+
+
+/*
+ * - showOrHideViews
+ */
+- (void)showOrHideViews
+{
+	NSSet *propertiesAvailable = self.propertiesController.managedProperties;
+	
+	if (!self.constraintsDict)
+	{
+		self.constraintsDict = [[NSMutableDictionary alloc] init];
+	}
+	
+	for (NSString *key in [[self hideableViews] allKeys])
+	{
+		NSLayoutConstraint *hiddenConstraint;
+		if ([[self.constraintsDict allKeys] containsObject:key])
+		{
+			hiddenConstraint = [self.constraintsDict objectForKey:key];
+		}
+		else
+		{
+			hiddenConstraint = [self makeHideConstraintForView:[self valueForKey:key]];
+			[self.constraintsDict setObject:hiddenConstraint forKey:key];
+		}
+		
+		NSSet *propertiesRequired = [[self hideableViews] objectForKey:key];
+		
+		if (![propertiesAvailable intersectsSet:propertiesRequired] && self.hidesUselessPanels)
+		{
+			[[self valueForKey:key] addConstraint:hiddenConstraint];
+		}
+		else
+		{
+			[[self valueForKey:key] removeConstraint:hiddenConstraint];
+		}
+	}
+}
+
+
+/*
+ * - makeHideConstraintForView
+ */
+- (NSLayoutConstraint *)makeHideConstraintForView:(NSView *)view
+{
+	return [NSLayoutConstraint constraintWithItem:view
+										attribute:NSLayoutAttributeHeight
+										relatedBy:NSLayoutRelationEqual
+										   toItem:nil
+										attribute:NSLayoutAttributeNotAnAttribute
+									   multiplier:1.0
+										 constant:0.0];
 }
 
 

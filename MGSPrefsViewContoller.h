@@ -48,4 +48,21 @@
  **/
 @property (nonatomic, assign, readonly) BOOL areAllColourPropertiesAvailable;
 
+
+/**
+ *  Indicates whether or not panels that have no eligible properties should
+ *  be hidden.
+ **/
+@property (nonatomic, assign) BOOL hidesUselessPanels;
+
+
+/**
+ *  A dictionary of view property names with an array of Fragaria property
+ *  names, used internally for automatic view hiding. Subclasses of this
+ *  class must override this method in order to provide a structure applicable
+ *  for your use case if you wish to support automatic view hiding.
+ **/
+- (NSDictionary *)hideableViews;
+
+
 @end
