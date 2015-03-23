@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
 #import "MGSColourScheme.h"
+#import "NSColor+RGBCompare.h"
 
 
 /**
@@ -60,7 +61,8 @@
 
 	[scheme propertiesLoadFromFile:outputPath];
 	
-	XCTAssert([scheme.displayName isEqualToString:expects1] && [scheme.colourForComments isEqualTo:expects2]);
+	XCTAssert([scheme.displayName isEqualToString:expects1]);
+	XCTAssert([scheme.colourForComments isEqualToRGBOfColour:expects2]);
 }
 
 
