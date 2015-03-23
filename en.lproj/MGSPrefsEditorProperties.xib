@@ -758,8 +758,8 @@
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineHeightMultiple" id="EZC-VC-p7A"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.lineHeightMultiple" id="OnM-9N-HEk"/>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineHeightMultiple" id="EZC-VC-p7A"/>
                                 <outlet property="formatter" destination="73M-TH-ya7" id="y6V-Jl-1fo"/>
                             </connections>
                         </textField>
@@ -771,7 +771,11 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineHeightMultiple" id="SSK-Tf-CDe"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.lineHeightMultiple" id="CNt-A2-NfI">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                     </subviews>
