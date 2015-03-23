@@ -147,6 +147,22 @@
 	XCTAssert([scheme isEqualToScheme:scheme2]);
 }
 
+/*
+ * - test_make_classic_fragaria_theme
+ *   This test always passes, but makes a virgin Classic Fragaria.plist.
+ */
+- (void)test_make_classic_fragaria_theme
+{
+	NSString *outputPath = @"~/Desktop/Classic Fragaria.plist";
+	
+	MGSColourScheme *scheme = [[MGSColourScheme alloc] init];
+	scheme.displayName = @"Classic Fragaria";
+
+	[scheme propertiesSaveToFile:outputPath];
+	
+	XCTAssert(YES);
+}
+
 
 
 
