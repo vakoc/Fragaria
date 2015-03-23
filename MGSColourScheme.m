@@ -10,6 +10,30 @@
 #import "MGSUserDefaultsDefinitions.h"
 
 
+static NSString *MGSStringFromColor(NSColor *col) {
+    NSColor *nc;
+    
+    nc = [col colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    if (!nc) {
+        NSLog(@"MGSStringFromColor: can't convert %@, returning red", col);
+        return @"1.0 0.0 0.0";
+    }
+    return [NSString stringWithFormat:@"%f %f %f", nc.redComponent, nc.greenComponent, nc.blueComponent];
+}
+
+static NSColor *MGSColorFromString(NSString *str) {
+    NSScanner *scan;
+    CGFloat r, g, b;
+    
+    scan = [NSScanner scannerWithString:str];
+    if (!([scan scanDouble:&r] && [scan scanDouble:&g] && [scan scanDouble:&b])) {
+        NSLog(@"MGSColorFromString: can't parse %@, returning red", str);
+        return [NSColor redColor];
+    }
+    return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:1.0];
+}
+
+
 @interface MGSColourScheme ()
 
 @property (nonatomic, assign, readwrite) NSDictionary *dictionaryRepresentation;
@@ -109,7 +133,7 @@
         }
         if ([[[self class] propertiesOfTypeColor] containsObject:key])
         {
-            NSColor *object = (NSColor *)[NSUnarchiver unarchiveObjectWithData:[propertyListRepresentation objectForKey:key]];
+            NSColor *object = (NSColor *)MGSColorFromString([propertyListRepresentation objectForKey:key]);
             [dictionary setObject:object forKey:key];
         }
         if ([[[self class] propertiesOfTypeBool] containsObject:key])
@@ -134,7 +158,7 @@
         }
         if ([[[self class] propertiesOfTypeColor] containsObject:key])
         {
-			[dictionary setObject:[NSArchiver archivedDataWithRootObject:[self.dictionaryRepresentation objectForKey:key]] forKey:key];
+			[dictionary setObject:MGSStringFromColor([self.dictionaryRepresentation objectForKey:key]) forKey:key];
         }
         if ([[[self class] propertiesOfTypeBool] containsObject:key])
         {

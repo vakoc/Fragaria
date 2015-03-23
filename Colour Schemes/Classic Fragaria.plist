@@ -3,25 +3,25 @@
 <plist version="1.0">
 <dict>
 	<key>backgroundColor</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZgEBhg==</data>
+	<string>1.000000 1.000000 1.000000</string>
 	<key>colourForAttributes</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgwAAAD+DAAAAP4PNzEw+AYY=</data>
+	<string>0.500000 0.500000 0.200000</string>
 	<key>colourForAutocomplete</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgz0KVz+DhevRPoOmm8Q7AYY=</data>
+	<string>0.840000 0.410000 0.006000</string>
 	<key>colourForCommands</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg7bz/TwAg0jhWj8Bhg==</data>
+	<string>0.031000 0.000000 0.855000</string>
 	<key>colourForComments</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmAINmZuY+AAGG</data>
+	<string>0.000000 0.450000 0.000000</string>
 	<key>colourForInstructions</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgwisPD8Ag8uhJT8Bhg==</data>
+	<string>0.737000 0.000000 0.647000</string>
 	<key>colourForKeywords</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgwisPD8Ag8uhJT8Bhg==</data>
+	<string>0.737000 0.000000 0.647000</string>
 	<key>colourForNumbers</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg7bz/TwAg0jhWj8Bhg==</data>
+	<string>0.031000 0.000000 0.855000</string>
 	<key>colourForStrings</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg/LSTT+Dc2iRPYMIrBw+AYY=</data>
+	<string>0.804000 0.071000 0.153000</string>
 	<key>colourForVariables</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg0jhOj8Ag6RwPT8Bhg==</data>
+	<string>0.730000 0.000000 0.740000</string>
 	<key>coloursAttributes</key>
 	<integer>1</integer>
 	<key>coloursAutocomplete</key>
@@ -41,16 +41,16 @@
 	<key>coloursVariables</key>
 	<integer>1</integer>
 	<key>currentLineHighlightColour</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg4/CdT+Dj8J1P4OPwjU/AYY=</data>
+	<string>0.960000 0.960000 0.710000</string>
 	<key>defaultSyntaxErrorHighlightingColour</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmAQGDMzMzPwGG</data>
+	<string>1.000000 1.000000 0.700000</string>
 	<key>displayName</key>
 	<string>Classic Fragaria</string>
 	<key>insertionPointColor</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMGhANAQECEhIQITlNTdHJpbmcBlIQBKwZTeXN0ZW2GhJaYCXRleHRDb2xvcoaEk5UDhAJmZgABhoY=</data>
+	<string>0.000000 0.000000 0.000000</string>
 	<key>textColor</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMGhANAQECEhIQITlNTdHJpbmcBlIQBKwZTeXN0ZW2GhJaYCXRleHRDb2xvcoaEk5UDhAJmZgABhoY=</data>
+	<string>0.000000 0.000000 0.000000</string>
 	<key>textInvisibleCharactersColour</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMGhANAQECEhIQITlNTdHJpbmcBlIQBKwZTeXN0ZW2GhJaYEGNvbnRyb2xUZXh0Q29sb3KGhJOVA4QCZmYAAYaG</data>
+	<string>0.000000 0.000000 0.000000</string>
 </dict>
 </plist>
