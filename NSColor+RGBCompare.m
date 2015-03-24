@@ -10,7 +10,7 @@
 #import "MGSColourToPlainTextTransformer.h"
 
 
-@implementation NSColor (RGBCompare)
+@implementation NSColor (MGSRGBCompare)
 
 
 /*
