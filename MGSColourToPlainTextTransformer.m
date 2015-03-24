@@ -54,10 +54,10 @@
  */
 - (id)transformedValue:(id)value
 {
+	if (!value) return nil;
+	
 	NSColor *color = [value colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
 	
-	NSAssert(color && [color isKindOfClass:[NSColor class]], @"Nil or non-color can't be used!");
-
 	NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
 	CGFloat red;
 	CGFloat green;
@@ -79,10 +79,10 @@
  */
 -(id)reverseTransformedValue:(id)value
 {
+	if (!value) return nil;
+
 	NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:value];
 
-	NSAssert(dictionary && [dictionary isKindOfClass:[NSDictionary class]], @"Nil or non-color can't be used!");
-	
 	CGFloat red = [self componentValueforHex:[dictionary objectForKey:@"red"]];
 	CGFloat green = [self componentValueforHex:[dictionary objectForKey:@"green"]];
 	CGFloat blue = [self componentValueforHex:[dictionary objectForKey:@"blue"]];
