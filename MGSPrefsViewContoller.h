@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "MGSUserDefaultsControllerProtocol.h"
 
-@class MGSUserDefaultsController;
 
 
 /** MGSPrefsViewContoller provides a base class for other MGSPrefsViewController
@@ -24,7 +24,7 @@
 @property (nonatomic, weak) IBOutlet NSObjectController *objectController;
 
 /** A reference to the properties controller that is the model for this view. */
-@property (nonatomic, weak) MGSUserDefaultsController *userDefaultsController;
+@property (nonatomic, weak) id <MGSUserDefaultsController> userDefaultsController;
 
 
 /** Returns whether or not a property is a managed property. This is a KVC

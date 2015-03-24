@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "MGSUserDefaultsDefinitions.h"
+#import "MGSUserDefaultsControllerProtocol.h"
 
 @class MGSFragaria;
 
@@ -29,7 +30,7 @@
  *  or read managed keys, but there's not much point.
  **/
 
-@interface MGSUserDefaultsController : NSObject
+@interface MGSUserDefaultsController : NSObject <MGSUserDefaultsController>
 
 
 #pragma mark - Class Methods - Singleton Controllers
@@ -57,6 +58,14 @@
 #pragma mark - Properties
 
 /**
+ *  Indicates whether or not properties are stored in user defaults.
+ **/
+@property (nonatomic, assign, getter=isPersistent) BOOL persistent;
+
+
+#pragma mark - <MGSUserDefaults> Conformance - Properties
+
+/**
  *  The groupID uniquely identifies the preferences that
  *  are managed by instances of this controller.
  **/
@@ -80,12 +89,6 @@
  *  that is to be managed by this instance of this class.
  **/
 @property (nonatomic, strong) NSSet *managedProperties;
-
-
-/**
- *  Indicates whether or not properties are stored in user defaults.
- **/
-@property (nonatomic, assign, getter=isPersistent) BOOL persistent;
 
 
 /**

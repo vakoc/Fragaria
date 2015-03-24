@@ -7,7 +7,8 @@
 //
 
 #import "MGSPrefsViewContoller.h"
-#import "MGSUserDefaultsController.h"
+#import "MGSUserDefaultsDefinitions.h"
+#import "MGSUserDefaultsControllerProtocol.h"
 
 
 #pragma mark - MGSManagedPropertiesProxy Class
@@ -20,7 +21,7 @@
  */
 @interface MGSManagedPropertiesProxy : NSObject
 
-@property (nonatomic, weak) MGSUserDefaultsController *userDefaultsController;
+@property (nonatomic, weak) id <MGSUserDefaultsController> userDefaultsController;
 @property (nonatomic, weak) MGSPrefsViewContoller *viewController;
 
 @end
@@ -91,7 +92,7 @@
 /*
  *  @property setUserDefaultsController
  */
-- (void)setUserDefaultsController:(MGSUserDefaultsController *)userDefaultsController
+- (void)setUserDefaultsController:(id <MGSUserDefaultsController>)userDefaultsController
 {
     [self willChangeValueForKey:@"managedProperties"];
     _userDefaultsController = userDefaultsController;

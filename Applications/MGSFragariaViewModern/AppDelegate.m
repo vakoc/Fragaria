@@ -15,6 +15,7 @@
 #import "ColorSettingsViewController.h"
 #import "EditorSettingsViewController.h"
 #import "MGSUserDefaultsController.h"
+#import "MGSHybridUserDefaultsController.h"
 #import "MGSUserDefaultsDefinitions.h"
 #import "MGSSyntaxController.h"
 
@@ -31,6 +32,7 @@
 @property (weak) IBOutlet MGSFragariaView *viewBottom;
 
 @property (nonatomic, strong) NSWindowController *preferencesWindowController;
+@property (nonatomic, strong) NSWindowController *preferencesHybridTopWindowController;
 @property (nonatomic, strong) NSWindowController *viewTopSettingsWindowController;
 @property (nonatomic, strong) NSWindowController *viewBottomSettingsWindowController;
 
@@ -111,6 +113,36 @@
     }
 
     return _preferencesWindowController;
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	@preferencesHybridTopWindowController
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSWindowController *)preferencesHybridTopWindowController
+{
+    /* We're configuring the windowController with hybridUserDefaultsController,
+       so we can't use our convenience method createWindowControllerForGroup. */
+
+    if (!_preferencesHybridTopWindowController)
+    {
+        EditorSettingsViewController *editorSettingsController = [[EditorSettingsViewController alloc] init];
+        ColorSettingsViewController *colorSettingsController = [[ColorSettingsViewController alloc] init];
+
+        editorSettingsController.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:@"topWindowGroup"];
+        colorSettingsController.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:@"topWindowGroup"];
+
+        editorSettingsController.hidesUselessPanels = YES;
+        colorSettingsController.hidesUselessPanels = YES;
+
+        NSArray *controllers = @[editorSettingsController, colorSettingsController];
+
+        NSString *title = NSLocalizedString(@"Hybrid Global/TopView Settings", @"Title for the hybrid preferences.");
+        
+        _preferencesHybridTopWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
+    }
+
+    return _preferencesHybridTopWindowController;
 }
 
 
@@ -256,6 +288,15 @@
 - (IBAction)openPreferences:(id)sender
 {
     [self.preferencesWindowController showWindow:nil];
+}
+
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	openHybridTopPreferences:
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (IBAction)openHybridTopPreferences:(id)sender
+{
+    [self.preferencesHybridTopWindowController showWindow:nil];
 }
 
 
