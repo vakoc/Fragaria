@@ -9,6 +9,7 @@
 #import "MGSColourScheme.h"
 #import "MGSUserDefaultsDefinitions.h"
 #import "MGSColourToPlainTextTransformer.h"
+#import "NSColor+RGBCompare.h"
 
 
 @interface MGSColourScheme ()
@@ -159,11 +160,26 @@
 {
     for (NSString *key in [[self class] colourProperties])
     {
-		if (![[self valueForKey:key] isEqual:[scheme valueForKey:key]])
-		{
-//			NSLog(@"KEY=%@ and SELF=%@ and EXTERNAL=%@", key, [self valueForKey:key], [scheme valueForKey:key] );
-			return NO;
-		}
+        if ([[self valueForKey:key] isKindOfClass:[NSColor class]])
+        {
+            NSColor *color1 = [self valueForKey:key];
+            NSColor *color2 = [scheme valueForKey:key];
+            BOOL result = [color1 isEqualToRGBOfColour:color2];
+            if (!result)
+            {
+//                NSLog(@"KEY=%@ and SELF=%@ and EXTERNAL=%@", key, color1, color2);
+                return result;
+            }
+        }
+        else
+        {
+            BOOL result = [[self valueForKey:key] isEqual:[scheme valueForKey:key]];
+            if (!result)
+            {
+//                NSLog(@"KEY=%@ and SELF=%@ and EXTERNAL=%@", key, [self valueForKey:key], [scheme valueForKey:key] );
+                return result;
+            }
+        }
     }
 
     return YES;
