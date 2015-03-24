@@ -46,7 +46,11 @@ NSString * const KMGSColourSchemeExt = @"plist";
  */
 - (void)awakeFromNib
 {
-    [self setup];
+    /* Currently the objectController that gets its data from MGSUserDefaults
+       isn't connected to any data, so we don't want to do too much while we
+       wait for it to connect by monitoring it via KVO. */
+
+    [self setupEarly];
 }
 
 
@@ -60,10 +64,14 @@ NSString * const KMGSColourSchemeExt = @"plist";
 
 
 /*
- * - setup
+ * - setupEarly
  */
-- (void)setup
+- (void)setupEarly
 {
+    /* Listen for the objectController to connect. */
+    [self addObserver:self forKeyPath:@"objectController.content" options:NSKeyValueObservingOptionNew context:@"objectController"];
+
+    /* Load our schemes and get them ready for use. */
 	[self loadColourSchemes];
 	
     [self setSortDescriptors:@[ [[NSSortDescriptor alloc] initWithKey:@"displayName"
@@ -71,17 +79,23 @@ NSString * const KMGSColourSchemeExt = @"plist";
                                                              selector:@selector(localizedCaseInsensitiveCompare:)]
                                 ]];
 
-    // Connect to our values.
     [self setContent:self.colourSchemes];
-	
-    // Setup observation of the properties of the connected outlets.
+}
+
+
+/*
+ * - setupLate
+ */
+- (void)setupLate
+{
+    /* Setup observation of the properties of the connected outlets. */
     [self setupObservers];
 
-    // Set our current scheme based on the view settings.
-	self.currentScheme = [self makeColourSchemeFromViewForScheme:nil];
-    
-	// If the current scheme matches an existing theme, then set it.
-//    [self findAndSetCurrentScheme];
+    /* Set our current scheme based on the view settings. */
+    self.currentScheme = [self makeColourSchemeFromViewForScheme:nil];
+
+    /* If the current scheme matches an existing theme, then set it. */
+    [self findAndSetCurrentScheme];
 }
 
 
@@ -92,7 +106,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
  */
 + (NSSet *)keyPathsForValuesAffectingButtonSaveDeleteEnabled
 {
-    return [NSSet setWithArray:@[ @"self.selectionIndex", @"self.currentScheme", @"self.schemeMenu.selectedObject", @"currentSchemeIsCustom", @"self.currentScheme.loadedFromBundle" ]];
+    return [NSSet setWithArray:@[ @"self.selectionIndex", @"self.currentScheme", @"self.schemeMenu.selectedObject", @"self.currentScheme.loadedFromBundle" ]];
 }
 - (BOOL)buttonSaveDeleteEnabled
 {
@@ -109,7 +123,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
  */
 + (NSSet *)keyPathsForValuesAffectingButtonSaveDeleteTitle
 {
-    return [NSSet setWithArray:@[ @"self.selectionIndex", @"self.currentScheme", @"self.schemeMenu.selectedObject", @"currentSchemeIsCustom", @"self.currentScheme.loadedFromBundle" ]];
+    return [NSSet setWithArray:@[ @"self.selectionIndex", @"self.currentScheme", @"self.schemeMenu.selectedObject", @"self.currentScheme.loadedFromBundle" ]];
 }
 - (NSString *)buttonSaveDeleteTitle
 {
@@ -156,9 +170,14 @@ NSString * const KMGSColourSchemeExt = @"plist";
             if (confirmed)
             {
                 path = [path stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.%@",self.saveController.fileName, KMGSColourSchemeExt]];
-                [self.currentScheme propertiesSaveToFile:path];
                 self.currentScheme.displayName = self.saveController.schemeName;
+                [self.currentScheme propertiesSaveToFile:path];
+                [self willChangeValueForKey:@"buttonSaveDeleteEnabled"];
+                [self willChangeValueForKey:@"buttonSaveDeleteTitle"];
                 self.currentSchemeIsCustom = NO;
+                [self didChangeValueForKey:@"buttonSaveDeleteEnabled"];
+                [self didChangeValueForKey:@"buttonSaveDeleteTitle"];
+
             }
         }];
     }
@@ -189,7 +208,6 @@ NSString * const KMGSColourSchemeExt = @"plist";
  */
 - (void)setupObservers
 {
-    // Observe the correct keypaths in the defaultsObjectController
     for (NSString *key in [[MGSColourScheme class] propertiesOfScheme])
     {
         if ([[self.objectController.content allKeys] containsObject:key])
@@ -200,7 +218,6 @@ NSString * const KMGSColourSchemeExt = @"plist";
     }
 
     [self addObserver:self forKeyPath:@"selectionIndex" options:NSKeyValueObservingOptionNew context:@"schemeMenu"];
-    [self addObserver:self forKeyPath:@"objectController.content" options:NSKeyValueObservingOptionNew context:@"defaultsObjectController"];
 }
 
 
@@ -209,7 +226,6 @@ NSString * const KMGSColourSchemeExt = @"plist";
  */
 - (void)teardownObservers
 {
-    // Observe the correct keypaths in the defaultsObjectController
     for (NSString *key in [[MGSColourScheme class] propertiesOfScheme])
     {
         if ([[self.objectController.content allKeys] containsObject:key])
@@ -220,7 +236,6 @@ NSString * const KMGSColourSchemeExt = @"plist";
     }
 
     [self removeObserver:self forKeyPath:@"selectionIndex" context:@"schemeMenu"];
-    [self removeObserver:self forKeyPath:@"defaultsObjectController.content" context:@"defaultsObjectController"];
 }
 
 
@@ -231,10 +246,10 @@ NSString * const KMGSColourSchemeExt = @"plist";
 {
     NSString *localContext = (__bridge NSString *)(context);
 
-    if ([localContext isEqualToString:@"defaultsObjectController"])
+    if ([localContext isEqualToString:@"objectController"])
     {
-        NSLog(@"This should be a one-time shot, otherwise we're in trouble for re-registering too many observers.");
-        [self setup];
+        [self removeObserver:self forKeyPath:@"objectController.content" context:@"objectController"];
+        [self setupLate];
     }
     else if ( !self.ignoreObservations && [[[MGSColourScheme class] propertiesOfScheme] containsObject:localContext] )
     {
@@ -293,47 +308,6 @@ NSString * const KMGSColourSchemeExt = @"plist";
 	}
 
 	return nil;
-}
-
-
-/*
- * - applicationSupportDirectory
- *   Get access to the user's Application Support directory, creating if needed.
- */
-- (NSString *)applicationSupportDirectory
-{
-	NSArray *URLS = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory
-														   inDomains:NSUserDomainMask];
-	if (URLS)
-	{
-		NSFileManager *fileManager = [NSFileManager defaultManager];
-		NSURL *appSup = [URLS firstObject];
-		NSURL *finalURL;
-		NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-		
-		if (infoDictionary.count != 0)
-		{
-			finalURL = [appSup URLByAppendingPathComponent:[infoDictionary objectForKey:@"CFBundleExecutable"] isDirectory:YES];
-		}
-		else
-		{
-			// Unit testing results in empty infoDictionary, so use a custom location.
-			finalURL = [appSup URLByAppendingPathComponent:@"MGSFragaria Framework Unit Tests" isDirectory:YES];
-		}
-		
-		if (![fileManager changeCurrentDirectoryPath:[finalURL path]])
-		{
-			[fileManager createDirectoryAtURL:finalURL
-                  withIntermediateDirectories:YES
-								   attributes:nil
-                                        error:nil];
-		}
-		return [finalURL path];
-	}
-	else
-	{
-		return nil;
-	}
 }
 
 
@@ -426,6 +400,47 @@ NSString * const KMGSColourSchemeExt = @"plist";
 
 
 #pragma mark - I/O and File Loading
+
+/*
+ * - applicationSupportDirectory
+ *   Get access to the user's Application Support directory, creating if needed.
+ */
+- (NSString *)applicationSupportDirectory
+{
+    NSArray *URLS = [[NSFileManager defaultManager] URLsForDirectory:NSApplicationSupportDirectory
+                                                           inDomains:NSUserDomainMask];
+    if (URLS)
+    {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSURL *appSup = [URLS firstObject];
+        NSURL *finalURL;
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+
+        if (infoDictionary.count != 0)
+        {
+            finalURL = [appSup URLByAppendingPathComponent:[infoDictionary objectForKey:@"CFBundleExecutable"] isDirectory:YES];
+        }
+        else
+        {
+            // Unit testing results in empty infoDictionary, so use a custom location.
+            finalURL = [appSup URLByAppendingPathComponent:@"MGSFragaria Framework Unit Tests" isDirectory:YES];
+        }
+
+        if (![fileManager changeCurrentDirectoryPath:[finalURL path]])
+        {
+            [fileManager createDirectoryAtURL:finalURL
+                  withIntermediateDirectories:YES
+                                   attributes:nil
+                                        error:nil];
+        }
+        return [finalURL path];
+    }
+    else
+    {
+        return nil;
+    }
+}
+
 
 /*
  * - loadColourSchemes
