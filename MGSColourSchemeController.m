@@ -95,7 +95,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
 	self.currentScheme = [self makeColourSchemeFromViewForScheme:nil];
     
 	// If the current scheme matches an existing theme, then set it.
-    [self findAndSetCurrentScheme];
+//    [self findAndSetCurrentScheme];
 }
 
 
@@ -160,6 +160,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
     }
 
     [self addObserver:self forKeyPath:@"selectionIndex" options:NSKeyValueObservingOptionNew context:@"schemeMenu"];
+    [self addObserver:self forKeyPath:@"defaultsObjectController.content" options:NSKeyValueObservingOptionNew context:@"defaultsObjectController"];
 }
 
 
@@ -179,6 +180,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
     }
 
     [self removeObserver:self forKeyPath:@"selectionIndex" context:@"schemeMenu"];
+    [self removeObserver:self forKeyPath:@"defaultsObjectController.content" context:@"defaultsObjectController"];
 }
 
 
@@ -189,7 +191,12 @@ NSString * const KMGSColourSchemeExt = @"plist";
 {
     NSString *localContext = (__bridge NSString *)(context);
 
-    if ( !self.ignoreObservations && [[[MGSColourScheme class] colourProperties] containsObject:localContext] )
+    if ([localContext isEqualToString:@"defaultsObjectController"])
+    {
+        NSLog(@"This should be a one-time shot, otherwise we're in trouble for re-registering too many observers.");
+        [self setup];
+    }
+    else if ( !self.ignoreObservations && [[[MGSColourScheme class] colourProperties] containsObject:localContext] )
     {
         [self willChangeValueForKey:@"buttonSaveDeleteEnabled"];
         [self willChangeValueForKey:@"buttonSaveDeleteTitle"];
