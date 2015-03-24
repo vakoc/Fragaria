@@ -389,9 +389,9 @@ return [NSSet setWithArray:@[
 
 
 /*
- * + propertyGroupThemeColours
+ * + propertyGroupTheme
  */
-+ (NSSet *)propertyGroupThemeColours
++ (NSSet *)propertyGroupTheme
 {
 	return [[[self class] propertyGroupEditorColours]
 			setByAddingObjectsFromSet:[[self class] propertyGroupSyntaxHighlighting]];

@@ -232,7 +232,7 @@ extern NSString * const MGSFragariaDefaultsColoursVariables;                    
 + (NSSet *)propertyGroupSyntaxHighlighting;
 
 /** A convenience NSSet of all of the colours property strings. */
-+ (NSSet *)propertyGroupThemeColours;
++ (NSSet *)propertyGroupTheme;
 
 /** A convenience NSSet of all of the syntax colours extra option group
     property strings. */
