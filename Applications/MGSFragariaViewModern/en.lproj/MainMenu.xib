@@ -752,7 +752,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1600" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -795,6 +795,11 @@
                             <action selector="openPreferences:" target="Voe-Tx-rLC" id="MQa-Ez-5VE"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="399D7C36-8B02-43DC-BC8D-1C95E7CEA7D5" label="Hybrid (Top)" paletteLabel="Hybrid (Top)" tag="-1" image="NSPreferencesGeneral" id="nlJ-II-F3c">
+                        <connections>
+                            <action selector="openHybridTopPreferences:" target="Voe-Tx-rLC" id="g51-OD-jiF"/>
+                        </connections>
+                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="A90E3544-FA30-4EBA-BFAD-2DD7114572D5" label="Top View" paletteLabel="Top View" tag="-1" image="NSActionTemplate" id="Cdw-ZE-ARm">
                         <connections>
                             <action selector="openTopSettings:" target="Voe-Tx-rLC" id="coa-EM-Jto"/>
@@ -835,6 +840,7 @@
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="9o1-ZA-WDJ"/>
+                    <toolbarItem reference="nlJ-II-F3c"/>
                     <toolbarItem reference="Cdw-ZE-ARm"/>
                     <toolbarItem reference="19i-3s-JSc"/>
                     <toolbarItem reference="zhg-Gu-Kik"/>
