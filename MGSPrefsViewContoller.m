@@ -12,6 +12,12 @@
 
 #pragma mark - MGSManagedPropertiesProxy Class
 
+/*
+ *  This bindable proxy object exists to support the managedProperties 
+ *  property, whereby we return a @(BOOL) indicating whether or not the
+ *  view controller's NSUserDefaultsController is managing the property
+ *  in the keypath, e.g., `viewController.managedProperties.textColour`.
+ */
 @interface MGSManagedPropertiesProxy : NSObject
 
 @property (nonatomic, weak) MGSUserDefaultsController *userDefaultsController;
@@ -19,12 +25,11 @@
 
 @end
 
+
 @implementation MGSManagedPropertiesProxy
 
 /*
  * - init
- *   This is a simple class and there's no need to specify multiple
- *   classes. Simply return the value appropriate to how we init'd.
  */
 - (instancetype)initWithViewController:(MGSPrefsViewContoller *)viewController
 {
@@ -35,6 +40,7 @@
 
     return self;
 }
+
 
 /*
  * - valueForKey
@@ -53,7 +59,7 @@
 
 @interface MGSPrefsViewContoller ()
 
-@property (nonatomic, strong) MGSManagedPropertiesProxy *propertiesProxy;
+@property (nonatomic, strong) MGSManagedPropertiesProxy *managedPropertiesProxy;
 
 @property (nonatomic, strong) NSMutableDictionary *constraintsDict;
 
@@ -72,7 +78,8 @@
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     {
-        _propertiesProxy = [[MGSManagedPropertiesProxy alloc] initWithViewController:self];
+        _managedPropertiesProxy = [[MGSManagedPropertiesProxy alloc] initWithViewController:self];
+		_constraintsDict = [[NSMutableDictionary alloc] init];
     }
 
     return self;
@@ -84,11 +91,11 @@
 /*
  *  @property setUserDefaultsController
  */
-- (void)setUserDefaultsController:(MGSUserDefaultsController *)setUserDefaultsController
+- (void)setUserDefaultsController:(MGSUserDefaultsController *)userDefaultsController
 {
     [self willChangeValueForKey:@"managedProperties"];
-    _userDefaultsController = setUserDefaultsController;
-    self.propertiesProxy.userDefaultsController = setUserDefaultsController;
+    _userDefaultsController = userDefaultsController;
+    self.managedPropertiesProxy.userDefaultsController = userDefaultsController;
     [self didChangeValueForKey:@"managedProperties"];
 	[self showOrHideViews];
 }
@@ -99,7 +106,7 @@
  */
 - (id)managedProperties
 {
-    return self.propertiesProxy;
+    return self.managedPropertiesProxy;
 }
 
 
@@ -133,6 +140,7 @@
 /*
  * - hideableViews
  *   Subclasses wishing to support automatic view hiding should override this.
+ *   See the reference implementation for an example of the dictionary format.
  */
 - (NSDictionary *)hideableViews;
 {
@@ -148,37 +156,36 @@
  */
 - (void)showOrHideViews
 {
-	NSSet *propertiesAvailable = self.userDefaultsController.managedProperties;
+	/* At this point, it's perfectly possible that the userDefaultsController
+       hasn't been assigned yet, and so we don't know what the properties are
+	   that we're going to manage. */
 	
-	if (!self.constraintsDict)
-	{
-		self.constraintsDict = [[NSMutableDictionary alloc] init];
-	}
+	NSSet *propertiesAvailable = self.userDefaultsController.managedProperties;
 	
 	for (NSString *key in [[self hideableViews] allKeys])
 	{
-		NSLayoutConstraint *hiddenConstraint;
+		NSLayoutConstraint *constraint;
 		if ([[self.constraintsDict allKeys] containsObject:key])
 		{
-			hiddenConstraint = [self.constraintsDict objectForKey:key];
+			constraint = [self.constraintsDict objectForKey:key];
 		}
 		else
 		{
-			hiddenConstraint = [self makeHideConstraintForView:[self valueForKey:key]];
-			[self.constraintsDict setObject:hiddenConstraint forKey:key];
+			constraint = [self makeHideConstraintForView:[self valueForKey:key]];
+			[self.constraintsDict setObject:constraint forKey:key];
 		}
 		
 		NSSet *propertiesRequired = [[self hideableViews] objectForKey:key];
 
 		[self.view layoutSubtreeIfNeeded];
 		
-		if (![propertiesAvailable intersectsSet:propertiesRequired] && self.hidesUselessPanels)
+		if (self.hidesUselessPanels && ![propertiesAvailable intersectsSet:propertiesRequired])
 		{
-			[[self valueForKey:key] addConstraint:hiddenConstraint];
+			[[self valueForKey:key] addConstraint:constraint];
 		}
 		else
 		{
-			[[self valueForKey:key] removeConstraint:hiddenConstraint];
+			[[self valueForKey:key] removeConstraint:constraint];
 		}
 		 
 		[self.view layoutSubtreeIfNeeded];
