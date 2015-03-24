@@ -16,5 +16,7 @@
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, MGSBreakpointDelegate, MGSDragOperationDelegate>
 
+@property (nonatomic, assign, readonly) NSArray *availableSyntaxDefinitions;
+
 @end
 

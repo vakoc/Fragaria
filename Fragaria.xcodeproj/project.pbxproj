@@ -81,8 +81,6 @@
 		ABE25D0B1635CA7C00F23718 /* MGSFragariaPrefsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABE25D091635CA7C00F23718 /* MGSFragariaPrefsViewController.m */; };
 		ABF28AF014C075D400ECAD48 /* NSScanner+Fragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */; };
 		D01A8CEC1ABE75E0003B2719 /* MGSPrefsViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A8CEB1ABE75E0003B2719 /* MGSPrefsViewControllerTests.m */; };
-		D01A8CEF1ABECE79003B2719 /* MGSBoolToColourTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D01A8CED1ABECE79003B2719 /* MGSBoolToColourTransformer.h */; };
-		D01A8CF01ABECE79003B2719 /* MGSBoolToColourTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D01A8CEE1ABECE79003B2719 /* MGSBoolToColourTransformer.m */; };
 		D01F51721AAF1D35006A3A90 /* MGSFragariaViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D01F51701AAF1D35006A3A90 /* MGSFragariaViewTests.m */; };
 		D034C8081A997FA8003D3A41 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C8071A997FA8003D3A41 /* MainMenu.xib */; };
 		D034C80B1A99807F003D3A41 /* MainMenu-Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C8091A99807F003D3A41 /* MainMenu-Document.xib */; };
@@ -91,8 +89,14 @@
 		D034C8161A998324003D3A41 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034C8121A998324003D3A41 /* MASPreferencesWindowController.m */; };
 		D034C81C1A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034C8191A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m */; };
 		D034C81D1A9984A1003D3A41 /* PrefsTextEditingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D034C81B1A9984A1003D3A41 /* PrefsTextEditingViewController.m */; };
-		D0411CC91AB7D07F003BD822 /* MGSColourSchemeControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0411CC81AB7D07F003BD822 /* MGSColourSchemeControllerTests.m */; };
 		D04A0DF81AAEAD7C00667E4D /* MGSFragariaAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D04A0DF71AAEAD7C00667E4D /* MGSFragariaAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D06653CE1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D06653CC1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h */; };
+		D06653CF1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D06653CD1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m */; };
+		D06653D21AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D06653D01AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h */; };
+		D06653D31AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D06653D11AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.m */; };
+		D06653D51AC0159800ACE8B0 /* MGSColourToPlainTextTransformerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D06653D41AC0159800ACE8B0 /* MGSColourToPlainTextTransformerTests.m */; };
+		D06653D81AC02A0400ACE8B0 /* NSColor+RGBCompare.h in Headers */ = {isa = PBXBuildFile; fileRef = D06653D61AC02A0400ACE8B0 /* NSColor+RGBCompare.h */; };
+		D06653D91AC02A0400ACE8B0 /* NSColor+RGBCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = D06653D71AC02A0400ACE8B0 /* NSColor+RGBCompare.m */; };
 		D07188301AB3CDDC0073493A /* MGSUserDefaultsControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D071882B1AB3CDDC0073493A /* MGSUserDefaultsControllerTests.m */; };
 		D07188311AB3CDDC0073493A /* MGSUserDefaultsDefinitionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D071882C1AB3CDDC0073493A /* MGSUserDefaultsDefinitionsTests.m */; };
 		D07188321AB3CDDC0073493A /* MGSUserDefaultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D071882D1AB3CDDC0073493A /* MGSUserDefaultsTests.m */; };
@@ -311,8 +315,6 @@
 		ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSScanner+Fragaria.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		ABF28AEF14C075D400ECAD48 /* NSScanner+Fragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScanner+Fragaria.h"; sourceTree = "<group>"; };
 		D01A8CEB1ABE75E0003B2719 /* MGSPrefsViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSPrefsViewControllerTests.m; sourceTree = "<group>"; };
-		D01A8CED1ABECE79003B2719 /* MGSBoolToColourTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBoolToColourTransformer.h; sourceTree = "<group>"; };
-		D01A8CEE1ABECE79003B2719 /* MGSBoolToColourTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBoolToColourTransformer.m; sourceTree = "<group>"; };
 		D01F51701AAF1D35006A3A90 /* MGSFragariaViewTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragariaViewTests.m; sourceTree = "<group>"; };
 		D034C8071A997FA8003D3A41 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = Applications/Simple/MainMenu.xib; sourceTree = "<group>"; };
 		D034C8091A99807F003D3A41 /* MainMenu-Document.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "MainMenu-Document.xib"; path = "Applications/Doc/MainMenu-Document.xib"; sourceTree = "<group>"; };
@@ -325,8 +327,14 @@
 		D034C8191A9984A1003D3A41 /* PrefsFontsAndColorsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrefsFontsAndColorsViewController.m; path = Applications/MGSFragariaView/PrefsFontsAndColorsViewController.m; sourceTree = "<group>"; };
 		D034C81A1A9984A1003D3A41 /* PrefsTextEditingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrefsTextEditingViewController.h; path = Applications/MGSFragariaView/PrefsTextEditingViewController.h; sourceTree = "<group>"; };
 		D034C81B1A9984A1003D3A41 /* PrefsTextEditingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrefsTextEditingViewController.m; path = Applications/MGSFragariaView/PrefsTextEditingViewController.m; sourceTree = "<group>"; };
-		D0411CC81AB7D07F003BD822 /* MGSColourSchemeControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSColourSchemeControllerTests.m; sourceTree = "<group>"; };
 		D04A0DF71AAEAD7C00667E4D /* MGSFragariaAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaAPI.h; sourceTree = "<group>"; };
+		D06653CC1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBoolToColourTransformer.h; sourceTree = "<group>"; };
+		D06653CD1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBoolToColourTransformer.m; sourceTree = "<group>"; };
+		D06653D01AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSColourToPlainTextTransformer.h; sourceTree = "<group>"; };
+		D06653D11AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSColourToPlainTextTransformer.m; sourceTree = "<group>"; };
+		D06653D41AC0159800ACE8B0 /* MGSColourToPlainTextTransformerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSColourToPlainTextTransformerTests.m; sourceTree = "<group>"; };
+		D06653D61AC02A0400ACE8B0 /* NSColor+RGBCompare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+RGBCompare.h"; sourceTree = "<group>"; };
+		D06653D71AC02A0400ACE8B0 /* NSColor+RGBCompare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+RGBCompare.m"; sourceTree = "<group>"; };
 		D071882B1AB3CDDC0073493A /* MGSUserDefaultsControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSUserDefaultsControllerTests.m; sourceTree = "<group>"; };
 		D071882C1AB3CDDC0073493A /* MGSUserDefaultsDefinitionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSUserDefaultsDefinitionsTests.m; sourceTree = "<group>"; };
 		D071882D1AB3CDDC0073493A /* MGSUserDefaultsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSUserDefaultsTests.m; sourceTree = "<group>"; };
@@ -802,17 +810,8 @@
 				D0718B421AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.h */,
 				D0718B431AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.m */,
 				D07188461AB423830073493A /* MGSPrefsEditorProperties.xib */,
-				D0718B981AB5C53D0073493A /* MGSFontToTextTransformer.h */,
-				D0718B991AB5C53D0073493A /* MGSFontToTextTransformer.m */,
-				D01A8CED1ABECE79003B2719 /* MGSBoolToColourTransformer.h */,
-				D01A8CEE1ABECE79003B2719 /* MGSBoolToColourTransformer.m */,
-				D0718BA91AB71FE00073493A /* MGSColourSchemeController.h */,
-				D0718BAA1AB71FE00073493A /* MGSColourSchemeController.m */,
-				D0718BA51AB70BE70073493A /* MGSColourScheme.h */,
-				D0718BA61AB70BE70073493A /* MGSColourScheme.m */,
-				D0C13BB91ABD12A400E191A9 /* MGSColourSchemeSaveController.h */,
-				D0C13BBA1ABD12A400E191A9 /* MGSColourSchemeSaveController.m */,
-				D0C13BBD1ABD246900E191A9 /* MGSColourSchemeSave.xib */,
+				D0F64EC51AC148C800693C52 /* Scheme Controller */,
+				D0F64EC41AC148A900693C52 /* Categories and Transformers */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -861,7 +860,7 @@
 			isa = PBXGroup;
 			children = (
 				D0718BAD1AB721280073493A /* MGSColourSchemeTests.m */,
-				D0411CC81AB7D07F003BD822 /* MGSColourSchemeControllerTests.m */,
+				D06653D41AC0159800ACE8B0 /* MGSColourToPlainTextTransformerTests.m */,
 				D01F51701AAF1D35006A3A90 /* MGSFragariaViewTests.m */,
 				D01A8CEB1ABE75E0003B2719 /* MGSPrefsViewControllerTests.m */,
 				D0E521071A90E307005CB80B /* MGSSyntaxErrorControllerTests.m */,
@@ -884,6 +883,35 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D0F64EC41AC148A900693C52 /* Categories and Transformers */ = {
+			isa = PBXGroup;
+			children = (
+				D06653CC1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h */,
+				D06653CD1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m */,
+				D06653D01AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h */,
+				D06653D11AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.m */,
+				D0718B981AB5C53D0073493A /* MGSFontToTextTransformer.h */,
+				D0718B991AB5C53D0073493A /* MGSFontToTextTransformer.m */,
+				D06653D61AC02A0400ACE8B0 /* NSColor+RGBCompare.h */,
+				D06653D71AC02A0400ACE8B0 /* NSColor+RGBCompare.m */,
+			);
+			name = "Categories and Transformers";
+			sourceTree = "<group>";
+		};
+		D0F64EC51AC148C800693C52 /* Scheme Controller */ = {
+			isa = PBXGroup;
+			children = (
+				D0718BA91AB71FE00073493A /* MGSColourSchemeController.h */,
+				D0718BAA1AB71FE00073493A /* MGSColourSchemeController.m */,
+				D0718BA51AB70BE70073493A /* MGSColourScheme.h */,
+				D0718BA61AB70BE70073493A /* MGSColourScheme.m */,
+				D0C13BB91ABD12A400E191A9 /* MGSColourSchemeSaveController.h */,
+				D0C13BBA1ABD12A400E191A9 /* MGSColourSchemeSaveController.m */,
+				D0C13BBD1ABD246900E191A9 /* MGSColourSchemeSave.xib */,
+			);
+			name = "Scheme Controller";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -896,6 +924,7 @@
 				019F56D51A9D3511009F9DCD /* SMLTextView+MGSDragging.h in Headers */,
 				019B80191A9E77330007D234 /* MGSFragariaTextViewDelegate.h in Headers */,
 				AB69B754118B830700903D1D /* MGSFragaria.h in Headers */,
+				D06653D21AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h in Headers */,
 				E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */,
 				D0718BAB1AB71FE00073493A /* MGSColourSchemeController.h in Headers */,
 				0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */,
@@ -906,6 +935,7 @@
 				ABE25D0A1635CA7C00F23718 /* MGSFragariaPrefsViewController.h in Headers */,
 				ABC578ED1603D7ED0040B3FB /* MGSFragariaTextEditingPrefsViewController.h in Headers */,
 				AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */,
+				D06653CE1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h in Headers */,
 				AB257FE4129B1CE300A3FF76 /* MGSTextMenuController.h in Headers */,
 				AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */,
 				E3D4B2771714D89700BB2CC6 /* SMLSyntaxError.h in Headers */,
@@ -916,11 +946,11 @@
 				E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */,
 				D0C13BBB1ABD12A400E191A9 /* MGSColourSchemeSaveController.h in Headers */,
 				D07188431AB3D2220073493A /* MGSMutableDictionary.h in Headers */,
-				D01A8CEF1ABECE79003B2719 /* MGSBoolToColourTransformer.h in Headers */,
 				D04A0DF81AAEAD7C00667E4D /* MGSFragariaAPI.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
 				D071884F1AB54CCA0073493A /* MGSPrefsViewContoller.h in Headers */,
 				D0718BA71AB70BE70073493A /* MGSColourScheme.h in Headers */,
+				D06653D81AC02A0400ACE8B0 /* NSColor+RGBCompare.h in Headers */,
 				AB8387C5171D6115004408F4 /* SMLSyntaxDefinition.h in Headers */,
 				0191FA811A8829930099B50D /* SMLTextView+MGSTextActions.h in Headers */,
 			);
@@ -1194,10 +1224,12 @@
 				017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */,
 				AB69B68F118B78D400903D1D /* SMLTextView.m in Sources */,
 				D0718B9B1AB5C53D0073493A /* MGSFontToTextTransformer.m in Sources */,
+				D06653D31AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.m in Sources */,
 				AB69B6DA118B7F2A00903D1D /* SMLLayoutManager.m in Sources */,
 				AB3971CB118C1F8A00AEF388 /* MGSSyntaxController.m in Sources */,
 				D0C145C71A85F2C900DDE90A /* SMLTextView+MGSDragging.m in Sources */,
 				D0718B4A1AB54EA70073493A /* MGSPrefsColourPropertiesViewController.m in Sources */,
+				D06653D91AC02A0400ACE8B0 /* NSColor+RGBCompare.m in Sources */,
 				D0C13BBC1ABD12A400E191A9 /* MGSColourSchemeSaveController.m in Sources */,
 				AB41C1051191FFCB004F0CB5 /* MGSFragaria.m in Sources */,
 				D0718BAC1AB71FE00073493A /* MGSColourSchemeController.m in Sources */,
@@ -1206,6 +1238,7 @@
 				AB472B6F129972E400202CB5 /* MGSTextMenuController.m in Sources */,
 				AB472BF41299BBB100202CB5 /* MGSExtraInterfaceController.m in Sources */,
 				ABF28AF014C075D400ECAD48 /* NSScanner+Fragaria.m in Sources */,
+				D06653CF1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m in Sources */,
 				ABC578D3160350240040B3FB /* MGSFragariaPreferences.m in Sources */,
 				ABC578EA1603D6000040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.m in Sources */,
 				D08359E11AA0875E001B7B50 /* MGSPreferencesObserver.m in Sources */,
@@ -1215,7 +1248,6 @@
 				D071883B1AB3CDFA0073493A /* MGSUserDefaults.m in Sources */,
 				D071883F1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m in Sources */,
 				D07188501AB54CCA0073493A /* MGSPrefsViewContoller.m in Sources */,
-				D01A8CF01ABECE79003B2719 /* MGSBoolToColourTransformer.m in Sources */,
 				D07188441AB3D2220073493A /* MGSMutableDictionary.m in Sources */,
 				D071883D1AB3CDFA0073493A /* MGSUserDefaultsController.m in Sources */,
 				ABC5799816047B4E0040B3FB /* FRAFontTransformer.m in Sources */,
@@ -1272,10 +1304,10 @@
 				D0AB50F01A91CDC200A6DF58 /* SMLSyntaxErrorTests.m in Sources */,
 				D0E5211A1A90E399005CB80B /* MGSSyntaxErrorControllerTests.m in Sources */,
 				D07188311AB3CDDC0073493A /* MGSUserDefaultsDefinitionsTests.m in Sources */,
-				D0411CC91AB7D07F003BD822 /* MGSColourSchemeControllerTests.m in Sources */,
 				D0718BAE1AB721280073493A /* MGSColourSchemeTests.m in Sources */,
 				D07188331AB3CDDC0073493A /* MGSUserDefaultsUtilities.m in Sources */,
 				D07188321AB3CDDC0073493A /* MGSUserDefaultsTests.m in Sources */,
+				D06653D51AC0159800ACE8B0 /* MGSColourToPlainTextTransformerTests.m in Sources */,
 				D01F51721AAF1D35006A3A90 /* MGSFragariaViewTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -3,25 +3,115 @@
 <plist version="1.0">
 <dict>
 	<key>backgroundColor</key>
-	<string>1.000000 1.000000 1.000000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>ff</string>
+		<key>green</key>
+		<string>ff</string>
+		<key>red</key>
+		<string>ff</string>
+	</dict>
 	<key>colourForAttributes</key>
-	<string>0.500000 0.500000 0.200000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>33</string>
+		<key>green</key>
+		<string>7f</string>
+		<key>red</key>
+		<string>7f</string>
+	</dict>
 	<key>colourForAutocomplete</key>
-	<string>0.840000 0.410000 0.006000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>1</string>
+		<key>green</key>
+		<string>68</string>
+		<key>red</key>
+		<string>d6</string>
+	</dict>
 	<key>colourForCommands</key>
-	<string>0.031000 0.000000 0.855000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>da</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>7</string>
+	</dict>
 	<key>colourForComments</key>
-	<string>0.000000 0.450000 0.000000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>0</string>
+		<key>green</key>
+		<string>72</string>
+		<key>red</key>
+		<string>0</string>
+	</dict>
 	<key>colourForInstructions</key>
-	<string>0.737000 0.000000 0.647000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>a4</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>bb</string>
+	</dict>
 	<key>colourForKeywords</key>
-	<string>0.737000 0.000000 0.647000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>a4</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>bb</string>
+	</dict>
 	<key>colourForNumbers</key>
-	<string>0.031000 0.000000 0.855000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>da</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>7</string>
+	</dict>
 	<key>colourForStrings</key>
-	<string>0.804000 0.071000 0.153000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>27</string>
+		<key>green</key>
+		<string>12</string>
+		<key>red</key>
+		<string>cd</string>
+	</dict>
 	<key>colourForVariables</key>
-	<string>0.730000 0.000000 0.740000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>bc</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>ba</string>
+	</dict>
 	<key>coloursAttributes</key>
 	<integer>1</integer>
 	<key>coloursAutocomplete</key>
@@ -41,16 +131,61 @@
 	<key>coloursVariables</key>
 	<integer>1</integer>
 	<key>currentLineHighlightColour</key>
-	<string>0.960000 0.960000 0.710000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>b5</string>
+		<key>green</key>
+		<string>f4</string>
+		<key>red</key>
+		<string>f4</string>
+	</dict>
 	<key>defaultSyntaxErrorHighlightingColour</key>
-	<string>1.000000 1.000000 0.700000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>b2</string>
+		<key>green</key>
+		<string>ff</string>
+		<key>red</key>
+		<string>ff</string>
+	</dict>
 	<key>displayName</key>
 	<string>Classic Fragaria</string>
 	<key>insertionPointColor</key>
-	<string>0.000000 0.000000 0.000000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>0</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>0</string>
+	</dict>
 	<key>textColor</key>
-	<string>0.000000 0.000000 0.000000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>0</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>0</string>
+	</dict>
 	<key>textInvisibleCharactersColour</key>
-	<string>0.000000 0.000000 0.000000</string>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>0</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>0</string>
+	</dict>
 </dict>
 </plist>

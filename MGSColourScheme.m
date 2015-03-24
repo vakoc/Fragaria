@@ -8,30 +8,8 @@
 
 #import "MGSColourScheme.h"
 #import "MGSUserDefaultsDefinitions.h"
-
-
-static NSString *MGSStringFromColor(NSColor *col) {
-    NSColor *nc;
-    
-    nc = [col colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-    if (!nc) {
-        NSLog(@"MGSStringFromColor: can't convert %@, returning red", col);
-        return @"1.0 0.0 0.0";
-    }
-    return [NSString stringWithFormat:@"%f %f %f", nc.redComponent, nc.greenComponent, nc.blueComponent];
-}
-
-static NSColor *MGSColorFromString(NSString *str) {
-    NSScanner *scan;
-    CGFloat r, g, b;
-    
-    scan = [NSScanner scannerWithString:str];
-    if (!([scan scanDouble:&r] && [scan scanDouble:&g] && [scan scanDouble:&b])) {
-        NSLog(@"MGSColorFromString: can't parse %@, returning red", str);
-        return [NSColor redColor];
-    }
-    return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:1.0];
-}
+#import "MGSColourToPlainTextTransformer.h"
+#import "NSColor+RGBCompare.h"
 
 
 @interface MGSColourScheme ()
@@ -123,6 +101,7 @@ static NSColor *MGSColorFromString(NSString *str) {
 - (void)setPropertyListRepresentation:(NSDictionary *)propertyListRepresentation
 {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+	NSValueTransformer *xformer = [NSValueTransformer valueTransformerForName:@"MGSColourToPlainTextTransformer"];
 
     for (NSString *key in [propertyListRepresentation allKeys])
     {
@@ -133,7 +112,7 @@ static NSColor *MGSColorFromString(NSString *str) {
         }
         if ([[[self class] propertiesOfTypeColor] containsObject:key])
         {
-            NSColor *object = (NSColor *)MGSColorFromString([propertyListRepresentation objectForKey:key]);
+			NSColor *object = [xformer reverseTransformedValue:[propertyListRepresentation objectForKey:key]];
             [dictionary setObject:object forKey:key];
         }
         if ([[[self class] propertiesOfTypeBool] containsObject:key])
@@ -149,6 +128,7 @@ static NSColor *MGSColorFromString(NSString *str) {
 - (NSDictionary *)propertyListRepresentation
 {
     NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+	NSValueTransformer *xformer = [NSValueTransformer valueTransformerForName:@"MGSColourToPlainTextTransformer"];
 
     for (NSString *key in [self.dictionaryRepresentation allKeys])
     {
@@ -158,7 +138,7 @@ static NSColor *MGSColorFromString(NSString *str) {
         }
         if ([[[self class] propertiesOfTypeColor] containsObject:key])
         {
-			[dictionary setObject:MGSStringFromColor([self.dictionaryRepresentation objectForKey:key]) forKey:key];
+			[dictionary setObject:[xformer transformedValue:[self.dictionaryRepresentation objectForKey:key]] forKey:key];
         }
         if ([[[self class] propertiesOfTypeBool] containsObject:key])
         {
@@ -178,13 +158,28 @@ static NSColor *MGSColorFromString(NSString *str) {
  */
 - (BOOL)isEqualToScheme:(MGSColourScheme *)scheme
 {
-    for (NSString *key in [[self class] colourProperties])
+    for (NSString *key in [[self class] propertiesOfScheme])
     {
-		if (![[self valueForKey:key] isEqual:[scheme valueForKey:key]])
-		{
-//			NSLog(@"KEY=%@ and SELF=%@ and EXTERNAL=%@", key, [self valueForKey:key], [scheme valueForKey:key] );
-			return NO;
-		}
+        if ([[self valueForKey:key] isKindOfClass:[NSColor class]])
+        {
+            NSColor *color1 = [self valueForKey:key];
+            NSColor *color2 = [scheme valueForKey:key];
+            BOOL result = [color1 isEqualToRGBOfColour:color2];
+            if (!result)
+            {
+//                NSLog(@"KEY=%@ and SELF=%@ and EXTERNAL=%@", key, color1, color2);
+                return result;
+            }
+        }
+        else
+        {
+            BOOL result = [[self valueForKey:key] isEqual:[scheme valueForKey:key]];
+            if (!result)
+            {
+//                NSLog(@"KEY=%@ and SELF=%@ and EXTERNAL=%@", key, [self valueForKey:key], [scheme valueForKey:key] );
+                return result;
+            }
+        }
     }
 
     return YES;
@@ -203,7 +198,7 @@ static NSColor *MGSColorFromString(NSString *str) {
 	NSAssert(fileContents, @"Error reading file %@", file);
 
     self.propertyListRepresentation = fileContents;
-    self.loadedFromFile = file;
+    self.sourceFile = file;
 }
 
 
@@ -268,9 +263,8 @@ static NSColor *MGSColorFromString(NSString *str) {
  */
 + (NSSet *)propertiesAll
 {
-	NSSet *result = [[[self class] propertiesOfTypeString] setByAddingObjectsFromSet:self.propertiesOfTypeColor];
-	result = [result setByAddingObjectsFromSet:[[self class] propertiesOfTypeBool]];
-	return result;
+	return [[[MGSUserDefaultsDefinitions class] propertyGroupTheme]
+			setByAddingObjectsFromSet:[[self class] propertiesOfTypeString]];
 }
 
 
@@ -279,11 +273,7 @@ static NSColor *MGSColorFromString(NSString *str) {
  */
 + (NSSet*)propertiesOfTypeBool
 {
-	return [NSSet setWithArray:
-			@[MGSFragariaDefaultsColoursAttributes, MGSFragariaDefaultsColoursAutocomplete, MGSFragariaDefaultsColoursCommands,
-			  MGSFragariaDefaultsColoursComments, MGSFragariaDefaultsColoursInstructions, MGSFragariaDefaultsColoursKeywords,
-			  MGSFragariaDefaultsColoursNumbers, MGSFragariaDefaultsColoursStrings, MGSFragariaDefaultsColoursVariables
-			  ]];
+	return [[MGSUserDefaultsDefinitions class] propertyGroupSyntaxHighlightingBools];
 }
 
 
@@ -292,13 +282,8 @@ static NSColor *MGSColorFromString(NSString *str) {
  */
 + (NSSet *)propertiesOfTypeColor
 {
-	return [NSSet setWithArray:
-			@[MGSFragariaDefaultsTextColor, MGSFragariaDefaultsBackgroundColor, MGSFragariaDefaultsDefaultErrorHighlightingColor,
-              MGSFragariaDefaultsTextInvisibleCharactersColour, MGSFragariaDefaultsCurrentLineHighlightColour, MGSFragariaDefaultsInsertionPointColor,
-              MGSFragariaDefaultsColourForAttributes, MGSFragariaDefaultsColourForAutocomplete, MGSFragariaDefaultsColourForCommands,
-              MGSFragariaDefaultsColourForComments, MGSFragariaDefaultsColourForInstructions, MGSFragariaDefaultsColourForKeywords,
-              MGSFragariaDefaultsColourForNumbers, MGSFragariaDefaultsColourForStrings, MGSFragariaDefaultsColourForVariables,
-			  ]];
+	return [[[MGSUserDefaultsDefinitions class] propertyGroupEditorColours]
+			setByAddingObjectsFromSet:[[MGSUserDefaultsDefinitions class] propertyGroupSyntaxHighlightingColours]];
 }
 
 
@@ -314,9 +299,9 @@ static NSColor *MGSColorFromString(NSString *str) {
 /*
  * + colourProperties
  */
-+ (NSArray *)colourProperties
++ (NSArray *)propertiesOfScheme
 {
-	return [[self.propertiesOfTypeColor setByAddingObjectsFromSet:self.propertiesOfTypeBool] allObjects];
+	return [[[MGSUserDefaultsDefinitions class] propertyGroupTheme] allObjects];
 }
 
 

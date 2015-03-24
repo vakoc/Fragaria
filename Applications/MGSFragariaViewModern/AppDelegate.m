@@ -16,6 +16,7 @@
 #import "EditorSettingsViewController.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSUserDefaultsDefinitions.h"
+#import "MGSSyntaxController.h"
 
 
 #pragma mark - PRIVATE INTERFACE
@@ -29,11 +30,9 @@
 
 @property (weak) IBOutlet MGSFragariaView *viewBottom;
 
-
 @property (nonatomic, strong) NSWindowController *preferencesWindowController;
 @property (nonatomic, strong) NSWindowController *viewTopSettingsWindowController;
 @property (nonatomic, strong) NSWindowController *viewBottomSettingsWindowController;
-
 
 @property (strong) NSArray *breakpoints;
 
@@ -79,15 +78,24 @@
 
     /* Make the upper view interesting. */
     self.viewTop.textView.string = fileContent;
-    self.viewTop.syntaxDefinitionName = @"html";
+    self.viewTop.syntaxDefinitionName = @"HTML";
 
     /* Make the lower view interesting. */
-    self.viewBottom.syntaxDefinitionName = @"html";
+    self.viewBottom.syntaxDefinitionName = @"HTML";
     self.viewBottom.textView.string = fileContent;
 }
 
 
 #pragma mark - Property Accessors
+
+/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
+	@availableSyntaxDefinitions
+ *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+- (NSArray *)availableSyntaxDefinitions
+{
+	return [[MGSSyntaxController sharedInstance] syntaxDefinitionNames];
+}
+
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	@preferencesWindowController
@@ -163,11 +171,15 @@
      
        In this example we're simply setting it for each view controller
        individually. In the real world I'd probably add a property to
-       the window controller and set it only once, there.
-     */
+       the window controller and set it only once, there. */
 
-    editorSettingsController.propertiesController = [MGSUserDefaultsController sharedControllerForGroupID:group];
-    colorSettingsController.propertiesController = [MGSUserDefaultsController sharedControllerForGroupID:group];
+    editorSettingsController.userDefaultsController = [MGSUserDefaultsController sharedControllerForGroupID:group];
+    colorSettingsController.userDefaultsController = [MGSUserDefaultsController sharedControllerForGroupID:group];
+	
+	/* We'll tell the panels to hide property groups that have no enabled items.
+	   Items are only enabled if the propertiesController is managing them. */
+	editorSettingsController.hidesUselessPanels = YES;
+	colorSettingsController.hidesUselessPanels = YES;
 
     NSArray *controllers = @[editorSettingsController, colorSettingsController];
 
@@ -319,11 +331,12 @@
 
     /* For fun, let's say that the global controller should manage these
        properties, and take away the power to do so from the groups. */
-    NSMutableArray *globalProperties = [NSMutableArray arrayWithArray:@[ MGSFragariaDefaultsBackgroundColor,
-                                                                         MGSFragariaDefaultsTextFont,
-                                                                         MGSFragariaDefaultsShowsGutter,
-                                                                         MGSFragariaDefaultsMinimumGutterWidth,
-                                                                         MGSFragariaDefaultsColoursAttributes]];
+	NSArray *colourProperties = [[[MGSUserDefaultsDefinitions class] propertyGroupTheme] allObjects];
+	NSMutableArray *globalProperties = [NSMutableArray arrayWithArray:colourProperties];
+	[globalProperties addObjectsFromArray:@[
+											MGSFragariaDefaultsTextFont,
+											MGSFragariaDefaultsShowsGutter,
+											]];
 
     /* And the groups' properties will simply be the remaining properties. */
     [groupProperties removeObjectsInArray:globalProperties];
@@ -339,6 +352,7 @@
 
     /* You don't (cannot) assign instances to the global group. */
     globalGroup.managedProperties = [NSSet setWithArray:globalProperties];
+	globalGroup.persistent = YES;
 }
 
 

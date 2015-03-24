@@ -202,4 +202,41 @@ extern NSString * const MGSFragariaDefaultsColoursVariables;                    
 + (void)applyDefaultsToFragariaView:(MGSFragariaView *)fragaria;
 
 
+#pragma mark - Class Methods - Convenience Sets of Properties
+
+/** A convenience NSSet of all of the editing group property strings. */
++ (NSSet *)propertyGroupEditing;
+
+/** A convenience NSSet of all of the gutter group property strings. */
++ (NSSet *)propertyGroupGutter;
+
+/** A convenience NSSet of all of the autocomplete group property strings. */
++ (NSSet *)propertyGroupAutocomplete;
+
+/** A convenience NSSet of all of the indenting group property strings. */
++ (NSSet *)propertyGroupIndenting;
+
+/** A convenience NSSet of all of the text font group property strings. */
++ (NSSet *)propertyGroupTextFont;
+
+/** A convenience NSSet of all of the editor colours group property strings. */
++ (NSSet *)propertyGroupEditorColours;
+
+/** A convenience NSSet of all of the syntax colours group property strings. */
++ (NSSet *)propertyGroupSyntaxHighlightingColours;
+
+/** A convenience NSSet of all of the syntax colours bools group property strings. */
++ (NSSet *)propertyGroupSyntaxHighlightingBools;
+
+/** A convenience NSSet of all of the syntax colours group property strings. */
++ (NSSet *)propertyGroupSyntaxHighlighting;
+
+/** A convenience NSSet of all of the colours property strings. */
++ (NSSet *)propertyGroupTheme;
+
+/** A convenience NSSet of all of the syntax colours extra option group
+    property strings. */
++ (NSSet *)propertyGroupColouringExtraOptions;
+
+
 @end

@@ -1,0 +1,165 @@
+//
+//  MGSFontToTextTransformer.m
+//  Fragaria
+//
+//  Created by Jim Derry on 3/23/15.
+//
+//
+
+#import "MGSColourToPlainTextTransformer.h"
+
+/*
+ *	There is precision loss for colors, of course, but we can control it
+ *  a little bit. Using 8 bits is probably fine and gives nice 2 character
+ *  hex codes that users are familiar with, but 16 and 32 could be used, too.
+ *
+ *  The system named colors require 32 bits for two-way transformations to be
+ *  reliable, though, so see also NSColor+RGBCompare for a safe alternative
+ *  for comparing colors via RGB value.
+ */
+#define COLOR_PRECISION (pow(2, 8)-1)
+
+
+@implementation MGSColourToPlainTextTransformer
+
+
+/*
+ * + initialize
+ */
++ (void)initialize
+{
+	[NSValueTransformer setValueTransformer:[[[self class] alloc] init] forName:NSStringFromClass([self class])];
+}
+
+/*
+ * + transformedValueClass
+ */
++ (Class)transformedValueClass
+{
+	return [NSColor class];
+}
+
+
+/*
+ * + allowsReverseTransformation
+ */
++ (BOOL)allowsReverseTransformation
+{
+	return YES;
+}
+
+
+/*
+ * - transformedValue:
+ */
+- (id)transformedValue:(id)value
+{
+	if (!value) return nil;
+	
+	NSColor *color = [value colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	
+	NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+	CGFloat red;
+	CGFloat green;
+	CGFloat blue;
+	CGFloat alpha;
+	[color getRed:&red green:&green blue:&blue alpha:&alpha];
+	
+	[dictionary setObject:[self hexValueForComponentValue:red] forKey:@"red"];
+	[dictionary setObject:[self hexValueForComponentValue:green] forKey:@"green"];
+	[dictionary setObject:[self hexValueForComponentValue:blue] forKey:@"blue"];
+	[dictionary setObject:[self hexValueForComponentValue:alpha] forKey:@"alpha"];
+	
+	return dictionary;
+}
+
+
+/*
+ * - reverseTransformedValue:
+ */
+-(id)reverseTransformedValue:(id)value
+{
+	if (!value) return nil;
+
+	// Support reading both types of plists.
+	if ([value isKindOfClass:[NSString class]])
+	{
+		return [self MGSColorFromString:value];
+	}
+	
+	NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:value];
+
+	CGFloat red = [self componentValueforHex:[dictionary objectForKey:@"red"]];
+	CGFloat green = [self componentValueforHex:[dictionary objectForKey:@"green"]];
+	CGFloat blue = [self componentValueforHex:[dictionary objectForKey:@"blue"]];
+	CGFloat alpha = [self componentValueforHex:[dictionary objectForKey:@"alpha"]];
+	
+	return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
+}
+
+
+/*
+ * - hexValueForComponentValue
+ *   I suppose this could be its own value transformer.
+ */
+- (NSString *)hexValueForComponentValue:(CGFloat)color
+{
+	NSString *result = [NSString stringWithFormat:@"%lx", (NSUInteger)(color * COLOR_PRECISION )];
+	
+	return result;
+}
+
+
+/*
+ * - componentValueforHex
+ *   I suppose this could be its own value transformer.
+ */
+- (CGFloat)componentValueforHex:(NSString *)hex
+{
+	unsigned int intVal;
+	CGFloat floatVal;
+	NSScanner *scanner = [NSScanner scannerWithString:hex];
+	[scanner scanHexInt:&intVal];
+	floatVal =  (CGFloat)((CGFloat)intVal / COLOR_PRECISION );
+	floatVal = floatVal > 1.0 ? 1.0 : floatVal;
+	floatVal = floatVal < 0.0 ? 0.0 : floatVal;
+	return floatVal;
+}
+
+
+/*
+ * - MGSStringFromColor
+ */
+- (NSString *) MGSStringFromColor:(NSColor *)col
+{
+	NSColor *nc;
+	
+	nc = [col colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	if (!nc)
+	{
+		NSLog(@"MGSStringFromColor: can't convert %@, returning red", col);
+		return @"1.0 0.0 0.0";
+	}
+	return [NSString stringWithFormat:@"%f %f %f", nc.redComponent, nc.greenComponent, nc.blueComponent];
+}
+
+
+/*
+ * - MGSColorFromString
+ */
+- (NSColor *)MGSColorFromString:(NSString *)str
+{
+	NSScanner *scan;
+	CGFloat r, g, b;
+	
+	scan = [NSScanner scannerWithString:str];
+	if (!([scan scanDouble:&r] && [scan scanDouble:&g] && [scan scanDouble:&b]))
+	{
+		NSLog(@"MGSColorFromString: can't parse %@, returning red", str);
+		return [NSColor redColor];
+	}
+	return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:1.0];
+}
+
+
+@end

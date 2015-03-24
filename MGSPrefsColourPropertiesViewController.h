@@ -11,8 +11,7 @@
 
 /**
  *  MGSPrefsColourPropertiesViewController provides a basic class for managing
- *  instances of the MGSPrefsColourProperties nib. It also includes the
- *  functionality for handling the colour schemes.
+ *  instances of the MGSPrefsColourProperties nib.
  **/
 
 @interface MGSPrefsColourPropertiesViewController : MGSPrefsViewContoller

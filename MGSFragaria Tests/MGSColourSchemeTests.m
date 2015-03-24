@@ -9,6 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
 #import "MGSColourScheme.h"
+#import "NSColor+RGBCompare.h"
 
 
 /**
@@ -60,7 +61,8 @@
 
 	[scheme propertiesLoadFromFile:outputPath];
 	
-	XCTAssert([scheme.displayName isEqualToString:expects1] && [scheme.colourForComments isEqualTo:expects2]);
+	XCTAssert([scheme.displayName isEqualToString:expects1]);
+	XCTAssert([scheme.colourForComments isEqualToRGBOfColour:expects2]);
 }
 
 
@@ -143,6 +145,22 @@
 	MGSColourScheme *scheme2 = [[MGSColourScheme alloc] initWithFile:outputPath];
 	
 	XCTAssert([scheme isEqualToScheme:scheme2]);
+}
+
+/*
+ * - test_make_classic_fragaria_theme
+ *   This test always passes, but makes a virgin Classic Fragaria.plist.
+ */
+- (void)test_make_classic_fragaria_theme
+{
+	NSString *outputPath = @"~/Desktop/Classic Fragaria.plist";
+	
+	MGSColourScheme *scheme = [[MGSColourScheme alloc] init];
+	scheme.displayName = @"Classic Fragaria";
+
+	[scheme propertiesSaveToFile:outputPath];
+	
+	XCTAssert(YES);
 }
 
 

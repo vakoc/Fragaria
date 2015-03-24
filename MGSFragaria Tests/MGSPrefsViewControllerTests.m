@@ -49,7 +49,7 @@
     controller.managedProperties = [NSSet setWithArray:@[ MGSFragariaDefaultsShowsGutter, MGSFragariaDefaultsTextFont]];
 
     MGSPrefsViewContoller *viewController = [[MGSPrefsViewContoller alloc] init];
-    viewController.propertiesController = controller;
+    viewController.userDefaultsController = controller;
 
     NSNumber *result = [viewController valueForKeyPath:@"managedProperties.showsGutter"];
     XCTAssert([result boolValue] == YES);

@@ -752,7 +752,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1600" height="877"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -805,11 +805,39 @@
                             <action selector="openBottomSettings:" target="Voe-Tx-rLC" id="eBc-pT-afs"/>
                         </connections>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="0B6E34A9-EFFF-4B7C-9B16-956E320B4461" label="Top Language" paletteLabel="Top Language" id="zhg-Gu-Kik" userLabel="Syntax Language">
+                        <nil key="toolTip"/>
+                        <size key="minSize" width="100" height="28"/>
+                        <size key="maxSize" width="214" height="31"/>
+                        <popUpButton key="view" verticalHuggingPriority="750" id="TVo-c0-Lo7">
+                            <rect key="frame" x="0.0" y="14" width="214" height="31"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            <popUpButtonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="U61-Ai-tUx">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="menu"/>
+                                <menu key="menu" id="BF8-vu-soC">
+                                    <items>
+                                        <menuItem title="Item 1" id="7Mt-qZ-OCy"/>
+                                        <menuItem title="Item 2" id="vDB-4s-ZAk"/>
+                                        <menuItem title="Item 3" id="J8K-Ig-jO1"/>
+                                    </items>
+                                </menu>
+                                <connections>
+                                    <binding destination="Voe-Tx-rLC" name="selectedValue" keyPath="self.viewTop.syntaxDefinitionName" id="bt5-Pv-ucf"/>
+                                </connections>
+                            </popUpButtonCell>
+                            <connections>
+                                <binding destination="Voe-Tx-rLC" name="contentValues" keyPath="self.availableSyntaxDefinitions" id="BXn-Xb-KPp"/>
+                                <binding destination="Voe-Tx-rLC" name="selectedValue" keyPath="self.viewTop.syntaxDefinitionName" previousBinding="BXn-Xb-KPp" id="yNh-qf-JbI"/>
+                            </connections>
+                        </popUpButton>
+                    </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="9o1-ZA-WDJ"/>
                     <toolbarItem reference="Cdw-ZE-ARm"/>
                     <toolbarItem reference="19i-3s-JSc"/>
+                    <toolbarItem reference="zhg-Gu-Kik"/>
                 </defaultToolbarItems>
             </toolbar>
         </window>

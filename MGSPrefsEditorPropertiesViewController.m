@@ -10,6 +10,16 @@
 #import "MGSUserDefaultsController.h"
 
 
+@interface MGSPrefsEditorPropertiesViewController ()
+
+@property (nonatomic, assign) IBOutlet NSView *paneEditing;
+@property (nonatomic, assign) IBOutlet NSView *paneGutter;
+@property (nonatomic, assign) IBOutlet NSView *paneAutocomplete;
+@property (nonatomic, assign) IBOutlet NSView *paneIndenting;
+@property (nonatomic, assign) IBOutlet NSView *paneTextFont;
+
+@end
+
 @implementation MGSPrefsEditorPropertiesViewController
 
 /*
@@ -67,12 +77,27 @@
  */
 - (void)setEditorFont:(NSFont *)editorFont
 {
-    [self.propertiesController.values setValue:editorFont forKey:MGSFragariaDefaultsTextFont];
+    [self.userDefaultsController.values setValue:editorFont forKey:MGSFragariaDefaultsTextFont];
 }
 
 - (NSFont *)editorFont
 {
-    return [self.propertiesController.values valueForKey:MGSFragariaDefaultsTextFont];
+    return [self.userDefaultsController.values valueForKey:MGSFragariaDefaultsTextFont];
+}
+
+
+/*
+ * - hideableViews
+ */
+- (NSDictionary *)hideableViews
+{
+	return @{
+			 NSStringFromSelector(@selector(paneEditing)) : [[MGSUserDefaultsDefinitions class] propertyGroupEditing],
+			 NSStringFromSelector(@selector(paneGutter)) : [[MGSUserDefaultsDefinitions class] propertyGroupGutter],
+			 NSStringFromSelector(@selector(paneAutocomplete)) : [[MGSUserDefaultsDefinitions class] propertyGroupAutocomplete],
+			 NSStringFromSelector(@selector(paneIndenting)) : [[MGSUserDefaultsDefinitions class] propertyGroupIndenting],
+			 NSStringFromSelector(@selector(paneTextFont)) : [[MGSUserDefaultsDefinitions class] propertyGroupTextFont],
+			 };
 }
 
 

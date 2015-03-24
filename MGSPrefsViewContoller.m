@@ -12,19 +12,24 @@
 
 #pragma mark - MGSManagedPropertiesProxy Class
 
+/*
+ *  This bindable proxy object exists to support the managedProperties 
+ *  property, whereby we return a @(BOOL) indicating whether or not the
+ *  view controller's NSUserDefaultsController is managing the property
+ *  in the keypath, e.g., `viewController.managedProperties.textColour`.
+ */
 @interface MGSManagedPropertiesProxy : NSObject
 
-@property (nonatomic, weak) MGSUserDefaultsController *propertiesController;
+@property (nonatomic, weak) MGSUserDefaultsController *userDefaultsController;
 @property (nonatomic, weak) MGSPrefsViewContoller *viewController;
 
 @end
+
 
 @implementation MGSManagedPropertiesProxy
 
 /*
  * - init
- *   This is a simple class and there's no need to specify multiple
- *   classes. Simply return the value appropriate to how we init'd.
  */
 - (instancetype)initWithViewController:(MGSPrefsViewContoller *)viewController
 {
@@ -36,12 +41,13 @@
     return self;
 }
 
+
 /*
  * - valueForKey
  */
 -(id)valueForKey:(NSString *)key
 {
-    BOOL managesProperty = [self.propertiesController.managedProperties containsObject:key];
+    BOOL managesProperty = [self.userDefaultsController.managedProperties containsObject:key];
 
     return @(managesProperty);
 }
@@ -53,13 +59,17 @@
 
 @interface MGSPrefsViewContoller ()
 
-@property (nonatomic, strong) MGSManagedPropertiesProxy *propertiesProxy;
+@property (nonatomic, strong) MGSManagedPropertiesProxy *managedPropertiesProxy;
+
+@property (nonatomic, strong) NSMutableDictionary *constraintsDict;
 
 @end
 
 
 @implementation MGSPrefsViewContoller
 
+
+#pragma mark - Initialization
 
 /*
  * - init
@@ -68,22 +78,26 @@
 {
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     {
-        _propertiesProxy = [[MGSManagedPropertiesProxy alloc] initWithViewController:self];
+        _managedPropertiesProxy = [[MGSManagedPropertiesProxy alloc] initWithViewController:self];
+		_constraintsDict = [[NSMutableDictionary alloc] init];
     }
 
     return self;
 }
 
 
+#pragma mark - Property Accessors
+
 /*
- *  @property propertiesController
+ *  @property setUserDefaultsController
  */
-- (void)setPropertiesController:(MGSUserDefaultsController *)propertiesController
+- (void)setUserDefaultsController:(MGSUserDefaultsController *)userDefaultsController
 {
     [self willChangeValueForKey:@"managedProperties"];
-    _propertiesController = propertiesController;
-    self.propertiesProxy.propertiesController = propertiesController;
+    _userDefaultsController = userDefaultsController;
+    self.managedPropertiesProxy.userDefaultsController = userDefaultsController;
     [self didChangeValueForKey:@"managedProperties"];
+	[self showOrHideViews];
 }
 
 
@@ -92,7 +106,105 @@
  */
 - (id)managedProperties
 {
-    return self.propertiesProxy;
+    return self.managedPropertiesProxy;
+}
+
+
+/*
+ * @property areAllColourPropertiesAvailable
+ */
++ (NSSet *)keyPathsForValuesAffectingAreAllColourPropertiesAvailable
+{
+	return [NSSet setWithArray:@[ @"managedProperties" ]];
+}
+- (BOOL)areAllColourPropertiesAvailable
+{
+	NSSet *propertiesAvailable = self.userDefaultsController.managedProperties;
+	NSSet *propertiesRequired = [[MGSUserDefaultsDefinitions class] propertyGroupTheme];
+	return [propertiesRequired isSubsetOfSet:propertiesAvailable];
+}
+
+
+/*
+ * @property hidesUselessPanels
+ */
+- (void)setHidesUselessPanels:(BOOL)hidesUselessPanels
+{
+	_hidesUselessPanels = hidesUselessPanels;
+	[self showOrHideViews];
+}
+
+
+#pragma mark - Instance Methods
+
+/*
+ * - hideableViews
+ *   Subclasses wishing to support automatic view hiding should override this.
+ *   See the reference implementation for an example of the dictionary format.
+ */
+- (NSDictionary *)hideableViews;
+{
+	return @{};
+}
+
+
+#pragma mark - Supporting Methods
+
+
+/*
+ * - showOrHideViews
+ */
+- (void)showOrHideViews
+{
+	/* At this point, it's perfectly possible that the userDefaultsController
+       hasn't been assigned yet, and so we don't know what the properties are
+	   that we're going to manage. */
+	
+	NSSet *propertiesAvailable = self.userDefaultsController.managedProperties;
+	
+	for (NSString *key in [[self hideableViews] allKeys])
+	{
+		NSLayoutConstraint *constraint;
+		if ([[self.constraintsDict allKeys] containsObject:key])
+		{
+			constraint = [self.constraintsDict objectForKey:key];
+		}
+		else
+		{
+			constraint = [self makeHideConstraintForView:[self valueForKey:key]];
+			[self.constraintsDict setObject:constraint forKey:key];
+		}
+		
+		NSSet *propertiesRequired = [[self hideableViews] objectForKey:key];
+
+		[self.view layoutSubtreeIfNeeded];
+		
+		if (self.hidesUselessPanels && ![propertiesAvailable intersectsSet:propertiesRequired])
+		{
+			[[self valueForKey:key] addConstraint:constraint];
+		}
+		else
+		{
+			[[self valueForKey:key] removeConstraint:constraint];
+		}
+		 
+		[self.view layoutSubtreeIfNeeded];
+	}
+}
+
+
+/*
+ * - makeHideConstraintForView
+ */
+- (NSLayoutConstraint *)makeHideConstraintForView:(NSView *)view
+{
+	return [NSLayoutConstraint constraintWithItem:view
+										attribute:NSLayoutAttributeHeight
+										relatedBy:NSLayoutRelationEqual
+										   toItem:nil
+										attribute:NSLayoutAttributeNotAnAttribute
+									   multiplier:1.0
+										 constant:0.0];
 }
 
 

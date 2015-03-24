@@ -18,13 +18,14 @@
  **/
 @interface MGSColourScheme : NSObject
 
+#pragma mark - Initializers
 /// @name Initializers
 
 /** 
  *  Initializes a new colour scheme instance from a dictionary.
  *  @param dictionary The dictionary representation of the plist file that
- *                    defines the color scheme. This is a standard NSDictionary
- *                    that may contain NSColor valus, and is not property list.
+ *  defines the color scheme. This is a standard NSDictionary that may contain
+ *  NSColor values, and is not property list.
  **/
 - (instancetype)initWithDictionary:(NSDictionary *)dictionary;
 
@@ -40,10 +41,11 @@
 - (instancetype)init;
 
 
+#pragma mark - Class Methods
 /// @name Class Methods
 
-/** An array of all of the color-specific properties for this class. */
-+ (NSArray *) colourProperties;
+/** An array of all of the properties of this class that constitute a scheme. */
++ (NSArray *) propertiesOfScheme;
 
 
 /// @name General Properties
@@ -53,7 +55,7 @@
 
 /** Indicates the complete and path and filename this instance was loaded
     from (if any). */
-@property (nonatomic, strong) NSString *loadedFromFile;
+@property (nonatomic, strong) NSString *sourceFile;
 
 
 /** An NSDictionary representation of the Colour Scheme Properties */
@@ -65,6 +67,7 @@
 @property (nonatomic, assign, readonly) NSDictionary *propertyListRepresentation;
 
 
+#pragma mark - Colour Scheme Properties
 /// @name Colour Scheme Properties
 
 /** Display name of the color scheme. */
@@ -143,7 +146,8 @@
 @property (nonatomic, assign) BOOL coloursVariables;
 
 
-/// @name InstanceMethods
+#pragma mark - Instance Methods
+/// @name Instance Methods
 
 /** Indicates if two schemes have the same colour settings.
     @param scheme The scheme that you want to compare to the receiver. */
