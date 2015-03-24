@@ -3,25 +3,115 @@
 <plist version="1.0">
 <dict>
 	<key>backgroundColor</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMDhAJmZgEBhg==</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>ff</string>
+		<key>green</key>
+		<string>ff</string>
+		<key>red</key>
+		<string>ff</string>
+	</dict>
 	<key>colourForAttributes</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgwAAAD+DAAAAP4PNzEw+AYY=</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>33</string>
+		<key>green</key>
+		<string>7f</string>
+		<key>red</key>
+		<string>7f</string>
+	</dict>
 	<key>colourForAutocomplete</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgz0KVz+DhevRPoOmm8Q7AYY=</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>1</string>
+		<key>green</key>
+		<string>68</string>
+		<key>red</key>
+		<string>d6</string>
+	</dict>
 	<key>colourForCommands</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg7bz/TwAg0jhWj8Bhg==</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>da</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>7</string>
+	</dict>
 	<key>colourForComments</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmAINmZuY+AAGG</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>0</string>
+		<key>green</key>
+		<string>72</string>
+		<key>red</key>
+		<string>0</string>
+	</dict>
 	<key>colourForInstructions</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgwisPD8Ag8uhJT8Bhg==</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>a4</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>bb</string>
+	</dict>
 	<key>colourForKeywords</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmgwisPD8Ag8uhJT8Bhg==</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>a4</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>bb</string>
+	</dict>
 	<key>colourForNumbers</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg7bz/TwAg0jhWj8Bhg==</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>da</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>7</string>
+	</dict>
 	<key>colourForStrings</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg/LSTT+Dc2iRPYMIrBw+AYY=</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>27</string>
+		<key>green</key>
+		<string>12</string>
+		<key>red</key>
+		<string>cd</string>
+	</dict>
 	<key>colourForVariables</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg0jhOj8Ag6RwPT8Bhg==</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>bc</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>ba</string>
+	</dict>
 	<key>coloursAttributes</key>
 	<integer>1</integer>
 	<key>coloursAutocomplete</key>
@@ -41,16 +131,61 @@
 	<key>coloursVariables</key>
 	<integer>1</integer>
 	<key>currentLineHighlightColour</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmg4/CdT+Dj8J1P4OPwjU/AYY=</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>b5</string>
+		<key>green</key>
+		<string>f4</string>
+		<key>red</key>
+		<string>f4</string>
+	</dict>
 	<key>defaultSyntaxErrorHighlightingColour</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMBhARmZmZmAQGDMzMzPwGG</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>b2</string>
+		<key>green</key>
+		<string>ff</string>
+		<key>red</key>
+		<string>ff</string>
+	</dict>
 	<key>displayName</key>
 	<string>Classic Fragaria</string>
 	<key>insertionPointColor</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMGhANAQECEhIQITlNTdHJpbmcBlIQBKwZTeXN0ZW2GhJaYCXRleHRDb2xvcoaEk5UDhAJmZgABhoY=</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>0</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>0</string>
+	</dict>
 	<key>textColor</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMGhANAQECEhIQITlNTdHJpbmcBlIQBKwZTeXN0ZW2GhJaYCXRleHRDb2xvcoaEk5UDhAJmZgABhoY=</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>0</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>0</string>
+	</dict>
 	<key>textInvisibleCharactersColour</key>
-	<data>BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWEAWMGhANAQECEhIQITlNTdHJpbmcBlIQBKwZTeXN0ZW2GhJaYEGNvbnRyb2xUZXh0Q29sb3KGhJOVA4QCZmYAAYaG</data>
+	<dict>
+		<key>alpha</key>
+		<string>ff</string>
+		<key>blue</key>
+		<string>0</string>
+		<key>green</key>
+		<string>0</string>
+		<key>red</key>
+		<string>0</string>
+	</dict>
 </dict>
 </plist>
