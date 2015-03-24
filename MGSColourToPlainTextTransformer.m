@@ -81,6 +81,12 @@
 {
 	if (!value) return nil;
 
+	// Support reading both types of plists.
+	if ([value isKindOfClass:[NSString class]])
+	{
+		return [self MGSColorFromString:value];
+	}
+	
 	NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:value];
 
 	CGFloat red = [self componentValueforHex:[dictionary objectForKey:@"red"]];
@@ -119,5 +125,41 @@
 	floatVal = floatVal < 0.0 ? 0.0 : floatVal;
 	return floatVal;
 }
+
+
+/*
+ * - MGSStringFromColor
+ */
+- (NSString *) MGSStringFromColor:(NSColor *)col
+{
+	NSColor *nc;
+	
+	nc = [col colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+	if (!nc)
+	{
+		NSLog(@"MGSStringFromColor: can't convert %@, returning red", col);
+		return @"1.0 0.0 0.0";
+	}
+	return [NSString stringWithFormat:@"%f %f %f", nc.redComponent, nc.greenComponent, nc.blueComponent];
+}
+
+
+/*
+ * - MGSColorFromString
+ */
+- (NSColor *)MGSColorFromString:(NSString *)str
+{
+	NSScanner *scan;
+	CGFloat r, g, b;
+	
+	scan = [NSScanner scannerWithString:str];
+	if (!([scan scanDouble:&r] && [scan scanDouble:&g] && [scan scanDouble:&b]))
+	{
+		NSLog(@"MGSColorFromString: can't parse %@, returning red", str);
+		return [NSColor redColor];
+	}
+	return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:1.0];
+}
+
 
 @end
