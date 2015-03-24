@@ -49,7 +49,7 @@
 /*
  * - hideableViews
  */
-- (NSDictionary *)hideableViews
+- (NSDictionary *)propertiesForPanelSubviews
 {
 	return @{
 			 NSStringFromSelector(@selector(paneScheme)) : [[MGSUserDefaultsDefinitions class] propertyGroupTheme],

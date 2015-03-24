@@ -46,11 +46,14 @@
 @property (nonatomic, assign) BOOL hidesUselessPanels;
 
 
-/** A dictionary of view property names with an array of Fragaria property
- *  names, used internally for automatic view hiding. Subclasses of this
- *  class must override this method in order to provide a structure applicable
- *  for your use case if you wish to support automatic view hiding. */
-- (NSDictionary *)hideableViews;
+/** A dictionary which pairs, for each panel of this preference view,
+ *  the NSSet of properties it manages. If a set for a given panel is missing
+ *  from the dictionary, that panel is always shown. 
+ *  @discussion Since NSView does not conform to NSCoding, the keys in the
+ *              dictionary must be the KVO key for a property of self used
+ *              to access that view. This dictionary is used to determine
+ *              which panels are to be hidden or not. */
+- (NSDictionary *)propertiesForPanelSubviews;
 
 /** The ordered list of the keys for this preference view's panels. The
  *  keys must be in the same order that panels are to be shown in the view.

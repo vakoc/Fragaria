@@ -89,7 +89,7 @@
 /*
  * - hideableViews
  */
-- (NSDictionary *)hideableViews
+- (NSDictionary *)propertiesForPanelSubviews
 {
 	return @{
 			 NSStringFromSelector(@selector(paneEditing)) : [[MGSUserDefaultsDefinitions class] propertyGroupEditing],

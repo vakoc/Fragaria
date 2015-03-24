@@ -142,7 +142,7 @@
  *   Subclasses wishing to support automatic view hiding should override this.
  *   See the reference implementation for an example of the dictionary format.
  */
-- (NSDictionary *)hideableViews
+- (NSDictionary *)propertiesForPanelSubviews
 {
 	return @{};
 }
@@ -159,10 +159,11 @@
 
 /*
  * - showOrHideViews
+ *
+ *   When this method is called, our userDefaultsController might not have been
+ * assigned yet, and so we don't know which properties each panel is going to
+ * manage.
  */
-/* At this point, it's perfectly possible that the userDefaultsController
- hasn't been assigned yet, and so we don't know what the properties are
- that we're going to manage. */
 - (void)showOrHideViews
 {
 	NSSet *propertiesAvailable = self.userDefaultsController.managedProperties;
@@ -180,7 +181,7 @@
     allViewsKeys = [self keysForPanelSubviews];
 	for (NSString *key in allViewsKeys) {
         NSView *thisView = [self valueForKey:key];
-		NSSet *propertiesRequired = [[self hideableViews] objectForKey:key];
+		NSSet *propertiesRequired = [[self propertiesForPanelSubviews] objectForKey:key];
         BOOL hidden = propertiesRequired && ![propertiesAvailable intersectsSet:propertiesRequired];
 		
 		if (self.hidesUselessPanels && hidden) {
