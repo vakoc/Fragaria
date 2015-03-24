@@ -152,15 +152,15 @@ NSString * const KMGSColourSchemeExt = @"plist";
     // Observe the correct keypaths in the defaultsObjectController
     for (NSString *key in [[MGSColourScheme class] propertiesOfScheme])
     {
-        if ([[self.defaultsObjectController.content allKeys] containsObject:key])
+        if ([[self.objectController.content allKeys] containsObject:key])
         {
             NSString *keyPath = [NSString stringWithFormat:@"selection.%@", key];
-            [self.defaultsObjectController addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:(__bridge void *)(key)];
+            [self.objectController addObserver:self forKeyPath:keyPath options:NSKeyValueObservingOptionNew context:(__bridge void *)(key)];
         }
     }
 
     [self addObserver:self forKeyPath:@"selectionIndex" options:NSKeyValueObservingOptionNew context:@"schemeMenu"];
-    [self addObserver:self forKeyPath:@"defaultsObjectController.content" options:NSKeyValueObservingOptionNew context:@"defaultsObjectController"];
+    [self addObserver:self forKeyPath:@"objectController.content" options:NSKeyValueObservingOptionNew context:@"defaultsObjectController"];
 }
 
 
@@ -172,10 +172,10 @@ NSString * const KMGSColourSchemeExt = @"plist";
     // Observe the correct keypaths in the defaultsObjectController
     for (NSString *key in [[MGSColourScheme class] propertiesOfScheme])
     {
-        if ([[self.defaultsObjectController.content allKeys] containsObject:key])
+        if ([[self.objectController.content allKeys] containsObject:key])
         {
             NSString *keyPath = [NSString stringWithFormat:@"selection.%@", key];
-            [self.defaultsObjectController removeObserver:self forKeyPath:keyPath context:(__bridge void *)(key)];
+            [self.objectController removeObserver:self forKeyPath:keyPath context:(__bridge void *)(key)];
         }
     }
 
@@ -417,9 +417,9 @@ NSString * const KMGSColourSchemeExt = @"plist";
 
     for (NSString *key in [[MGSColourScheme class] propertiesOfScheme])
     {
-        if ([[self.defaultsObjectController.content allKeys] containsObject:key])
+        if ([[self.objectController.content allKeys] containsObject:key])
         {
-            [currentViewScheme setValue:[self.defaultsObjectController.selection valueForKey:key] forKey:key];
+            [currentViewScheme setValue:[self.objectController.selection valueForKey:key] forKey:key];
         }
     }
 
@@ -436,13 +436,13 @@ NSString * const KMGSColourSchemeExt = @"plist";
     self.ignoreObservations = YES;
     for (NSString *key in [[MGSColourScheme class] propertiesOfScheme])
     {
-        if ([[self.defaultsObjectController.content allKeys] containsObject:key])
+        if ([[self.objectController.content allKeys] containsObject:key])
         {
-            id remote = [self.defaultsObjectController.selection valueForKey:key];
+            id remote = [self.objectController.selection valueForKey:key];
             id local = [self.currentScheme valueForKey:key];
             if (![remote isEqual:local])
             {
-                [self.defaultsObjectController.selection setValue:[self.currentScheme valueForKey:key] forKey:key];
+                [self.objectController.selection setValue:[self.currentScheme valueForKey:key] forKey:key];
             }
         }
     }

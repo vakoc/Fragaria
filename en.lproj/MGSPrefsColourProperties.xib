@@ -1070,7 +1070,7 @@
         </objectController>
         <arrayController objectClassName="MGSColourScheme" automaticallyRearrangesObjects="YES" id="z8u-bs-3l4" customClass="MGSColourSchemeController">
             <connections>
-                <outlet property="defaultsObjectController" destination="x5m-Ak-VJo" id="T0J-21-N3I"/>
+                <outlet property="objectController" destination="x5m-Ak-VJo" id="Fox-4l-Iys"/>
                 <outlet property="parentView" destination="c22-O7-iKe" id="GPo-iC-umA"/>
                 <outlet property="schemeMenu" destination="cfm-EI-KQe" id="i0a-jy-Jsv"/>
                 <outlet property="schemeSaveDeleteButton" destination="soo-KG-LXb" id="OuI-uw-TkN"/>

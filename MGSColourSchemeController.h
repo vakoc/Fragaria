@@ -18,20 +18,22 @@
  *  As an NSArrayController descendent, it can be instantiated by IB.
  *
  *  MGSColourSchemeController doesn't pretend to know anything about your
- *  views or make assumptions about property names. These are only accessible
- *  via an NSObjectController that you connect to defaultsObjectController.
- *  And of course that NSObjectController must be connected to the
- *  MGSUserDefaultsController that is providing model data for your view.
- *
+ *  views or make assumptions about property names. All observing and setting
+ *  is performed via the view's objectController instance (which is the
+ *  controller for the model object intance MGSUserDefaults controller). Make
+ *  sure an instance of this class in IB has its `objectController` outlet
+ *  connected to the same objectController that all properties are connected to.
+*
  *  Schemes are loaded first from the framework bundle, then the application
  *  bundle, then finally from the application's Application Support folder.
  *  Subsequent schemes with the same displayName replace schemes loaded
- *  earilier, given you the chance to modify them without modifying the
+ *  earlier, giving you the chance to modify them without modifying the
  *  framework bundle.
  *
  *  No part of Fragaria saves the scheme name. Consequently the colour scheme
  *  controller looks for a matching named scheme for the current colour
- *  settings, which effectively prevents duplicated schemes.
+ *  settings. Two schemes with otherwise identical settings will result in the
+ *  first scheme in your locality's sort order to be detected.
  *
  *  Schemes are saved in the application's Application Support/Colour Schemes
  *  directory, and only those schemes can be deleted.
@@ -43,18 +45,19 @@
  *  This makes it impossible to modify existing schemes per se, however the
  *  workaround is to modify the existing scheme and save it with a new name,
  *  The previous version can then be selected and deleted. This is consistent
- *  with the behaviour in other text editors.
+ *  with the behaviour of many other text editors.
  **/
 @interface MGSColourSchemeController : NSArrayController
 
 
+#pragma mark - IBOutlet Properties - Controls
 /// @name IBOutlet Properties - Controls
 
 /** A reference to the MGSUserDefaultsController for the view.
-    @discuss This controller needs to know where the model data for your view
-    is. Your view should access MGSFragariaView properties with an
-    NSOBjectController. This property is a reference to that controller. */
-@property (nonatomic, assign) IBOutlet NSObjectController *defaultsObjectController;
+    @discuss This controller needs to know where the model controller for your
+    view is. Your view should access MGSFragariaView properties with an
+    NSObjectController. This property is a reference to that controller. */
+@property (nonatomic, assign) IBOutlet NSObjectController *objectController;
 
 /** A popup list that provides the current list of available schemes. */
 @property (nonatomic, assign) IBOutlet NSPopUpButton *schemeMenu;
@@ -65,10 +68,12 @@
     and buttonSaveDeleteEnabled respectively. */
 @property (nonatomic, assign) IBOutlet NSButton *schemeSaveDeleteButton;
 
-/** A reference to the parent view. */
+/** A reference to the parent view. You must set this in IB otherwise
+    save and delete dialogues will not attach as sheet to the window. */
 @property (nonatomic, assign) IBOutlet NSView *parentView;
 
 
+#pragma mark - Properties - Bindable for UI Use
 /// @name Properties - Bindable for UI Use
 
 /** The current correct state of a save/delete button. Bind the button to
@@ -80,6 +85,7 @@
 @property (nonatomic, assign, readonly) NSString *buttonSaveDeleteTitle;
 
 
+#pragma mark - Actions
 /// @name Actions
 
 /** The add/delete button action.
