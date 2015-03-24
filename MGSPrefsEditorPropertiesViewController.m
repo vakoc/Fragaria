@@ -77,12 +77,12 @@
  */
 - (void)setEditorFont:(NSFont *)editorFont
 {
-    [self.propertiesController.values setValue:editorFont forKey:MGSFragariaDefaultsTextFont];
+    [self.userDefaultsController.values setValue:editorFont forKey:MGSFragariaDefaultsTextFont];
 }
 
 - (NSFont *)editorFont
 {
-    return [self.propertiesController.values valueForKey:MGSFragariaDefaultsTextFont];
+    return [self.userDefaultsController.values valueForKey:MGSFragariaDefaultsTextFont];
 }
 
 

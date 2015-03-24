@@ -21,14 +21,15 @@
 @interface MGSPrefsViewContoller : NSViewController
 
 /**
- *  The NSObjectController that the UI elements are bound to.
+ *  The NSObjectController that the UI elements are bound to. Its datasource
+ *  is
  */
 @property (nonatomic, weak) IBOutlet NSObjectController *objectController;
 
 /**
  *  A reference to the properties controller that is the model for this view.
  **/
-@property (nonatomic, weak) MGSUserDefaultsController *propertiesController;
+@property (nonatomic, weak) MGSUserDefaultsController *userDefaultsController;
 
 
 /**
@@ -36,7 +37,7 @@
  *  structure that returns @(YES) or @(NO) for keyPaths in the form of
  *  this_controller.managedProperties.propertyName.
  *  @discuss Useful for user interface enabled bindings to disable elements
- *  that the propertiesController doesn't manage.
+ *  that the userDefaultsController doesn't manage.
  **/
 @property (nonatomic, assign, readonly) id managedProperties;
 

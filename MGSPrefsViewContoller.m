@@ -14,7 +14,7 @@
 
 @interface MGSManagedPropertiesProxy : NSObject
 
-@property (nonatomic, weak) MGSUserDefaultsController *propertiesController;
+@property (nonatomic, weak) MGSUserDefaultsController *userDefaultsController;
 @property (nonatomic, weak) MGSPrefsViewContoller *viewController;
 
 @end
@@ -41,7 +41,7 @@
  */
 -(id)valueForKey:(NSString *)key
 {
-    BOOL managesProperty = [self.propertiesController.managedProperties containsObject:key];
+    BOOL managesProperty = [self.userDefaultsController.managedProperties containsObject:key];
 
     return @(managesProperty);
 }
@@ -82,13 +82,13 @@
 #pragma mark - Property Accessors
 
 /*
- *  @property propertiesController
+ *  @property setUserDefaultsController
  */
-- (void)setPropertiesController:(MGSUserDefaultsController *)propertiesController
+- (void)setUserDefaultsController:(MGSUserDefaultsController *)setUserDefaultsController
 {
     [self willChangeValueForKey:@"managedProperties"];
-    _propertiesController = propertiesController;
-    self.propertiesProxy.propertiesController = propertiesController;
+    _userDefaultsController = setUserDefaultsController;
+    self.propertiesProxy.userDefaultsController = setUserDefaultsController;
     [self didChangeValueForKey:@"managedProperties"];
 	[self showOrHideViews];
 }
@@ -112,7 +112,7 @@
 }
 - (BOOL)areAllColourPropertiesAvailable
 {
-	NSSet *propertiesAvailable = self.propertiesController.managedProperties;
+	NSSet *propertiesAvailable = self.userDefaultsController.managedProperties;
 	NSSet *propertiesRequired = [[MGSUserDefaultsDefinitions class] propertyGroupThemeColours];
 	return [propertiesRequired isSubsetOfSet:propertiesAvailable];
 }
@@ -148,7 +148,7 @@
  */
 - (void)showOrHideViews
 {
-	NSSet *propertiesAvailable = self.propertiesController.managedProperties;
+	NSSet *propertiesAvailable = self.userDefaultsController.managedProperties;
 	
 	if (!self.constraintsDict)
 	{

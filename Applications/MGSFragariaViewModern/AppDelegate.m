@@ -173,8 +173,8 @@
        individually. In the real world I'd probably add a property to
        the window controller and set it only once, there. */
 
-    editorSettingsController.propertiesController = [MGSUserDefaultsController sharedControllerForGroupID:group];
-    colorSettingsController.propertiesController = [MGSUserDefaultsController sharedControllerForGroupID:group];
+    editorSettingsController.userDefaultsController = [MGSUserDefaultsController sharedControllerForGroupID:group];
+    colorSettingsController.userDefaultsController = [MGSUserDefaultsController sharedControllerForGroupID:group];
 	
 	/* We'll tell the panels to hide property groups that have no enabled items.
 	   Items are only enabled if the propertiesController is managing them. */
