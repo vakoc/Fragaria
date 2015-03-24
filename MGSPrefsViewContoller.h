@@ -7,8 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-@class MGSUserDefaultsController;
+#import "MGSUserDefaultsControllerProtocol.h"
 
 
 /**
@@ -29,7 +28,7 @@
 /**
  *  A reference to the properties controller that is the model for this view.
  **/
-@property (nonatomic, weak) MGSUserDefaultsController *userDefaultsController;
+@property (nonatomic, weak) id <MGSUserDefaultsController> userDefaultsController;
 
 
 /**

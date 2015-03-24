@@ -151,6 +151,7 @@
 		D0E521061A90DC02005CB80B /* MGSSyntaxErrorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E521041A90DC02005CB80B /* MGSSyntaxErrorController.m */; };
 		D0E521131A90E34F005CB80B /* MGSFragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* MGSFragaria.framework */; };
 		D0E5211A1A90E399005CB80B /* MGSSyntaxErrorControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E521071A90E307005CB80B /* MGSSyntaxErrorControllerTests.m */; };
+		D0F353551AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F353541AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h */; };
 		E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CF4B7816E6927300C27B5C /* MGSBreakpointDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E3D4B2771714D89700BB2CC6 /* SMLSyntaxError.h in Headers */ = {isa = PBXBuildFile; fileRef = E3D4B2751714D89700BB2CC6 /* SMLSyntaxError.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -402,6 +403,7 @@
 		D0E521071A90E307005CB80B /* MGSSyntaxErrorControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxErrorControllerTests.m; sourceTree = "<group>"; };
 		D0E5210D1A90E34F005CB80B /* MGSFragaria Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "MGSFragaria Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0E521101A90E34F005CB80B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D0F353541AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSUserDefaultsControllerProtocol.h; sourceTree = "<group>"; };
 		E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMLAutoCompleteDelegate.h; sourceTree = "<group>"; };
 		E3CF4B7816E6927300C27B5C /* MGSBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBreakpointDelegate.h; sourceTree = "<group>"; };
 		E3D4B2751714D89700BB2CC6 /* SMLSyntaxError.h */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 4; lastKnownFileType = sourcecode.c.h; path = SMLSyntaxError.h; sourceTree = "<group>"; tabWidth = 4; };
@@ -750,6 +752,7 @@
 			children = (
 				D07188381AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h */,
 				D07188391AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m */,
+				D0F353541AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h */,
 				D07188361AB3CDFA0073493A /* MGSUserDefaultsController.h */,
 				D07188371AB3CDFA0073493A /* MGSUserDefaultsController.m */,
 				D07188341AB3CDFA0073493A /* MGSUserDefaults.h */,
@@ -927,6 +930,7 @@
 				D06653D21AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h in Headers */,
 				E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */,
 				D0718BAB1AB71FE00073493A /* MGSColourSchemeController.h in Headers */,
+				D0F353551AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h in Headers */,
 				0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */,
 				ABC578E91603D6000040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h in Headers */,
 				D071883E1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h in Headers */,
