@@ -120,7 +120,7 @@
 - (BOOL)areAllColourPropertiesAvailable
 {
 	NSSet *propertiesAvailable = self.userDefaultsController.managedProperties;
-	NSSet *propertiesRequired = [[MGSUserDefaultsDefinitions class] propertyGroupThemeColours];
+	NSSet *propertiesRequired = [[MGSUserDefaultsDefinitions class] propertyGroupTheme];
 	return [propertiesRequired isSubsetOfSet:propertiesAvailable];
 }
 

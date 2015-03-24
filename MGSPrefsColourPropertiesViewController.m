@@ -52,9 +52,9 @@
 - (NSDictionary *)hideableViews
 {
 	return @{
-			 NSStringFromSelector(@selector(paneScheme)) : [[MGSUserDefaultsDefinitions class] propertyGroupThemeColours],
+			 NSStringFromSelector(@selector(paneScheme)) : [[MGSUserDefaultsDefinitions class] propertyGroupTheme],
 			 NSStringFromSelector(@selector(paneEditorColours)) : [[MGSUserDefaultsDefinitions class] propertyGroupEditorColours],
-			 NSStringFromSelector(@selector(paneSyntaxColours)) : [[MGSUserDefaultsDefinitions class] propertyGroupSyntaxHighlightingColours],
+			 NSStringFromSelector(@selector(paneSyntaxColours)) : [[MGSUserDefaultsDefinitions class] propertyGroupSyntaxHighlighting],
 			 NSStringFromSelector(@selector(paneOtherSettings)) : [[MGSUserDefaultsDefinitions class] propertyGroupColouringExtraOptions],
 			 };
 }

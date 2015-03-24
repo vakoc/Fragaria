@@ -150,7 +150,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
 - (void)setupObservers
 {
     // Observe the correct keypaths in the defaultsObjectController
-    for (NSString *key in [[MGSColourScheme class] colourProperties])
+    for (NSString *key in [[MGSColourScheme class] propertiesOfScheme])
     {
         if ([[self.defaultsObjectController.content allKeys] containsObject:key])
         {
@@ -170,7 +170,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
 - (void)teardownObservers
 {
     // Observe the correct keypaths in the defaultsObjectController
-    for (NSString *key in [[MGSColourScheme class] colourProperties])
+    for (NSString *key in [[MGSColourScheme class] propertiesOfScheme])
     {
         if ([[self.defaultsObjectController.content allKeys] containsObject:key])
         {
@@ -196,7 +196,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
         NSLog(@"This should be a one-time shot, otherwise we're in trouble for re-registering too many observers.");
         [self setup];
     }
-    else if ( !self.ignoreObservations && [[[MGSColourScheme class] colourProperties] containsObject:localContext] )
+    else if ( !self.ignoreObservations && [[[MGSColourScheme class] propertiesOfScheme] containsObject:localContext] )
     {
         [self willChangeValueForKey:@"buttonSaveDeleteEnabled"];
         [self willChangeValueForKey:@"buttonSaveDeleteTitle"];
@@ -269,7 +269,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
             if (!cancelled)
             {
                 [self removeObject:self.currentScheme];
-                [[NSFileManager defaultManager] removeItemAtPath:self.currentScheme.loadedFromFile error:nil];
+                [[NSFileManager defaultManager] removeItemAtPath:self.currentScheme.sourceFile error:nil];
             }
         }];
     }
@@ -415,7 +415,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
         currentViewScheme = [[MGSColourScheme alloc] init];
     }
 
-    for (NSString *key in [[MGSColourScheme class] colourProperties])
+    for (NSString *key in [[MGSColourScheme class] propertiesOfScheme])
     {
         if ([[self.defaultsObjectController.content allKeys] containsObject:key])
         {
@@ -434,7 +434,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
 - (void)applyColourSchemeToView
 {
     self.ignoreObservations = YES;
-    for (NSString *key in [[MGSColourScheme class] colourProperties])
+    for (NSString *key in [[MGSColourScheme class] propertiesOfScheme])
     {
         if ([[self.defaultsObjectController.content allKeys] containsObject:key])
         {

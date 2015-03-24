@@ -158,7 +158,7 @@
  */
 - (BOOL)isEqualToScheme:(MGSColourScheme *)scheme
 {
-    for (NSString *key in [[self class] colourProperties])
+    for (NSString *key in [[self class] propertiesOfScheme])
     {
         if ([[self valueForKey:key] isKindOfClass:[NSColor class]])
         {
@@ -198,7 +198,7 @@
 	NSAssert(fileContents, @"Error reading file %@", file);
 
     self.propertyListRepresentation = fileContents;
-    self.loadedFromFile = file;
+    self.sourceFile = file;
 }
 
 
@@ -263,9 +263,8 @@
  */
 + (NSSet *)propertiesAll
 {
-	NSSet *result = [[[self class] propertiesOfTypeString] setByAddingObjectsFromSet:self.propertiesOfTypeColor];
-	result = [result setByAddingObjectsFromSet:[[self class] propertiesOfTypeBool]];
-	return result;
+	return [[[MGSUserDefaultsDefinitions class] propertyGroupTheme]
+			setByAddingObjectsFromSet:[[self class] propertiesOfTypeString]];
 }
 
 
@@ -274,11 +273,7 @@
  */
 + (NSSet*)propertiesOfTypeBool
 {
-	return [NSSet setWithArray:
-			@[MGSFragariaDefaultsColoursAttributes, MGSFragariaDefaultsColoursAutocomplete, MGSFragariaDefaultsColoursCommands,
-			  MGSFragariaDefaultsColoursComments, MGSFragariaDefaultsColoursInstructions, MGSFragariaDefaultsColoursKeywords,
-			  MGSFragariaDefaultsColoursNumbers, MGSFragariaDefaultsColoursStrings, MGSFragariaDefaultsColoursVariables
-			  ]];
+	return [[MGSUserDefaultsDefinitions class] propertyGroupSyntaxHighlightingBools];
 }
 
 
@@ -287,13 +282,8 @@
  */
 + (NSSet *)propertiesOfTypeColor
 {
-	return [NSSet setWithArray:
-			@[MGSFragariaDefaultsTextColor, MGSFragariaDefaultsBackgroundColor, MGSFragariaDefaultsDefaultErrorHighlightingColor,
-              MGSFragariaDefaultsTextInvisibleCharactersColour, MGSFragariaDefaultsCurrentLineHighlightColour, MGSFragariaDefaultsInsertionPointColor,
-              MGSFragariaDefaultsColourForAttributes, MGSFragariaDefaultsColourForAutocomplete, MGSFragariaDefaultsColourForCommands,
-              MGSFragariaDefaultsColourForComments, MGSFragariaDefaultsColourForInstructions, MGSFragariaDefaultsColourForKeywords,
-              MGSFragariaDefaultsColourForNumbers, MGSFragariaDefaultsColourForStrings, MGSFragariaDefaultsColourForVariables,
-			  ]];
+	return [[[MGSUserDefaultsDefinitions class] propertyGroupEditorColours]
+			setByAddingObjectsFromSet:[[MGSUserDefaultsDefinitions class] propertyGroupSyntaxHighlightingColours]];
 }
 
 
@@ -309,9 +299,9 @@
 /*
  * + colourProperties
  */
-+ (NSArray *)colourProperties
++ (NSArray *)propertiesOfScheme
 {
-	return [[self.propertiesOfTypeColor setByAddingObjectsFromSet:self.propertiesOfTypeBool] allObjects];
+	return [[[MGSUserDefaultsDefinitions class] propertyGroupTheme] allObjects];
 }
 
 
