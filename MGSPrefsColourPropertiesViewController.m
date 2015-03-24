@@ -59,4 +59,19 @@
 			 };
 }
 
+
+/*
+ * - keysForPanelSubviews
+ */
+- (NSArray *)keysForPanelSubviews
+{
+    return @[
+        NSStringFromSelector(@selector(paneScheme)),
+        NSStringFromSelector(@selector(paneEditorColours)),
+        NSStringFromSelector(@selector(paneSyntaxColours)),
+        NSStringFromSelector(@selector(paneOtherSettings))
+    ];
+}
+
+
 @end

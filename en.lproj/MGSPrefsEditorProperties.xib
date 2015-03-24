@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -19,11 +20,11 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="c22-O7-iKe" userLabel="Editor Properties">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="558"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="554"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="pL0-gX-MzB" userLabel="Editing View">
-                    <rect key="frame" x="0.0" y="390" width="500" height="168"/>
+                    <rect key="frame" x="0.0" y="386" width="500" height="168"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Mdb-GN-6Ll">
                             <rect key="frame" x="18" y="141" width="464" height="17"/>
@@ -330,14 +331,8 @@
                         <constraint firstItem="qF8-AN-CYR" firstAttribute="leading" secondItem="CJI-81-uJZ" secondAttribute="leading" priority="900" id="zwJ-aI-ydr"/>
                     </constraints>
                 </customView>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="grI-7d-jFP" userLabel="Horizontal Line 1">
-                    <rect key="frame" x="0.0" y="387" width="500" height="5"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="kX7-bx-8Jg" userLabel="Gutter View">
-                    <rect key="frame" x="0.0" y="303" width="500" height="86"/>
+                    <rect key="frame" x="0.0" y="300" width="500" height="86"/>
                     <subviews>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="rYf-Q4-e3m">
                             <rect key="frame" x="38" y="35" width="121" height="18"/>
@@ -440,6 +435,7 @@
                         <constraint firstItem="gY4-90-HrU" firstAttribute="baseline" secondItem="Nn8-Cg-QG4" secondAttribute="baseline" priority="900" id="5mq-t0-yBP"/>
                         <constraint firstItem="gY4-90-HrU" firstAttribute="leading" secondItem="rYf-Q4-e3m" secondAttribute="leading" priority="900" id="Bgj-uy-QsP"/>
                         <constraint firstItem="rYf-Q4-e3m" firstAttribute="top" secondItem="h8x-Ji-ezN" secondAttribute="top" priority="900" id="FXX-VE-PgI"/>
+                        <constraint firstItem="h8x-Ji-ezN" firstAttribute="leading" secondItem="kX7-bx-8Jg" secondAttribute="leading" constant="305" id="Kel-st-XbF"/>
                         <constraint firstItem="Nn8-Cg-QG4" firstAttribute="leading" secondItem="gY4-90-HrU" secondAttribute="trailing" priority="900" constant="8" symbolic="YES" id="LwQ-UN-5I7"/>
                         <constraint firstAttribute="bottom" secondItem="gY4-90-HrU" secondAttribute="bottom" priority="900" constant="10" id="PhI-91-ydC"/>
                         <constraint firstItem="TsA-rT-l4o" firstAttribute="leading" secondItem="kX7-bx-8Jg" secondAttribute="leading" priority="900" constant="20" symbolic="YES" id="Q5j-R8-Rtg"/>
@@ -451,14 +447,8 @@
                         <constraint firstAttribute="trailing" secondItem="TsA-rT-l4o" secondAttribute="trailing" priority="900" constant="20" symbolic="YES" id="nnx-GY-rpE"/>
                     </constraints>
                 </customView>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="DjC-1y-U8Z" userLabel="Horizontal Line 2">
-                    <rect key="frame" x="0.0" y="300" width="500" height="5"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="5nN-zl-ccv" userLabel="Auto Complete View">
-                    <rect key="frame" x="0.0" y="203" width="500" height="99"/>
+                    <rect key="frame" x="0.0" y="201" width="500" height="99"/>
                     <subviews>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hyh-4o-qfx">
                             <rect key="frame" x="403" y="51" width="39" height="11"/>
@@ -596,6 +586,7 @@
                         <constraint firstItem="qVG-TA-QQW" firstAttribute="baseline" secondItem="hyh-4o-qfx" secondAttribute="baseline" priority="900" id="S8j-fl-lry"/>
                         <constraint firstItem="soq-1p-DIJ" firstAttribute="leading" secondItem="5nN-zl-ccv" secondAttribute="leading" priority="900" constant="20" symbolic="YES" id="SAa-GD-NjC"/>
                         <constraint firstAttribute="trailing" secondItem="zdv-D4-Xw4" secondAttribute="trailing" priority="800" constant="20" symbolic="YES" id="e73-IF-8iP"/>
+                        <constraint firstItem="zdv-D4-Xw4" firstAttribute="leading" secondItem="5nN-zl-ccv" secondAttribute="leading" constant="305" id="f6y-Wj-nzj"/>
                         <constraint firstItem="zdv-D4-Xw4" firstAttribute="baseline" secondItem="kPH-cN-saE" secondAttribute="baseline" priority="900" id="foE-35-8ft"/>
                         <constraint firstItem="qVG-TA-QQW" firstAttribute="leading" secondItem="zp4-KL-GPt" secondAttribute="trailing" priority="900" constant="8" symbolic="YES" id="j8K-OU-wHT"/>
                         <constraint firstAttribute="bottom" secondItem="kPH-cN-saE" secondAttribute="bottom" priority="900" constant="10" id="pMm-If-2Nr"/>
@@ -603,14 +594,8 @@
                         <constraint firstItem="zp4-KL-GPt" firstAttribute="leading" secondItem="JKN-Q8-Olx" secondAttribute="leading" priority="900" id="uC2-ee-8jW"/>
                     </constraints>
                 </customView>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="mNI-lO-6kW" userLabel="Horizontal Line 3">
-                    <rect key="frame" x="0.0" y="200" width="500" height="5"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="5Nw-IJ-f7x" userLabel="Indenting View">
-                    <rect key="frame" x="0.0" y="96" width="500" height="106"/>
+                    <rect key="frame" x="0.0" y="95" width="500" height="106"/>
                     <subviews>
                         <button verticalHuggingPriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="WZV-XE-6el">
                             <rect key="frame" x="38" y="35" width="155" height="18"/>
@@ -769,6 +754,7 @@
                         <constraint firstItem="M9y-Ym-86h" firstAttribute="top" secondItem="5Nw-IJ-f7x" secondAttribute="top" priority="900" constant="10" id="36d-ws-1NM"/>
                         <constraint firstItem="hlh-nz-Zl4" firstAttribute="leading" secondItem="f9G-4F-muL" secondAttribute="trailing" priority="900" constant="8" symbolic="YES" id="3MO-hm-aEa"/>
                         <constraint firstItem="9Em-Lk-rB9" firstAttribute="baseline" secondItem="f9G-4F-muL" secondAttribute="baseline" priority="900" id="3bf-T1-xeL"/>
+                        <constraint firstItem="8RM-vf-eWV" firstAttribute="leading" secondItem="5Nw-IJ-f7x" secondAttribute="leading" constant="309" id="65c-oK-dKu"/>
                         <constraint firstItem="o7c-2C-c7k" firstAttribute="top" secondItem="M9y-Ym-86h" secondAttribute="bottom" priority="900" constant="8" symbolic="YES" id="FGa-Q9-Jks"/>
                         <constraint firstItem="WZV-XE-6el" firstAttribute="baseline" secondItem="3jU-gT-dEz" secondAttribute="baseline" priority="900" id="GRu-CX-tQq"/>
                         <constraint firstItem="WZV-XE-6el" firstAttribute="leading" secondItem="9Em-Lk-rB9" secondAttribute="leading" priority="900" id="GfK-7i-7tE"/>
@@ -788,12 +774,6 @@
                         <constraint firstItem="1Ua-x8-chS" firstAttribute="baseline" secondItem="9Em-Lk-rB9" secondAttribute="baseline" priority="900" id="wdl-7p-UzE"/>
                     </constraints>
                 </customView>
-                <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="s6a-oL-oN4" userLabel="Horizontal Line 4">
-                    <rect key="frame" x="0.0" y="93" width="500" height="5"/>
-                    <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
-                    <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <font key="titleFont" metaFont="system"/>
-                </box>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="bZI-wA-fV8" userLabel="Text Font View">
                     <rect key="frame" x="0.0" y="0.0" width="500" height="95"/>
                     <subviews>
@@ -852,38 +832,22 @@
             </subviews>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="5nN-zl-ccv" secondAttribute="trailing" id="1XI-Mw-ve2"/>
-                <constraint firstItem="bZI-wA-fV8" firstAttribute="top" secondItem="s6a-oL-oN4" secondAttribute="bottom" id="5Pr-sa-hVk"/>
-                <constraint firstAttribute="trailing" secondItem="grI-7d-jFP" secondAttribute="trailing" id="5w4-kM-gwd"/>
-                <constraint firstItem="grI-7d-jFP" firstAttribute="top" secondItem="pL0-gX-MzB" secondAttribute="bottom" id="78Y-lZ-wcy"/>
                 <constraint firstAttribute="trailing" secondItem="bZI-wA-fV8" secondAttribute="trailing" id="7kO-DI-jL9"/>
+                <constraint firstItem="5nN-zl-ccv" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="254" id="7sl-f9-H9c"/>
                 <constraint firstAttribute="trailing" secondItem="pL0-gX-MzB" secondAttribute="trailing" id="8O4-3f-ebc"/>
-                <constraint firstItem="5ao-7b-jBq" firstAttribute="leading" secondItem="h8x-Ji-ezN" secondAttribute="leading" id="8vR-Gd-gcz"/>
-                <constraint firstAttribute="trailing" secondItem="s6a-oL-oN4" secondAttribute="trailing" id="FAO-W4-EE9"/>
+                <constraint firstItem="5nN-zl-ccv" firstAttribute="top" secondItem="kX7-bx-8Jg" secondAttribute="bottom" id="CaW-03-QX4"/>
                 <constraint firstItem="pL0-gX-MzB" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="GHa-0h-VFg"/>
-                <constraint firstItem="DjC-1y-U8Z" firstAttribute="top" secondItem="kX7-bx-8Jg" secondAttribute="bottom" id="QMD-ys-Nns"/>
+                <constraint firstItem="5Nw-IJ-f7x" firstAttribute="top" secondItem="5nN-zl-ccv" secondAttribute="bottom" id="Ls2-ia-b8X"/>
                 <constraint firstAttribute="trailing" secondItem="5Nw-IJ-f7x" secondAttribute="trailing" id="SOg-sd-W5S"/>
                 <constraint firstItem="bZI-wA-fV8" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="Uze-lU-tQJ"/>
-                <constraint firstItem="kX7-bx-8Jg" firstAttribute="top" secondItem="grI-7d-jFP" secondAttribute="bottom" id="WP4-Ve-nlU"/>
-                <constraint firstItem="8RM-vf-eWV" firstAttribute="leading" secondItem="zdv-D4-Xw4" secondAttribute="leading" constant="4" id="XxD-5d-uPO"/>
                 <constraint firstAttribute="bottom" secondItem="bZI-wA-fV8" secondAttribute="bottom" id="Yug-e3-CuV"/>
-                <constraint firstAttribute="trailing" secondItem="mNI-lO-6kW" secondAttribute="trailing" id="Zdz-UL-kFT"/>
                 <constraint firstItem="5nN-zl-ccv" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="bCe-1d-WdF"/>
-                <constraint firstItem="mNI-lO-6kW" firstAttribute="top" secondItem="5nN-zl-ccv" secondAttribute="bottom" id="bb2-61-sFA"/>
                 <constraint firstAttribute="trailing" secondItem="kX7-bx-8Jg" secondAttribute="trailing" id="cmp-yW-oaI"/>
                 <constraint firstItem="kX7-bx-8Jg" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="eOy-H4-pJk"/>
-                <constraint firstItem="5nN-zl-ccv" firstAttribute="top" secondItem="DjC-1y-U8Z" secondAttribute="bottom" id="eb6-OQ-SBU"/>
-                <constraint firstAttribute="trailing" secondItem="DjC-1y-U8Z" secondAttribute="trailing" id="etF-e0-Tav"/>
-                <constraint firstItem="zdv-D4-Xw4" firstAttribute="leading" secondItem="h8x-Ji-ezN" secondAttribute="leading" id="fOl-EQ-swR"/>
                 <constraint firstItem="5Nw-IJ-f7x" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="gRQ-bL-Xr2"/>
-                <constraint firstItem="grI-7d-jFP" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="i3h-QG-jwi"/>
-                <constraint firstItem="s6a-oL-oN4" firstAttribute="top" secondItem="5Nw-IJ-f7x" secondAttribute="bottom" id="ixO-0N-0vU"/>
-                <constraint firstItem="DjC-1y-U8Z" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="lMq-5d-M1z"/>
-                <constraint firstItem="5Nw-IJ-f7x" firstAttribute="top" secondItem="mNI-lO-6kW" secondAttribute="bottom" id="ljo-QF-QoN"/>
-                <constraint firstItem="s6a-oL-oN4" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="mTR-dV-UNZ"/>
                 <constraint firstItem="pL0-gX-MzB" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="u37-qP-yJv"/>
-                <constraint firstItem="mNI-lO-6kW" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="uQg-ih-Dgh"/>
             </constraints>
-            <point key="canvasLocation" x="913" y="861.5"/>
+            <point key="canvasLocation" x="913" y="859"/>
         </customView>
         <objectController id="nB4-Iz-pOA" userLabel="MGSUserDefaults">
             <connections>

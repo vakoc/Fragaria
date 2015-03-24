@@ -101,4 +101,19 @@
 }
 
 
+/*
+ * - keysForPanelSubviews
+ */
+- (NSArray *)keysForPanelSubviews
+{
+    return @[
+        NSStringFromSelector(@selector(paneEditing)),
+        NSStringFromSelector(@selector(paneGutter)),
+        NSStringFromSelector(@selector(paneAutocomplete)),
+        NSStringFromSelector(@selector(paneIndenting)),
+        NSStringFromSelector(@selector(paneTextFont))
+    ];
+}
+
+
 @end
