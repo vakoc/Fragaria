@@ -21,8 +21,8 @@
 @interface MGSPrefsViewContoller : NSViewController
 
 /**
- *  The NSObjectController that the UI elements are bound to. Its datasource
- *  is
+ *  The NSObjectController that the UI elements are bound to. Its contentObject
+ *  is an instance of MGSUserDefaultsController, and should be set in IB.
  */
 @property (nonatomic, weak) IBOutlet NSObjectController *objectController;
 
