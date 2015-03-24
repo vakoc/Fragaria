@@ -22,7 +22,7 @@
 
 @implementation MGSColourSchemeSaveController {
 
-    void (^completionBlock)();
+    void (^completionBlock)(BOOL);
     void (^deleteCompletion)(BOOL);
 }
 
@@ -55,7 +55,7 @@
 /*
  * - showSchemeNameGetter:completion:
  */
-- (void)showSchemeNameGetter:(NSWindow *)window completion:(void (^)(void))aCompletionBlock
+- (void)showSchemeNameGetter:(NSWindow *)window completion:(void (^)(BOOL))aCompletionBlock
 {
     completionBlock = aCompletionBlock;
     [NSApp beginSheet:self.window
@@ -72,11 +72,14 @@
 - (IBAction)closeSheet:(id)sender
 {
     [NSApp endSheet:self.window];
-    if (sender == self.bCancel)
+    BOOL confirmed = sender != self.bCancel;
+
+    if (confirmed)
     {
-        self.schemeName = nil;
+        NSCharacterSet *cleanCharacters = [NSCharacterSet characterSetWithCharactersInString:@"/\\?%*|\"<>"];
+        self.fileName = [[self.schemeName componentsSeparatedByCharactersInSet:cleanCharacters] componentsJoinedByString:@""];
     }
-    completionBlock();
+    completionBlock(confirmed);
 }
 
 
@@ -134,7 +137,7 @@
 - (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
     BOOL result = returnCode == NSAlertFirstButtonReturn;
-    deleteCompletion(!result);
+    deleteCompletion(result);
 }
 
 @end
