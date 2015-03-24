@@ -355,6 +355,16 @@ return [NSSet setWithArray:@[
 								 MGSFragariaDefaultsColourForNumbers,
 								 MGSFragariaDefaultsColourForStrings,
 								 MGSFragariaDefaultsColourForVariables,
+								 ]];
+}
+
+
+/*
+ * + propertyGroupSyntaxHighlightingBools
+ */
++ (NSSet *)propertyGroupSyntaxHighlightingBools
+{
+	return [NSSet setWithArray:@[
 								 MGSFragariaDefaultsColoursAttributes,
 								 MGSFragariaDefaultsColoursAutocomplete,
 								 MGSFragariaDefaultsColoursCommands,
@@ -369,12 +379,22 @@ return [NSSet setWithArray:@[
 
 
 /*
+ * - propertyGroupSyntaxHighlighting
+ */
++ (NSSet *)propertyGroupSyntaxHighlighting
+{
+	return [[[self class] propertyGroupSyntaxHighlightingColours]
+			setByAddingObjectsFromSet:[[self class] propertyGroupSyntaxHighlightingBools]];
+}
+
+
+/*
  * + propertyGroupThemeColours
  */
 + (NSSet *)propertyGroupThemeColours
 {
 	return [[[self class] propertyGroupEditorColours]
-			setByAddingObjectsFromSet:[[self class] propertyGroupSyntaxHighlightingColours]];
+			setByAddingObjectsFromSet:[[self class] propertyGroupSyntaxHighlighting]];
 }
 
 
