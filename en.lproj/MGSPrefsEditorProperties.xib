@@ -215,7 +215,6 @@
                             <connections>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.lineHeightMultiple" id="OnM-9N-HEk"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineHeightMultiple" id="EZC-VC-p7A"/>
-                                <outlet property="formatter" destination="73M-TH-ya7" id="y6V-Jl-1fo"/>
                             </connections>
                         </textField>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="GJ0-vQ-rM3">
@@ -896,10 +895,5 @@
                 </binding>
             </connections>
         </objectController>
-        <numberFormatter formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="73M-TH-ya7">
-            <metadata>
-                <real key="inspectorSampleValue" value="1"/>
-            </metadata>
-        </numberFormatter>
     </objects>
 </document>
