@@ -44,13 +44,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsInvisibleCharacters" id="z8I-rP-E9h"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsInvisibleCharacters" id="U90-i6-CNS">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsInvisibleCharacters" id="z8I-rP-E9h"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsInvisibleCharacters" id="Cfv-dB-ezf"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.showsInvisibleCharacters" id="gmi-Dg-hkm">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="J1G-DE-nBK">
@@ -63,13 +68,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsSyntaxErrors" id="7pC-qr-cC6"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsSyntaxErrors" id="QEf-Yr-rtv">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsSyntaxErrors" id="7pC-qr-cC6"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsSyntaxErrors" id="JvK-1F-fMc"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.showsSyntaxErrors" id="BKb-Gg-II1">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="5ao-7b-jBq">
@@ -82,13 +92,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsMatchingBraces" id="Uxq-hB-c3b"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsMatchingBraces" id="Iab-51-rac">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsMatchingBraces" id="Uxq-hB-c3b"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsMatchingBraces" id="eUE-0E-Yy3"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.showsMatchingBraces" id="hsb-9z-Oi9">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="CJI-81-uJZ">
@@ -101,13 +116,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.lineWrap" id="cri-vD-oRv"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.lineWrap" id="qr2-IQ-GFw">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.lineWrap" id="cri-vD-oRv"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineWrap" id="fqD-3E-LLd"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.lineWrap" id="ULs-wx-2qm">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="oCx-lB-Pp7">
@@ -120,13 +140,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsPageGuide" id="yWb-uU-Gfs"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsPageGuide" id="LpB-wE-Iog">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsPageGuide" id="yWb-uU-Gfs"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsPageGuide" id="Cdg-Pp-i1n"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.showsPageGuide" id="dFt-Ch-wQL">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="Ott-wa-8PV">
@@ -139,7 +164,6 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.lineWrapsAtPageGuide" id="30e-La-lTF"/>
                                 <binding destination="nB4-Iz-pOA" name="enabled2" keyPath="selection.lineWrap" previousBinding="4JS-Q1-e31" id="7lr-3S-lRv">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -153,26 +177,13 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.lineWrapsAtPageGuide" id="30e-La-lTF"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineWrapsAtPageGuide" id="4JS-Q1-e31"/>
-                            </connections>
-                        </button>
-                        <button translatesAutoresizingMaskIntoConstraints="NO" id="qF8-AN-CYR">
-                            <rect key="frame" x="38" y="115" width="166" height="18"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="14" id="jtU-YY-jCI"/>
-                            </constraints>
-                            <buttonCell key="cell" type="check" title="Use syntax highlighting" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="yxF-Bd-a9n">
-                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                <font key="font" metaFont="system"/>
-                            </buttonCell>
-                            <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.syntaxColoured" id="Fhn-iy-AFI"/>
-                                <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.syntaxColoured" id="nRR-hs-I4T">
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.lineWrapsAtPageGuide" id="WGY-B1-JP6">
                                     <dictionary key="options">
-                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.syntaxColoured" id="ypD-2D-51P"/>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="7tI-Nb-Shf">
@@ -185,7 +196,6 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsIndividualErrors" id="dAX-CN-sag"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsIndividualErrors" id="H4G-fT-QoG">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
@@ -199,7 +209,13 @@
                                         <integer key="NSNullPlaceholder" value="-1"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsIndividualErrors" id="dAX-CN-sag"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsIndividualErrors" id="L1j-Nm-3zC"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.showsIndividualErrors" id="WGz-A8-9nq">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="i9B-Jn-s8k">
@@ -235,13 +251,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.highlightsCurrentLine" id="X4W-Vq-Jar"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.highlightsCurrentLine" id="ucy-A2-Iis">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.highlightsCurrentLine" id="X4W-Vq-Jar"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.highlightsCurrentLine" id="Nub-Q6-ldW"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.highlightsCurrentLine" id="zIb-ef-tOL">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kTZ-vB-uuT">
@@ -285,8 +306,37 @@
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.pageGuideColumn" id="0yL-Da-uSr">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="qF8-AN-CYR">
+                            <rect key="frame" x="38" y="115" width="166" height="18"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="14" id="jtU-YY-jCI"/>
+                            </constraints>
+                            <buttonCell key="cell" type="check" title="Use syntax highlighting" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="yxF-Bd-a9n">
+                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.syntaxColoured" id="nRR-hs-I4T">
+                                    <dictionary key="options">
+                                        <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.syntaxColoured" id="AJt-fl-PXw">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.syntaxColoured" id="Fhn-iy-AFI"/>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.syntaxColoured" id="ypD-2D-51P"/>
+                            </connections>
+                        </button>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Cyx-qP-Uc1">
                             <rect key="frame" x="351" y="12" width="151" height="17"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Line Height" id="LwL-PK-1Es">
@@ -302,6 +352,11 @@
                                     </dictionary>
                                 </binding>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.lineHeightMultiple" id="SSK-Tf-CDe"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.lineHeightMultiple" id="nNq-nv-XSN">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                     </subviews>
@@ -359,6 +414,11 @@
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.autoCompleteDelay" id="g9D-6o-Cra">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </textField>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="zp4-KL-GPt">
@@ -371,13 +431,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.autoCompleteEnabled" id="BIs-4z-Ueq"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.autoCompleteEnabled" id="64x-wn-Hhd">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.autoCompleteEnabled" id="BIs-4z-Ueq"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.autoCompleteEnabled" id="uxj-9h-1dr"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.autoCompleteEnabled" id="KEn-zc-PQF">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="JKN-Q8-Olx">
@@ -390,13 +455,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.autoCompleteWithKeywords" id="fDu-U3-QsH"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.autoCompleteWithKeywords" id="UpE-uj-mdf">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.autoCompleteWithKeywords" id="fDu-U3-QsH"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.autoCompleteWithKeywords" id="caJ-yP-LOP"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.autoCompleteWithKeywords" id="7F2-wZ-Jv9">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="soq-1p-DIJ">
@@ -417,13 +487,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.autoCompleteWithKeywords" id="nF9-OA-zVv"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.insertClosingParenthesisAutomatically" id="ksg-sf-s7o">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.autoCompleteWithKeywords" id="nF9-OA-zVv"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.autoCompleteWithKeywords" id="ef9-JL-hV1"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.autoCompleteWithKeywords" id="azp-1h-3HA">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qVG-TA-QQW">
@@ -464,13 +539,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.insertClosingBraceAutomatically" id="Hgr-4k-0JD"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.insertClosingBraceAutomatically" id="m1R-G5-sM2">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.insertClosingBraceAutomatically" id="Hgr-4k-0JD"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.insertClosingBraceAutomatically" id="NhO-SM-9aH"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.insertClosingBraceAutomatically" id="pLV-1D-Kca">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                     </subviews>
@@ -504,13 +584,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.indentNewLinesAutomatically" id="gBC-rt-DCA"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.indentNewLinesAutomatically" id="iC3-V6-Y8t">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.indentNewLinesAutomatically" id="gBC-rt-DCA"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.indentNewLinesAutomatically" id="RXu-WO-mEX"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.indentNewLinesAutomatically" id="Zze-sT-WHV">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="M9y-Ym-86h">
@@ -528,13 +613,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.indentWithSpaces" id="lOY-4b-IaE"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.indentWithSpaces" id="tK8-tC-ENV">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.indentWithSpaces" id="lOY-4b-IaE"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.indentWithSpaces" id="FyS-ff-Cqu"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.indentWithSpaces" id="9h8-eS-XjD">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="8RM-vf-eWV">
@@ -544,13 +634,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.useTabStops" id="jC8-FJ-u5E"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.useTabStops" id="BE8-Nl-TrF">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.useTabStops" id="jC8-FJ-u5E"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.useTabStops" id="pel-BM-GFL"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.useTabStops" id="cbk-8l-b34">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="3jU-gT-dEz">
@@ -560,32 +655,20 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.indentBracesAutomatically" id="ekR-53-BjG"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.indentBracesAutomatically" id="sdf-V6-8wP">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.indentBracesAutomatically" id="ekR-53-BjG"/>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.indentBracesAutomatically" id="Y9T-hd-DUR"/>
-                            </connections>
-                        </button>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hlh-nz-Zl4">
-                            <rect key="frame" x="355" y="12" width="127" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Tab width" id="C36-WQ-ZI9">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.tabWidth" id="FvK-2F-MYj"/>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.tabWidth" id="LVv-H6-i9R"/>
-                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.tabWidth" id="f7q-77-lAE">
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.indentBracesAutomatically" id="Qoh-Dt-HCy">
                                     <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
-                        </textField>
+                        </button>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9Em-Lk-rB9">
                             <rect key="frame" x="40" y="10" width="40" height="19"/>
                             <constraints>
@@ -650,6 +733,33 @@
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.indentWidth" id="bkW-z9-eln">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.indentWidth" id="FTH-N2-Kin">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hlh-nz-Zl4">
+                            <rect key="frame" x="355" y="12" width="127" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Tab width" id="C36-WQ-ZI9">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.tabWidth" id="FvK-2F-MYj"/>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.tabWidth" id="LVv-H6-i9R"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.tabWidth" id="f7q-77-lAE">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.tabWidth" id="5a1-vT-uDi">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -723,12 +833,12 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.textFont" id="hW4-Oq-pob"/>
                                 <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.textFont" id="DCb-Wr-IOA">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.textFont" id="hW4-Oq-pob"/>
                             </connections>
                         </textField>
                     </subviews>
@@ -756,36 +866,20 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsGutter" id="RcH-K9-lvZ"/>
                                 <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.showsGutter" id="XvX-6c-EMI">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsGutter" id="egB-ln-fTG"/>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsGutter" id="RcH-K9-lvZ"/>
                                 <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.showsGutter" id="xbh-W9-fwz">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsGutter" id="egB-ln-fTG"/>
                             </connections>
                         </button>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Nn8-Cg-QG4">
-                            <rect key="frame" x="86" y="12" width="230" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Minumum gutter width (25-99 pixels)" id="jYz-Is-P8W">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.minimumGutterWidth" id="Z34-EA-vmJ"/>
-                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.minimumGutterWidth" id="ao3-CO-frT">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </textField>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gY4-90-HrU">
                             <rect key="frame" x="40" y="10" width="40" height="19"/>
                             <constraints>
@@ -833,7 +927,6 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
-                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsLineNumbers" id="wDv-75-RbC"/>
                                 <binding destination="nB4-Iz-pOA" name="enabled2" keyPath="selection.showsGutter" previousBinding="yA5-p6-5dS" id="QPn-fs-JW8">
                                     <dictionary key="options">
                                         <integer key="NSMultipleValuesPlaceholder" value="-1"/>
@@ -847,14 +940,36 @@
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
-                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsLineNumbers" id="yA5-p6-5dS"/>
                                 <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.showsLineNumbers" id="ET6-iF-dAu">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.showsLineNumbers" id="wDv-75-RbC"/>
+                                <binding destination="-2" name="enabled" keyPath="self.managedProperties.showsLineNumbers" id="yA5-p6-5dS"/>
                             </connections>
                         </button>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Nn8-Cg-QG4">
+                            <rect key="frame" x="86" y="12" width="230" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Minumum gutter width (25-99 pixels)" id="jYz-Is-P8W">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.minimumGutterWidth" id="Z34-EA-vmJ"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.minimumGutterWidth" id="ao3-CO-frT">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.minimumGutterWidth" id="GtA-na-OeC">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
                     </subviews>
                     <constraints>
                         <constraint firstItem="gY4-90-HrU" firstAttribute="baseline" secondItem="Nn8-Cg-QG4" secondAttribute="baseline" priority="900" id="5mq-t0-yBP"/>
