@@ -13,14 +13,6 @@
 
 
 /*
- * + initialize
- */
-+ (void)initialize
-{
-	[NSValueTransformer setValueTransformer:[[[self class] alloc] init] forName:NSStringFromClass([self class])];
-}
-
-/*
  * + transformedValueClass
  */
 + (Class)transformedValueClass
