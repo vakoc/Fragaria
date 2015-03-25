@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
 #import "MGSUserDefaultsController.h"
-#import "MGSPrefsViewContoller.h"
+#import "MGSPrefsEditorPropertiesViewController.h"
 
 
 /**
@@ -48,7 +48,7 @@
     MGSUserDefaultsController *controller = [MGSUserDefaultsController sharedControllerForGroupID:@"managedPropertiesTest"];
     controller.managedProperties = [NSSet setWithArray:@[ MGSFragariaDefaultsShowsGutter, MGSFragariaDefaultsTextFont]];
 
-    MGSPrefsViewContoller *viewController = [[MGSPrefsViewContoller alloc] init];
+    MGSPrefsViewContoller *viewController = [[MGSPrefsEditorPropertiesViewController alloc] init];
     viewController.userDefaultsController = controller;
 
     NSNumber *result = [viewController valueForKeyPath:@"managedProperties.showsGutter"];

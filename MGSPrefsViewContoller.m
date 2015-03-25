@@ -73,7 +73,7 @@
 #pragma mark - Initialization
 
 /*
- * - init
+ * - initWithNibName:bundle:
  */
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
