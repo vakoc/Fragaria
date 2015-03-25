@@ -26,7 +26,7 @@
 {
 	if (value && [value boolValue])
 	{
-		return NSLocalizedString(@"Items in bold effect all of your views.",@"Hint explaining why certain items are bold.");
+		return NSLocalizedString(@"Items in bold affect all of your views.",@"Hint explaining why certain items are bold.");
 	}
 	
 	return nil;
