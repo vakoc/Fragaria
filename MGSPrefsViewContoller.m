@@ -9,9 +9,10 @@
 #import "MGSPrefsViewContoller.h"
 #import "MGSUserDefaultsDefinitions.h"
 #import "MGSUserDefaultsControllerProtocol.h"
+#import "MGSUserDefaultsController.h"
 
 
-#pragma mark - MGSManagedPropertiesProxy Class
+#pragma mark - Proxy Classes
 
 /*
  *  This bindable proxy object exists to support the managedProperties 
@@ -56,11 +57,38 @@
 @end
 
 
+/*
+ *  This bindable proxy object exists to support the managedGlobalProperties
+ *  property, whereby we return a @(BOOL) indicating whether or not the view
+ *  controller's NSUserDefaultsController is managing the property in the
+ *  keypath, e.g., `viewController.managedProperties.textColour`. This may
+ *  be useful in UI applications that which to provide different styles for
+ *  global versus group properties.
+ */
+@interface MGSManagedGlobalPropertiesProxy : MGSManagedPropertiesProxy
+
+@end
+
+
+@implementation MGSManagedGlobalPropertiesProxy
+/*
+ * - valueForKey
+ */
+-(id)valueForKey:(NSString *)key
+{
+	BOOL isGlobalProperty = [[[MGSUserDefaultsController sharedController] managedProperties] containsObject:key];
+	
+	return @(isGlobalProperty);
+}
+@end
+
+
 #pragma mark - MGSPrefsViewController
 
 @interface MGSPrefsViewContoller ()
 
 @property (nonatomic, strong) MGSManagedPropertiesProxy *managedPropertiesProxy;
+@property (nonatomic, strong) MGSManagedGlobalPropertiesProxy *managedGlobalPropertiesProxy;
 
 @end
 
@@ -80,6 +108,7 @@
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     {
         _managedPropertiesProxy = [[MGSManagedPropertiesProxy alloc] initWithViewController:self];
+		_managedGlobalPropertiesProxy = [[MGSManagedGlobalPropertiesProxy alloc] initWithViewController:self];
         separators = [[NSMutableArray alloc] init];
     }
 
@@ -97,6 +126,7 @@
     [self willChangeValueForKey:@"managedProperties"];
     _userDefaultsController = userDefaultsController;
     self.managedPropertiesProxy.userDefaultsController = userDefaultsController;
+	self.managedGlobalPropertiesProxy.userDefaultsController = userDefaultsController;
     [self didChangeValueForKey:@"managedProperties"];
 	[self showOrHideViews];
 }
@@ -108,6 +138,18 @@
 - (id)managedProperties
 {
     return self.managedPropertiesProxy;
+}
+
+/*
+ * @property managedGlobalProperties
+ */
++ (NSSet *)keyPathsForValuesAffectingManagedGlobalProperties
+{
+	return [NSSet setWithArray:@[ NSStringFromSelector(@selector(stylizeGlobalProperties)) ]];
+}
+- (id)managedGlobalProperties
+{
+	return self.stylizeGlobalProperties ? self.managedGlobalPropertiesProxy : nil;
 }
 
 
@@ -139,7 +181,7 @@
 #pragma mark - Instance Methods
 
 /*
- * - hideableViews
+ * - propertiesForPanelSubviews
  *   Subclasses wishing to support automatic view hiding should override this.
  *   See the reference implementation for an example of the dictionary format.
  */
@@ -149,6 +191,9 @@
 }
 
 
+/*
+ * - keysForPanelSubviews
+ */
 - (NSArray *)keysForPanelSubviews
 {
     return @[];
@@ -203,6 +248,9 @@
 }
 
 
+/*
+ * - stackPanelView:
+ */
 - (void)stackPanelView:(NSView *)view underPanelView:(NSView *)prev
 {
     NSArray *cs;
@@ -239,6 +287,9 @@
 }
 
 
+/*
+ * - hidePanelView:
+ */
 - (void)hidePanelView:(NSView*)view
 {
     NSArray *cs;

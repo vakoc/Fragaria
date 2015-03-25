@@ -35,11 +35,26 @@
 @property (nonatomic, assign, readonly) id managedProperties;
 
 
+/** Returns whether or not a property is a managed global property. This is a 
+ *  KVC structure that returns @(YES) or @(NO) for keyPaths in the form of
+ *  this_controller.managedProperties.propertyName.
+ *  @discuss Useful for user interface enabled bindings to style elements
+ *  that a hybrid userDefaultsController manages. */
+@property (nonatomic, assign, readonly) id managedGlobalProperties;
+
+
 /** Bindable property indicating whether or not the scheme menu should be
  *  enabled. If the instance does not have available every property for a
  *  scheme, then using the scheme selector can be quite messy. */
 @property (nonatomic, assign, readonly) BOOL areAllColourPropertiesAvailable;
 
+
+/** Specifies whether or not to stylize item labels for items that are
+    managed by the global sharedUserDefaultsController. When YES, boolean
+    properties in Interface Builder (such as Font Bold) that are bound to
+    managedGlobalProperties will receive a non-nil value of YES or NO.
+ */
+@property (nonatomic, assign) BOOL stylizeGlobalProperties;
 
 /** Indicates whether or not panels that have no eligible properties should
  *  be hidden. */
