@@ -24,14 +24,6 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="xfo-Mv-vNh" userLabel="Color Scheme View">
                     <rect key="frame" x="0.0" y="492" width="500" height="73"/>
                     <subviews>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="eKe-mh-aBb">
-                            <rect key="frame" x="18" y="46" width="96" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Color Scheme:" id="adW-t3-6cT">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="soo-KG-LXb">
                             <rect key="frame" x="348" y="36" width="138" height="32"/>
                             <buttonCell key="cell" type="push" title="Save Scheme…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="puF-St-KA8">
@@ -72,6 +64,14 @@
                                 <binding destination="-2" name="enabled" keyPath="self.areAllColourPropertiesAvailable" id="SpL-He-5WO"/>
                             </connections>
                         </popUpButton>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="eKe-mh-aBb">
+                            <rect key="frame" x="18" y="46" width="96" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Color Scheme:" id="adW-t3-6cT">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="soo-KG-LXb" secondAttribute="trailing" priority="900" constant="20" symbolic="YES" id="02w-x8-xST"/>
@@ -98,9 +98,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.textColor" id="aQU-k1-N1i"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.textColor" id="rh1-dF-XJ4">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.textColor" id="AW7-iu-EMC">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -145,9 +151,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.backgroundColor" id="4OX-Cv-Zxh"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.backgroundColor" id="NZl-wK-GzM">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.backgroundColor" id="qC0-4t-KKL">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -160,9 +172,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.textInvisibleCharactersColour" id="KWB-4n-Sg5"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.textInvisibleCharactersColour" id="UR7-gx-fvJ">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.textInvisibleCharactersColour" id="92z-34-ilB">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -191,9 +209,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.insertionPointColor" id="PDj-w5-xke"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.insertionPointColor" id="cdE-JY-RRO">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.insertionPointColor" id="DT4-3s-OiS">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -214,24 +238,6 @@
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.currentLineHighlightColour" id="uaV-7n-5ZF"/>
                             </connections>
                         </colorWell>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="dNx-bb-167">
-                            <rect key="frame" x="328" y="83" width="154" height="17"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="150" id="iMo-y3-aCK"/>
-                            </constraints>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Current Line Highlight" id="qb0-Fj-0v1">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.currentLineHighlightColour" id="0tY-au-ox8">
-                                    <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
-                                    </dictionary>
-                                </binding>
-                            </connections>
-                        </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="bx6-hL-JOT">
                             <rect key="frame" x="48" y="112" width="434" height="28"/>
                             <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These colors determine the overall appearance of the text editor. These colors are always used and cannot be disabled." id="SOX-V5-eX0">
@@ -284,9 +290,39 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.defaultSyntaxErrorHighlightingColour" id="lll-jZ-Yji"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.defaultSyntaxErrorHighlightingColour" id="dAr-fi-0gz">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.defaultSyntaxErrorHighlightingColour" id="DIW-8R-pD5">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="dNx-bb-167">
+                            <rect key="frame" x="328" y="83" width="154" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="150" id="iMo-y3-aCK"/>
+                            </constraints>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Current Line Highlight" id="qb0-Fj-0v1">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.currentLineHighlightColour" id="mVz-o4-dcj"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.currentLineHighlightColour" id="0tY-au-ox8">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.currentLineHighlightColour" id="31z-Ds-fML">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -455,24 +491,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursKeywords" id="lm8-te-akr"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursKeywords" id="JV6-qt-J5Z">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
                                     </dictionary>
                                 </binding>
-                            </connections>
-                        </textField>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xIm-q5-TgG">
-                            <rect key="frame" x="328" y="15" width="60" height="17"/>
-                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Variables" id="WSJ-ge-3fn">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                            <connections>
-                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursVariables" id="INg-2h-jNd">
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursKeywords" id="5qE-E1-xLd">
                                     <dictionary key="options">
-                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -485,9 +512,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursAutocomplete" id="by6-LQ-dMT"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursAutocomplete" id="HPI-Vu-iVf">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursAutocomplete" id="fZI-yi-AGj">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -600,9 +633,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursNumbers" id="gTp-S1-gi7"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursNumbers" id="5gc-Rs-SY8">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursNumbers" id="Vn3-O9-iEw">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -615,9 +654,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursInstructions" id="uUI-lP-o5d"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursInstructions" id="YLi-np-rJ1">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursInstructions" id="J6v-Bq-fVA">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -694,9 +739,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursCommands" id="RBf-ad-fVw"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursCommands" id="1Uo-9K-UP1">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursCommands" id="1TS-nd-7np">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -709,9 +760,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursStrings" id="FWD-OL-eGz"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursStrings" id="9LF-uA-mTH">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursStrings" id="wPE-CU-3kW">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -810,9 +867,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursAttributes" id="5uG-Go-q08"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursAttributes" id="k8p-KE-wvN">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursAttributes" id="UbS-r8-BPB">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -929,9 +992,36 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursComments" id="Cap-5L-x2j"/>
                                 <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursComments" id="47n-Da-ECl">
                                     <dictionary key="options">
                                         <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursComments" id="gyl-UZ-2Or">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
+                            </connections>
+                        </textField>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xIm-q5-TgG">
+                            <rect key="frame" x="328" y="15" width="60" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Variables" id="WSJ-ge-3fn">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                            <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursVariables" id="zJY-fb-PsP"/>
+                                <binding destination="-2" name="textColor" keyPath="self.managedProperties.coloursVariables" id="INg-2h-jNd">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToColourTransformer</string>
+                                    </dictionary>
+                                </binding>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursVariables" id="Oig-Vc-N3w">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
                                     </dictionary>
                                 </binding>
                             </connections>
@@ -994,12 +1084,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursMultiLineStrings" id="PRl-kL-cNS"/>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.coloursMultiLineStrings" id="x4e-Jp-X3v">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursMultiLineStrings" id="T3d-eY-zJ0"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursMultiLineStrings" id="vVh-Np-jwx">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                         <button verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="5oR-v8-2jt">
@@ -1012,12 +1108,18 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                             <connections>
+                                <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.coloursOnlyUntilEndOfLine" id="fH0-We-nue"/>
                                 <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.coloursOnlyUntilEndOfLine" id="6fD-1Y-9O8">
                                     <dictionary key="options">
                                         <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                     </dictionary>
                                 </binding>
                                 <binding destination="-2" name="enabled" keyPath="self.managedProperties.coloursOnlyUntilEndOfLine" id="Vnj-Gk-bYc"/>
+                                <binding destination="-2" name="toolTip" keyPath="self.managedGlobalProperties.coloursOnlyUntilEndOfLine" id="EAW-7Q-cCR">
+                                    <dictionary key="options">
+                                        <string key="NSValueTransformerName">MGSBoolToGlobalHintTransformer</string>
+                                    </dictionary>
+                                </binding>
                             </connections>
                         </button>
                     </subviews>
