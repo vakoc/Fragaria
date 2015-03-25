@@ -47,26 +47,11 @@
 	NSValueTransformer *xformer = [NSValueTransformer valueTransformerForName:@"MGSColourToPlainTextTransformer"];
 	
 	NSColor *color = [NSColor colorWithCalibratedRed:0.1f green:0.35f blue:1.0f alpha:1.0f];
+	NSString *result = [xformer transformedValue:color];
+    XCTAssert([result isEqual:@"0.100000 0.350000 1.000000"]);
 	
-	NSDictionary *result = [xformer transformedValue:color];
-	
-	NSString *red = [result objectForKey:@"red"];
-	NSString *green = [result objectForKey:@"green"];
-	NSString *blue = [result objectForKey:@"blue"];
-	NSString *alpha = [result objectForKey:@"alpha"];
-	
-	XCTAssert([red isEqualToString:@"19"]);
-	XCTAssert([green isEqualToString:@"59"]);
-	XCTAssert([blue isEqualToString:@"ff"]);
-	XCTAssert([alpha isEqualToString:@"ff"]);
-	
-	[result setValue:@"00" forKey:@"red"];
-	[result setValue:@"80" forKey:@"green"];
-	[result setValue:@"80" forKey:@"blue"];
-	[result setValue:@"fF" forKey:@"alpha"];
-	
+	result = @"0.0 0.501961 0.501961 1";
 	color = [xformer reverseTransformedValue:result];
-	
 	XCTAssert([color.description isEqual:@"NSCalibratedRGBColorSpace 0 0.501961 0.501961 1"]);
 	
     XCTAssert(YES, @"Pass");
