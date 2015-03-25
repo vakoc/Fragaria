@@ -752,7 +752,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1600" height="877"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -837,12 +837,16 @@
                             </connections>
                         </popUpButton>
                     </toolbarItem>
+                    <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="JJ4-0W-EDx"/>
+                    <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="NOV-fT-rN5"/>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="9o1-ZA-WDJ"/>
-                    <toolbarItem reference="nlJ-II-F3c"/>
                     <toolbarItem reference="Cdw-ZE-ARm"/>
                     <toolbarItem reference="19i-3s-JSc"/>
+                    <toolbarItem reference="NOV-fT-rN5"/>
+                    <toolbarItem reference="nlJ-II-F3c"/>
+                    <toolbarItem reference="JJ4-0W-EDx"/>
                     <toolbarItem reference="zhg-Gu-Kik"/>
                 </defaultToolbarItems>
             </toolbar>

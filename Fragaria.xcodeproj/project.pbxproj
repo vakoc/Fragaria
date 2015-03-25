@@ -134,6 +134,9 @@
 		D0718BAB1AB71FE00073493A /* MGSColourSchemeController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0718BA91AB71FE00073493A /* MGSColourSchemeController.h */; };
 		D0718BAC1AB71FE00073493A /* MGSColourSchemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718BAA1AB71FE00073493A /* MGSColourSchemeController.m */; };
 		D0718BAE1AB721280073493A /* MGSColourSchemeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718BAD1AB721280073493A /* MGSColourSchemeTests.m */; };
+		D07717B01AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D07717AE1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.h */; };
+		D07717B11AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D07717AF1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m */; };
+		D07717B41AC2670500B23867 /* MGSSampleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D07717B31AC2670500B23867 /* MGSSampleBreakpointDelegate.m */; };
 		D079D85D1AB7DEE600169F82 /* Colour Schemes in Resources */ = {isa = PBXBuildFile; fileRef = D079D85C1AB7DEE600169F82 /* Colour Schemes */; };
 		D08359DB1A9F0446001B7B50 /* FeaturesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08359D91A9F0446001B7B50 /* FeaturesWindowController.m */; };
 		D08359E11AA0875E001B7B50 /* MGSPreferencesObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = D08359DE1AA0875E001B7B50 /* MGSPreferencesObserver.m */; };
@@ -381,6 +384,10 @@
 		D0718BA91AB71FE00073493A /* MGSColourSchemeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSColourSchemeController.h; sourceTree = "<group>"; };
 		D0718BAA1AB71FE00073493A /* MGSColourSchemeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSColourSchemeController.m; sourceTree = "<group>"; };
 		D0718BAD1AB721280073493A /* MGSColourSchemeTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSColourSchemeTests.m; sourceTree = "<group>"; };
+		D07717AE1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBoolToGlobalHintTransformer.h; sourceTree = "<group>"; };
+		D07717AF1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBoolToGlobalHintTransformer.m; sourceTree = "<group>"; };
+		D07717B21AC2670500B23867 /* MGSSampleBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSSampleBreakpointDelegate.h; path = Applications/MGSFragariaViewModern/MGSSampleBreakpointDelegate.h; sourceTree = SOURCE_ROOT; };
+		D07717B31AC2670500B23867 /* MGSSampleBreakpointDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSSampleBreakpointDelegate.m; path = Applications/MGSFragariaViewModern/MGSSampleBreakpointDelegate.m; sourceTree = SOURCE_ROOT; };
 		D079D85C1AB7DEE600169F82 /* Colour Schemes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Colour Schemes"; sourceTree = "<group>"; };
 		D08359D81A9F0446001B7B50 /* FeaturesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeaturesWindowController.h; path = Applications/MGSFragariaView/FeaturesWindowController.h; sourceTree = "<group>"; };
 		D08359D91A9F0446001B7B50 /* FeaturesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeaturesWindowController.m; path = Applications/MGSFragariaView/FeaturesWindowController.m; sourceTree = "<group>"; };
@@ -775,6 +782,8 @@
 			children = (
 				D0718B951AB556990073493A /* AppDelegate.h */,
 				D0718B961AB556990073493A /* AppDelegate.m */,
+				D07717B21AC2670500B23867 /* MGSSampleBreakpointDelegate.h */,
+				D07717B31AC2670500B23867 /* MGSSampleBreakpointDelegate.m */,
 				D0718B891AB553E80073493A /* ColorSettingsViewController.h */,
 				D0718B8A1AB553E80073493A /* ColorSettingsViewController.m */,
 				D0718B8B1AB553E80073493A /* EditorSettingsViewController.h */,
@@ -897,6 +906,8 @@
 			children = (
 				D06653CC1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h */,
 				D06653CD1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m */,
+				D07717AE1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.h */,
+				D07717AF1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m */,
 				D06653D01AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h */,
 				D06653D11AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.m */,
 				D0718B981AB5C53D0073493A /* MGSFontToTextTransformer.h */,
@@ -957,6 +968,7 @@
 				E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */,
 				D0C13BBB1ABD12A400E191A9 /* MGSColourSchemeSaveController.h in Headers */,
 				D07188431AB3D2220073493A /* MGSMutableDictionary.h in Headers */,
+				D07717B01AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.h in Headers */,
 				D04A0DF81AAEAD7C00667E4D /* MGSFragariaAPI.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
 				D071884F1AB54CCA0073493A /* MGSPrefsViewContoller.h in Headers */,
@@ -1233,6 +1245,7 @@
 			files = (
 				D0F353591AC1A369007B9E2E /* MGSHybridUserDefaultsController.m in Sources */,
 				AB69B65C118B75FB00903D1D /* SMLSyntaxColouring.m in Sources */,
+				D07717B11AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m in Sources */,
 				017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */,
 				AB69B68F118B78D400903D1D /* SMLTextView.m in Sources */,
 				D0718B9B1AB5C53D0073493A /* MGSFontToTextTransformer.m in Sources */,
@@ -1291,6 +1304,7 @@
 				D0718B8F1AB553E80073493A /* EditorSettingsViewController.m in Sources */,
 				D0718B8E1AB553E80073493A /* ColorSettingsViewController.m in Sources */,
 				D0718B971AB556990073493A /* AppDelegate.m in Sources */,
+				D07717B41AC2670500B23867 /* MGSSampleBreakpointDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
