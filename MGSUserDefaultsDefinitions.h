@@ -14,12 +14,12 @@
  *  ## Use with MGSUserDefaultsController and MGSUserDefaults:
  *  These keys can be used in your code to manage Fragaria properties and
  *  user defaults for any instance of MGSFragariaView. The keys' names
- *  correspond fairly well with MGSFragriaView's properties properties.
+ *  correspond fairly well with MGSFragariaView's properties properties.
  *
  *  ## For use in KVO/KVC/IB:
  *  The string values can be found in MGSUserDefaults.m and is also documented
  *  in the comments after each declaration below. For convenience the string
- *  value is identical to the MGSFaragariaView property name. These definitions
+ *  value is identical to the MGSFragariaView property name. These definitions
  *  are also critical to how MGSUserDefaultsController operates, so do not
  *  change them for namespacing purposes (see +fragariaNamespacedKeyForKey).
  *

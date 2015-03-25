@@ -23,7 +23,7 @@
  *  text view and gutter view. */
 @property (readonly) MGSSyntaxErrorController *syntaxErrorController;
 
-/** Fragaria's preferences obsever, used for supporting the default preference
+/** Fragaria's preferences observer, used for supporting the default preference
  *  panels.  */
 @property (readonly) MGSPreferencesObserver *preferencesObserver;
 

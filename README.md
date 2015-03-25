@@ -15,7 +15,7 @@ where `view` is the parameter you pass to `[fragaria embedInView:view];`. Then r
 entirely. Most of the time, this is the only change you need to make, and is required by the new internal
 architecture of Fragaria. If you app continues not to work, read on.
 
-Fragaria used to be a part of a bigger application (Smultron). When it was separed from it, some things which
+Fragaria used to be a part of a bigger application (Smultron). When it was separated from it, some things which
 Smultron used but were unrelated to Fragaria itself were mistakenly left in. Also, various internal components of 
 Fragaria were not made private (because in application code there's no distinction between public and private
 stuff). These things are being removed.

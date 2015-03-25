@@ -66,7 +66,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
  *  ======================
  *
  *  - `SMLSyntaxGroup`:      NSString describing the group being coloured.
- *  - `SMLSyntaxGroupID`:    NSNumber identyfying the group being coloured.
+ *  - `SMLSyntaxGroupID`:    NSNumber identifying the group being coloured.
  *  - `SMLSyntaxWillColour`: NSNumber containing a BOOL indicating whether the
  *                           caller will colour the string.
  *  - `SMLSyntaxAttributes`: NSDictionary of NSAttributed string attributes used

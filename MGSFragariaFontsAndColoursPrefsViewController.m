@@ -7,7 +7,6 @@
 //
 
 #import "MGSFragaria.h"
-#import "MGSFragariaFramework.h"
 
 @interface MGSFragariaFontsAndColoursPrefsViewController ()
 

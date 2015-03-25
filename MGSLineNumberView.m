@@ -122,7 +122,7 @@
 }
 
 
-- (void)setShowsLineNumbers:(BOOL *)drawsLineNumbers
+- (void)setShowsLineNumbers:(BOOL)drawsLineNumbers
 {
     _showsLineNumbers = drawsLineNumbers;
     [self setRuleThickness:[self requiredThickness]];

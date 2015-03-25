@@ -235,7 +235,7 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     [self.textView setDelegate:textViewDelegate];
 }
 
-- (id<MGSFragariaTextViewDelegate>)textViewDelegate
+- (id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate>)textViewDelegate
 {
     return self.textView.delegate;
 }

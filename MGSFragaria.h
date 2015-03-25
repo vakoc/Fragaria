@@ -99,6 +99,8 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 /// @name Deprecated Methods
 
 
+- (id <MGSFragariaTextViewDelegate, MGSDragOperationDelegate>)textViewDelegate;
+
 /** Deprecated. Do not use. */
 + (id)currentInstance DEPRECATED_ATTRIBUTE;
 

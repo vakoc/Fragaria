@@ -199,7 +199,7 @@
 /// @name Automatic Bracing
 
 
-/** Specifies whether or not closing paretheses are inserted automatically.*/
+/** Specifies whether or not closing parentheses are inserted automatically.*/
 @property (nonatomic, assign) BOOL insertClosingParenthesisAutomatically;
 /** Specifies whether or not closing braces are inserted automatically.*/
 @property (nonatomic, assign) BOOL insertClosingBraceAutomatically;

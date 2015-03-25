@@ -6,7 +6,7 @@
 //
 //
 
-#import "MGSPrefsViewContoller.h"
+#import "MGSPrefsViewController.h"
 
 
 /**
@@ -14,7 +14,7 @@
  *  managing and instance of the MGSPrefsEditorProperties nib.
  **/
 
-@interface MGSPrefsEditorPropertiesViewController : MGSPrefsViewContoller
+@interface MGSPrefsEditorPropertiesViewController : MGSPrefsViewController
 
 
 /** 

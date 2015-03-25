@@ -48,7 +48,7 @@
     MGSUserDefaultsController *controller = [MGSUserDefaultsController sharedControllerForGroupID:@"managedPropertiesTest"];
     controller.managedProperties = [NSSet setWithArray:@[ MGSFragariaDefaultsShowsGutter, MGSFragariaDefaultsTextFont]];
 
-    MGSPrefsViewContoller *viewController = [[MGSPrefsEditorPropertiesViewController alloc] init];
+    MGSPrefsViewController *viewController = [[MGSPrefsEditorPropertiesViewController alloc] init];
     viewController.userDefaultsController = controller;
 
     NSNumber *result = [viewController valueForKeyPath:@"managedProperties.showsGutter"];

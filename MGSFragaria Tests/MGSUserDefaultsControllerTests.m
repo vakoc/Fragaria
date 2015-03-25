@@ -178,14 +178,14 @@
 
 
 /*
- * - test_persistance_changes
+ * - test_persistence_changes
  *   Demonstrate:
- *   - When persistance is turned ON, the defaults values update to the 
+ *   - When persistence is turned ON, the defaults values update to the
  *     current value.
- *   - When persistance is turned OFF, the current value is updated with the 
+ *   - When persistence is turned OFF, the current value is updated with the
  *     defaults value.
  */
-- (void)test_persistance_changes
+- (void)test_persistence_changes
 {
 	NSUInteger expect;
 	NSUInteger result1, result2, result3;
@@ -213,7 +213,7 @@
 	result2 = self.view1.startingLineNumber;
 	XCTAssert(result1 == expect && result2 == expect);
 
-	// Now that we have persistance, if we set the controller, will
+	// Now that we have persistence, if we set the controller, will
 	// all of the views and defaults take the values, too?
 	expect = arc4random_uniform(100) + 1;
     [controller.values setValue:@(expect) forKey:@"startingLineNumber"];

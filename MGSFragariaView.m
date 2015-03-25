@@ -346,7 +346,7 @@
  */
 - (void)setShowsLineNumbers:(BOOL)showsLineNumbers
 {
-	[self.gutterView setShowsLineNumbers:showsLineNumbers];
+	self.gutterView.showsLineNumbers = showsLineNumbers;
 	[self propagateValue:@(showsLineNumbers) forBinding:NSStringFromSelector(@selector(showsLineNumbers))];
 }
 

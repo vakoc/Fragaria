@@ -36,7 +36,7 @@
 
 
 /*
- *  Ensures the namingspacing inline function works correctly.
+ *  Ensures that name-spacing inline function works correctly.
  */
 - (void)test_namespace_function
 {

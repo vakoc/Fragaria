@@ -11,12 +11,12 @@
 
 
 /**
- *  This class masqerades as an MGSUserDefaultsController by adopting its
+ *  This class masquerades as an MGSUserDefaultsController by adopting its
  *  protocol. It wraps a sharedControllerForGroupID: and a sharedController
  *  so that they can act as one object when bound in the user interface.
  *
  *  All of the properties are read-only, and consist of the union of the
- *  respective properies of the current global sharedControllr and the
+ *  respective properties of the current global sharedController and the
  *  specified groupID.
  **/
 @interface MGSHybridUserDefaultsController : NSObject <MGSUserDefaultsController>

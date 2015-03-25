@@ -67,7 +67,7 @@
 @property (readonly) NSString *endInstruction;
 
 /** A regular expression that matches a variable.
- *  @discuss This property supercedes beginVariableCharacterSet and
+ *  @discuss This property supersedes beginVariableCharacterSet and
  *           endVariableCharacterSet. If this property is nil, a syntax
  *           colourer should use these properties instead, otherwise they
  *           should be ignored. */
@@ -78,7 +78,7 @@
 @property (readonly) NSCharacterSet *endVariableCharacterSet;
 
 /** A regular expression that matches a single line comment.
- *  @discuss This property supercedes singleLineComments. If this property is
+ *  @discuss This property supersedes singleLineComments. If this property is
  *           nil, a syntax colourer should use singleLineComments instead,
  *           otherwise it is ignored. */
 @property (readonly) NSString *singleLineCommentRegex;
@@ -97,7 +97,7 @@
 @property (readonly) NSCharacterSet *attributesCharacterSet;
 
 /** A regular expression that matches numbers.
- *  @discuss This property supercedes numberCharacterSet, nameCharacterSet and
+ *  @discuss This property supersedes numberCharacterSet, nameCharacterSet and
  *           decimalPointCharacter. If this property is nil, a syntax
  *           colourer should use those properties instead, otherwise they are
  *           ignored. */
@@ -116,7 +116,7 @@
 
 /** A dictionary which describes this syntax definition. This method returns
  *  a representation of this syntax definition suitable as a parameter to
- *  -initFromSyntaxDictionary: to make a syntax defintion equal to this
+ *  -initFromSyntaxDictionary: to make a syntax definition equal to this
  *  one. */
 @property (readonly) NSDictionary *syntaxDictionary;
 /** A name associated with this syntax definition. Might be nil. */

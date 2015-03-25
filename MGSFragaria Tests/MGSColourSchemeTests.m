@@ -80,8 +80,6 @@
     NSString *result = testInstance.displayName;
 
     XCTAssert([result isEqualToString:expects]);
-
-    testDict = @{ @"colourForAttributes" : @"Hello world." };
 }
 
 

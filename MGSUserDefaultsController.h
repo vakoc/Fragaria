@@ -23,7 +23,7 @@
  *  In order to support shared defaults, i.e., a default that serves as a master
  *  for multiple instances, there's also a global default. For example if you
  *  wish to ensure that multiple text views' `backgroundColor` is shared, you
- *  can specifiy that that `backgroundColor` is a global property.
+ *  can specify that that `backgroundColor` is a global property.
  *
  *  In general user defaults managed by this class are not compatible with
  *  NSUserDefaults. It's certainly possible to use NSUserDefaults to change

@@ -7,7 +7,6 @@
 //
 
 #import "MGSFragariaTextEditingPrefsViewController.h"
-#import "MGSFragariaFramework.h"
 
 @interface MGSFragariaTextEditingPrefsViewController ()
 
