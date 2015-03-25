@@ -132,8 +132,13 @@
         editorSettingsController.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:@"topWindowGroup"];
         colorSettingsController.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:@"topWindowGroup"];
 
+		/* We will hide panels that have nothing enabled, and allow global
+		   properties to be stylized in the Preferences. */
         editorSettingsController.hidesUselessPanels = YES;
+		editorSettingsController.stylizeGlobalProperties = YES;
+		
         colorSettingsController.hidesUselessPanels = YES;
+		colorSettingsController.stylizeGlobalProperties = YES;
 
         NSArray *controllers = @[editorSettingsController, colorSettingsController];
 
