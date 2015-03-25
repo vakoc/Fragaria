@@ -82,7 +82,7 @@
 @property (readonly) NSUInteger selectedLineNumber;
 
 /** Indicates whether or not line numbers should be drawn. */
-@property (nonatomic) BOOL *showsLineNumbers;
+@property (nonatomic, assign) BOOL showsLineNumbers;
 
 
 /// @name Instance Methods
@@ -129,7 +129,7 @@
 /** Inform this line number view that its client text view's text storage
  *  has changed.
  *  @discussion In this method the line number view can register as observer
- *              of any of the new text storage's notificaitons. */
+ *              of any of the new text storage's notifications. */
 - (void)layoutManagerDidChangeTextStorage;
 
 

@@ -178,14 +178,14 @@
 
 
 /*
- * - test_persistance_changes
+ * - test_persistence_changes
  *   Demonstrate:
- *   - When persistance is turned ON, the defaults values update to the 
+ *   - When persistence is turned ON, the defaults values update to the
  *     current value.
- *   - When persistance is turned OFF, the current value is updated with the 
+ *   - When persistence is turned OFF, the current value is updated with the
  *     defaults value.
  */
-- (void)test_persistance_changes
+- (void)test_persistence_changes
 {
 	NSUInteger expect;
 	NSUInteger result1, result2, result3;

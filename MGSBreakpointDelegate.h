@@ -24,7 +24,7 @@
 /** Returns a dictionary of NSColors keyed by line numbers. A breakpoint marker
  *  will be shown on the line numbers specified, of the color associated with
  *  that line number.
- *  @discussion This method supercedes both breakpointsForFragaria: and
+ *  @discussion This method supersedes both breakpointsForFragaria: and
  *              breakpointColourForLine:ofFragaria:, and is provided as an
  *              higher-performance alternative to these other two methods.
  *              Thus, if you implement colouredBreakpointsForFragaria:, 

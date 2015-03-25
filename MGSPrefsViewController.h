@@ -1,5 +1,5 @@
 //
-//  MGSPrefsViewContoller.h
+//  MGSPrefsViewController.h
 //  Fragaria
 //
 //  Created by Jim Derry on 3/15/15.
@@ -11,12 +11,12 @@
 
 
 
-/** MGSPrefsViewContoller provides a base class for other MGSPrefsViewController
+/** MGSPrefsViewController provides a base class for other MGSPrefsViewController
  *  classes. It is not implemented directly anywhere.
  *  @see MGSPrefsEditorPropertiesViewController
  *  @see MGSPrefsColourPropertiesViewController */
 
-@interface MGSPrefsViewContoller : NSViewController
+@interface MGSPrefsViewController : NSViewController
 
 
 /** The NSObjectController that the UI elements are bound to. Its contentObject

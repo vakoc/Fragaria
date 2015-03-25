@@ -112,8 +112,8 @@
 		D07188441AB3D2220073493A /* MGSMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188421AB3D2220073493A /* MGSMutableDictionary.m */; };
 		D07188481AB423830073493A /* MGSPrefsEditorProperties.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07188461AB423830073493A /* MGSPrefsEditorProperties.xib */; };
 		D071884B1AB428570073493A /* MGSPrefsColourProperties.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07188491AB428570073493A /* MGSPrefsColourProperties.xib */; };
-		D071884F1AB54CCA0073493A /* MGSPrefsViewContoller.h in Headers */ = {isa = PBXBuildFile; fileRef = D071884D1AB54CCA0073493A /* MGSPrefsViewContoller.h */; };
-		D07188501AB54CCA0073493A /* MGSPrefsViewContoller.m in Sources */ = {isa = PBXBuildFile; fileRef = D071884E1AB54CCA0073493A /* MGSPrefsViewContoller.m */; };
+		D071884F1AB54CCA0073493A /* MGSPrefsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D071884D1AB54CCA0073493A /* MGSPrefsViewController.h */; };
+		D07188501AB54CCA0073493A /* MGSPrefsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D071884E1AB54CCA0073493A /* MGSPrefsViewController.m */; };
 		D0718B441AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0718B421AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.h */; };
 		D0718B451AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B431AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.m */; };
 		D0718B491AB54EA70073493A /* MGSPrefsColourPropertiesViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0718B461AB54EA70073493A /* MGSPrefsColourPropertiesViewController.h */; };
@@ -358,8 +358,8 @@
 		D07188421AB3D2220073493A /* MGSMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSMutableDictionary.m; sourceTree = "<group>"; };
 		D07188471AB423830073493A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MGSPrefsEditorProperties.xib; sourceTree = "<group>"; };
 		D071884A1AB428570073493A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MGSPrefsColourProperties.xib; sourceTree = "<group>"; };
-		D071884D1AB54CCA0073493A /* MGSPrefsViewContoller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPrefsViewContoller.h; sourceTree = "<group>"; };
-		D071884E1AB54CCA0073493A /* MGSPrefsViewContoller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSPrefsViewContoller.m; sourceTree = "<group>"; };
+		D071884D1AB54CCA0073493A /* MGSPrefsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPrefsViewController.h; sourceTree = "<group>"; };
+		D071884E1AB54CCA0073493A /* MGSPrefsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSPrefsViewController.m; sourceTree = "<group>"; };
 		D0718B421AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPrefsEditorPropertiesViewController.h; sourceTree = "<group>"; };
 		D0718B431AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSPrefsEditorPropertiesViewController.m; sourceTree = "<group>"; };
 		D0718B461AB54EA70073493A /* MGSPrefsColourPropertiesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSPrefsColourPropertiesViewController.h; sourceTree = "<group>"; };
@@ -823,8 +823,8 @@
 		D0718BA41AB7062A0073493A /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
-				D071884D1AB54CCA0073493A /* MGSPrefsViewContoller.h */,
-				D071884E1AB54CCA0073493A /* MGSPrefsViewContoller.m */,
+				D071884D1AB54CCA0073493A /* MGSPrefsViewController.h */,
+				D071884E1AB54CCA0073493A /* MGSPrefsViewController.m */,
 				D0718B461AB54EA70073493A /* MGSPrefsColourPropertiesViewController.h */,
 				D0718B471AB54EA70073493A /* MGSPrefsColourPropertiesViewController.m */,
 				D07188491AB428570073493A /* MGSPrefsColourProperties.xib */,
@@ -975,7 +975,7 @@
 				D07717B01AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.h in Headers */,
 				D04A0DF81AAEAD7C00667E4D /* MGSFragariaAPI.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
-				D071884F1AB54CCA0073493A /* MGSPrefsViewContoller.h in Headers */,
+				D071884F1AB54CCA0073493A /* MGSPrefsViewController.h in Headers */,
 				D0718BA71AB70BE70073493A /* MGSColourScheme.h in Headers */,
 				D06653D81AC02A0400ACE8B0 /* NSColor+RGBCompare.h in Headers */,
 				AB8387C5171D6115004408F4 /* SMLSyntaxDefinition.h in Headers */,
@@ -1276,7 +1276,7 @@
 				D0718B451AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.m in Sources */,
 				D071883B1AB3CDFA0073493A /* MGSUserDefaults.m in Sources */,
 				D071883F1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m in Sources */,
-				D07188501AB54CCA0073493A /* MGSPrefsViewContoller.m in Sources */,
+				D07188501AB54CCA0073493A /* MGSPrefsViewController.m in Sources */,
 				D07188441AB3D2220073493A /* MGSMutableDictionary.m in Sources */,
 				D071883D1AB3CDFA0073493A /* MGSUserDefaultsController.m in Sources */,
 				ABC5799816047B4E0040B3FB /* FRAFontTransformer.m in Sources */,

@@ -89,10 +89,10 @@
 	
 	NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:value];
 
-	CGFloat red = [self componentValueforHex:[dictionary objectForKey:@"red"]];
-	CGFloat green = [self componentValueforHex:[dictionary objectForKey:@"green"]];
-	CGFloat blue = [self componentValueforHex:[dictionary objectForKey:@"blue"]];
-	CGFloat alpha = [self componentValueforHex:[dictionary objectForKey:@"alpha"]];
+	CGFloat red = [self componentValueForHex:[dictionary objectForKey:@"red"]];
+	CGFloat green = [self componentValueForHex:[dictionary objectForKey:@"green"]];
+	CGFloat blue = [self componentValueForHex:[dictionary objectForKey:@"blue"]];
+	CGFloat alpha = [self componentValueForHex:[dictionary objectForKey:@"alpha"]];
 	
 	return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
 }
@@ -111,10 +111,10 @@
 
 
 /*
- * - componentValueforHex
+ * - componentValueForHex
  *   I suppose this could be its own value transformer.
  */
-- (CGFloat)componentValueforHex:(NSString *)hex
+- (CGFloat)componentValueForHex:(NSString *)hex
 {
 	unsigned int intVal;
 	CGFloat floatVal;

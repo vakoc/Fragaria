@@ -150,7 +150,7 @@
 }
 
 
-#pragma mark - Protocol Comformance
+#pragma mark - Protocol Conformance
 
 /*
  * @property managedInstances

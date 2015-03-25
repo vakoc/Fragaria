@@ -104,7 +104,7 @@ Copyright 2004-2009 Peter Borg
 /** Inform this syntax colourer that its layout manager's text storage
  *  has changed.
  *  @discussion In this method the syntax colourer can register as observer
- *              of any of the new text storage's notificaitons. */
+ *              of any of the new text storage's notifications. */
 - (void)layoutManagerDidChangeTextStorage;
 
 
@@ -127,7 +127,7 @@ Copyright 2004-2009 Peter Borg
  * part).
  * @param rangeToRecolour Indicates the range to be recoloured.
  * @return The range that was effectively coloured. The returned range always
- *         contains entirely the intial range. */
+ *         contains entirely the initial range. */
 - (NSRange)recolourChangedRange:(NSRange)rangeToRecolour;
 
 

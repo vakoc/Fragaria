@@ -15,12 +15,12 @@
  *  MGSColourSchemeController manages MGSColourScheme instances for use in
  *  UI applications. Although it's designed for use with the MGSFragariaView
  *  settings panel(s), it should be suitable for use in other classes, too.
- *  As an NSArrayController descendent, it can be instantiated by IB.
+ *  As an NSArrayController descendant, it can be instantiated by IB.
  *
  *  MGSColourSchemeController doesn't pretend to know anything about your
  *  views or make assumptions about property names. All observing and setting
  *  is performed via the view's objectController instance (which is the
- *  controller for the model object intance MGSUserDefaults controller). Make
+ *  controller for the model object instance MGSUserDefaults controller). Make
  *  sure an instance of this class in IB has its `objectController` outlet
  *  connected to the same objectController that all properties are connected to.
 *

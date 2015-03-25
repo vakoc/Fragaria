@@ -24,7 +24,7 @@
 
 /*
  *  - setup
- *    Populate self.sytnax errors with sample errors for each test.
+ *    Populate self.syntax errors with sample errors for each test.
  */
 - (void)setUp {
     [super setUp];

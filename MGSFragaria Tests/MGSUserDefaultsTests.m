@@ -75,7 +75,7 @@
 
 
 /*
- *  Check that the shareduserDefaults are indeed separate instances, and are
+ *  Check that the sharedUserDefaults are indeed separate instances, and are
  *  accessible.
  */
 - (void)test_sharedUserDefaults_groupID

@@ -14,7 +14,7 @@
 
 
 /**
- *  MGSFragariaView remimplements MGSFragaria from scratch as an IB-compatible
+ *  MGSFragariaView re-implements MGSFragaria from scratch as an IB-compatible
  *  NSView. It is fully compatible with Fragaria's "modern" property-based API
  *  and leaves behind all support for the old docspec, setters and preferences.
  *
@@ -24,7 +24,7 @@
  *  All API properties are fully bindings-compatible (two-way).
  *
  *  Optional pre-set settings that largely match classic Fragaria's settings and
- *  appearance are available in MGSUserDefaultsDeifinitions, including a handy
+ *  appearance are available in MGSUserDefaultsDefinitions, including a handy
  *  plist dictionary that can be used for userDefaults.
  *
  *  A complete management system for properties and user defaults, as well as

@@ -6,7 +6,7 @@
 //
 //
 
-#import "MGSPrefsViewContoller.h"
+#import "MGSPrefsViewController.h"
 
 
 /**
@@ -14,6 +14,6 @@
  *  instances of the MGSPrefsColourProperties nib.
  **/
 
-@interface MGSPrefsColourPropertiesViewController : MGSPrefsViewContoller
+@interface MGSPrefsColourPropertiesViewController : MGSPrefsViewController
 
 @end

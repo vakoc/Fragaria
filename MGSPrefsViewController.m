@@ -1,12 +1,12 @@
 //
-//  MGSPrefsViewContoller.m
+//  MGSPrefsViewController.m
 //  Fragaria
 //
 //  Created by Jim Derry on 3/15/15.
 //
 //
 
-#import "MGSPrefsViewContoller.h"
+#import "MGSPrefsViewController.h"
 #import "MGSUserDefaultsDefinitions.h"
 #import "MGSUserDefaultsControllerProtocol.h"
 #import "MGSUserDefaultsController.h"
@@ -23,7 +23,7 @@
 @interface MGSManagedPropertiesProxy : NSObject
 
 @property (nonatomic, weak) id <MGSUserDefaultsController> userDefaultsController;
-@property (nonatomic, weak) MGSPrefsViewContoller *viewController;
+@property (nonatomic, weak) MGSPrefsViewController *viewController;
 
 @end
 
@@ -33,7 +33,7 @@
 /*
  * - init
  */
-- (instancetype)initWithViewController:(MGSPrefsViewContoller *)viewController
+- (instancetype)initWithViewController:(MGSPrefsViewController *)viewController
 {
     if ((self = [super init]))
     {
@@ -85,7 +85,7 @@
 
 #pragma mark - MGSPrefsViewController
 
-@interface MGSPrefsViewContoller ()
+@interface MGSPrefsViewController ()
 
 @property (nonatomic, strong) MGSManagedPropertiesProxy *managedPropertiesProxy;
 @property (nonatomic, strong) MGSManagedGlobalPropertiesProxy *managedGlobalPropertiesProxy;
@@ -93,7 +93,7 @@
 @end
 
 
-@implementation MGSPrefsViewContoller {
+@implementation MGSPrefsViewController {
     NSMutableArray *separators;
 }
 
