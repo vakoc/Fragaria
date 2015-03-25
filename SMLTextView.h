@@ -68,7 +68,7 @@
 /** Specifies whether spaces should be inserted instead of tab characters when indenting. */
 @property (nonatomic, assign) BOOL indentWithSpaces;
 
-/** Specifies whether or not closing paretheses are inserted automatically. */
+/** Specifies whether or not closing parentheses are inserted automatically. */
 @property (nonatomic, assign) BOOL insertClosingParenthesisAutomatically;
 
 /** Specifies whether or not closing braces are inserted automatically. */

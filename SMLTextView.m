@@ -360,7 +360,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
 }
 
 
-#pragma mark - Instance methods - Intializers and Setup
+#pragma mark - Instance methods - Initializers and Setup
 
 
 /*

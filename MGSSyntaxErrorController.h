@@ -121,7 +121,7 @@
 /** Inform this syntax error controller that its text view's text storage
  *  has changed.
  *  @discussion In this method the syntax error controller can register as
- *              observer of any of the new text storage's notificaitons. */
+ *              observer of any of the new text storage's notifications. */
 - (void)layoutManagerDidChangeTextStorage;
 
 

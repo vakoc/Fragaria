@@ -213,7 +213,7 @@
 	result2 = self.view1.startingLineNumber;
 	XCTAssert(result1 == expect && result2 == expect);
 
-	// Now that we have persistance, if we set the controller, will
+	// Now that we have persistence, if we set the controller, will
 	// all of the views and defaults take the values, too?
 	expect = arc4random_uniform(100) + 1;
     [controller.values setValue:@(expect) forKey:@"startingLineNumber"];
