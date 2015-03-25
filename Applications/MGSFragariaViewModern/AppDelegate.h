@@ -14,6 +14,11 @@
 #import <MGSFragaria/MGSDragOperationDelegate.h>
 
 
+/**
+ *  This application delegate serves as the main delegate and application
+ *  controller for the MGSFragariaViewModern application target. It demos
+ *  most of the major features provided my MGSFragariaView.
+ **/
 @interface AppDelegate : NSObject <NSApplicationDelegate, MGSBreakpointDelegate, MGSDragOperationDelegate>
 
 @property (nonatomic, assign, readonly) NSArray *availableSyntaxDefinitions;

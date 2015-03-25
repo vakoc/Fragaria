@@ -18,6 +18,7 @@
 #import "MGSHybridUserDefaultsController.h"
 #import "MGSUserDefaultsDefinitions.h"
 #import "MGSSyntaxController.h"
+#import "MGSSampleBreakpointDelegate.h"
 
 
 #pragma mark - PRIVATE INTERFACE
@@ -44,7 +45,9 @@
 #pragma mark - IMPLEMENTATION
 
 
-@implementation AppDelegate
+@implementation AppDelegate {
+	MGSSampleBreakpointDelegate *breakpointDelegate;
+}
 
 @synthesize preferencesWindowController = _preferencesWindowController;
 
@@ -85,6 +88,14 @@
     /* Make the lower view interesting. */
     self.viewBottom.syntaxDefinitionName = @"HTML";
     self.viewBottom.textView.string = fileContent;
+	
+	/* Use an external breakpoint delegate for each view. Note that by
+	   default the delegate would be set to this AppDelegate if we
+	   don't assign it here. */
+	breakpointDelegate = [[MGSSampleBreakpointDelegate alloc] init];
+	self.viewTop.breakpointDelegate = breakpointDelegate;
+	self.viewBottom.breakpointDelegate = breakpointDelegate;
+	
 }
 
 
@@ -235,43 +246,6 @@
 {
 	#pragma unused(notification)
 	NSLog(@"%@", @"textDidChange: notification.");
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	breakpointsForView:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSSet*) breakpointsForFragaria:(id)sender
-{
-    return [NSSet setWithArray:self.breakpoints];
-}
-
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	toggleBreakpointForFragaria:onLine
-        This simple demonstration simply toggles breakpoints every
-        time the line number is clicked.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)toggleBreakpointForFragaria:(id)sender onLine:(NSUInteger)line;
-{
-	if ([self.breakpoints containsObject:@(line)])
-	{
-		self.breakpoints = [self.breakpoints filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(id evaluatedObject, NSDictionary *bindings) {
-			return ![evaluatedObject isEqualToValue:@(line)];
-		}]];
-	}
-	else
-	{
-		if (self.breakpoints)
-		{
-			self.breakpoints = [self.breakpoints arrayByAddingObject:@(line)];
-		}
-		else
-		{
-			self.breakpoints = @[@(line)];
-		}
-	}
-	
 }
 
 
