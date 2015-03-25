@@ -9,10 +9,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import <MGSFragaria/MGSFragariaTextViewDelegate.h>
+#import <MGSFragaria/SMLSyntaxColouringDelegate.h>
+#import <MGSFragaria/MGSDragOperationDelegate.h>
+
 
 @class MGSFragaria;
 
-@interface MyDocument : NSDocument <MGSFragariaTextViewDelegate>
+@interface MyDocument : NSDocument <MGSFragariaTextViewDelegate, SMLSyntaxColouringDelegate, MGSDragOperationDelegate>
 
 @property (assign) IBOutlet NSView *editView;
 

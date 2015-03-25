@@ -123,6 +123,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
 
 @protocol SMLSyntaxColouringDelegate <NSObject>
 
+@optional
 /**
  *  Query delegate if should colour this document.
  *  @param fragaria The instance of Fragaria being coloured.

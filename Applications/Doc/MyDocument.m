@@ -72,7 +72,7 @@
 	// see MGSFragaria.h for details
 	//
     if (YES) {
-        fragaria.isSyntaxColoured = YES;
+        fragaria.syntaxColoured = YES;
         fragaria.showsLineNumbers = YES;
     }
 
