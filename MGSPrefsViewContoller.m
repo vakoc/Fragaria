@@ -193,9 +193,11 @@
 		}
 	}
     
-    cs = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[prev]|" options:0
-      metrics:nil views:NSDictionaryOfVariableBindings(prev)];
-    [self.view addConstraints:cs];
+    if (prev) {
+        cs = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[prev]|" options:0
+          metrics:nil views:NSDictionaryOfVariableBindings(prev)];
+        [self.view addConstraints:cs];
+    }
     
     /* This is needed to update the view's height, because the preference
      * window handler will cache it before the first display. */
