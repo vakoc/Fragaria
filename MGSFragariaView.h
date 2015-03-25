@@ -14,22 +14,27 @@
 
 
 /**
- *  MGSFragariaView abstracts much of Fragaria's overhead into an IB-compatible
- *  view. Implements an NSView subclass that abstracts several characteristics
- *  of Fragaria, such as the use of Interface Builder to set delegates and
- *  assign key-value pairs.
- *  Also provides two-way bindable property abstractions for Fragaria's
- *  settings and methods.
+ *  MGSFragariaView remimplements MGSFragaria from scratch as an IB-compatible
+ *  NSView. It is fully compatible with Fragaria's "modern" property-based API
+ *  and leaves behind all support for the old docspec, setters and preferences.
  *
- *  Consult MGSFragariaAPI.h for the other properties and methods this class
- *  shares with MGSFragaria.
+ *  MGSFragariaView adheres to <MGSFragariaAPI> so refer to its header file for
+ *  the complete reference of properties and methods available.
+ *
+ *  All API properties are fully bindings-compatible (two-way).
+ *
+ *  Optional pre-set settings that largely match classic Fragaria's settings and
+ *  appearance are available in MGSUserDefaultsDeifinitions, including a handy
+ *  plist dictionary that can be used for userDefaults.
+ *
+ *  A complete management system for properties and user defaults, as well as
+ *  a modern set of user interfaces are available in MGSUserDefaultsController
+ *  group of files. These are for convenience and are in no way required in
+ *  order to use MGSFragariaView.
  */
 
 @interface MGSFragariaView : NSView <MGSFragariaAPI>
 
-
-/** Provides direct access to the view's instance of MGSFragaria. */
-@property (nonatomic, strong, readonly) MGSFragaria *fragaria;
 
 /** The same as in the protocol, but IBOutlet added. */
 @property (nonatomic, weak) IBOutlet id<SMLAutoCompleteDelegate> autoCompleteDelegate;
