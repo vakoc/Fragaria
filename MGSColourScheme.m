@@ -9,7 +9,7 @@
 #import "MGSColourScheme.h"
 #import "MGSUserDefaultsDefinitions.h"
 #import "MGSColourToPlainTextTransformer.h"
-#import "NSColor+RGBCompare.h"
+#import "NSColor+TransformedCompare.h"
 
 
 @interface MGSColourScheme ()
@@ -164,7 +164,7 @@
         {
             NSColor *color1 = [self valueForKey:key];
             NSColor *color2 = [scheme valueForKey:key];
-            BOOL result = [color1 isEqualToRGBOfColour:color2];
+            BOOL result = [color1 mgs_isEqualToColor:color2 transformedThrough:@"MGSColourToPlainTextTransformer"];
             if (!result)
             {
 //                NSLog(@"KEY=%@ and SELF=%@ and EXTERNAL=%@", key, color1, color2);
