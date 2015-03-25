@@ -8,17 +8,6 @@
 
 #import "MGSColourToPlainTextTransformer.h"
 
-/*
- *	There is precision loss for colors, of course, but we can control it
- *  a little bit. Using 8 bits is probably fine and gives nice 2 character
- *  hex codes that users are familiar with, but 16 and 32 could be used, too.
- *
- *  The system named colors require 32 bits for two-way transformations to be
- *  reliable, though, so see also NSColor+RGBCompare for a safe alternative
- *  for comparing colors via RGB value.
- */
-#define COLOR_PRECISION (pow(2, 8)-1)
-
 
 @implementation MGSColourToPlainTextTransformer
 
@@ -52,113 +41,44 @@
 /*
  * - transformedValue:
  */
-- (id)transformedValue:(id)value
+- (id)transformedValue:(id)col
 {
-	if (!value) return nil;
-	
-	NSColor *color = [value colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-	
-	NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-	CGFloat red;
-	CGFloat green;
-	CGFloat blue;
-	CGFloat alpha;
-	[color getRed:&red green:&green blue:&blue alpha:&alpha];
-	
-	[dictionary setObject:[self hexValueForComponentValue:red] forKey:@"red"];
-	[dictionary setObject:[self hexValueForComponentValue:green] forKey:@"green"];
-	[dictionary setObject:[self hexValueForComponentValue:blue] forKey:@"blue"];
-	[dictionary setObject:[self hexValueForComponentValue:alpha] forKey:@"alpha"];
-	
-	return dictionary;
+    NSColor *nc;
+    NSMutableString *tmp;
+    
+    nc = [col colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    if (!nc) {
+        NSLog(@"MGSStringFromColor: can't convert %@, returning red", col);
+        return @"1.0 0.0 0.0";
+    }
+    
+    tmp = [NSMutableString string];
+    [tmp appendFormat:@"%lf %lf %lf", nc.redComponent, nc.greenComponent, nc.blueComponent];
+    if (nc.alphaComponent != 1.0)
+        [tmp appendFormat:@" %lf", nc.alphaComponent];
+    
+    return [tmp copy];
 }
 
 
 /*
  * - reverseTransformedValue:
  */
--(id)reverseTransformedValue:(id)value
+-(id)reverseTransformedValue:(id)str
 {
-	if (!value) return nil;
-
-	// Support reading both types of plists.
-	if ([value isKindOfClass:[NSString class]])
-	{
-		return [self MGSColorFromString:value];
-	}
-	
-	NSMutableDictionary *dictionary = [NSMutableDictionary dictionaryWithDictionary:value];
-
-	CGFloat red = [self componentValueforHex:[dictionary objectForKey:@"red"]];
-	CGFloat green = [self componentValueforHex:[dictionary objectForKey:@"green"]];
-	CGFloat blue = [self componentValueforHex:[dictionary objectForKey:@"blue"]];
-	CGFloat alpha = [self componentValueforHex:[dictionary objectForKey:@"alpha"]];
-	
-	return [NSColor colorWithCalibratedRed:red green:green blue:blue alpha:alpha];
-}
-
-
-/*
- * - hexValueForComponentValue
- *   I suppose this could be its own value transformer.
- */
-- (NSString *)hexValueForComponentValue:(CGFloat)color
-{
-	NSString *result = [NSString stringWithFormat:@"%lx", (NSUInteger)(color * COLOR_PRECISION )];
-	
-	return result;
-}
-
-
-/*
- * - componentValueforHex
- *   I suppose this could be its own value transformer.
- */
-- (CGFloat)componentValueforHex:(NSString *)hex
-{
-	unsigned int intVal;
-	CGFloat floatVal;
-	NSScanner *scanner = [NSScanner scannerWithString:hex];
-	[scanner scanHexInt:&intVal];
-	floatVal =  (CGFloat)((CGFloat)intVal / COLOR_PRECISION );
-	floatVal = floatVal > 1.0 ? 1.0 : floatVal;
-	floatVal = floatVal < 0.0 ? 0.0 : floatVal;
-	return floatVal;
-}
-
-
-/*
- * - MGSStringFromColor
- */
-- (NSString *) MGSStringFromColor:(NSColor *)col
-{
-	NSColor *nc;
-	
-	nc = [col colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
-	if (!nc)
-	{
-		NSLog(@"MGSStringFromColor: can't convert %@, returning red", col);
-		return @"1.0 0.0 0.0";
-	}
-	return [NSString stringWithFormat:@"%f %f %f", nc.redComponent, nc.greenComponent, nc.blueComponent];
-}
-
-
-/*
- * - MGSColorFromString
- */
-- (NSColor *)MGSColorFromString:(NSString *)str
-{
-	NSScanner *scan;
-	CGFloat r, g, b;
-	
-	scan = [NSScanner scannerWithString:str];
-	if (!([scan scanDouble:&r] && [scan scanDouble:&g] && [scan scanDouble:&b]))
-	{
-		NSLog(@"MGSColorFromString: can't parse %@, returning red", str);
-		return [NSColor redColor];
-	}
-	return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:1.0];
+    NSScanner *scan;
+    CGFloat r, g, b, a;
+    
+    scan = [NSScanner scannerWithString:str];
+    
+    a = 1.0;
+    if (!([scan scanDouble:&r] && [scan scanDouble:&g] && [scan scanDouble:&b])) {
+        NSLog(@"MGSColorFromString: can't parse %@, returning red", str);
+        return [NSColor redColor];
+    }
+    [scan scanDouble:&a];
+    
+    return [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
 }
 
 

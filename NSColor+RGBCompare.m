@@ -23,7 +23,7 @@
 	NSDictionary *result1 = [xformer transformedValue:self];
 	NSDictionary *result2 = [xformer transformedValue:colour];
 	
-	return [result1 isEqualToDictionary:result2];
+    return [result1 isEqual:result2];
 }
 
 @end
