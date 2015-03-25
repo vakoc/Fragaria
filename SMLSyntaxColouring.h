@@ -43,7 +43,7 @@ Copyright 2004-2009 Peter Borg
 
 /** The MGSFragaria instance to be passed to the syntax colouring delegate
  * as the fragaria document parameter. */
-@property (weak) MGSFragaria *fragaria;
+@property (weak) id<MGSFragariaAPI> fragaria;
 
 /** The layout manager to be used for setting temporary attributes. */
 @property (readonly, weak) NSLayoutManager *layoutManager;

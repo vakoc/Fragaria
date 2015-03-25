@@ -77,7 +77,7 @@ static char kcColoursChanged;
 
 
 /*
- * - initWithFragaria
+ * - initWithLayoutManager:
  */
 - (instancetype)initWithLayoutManager:(SMLLayoutManager *)lm
 {

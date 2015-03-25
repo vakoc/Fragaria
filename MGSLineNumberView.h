@@ -92,7 +92,7 @@
  * and an owning Fragaria instance.
  * @param aScrollView Indicates the scroll view associated with this instance.
  * @param fragaria Indicates the Fragaria instance associated with this instance. */
-- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(MGSFragaria *)fragaria;
+- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(id <MGSFragariaAPI>)fragaria;
 
 /** Initializes a new instance of MGSLineNumberView, associating is with aScrollView.
  * @param aScrollView Indicates the scroll view associated with this instance. */
