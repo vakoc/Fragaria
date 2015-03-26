@@ -10,7 +10,6 @@
 
 #import "AppDelegate.h"
 #import <MGSFragaria/MGSFragaria.h>
-#import "MASPreferencesWindowController.h"
 #import "PrefsFontsAndColorsViewController.h"
 #import "PrefsTextEditingViewController.h"
 #import "FeaturesWindowController.h"
@@ -28,8 +27,6 @@
 @property (weak) IBOutlet MGSFragariaView *viewBottom;
 
 
-@property (nonatomic, strong) NSWindowController *preferencesWindowController;
-
 @property (nonatomic, strong) FeaturesWindowController *featuresWindowController;
 
 
@@ -43,7 +40,6 @@
 
 @implementation AppDelegate
 
-@synthesize preferencesWindowController = _preferencesWindowController;
 @synthesize featuresWindowController = _featuresWindowController;
 
 
@@ -86,24 +82,6 @@
 
 
 #pragma mark - Property Accessors
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	@preferencesWindowController
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSWindowController *)preferencesWindowController
-{
-    if (!_preferencesWindowController)
-    {
-        NSViewController *fontsAndColorsPrefsController = [[PrefsFontsAndColorsViewController alloc] init];
-        NSViewController *textEditingPrefsController = [[PrefsTextEditingViewController alloc] init];
-        NSArray *controllers = [[NSArray alloc] initWithObjects:fontsAndColorsPrefsController, textEditingPrefsController, nil];
-
-        NSString *title = NSLocalizedString(@"Preferences", @"Common title for Preferences window");
-        _preferencesWindowController = [[MASPreferencesWindowController alloc] initWithViewControllers:controllers title:title];
-    }
-    return _preferencesWindowController;
-}
-
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	@featuresWindowController
@@ -179,15 +157,6 @@
 
 
 #pragma mark - UI Handling
-
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	openPreferences:
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (IBAction)openPreferences:(id)sender
-{
-    [self.preferencesWindowController showWindow:nil];
-}
-
 
 /*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
 	openFeatures:

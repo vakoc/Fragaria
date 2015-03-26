@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1514" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6254"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -33,11 +33,7 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW">
-                                <connections>
-                                    <action selector="openPreferences:" target="Voe-Tx-rLC" id="vtx-ZQ-KT1"/>
-                                </connections>
-                            </menuItem>
+                            <menuItem title="Preferences…" keyEquivalent="," id="BOF-NM-1cW"/>
                             <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>
                             <menuItem title="Services" id="NMo-om-nkz">
                                 <modifierMask key="keyEquivalentModifierMask"/>
@@ -752,7 +748,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="480" height="360"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1440"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="360"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -790,11 +786,6 @@
             </view>
             <toolbar key="toolbar" implicitIdentifier="65C67096-4946-4999-AF7B-720E08B06DD4" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="83M-69-f2l">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="285A32C5-A2B5-4167-B7FC-6484B851DBC1" label="Preferences" paletteLabel="Preferences" tag="-1" image="NSPreferencesGeneral" id="9o1-ZA-WDJ">
-                        <connections>
-                            <action selector="openPreferences:" target="Voe-Tx-rLC" id="MQa-Ez-5VE"/>
-                        </connections>
-                    </toolbarItem>
                     <toolbarItem implicitItemIdentifier="4DB76091-4088-462F-9D65-09C146AA5956" label="Features" paletteLabel="Features" tag="-1" image="NSActionTemplate" id="pm1-IK-QRH">
                         <connections>
                             <action selector="openFeatures:" target="Voe-Tx-rLC" id="ebb-1o-cjB"/>
@@ -802,7 +793,6 @@
                     </toolbarItem>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
-                    <toolbarItem reference="9o1-ZA-WDJ"/>
                     <toolbarItem reference="pm1-IK-QRH"/>
                 </defaultToolbarItems>
             </toolbar>
@@ -810,6 +800,5 @@
     </objects>
     <resources>
         <image name="NSActionTemplate" width="14" height="14"/>
-        <image name="NSPreferencesGeneral" width="32" height="32"/>
     </resources>
 </document>
