@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>numberDefinition</key>
-	<string>(?&lt;=\W)((-?[0-9]+(?=\W))|(([0-9][0-9A-Fa-f]+)h)|(([01_]+)b)|(([0-7]+)o))</string>
+	<string>(?&lt;=\W)(([-+]?[0-9]+(?=\W))|(([0-9][0-9A-Fa-f]*)h)|(([01_]+)b)|(([0-7]+)o))</string>
 	<key>beginCommand</key>
 	<string></string>
 	<key>endCommand</key>

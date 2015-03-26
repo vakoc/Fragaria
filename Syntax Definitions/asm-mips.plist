@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>numberDefinition</key>
-	<string>(?&lt;=\W)((-?[0-9]+(?=[^xb]))|(0x[0-9A-Fa-f]+)|(0b[01]+))</string>
+	<string>(?&lt;=\W)(([-+]?[0-9]+(?=[^xb]))|(0x[0-9A-Fa-f]+)|(0b[01]+))</string>
 	<key>autocompleteWords</key>
 	<array/>
 	<key>beginCommand</key>
