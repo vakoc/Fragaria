@@ -768,7 +768,7 @@
  */
 - (void)setLineHeightMultiple:(CGFloat)lineHeightMultiple
 {
-    self.lineHeightMultiple = lineHeightMultiple;
+    self.textView.lineHeightMultiple = lineHeightMultiple;
     [self propagateValue:@(lineHeightMultiple) forBinding:NSStringFromSelector(@selector(lineHeightMultiple))];
 }
 
