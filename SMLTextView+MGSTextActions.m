@@ -395,7 +395,7 @@
 
 /*
  
- - performEntab
+ - performEntabWithNumberOfSpaces:
  
  */
 - (void)performEntabWithNumberOfSpaces:(NSInteger)numberOfSpaces
@@ -404,12 +404,11 @@
     NSRange savedRange = [self selectedRange];
     
     NSArray *array = [self selectedRanges];
-    NSMutableString *completeString = [NSMutableString stringWithString:[self string]];
+    NSMutableString *completeString = [self.string mutableCopy];
     NSInteger sumOfRemovedCharacters = 0;
     for (id item in array) {
         selectedRange = NSMakeRange([item rangeValue].location - sumOfRemovedCharacters, [item rangeValue].length);
         
-        NSInteger removedCharsInLine = 0;
         NSRange thisSpace, prevSpaces, thisLine, range;
         prevSpaces = NSMakeRange(NSNotFound, 0);
         thisLine = NSMakeRange(NSNotFound, 0);
@@ -417,22 +416,23 @@
         thisSpace = [completeString rangeOfString:@" " options:NSLiteralSearch range:range];
         while (thisSpace.length) {
             NSInteger phase, temp;
+            NSUInteger realLocation;
             
-            if (!NSLocationInRange(thisSpace.location, thisLine)) {
+            if (!NSLocationInRange(thisSpace.location, thisLine))
                 thisLine = [completeString lineRangeForRange:thisSpace];
-                removedCharsInLine = 0;
-            }
             
             if (NSMaxRange(prevSpaces) == thisSpace.location)
                 prevSpaces.length++;
             else
                 prevSpaces = thisSpace;
             
-            phase = (removedCharsInLine + NSMaxRange(prevSpaces) - thisLine.location) % numberOfSpaces;
+            temp = NSMaxRange(prevSpaces) + sumOfRemovedCharacters;
+            realLocation = [self realColumnOfCharacter:temp];
+            phase = realLocation % numberOfSpaces;
             if (phase == 0) {
                 if (prevSpaces.length > 1) {
                     [completeString replaceCharactersInRange:prevSpaces withString:@"\t"];
-                    removedCharsInLine += prevSpaces.length - 1;
+                    sumOfRemovedCharacters += prevSpaces.length - 1;
                     temp = NSMaxRange(range) - (prevSpaces.length - 1);
                     range.location = prevSpaces.location;
                     range.length = temp - range.location;
@@ -452,7 +452,6 @@
             [self replaceCharactersInRange:NSMakeRange(0, [[self string] length]) withString:completeString];
             [self didChangeText];
         }
-        
     }
     
     [self setSelectedRange:NSMakeRange(savedRange.location, 0)];
@@ -483,18 +482,20 @@
         tempRange = [completeString rangeOfString:@"\t" options:NSLiteralSearch range:selectedRange];
         while (tempRange.length) {
             NSRange lineRange;
-            NSInteger phase;
+            NSInteger phase, oldpos;
             NSString *replStr;
             
             lineRange = [completeString lineRangeForRange:tempRange];
             if (numberOfSpaces) {
-                phase = (tempRange.location - lineRange.location) % numberOfSpaces;
+                oldpos = tempRange.location - sumOfInsertedCharacters;
+                phase = [self realColumnOfCharacter:oldpos] % numberOfSpaces;
                 replStr = [spaces substringFromIndex:phase];
             } else {
                 replStr = @"";
             }
             [completeString replaceCharactersInRange:tempRange withString:replStr];
             
+            sumOfInsertedCharacters += [replStr length] - 1;
             selectedRange.length += [replStr length] - 1;
             selectedRange.length -= NSMaxRange(tempRange) - selectedRange.location;
             selectedRange.location = NSMaxRange(tempRange);
@@ -506,7 +507,6 @@
             [self replaceCharactersInRange:NSMakeRange(0, [[self string] length]) withString:completeString];
             [self didChangeText];
         }
-        
     }
     
     [self setSelectedRange:NSMakeRange(savedRange.location, 0)];
