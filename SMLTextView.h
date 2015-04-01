@@ -139,6 +139,13 @@
  *  applied by the syntax colourer. */
 - (NSAttributedString *)attributedStringWithTemporaryAttributesApplied;
 
+/** The real location of the specified character index in its line, in
+ *  characters.
+ *  @discussion This method takes in account the real width of tabulation
+ *              characters.
+ *  @param c A character index in the text view's string. */
+- (NSUInteger)realColumnOfCharacter:(NSUInteger)c;
+
 
 /// @name Instance Methods - Initializers and Setup
 #pragma mark - Instance Methods - Setup

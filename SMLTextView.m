@@ -776,7 +776,7 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
         NSMutableString *spacesString = [NSMutableString string];
         NSInteger numberOfSpacesPerTab = self.tabWidth;
         if (self.useTabStops) {
-            NSInteger locationOnLine = [self selectedRange].location - [[self string] lineRangeForRange:[self selectedRange]].location;
+            NSInteger locationOnLine = [self realColumnOfCharacter:self.selectedRange.location];
             if (numberOfSpacesPerTab != 0) {
                 NSInteger numberOfSpacesLess = locationOnLine % numberOfSpacesPerTab;
                 numberOfSpacesPerTab = numberOfSpacesPerTab - numberOfSpacesLess;
@@ -792,6 +792,31 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     } else {
         [super insertTab:sender];
     }
+}
+
+
+/*
+ * - realColumnOfCharacter:
+ */
+- (NSUInteger)realColumnOfCharacter:(NSUInteger)c
+{
+    NSString *str;
+    NSRange line;
+    NSUInteger i, pos, phase, tabwidth;
+    
+    str = [self string];
+    line = [str lineRangeForRange:NSMakeRange(c, 0)];
+    
+    pos = 0;
+    tabwidth = self.tabWidth;
+    for (i=line.location; i<c; i++) {
+        if ([str characterAtIndex:i] == '\t') {
+            phase = pos % tabwidth;
+            pos += tabwidth - phase;
+        } else
+            pos++;
+    }
+    return pos;
 }
 
 
