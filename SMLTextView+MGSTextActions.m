@@ -459,7 +459,7 @@
 
 /*
  
- - performDetab
+ - performDetabWithNumberOfSpaces:
  
  */
 - (void)performDetabWithNumberOfSpaces:(NSInteger)numberOfSpaces
@@ -481,11 +481,9 @@
         NSRange tempRange;
         tempRange = [completeString rangeOfString:@"\t" options:NSLiteralSearch range:selectedRange];
         while (tempRange.length) {
-            NSRange lineRange;
             NSInteger phase, oldpos;
             NSString *replStr;
             
-            lineRange = [completeString lineRangeForRange:tempRange];
             if (numberOfSpaces) {
                 oldpos = tempRange.location - sumOfInsertedCharacters;
                 phase = [self realColumnOfCharacter:oldpos] % numberOfSpaces;
