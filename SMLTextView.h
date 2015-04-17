@@ -105,7 +105,7 @@
 @property (nonatomic) CGFloat lineHeightMultiple;
 
 /** Indicates the current text color. */
-@property (nonatomic, assign) NSColor *textColor;
+@property (copy) NSColor *textColor;
 
 /** Indicates the current editor font. */
 @property (nonatomic, strong) NSFont *textFont;
@@ -125,7 +125,7 @@
 
 
 /** The text view's delegate */
-@property (nonatomic, assign) id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> delegate;
+@property (assign) id<MGSFragariaTextViewDelegate, MGSDragOperationDelegate> delegate;
 
 /** The autocomplete delegate for this text view. */
 @property (weak) id<SMLAutoCompleteDelegate> autoCompleteDelegate;

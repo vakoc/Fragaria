@@ -61,6 +61,10 @@
 }
 
 
+/* Properties implemented by superclass */
+@dynamic clientView;
+
+
 - (id)initWithScrollView:(NSScrollView *)aScrollView
 {
     return [self initWithScrollView:aScrollView fragaria:nil];

@@ -86,6 +86,10 @@ static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
     id __weak syntaxDefOfCachedKeywords;
 }
 
+
+/* Properties implemented by superclass */
+@dynamic delegate, layoutManager;
+
 @synthesize lineWrap = _lineWrap;
 @synthesize showsPageGuide = _showsPageGuide;
 
