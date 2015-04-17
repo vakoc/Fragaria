@@ -11,7 +11,7 @@
  *  to receive notifications from Fragaria's text view.
  **/
 #pragma mark - MGSFragariaTextViewDelegate Protocol
-@protocol MGSFragariaTextViewDelegate <NSObject>
+@protocol MGSFragariaTextViewDelegate <NSTextViewDelegate>
 @optional
 
 /**
