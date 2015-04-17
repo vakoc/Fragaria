@@ -65,9 +65,6 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 }
 
 
-static void *LineHighlightingPrefChanged = &LineHighlightingPrefChanged;
-
-
 #pragma mark - Implementation
 
 
