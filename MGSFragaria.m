@@ -10,7 +10,6 @@
 #import "MGSFragaria.h"
 #import "MGSFragariaPrivate.h"
 #import "SMLTextViewPrivate.h"
-#import "MGSPreferencesObserver.h"
 
 
 // BOOL
@@ -289,7 +288,9 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
  */
 - (instancetype)initWithView:(NSView *)view
 {
-    return [self initWithView:view useStandardPreferences:YES];
+    self = [super init];
+    [self embedInView:view];
+    return self;
 }
 
 
@@ -301,10 +302,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
     self = [super init];
     
     [self embedInView:view];
-    if (autopref) {
-        // create the temporary preferences observer
-        _preferencesObserver = [[MGSPreferencesObserver alloc] initWithFragaria:self];
-    }
     
     return self;
 }

@@ -44,7 +44,6 @@ extern NSString * const MGSFOAutoCompleteDelegate DEPRECATED_ATTRIBUTE;
 #import "SMLSyntaxColouringDelegate.h"      // Justification: public delegate.
 #import "SMLAutoCompleteDelegate.h"         // Justification: public delegate.
 
-#import "MGSFragariaPreferences.h"          // Justification: currently exposed, but to be killed off later.
 #import "SMLSyntaxError.h"                  // Justification: external users require it.
 #import "MGSFragariaView.h"                 // Justification: external users require it.
 #import "SMLTextView.h"                     // Justification: external users require it / textView property is exposed.
