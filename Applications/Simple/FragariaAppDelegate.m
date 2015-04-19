@@ -11,7 +11,7 @@
 #import "MGSSimpleBreakpointDelegate.h"
 
 @implementation FragariaAppDelegate {
-    MGSFragaria *fragaria;
+    IBOutlet MGSFragariaView *fragaria;
     MGSSimpleBreakpointDelegate *breakptDelegate;
 }
 
@@ -25,11 +25,6 @@
  */
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification 
 {
-#pragma unused(aNotification)
-	
-	// create an instance
-	fragaria = [[MGSFragaria alloc] initWithView:self.editView];
-
 	// define initial object configuration
 	//
 	// see MGSFragaria.h for details

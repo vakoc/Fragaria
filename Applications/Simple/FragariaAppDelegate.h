@@ -7,9 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <MGSFragaria/MGSFragariaTextViewDelegate.h>
-#import <MGSFragaria/SMLSyntaxColouringDelegate.h>
-#import <MGSFragaria/MGSDragOperationDelegate.h>
+#import <MGSFragaria/MGSFragaria.h>
 
 @class SMLTextView;
 @class MGSFragaria;
@@ -21,8 +19,6 @@
 - (IBAction)reloadString:(id)sender;
 
 @property (weak) IBOutlet NSWindow *window;
-
-@property (weak) IBOutlet NSView *editView;
 
 @property (nonatomic,assign) NSString *syntaxDefinition;
 
