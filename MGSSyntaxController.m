@@ -35,7 +35,6 @@ NSString * const KMGSSyntaxDefinitionsFolder = @"Syntax Definitions";
 
 @interface MGSSyntaxController()
 
-@property (strong, nonatomic, readwrite) NSArray *syntaxDefinitionNames;
 @property (strong) NSMutableDictionary *syntaxDefinitions;
 
 @end
@@ -236,7 +235,7 @@ static id sharedInstance = nil;
 		[definitionNames addObject:name];
 	}
 	
-	self.syntaxDefinitionNames = [definitionNames copy];
+	_syntaxDefinitionNames = [definitionNames copy];
 
 }
 
