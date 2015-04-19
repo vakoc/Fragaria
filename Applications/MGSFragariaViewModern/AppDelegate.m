@@ -86,8 +86,8 @@
     self.viewTop.syntaxDefinitionName = @"HTML";
 
     /* Make the lower view interesting. */
+    [self.viewBottom replaceTextStorage:self.viewTop.textView.textStorage];
     self.viewBottom.syntaxDefinitionName = @"HTML";
-    self.viewBottom.textView.string = fileContent;
 	
 	/* Use an external breakpoint delegate for each view. Note that by
 	   default the delegate would be set to this AppDelegate if we
