@@ -58,10 +58,6 @@ NSString * const MGSFOAutoCompleteDelegate = @"autoCompleteDelegate";
 // MGSLineNumberView dynamic properties:
 @dynamic startingLineNumber, showsLineNumbers;
 
-// MGSFragariaAPI properties
-@synthesize scrollView = _scrollView, indentWidth = _indentWidth;
-@synthesize textView = _textView, gutterView = _gutterView;
-
 
 #pragma mark - Properties - Overall Appearance and Display
 

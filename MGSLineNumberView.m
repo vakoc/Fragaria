@@ -71,7 +71,7 @@
 }
 
 
-- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(id <MGSFragariaAPI>)fragaria
+- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(MGSFragaria *)fragaria
 {
     if ((self = [super initWithScrollView:aScrollView orientation:NSVerticalRuler]) != nil)
     {
