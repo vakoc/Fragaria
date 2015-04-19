@@ -103,22 +103,4 @@ extern float const kMGSErrorCategoryDefault;  ///< warningLevel = kMGSErrorCateg
 @property (nonatomic,strong) NSImage *warningImage;
 
 
-/**
- * @name Deprecated Properties
- * @todo: (jsd) AppleDoc currently chokes on these; it doesn't like the attributes.
- **/
-
-/// @deprecated This property is not used.
-@property (nonatomic,copy) NSString* code __deprecated_msg("This property is not used.");
-
-/// @deprecated Use the warningLevel property instead.
-@property (nonatomic,assign) float warningStyle __deprecated_msg("Use the warningLevel property instead.");
-
-/// @deprecated Use the hidden property instead.
-@property (nonatomic,assign) BOOL hideWarning __deprecated_msg("Use the hidden property instead.");
-
-/// @deprecated Use the errorLineHighlightColor property.
-@property (nonatomic,copy) NSColor *customBackgroundColor __deprecated_msg("Use the errorLineHighlightColor property.");
-
-
 @end

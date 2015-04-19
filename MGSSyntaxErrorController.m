@@ -239,8 +239,8 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 
 - (SMLSyntaxError *)errorForLine:(NSInteger)line
 {
-    float highestErrorLevel = [[[self errorsForLine:line] valueForKeyPath:@"@max.warningStyle"] floatValue];
-    NSArray* errors = [[self errorsForLine:line] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"warningStyle = %@", @(highestErrorLevel)]];
+    float highestErrorLevel = [[[self errorsForLine:line] valueForKeyPath:@"@max.warningLevel"] floatValue];
+    NSArray* errors = [[self errorsForLine:line] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"warningLevel = %@", @(highestErrorLevel)]];
 
     return errors.firstObject;
 }

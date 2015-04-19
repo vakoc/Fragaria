@@ -25,9 +25,6 @@ float const kMGSErrorCategoryDefault = 500;
 // manual
 @synthesize warningImage = _warningImage;
 
-// to be deprecated
-@synthesize code; // deprecated; separate line as reminder to remove.
-
 
 #pragma mark - Class Methods
 
@@ -121,42 +118,6 @@ float const kMGSErrorCategoryDefault = 500;
     }
 
     return _warningImage;
-}
-
-
-#pragma mark - Deprecated Properties
-
-
-- (void)setWarningStyle:(float)style
-{
-    self.warningLevel = style;
-}
-
-- (float)warningStyle
-{
-    return self.warningLevel;
-}
-
-
-- (void)setHideWarning:(BOOL)hideWarning
-{
-    self.hidden = hideWarning;
-}
-
-- (BOOL)hideWarning
-{
-    return self.hidden;
-}
-
-
--(void)setCustomBackgroundColor:(NSColor *)customBackgroundColor
-{
-    self.errorLineHighlightColor = customBackgroundColor;
-}
-
-- (NSColor *)customBackgroundColor
-{
-    return self.errorLineHighlightColor;
 }
 
 
