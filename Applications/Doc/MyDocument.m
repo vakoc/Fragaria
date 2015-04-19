@@ -10,7 +10,7 @@
 #import <MGSFragaria/MGSFragaria.h>
 
 @implementation MyDocument{
-    MGSFragaria *fragaria;
+    IBOutlet MGSFragariaView *fragaria;
 }
 
 
@@ -47,25 +47,11 @@
 - (void)windowControllerDidLoadNib:(NSWindowController *) aController
 {
     [super windowControllerDidLoadNib:aController];
-
-	// create an instance
-	fragaria = [[MGSFragaria alloc] initWithView:self.editView useStandardPreferences:NO];
 	
     fragaria.textViewDelegate = self;
 	
 	// set our syntax definition
 	[self setSyntaxDefinition:@"Objective-C"];
-	
-    //
-	// assign user defaults.
-	// a number of properties are currently derived from the user defaults system.
-	//
-	// see MGSFragariaPreferences.h for details
-	//
-#if 0
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:MGSFragariaPrefsAutocompleteSuggestAutomatically];
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:MGSFragariaPrefsLineWrapNewDocuments];
-#endif
 	
 	// define initial document configuration
 	//

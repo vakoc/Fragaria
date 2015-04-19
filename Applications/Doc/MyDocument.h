@@ -13,11 +13,9 @@
 #import <MGSFragaria/MGSDragOperationDelegate.h>
 
 
-@class MGSFragaria;
+@class MGSFragariaView;
 
 @interface MyDocument : NSDocument <MGSFragariaTextViewDelegate, SMLSyntaxColouringDelegate, MGSDragOperationDelegate>
-
-@property (assign) IBOutlet NSView *editView;
 
 @property (nonatomic,assign) NSString *syntaxDefinition;
 
