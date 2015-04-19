@@ -25,6 +25,6 @@
 - (instancetype)initWithController:(MGSUserDefaultsController *)controller dictionary:(NSDictionary *)dictionary;
 
 /** A reference to the controller that owns an instance of this class. */
-@property (nonatomic, strong) MGSUserDefaultsController *controller;
+@property (weak) MGSUserDefaultsController *controller;
 
 @end
