@@ -32,7 +32,7 @@
 		This is just a demo! A real app would have a more
 		sophisticated way of deciding a breakpoint's color.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSColor *)breakpointColourForLine:(NSUInteger)line ofFragaria:(MGSFragaria *)sender
+- (NSColor *)breakpointColourForLine:(NSUInteger)line ofFragaria:(MGSFragariaView *)sender
 {
 	if (line % 2 == 0)
         /* Non-standard-color breakpoint */
@@ -56,7 +56,7 @@
 		This is just a demo! A real app would have a more
 		sophisticated way of managing breakpoint events.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (void)toggleBreakpointForFragaria:(MGSFragaria *)sender onLine:(NSUInteger)line
+- (void)toggleBreakpointForFragaria:(MGSFragariaView *)sender onLine:(NSUInteger)line
 {
     NSNumber *lineNumber;
     
@@ -75,7 +75,7 @@
 		method should return an NSSet of NSNumber objects containing
 		the line numbers of breakpoints.
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSSet *)breakpointsForFragaria:(MGSFragaria *)sender
+- (NSSet *)breakpointsForFragaria:(MGSFragariaView *)sender
 {
     return [breakpoints copy];
 }

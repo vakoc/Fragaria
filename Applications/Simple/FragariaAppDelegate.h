@@ -10,7 +10,6 @@
 #import <MGSFragaria/MGSFragaria.h>
 
 @class SMLTextView;
-@class MGSFragaria;
 @class MGSSimpleBreakpointDelegate;
 
 @interface FragariaAppDelegate : NSObject <NSApplicationDelegate, MGSFragariaTextViewDelegate, SMLSyntaxColouringDelegate, MGSDragOperationDelegate>

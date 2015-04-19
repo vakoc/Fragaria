@@ -10,7 +10,7 @@
 #import "SMLAutoCompleteDelegate.h"
 
 
-@class MGSFragaria;
+@class MGSFragariaView;
 
 
 /** An MGSSyntaxDefinition is a model object that describes how

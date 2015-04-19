@@ -27,7 +27,7 @@
 #import "SMLAutoCompleteDelegate.h"
 
 
-@class MGSFragaria;
+@class MGSFragariaView;
 
 /**
  *  The SMLTextView is the text view used by Fragaria, and offers rich integration

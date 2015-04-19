@@ -8,7 +8,6 @@
 
 #import "SMLTextView+MGSTextActions.h"
 #import "MGSFragariaFramework.h"
-#import "MGSFragariaPrivate.h"
 #import "SMLTextViewPrivate.h"
 
 

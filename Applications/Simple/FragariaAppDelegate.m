@@ -298,7 +298,7 @@
 /*
  * - fragariaDocument:didColourGroupWithBlock:string:range:info
  */
-- (void)fragariaDocument:(MGSFragaria *)fragaria didColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
+- (void)fragariaDocument:(MGSFragariaView *)fragaria didColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
 {
     #pragma unused(fragaria, string)
     
@@ -382,7 +382,7 @@
 /*
  * - fragariaDocument:didColourWithBlock:string:range:info
  */
-- (void)fragariaDocument:(MGSFragaria *)fragaria didColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
+- (void)fragariaDocument:(MGSFragariaView *)fragaria didColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
 {
     #pragma unused(fragaria, colourWithBlock, string, range, info)
     NSLog(@"Did colour document.");

@@ -19,7 +19,7 @@
 }
 
 
-- (NSColor *)breakpointColourForLine:(NSUInteger)line ofFragaria:(MGSFragaria *)sender
+- (NSColor *)breakpointColourForLine:(NSUInteger)line ofFragaria:(MGSFragariaView *)sender
 {
     /* This is just a demo! A real app would have a more sophisticated way
      * of deciding a breakpoint's color. */

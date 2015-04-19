@@ -54,7 +54,7 @@
 @property (nonatomic, weak) id <MGSBreakpointDelegate> breakpointDelegate;
 
 /** A reference to the owning Fragaria instance. */
-@property (nonatomic, weak, readonly) MGSFragaria *fragaria;
+@property (nonatomic, weak, readonly) MGSFragariaView *fragaria;
 /** The text view client of this ruler. */
 @property (assign) SMLTextView *clientView;
 
@@ -92,7 +92,7 @@
  * and an owning Fragaria instance.
  * @param aScrollView Indicates the scroll view associated with this instance.
  * @param fragaria Indicates the Fragaria instance associated with this instance. */
-- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(id <MGSFragariaAPI>)fragaria;
+- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(MGSFragariaView *)fragaria;
 
 /** Initializes a new instance of MGSLineNumberView, associating is with aScrollView.
  * @param aScrollView Indicates the scroll view associated with this instance. */

@@ -10,9 +10,6 @@
 #import "MGSFragariaAPI.h"
 
 
-@class MGSFragaria;
-
-
 /**
  *  MGSFragariaView re-implements MGSFragaria from scratch as an IB-compatible
  *  NSView. It is fully compatible with Fragaria's "modern" property-based API

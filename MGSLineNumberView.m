@@ -38,7 +38,6 @@
 #import "MGSFragariaFramework.h"
 #import <tgmath.h>
 #import "MGSSyntaxErrorController.h"
-#import "MGSFragariaPrivate.h"
 
 
 #define RULER_MARGIN		5.0
@@ -71,7 +70,7 @@
 }
 
 
-- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(id <MGSFragariaAPI>)fragaria
+- (id)initWithScrollView:(NSScrollView *)aScrollView fragaria:(MGSFragariaView *)fragaria
 {
     if ((self = [super initWithScrollView:aScrollView orientation:NSVerticalRuler]) != nil)
     {

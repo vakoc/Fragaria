@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class MGSFragaria;
+@class MGSFragariaView;
 
 
 /** The <MGSBreakpointDelegate> protocol specifies methods for delegates
@@ -31,13 +31,13 @@
  *              breakpointsForFragaria: and breakpointColourForLine:ofFragaria:
  *              will never be called.
  *  @param sender The MGSFragaria instance which sent the message. */
-- (NSDictionary *)colouredBreakpointsForFragaria:(MGSFragaria *)sender;
+- (NSDictionary *)colouredBreakpointsForFragaria:(MGSFragariaView *)sender;
 
 /** Returns a set of one-based line numbers containing breakpoints.
  *  @param sender The MGSFragaria instance which sent the message.
  *  @return A set of NSNumber indicating the line numbers that have
  *          breakpoints. */
-- (NSSet *)breakpointsForFragaria:(MGSFragaria *)sender;
+- (NSSet *)breakpointsForFragaria:(MGSFragariaView *)sender;
 
 /** Returns the color for the breakpoint marker to be shown at the specified
  *  line.
@@ -46,13 +46,13 @@
  *              returns nil or is unimplemented, a default color is used.
  *  @param line A one-based line number.
  *  @param sender The MGSFragaria instance which sent the message. */
-- (NSColor *)breakpointColourForLine:(NSUInteger)line ofFragaria:(MGSFragaria *)sender;
+- (NSColor *)breakpointColourForLine:(NSUInteger)line ofFragaria:(MGSFragariaView *)sender;
 
 /** This message is sent to a delegate when Fragaria indicates that a request
  *  to toggle a breakpoint was made.
  *  @param sender The MGSFragaria instance which sent the message.
  *  @param line The one-based line number which the user clicked on. */
-- (void)toggleBreakpointForFragaria:(MGSFragaria *)sender onLine:(NSUInteger)line;
+- (void)toggleBreakpointForFragaria:(MGSFragariaView *)sender onLine:(NSUInteger)line;
 
 
 /** @deprecated Use breakpointsForFragaria: instead.

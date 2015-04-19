@@ -23,7 +23,6 @@
 
 #import "MGSFragariaFramework.h"
 #import "MGSFragaria.h"
-#import "MGSFragariaPrivate.h"
 #import "SMLTextViewPrivate.h"
 
 

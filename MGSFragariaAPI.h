@@ -27,7 +27,7 @@
  *  only those APIs which are shared between MGSFragaria and MGSFragariaView.
  */
 
-@protocol MGSFragariaAPI <NSObject>
+@protocol MGSFragariaAPI
 
 #pragma mark - Required Properties and Methods
 /// @name Required Properties and Methods

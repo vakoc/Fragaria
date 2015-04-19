@@ -10,7 +10,7 @@
 #import "MGSUserDefaultsDefinitions.h"
 #import "MGSUserDefaultsControllerProtocol.h"
 
-@class MGSFragaria;
+@class MGSFragariaView;
 
 
 /**

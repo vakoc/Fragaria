@@ -119,7 +119,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
  *  Each delegate method includes a block that can can be called with a dictionary of attributes and a range to affect colouring.
  **/
 
-@class MGSFragaria;
+@class MGSFragariaView;
 
 @protocol SMLSyntaxColouringDelegate <NSObject>
 
@@ -132,7 +132,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
  *  @param range The range of the string to color.
  *  @param info An information dictionary, as described in the discussion above.
  **/
-- (BOOL)fragariaDocument:(MGSFragaria *)fragaria shouldColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))block string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info;
+- (BOOL)fragariaDocument:(MGSFragariaView *)fragaria shouldColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))block string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info;
 
 /**
  *  Query delegate for each group defined by SMLSyntaxGroupInteger.
@@ -142,7 +142,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
  *  @param range The range of the string to color.
  *  @param info An information dictionary, as described in the discussion above.
  **/
-- (BOOL)fragariaDocument:(MGSFragaria *)fragaria shouldColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))block string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info;
+- (BOOL)fragariaDocument:(MGSFragariaView *)fragaria shouldColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))block string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info;
 
 /**
  *  Inform the delegate that the group was colored.
@@ -152,7 +152,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
  *  @param range The range of the string to color.
  *  @param info An information dictionary, as described in the discussion above.
  **/
-- (void)fragariaDocument:(MGSFragaria *)fragaria didColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))block string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info;
+- (void)fragariaDocument:(MGSFragariaView *)fragaria didColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))block string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info;
 
 /**
  *  Inform the delegate that the document was colored.
@@ -162,7 +162,7 @@ typedef NSInteger SMLSyntaxGroupInteger;
  *  @param range The range of the string to color.
  *  @param info An information dictionary, as described in the discussion above.
  **/
-- (void)fragariaDocument:(MGSFragaria *)fragaria didColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))block string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info;
+- (void)fragariaDocument:(MGSFragariaView *)fragaria didColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))block string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info;
 
 
 @end

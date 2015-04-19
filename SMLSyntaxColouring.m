@@ -20,8 +20,7 @@
  specific language governing permissions and limitations under the License.
 */
 
-#import "MGSFragaria.h"
-#import "MGSFragariaPrivate.h"
+#import "MGSFragariaView.h"
 #import "MGSFragariaFramework.h"
 
 
