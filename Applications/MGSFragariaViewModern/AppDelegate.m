@@ -89,9 +89,7 @@
     [self.viewBottom replaceTextStorage:self.viewTop.textView.textStorage];
     self.viewBottom.syntaxDefinitionName = @"HTML";
 	
-	/* Use an external breakpoint delegate for each view. Note that by
-	   default the delegate would be set to this AppDelegate if we
-	   don't assign it here. */
+	/* Use an external breakpoint delegate for each view. */
 	breakpointDelegate = [[MGSSampleBreakpointDelegate alloc] init];
 	self.viewTop.breakpointDelegate = breakpointDelegate;
 	self.viewBottom.breakpointDelegate = breakpointDelegate;
