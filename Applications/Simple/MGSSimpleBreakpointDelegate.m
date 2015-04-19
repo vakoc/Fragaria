@@ -37,10 +37,10 @@
 }
 
 
-- (void)toggleBreakpointForFile:(NSString*)file onLine:(int)line {
+- (void)toggleBreakpointForFragaria:(MGSFragariaView *)sender onLine:(NSUInteger)line {
     NSNumber *lineNumber;
     
-    lineNumber = [NSNumber numberWithInt:line];
+    lineNumber = [NSNumber numberWithInteger:line];
     if ([breakpoints containsObject:lineNumber])
         [breakpoints removeObject:lineNumber];
     else
@@ -48,7 +48,7 @@
 }
 
 
-- (NSSet*)breakpointsForFile:(NSString*)file {
+- (NSSet*)breakpointsForFragaria:(MGSFragariaView *)sender {
     return [breakpoints copy];
 }
 
