@@ -115,9 +115,12 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
  */
 + (NSDictionary *)fragariaDefaultsDictionary
 {
-	__block NSMutableDictionary *dictionary;
+	NSMutableDictionary *tmp;
+    static NSDictionary *cache;
+    
+    if (cache) return cache;
 	
-	dictionary = [NSMutableDictionary dictionaryWithDictionary:@{
+	tmp = [@{
 		 MGSFragariaDefaultsIsSyntaxColoured : @YES,
 		 MGSFragariaDefaultsSyntaxDefinitionName : [[MGSSyntaxController class] standardSyntaxDefinitionName],
 		 MGSFragariaDefaultsColoursMultiLineStrings : @NO,
@@ -188,13 +191,10 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 		 MGSFragariaDefaultsColoursNumbers : @YES,
 		 MGSFragariaDefaultsColoursStrings : @YES,
 		 MGSFragariaDefaultsColoursVariables : @YES,
-	 }];
+	 } mutableCopy];
 	
-	[[[self class] fragariaSupplementalDefaultsDictionary] enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
-		[dictionary setObject:object forKey:key];
-	}];
-	
-	return dictionary;
+    [tmp addEntriesFromDictionary:[[self class] fragariaSupplementalDefaultsDictionary]];
+    return cache = [tmp copy];
 }
 
 
