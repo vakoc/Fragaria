@@ -838,6 +838,11 @@
     
     if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFragaria:)]) {
         linesWithBreakpoints = [_breakpointDelegate breakpointsForFragaria:self.fragaria];
+    } else {
+        [NSException raise:@"MGSBrokenBreakpointDelegate" format:@"The breakpoint "
+         "delegate %@ of %@ does not implement at least one of the following "
+         "methods: -colouredBreakpointsForFragaria:, -breakpointsForFragaria:.",
+         _breakpointDelegate, self];
     }
     
     NSColor *defaultMarkerColor = [NSColor colorWithCalibratedRed:1.0 green:0.5 blue:1.0 alpha:1.0];
