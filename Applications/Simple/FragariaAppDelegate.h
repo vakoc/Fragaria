@@ -17,7 +17,6 @@
 
 @interface FragariaAppDelegate : NSObject <NSApplicationDelegate, MGSFragariaTextViewDelegate, SMLSyntaxColouringDelegate, MGSDragOperationDelegate>
 
-- (IBAction)showPreferencesWindow:(id)sender;
 - (IBAction)copyToPasteBoard:(id)sender;
 - (IBAction)reloadString:(id)sender;
 

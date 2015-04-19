@@ -8,7 +8,6 @@
 
 #import "FragariaAppDelegate.h"
 #import <MGSFragaria/MGSFragaria.h>
-#import "MGSPreferencesController.h"
 #import "MGSSimpleBreakpointDelegate.h"
 
 @implementation FragariaAppDelegate {
@@ -43,14 +42,6 @@
 	// set our syntax definition
 	[self setSyntaxDefinition:@"Objective-C"];
 
-    //
-	// assign user defaults.
-	// a number of properties are derived from the user defaults system rather than the doc spec.
-	//
-	// see MGSFragariaPreferences.h for details
-	//
-	[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:MGSFragariaPrefsAutocompleteSuggestAutomatically];
-
 	// get initial text - in this case a test file from the bundle
 	NSString *path = [[NSBundle mainBundle] pathForResource:@"SMLSyntaxColouring" ofType:@"m"];
 	NSString *fileText = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
@@ -84,14 +75,6 @@
 
 
 #pragma mark - Actions
-
-/*
- * - showPreferencesWindow:
- */
-- (IBAction)showPreferencesWindow:(id)sender
-{
-    [[MGSPreferencesController sharedPrefsWindowController] showWindow:self];
-}
 
 
 /*
