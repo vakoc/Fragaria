@@ -71,7 +71,6 @@
 		D034C80B1A99807F003D3A41 /* MainMenu-Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C8091A99807F003D3A41 /* MainMenu-Document.xib */; };
 		D034C80C1A99807F003D3A41 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C80A1A99807F003D3A41 /* MyDocument.xib */; };
 		D040AAC71AC27D98009931EE /* MGSFragariaViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = D040AAC61AC27D98009931EE /* MGSFragariaViewPrivate.h */; };
-		D04A0DF81AAEAD7C00667E4D /* MGSFragariaAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = D04A0DF71AAEAD7C00667E4D /* MGSFragariaAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D06653CE1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D06653CC1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h */; };
 		D06653CF1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D06653CD1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m */; };
 		D06653D21AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D06653D01AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h */; };
@@ -286,7 +285,6 @@
 		D034C8091A99807F003D3A41 /* MainMenu-Document.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "MainMenu-Document.xib"; path = "Applications/Doc/MainMenu-Document.xib"; sourceTree = "<group>"; };
 		D034C80A1A99807F003D3A41 /* MyDocument.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MyDocument.xib; path = Applications/Doc/MyDocument.xib; sourceTree = "<group>"; };
 		D040AAC61AC27D98009931EE /* MGSFragariaViewPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaViewPrivate.h; sourceTree = "<group>"; };
-		D04A0DF71AAEAD7C00667E4D /* MGSFragariaAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaAPI.h; sourceTree = "<group>"; };
 		D06653CC1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSBoolToColourTransformer.h; sourceTree = "<group>"; };
 		D06653CD1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBoolToColourTransformer.m; sourceTree = "<group>"; };
 		D06653D01AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSColourToPlainTextTransformer.h; sourceTree = "<group>"; };
@@ -640,13 +638,13 @@
 		ABDED9B6128AB144002EE039 /* Fragaria */ = {
 			isa = PBXGroup;
 			children = (
+				AB69B753118B830700903D1D /* MGSFragaria.h */,
 				E3CF4B7816E6927300C27B5C /* MGSBreakpointDelegate.h */,
 				AB8387C4171D6115004408F4 /* SMLSyntaxDefinition.h */,
 				AB8387A9171B4505004408F4 /* SMLSyntaxColouringDelegate.h */,
 				E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */,
 				0191FA7C1A881F280099B50D /* MGSDragOperationDelegate.h */,
 				019B80181A9E77330007D234 /* MGSFragariaTextViewDelegate.h */,
-				D04A0DF71AAEAD7C00667E4D /* MGSFragariaAPI.h */,
 				D0C146731A871A0B00DDE90A /* MGSFragariaView.h */,
 				D040AAC61AC27D98009931EE /* MGSFragariaViewPrivate.h */,
 				D0C146741A871A0B00DDE90A /* MGSFragariaView.m */,
@@ -863,7 +861,6 @@
 				D0C13BBB1ABD12A400E191A9 /* MGSColourSchemeSaveController.h in Headers */,
 				D07188431AB3D2220073493A /* MGSMutableDictionary.h in Headers */,
 				D07717B01AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.h in Headers */,
-				D04A0DF81AAEAD7C00667E4D /* MGSFragariaAPI.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
 				D071884F1AB54CCA0073493A /* MGSPrefsViewController.h in Headers */,
 				D0718BA71AB70BE70073493A /* MGSColourScheme.h in Headers */,
