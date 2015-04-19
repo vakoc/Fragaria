@@ -10,8 +10,6 @@
 
 #import "AppDelegate.h"
 #import <MGSFragaria/MGSFragaria.h>
-#import "PrefsFontsAndColorsViewController.h"
-#import "PrefsTextEditingViewController.h"
 #import "FeaturesWindowController.h"
 
 
