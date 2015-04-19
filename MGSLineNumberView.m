@@ -838,11 +838,6 @@
     
     if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFragaria:)]) {
         linesWithBreakpoints = [_breakpointDelegate breakpointsForFragaria:self.fragaria];
-    } else if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFile:)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        linesWithBreakpoints = [_breakpointDelegate breakpointsForFile:nil];
-#pragma clang diagnostic pop
     }
     
     NSColor *defaultMarkerColor = [NSColor colorWithCalibratedRed:1.0 green:0.5 blue:1.0 alpha:1.0];
@@ -872,11 +867,6 @@
     
     if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFragaria:onLine:)]) {
         [_breakpointDelegate toggleBreakpointForFragaria:self.fragaria onLine:line];
-    } else if ([_breakpointDelegate respondsToSelector:@selector(toggleBreakpointForFile:onLine:)]) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [_breakpointDelegate toggleBreakpointForFile:nil onLine:(int)line];
-#pragma clang diagnostic pop
     }
 
     [self reloadBreakpointData];

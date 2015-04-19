@@ -55,14 +55,4 @@
 - (void)toggleBreakpointForFragaria:(MGSFragariaView *)sender onLine:(NSUInteger)line;
 
 
-/** @deprecated Use breakpointsForFragaria: instead.
- *  @param file Deprecated parameter. */
-- (NSSet*) breakpointsForFile:(NSString*)file DEPRECATED_ATTRIBUTE;
-
-/** @deprecated Use toggleBreakpointForFragaria:onLine: instead.
- *  @param file Deprecated parameter.
- *  @param line Deprecated parameter. */
-- (void) toggleBreakpointForFile:(NSString*)file onLine:(int)line DEPRECATED_ATTRIBUTE;
-
-
 @end
