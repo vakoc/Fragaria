@@ -477,7 +477,7 @@
 	self.gutterView.breakpointDelegate = breakpointDelegate;
 }
 
-- (id<MGSBreakpointDelegate>)breakPointDelegate
+- (id<MGSBreakpointDelegate>)breakpointDelegate
 {
 	return self.gutterView.breakpointDelegate;
 }
