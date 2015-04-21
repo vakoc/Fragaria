@@ -7,7 +7,6 @@
 //
 
 @class MGSSyntaxErrorController;
-@class MGSPreferencesObserver;
 
 
 #pragma mark - Class Extension
@@ -22,10 +21,6 @@
 /** The controller which manages and displays the syntax errors in Fragaria's
  *  text view and gutter view. */
 @property (readonly) MGSSyntaxErrorController *syntaxErrorController;
-
-/** Fragaria's preferences observer, used for supporting the default preference
- *  panels.  */
-@property (readonly) MGSPreferencesObserver *preferencesObserver;
 
 
 @end
