@@ -5,26 +5,22 @@ the way.
 
 ## What is it?
 
-Fragaria is an OS X Cocoa syntax colouring NSTextView implemented within a framework named MGSFragaria. It supports a
+Fragaria is an OS X Cocoa syntax colouring `NSTextView` implemented within a framework named `MGSFragaria`. It supports a
 wide range of programming languages and includes preference panel support.
 
 ## Why switching to this fork makes my code not build anymore?
 
-First, replace your `fragaria = [[MGSFragaria alloc] init];` with `fragaria = [[MGSFragaria alloc] initWithView:view]`,
-where `view` is the parameter you pass to `[fragaria embedInView:view];`. Then remove `[fragaria embedInView:view];`
-entirely. Most of the time, this is the only change you need to make, and is required by the new internal
-architecture of Fragaria. If you app continues not to work, read on.
+This fork of Fragaria is a significant departure from the original design. The `MGSFragaria` class was replaced by
+`MGSFragariaView`, and the old preference panels were replaced by a more flexible design. The settings which
+could only be set as user defaults were converted to properties of `MGSFragariaView`, and `MGSTextMenuController`
+was removed (you can directly make a connection to `MGSFragariaView` or to First Responder instead).
 
-Fragaria used to be a part of a bigger application (Smultron). When it was separated from it, some things which
-Smultron used but were unrelated to Fragaria itself were mistakenly left in. Also, various internal components of 
-Fragaria were not made private (because in application code there's no distinction between public and private
-stuff). These things are being removed.
-
-If your app was using this stuff, you should reimplement it yourself.
+If you want to update your app to this fork of Fragaria, to lessen the burden you can use 
+[the legacy branch](https://github.com/shysaur/Fragaria/tree/legacy) as a stepping stone.
 
 ## Where can I see it in use
 
-You can see Fragaria used in the following projects and products:
+You can see an old version of Fragaria used in the following projects and products:
 
 * [Appium Recorder](http://appium.io) : Appium is an open source, cross-platform test automation tool for native
   and hybrid mobile apps. ([repo](https://github.com/appium/appium)).
@@ -46,8 +42,6 @@ If you use Fragaria in your app and want it added to the list just let us know o
 
 ## Features
 
-Most features are accessed via the framework preferences.
-
 * Configurable syntax colouring
 * Configurable font type, size and colour.
 * Invisible character display
@@ -57,79 +51,68 @@ Most features are accessed via the framework preferences.
 * Simple word auto complete
 * Tab and indent control
 * Line wrapping
-
+* Configurable breakpoint marks
+* Syntax error badges and underlines
+* Drag and drop
+* Split view support
 
 ## How do I use it?
 
 The best way to learn how to use the framework is to look at the sample apps.
 
-* __Fragaria__ : a simple editor window that features language selection, a wired up text menu and a preferences panel.
+* __Fragaria__ : a simple editor window that features language selection, and a wired up text menu.
 
-* __Fragaria Doc__ : a simple NSDocument based editor.
+* __Fragaria Doc__ : a simple `NSDocument` based editor.
+
+* __MGSFragariaView__ : a split view editor with an hard-wired options panel
+
+* __MGSFragariaViewModern__ : a split view editor like `MGSFragariaView` with the new preferences panels.
 
 ### Show me code
 
-A Fragaria view is embedded in a content view.
+First, place `MGSFragariaView` in your nib. Then create an outlet for it in your window controller class,
+wiring the newly placed view to it. Alternatively you can create `MGSFragariaView` programmatically like
+any other view. Then, you can initialize Fragaria using its ivar or property.
 
-
-    #import "MGSFragaria/MGSFragaria.h"
-    
-    // we need a container view to host Fragaria in
-    NSView *containerView = nil; // loaded from nib or otherwise created
-    
-    // create our instance
-    MGSFragaria *fragaria = [[MGSFragaria alloc] initWithView:containerView];
-    
-    // we want to be the delegate
-    [fragaria setObject:self forKey:MGSFODelegate];
+    ```obj-c
+    #import <MGSFragaria/MGSFragaria.h>
     
     // Objective-C is the place to be
-    [self setSyntaxDefinition:@"Objective-C"];
+    [fragaria setSyntaxDefinitionName:@"Objective-C"];
     
     // set initial text
     [fragaria setString:@"// We don't need the future."];
+    ```
 
-
-The initial appearance of a Fragaria view is determined by the framework preferences controller. The MGSFragaria
-framework supplies two preference view controllers whose views can be embedded in your preference panel.
-
-
-
-    MGSFragariaTextEditingPrefsViewController * textEditingPrefsViewController = [MGSFragariaPreferences sharedInstance].textEditingPrefsViewController;
-    
-    MGSFragariaFontsAndColoursPrefsViewController *fontsAndColoursPrefsViewController = [MGSFragariaPreferences sharedInstance].fontsAndColoursPrefsViewController;
-
-
-
-### Setting preferences
-
-Preference strings are defined in MGSFragaria/MGSFragariaPreferences.h. Each preference name is prefixed with Fragaria
-for easy identification within the application preferences file.
-
-
-    // default to line wrap off
-    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:MGSFragariaPrefsLineWrapNewDocuments];
-
-
-All preferences are observed and instances of Fragaria views update immediately to reflect the new preference.
-
+You can further customize the look of Fragaria by setting the appropriate properties. Have a look at 
+[MGSFragariaView.h](MGSFragariaView.h) for detailed documentation.
 
 ### Breakpoint Highlighting
 
-Use the `MGSFOBreakpointDelegate` key to define a breakpoint delegate that responds to conforms to
-`MGSBreakpointDelegate`
+Use the `breakpointDelegate` property to define a breakpoint delegate that conforms to
+`MGSBreakpointDelegate`. This delegate will act as a data source for the gutter view.
 
+    ```obj-c
+    [fragaria setBreakpointDelegate:self];
+    ```
 
-    [fragaria setObject:self forKey:MGSFODelegate];
+If the delegates implements either `-colouredBreakpointsForFragaria:` or `-breakpointColourForLine:ofFragaria:`,
+you can set a custom color for your breakpoints. For example you can return a transparent `NSColor` for
+disabled breakpoints.
 
+When the user clicks on a line number in the gutter, Fragaria sends the `-toggleBreakpointForFragaria:onLine:`
+message to the delegate, which will then update its breakpoint data. If you need to manually update the
+breakpoints, you should refresh the gutter view manually afterwards:
 
-The breakpoint delegate returns an `NSSet` of breakpoint line numbers. The implementation of this feature is at an early
-stage. Feel free to improve it.
+    ```obj-c
+    [[fragaria gutterView] reloadBreakpointData];
+    ```
 
 ### Syntax Error Highlighting
 
-To add clickable syntax error highlights define an `NSArray` of SMLSyntaxErrors.
+To add clickable syntax error highlights define an `NSArray` of `SMLSyntaxError`s.
 
+    ```obj-c
     // define a syntax error
     SMLSyntaxError *syntaxError = [[SMLSyntaxError new] autorelease];
     syntaxError.errorDescription = @"Syntax errors can be defined";
@@ -138,8 +121,36 @@ To add clickable syntax error highlights define an `NSArray` of SMLSyntaxErrors.
     syntaxError.length = 10;
     
     fragaria.syntaxErrors = @[syntaxError];
+    ```
 
-The implementation of this feature is at an early stage. Feel free to improve it.
+You can specify a custom `warningLevel` to change the icon shown for the syntax error and its priority
+in case multiple syntax errors are assigned to the same line. To define custom priorities and icons you
+can subclass `SMLSyntaxError` and use the subclass.
+
+### Using the new preference panels
+
+The new preferences system allows for having multiple preference groups in the same apps, which can control
+all or some of the available options. Every `MGSFragariaView` that you want to be controlled by preferences
+must be added manually to a preference group; after you've done that, everything's automatic.
+
+The easiest way to use the new preference panels is to use the global group, but to do that
+you must have at least one local group.
+
+    ```obj-c
+    MGSUserDefaultsController *globalGroup = [MGSUserDefaultsController sharedController];
+    MGSUserDefaultsController *tmpGroup = [MGSUserDefaultsController sharedControllerForGroupID:@"MainGroup"];
+    
+    /* Create a dummy group with our MGSFragaria object */
+    tmpGroup.managedInstances = [NSSet setWithObject:fragaria];
+    tmpGroup.managedProperties = [NSSet set];
+    tmpGroup.persistent = NO;
+    
+    NSArray *groupProperties = [[MGSUserDefaultsDefinitions fragariaDefaultsDictionary] allKeys];
+    globalGroup.managedProperties = [NSSet setWithArray:groupProperties];
+    globalGroup.persistent = YES;
+    ```
+
+This feature is very new and still needs improvements, so it may change in potentially breaking ways.
 
 ### Custom colouring
 
@@ -148,6 +159,7 @@ syntactical groups such as numbers, attributes, comments or keywords.
 
 Pseudo code for the protocol method flow looks something like:
 
+    ```obj-c
     // query delegate if should colour this document
     doColouring = fragariaDocument:shouldColourWithBlock:string:range:info
     if !doColouring quit colouring
@@ -170,6 +182,7 @@ Pseudo code for the protocol method flow looks something like:
     
     // inform delegate document was coloured
     fragariaDocument:willDidWithBlock:string:range:info
+    ```
 
 The delegate can completely override the colouring for a given group or provide additional colouring support (you will have
 to provide you own scanning logic). Document level delegate messages provide an opportunity to provide colouring for
@@ -312,11 +325,15 @@ xml
 
 To define a new syntax definition:
 
-1. Generate a plist that defines the language syntax. The plist structure is simple and browsing the [existing
-                                                                                                      definitions](Syntax%20Definitions) should provide some enlightenment. The plist keys are defined in `
-SMLSyntaxDefinition.h`. For much deeper insight see `SMLSyntaxColouring - recolourRange:`.
+1. Generate a plist that defines the language syntax. 
 
 2. Insert a reference to the new plist into [SyntaxDefinitions.plist](SyntaxDefinitions.plist)
+
+The plist structure is simple and browsing the [existing definitions](Syntax%20Definitions) should provide 
+some enlightenment. The plist keys are defined in [MGSSyntaxDefinition.m](MGSSyntaxDefinition.m). 
+
+For much deeper insight see the  `-colour...InRange:withRangeScanner:documentScanner` methods in `SMLSyntaxColouring`
+and the detailed comments in [MGSSyntaxDefinition.h](MGSSyntaxDefinition.h).
 
 ## How can I contribute
 Take a look at the [TODO](TODO.md) list.
