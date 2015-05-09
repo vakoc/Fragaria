@@ -74,15 +74,15 @@ First, place `MGSFragariaView` in your nib. Then create an outlet for it in your
 wiring the newly placed view to it. Alternatively you can create `MGSFragariaView` programmatically like
 any other view. Then, you can initialize Fragaria using its ivar or property.
 
-    ```obj-c
-    #import <MGSFragaria/MGSFragaria.h>
-    
-    // Objective-C is the place to be
-    [fragaria setSyntaxDefinitionName:@"Objective-C"];
-    
-    // set initial text
-    [fragaria setString:@"// We don't need the future."];
-    ```
+```obj-c
+#import <MGSFragaria/MGSFragaria.h>
+
+// Objective-C is the place to be
+[fragaria setSyntaxDefinitionName:@"Objective-C"];
+
+// set initial text
+[fragaria setString:@"// We don't need the future."];
+```
 
 You can further customize the look of Fragaria by setting the appropriate properties. Have a look at 
 [MGSFragariaView.h](MGSFragariaView.h) for detailed documentation.
@@ -92,9 +92,9 @@ You can further customize the look of Fragaria by setting the appropriate proper
 Use the `breakpointDelegate` property to define a breakpoint delegate that conforms to
 `MGSBreakpointDelegate`. This delegate will act as a data source for the gutter view.
 
-    ```obj-c
-    [fragaria setBreakpointDelegate:self];
-    ```
+```obj-c
+[fragaria setBreakpointDelegate:self];
+```
 
 If the delegates implements either `-colouredBreakpointsForFragaria:` or `-breakpointColourForLine:ofFragaria:`,
 you can set a custom color for your breakpoints. For example you can return a transparent `NSColor` for
@@ -104,24 +104,24 @@ When the user clicks on a line number in the gutter, Fragaria sends the `-toggle
 message to the delegate, which will then update its breakpoint data. If you need to manually update the
 breakpoints, you should refresh the gutter view manually afterwards:
 
-    ```obj-c
-    [[fragaria gutterView] reloadBreakpointData];
-    ```
+```obj-c
+[[fragaria gutterView] reloadBreakpointData];
+```
 
 ### Syntax Error Highlighting
 
 To add clickable syntax error highlights define an `NSArray` of `SMLSyntaxError`s.
 
-    ```obj-c
-    // define a syntax error
-    SMLSyntaxError *syntaxError = [[SMLSyntaxError new] autorelease];
-    syntaxError.errorDescription = @"Syntax errors can be defined";
-    syntaxError.line = 1;
-    syntaxError.character = 1;
-    syntaxError.length = 10;
-    
-    fragaria.syntaxErrors = @[syntaxError];
-    ```
+```obj-c
+// define a syntax error
+SMLSyntaxError *syntaxError = [[SMLSyntaxError new] autorelease];
+syntaxError.errorDescription = @"Syntax errors can be defined";
+syntaxError.line = 1;
+syntaxError.character = 1;
+syntaxError.length = 10;
+
+fragaria.syntaxErrors = @[syntaxError];
+```
 
 You can specify a custom `warningLevel` to change the icon shown for the syntax error and its priority
 in case multiple syntax errors are assigned to the same line. To define custom priorities and icons you
@@ -136,19 +136,19 @@ must be added manually to a preference group; after you've done that, everything
 The easiest way to use the new preference panels is to use the global group, but to do that
 you must have at least one local group.
 
-    ```obj-c
-    MGSUserDefaultsController *globalGroup = [MGSUserDefaultsController sharedController];
-    MGSUserDefaultsController *tmpGroup = [MGSUserDefaultsController sharedControllerForGroupID:@"MainGroup"];
-    
-    /* Create a dummy group with our MGSFragaria object */
-    tmpGroup.managedInstances = [NSSet setWithObject:fragaria];
-    tmpGroup.managedProperties = [NSSet set];
-    tmpGroup.persistent = NO;
-    
-    NSArray *groupProperties = [[MGSUserDefaultsDefinitions fragariaDefaultsDictionary] allKeys];
-    globalGroup.managedProperties = [NSSet setWithArray:groupProperties];
-    globalGroup.persistent = YES;
-    ```
+```obj-c
+MGSUserDefaultsController *globalGroup = [MGSUserDefaultsController sharedController];
+MGSUserDefaultsController *tmpGroup = [MGSUserDefaultsController sharedControllerForGroupID:@"MainGroup"];
+
+/* Create a dummy group with our MGSFragaria object */
+tmpGroup.managedInstances = [NSSet setWithObject:fragaria];
+tmpGroup.managedProperties = [NSSet set];
+tmpGroup.persistent = NO;
+
+NSArray *groupProperties = [[MGSUserDefaultsDefinitions fragariaDefaultsDictionary] allKeys];
+globalGroup.managedProperties = [NSSet setWithArray:groupProperties];
+globalGroup.persistent = YES;
+```
 
 This feature is very new and still needs improvements, so it may change in potentially breaking ways.
 
@@ -159,30 +159,30 @@ syntactical groups such as numbers, attributes, comments or keywords.
 
 Pseudo code for the protocol method flow looks something like:
 
-    ```obj-c
-    // query delegate if should colour this document
-    doColouring = fragariaDocument:shouldColourWithBlock:string:range:info
-    if !doColouring quit colouring
-    
-    // send *ColourGroupWithBlock methods for each group defined by SMLSyntaxGroupInteger
-    foreach group
-    
-    // query delegate if should colour this group
-    doColouring = fragariaDocument:shouldColourGroupWithBlock:string:range:info
-    
-    if doColouring
-    
-    colour the group
-    
-    // inform delegate group was coloured
-    fragariaDocument:didColourGroupWithBlock:string:range:info
-    
-    end if
-    end
-    
-    // inform delegate document was coloured
-    fragariaDocument:willDidWithBlock:string:range:info
-    ```
+````
+// query delegate if should colour this document
+doColouring = fragariaDocument:shouldColourWithBlock:string:range:info
+if !doColouring quit colouring
+
+// send *ColourGroupWithBlock methods for each group defined by SMLSyntaxGroupInteger
+foreach group
+
+// query delegate if should colour this group
+doColouring = fragariaDocument:shouldColourGroupWithBlock:string:range:info
+
+if doColouring
+
+colour the group
+
+// inform delegate group was coloured
+fragariaDocument:didColourGroupWithBlock:string:range:info
+
+end if
+end
+
+// inform delegate document was coloured
+fragariaDocument:willDidWithBlock:string:range:info
+````
 
 The delegate can completely override the colouring for a given group or provide additional colouring support (you will have
 to provide you own scanning logic). Document level delegate messages provide an opportunity to provide colouring for
