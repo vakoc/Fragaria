@@ -25,6 +25,7 @@
 		01098F171AA7BD0400ED4CFD /* SMLGoToLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F191AA7BD0400ED4CFD /* SMLGoToLine.xib */; };
 		01098F1A1AA7BD0900ED4CFD /* SMLEntab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F1C1AA7BD0900ED4CFD /* SMLEntab.xib */; };
 		01098F1D1AA7BD0D00ED4CFD /* SMLDetab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F1F1AA7BD0D00ED4CFD /* SMLDetab.xib */; };
+		010F6D2F1AFEA19C0054F3D2 /* MGSUserDefaultsControllerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F353541AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */; };
 		013A79191AA8C715008ADFA1 /* MGSContextMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 013A791B1AA8C715008ADFA1 /* MGSContextMenu.xib */; };
 		017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 017FD5861A7A992700B305FB /* MGSLineNumberView.h */; };
@@ -69,32 +70,27 @@
 		D034C80B1A99807F003D3A41 /* MainMenu-Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C8091A99807F003D3A41 /* MainMenu-Document.xib */; };
 		D034C80C1A99807F003D3A41 /* MyDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = D034C80A1A99807F003D3A41 /* MyDocument.xib */; };
 		D040AAC71AC27D98009931EE /* MGSFragariaViewPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = D040AAC61AC27D98009931EE /* MGSFragariaViewPrivate.h */; };
-		D06653CE1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D06653CC1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h */; };
 		D06653CF1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D06653CD1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.m */; };
-		D06653D21AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D06653D01AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h */; };
 		D06653D31AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D06653D11AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.m */; };
 		D06653D51AC0159800ACE8B0 /* MGSColourToPlainTextTransformerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D06653D41AC0159800ACE8B0 /* MGSColourToPlainTextTransformerTests.m */; };
-		D06653D81AC02A0400ACE8B0 /* NSColor+TransformedCompare.h in Headers */ = {isa = PBXBuildFile; fileRef = D06653D61AC02A0400ACE8B0 /* NSColor+TransformedCompare.h */; };
 		D06653D91AC02A0400ACE8B0 /* NSColor+TransformedCompare.m in Sources */ = {isa = PBXBuildFile; fileRef = D06653D71AC02A0400ACE8B0 /* NSColor+TransformedCompare.m */; };
 		D07188301AB3CDDC0073493A /* MGSUserDefaultsControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D071882B1AB3CDDC0073493A /* MGSUserDefaultsControllerTests.m */; };
 		D07188311AB3CDDC0073493A /* MGSUserDefaultsDefinitionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D071882C1AB3CDDC0073493A /* MGSUserDefaultsDefinitionsTests.m */; };
 		D07188321AB3CDDC0073493A /* MGSUserDefaultsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D071882D1AB3CDDC0073493A /* MGSUserDefaultsTests.m */; };
 		D07188331AB3CDDC0073493A /* MGSUserDefaultsUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = D071882F1AB3CDDC0073493A /* MGSUserDefaultsUtilities.m */; };
-		D071883A1AB3CDFA0073493A /* MGSUserDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188341AB3CDFA0073493A /* MGSUserDefaults.h */; };
 		D071883B1AB3CDFA0073493A /* MGSUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188351AB3CDFA0073493A /* MGSUserDefaults.m */; };
-		D071883C1AB3CDFA0073493A /* MGSUserDefaultsController.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188361AB3CDFA0073493A /* MGSUserDefaultsController.h */; };
+		D071883C1AB3CDFA0073493A /* MGSUserDefaultsController.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188361AB3CDFA0073493A /* MGSUserDefaultsController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D071883D1AB3CDFA0073493A /* MGSUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188371AB3CDFA0073493A /* MGSUserDefaultsController.m */; };
-		D071883E1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188381AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h */; };
+		D071883E1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188381AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D071883F1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188391AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m */; };
-		D07188431AB3D2220073493A /* MGSMutableDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188411AB3D2220073493A /* MGSMutableDictionary.h */; };
 		D07188441AB3D2220073493A /* MGSMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188421AB3D2220073493A /* MGSMutableDictionary.m */; };
 		D07188481AB423830073493A /* MGSPrefsEditorProperties.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07188461AB423830073493A /* MGSPrefsEditorProperties.xib */; };
 		D071884B1AB428570073493A /* MGSPrefsColourProperties.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07188491AB428570073493A /* MGSPrefsColourProperties.xib */; };
-		D071884F1AB54CCA0073493A /* MGSPrefsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D071884D1AB54CCA0073493A /* MGSPrefsViewController.h */; };
+		D071884F1AB54CCA0073493A /* MGSPrefsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D071884D1AB54CCA0073493A /* MGSPrefsViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D07188501AB54CCA0073493A /* MGSPrefsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D071884E1AB54CCA0073493A /* MGSPrefsViewController.m */; };
-		D0718B441AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0718B421AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.h */; };
+		D0718B441AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0718B421AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0718B451AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B431AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.m */; };
-		D0718B491AB54EA70073493A /* MGSPrefsColourPropertiesViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0718B461AB54EA70073493A /* MGSPrefsColourPropertiesViewController.h */; };
+		D0718B491AB54EA70073493A /* MGSPrefsColourPropertiesViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0718B461AB54EA70073493A /* MGSPrefsColourPropertiesViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0718B4A1AB54EA70073493A /* MGSPrefsColourPropertiesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B471AB54EA70073493A /* MGSPrefsColourPropertiesViewController.m */; };
 		D0718B781AB552710073493A /* MGSFragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* MGSFragaria.framework */; };
 		D0718B791AB552710073493A /* MGSFragaria.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* MGSFragaria.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -106,20 +102,15 @@
 		D0718B921AB556280073493A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0718B901AB556280073493A /* MainMenu.xib */; };
 		D0718B941AB5566F0073493A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B931AB5566F0073493A /* main.m */; };
 		D0718B971AB556990073493A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B961AB556990073493A /* AppDelegate.m */; };
-		D0718B9A1AB5C53D0073493A /* MGSFontToTextTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D0718B981AB5C53D0073493A /* MGSFontToTextTransformer.h */; };
 		D0718B9B1AB5C53D0073493A /* MGSFontToTextTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B991AB5C53D0073493A /* MGSFontToTextTransformer.m */; };
-		D0718BA71AB70BE70073493A /* MGSColourScheme.h in Headers */ = {isa = PBXBuildFile; fileRef = D0718BA51AB70BE70073493A /* MGSColourScheme.h */; };
 		D0718BA81AB70BE70073493A /* MGSColourScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718BA61AB70BE70073493A /* MGSColourScheme.m */; };
-		D0718BAB1AB71FE00073493A /* MGSColourSchemeController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0718BA91AB71FE00073493A /* MGSColourSchemeController.h */; };
 		D0718BAC1AB71FE00073493A /* MGSColourSchemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718BAA1AB71FE00073493A /* MGSColourSchemeController.m */; };
 		D0718BAE1AB721280073493A /* MGSColourSchemeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718BAD1AB721280073493A /* MGSColourSchemeTests.m */; };
-		D07717B01AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = D07717AE1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.h */; };
 		D07717B11AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D07717AF1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m */; };
 		D07717B41AC2670500B23867 /* MGSSampleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D07717B31AC2670500B23867 /* MGSSampleBreakpointDelegate.m */; };
 		D079D85D1AB7DEE600169F82 /* Colour Schemes in Resources */ = {isa = PBXBuildFile; fileRef = D079D85C1AB7DEE600169F82 /* Colour Schemes */; };
 		D08359DB1A9F0446001B7B50 /* FeaturesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08359D91A9F0446001B7B50 /* FeaturesWindowController.m */; };
 		D0AB50F01A91CDC200A6DF58 /* SMLSyntaxErrorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AB50EF1A91CDC200A6DF58 /* SMLSyntaxErrorTests.m */; };
-		D0C13BBB1ABD12A400E191A9 /* MGSColourSchemeSaveController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0C13BB91ABD12A400E191A9 /* MGSColourSchemeSaveController.h */; };
 		D0C13BBC1ABD12A400E191A9 /* MGSColourSchemeSaveController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C13BBA1ABD12A400E191A9 /* MGSColourSchemeSaveController.m */; };
 		D0C13BBF1ABD246900E191A9 /* MGSColourSchemeSave.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0C13BBD1ABD246900E191A9 /* MGSColourSchemeSave.xib */; };
 		D0C145C71A85F2C900DDE90A /* SMLTextView+MGSDragging.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C145C31A85E1FD00DDE90A /* SMLTextView+MGSDragging.m */; };
@@ -132,8 +123,6 @@
 		D0E521061A90DC02005CB80B /* MGSSyntaxErrorController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E521041A90DC02005CB80B /* MGSSyntaxErrorController.m */; };
 		D0E521131A90E34F005CB80B /* MGSFragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* MGSFragaria.framework */; };
 		D0E5211A1A90E399005CB80B /* MGSSyntaxErrorControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0E521071A90E307005CB80B /* MGSSyntaxErrorControllerTests.m */; };
-		D0F353551AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F353541AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h */; };
-		D0F353581AC1A369007B9E2E /* MGSHybridUserDefaultsController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F353561AC1A369007B9E2E /* MGSHybridUserDefaultsController.h */; };
 		D0F353591AC1A369007B9E2E /* MGSHybridUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0F353571AC1A369007B9E2E /* MGSHybridUserDefaultsController.m */; };
 		E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E373BF121718A64700D71602 /* SMLAutoCompleteDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = E3CF4B7816E6927300C27B5C /* MGSBreakpointDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -815,31 +804,20 @@
 				019F56D51A9D3511009F9DCD /* SMLTextView+MGSDragging.h in Headers */,
 				019B80191A9E77330007D234 /* MGSFragariaTextViewDelegate.h in Headers */,
 				AB69B754118B830700903D1D /* MGSFragaria.h in Headers */,
-				D06653D21AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h in Headers */,
 				E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */,
-				D0718BAB1AB71FE00073493A /* MGSColourSchemeController.h in Headers */,
 				D040AAC71AC27D98009931EE /* MGSFragariaViewPrivate.h in Headers */,
-				D0F353551AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h in Headers */,
 				0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */,
 				D071883E1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h in Headers */,
-				D0718B9A1AB5C53D0073493A /* MGSFontToTextTransformer.h in Headers */,
 				AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */,
-				D06653CE1AC00CCD00ACE8B0 /* MGSBoolToColourTransformer.h in Headers */,
 				AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */,
 				E3D4B2771714D89700BB2CC6 /* SMLSyntaxError.h in Headers */,
-				D0F353581AC1A369007B9E2E /* MGSHybridUserDefaultsController.h in Headers */,
 				D071883C1AB3CDFA0073493A /* MGSUserDefaultsController.h in Headers */,
 				D0C146751A871A0B00DDE90A /* MGSFragariaView.h in Headers */,
 				017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */,
-				D071883A1AB3CDFA0073493A /* MGSUserDefaults.h in Headers */,
+				010F6D2F1AFEA19C0054F3D2 /* MGSUserDefaultsControllerProtocol.h in Headers */,
 				E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */,
-				D0C13BBB1ABD12A400E191A9 /* MGSColourSchemeSaveController.h in Headers */,
-				D07188431AB3D2220073493A /* MGSMutableDictionary.h in Headers */,
-				D07717B01AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
 				D071884F1AB54CCA0073493A /* MGSPrefsViewController.h in Headers */,
-				D0718BA71AB70BE70073493A /* MGSColourScheme.h in Headers */,
-				D06653D81AC02A0400ACE8B0 /* NSColor+TransformedCompare.h in Headers */,
 				AB8387C5171D6115004408F4 /* SMLSyntaxDefinition.h in Headers */,
 				0191FA811A8829930099B50D /* SMLTextView+MGSTextActions.h in Headers */,
 			);
