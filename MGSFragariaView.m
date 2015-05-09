@@ -1,5 +1,5 @@
 //
-//  MGSFragariaView.h
+//  MGSFragariaView.m
 //  Fragaria
 //
 //  File created by Jim Derry on 2015/02/07.
@@ -11,17 +11,18 @@
 
 #import "MGSFragariaView.h"
 #import "MGSFragariaViewPrivate.h"
-#import "MGSFragariaFramework.h"
+#import "SMLLayoutManager.h"
+#import "SMLSyntaxColouring.h"
+#import "MGSExtraInterfaceController.h"
+#import "MGSLineNumberView.h"
+#import "MGSSyntaxController.h"
+
+#import "MGSSyntaxErrorController.h"
+#import "SMLSyntaxError.h"
+
+#import "SMLTextView.h"
 #import "SMLTextViewPrivate.h"
-
-#import "MGSBreakpointDelegate.h"           // Justification: public delegate.
-#import "MGSDragOperationDelegate.h"        // Justification: public delegate.
-#import "MGSFragariaTextViewDelegate.h"     // Justification: public delegate.
-#import "SMLSyntaxColouringDelegate.h"      // Justification: public delegate.
-#import "SMLAutoCompleteDelegate.h"         // Justification: public delegate.
-
-#import "SMLSyntaxError.h"                  // Justification: external users require it.
-#import "SMLTextView.h"                     // Justification: external users require it.
+#import "SMLTextView+MGSTextActions.h"
 
 
 #pragma mark - IMPLEMENTATION

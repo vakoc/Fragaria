@@ -7,9 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SMLSyntaxError.h"
-#import "MGSLineNumberView.h"
-#import "SMLTextView.h"
+
+
+@class SMLTextView;
+@class MGSLineNumberView;
+@class SMLSyntaxError;
 
 
 /**

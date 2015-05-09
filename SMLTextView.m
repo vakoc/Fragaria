@@ -21,9 +21,13 @@
  specific language governing permissions and limitations under the License.
  */
 
-#import "MGSFragariaFramework.h"
-#import "MGSFragaria.h"
+#import "SMLTextView.h"
 #import "SMLTextViewPrivate.h"
+#import "SMLTextView+MGSTextActions.h"
+#import "SMLLayoutManager.h"
+#import "MGSSyntaxDefinition.h"
+#import "SMLSyntaxColouring.h"
+#import "MGSExtraInterfaceController.h"
 
 
 static BOOL CharacterIsBrace(unichar c)

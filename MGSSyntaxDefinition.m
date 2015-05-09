@@ -7,7 +7,6 @@
 //
 
 #import "MGSSyntaxDefinition.h"
-#import "MGSFragariaFramework.h"
 
 
 // syntax definition dictionary keys

@@ -8,6 +8,9 @@
 
 #import "MGSSyntaxErrorController.h"
 #import "SMLLayoutManager.h"
+#import "SMLSyntaxError.h"
+#import "MGSLineNumberView.h"
+#import "SMLTextView.h"
 
 
 #define kSMLErrorPopOverMargin        6.0

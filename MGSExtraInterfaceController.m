@@ -20,8 +20,7 @@
  specific language governing permissions and limitations under the License.
 */
 
-#import "MGSFragaria.h"
-#import "MGSFragariaFramework.h"
+#import "MGSExtraInterfaceController.h"
 #import "SMLTextView+MGSTextActions.h"
 
 

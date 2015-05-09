@@ -10,6 +10,11 @@
 #import "SMLTextView.h"
 
 
+@class MGSExtraInterfaceController;
+@class SMLSyntaxColouring;
+@class SMLLayoutManager;
+
+
 @interface SMLTextView ()
 
 

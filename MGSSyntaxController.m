@@ -21,8 +21,8 @@
  specific language governing permissions and limitations under the License.
  */
 
-#import "MGSFragaria.h"
-#import "MGSFragariaFramework.h"
+#import "MGSSyntaxController.h"
+
 
 NSString * const KMGSSyntaxDefinitions =  @"SyntaxDefinitions";
 NSString * const KMGSSyntaxDefinitionsExt = @"plist";

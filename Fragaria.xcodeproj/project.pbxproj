@@ -272,7 +272,6 @@
 		ABA1C12116144D3F00C8723F /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		ABA812DB11B6855200A29990 /* LICENSE-2.0.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LICENSE-2.0.txt"; sourceTree = "<group>"; };
 		ABCA4DAF16137FC000E4849B /* Fragaria.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Fragaria.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		ABD0FD7F119326FE00E6AFE6 /* MGSFragariaFramework.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaFramework.h; sourceTree = "<group>"; };
 		ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = "NSScanner+Fragaria.m"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		ABF28AEF14C075D400ECAD48 /* NSScanner+Fragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSScanner+Fragaria.h"; sourceTree = "<group>"; };
 		D01A8CEB1ABE75E0003B2719 /* MGSPrefsViewControllerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSPrefsViewControllerTests.m; sourceTree = "<group>"; };
@@ -428,14 +427,6 @@
 				013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */,
 			);
 			name = "Syntax Definition Manager";
-			sourceTree = "<group>";
-		};
-		0191FA831A882B0F0099B50D /* Global Private Headers */ = {
-			isa = PBXGroup;
-			children = (
-				ABD0FD7F119326FE00E6AFE6 /* MGSFragariaFramework.h */,
-			);
-			name = "Global Private Headers";
 			sourceTree = "<group>";
 		};
 		01BB1BE81A795E58006C0056 /* Supporting Files */ = {
@@ -634,7 +625,6 @@
 				D0C146731A871A0B00DDE90A /* MGSFragariaView.h */,
 				D040AAC61AC27D98009931EE /* MGSFragariaViewPrivate.h */,
 				D0C146741A871A0B00DDE90A /* MGSFragariaView.m */,
-				0191FA831A882B0F0099B50D /* Global Private Headers */,
 				AB83887D171E94C5004408F4 /* NS Categories */,
 				D0E521021A90BAC1005CB80B /* Syntax Error Components */,
 				01BB1BEC1A7962C7006C0056 /* Text View Components */,

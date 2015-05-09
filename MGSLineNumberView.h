@@ -35,14 +35,16 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "MGSFragaria.h"
+#import "SMLTextView.h"
+
+
+@class MGSFragariaView;
+@protocol MGSBreakpointDelegate;
+
 
 /**
  *  Displays line numbers for an NSTextView.
  */
-
-@protocol MGSBreakpointDelegate;
-
 
 @interface MGSLineNumberView : NSRulerView
 

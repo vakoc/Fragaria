@@ -23,11 +23,13 @@
 
 #import <Cocoa/Cocoa.h>
 #import "MGSFragariaTextViewDelegate.h"
-#import "MGSDragOperationDelegate.h"
-#import "SMLAutoCompleteDelegate.h"
 
 
 @class MGSFragariaView;
+
+@protocol MGSDragOperationDelegate;
+@protocol SMLAutoCompleteDelegate;
+
 
 /**
  *  The SMLTextView is the text view used by Fragaria, and offers rich integration

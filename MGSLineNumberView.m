@@ -34,10 +34,10 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#import "MGSLineNumberView.h"
-#import "MGSFragariaFramework.h"
 #import <tgmath.h>
-#import "MGSSyntaxErrorController.h"
+#import "MGSFragariaView.h"
+#import "MGSLineNumberView.h"
+#import "MGSBreakpointDelegate.h"
 
 
 #define RULER_MARGIN		5.0

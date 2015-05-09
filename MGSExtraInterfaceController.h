@@ -23,7 +23,9 @@
 */
 
 #import <Cocoa/Cocoa.h>
-#import "SMLTextView+MGSTextActions.h"
+
+
+@class SMLTextView;
 
 
 /** MGSExtraInterfaceController displays and controls the NSPanels and the

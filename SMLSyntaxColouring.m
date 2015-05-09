@@ -20,8 +20,13 @@
  specific language governing permissions and limitations under the License.
 */
 
-#import "MGSFragariaView.h"
-#import "MGSFragariaFramework.h"
+#import "SMLSyntaxColouring.h"
+#import "MGSSyntaxDefinition.h"
+#import "SMLLayoutManager.h"
+#import "MGSSyntaxController.h"
+#import "SMLTextView.h"
+#import "SMLSyntaxColouringDelegate.h"
+#import "NSScanner+Fragaria.h"
 
 
 // syntax colouring information dictionary keys

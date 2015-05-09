@@ -6,9 +6,12 @@
 //
 //
 
-#import "SMLTextView+MGSTextActions.h"
-#import "MGSFragariaFramework.h"
+#import "SMLTextView.h"
 #import "SMLTextViewPrivate.h"
+#import "SMLTextView+MGSTextActions.h"
+#import "MGSSyntaxDefinition.h"
+#import "SMLSyntaxColouring.h"
+#import "MGSExtraInterfaceController.h"
 
 
 @implementation SMLTextView (MGSTextActions)

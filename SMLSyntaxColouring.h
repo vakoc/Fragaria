@@ -23,14 +23,15 @@ Copyright 2004-2009 Peter Borg
 */
 
 #import <Cocoa/Cocoa.h>
-#import "MGSFragaria.h"
-#import "SMLTextView.h"
-#import "SMLAutoCompleteDelegate.h"
-#import "MGSSyntaxDefinition.h"
-#import "SMLSyntaxColouringDelegate.h"
 
 
 @class SMLLayoutManager;
+@class MGSFragariaView;
+@class SMLTextView;
+@class MGSSyntaxDefinition;
+
+@protocol SMLSyntaxColouringDelegate;
+@protocol SMLAutoCompleteDelegate;
 
 
 /**

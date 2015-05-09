@@ -8,7 +8,6 @@
 //  - Implements the required <NSDraggingDestination> protocol classes, passing them on to the delegate.
 //
 
-#import <AppKit/AppKit.h>
 #import "SMLTextView.h"
 
 
