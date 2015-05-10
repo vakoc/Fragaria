@@ -226,7 +226,7 @@
 
 	self.loadedFromBundle = NO;
 	
-    self.displayName = NSLocalizedString(@"Custom Settings", @"Name for Custom Settings scheme.");
+    self.displayName = NSLocalizedStringFromTableInBundle(@"Custom Settings", nil, [NSBundle bundleForClass:[self class]],  @"Name for Custom Settings scheme.");
 
     self.textColor = [NSUnarchiver unarchiveObjectWithData:defaults[MGSFragariaDefaultsTextColor]];
     self.backgroundColor = [NSUnarchiver unarchiveObjectWithData:defaults[MGSFragariaDefaultsBackgroundColor]];

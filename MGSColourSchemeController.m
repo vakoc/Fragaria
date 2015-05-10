@@ -134,10 +134,10 @@ NSString * const KMGSColourSchemeExt = @"plist";
 
     if ( self.currentSchemeIsCustom || self.currentScheme.loadedFromBundle)
     {
-        return NSLocalizedString(@"Save Scheme…", @"The text for the save/delete scheme button when it should read Save Scheme…");
+        return NSLocalizedStringFromTableInBundle(@"Save Scheme…", nil, [NSBundle bundleForClass:[self class]],  @"The text for the save/delete scheme button when it should read Save Scheme…");
     }
 
-    return NSLocalizedString(@"Delete Scheme…", @"The text for the save/delete scheme button when it should read Delete Scheme…");
+    return NSLocalizedStringFromTableInBundle(@"Delete Scheme…", nil, [NSBundle bundleForClass:[self class]],  @"The text for the save/delete scheme button when it should read Delete Scheme…");
 }
 
 
@@ -164,7 +164,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
                                                         error:nil];
 
         self.saveController = [[MGSColourSchemeSaveController alloc] init];
-        self.saveController.schemeName = NSLocalizedString(@"New Scheme", @"Default name for new schemes.");
+        self.saveController.schemeName = NSLocalizedStringFromTableInBundle(@"New Scheme", nil, [NSBundle bundleForClass:[self class]],  @"Default name for new schemes.");
 
         [self.saveController showSchemeNameGetter:self.parentView.window completion:^void (BOOL confirmed) {
             if (confirmed)

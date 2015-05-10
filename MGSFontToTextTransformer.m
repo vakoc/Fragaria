@@ -40,7 +40,7 @@
 	}
 	else
 	{
-		return NSLocalizedString(@"Not Available", @"Font editing is not enabled in the editor settings.");
+		return NSLocalizedStringFromTableInBundle(@"Not Available", nil, [NSBundle bundleForClass:[self class]],  @"Font editing is not enabled in the editor settings.");
 	}
 
 }
