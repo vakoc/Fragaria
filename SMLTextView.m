@@ -831,21 +831,20 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 /*
  * - insertText:
  */
-- (void)insertText:(NSString *)aString
+- (void)insertText:(NSString *)input
 {
-    /* AppKit Bug: when inserting an emoji (for example by double-clicking it
-     * in the character set panel) an NSMutableAttributedString is passed to
-     * insertText instead of an NSString. This works around this by making the
-     * attributed string an NSString again. */
-    if ([aString isKindOfClass:[NSAttributedString class]]){
-        aString = [(NSAttributedString *)aString string];
-    }
+    NSString *aString;
+
+    if ([input isKindOfClass:[NSAttributedString class]])
+        aString = [(NSAttributedString *)input string];
+    else
+        aString = input;
 
     if ([aString isEqualToString:@"}"] && self.indentNewLinesAutomatically && self.indentBracesAutomatically) {
         [self shiftBackToLastOpenBrace];
     }
 
-    [super insertText:aString];
+    [super insertText:input];
 
     if ([aString isEqualToString:@"("] && self.insertClosingParenthesisAutomatically) {
         [self insertStringAfterInsertionPoint:@")"];
