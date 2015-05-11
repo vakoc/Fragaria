@@ -216,8 +216,6 @@
     NSView *sep, *prev;
     NSArray *allViewsKeys, *cs;
     
-    [self.view setTranslatesAutoresizingMaskIntoConstraints:NO];
-    
     [self.view removeConstraints:[self.view constraints]];
     for (sep in separators) {
         [sep removeFromSuperview];
@@ -258,6 +256,11 @@
     NSArray *cs;
     NSBox *newsep;
     
+    if (![view superview]) {
+        [view setTranslatesAutoresizingMaskIntoConstraints:NO];
+        [self.view addSubview:view];
+    }
+    
     cs = [NSLayoutConstraint constraintsWithVisualFormat:@"|[view]|" options:0
       metrics:nil views:NSDictionaryOfVariableBindings(view)];
     [self.view addConstraints:cs];
@@ -294,16 +297,8 @@
  */
 - (void)hidePanelView:(NSView*)view
 {
-    NSArray *cs;
-    
-    /* Move the view out of the bounds of its parent view */
-    cs = @[[NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeRight
-        relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeLeft
-        multiplier:1.0 constant:0.0],
-      [NSLayoutConstraint constraintWithItem:view attribute:NSLayoutAttributeTop
-        relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeTop
-        multiplier:1.0 constant:0.0]];
-    [self.view addConstraints:cs];
+    if ([view superview])
+        [view removeFromSuperviewWithoutNeedingDisplay];
 }
 
 

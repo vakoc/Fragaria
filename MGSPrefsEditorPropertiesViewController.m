@@ -12,13 +12,14 @@
 
 @interface MGSPrefsEditorPropertiesViewController ()
 
-@property (nonatomic, assign) IBOutlet NSView *paneEditing;
-@property (nonatomic, assign) IBOutlet NSView *paneGutter;
-@property (nonatomic, assign) IBOutlet NSView *paneAutocomplete;
-@property (nonatomic, assign) IBOutlet NSView *paneIndenting;
-@property (nonatomic, assign) IBOutlet NSView *paneTextFont;
+@property IBOutlet NSView *paneEditing;
+@property IBOutlet NSView *paneGutter;
+@property IBOutlet NSView *paneAutocomplete;
+@property IBOutlet NSView *paneIndenting;
+@property IBOutlet NSView *paneTextFont;
 
 @end
+
 
 @implementation MGSPrefsEditorPropertiesViewController
 
@@ -27,22 +28,28 @@
  */
 - (id)init
 {
-    NSView *v;
     id nextResp;
-
-    if ((self = [super initWithNibName:@"MGSPrefsEditorProperties" bundle:[NSBundle bundleForClass:[MGSPrefsEditorPropertiesViewController class]]]))
-    {
-        /* Install this view controller in the responder chain so that it will
-         * receive the changeFont message. */
-        v = [self view];
-        nextResp = [v nextResponder];
-        /* Yosemite already does this for us, so don't do it if it is not
-         * needed. */
-        if (nextResp != self)
-        {
-            [v setNextResponder:self];
-            [self setNextResponder:nextResp];
-        }
+    NSBundle *bundle;
+    NSView *v;
+    CGFloat width;
+    
+    self = [super init];
+    bundle = [NSBundle bundleForClass:[MGSPrefsEditorPropertiesViewController class]];
+    [bundle loadNibNamed:@"MGSPrefsEditorProperties" owner:self topLevelObjects:nil];
+    
+    width = [self.paneEditing frame].size.width;
+    v = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, width, 0)];
+    [self setView:v];
+    
+    /* Install this view controller in the responder chain so that it will
+     * receive the changeFont message. */
+    v = [self view];
+    nextResp = [v nextResponder];
+    /* Yosemite already does this for us, so don't do it if it is not
+     * needed. */
+    if (nextResp != self) {
+        [v setNextResponder:self];
+        [self setNextResponder:nextResp];
     }
 
     return self;

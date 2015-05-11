@@ -12,10 +12,10 @@
 
 @interface MGSPrefsColourPropertiesViewController ()
 
-@property (nonatomic, assign) IBOutlet NSView *paneScheme;
-@property (nonatomic, assign) IBOutlet NSView *paneEditorColours;
-@property (nonatomic, assign) IBOutlet NSView *paneSyntaxColours;
-@property (nonatomic, assign) IBOutlet NSView *paneOtherSettings;
+@property IBOutlet NSView *paneScheme;
+@property IBOutlet NSView *paneEditorColours;
+@property IBOutlet NSView *paneSyntaxColours;
+@property IBOutlet NSView *paneOtherSettings;
 
 @end
 
@@ -27,22 +27,19 @@
  */
 - (id)init
 {
-    self = [super initWithNibName:@"MGSPrefsColourProperties" bundle:[NSBundle bundleForClass:[MGSPrefsColourPropertiesViewController class]]];
-    if (self)
-	{
-		[self view]; // Don't lazy load. We need you!
-    }
+    NSBundle *bundle;
+    NSView *view;
+    CGFloat width;
+    
+    self = [super init];
+    bundle = [NSBundle bundleForClass:[MGSPrefsColourPropertiesViewController class]];
+    [bundle loadNibNamed:@"MGSPrefsColourProperties" owner:self topLevelObjects:nil];
+    
+    width = [self.paneScheme frame].size.width;
+    view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, width, 0)];
+    [self setView:view];
+    
     return self;
-}
-
-
-/*
- *  - viewDidLoad
- */
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do view setup here.
 }
 
 
