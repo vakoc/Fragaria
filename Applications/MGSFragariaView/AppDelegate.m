@@ -204,8 +204,10 @@
     error4.character = 12;
     error4.length = 7;
     error4.hidden = NO;
+    
+    SMLSyntaxError *error5 = [SMLSyntaxError errorWithDescription:@"Yet another error" ofLevel:-912454 atLine:5];
 
-    return @[error1, error2, error3, error4];
+    return @[error1, error2, error3, error4, error5];
 }
 
 
