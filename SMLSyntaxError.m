@@ -9,21 +9,19 @@
 #import "SMLSyntaxError.h"
 
 
-float const kMGSErrorCategoryAccess = 100;
-float const kMGSErrorCategoryConfig = 200;
-float const kMGSErrorCategoryDocument = 300;
-float const kMGSErrorCategoryInfo = 400;
-float const kMGSErrorCategoryWarning = 500;
-float const kMGSErrorCategoryError = 600;
-float const kMGSErrorCategoryPanic = FLT_MAX;
-float const kMGSErrorCategoryDefault = 500;
+float const kMGSErrorCategoryAccess   =  50.0;
+float const kMGSErrorCategoryConfig   = 150.0;
+float const kMGSErrorCategoryDocument = 250.0;
+float const kMGSErrorCategoryInfo     = 350.0;
+float const kMGSErrorCategoryWarning  = 450.0;
+float const kMGSErrorCategoryError    = 550.0;
+float const kMGSErrorCategoryPanic    = 650.0;
+float const kMGSErrorCategoryDefault  = 450.0;
 
 
-@implementation SMLSyntaxError
-
-
-// manual
-@synthesize warningImage = _warningImage;
+@implementation SMLSyntaxError {
+    BOOL manualImage;
+}
 
 // to be deprecated
 @synthesize code; // deprecated; separate line as reminder to remove.
@@ -34,42 +32,50 @@ float const kMGSErrorCategoryDefault = 500;
 
 + (NSImage *)defaultImageForWarningLevel:(float)level
 {
+    static NSArray *imageNames;
+    static NSMutableDictionary *imageCache;
+    static dispatch_once_t onceToken;
 	NSString *imageName;
+    NSInteger imageIdx;
+    NSNumber *imageNum;
+    NSImage *res;
+    
+    dispatch_once(&onceToken, ^{
+        imageCache = [[NSMutableDictionary alloc] init];
+        imageNames = @[@"messagesAccess", @"messagesConfig",
+          @"messagesDocument", @"messagesInfo", @"messagesWarning",
+          @"messagesError", @"messagesPanic"];
+    });
+    
+    imageIdx = MIN(MAX(0, (NSInteger)(level/100.0)), 6);
+    imageNum = @(imageIdx);
+    
+    if (!(res = [imageCache objectForKey:imageNum])) {
+        imageName = [imageNames objectAtIndex:imageIdx];
+        res = [[NSBundle bundleForClass:[self class]] imageForResource:imageName];
+        [imageCache setObject:res forKey:imageNum];
+    }
 
-    switch ((int)ceil(level/100.0))
-	{
-		case 1:
-			imageName  = @"messagesAccess";
-			break;
-		case 2:
-			imageName  = @"messagesConfig";
-			break;
-		case 3:
-			imageName  = @"messagesDocument";
-			break;
-		case 4:
-			imageName  = @"messagesInfo";
-			break;
-		case 0:
-		case 5:
-			imageName  = @"messagesWarning";
-			break;
-		case 6:
-			imageName  = @"messagesError";
-			break;
-		default:
-			imageName  = @"messagesPanic";
-			break;
-	}
-
-    NSImage *warningImage = [[NSBundle bundleForClass:[self class]] imageForResource:imageName];
-    return warningImage;
+    return res;
 }
 
 
 + (instancetype) errorWithDictionary:(NSDictionary *)dictionary
 {
     return [[[self class] alloc] initWithDictionary:dictionary];
+}
+
+
++ (instancetype)errorWithDescription:(NSString *)desc ofLevel:(float)level
+  atLine:(NSUInteger)line
+{
+    SMLSyntaxError *res;
+    
+    res = [[SMLSyntaxError alloc] init];
+    res.errorDescription = desc;
+    res.line = line;
+    res.warningLevel = level;
+    return res;
 }
 
 
@@ -89,6 +95,7 @@ float const kMGSErrorCategoryDefault = 500;
 {
     self = [super init];
     
+    manualImage = NO;
     self.line = 1;
     self.character = 1;
     self.warningLevel = kMGSErrorCategoryWarning;
@@ -108,19 +115,18 @@ float const kMGSErrorCategoryDefault = 500;
 #pragma mark - Property Accessors
 
 
+- (void)setWarningLevel:(float)warningLevel
+{
+    _warningLevel = warningLevel;
+    if (!manualImage)
+        _warningImage = [[self class] defaultImageForWarningLevel:warningLevel];
+}
+
+
 - (void)setWarningImage:(NSImage *)warningImage
 {
     _warningImage = warningImage;
-}
-
-- (NSImage *)warningImage
-{
-    if (!_warningImage)
-    {
-        _warningImage = [[self class] defaultImageForWarningLevel:self.warningLevel];
-    }
-
-    return _warningImage;
+    manualImage = YES;
 }
 
 

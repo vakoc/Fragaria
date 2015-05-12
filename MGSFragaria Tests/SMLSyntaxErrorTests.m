@@ -42,12 +42,9 @@
 																@"hidden" : @(YES),
 																@"warningLevel" : @(601.223) // panic
 																}],
-						  [SMLSyntaxError errorWithDictionary:@{
-																@"errorDescription" : @"Sample error 3.",
-																@"line" : @(37),
-																@"hidden" : @(NO),
-																@"warningLevel" : @(kMGSErrorCategoryDocument)
-																}],
+						  [SMLSyntaxError errorWithDescription:@"Sample error 3."
+                                                       ofLevel:kMGSErrorCategoryDocument
+                                                        atLine:37],
 						  [SMLSyntaxError errorWithDictionary:@{
 																@"errorDescription" : @"Sample error 4.",
 																@"line" : @(37),
@@ -79,7 +76,7 @@
 
 /*
  *  - test_defaultImagesForWarningLevel
- *    Here wer want to ensure that if an image isn't specified, the correct
+ *    Here we want to ensure that if an image isn't specified, the correct
  *    default image is supplied based on the warningLevel property.
  */
 - (void)test_defaultImageForWarningLevel
@@ -94,7 +91,7 @@
 	expect = [[NSBundle bundleForClass:[SMLSyntaxError class]] imageForResource:@"messagesPanic"];
 	XCTAssert([[result TIFFRepresentation] isEqualToData:[expect TIFFRepresentation]]);
 
-	// Tests the default case where the value is 0.
+	// Tests the default value
 	test = self.syntaxErrors[5];
 	result = [SMLSyntaxError defaultImageForWarningLevel:test.warningLevel];
 	expect = [[NSBundle bundleForClass:[SMLSyntaxError class]] imageForResource:@"messagesWarning"];
