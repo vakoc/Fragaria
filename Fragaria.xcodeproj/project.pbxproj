@@ -28,7 +28,7 @@
 		010F6D2F1AFEA19C0054F3D2 /* MGSUserDefaultsControllerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F353541AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */; };
 		013A79191AA8C715008ADFA1 /* MGSContextMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 013A791B1AA8C715008ADFA1 /* MGSContextMenu.xib */; };
-		013BB8A41AFFDF1100FD5AE0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 013BB8A31AFFDF1100FD5AE0 /* Localizable.strings */; };
+		016E310F1B0324D3000D3497 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 016E31111B0324D3000D3497 /* Localizable.strings */; };
 		017FD58A1A7A992700B305FB /* MGSLineNumberView.h in Headers */ = {isa = PBXBuildFile; fileRef = 017FD5861A7A992700B305FB /* MGSLineNumberView.h */; };
 		017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FD5871A7A992700B305FB /* MGSLineNumberView.m */; };
 		018CFA0D1AE46B8F00334011 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 018CFA0C1AE46B8F00334011 /* main.m */; };
@@ -214,8 +214,8 @@
 		013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxDefinition.m; sourceTree = "<group>"; };
 		013A791A1AA8C715008ADFA1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MGSContextMenu.xib; sourceTree = "<group>"; };
 		013A791C1AA8C719008ADFA1 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/MGSContextMenu.xib"; sourceTree = "<group>"; };
-		013BB8A31AFFDF1100FD5AE0 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		0166D9971A9FC3B20099AB81 /* SMLTextViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMLTextViewPrivate.h; sourceTree = "<group>"; };
+		016E31101B0324D3000D3497 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		017FD5861A7A992700B305FB /* MGSLineNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberView.h; sourceTree = "<group>"; };
 		017FD5871A7A992700B305FB /* MGSLineNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLineNumberView.m; sourceTree = "<group>"; };
 		018CFA0C1AE46B8F00334011 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Applications/Doc/main.m; sourceTree = "<group>"; };
@@ -543,7 +543,7 @@
 				ABA812DB11B6855200A29990 /* LICENSE-2.0.txt */,
 				AB69B62C118B745700903D1D /* MGSFragaria-Info.plist */,
 				AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */,
-				013BB8A31AFFDF1100FD5AE0 /* Localizable.strings */,
+				016E31111B0324D3000D3497 /* Localizable.strings */,
 				D079D85C1AB7DEE600169F82 /* Colour Schemes */,
 				AB397291118C28E700AEF388 /* Syntax Definitions */,
 			);
@@ -971,7 +971,6 @@
 			knownRegions = (
 				en,
 				"en-GB",
-				Base,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* KosmicEditor */;
 			projectDirPath = "";
@@ -1005,7 +1004,7 @@
 				D07188481AB423830073493A /* MGSPrefsEditorProperties.xib in Resources */,
 				AB39723A118C27E700AEF388 /* SyntaxDefinitions.plist in Resources */,
 				D079D85D1AB7DEE600169F82 /* Colour Schemes in Resources */,
-				013BB8A41AFFDF1100FD5AE0 /* Localizable.strings in Resources */,
+				016E310F1B0324D3000D3497 /* Localizable.strings in Resources */,
 				AB3972E5118C28E700AEF388 /* Syntax Definitions in Resources */,
 				ABA1C12316144EFD00C8723F /* README.md in Resources */,
 				ABA812DC11B6855200A29990 /* LICENSE-2.0.txt in Resources */,
@@ -1234,6 +1233,14 @@
 				013A791C1AA8C719008ADFA1 /* en-GB */,
 			);
 			name = MGSContextMenu.xib;
+			sourceTree = "<group>";
+		};
+		016E31111B0324D3000D3497 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				016E31101B0324D3000D3497 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		D07188461AB423830073493A /* MGSPrefsEditorProperties.xib */ = {
