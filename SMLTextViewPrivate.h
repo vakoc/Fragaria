@@ -18,6 +18,9 @@
 @interface SMLTextView ()
 
 
+/// @name Private properties
+
+
 /** The controller which manages the accessory user interface for this text
  * view. */
 @property (readonly) MGSExtraInterfaceController *interfaceController;

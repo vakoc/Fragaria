@@ -109,9 +109,9 @@
 
 
 /** The autocomplete delegate for this instance of Fragaria. The autocomplete
- * delegate provides a list of words that can be used by the autocomplete
- * feature. If this property is nil, then the list of autocomplete words will
- * be read from the current syntax highlighting dictionary. */
+ *  delegate provides a list of words that can be used by the autocomplete
+ *  feature. If this property is nil, then the list of autocomplete words will
+ *  be read from the current syntax highlighting dictionary. */
 @property (nonatomic, weak) IBOutlet id<SMLAutoCompleteDelegate> autoCompleteDelegate;
 
 /** Specifies the delay time for autocomplete, in seconds.*/
@@ -191,7 +191,8 @@
 @property (nonatomic, assign) NSInteger tabWidth;
 /** Specifies the automatic indentation width.*/
 @property (nonatomic, assign) NSUInteger indentWidth;
-/** Specifies whether spaces should be inserted instead of tab characters when indenting.*/
+/** Specifies whether spaces should be inserted instead of tab characters when
+ *  indenting.*/
 @property (nonatomic, assign) BOOL indentWithSpaces;
 /** Specifies whether or not tab stops should be used when indenting.*/
 @property (nonatomic, assign) BOOL useTabStops;
@@ -219,15 +220,16 @@
 
 
 /** Specifies the column position to draw the page guide. Independently of
- whether or not showsPageGuide is enabled, also indicates the line wrap
- column when both lineWrap and lineWrapsAtPageGuide are enabled.*/
+ *  whether or not showsPageGuide is enabled, also indicates the line wrap
+ *  column when both lineWrap and lineWrapsAtPageGuide are enabled.*/
 @property (nonatomic, assign) NSInteger pageGuideColumn;
 /** Specifies whether or not to show the page guide.*/
 @property (nonatomic, assign) BOOL showsPageGuide;
 
 /** Indicates whether or not line wrap is enabled.*/
 @property (nonatomic, assign) BOOL lineWrap;
-/** If lineWrap is enabled, this indicates whether the line should wrap at the page guide column. */
+/** If lineWrap is enabled, this indicates whether the line should wrap at the 
+ *  page guide column. */
 @property (nonatomic, assign) BOOL lineWrapsAtPageGuide;
 
 
@@ -246,11 +248,11 @@
 
 
 /** Indicates the base (non-highlighted) text color.*/
-@property (nonatomic, assign) NSColor *textColor;
+@property (copy) NSColor *textColor;
 /** Indicates the text view background color.*/
 @property NSColor *backgroundColor;
 /** Specifies the text editor font.*/
-@property (nonatomic, assign) NSFont *textFont;
+@property (nonatomic) NSFont *textFont;
 /** The real line height as a multiple of the natural line height for the
  *  current font. */
 @property (nonatomic) CGFloat lineHeightMultiple;
