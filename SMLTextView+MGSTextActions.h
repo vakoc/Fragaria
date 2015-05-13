@@ -9,109 +9,127 @@
 #import "SMLTextView.h"
 
 
-/**
- *  This category implements the editing options added by Fragaria to
- *  NSTextView.
- **/
+/** 
+ *  MGSTextActions implements the text view actions added by Fragaria to
+ *  NSTextView. These actions are typically made available to the user through
+ *  a "Text" menu. 
+ */
+
 @interface SMLTextView (MGSTextActions)
 
-/**
- *  Sender wants to remove needless whitespace.
- *  @param sender The sender of the action.
- **/
+
+/** Removes trailing whitespace in the currently selected range.
+ *  @discussion The selected range is expanded to include an integer number
+ *              of lines.
+ *  @param sender The sender of the action. */
 - (IBAction)removeNeedlessWhitespace:(id)sender;
 
-/**
- *  Sender wants to start the detab process.
- *  @param sender The sender of the action.
- **/
+
+/** Replaces tabulations with spaces in the selected range.
+ *  @discussion This method will open a sheet attached to Fragaria's parent
+ *              window to ask the user the width (in spaces) of a tabulation.
+ *              Also, the selected range is expanded to include an integer
+ *              number of lines. When the user confirms the action, this
+ *              method will call -performDetabWithNumberOfSpaces: to actually
+ *              perform the operation.
+ *  @param sender The sender of the action. */
 - (IBAction)detab:(id)sender;
 
-/**
- *  Sender wants to start the entab process.
- *  @param sender The sender of the action.
- **/
+/** Replaces spaces with tabulations in the selected range.
+ *  @discussion This method will open a sheet attached to Fragaria's parent
+ *              window to ask the user the width (in spaces) of a tabulation.
+ *              Also, the selected range is expanded to include an integer
+ *              number of lines. When the user confirms the action, this
+ *              method will call -performEntabWithNumberOfSpaces: to actually
+ *              perform the operation.
+ *  @param sender The sender of the action. */
 - (IBAction)entab:(id)sender;
 
-/** Convert spaces to tabs.
+
+/** Replaces spaces with tabulations in the selected range.
+ *  @discussion The selected range is expanded to include an integer number
+ *              of lines.
  *  @param numberOfSpaces The maximum width of a tabulation, in spaces. */
 - (void)performEntabWithNumberOfSpaces:(NSInteger)numberOfSpaces;
 
-/** Convert tabs to spaces.
+/** Replaces tabulations with spaces in the selected range.
+ *  @discussion The selected range is expanded to include an integer number
+ *              of lines.
  *  @param numberOfSpaces The maximum width of a tabulation, in spaces. */
 - (void)performDetabWithNumberOfSpaces:(NSInteger)numberOfSpaces;
 
-/**
- *  Sender wants to shift the text left.
- *  @param sender The sender of the action.
- **/
+
+/** De-indent the selected range by indentWidth spaces.
+ *  @discussion This method won't work correctly if the indentWithSpaces and
+ *              useTabStops properties are inconsistent with the text being
+ *              edited.
+ *  @param sender The sender of the action. */
 - (IBAction)shiftLeft:(id)sender;
 
-/**
- *  Sender wants to shift the text right.
- *  @param sender The sender of the action.
- **/
+/** Indent the selected range by indentWidth.
+ *  @discussion The selected range is expanded to include an integer number
+ *              of lines.
+ *  @param sender The sender of the action. */
 - (IBAction)shiftRight:(id)sender;
 
-/**
- *  Sender wants to convert selection to lower-case.
- *  @param sender The sender of the action.
- **/
+
+/** Change all alfabetic characters in the selection to lower case.
+ *  @param sender The sender of the action. */
 - (IBAction)lowercaseCharacters:(id)sender;
 
-/**
- *  Sender wants to convert selection to upper-case.
- *  @param sender The sender of the action.
- **/
+/** Change all alfabetic characters in the selection to upper case.
+ *  @param sender The sender of the action. */
 - (IBAction)uppercaseCharacters:(id)sender;
 
-/**
- *  Sender wants to capitalize every word.
- *  @param sender The sender of the action.
- **/
+/** Capitalize the words in the selection.
+ *  @param sender The sender of the action. */
 - (IBAction)capitalizeWord:(id)sender;
 
-/**
- *  Sender wants to go to a specific line.
- *  @param sender The sender of the action.
- **/
+
+/** Present an interface to allow the user to scroll the view to a text line.
+ *  @discussion This method will open a sheet attached to Fragaria's parent
+ *              window to ask the user the line to be scrolled into view.
+ *              When the user confirms the action, this method will call 
+ *              -performGoToLine:setSelected: to actually perform the operation.
+ *  @param sender The sender of the action. */
 - (IBAction)goToLine:(id)sender;
 
-/**
- *  Perform a go to line operation.
- *  @param lineToGoTo The line to go to.
- *  @param highlight Indicates whether the line should be selected.
- **/
+/** Scroll the view to the specified line number.
+ *  @param lineToGoTo The one-based line number to go to.
+ *  @param highlight Indicates whether the line should be selected. */
 - (void)performGoToLine:(NSInteger)lineToGoTo setSelected:(BOOL)highlight;
 
-/**
- *  The sender wants to close the current tag.
- *  @param sender The sender of the action.
- **/
+
+/** Close the last XHTML or HTML tag still opened.
+ *  @discussion This method special-cases various XHTML and HTML tags to ensure
+ *              it does not close self-closing tags, such as \<br\>, \<image\>
+ *              and \<!-- --\>.
+ *  @param sender The sender of the action. */
 - (IBAction)closeTag:(id)sender;
 
-/**
- *  The sender wants to comment or uncomment code.
- *  @param sender The sender of the action.
- **/
+
+/** Toggle leading commenting of the selected range.
+ *  @discussion This method looks only for single-line comments starting at the
+ *              end of each line.
+ *  @param sender The sender of the action. */
 - (IBAction)commentOrUncomment:(id)sender;
 
-/**
- *  The sender wants to remove line breaks.
- *  @param sender The sender of the action.
- **/
+
+/** Remove line breaks from the selected range.
+ *  @discussion All unicode line breaks are supported.
+ *  @param sender The sender of the action. */
 - (IBAction)removeLineEndings:(id)sender;
 
-/**
- *  The sender wants to prepare the text for XML.
- *  @param sender The sender of the action.
- **/
+
+/** Substitute XML escapes in the selected text.
+ *  @discussion The XML escapes supported by this method are \&amp;, \&lt; and
+ *              \&gt;.
+ *  @param sender The sender of the action. */
 - (IBAction)prepareForXML:(id)sender;
 
-/**
- *  The sender wants to transpose two characters.
- *  @param sender The sender of the action.
- **/
+
+/** Transpose the two characters on the sides of the current insertion point.
+ *  @param sender The sender of the action. */
 - (IBAction)transpose:(id)sender;
 
 
