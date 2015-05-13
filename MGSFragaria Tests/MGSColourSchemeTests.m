@@ -47,10 +47,11 @@
  */
 - (void)test_propertiesToFile
 {
-	NSString *outputPath = @"~/Desktop/test_propertiesToFile.plist";
+    NSString *outputPath;
 	NSString *expects1 = @"Monty Python";
     NSColor *expects2 = [NSColor purpleColor];
 
+    outputPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"test_propertiesToFile.plist"];
 	MGSColourScheme *scheme = [[MGSColourScheme alloc] init];
 	scheme.displayName = expects1;
     scheme.colourForComments = expects2;
@@ -127,10 +128,12 @@
  */
 - (void)test_isEqualToScheme_file
 {
-	NSString *outputPath = @"~/Desktop/test_isEqualToScheme_file.plist";
+	NSString *outputPath;
 	NSString *expects1 = @"Pecans and Cashews";
 	NSColor *expects2 = [NSColor purpleColor];
 	
+    outputPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"test_isEqualToScheme_file.plist"];
+    
 	MGSColourScheme *scheme = [[MGSColourScheme alloc] init];
 	scheme.displayName = expects1;
 	scheme.colourForKeywords = expects2;
@@ -151,8 +154,10 @@
  */
 - (void)test_make_classic_fragaria_theme
 {
-	NSString *outputPath = @"~/Desktop/Classic Fragaria.plist";
+	NSString *outputPath;
 	
+    outputPath = [NSTemporaryDirectory() stringByAppendingPathComponent:@"Classic Fragaria.plist"];
+    
 	MGSColourScheme *scheme = [[MGSColourScheme alloc] init];
 	scheme.displayName = @"Classic Fragaria";
 
