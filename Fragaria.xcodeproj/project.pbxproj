@@ -43,6 +43,7 @@
 		01D81AD21AA7E37E006DF8B8 /* Features.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D81ACF1AA7E37E006DF8B8 /* Features.xib */; };
 		01D81AD31AA7E37E006DF8B8 /* Lorem.html in Resources */ = {isa = PBXBuildFile; fileRef = 01D81AD01AA7E37E006DF8B8 /* Lorem.html */; };
 		01D81AD41AA7E37E006DF8B8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D81AD11AA7E37E006DF8B8 /* MainMenu.xib */; };
+		01FBC7EC1B0679520008EAF8 /* MGSMutableSubstring.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC7EA1B0679520008EAF8 /* MGSMutableSubstring.m */; };
 		AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B666118B768000903D1D /* SMLTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB3971CB118C1F8A00AEF388 /* MGSSyntaxController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */; };
@@ -233,6 +234,8 @@
 		01D81ACF1AA7E37E006DF8B8 /* Features.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Features.xib; path = Applications/MGSFragariaView/Features.xib; sourceTree = "<group>"; };
 		01D81AD01AA7E37E006DF8B8 /* Lorem.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Lorem.html; path = Applications/MGSFragariaView/Lorem.html; sourceTree = "<group>"; };
 		01D81AD11AA7E37E006DF8B8 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = Applications/MGSFragariaView/MainMenu.xib; sourceTree = "<group>"; };
+		01FBC7E91B0679520008EAF8 /* MGSMutableSubstring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSMutableSubstring.h; sourceTree = "<group>"; };
+		01FBC7EA1B0679520008EAF8 /* MGSMutableSubstring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSMutableSubstring.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		256AC3D80F4B6AC300CF3369 /* FragariaAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FragariaAppDelegate.h; path = Applications/Simple/FragariaAppDelegate.h; sourceTree = "<group>"; };
 		256AC3D90F4B6AC300CF3369 /* FragariaAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FragariaAppDelegate.m; path = Applications/Simple/FragariaAppDelegate.m; sourceTree = "<group>"; };
@@ -589,6 +592,8 @@
 			children = (
 				ABF28AEF14C075D400ECAD48 /* NSScanner+Fragaria.h */,
 				ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */,
+				01FBC7E91B0679520008EAF8 /* MGSMutableSubstring.h */,
+				01FBC7EA1B0679520008EAF8 /* MGSMutableSubstring.m */,
 			);
 			name = "NS Categories";
 			sourceTree = "<group>";
@@ -1108,6 +1113,7 @@
 				D0C146761A871A0B00DDE90A /* MGSFragariaView.m in Sources */,
 				D0718B451AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.m in Sources */,
 				D071883B1AB3CDFA0073493A /* MGSUserDefaults.m in Sources */,
+				01FBC7EC1B0679520008EAF8 /* MGSMutableSubstring.m in Sources */,
 				D071883F1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m in Sources */,
 				D07188501AB54CCA0073493A /* MGSPrefsViewController.m in Sources */,
 				D07188441AB3D2220073493A /* MGSMutableDictionary.m in Sources */,
