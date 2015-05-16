@@ -760,24 +760,22 @@
     }
 }
 
+
 /*
- 
- - prepareForXMLAction:
- 
+ * - prepareForXML:
  */
 - (IBAction)prepareForXML:(id)sender
 {
-    NSRange selectedRange = [self selectedRange];
-    NSMutableString *stringToConvert = [NSMutableString stringWithString:[[self string] substringWithRange:selectedRange]];
-    [stringToConvert replaceOccurrencesOfString:@"&amp;" withString:@"&" options:NSLiteralSearch range:NSMakeRange(0, [stringToConvert length])];
-    [stringToConvert replaceOccurrencesOfString:@"&" withString:@"&amp;" options:NSLiteralSearch range:NSMakeRange(0, [stringToConvert length])];
-    [stringToConvert replaceOccurrencesOfString:@"<" withString:@"&lt;" options:NSLiteralSearch range:NSMakeRange(0, [stringToConvert length])];
-    [stringToConvert replaceOccurrencesOfString:@">" withString:@"&gt;" options:NSLiteralSearch range:NSMakeRange(0, [stringToConvert length])];
-    if ([self shouldChangeTextInRange:selectedRange replacementString:stringToConvert]) { // Do it this way to mark it as an Undo
-        [self replaceCharactersInRange:selectedRange withString:stringToConvert];
-        [self didChangeText];
-    }
+    [self editSelectionArrayWithBlock:^(NSMutableString *stringToConvert) {
+        NSRange allString = NSMakeRange(0, [stringToConvert length]);
+        
+        [stringToConvert replaceOccurrencesOfString:@"&amp;" withString:@"&" options:NSLiteralSearch range:allString];
+        [stringToConvert replaceOccurrencesOfString:@"&" withString:@"&amp;" options:NSLiteralSearch range:allString];
+        [stringToConvert replaceOccurrencesOfString:@"<" withString:@"&lt;" options:NSLiteralSearch range:allString];
+        [stringToConvert replaceOccurrencesOfString:@">" withString:@"&gt;" options:NSLiteralSearch range:allString];
+    }];
 }
+
 
 #pragma mark -
 #pragma mark Comment handling
