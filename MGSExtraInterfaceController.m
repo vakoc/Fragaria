@@ -50,6 +50,7 @@
     
 	if (entabWindow == nil) {
 		[NSBundle loadNibNamed:@"SMLEntab.nib" owner:self];
+        spacesTextFieldEntabWindow.integerValue = target.tabWidth;
 	}
 	
     _completionTarget = target;
@@ -67,6 +68,7 @@
     
 	if (detabWindow == nil) {
 		[NSBundle loadNibNamed:@"SMLDetab.nib" owner:self];
+        spacesTextFieldDetabWindow.integerValue = target.tabWidth;
 	}
 	
     _completionTarget = target;
