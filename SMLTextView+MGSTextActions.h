@@ -60,9 +60,8 @@
 
 
 /** De-indent the selected range by indentWidth spaces.
- *  @discussion This method won't work correctly if the indentWithSpaces and
- *              useTabStops properties are inconsistent with the text being
- *              edited.
+ *  @discussion The selected range is expanded to include an integer number
+ *              of lines.
  *  @param sender The sender of the action. */
 - (IBAction)shiftLeft:(id)sender;
 
