@@ -11,6 +11,7 @@
 #import "MGSFragariaPrivate.h"
 #import "SMLTextViewPrivate.h"
 #import "MGSMutableSubstring.h"
+#import "NSString+Fragaria.h"
 
 
 @implementation SMLTextView (MGSTextActions)
@@ -366,19 +367,16 @@
 
 
 /*
- 
- - entabAction:
- 
+ * - entab:
  */
 - (IBAction)entab:(id)sender
 {
     [self.interfaceController displayEntabForTarget:self];
 }
 
+
 /*
- 
- - detabAction
- 
+ * - detabAction
  */
 - (IBAction)detab:(id)sender
 {
@@ -387,120 +385,87 @@
 
 
 /*
- 
- - performEntabWithNumberOfSpaces:
- 
+ * - performEntabWithNumberOfSpaces:
  */
 - (void)performEntabWithNumberOfSpaces:(NSInteger)numberOfSpaces
 {
-    NSRange selectedRange;
-    NSRange savedRange = [self selectedRange];
-    
-    NSArray *array = [self selectedRanges];
-    NSMutableString *completeString = [self.string mutableCopy];
-    NSInteger sumOfRemovedCharacters = 0;
-    for (id item in array) {
-        selectedRange = NSMakeRange([item rangeValue].location - sumOfRemovedCharacters, [item rangeValue].length);
-        
-        NSRange thisSpace, prevSpaces, thisLine, range;
-        prevSpaces = NSMakeRange(NSNotFound, 0);
-        thisLine = NSMakeRange(NSNotFound, 0);
-        range = selectedRange;
-        thisSpace = [completeString rangeOfString:@" " options:NSLiteralSearch range:range];
-        while (thisSpace.length) {
-            NSInteger phase, temp;
-            NSUInteger realLocation;
+    [self alignSelectionToLineBonduaries];
+    [self editSelectionArrayWithBlock:^(NSMutableString *string) {
+        [string enumerateMutableSubstringsOfLinesUsingBlock:^(MGSMutableSubstring *line, BOOL *stop) {
+            NSRange thisSpace, prevSpaces, range;
             
-            if (!NSLocationInRange(thisSpace.location, thisLine))
-                thisLine = [completeString lineRangeForRange:thisSpace];
-            
-            if (NSMaxRange(prevSpaces) == thisSpace.location)
-                prevSpaces.length++;
-            else
-                prevSpaces = thisSpace;
-            
-            temp = NSMaxRange(prevSpaces) + sumOfRemovedCharacters;
-            realLocation = [self realColumnOfCharacter:temp];
-            phase = realLocation % numberOfSpaces;
-            if (phase == 0) {
-                if (prevSpaces.length > 1) {
-                    [completeString replaceCharactersInRange:prevSpaces withString:@"\t"];
-                    sumOfRemovedCharacters += prevSpaces.length - 1;
-                    temp = NSMaxRange(range) - (prevSpaces.length - 1);
-                    range.location = prevSpaces.location;
-                    range.length = temp - range.location;
-                    thisSpace.location = prevSpaces.location;
-                    thisLine.length -= prevSpaces.length - 1;
+            range = NSMakeRange(0, [line length]);
+            prevSpaces = NSMakeRange(NSNotFound, 0);
+            thisSpace = [line rangeOfString:@" " options:NSLiteralSearch range:range];
+            while (thisSpace.length) {
+                NSInteger phase;
+                NSUInteger realLocation;
+                
+                if (NSMaxRange(prevSpaces) == thisSpace.location)
+                    prevSpaces.length++;
+                else
+                    prevSpaces = thisSpace;
+                
+                realLocation = [line mgs_columnOfCharacter:NSMaxRange(prevSpaces) tabWidth:numberOfSpaces];
+                phase = realLocation % numberOfSpaces;
+                if (phase == 0) {
+                    if (prevSpaces.length > 1) {
+                        [line replaceCharactersInRange:prevSpaces withString:@"\t"];
+                        thisSpace.location = prevSpaces.location;
+                        thisSpace.length = 1;
+                    }
+                    prevSpaces = NSMakeRange(NSNotFound, 0);
                 }
-                prevSpaces = NSMakeRange(NSNotFound, 0);
+                
+                range.location = NSMaxRange(thisSpace);
+                range.length = [line length] - range.location;
+                
+                thisSpace = [line rangeOfString:@" " options:NSLiteralSearch range:range];
             }
-            
-            range.length -= NSMaxRange(thisSpace) - range.location;
-            range.location = NSMaxRange(thisSpace);
-            
-            thisSpace = [completeString rangeOfString:@" " options:NSLiteralSearch range:range];
-        }
-        
-        if ([self shouldChangeTextInRange:NSMakeRange(0, [[self string] length]) replacementString:completeString]) { // Do it this way to mark it as an Undo
-            [self replaceCharactersInRange:NSMakeRange(0, [[self string] length]) withString:completeString];
-            [self didChangeText];
-        }
-    }
-    
-    [self setSelectedRange:NSMakeRange(savedRange.location, 0)];
+        }];
+    }];
 }
 
+
 /*
- 
- - performDetabWithNumberOfSpaces:
- 
+ * - performDetabWithNumberOfSpaces:
  */
 - (void)performDetabWithNumberOfSpaces:(NSInteger)numberOfSpaces
 {
+    NSMutableString *spaces;
     NSInteger i;
-    NSRange selectedRange;
-    NSRange savedRange = [self selectedRange];
     
-    NSArray *array = [self selectedRanges];
-    NSMutableString *spaces = [NSMutableString string];
+    spaces = [NSMutableString string];
     for (i=0; i<numberOfSpaces; i++) {
         [spaces appendString:@" "];
     }
-    NSMutableString *completeString = [NSMutableString stringWithString:[self string]];
-    NSInteger sumOfInsertedCharacters = 0;
-    for (id item in array) {
-        selectedRange = NSMakeRange([item rangeValue].location + sumOfInsertedCharacters, [item rangeValue].length);
-        
-        NSRange tempRange;
-        tempRange = [completeString rangeOfString:@"\t" options:NSLiteralSearch range:selectedRange];
-        while (tempRange.length) {
-            NSInteger phase, oldpos;
-            NSString *replStr;
-            
-            if (numberOfSpaces) {
-                oldpos = tempRange.location - sumOfInsertedCharacters;
-                phase = [self realColumnOfCharacter:oldpos] % numberOfSpaces;
-                replStr = [spaces substringFromIndex:phase];
-            } else {
-                replStr = @"";
-            }
-            [completeString replaceCharactersInRange:tempRange withString:replStr];
-            
-            sumOfInsertedCharacters += [replStr length] - 1;
-            selectedRange.length += [replStr length] - 1;
-            selectedRange.length -= NSMaxRange(tempRange) - selectedRange.location;
-            selectedRange.location = NSMaxRange(tempRange);
-            
-            tempRange = [completeString rangeOfString:@"\t" options:NSLiteralSearch range:selectedRange];
-        }
-        
-        if ([self shouldChangeTextInRange:NSMakeRange(0, [[self string] length]) replacementString:completeString]) { // Do it this way to mark it as an Undo
-            [self replaceCharactersInRange:NSMakeRange(0, [[self string] length]) withString:completeString];
-            [self didChangeText];
-        }
-    }
     
-    [self setSelectedRange:NSMakeRange(savedRange.location, 0)];
+    [self alignSelectionToLineBonduaries];
+    [self editSelectionArrayWithBlock:^(NSMutableString *string) {
+        [string enumerateMutableSubstringsOfLinesUsingBlock:^(MGSMutableSubstring *line, BOOL *stop) {
+            NSRange tempRange, range;
+            
+            range = NSMakeRange(0, [line length]);
+            tempRange = [line rangeOfString:@"\t" options:NSLiteralSearch range:range];
+            while (tempRange.length) {
+                NSInteger phase;
+                NSString *replStr;
+                
+                if (numberOfSpaces) {
+                    phase = [line mgs_columnOfCharacter:tempRange.location tabWidth:numberOfSpaces] % numberOfSpaces;
+                    replStr = [spaces substringFromIndex:phase];
+                } else {
+                    replStr = @"";
+                }
+                [line replaceCharactersInRange:tempRange withString:replStr];
+                
+                range.location = tempRange.location + [replStr length];
+                range.length = [line length] - range.location;
+                
+                tempRange = [line rangeOfString:@"\t" options:NSLiteralSearch range:range];
+            }
+        }];
+    }];
 }
 
 
