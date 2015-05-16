@@ -39,8 +39,8 @@
 		019B80191A9E77330007D234 /* MGSFragariaTextViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 019B80181A9E77330007D234 /* MGSFragariaTextViewDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		019F56D51A9D3511009F9DCD /* SMLTextView+MGSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = D0C145C21A85E1FD00DDE90A /* SMLTextView+MGSDragging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01AC7E721AA341AA00DF7620 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01AC7E711AA341AA00DF7620 /* Images.xcassets */; };
-		01B50A871B07E3F200C9A856 /* MGSMutableSubstring.h in Headers */ = {isa = PBXBuildFile; fileRef = 01B50A851B07E3F200C9A856 /* MGSMutableSubstring.h */; };
 		01B50A881B07E3F200C9A856 /* MGSMutableSubstring.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B50A861B07E3F200C9A856 /* MGSMutableSubstring.m */; };
+		01B50A8C1B07E55700C9A856 /* NSString+Fragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B50A8A1B07E55700C9A856 /* NSString+Fragaria.m */; };
 		01BB1BF41A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */; };
 		AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B666118B768000903D1D /* SMLTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -157,6 +157,8 @@
 		01AC7E711AA341AA00DF7620 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		01B50A851B07E3F200C9A856 /* MGSMutableSubstring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSMutableSubstring.h; sourceTree = "<group>"; };
 		01B50A861B07E3F200C9A856 /* MGSMutableSubstring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSMutableSubstring.m; sourceTree = "<group>"; };
+		01B50A891B07E55700C9A856 /* NSString+Fragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Fragaria.h"; sourceTree = "<group>"; };
+		01B50A8A1B07E55700C9A856 /* NSString+Fragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Fragaria.m"; sourceTree = "<group>"; };
 		01BB1BF11A79AA15006C0056 /* MGSSimpleBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSSimpleBreakpointDelegate.h; path = Applications/Simple/MGSSimpleBreakpointDelegate.h; sourceTree = "<group>"; };
 		01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSSimpleBreakpointDelegate.m; path = Applications/Simple/MGSSimpleBreakpointDelegate.m; sourceTree = "<group>"; };
 		01BEF2A31AA7E761005F11B4 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/SMLDetab.xib"; sourceTree = "<group>"; };
@@ -496,6 +498,8 @@
 				ABF28AEE14C075D400ECAD48 /* NSScanner+Fragaria.m */,
 				01B50A851B07E3F200C9A856 /* MGSMutableSubstring.h */,
 				01B50A861B07E3F200C9A856 /* MGSMutableSubstring.m */,
+				01B50A891B07E55700C9A856 /* NSString+Fragaria.h */,
+				01B50A8A1B07E55700C9A856 /* NSString+Fragaria.m */,
 			);
 			name = "NS Categories";
 			sourceTree = "<group>";
@@ -570,7 +574,6 @@
 				019F56D51A9D3511009F9DCD /* SMLTextView+MGSDragging.h in Headers */,
 				019B80191A9E77330007D234 /* MGSFragariaTextViewDelegate.h in Headers */,
 				AB69B754118B830700903D1D /* MGSFragaria.h in Headers */,
-				01B50A871B07E3F200C9A856 /* MGSMutableSubstring.h in Headers */,
 				E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */,
 				0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */,
 				ABC578E91603D6000040B3FB /* MGSFragariaFontsAndColoursPrefsViewController.h in Headers */,
@@ -783,6 +786,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01B50A8C1B07E55700C9A856 /* NSString+Fragaria.m in Sources */,
 				AB69B65C118B75FB00903D1D /* SMLSyntaxColouring.m in Sources */,
 				017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */,
 				AB69B68F118B78D400903D1D /* SMLTextView.m in Sources */,
