@@ -53,6 +53,52 @@
 }
 
 
+#pragma mark - Utilities
+
+
+- (void)editSelectionArrayWithBlock:(void (^)(NSMutableString *string))b
+{
+    NSMutableString *string = [[self textStorage] mutableString];
+    NSArray *newselection;
+    
+    newselection = [string enumerateMutableSubstringsFromRangeArray: [self selectedRanges]
+    usingBlock:^(MGSMutableSubstring *substr, BOOL *stop) {
+        NSMutableString *temp = [NSMutableString stringWithString:substr];
+        b(temp);
+        
+        if ([self shouldChangeTextInRange:[substr superstringRange] replacementString:temp]) {
+            [substr setString:temp];
+            [self didChangeText];
+        }
+    }];
+    [self setSelectedRanges:newselection];
+}
+
+
+- (void)alignSelectionToLineBonduaries
+{
+    NSMutableIndexSet *indexset;
+    NSArray *sel;
+    NSMutableArray *newsel;
+    NSValue *rangeval;
+    NSRange range;
+    NSMutableString *string = [[self textStorage] mutableString];
+    
+    indexset = [NSMutableIndexSet indexSet];
+    sel = [self selectedRanges];
+    for (rangeval in sel) {
+        range = [string lineRangeForRange:[rangeval rangeValue]];
+        [indexset addIndexesInRange:range];
+    }
+    
+    newsel = [NSMutableArray array];
+    [indexset enumerateRangesUsingBlock:^(NSRange range, BOOL *stop) {
+        [newsel addObject:[NSValue valueWithRange:range]];
+    }];
+    [self setSelectedRanges:newsel];
+}
+
+
 #pragma mark -
 #pragma mark Text shifting
 
@@ -836,26 +882,14 @@
  */
 - (IBAction)removeLineEndings:(id)sender
 {
-    NSMutableString *string = [[self textStorage] mutableString];
-    NSArray *newselection;
-    
-    newselection = [string enumerateMutableSubstringsFromRangeArray: [self selectedRanges]
-      usingBlock:^(MGSMutableSubstring *substr, BOOL *stop) {
-        NSString *tmp;
-        
-        tmp = [self removeAllLineEndingsFromString:substr];
-        if (![self shouldChangeTextInRange:[substr superstringRange] replacementString:tmp])
-            return;
-        [substr setString:tmp];
-        [self didChangeText];
+    [self editSelectionArrayWithBlock:^(NSMutableString *string) {
+        [self removeAllLineEndingsFromString:string];
     }];
-    [self setSelectedRanges:newselection];
 }
 
 
-- (NSString *)removeAllLineEndingsFromString:(NSString*)orig
+- (void)removeAllLineEndingsFromString:(NSMutableString *)string
 {
-    NSMutableString *string = [orig mutableCopy];
     NSCharacterSet *newlines = [NSCharacterSet newlineCharacterSet];
     NSRange range;
     
@@ -865,7 +899,6 @@
         range.length = [string length] - range.location;
         range = [string rangeOfCharacterFromSet:newlines options:0 range:range];
     }
-    return string;
 }
 
 
