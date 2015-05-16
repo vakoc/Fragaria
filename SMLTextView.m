@@ -28,6 +28,7 @@
 #import "MGSSyntaxDefinition.h"
 #import "SMLSyntaxColouring.h"
 #import "MGSExtraInterfaceController.h"
+#import "NSString+Fragaria.h"
 
 
 static BOOL CharacterIsBrace(unichar c)
@@ -804,25 +805,14 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
  */
 - (NSUInteger)realColumnOfCharacter:(NSUInteger)c
 {
-    NSString *str;
-    NSRange line;
-    NSUInteger i, pos, phase, tabwidth;
+    NSString *str, *line;
+    NSRange lineRange;
     
     str = [self string];
-    line = [str lineRangeForRange:NSMakeRange(c, 0)];
-    
-    pos = 0;
-    tabwidth = self.tabWidth;
-    for (i=line.location; i<c; i++) {
-        if ([str characterAtIndex:i] == '\t') {
-            phase = pos % tabwidth;
-            pos += tabwidth - phase;
-        } else
-            pos++;
-    }
-    return pos;
+    lineRange = [str lineRangeForRange:NSMakeRange(c, 0)];
+    line = [str substringWithRange:lineRange];
+    return [line mgs_columnOfCharacter:c - lineRange.location tabWidth:self.tabWidth];
 }
-
 
 
 #pragma mark - Text handling
