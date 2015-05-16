@@ -303,84 +303,37 @@
     }
 }
 
+
 #pragma mark -
 #pragma mark Text manipulation
 
+
 /*
- 
- - removeNeedlessWhitespaceAction:
- 
+ * - removeNeedlessWhitespace:
  */
 - (IBAction)removeNeedlessWhitespace:(id)sender
 {
-    // First count the number of lines in which to perform the action, as the original range changes when you insert characters, and then perform the action line after line, by removing tabs and spaces after the last non-whitespace characters in every line
+    NSCharacterSet *whitespace = [NSCharacterSet whitespaceCharacterSet];
+    NSInteger lchg;
     
-    NSString *completeString = [self string];
-    if ([completeString length] < 1) {
-        return;
-    }
-    NSRange selectedRange;
-    
-    NSArray *array = [self selectedRanges];
-    NSInteger sumOfAllCharactersRemoved = 0;
-    NSInteger updatedLocation;
-    NSMutableArray *updatedSelectionsArray = [NSMutableArray array];
-    for (id item in array) {
-        selectedRange = NSMakeRange([item rangeValue].location - sumOfAllCharactersRemoved, [item rangeValue].length);
-        NSUInteger tempLocation = selectedRange.location;
-        NSUInteger maxSelectedRange = NSMaxRange(selectedRange);
-        NSInteger numberOfLines = 0;
-        NSInteger locationOfFirstLine = [completeString lineRangeForRange:NSMakeRange(tempLocation, 0)].location;
-        
-        do {
-            tempLocation = NSMaxRange([completeString lineRangeForRange:NSMakeRange(tempLocation, 0)]);
-            numberOfLines++;
-        } while (tempLocation < maxSelectedRange);
-        
-        tempLocation = selectedRange.location;
-        NSInteger idx;
-        NSInteger charactersRemoved = 0;
-        NSInteger charactersRemovedInSelection = 0;
-        NSRange rangeOfLine;
-        
-        NSUInteger endOfContentsLocation;
-        for (idx = 0; idx < numberOfLines; idx++) {
-            rangeOfLine = [completeString lineRangeForRange:NSMakeRange(tempLocation, 0)];
-            [completeString getLineStart:NULL end:NULL contentsEnd:&endOfContentsLocation forRange:rangeOfLine];
+    [self alignSelectionToLineBonduaries];
+    lchg = [self editSelectionArrayWithBlock:^(NSMutableString *string) {
+        [string enumerateMutableSubstringsOfLinesUsingBlock:^(MGSMutableSubstring *line, BOOL *stop) {
+            NSUInteger i, e;
+            NSRange whitespaces;
             
-            while (endOfContentsLocation != 0 && ([completeString characterAtIndex:endOfContentsLocation - 1] == ' ' || [completeString characterAtIndex:endOfContentsLocation - 1] == '\t')) {
-                if ([self shouldChangeTextInRange:NSMakeRange(endOfContentsLocation - 1, 1) replacementString:@""]) { // Do it this way to mark it as an Undo
-                    [self replaceCharactersInRange:NSMakeRange(endOfContentsLocation - 1, 1) withString:@""];
-                }
-                endOfContentsLocation--;
-                charactersRemoved++;
-                if (rangeOfLine.location >= selectedRange.location && rangeOfLine.location < maxSelectedRange) {
-                    charactersRemovedInSelection++;
-                }
-            }
-            tempLocation = NSMaxRange([completeString lineRangeForRange:NSMakeRange(tempLocation, 0)]);
-        }
+            [line getLineStart:NULL end:NULL contentsEnd:&e forRange:NSMakeRange(0, line.length)];
+            i = e;
         
-        if (selectedRange.length > 0) {
-            NSInteger selectedRangeLocation = selectedRange.location; // Make the location into an NSInteger because otherwise the value gets all screwed up when subtracting from it
-            if (selectedRangeLocation - 1 <= locationOfFirstLine) {
-                updatedLocation = locationOfFirstLine;
-            } else {
-                updatedLocation = selectedRangeLocation - 1;
-            }
-            [updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(updatedLocation, selectedRange.length - charactersRemoved)]];
-        }
-        sumOfAllCharactersRemoved = sumOfAllCharactersRemoved + charactersRemoved;
-        [self didChangeText];
-    }
+            while (i > 0 && [whitespace characterIsMember:[line characterAtIndex:i-1]])
+                i--;
+            
+            whitespaces = NSMakeRange(i, e - i);
+            [line replaceCharactersInRange:whitespaces withString:@""];
+        }];
+    }];
     
-    if (sumOfAllCharactersRemoved == 0) {
-        NSBeep();
-    }
-    
-    if ([updatedSelectionsArray count] > 0) {
-        [self setSelectedRanges:updatedSelectionsArray];
-    }
+    if (!lchg) NSBeep();
 }
 
 
