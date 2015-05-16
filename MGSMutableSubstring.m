@@ -164,6 +164,21 @@
 }
 
 
+- (MGSMutableSubstring *)mutableSubstringByLeftTrimmingCharactersFromSet:
+  (NSCharacterSet *)cs
+{
+    NSUInteger i;
+    NSRange range;
+    
+    i = 0;
+    while (i < [self length] && [cs characterIsMember:[self characterAtIndex:i]])
+        i++;
+    range = NSMakeRange(i, [self length] - i);
+    
+    return [MGSMutableSubstring substringInRange:range ofString:self];
+}
+
+
 @end
 
 
