@@ -561,96 +561,50 @@
 #pragma mark -
 #pragma mark Comment handling
 
+
 /*
- 
- - commentOrUncommentAction:
- 
+ * - commentOrUncomment:
  */
 - (IBAction)commentOrUncomment:(id)sender
 {
-    NSString *completeString = [self string];
-    NSString *commentString = self.syntaxColouring.syntaxDefinition.singleLineComments[0];
-    NSUInteger commentStringLength = [commentString length];
-    if ([commentString isEqualToString:@""] || [completeString length] < commentStringLength) {
-        NSBeep();
-        return;
-    }
+    NSCharacterSet *whitespace = [NSCharacterSet whitespaceCharacterSet];
+    NSString *comment = self.syntaxColouring.syntaxDefinition.singleLineComments[0];
+    NSInteger lchg;
     
-    NSArray *array = [self selectedRanges];
-    NSRange selectedRange = NSMakeRange(0, 0);
-    NSInteger sumOfChangedCharacters = 0;
-    NSMutableArray *updatedSelectionsArray = [NSMutableArray array];
-    for (id item in array) {
-        selectedRange = NSMakeRange([item rangeValue].location + sumOfChangedCharacters, [item rangeValue].length);
+    [self alignSelectionToLineBonduaries];
+    lchg = [self editSelectionArrayWithBlock:^(NSMutableString *string) {
+        NSRange commentRange = NSMakeRange(0, [comment length]);
+        BOOL __block allCommented = YES;
+        void (^workblock)(MGSMutableSubstring *, BOOL *);
         
-        NSUInteger tempLocation = selectedRange.location;
-        NSUInteger maxSelectedRange = NSMaxRange(selectedRange);
-        NSInteger numberOfLines = 0;
-        NSInteger locationOfFirstLine = [completeString lineRangeForRange:NSMakeRange(tempLocation, 0)].location;
+        [string enumerateMutableSubstringsOfLinesUsingBlock:^(MGSMutableSubstring *line, BOOL *stop) {
+            MGSMutableSubstring *tmp;
         
-        BOOL shouldUncomment = NO;
-        NSInteger searchLength = commentStringLength;
-        if ((tempLocation + commentStringLength) > [completeString length]) {
-            searchLength = 0;
-        }
-        
-        if ([completeString rangeOfString:commentString options:NSCaseInsensitiveSearch range:NSMakeRange(tempLocation, searchLength)].location != NSNotFound) {
-            shouldUncomment = YES; // The first line of the selection is already commented and thus we should uncomment
-        } else if ([completeString rangeOfString:commentString options:NSCaseInsensitiveSearch range:NSMakeRange(locationOfFirstLine, searchLength)].location != NSNotFound) {
-            shouldUncomment = YES; // Check the beginning of the line too
-        } else { // Also check the first character after the whitespace
-            NSInteger firstCharacterOfFirstLine = locationOfFirstLine;
-            while ([completeString characterAtIndex:firstCharacterOfFirstLine] == ' ' || [completeString characterAtIndex:firstCharacterOfFirstLine] == '\t') {
-                firstCharacterOfFirstLine++;
+            tmp = [line mutableSubstringByLeftTrimmingCharactersFromSet:whitespace];
+            if (![tmp hasPrefix:comment]) {
+                allCommented = NO;
+                *stop = YES;
             }
-            if ([completeString rangeOfString:commentString options:NSCaseInsensitiveSearch range:NSMakeRange(firstCharacterOfFirstLine, searchLength)].location != NSNotFound) {
-                shouldUncomment = YES;
-            }
+        }];
+        
+        if (allCommented) {
+            workblock = ^void(MGSMutableSubstring *line, BOOL *stop) {
+                MGSMutableSubstring *tmp;
+                
+                tmp = [line mutableSubstringByLeftTrimmingCharactersFromSet:whitespace];
+                [tmp deleteCharactersInRange:commentRange];
+            };
+        } else {
+            workblock = ^void(MGSMutableSubstring *line, BOOL *stop) {
+                [line insertString:comment atIndex:0];
+            };
         }
-        
-        do {
-            tempLocation = NSMaxRange([completeString lineRangeForRange:NSMakeRange(tempLocation, 0)]);
-            numberOfLines++;
-        } while (tempLocation < maxSelectedRange);
-        NSInteger locationOfLastLine = tempLocation;
-        
-        tempLocation = selectedRange.location;
-        NSInteger idx;
-        NSInteger charactersInserted = 0;
-        NSRange rangeOfLine;
-        NSInteger firstCharacterOfLine;
-        
-        for (idx = 0; idx < numberOfLines; idx++) {
-            rangeOfLine = [completeString lineRangeForRange:NSMakeRange(tempLocation, 0)];
-            if (shouldUncomment == NO) {
-                if ([self shouldChangeTextInRange:NSMakeRange(rangeOfLine.location, 0) replacementString:commentString]) { // Do it this way to mark it as an Undo
-                    [self replaceCharactersInRange:NSMakeRange(rangeOfLine.location, 0) withString:commentString];
-                }
-                charactersInserted = charactersInserted + commentStringLength;
-            } else {
-                firstCharacterOfLine = rangeOfLine.location;
-                while ([completeString characterAtIndex:firstCharacterOfLine] == ' ' || [completeString characterAtIndex:firstCharacterOfLine] == '\t') {
-                    firstCharacterOfLine++;
-                }
-                if ([completeString rangeOfString:commentString options:NSCaseInsensitiveSearch range:NSMakeRange(firstCharacterOfLine, [commentString length])].location != NSNotFound) {
-                    if ([self shouldChangeTextInRange:NSMakeRange(firstCharacterOfLine, commentStringLength) replacementString:@""]) { // Do it this way to mark it as an Undo
-                        [self replaceCharactersInRange:NSMakeRange(firstCharacterOfLine, commentStringLength) withString:@""];
-                    }		
-                    charactersInserted = charactersInserted - commentStringLength;
-                }
-            }
-            tempLocation = NSMaxRange([completeString lineRangeForRange:NSMakeRange(tempLocation, 0)]);
-        }
-        sumOfChangedCharacters = sumOfChangedCharacters + charactersInserted;
-        [updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(locationOfFirstLine, locationOfLastLine - locationOfFirstLine + charactersInserted)]];
-        [self didChangeText];
-    }
+        [string enumerateMutableSubstringsOfLinesUsingBlock:workblock];
+    }];
     
-    if (selectedRange.length > 0) {
-        [self setSelectedRanges:updatedSelectionsArray];
-    }
-    
+    if (!lchg) NSBeep();
 }
+
 
 #pragma mark -
 #pragma mark Line endings

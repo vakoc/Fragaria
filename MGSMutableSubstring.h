@@ -83,6 +83,11 @@
 - (void)enumerateMutableSubstringsOfLinesUsingBlock:(void (^)
   (MGSMutableSubstring *substring, BOOL *stop))b;
 
+/** Returns a mutable substring mapped to the substring trailing the characters
+ *  from the given character set.
+ *  @param cs A character set. */
+- (MGSMutableSubstring *)mutableSubstringByLeftTrimmingCharactersFromSet:
+  (NSCharacterSet *)cs;
 
 @end
 

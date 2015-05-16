@@ -107,9 +107,12 @@
 - (IBAction)closeTag:(id)sender;
 
 
-/** Toggle leading commenting of the selected range.
+/** Toggle commenting of the selected range.
  *  @discussion This method looks only for single-line comments starting at the
- *              end of each line.
+ *              beginning of each line. This method either comments or
+ *              uncomments each selected range separately, aligned to line
+ *              bonduaries. Uncommenting is performed only if all selected lines
+ *              are commented; otherwise, they are commented.
  *  @param sender The sender of the action. */
 - (IBAction)commentOrUncomment:(id)sender;
 
