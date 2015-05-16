@@ -12,6 +12,7 @@
 #import "MGSSyntaxDefinition.h"
 #import "SMLSyntaxColouring.h"
 #import "MGSExtraInterfaceController.h"
+#import "MGSMutableSubstring.h"
 
 
 @implementation SMLTextView (MGSTextActions)
@@ -829,35 +830,26 @@
 #pragma mark -
 #pragma mark Line endings
 
+
 /*
- 
- - removeLineEndingsAction:
- 
+ * - removeLineEndings:
  */
 - (IBAction)removeLineEndings:(id)sender
 {
-    NSString *text = [self string];
-    NSArray *array = [self selectedRanges];
-    NSInteger sumOfDeletedLineEndings = 0;
-    NSMutableArray *updatedSelectionsArray = [NSMutableArray array];
-    for (id item in array) {
-        NSRange selectedRange = NSMakeRange([item rangeValue].location - sumOfDeletedLineEndings, [item rangeValue].length);
-        NSString *stringToRemoveLineEndingsFrom = [text substringWithRange:selectedRange];
-        NSInteger originalLength = [stringToRemoveLineEndingsFrom length];
-        NSString *stringWithNoLineEndings = [self removeAllLineEndingsFromString:stringToRemoveLineEndingsFrom];
-        NSInteger newLength = [stringWithNoLineEndings length];
-        if ([self shouldChangeTextInRange:NSMakeRange(selectedRange.location, originalLength) replacementString:stringWithNoLineEndings]) { // Do it this way to mark it as an Undo
-            [self replaceCharactersInRange:NSMakeRange(selectedRange.location, originalLength) withString:stringWithNoLineEndings];
-            [self didChangeText];
-        }			
-        sumOfDeletedLineEndings = sumOfDeletedLineEndings + (originalLength - newLength);
-        
-        [updatedSelectionsArray addObject:[NSValue valueWithRange:NSMakeRange(selectedRange.location, newLength)]];
-    }
+    NSMutableString *string = [[self textStorage] mutableString];
+    NSArray *newselection;
     
-    if ([updatedSelectionsArray count] > 0) {
-        [self setSelectedRanges:updatedSelectionsArray];
-    }
+    newselection = [string enumerateMutableSubstringsFromRangeArray: [self selectedRanges]
+      usingBlock:^(MGSMutableSubstring *substr, BOOL *stop) {
+        NSString *tmp;
+        
+        tmp = [self removeAllLineEndingsFromString:substr];
+        if (![self shouldChangeTextInRange:[substr superstringRange] replacementString:tmp])
+            return;
+        [substr setString:tmp];
+        [self didChangeText];
+    }];
+    [self setSelectedRanges:newselection];
 }
 
 
