@@ -825,22 +825,16 @@
 - (IBAction)removeLineEndings:(id)sender
 {
     [self editSelectionArrayWithBlock:^(NSMutableString *string) {
-        [self removeAllLineEndingsFromString:string];
+        NSCharacterSet *newlines = [NSCharacterSet newlineCharacterSet];
+        NSRange range;
+        
+        range = [string rangeOfCharacterFromSet:newlines];
+        while (range.length) {
+            [string replaceCharactersInRange:range withString:@""];
+            range.length = [string length] - range.location;
+            range = [string rangeOfCharacterFromSet:newlines options:0 range:range];
+        }
     }];
-}
-
-
-- (void)removeAllLineEndingsFromString:(NSMutableString *)string
-{
-    NSCharacterSet *newlines = [NSCharacterSet newlineCharacterSet];
-    NSRange range;
-    
-    range = [string rangeOfCharacterFromSet:newlines];
-    while (range.length) {
-        [string replaceCharactersInRange:range withString:@""];
-        range.length = [string length] - range.location;
-        range = [string rangeOfCharacterFromSet:newlines options:0 range:range];
-    }
 }
 
 
