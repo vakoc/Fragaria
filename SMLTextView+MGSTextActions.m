@@ -378,38 +378,26 @@
     }
 }
 
+
 /*
- 
- - toLowercaseAction:
- 
+ * - lowercaseCharacters:
  */
 - (IBAction)lowercaseCharacters:(id)sender
 {
-    NSArray *array = [self selectedRanges];
-    for (id item in array) {
-        NSRange selectedRange = [item rangeValue];
-        NSString *originalString = [[self string] substringWithRange:selectedRange];
-        NSString *newString = [NSString stringWithString:[originalString lowercaseString]];
-        [self setSelectedRange:selectedRange];
-        [self insertText:newString];
-    }
+    [self editSelectionArrayWithBlock:^(NSMutableString *string) {
+        [string setString:[string lowercaseString]];
+    }];
 }
 
+
 /*
- 
- - toUppercaseAction:
- 
+ * - uppercaseCharacters:
  */
 - (IBAction)uppercaseCharacters:(id)sender
 {
-    NSArray *array = [self selectedRanges];
-    for (id item in array) {
-        NSRange selectedRange = [item rangeValue];
-        NSString *originalString = [[self string] substringWithRange:selectedRange];
-        NSString *newString = [NSString stringWithString:[originalString uppercaseString]];
-        [self setSelectedRange:selectedRange];
-        [self insertText:newString];
-    }
+    [self editSelectionArrayWithBlock:^(NSMutableString *string) {
+        [string setString:[string uppercaseString]];
+    }];
 }
 
 
