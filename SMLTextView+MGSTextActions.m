@@ -54,10 +54,13 @@
 #pragma mark - Utilities
 
 
-- (void)editSelectionArrayWithBlock:(void (^)(NSMutableString *string))b
+- (NSInteger)editSelectionArrayWithBlock:(void (^)(NSMutableString *string))b
 {
     NSMutableString *string = [[self textStorage] mutableString];
     NSArray *newselection;
+    NSInteger l0;
+    
+    l0 = [string length];
     
     newselection = [string enumerateMutableSubstringsFromRangeArray: [self selectedRanges]
     usingBlock:^(MGSMutableSubstring *substr, BOOL *stop) {
@@ -70,6 +73,8 @@
         }
     }];
     [self setSelectedRanges:newselection];
+    
+    return [string length] - l0;
 }
 
 
