@@ -675,16 +675,20 @@
     NSImage *image;
     CGFloat height;
     NSRect centeredRect;
+    CGFloat margin, fontsize;
     
     image = [_decorations objectForKey:@(line+1)];
     if (!image) return NSZeroRect;
     
     rect = [self wholeLineRectForLine:line];
-    CGFloat lineWidth = (rect.size.height < 12.0 ? 1 : (rect.size.height / 12.0));
-    height = rect.size.height - 2.0 * lineWidth;
+    fontsize = self.font.pointSize;
+    
+    margin = MAX(1.0, MIN(fontsize / 11.0, rect.size.height / 12.0));
+    height = MIN(fontsize, rect.size.height - 2.0 * margin);
+    
     centeredRect = rect;
-    centeredRect.origin.y += (rect.size.height - height) / 2.0;
-    centeredRect.origin.x += RULER_MARGIN + lineWidth;
+    centeredRect.origin.y += rect.size.height - height - 1.0;
+    centeredRect.origin.x += RULER_MARGIN + margin;
     centeredRect.size.height = height;
     centeredRect.size.width = image.size.width / (image.size.height / height);
     
