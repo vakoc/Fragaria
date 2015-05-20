@@ -20,7 +20,6 @@
 #import "SMLTextView+MGSTextActions.h"
 #import "SMLTextView+MGSDragging.h"
 #import "MGSSyntaxController.h"
-#import "MGSLineNumberView.h"
 
 #import "MGSUserDefaultsDefinitions.h"
 #import "MGSUserDefaultsControllerProtocol.h"
