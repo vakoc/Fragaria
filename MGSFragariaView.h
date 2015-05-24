@@ -74,12 +74,16 @@
  *  the specified text storage.
  *
  *  @discussion This allows two Fragaria instances to show the same text in a
- *              split view, for example. Replacing the text storage directly
- *              on the text view's layout manager is not supported, and will
- *              not work properly. The two Fragaria instances will not share
- *              their syntax definition or syntax errors. Also, if the two
- *              instances use different coloring settings, the resulting
- *              colors will be undefined.
+ *       split view, for example. Replacing the text storage directly on the
+ *       text view's layout manager is not supported, and will not work
+ *       properly.
+ *
+ *       The two Fragaria instances will not share their syntax definition or
+ *       syntax errors. Also, if the two instances use different coloring
+ *       settings, the resulting colors will be undefined. The typing
+ *       attributes for this instance of Fragaria's text view will be set to
+ *       the attributes of the first character in this text storage.
+ *
  *  @param textStorage The new text storage for this instance of Fragaria. */
 - (void)replaceTextStorage:(NSTextStorage*)textStorage;
 
