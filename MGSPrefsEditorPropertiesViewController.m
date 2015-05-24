@@ -85,6 +85,7 @@
 - (void)setEditorFont:(NSFont *)editorFont
 {
     [self.userDefaultsController.values setValue:editorFont forKey:MGSFragariaDefaultsTextFont];
+    [self.userDefaultsController.values setValue:editorFont forKey:MGSFragariaDefaultsGutterFont];
 }
 
 - (NSFont *)editorFont
