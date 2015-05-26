@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MGSUserDefaultsDefinitions.h"
+#import "MGSFragariaView+Definitions.h"
 #import "MGSUserDefaultsControllerProtocol.h"
 
 @class MGSFragariaView;

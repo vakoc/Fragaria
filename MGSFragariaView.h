@@ -28,8 +28,8 @@
  *  All API properties are fully bindings-compatible (two-way).
  *
  *  Optional pre-set settings that largely match classic Fragaria's settings and
- *  appearance are available in MGSUserDefaultsDefinitions, including a handy
- *  plist dictionary that can be used for userDefaults.
+ *  appearance are available in the MGSUserDefaultsDefinitions category, 
+ *  including a plist dictionary that can be used for userDefaults.
  *
  *  A complete management system for properties and user defaults, as well as
  *  a modern set of user interfaces are available in MGSUserDefaultsController

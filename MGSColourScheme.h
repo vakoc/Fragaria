@@ -12,9 +12,7 @@
 /**
  *   MGSColourScheme defines a colour scheme for MGSColourSchemeController.
  *   @discuss Property names (except for displayName) are identical
- *   to the MGSFragariaView property names. In addition the
- *   MGSUserDefaultsDefinitions extern key names are used, which
- *   happen to reference these exact property names.
+ *   to the MGSFragariaView property names.
  **/
 @interface MGSColourScheme : NSObject
 

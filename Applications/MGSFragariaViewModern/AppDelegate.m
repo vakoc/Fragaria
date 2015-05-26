@@ -16,7 +16,6 @@
 #import "EditorSettingsViewController.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSHybridUserDefaultsController.h"
-#import "MGSUserDefaultsDefinitions.h"
 #import "MGSSyntaxController.h"
 #import "MGSSampleBreakpointDelegate.h"
 
@@ -301,7 +300,7 @@
 	makePreferencesAndGroups
         Demonstrate the new settings groups and how they interact
         with user defaults.
-    see: MGSUserDefaultsDefinitions.h
+    see: MGSFragariaView+Definitions.h
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (void)makePreferencesAndGroups
 {

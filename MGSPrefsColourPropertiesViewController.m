@@ -7,7 +7,7 @@
 //
 
 #import "MGSPrefsColourPropertiesViewController.h"
-#import "MGSUserDefaultsDefinitions.h"
+#import "MGSFragariaView+Definitions.h"
 
 
 @interface MGSPrefsColourPropertiesViewController ()

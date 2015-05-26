@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
-#import "MGSUserDefaultsDefinitions.h"
+#import "MGSFragariaView+Definitions.h"
 #import "MGSFragariaView.h"
 #import "MGSUserDefaultsUtilities.h"
 

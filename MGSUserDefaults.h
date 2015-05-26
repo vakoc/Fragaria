@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MGSUserDefaultsDefinitions.h"
+#import "MGSFragariaView+Definitions.h"
 
 
 /** This macro defines the groupID that should correspond to the global group

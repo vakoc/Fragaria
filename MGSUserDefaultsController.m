@@ -8,7 +8,7 @@
 
 #import "MGSMutableDictionary.h"
 #import "MGSUserDefaultsController.h"
-#import "MGSUserDefaultsDefinitions.h"
+#import "MGSFragariaView+Definitions.h"
 #import "MGSUserDefaults.h"
 #import "MGSFragariaView.h"
 

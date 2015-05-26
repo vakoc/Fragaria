@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
 #import "MGSMutableDictionary.h"
-#import "MGSUserDefaultsDefinitions.h"
+#import "MGSFragariaView+Definitions.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSUserDefaults.h"
 #import "MGSFragariaView.h"

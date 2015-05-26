@@ -1,13 +1,17 @@
 //
-//  MGSUserDefaultsDefinitions.m
+//  MGSFragariaView+Definitions.m
 //  Fragaria
 //
 //  Created by Jim Derry on 3/3/15.
 //
 //
+#import "MGSFragariaView.h"
+#import "MGSFragariaView+Definitions.h"
+#import "MGSSyntaxController.h"
 
 
 #pragma mark - Property User Defaults Keys
+
 
 // Configuring Syntax Highlighting
 NSString * const MGSFragariaDefaultsIsSyntaxColoured =          @"syntaxColoured";
@@ -94,17 +98,14 @@ NSString * const MGSFragariaDefaultsColoursStrings =      @"coloursStrings";
 NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 
 
-
-#import <MGSFragaria/MGSFragariaView.h>
-#import "MGSUserDefaultsDefinitions.h"
-#import "MGSSyntaxController.h"
-
 #pragma mark - Implementation
+
 
 @implementation MGSFragariaView (MGSUserDefaultsDefinitions)
 
 
 #pragma mark - Defaults Dictionaries
+
 
 #define ARCHIVED_COLOR(rd, gr, bl) [NSArchiver archivedDataWithRootObject:\
 [NSColor colorWithCalibratedRed:rd green:gr blue:bl alpha:1.0f]]

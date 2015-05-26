@@ -7,7 +7,7 @@
 //
 
 #import "MGSPrefsViewController.h"
-#import "MGSUserDefaultsDefinitions.h"
+#import "MGSFragariaView+Definitions.h"
 #import "MGSUserDefaultsControllerProtocol.h"
 #import "MGSUserDefaultsController.h"
 

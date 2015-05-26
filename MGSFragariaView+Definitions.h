@@ -1,5 +1,5 @@
 //
-//  MGSUserDefaultsDefinitions.h
+//  MGSFragariaView+Definitions.h
 //  Fragaria
 //
 //  Created by Jim Derry on 3/3/15.

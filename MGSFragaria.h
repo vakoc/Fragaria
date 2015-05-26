@@ -15,7 +15,7 @@
 #import "SMLSyntaxDefinition.h"
 
 #import "MGSFragariaView.h"
-#import "MGSUserDefaultsDefinitions.h"
+#import "MGSFragariaView+Definitions.h"
 #import "SMLSyntaxError.h"
 #import "SMLTextView.h"
 #import "SMLTextView+MGSTextActions.h"

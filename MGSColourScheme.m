@@ -7,7 +7,7 @@
 //
 
 #import "MGSColourScheme.h"
-#import "MGSUserDefaultsDefinitions.h"
+#import "MGSFragariaView+Definitions.h"
 #import "MGSColourToPlainTextTransformer.h"
 #import "NSColor+TransformedCompare.h"
 

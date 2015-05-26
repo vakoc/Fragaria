@@ -83,8 +83,8 @@
 		D071883B1AB3CDFA0073493A /* MGSUserDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188351AB3CDFA0073493A /* MGSUserDefaults.m */; };
 		D071883C1AB3CDFA0073493A /* MGSUserDefaultsController.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188361AB3CDFA0073493A /* MGSUserDefaultsController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D071883D1AB3CDFA0073493A /* MGSUserDefaultsController.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188371AB3CDFA0073493A /* MGSUserDefaultsController.m */; };
-		D071883E1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188381AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D071883F1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188391AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m */; };
+		D071883E1AB3CDFA0073493A /* MGSFragariaView+Definitions.h in Headers */ = {isa = PBXBuildFile; fileRef = D07188381AB3CDFA0073493A /* MGSFragariaView+Definitions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D071883F1AB3CDFA0073493A /* MGSFragariaView+Definitions.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188391AB3CDFA0073493A /* MGSFragariaView+Definitions.m */; };
 		D07188441AB3D2220073493A /* MGSMutableDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = D07188421AB3D2220073493A /* MGSMutableDictionary.m */; };
 		D07188481AB423830073493A /* MGSPrefsEditorProperties.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07188461AB423830073493A /* MGSPrefsEditorProperties.xib */; };
 		D071884B1AB428570073493A /* MGSPrefsColourProperties.xib in Resources */ = {isa = PBXBuildFile; fileRef = D07188491AB428570073493A /* MGSPrefsColourProperties.xib */; };
@@ -292,8 +292,8 @@
 		D07188351AB3CDFA0073493A /* MGSUserDefaults.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSUserDefaults.m; sourceTree = "<group>"; };
 		D07188361AB3CDFA0073493A /* MGSUserDefaultsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSUserDefaultsController.h; sourceTree = "<group>"; };
 		D07188371AB3CDFA0073493A /* MGSUserDefaultsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSUserDefaultsController.m; sourceTree = "<group>"; };
-		D07188381AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSUserDefaultsDefinitions.h; sourceTree = "<group>"; };
-		D07188391AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSUserDefaultsDefinitions.m; sourceTree = "<group>"; };
+		D07188381AB3CDFA0073493A /* MGSFragariaView+Definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MGSFragariaView+Definitions.h"; sourceTree = "<group>"; };
+		D07188391AB3CDFA0073493A /* MGSFragariaView+Definitions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MGSFragariaView+Definitions.m"; sourceTree = "<group>"; };
 		D07188411AB3D2220073493A /* MGSMutableDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSMutableDictionary.h; sourceTree = "<group>"; };
 		D07188421AB3D2220073493A /* MGSMutableDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSMutableDictionary.m; sourceTree = "<group>"; };
 		D07188471AB423830073493A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MGSPrefsEditorProperties.xib; sourceTree = "<group>"; };
@@ -638,8 +638,8 @@
 		D07188401AB3CE020073493A /* Defaults Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				D07188381AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h */,
-				D07188391AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m */,
+				D07188381AB3CDFA0073493A /* MGSFragariaView+Definitions.h */,
+				D07188391AB3CDFA0073493A /* MGSFragariaView+Definitions.m */,
 				D0F353541AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h */,
 				D07188361AB3CDFA0073493A /* MGSUserDefaultsController.h */,
 				D07188371AB3CDFA0073493A /* MGSUserDefaultsController.m */,
@@ -819,7 +819,7 @@
 				E3CF4B7916E6927300C27B5C /* MGSBreakpointDelegate.h in Headers */,
 				D040AAC71AC27D98009931EE /* MGSFragariaViewPrivate.h in Headers */,
 				0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */,
-				D071883E1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.h in Headers */,
+				D071883E1AB3CDFA0073493A /* MGSFragariaView+Definitions.h in Headers */,
 				AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */,
 				AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */,
 				E3D4B2771714D89700BB2CC6 /* SMLSyntaxError.h in Headers */,
@@ -1118,7 +1118,7 @@
 				D0718B451AB54E8C0073493A /* MGSPrefsEditorPropertiesViewController.m in Sources */,
 				D071883B1AB3CDFA0073493A /* MGSUserDefaults.m in Sources */,
 				01FBC7EC1B0679520008EAF8 /* MGSMutableSubstring.m in Sources */,
-				D071883F1AB3CDFA0073493A /* MGSUserDefaultsDefinitions.m in Sources */,
+				D071883F1AB3CDFA0073493A /* MGSFragariaView+Definitions.m in Sources */,
 				D07188501AB54CCA0073493A /* MGSPrefsViewController.m in Sources */,
 				D07188441AB3D2220073493A /* MGSMutableDictionary.m in Sources */,
 				D071883D1AB3CDFA0073493A /* MGSUserDefaultsController.m in Sources */,
