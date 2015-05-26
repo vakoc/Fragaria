@@ -13,6 +13,31 @@
 #import "MGSFragariaView.h"
 
 
+/* This method exists only because Apple added +weakObjectsHashTable in 10.8,
+ * but we still need to support 10.7 */
+static NSHashTable *MGSWeakOrUnretainedHashTable(void)
+{
+    NSPointerFunctions *pf;
+    
+    if (NSAppKitVersionNumber < NSAppKitVersionNumber10_8) {
+        /* 
+         * NSPointerFunctionsOpaqueMemory is not reccommended for objects, but
+         * the main thing we want here is that the hash table won't mess with
+         * retaining and releasing the Fragarias we put in. Since Fragarias
+         * are NSViews, we can also use NSPointerFunctionsObjectPointerPersonality
+         * because it implements object equality and hashing like the default
+         * implementation of NSObject, and views never override equality
+         * and hashing methods. 
+         */
+        pf = [NSPointerFunctions pointerFunctionsWithOptions:
+          NSPointerFunctionsObjectPointerPersonality |
+          NSPointerFunctionsOpaqueMemory];
+        return [[NSHashTable alloc] initWithPointerFunctions:pf capacity:0];
+    }
+    return [NSHashTable weakObjectsHashTable];
+}
+
+
 #pragma mark - CATEGORY MGSUserDefaultsController
 
 
@@ -102,7 +127,7 @@ static NSHashTable *allManagedInstances;
 - (void)addFragariaToManagedSet:(MGSFragariaView *)object
 {
     if (!allManagedInstances)
-        allManagedInstances = [NSHashTable hashTableWithWeakObjects];
+        allManagedInstances = MGSWeakOrUnretainedHashTable();
     if ([allManagedInstances containsObject:object])
         [NSException raise:@"MGSUserDefaultsControllerClash" format:@"Trying "
       "to manage Fragaria %@ with more than one MGSUserDefaultsController!", object];
@@ -189,7 +214,7 @@ static NSHashTable *allManagedInstances;
     self.values = [[MGSMutableDictionary alloc] initWithController:self
       dictionary:[self unarchiveFromDefaultsDictionary:defaults]];
     
-    _managedInstances = [NSHashTable hashTableWithWeakObjects];
+    _managedInstances = MGSWeakOrUnretainedHashTable();
 	
 	return self;
 }
