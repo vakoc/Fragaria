@@ -361,14 +361,13 @@
 
     /* Tell the groups which instances and properties to manage. */
 
-    topGroup.managedInstances = [NSSet setWithArray:@[self.viewTop]];
+    [topGroup addFragariaToManagedSet:self.viewTop];
     topGroup.managedProperties = [NSSet setWithArray:groupProperties];
     topGroup.persistent = YES;
 
-    bottomGroup.managedInstances = [NSSet setWithArray:@[self.viewBottom]];
+    [bottomGroup addFragariaToManagedSet:self.viewBottom];
     bottomGroup.managedProperties = [NSSet setWithArray:groupProperties];
 
-    /* You don't (cannot) assign instances to the global group. */
     globalGroup.managedProperties = [NSSet setWithArray:globalProperties];
 	globalGroup.persistent = YES;
 }

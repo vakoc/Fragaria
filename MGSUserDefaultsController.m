@@ -15,6 +15,7 @@
 
 #pragma mark - CATEGORY MGSUserDefaultsController
 
+
 @interface MGSUserDefaultsController ()
 
 @property (nonatomic, strong, readwrite) id values;
@@ -26,14 +27,16 @@
 
 
 static NSMutableDictionary *controllerInstances;
+static NSHashTable *allManagedInstances;
 
-@implementation MGSUserDefaultsController
 
-@synthesize managedInstances = _managedInstances;
-@synthesize persistent = _persistent;
+@implementation MGSUserDefaultsController {
+    NSHashTable *_managedInstances;
+}
 
 
 #pragma mark - Class Methods - Singleton Controllers
+
 
 /*
  *  + sharedControllerForGroupID:
@@ -41,24 +44,18 @@ static NSMutableDictionary *controllerInstances;
 + (instancetype)sharedControllerForGroupID:(NSString *)groupID
 {
     if (!groupID || [groupID length] == 0)
-    {
         groupID = MGSUSERDEFAULTS_GLOBAL_ID;
-    }
 
 	@synchronized(self) {
-
         if (!controllerInstances)
-        {
             controllerInstances = [[NSMutableDictionary alloc] init];
-        }
 
 		if ([[controllerInstances allKeys] containsObject:groupID])
-		{
 			return [controllerInstances objectForKey:groupID];
-		}
 	
 		MGSUserDefaultsController *newController = [[[self class] alloc] initWithGroupID:groupID];
 		[controllerInstances setObject:newController forKey:groupID];
+        
 		return newController;
 	}
 }
@@ -75,38 +72,55 @@ static NSMutableDictionary *controllerInstances;
 
 #pragma mark - Property Accessors
 
+
+- (BOOL)isGlobal
+{
+    return [self.groupID isEqual:MGSUSERDEFAULTS_GLOBAL_ID];
+}
+
+
 /*
  *  @property managedInstances
  */
-- (void)setManagedInstances:(NSSet *)managedInstances
-{
-	NSAssert(![self.groupID isEqualToString:MGSUSERDEFAULTS_GLOBAL_ID],
-			 @"You cannot set managedInstances for the global controller.");
-	
-	[self unregisterBindings:_managedProperties];
-    _managedInstances = managedInstances;
-	[self registerBindings:_managedProperties];
-}
-
 - (NSSet *)managedInstances
 {
-    if ([self.groupID isEqualToString:MGSUSERDEFAULTS_GLOBAL_ID])
-    {
-        NSMutableSet *allInstances = [[NSMutableSet alloc] init];
+    return [NSSet setWithArray:[self.managedInstancesHashTable allObjects]];
+}
 
-        for (MGSUserDefaultsController *controllerInstance in [controllerInstances allValues])
-        {
-            if (![controllerInstance.groupID isEqualToString:MGSUSERDEFAULTS_GLOBAL_ID])
-            {
-                [allInstances unionSet:controllerInstance.managedInstances];
-            }
-        }
-        return allInstances;
-    }
-    else
-    {
-        return _managedInstances;
-    }
+
+- (NSHashTable *)managedInstancesHashTable
+{
+    if ([self isGlobal])
+        return allManagedInstances;
+    return _managedInstances;
+}
+
+
+/*
+ * - addFragariaToManagedSet:
+ */
+- (void)addFragariaToManagedSet:(MGSFragariaView *)object
+{
+    if (!allManagedInstances)
+        allManagedInstances = [NSHashTable hashTableWithWeakObjects];
+    if ([allManagedInstances containsObject:object])
+        [NSException raise:@"MGSUserDefaultsControllerClash" format:@"Trying "
+      "to manage Fragaria %@ with more than one MGSUserDefaultsController!", object];
+    
+    [self registerBindings:_managedProperties forFragaria:object];
+    [_managedInstances addObject:object];
+    [allManagedInstances addObject:object];
+}
+
+
+/*
+ * - removeFragariaFromManagedSet:
+ */
+- (void)removeFragariaFromManagedSet:(MGSFragariaView *)object
+{
+    [self unregisterBindings:_managedProperties forFragaria:object];
+    [_managedInstances removeObject:object];
+    [allManagedInstances addObject:object];
 }
 
 
@@ -126,41 +140,30 @@ static NSMutableDictionary *controllerInstances;
  */
 - (void)setPersistent:(BOOL)persistent
 {
+    NSDictionary *defaultsDict, *currentDict, *defaultsValues;
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    NSUserDefaultsController *udc = [NSUserDefaultsController sharedUserDefaultsController];
+    NSString *groupKeyPath;
+    
 	if (_persistent == persistent) return;
-
     _persistent = persistent;
 
-	if (persistent)
-	{
-        NSDictionary *defaultsDict = [self archiveForDefaultsDictionary:self.values];
-        [[NSUserDefaults standardUserDefaults] setObject:defaultsDict forKey:self.groupID];
+    groupKeyPath = [NSString stringWithFormat:@"values.%@", self.groupID];
+	if (persistent) {
+        defaultsDict = [self archiveForDefaultsDictionary:self.values];
+        [ud setObject:defaultsDict forKey:self.groupID];
         
-		[[NSUserDefaultsController sharedUserDefaultsController] addObserver:self
-																  forKeyPath:[NSString stringWithFormat:@"values.%@", self.groupID]
-																	 options:NSKeyValueObservingOptionNew
-																	 context:(__bridge void *)(self.groupID)];
-	}
-	else
-	{
-		[[NSUserDefaultsController sharedUserDefaultsController] removeObserver:self
-                                                                     forKeyPath:[NSString stringWithFormat:@"values.%@", self.groupID]
-                                                                        context:(__bridge void *)(self.groupID)];
+		[udc addObserver:self forKeyPath:groupKeyPath options:NSKeyValueObservingOptionNew context:nil];
+	} else {
+		[udc removeObserver:self forKeyPath:groupKeyPath context:nil];
 
-        NSDictionary *currentDict = [[NSUserDefaults standardUserDefaults] objectForKey:self.groupID];
-        NSDictionary *defaultsValues = [self unarchiveFromDefaultsDictionary:currentDict];
-        for (NSString *key in self.values)
-        {
-            if (![[self.values valueForKey:key] isEqualTo:[defaultsValues valueForKey:key]])
-            {
+        currentDict = [ud objectForKey:self.groupID];
+        defaultsValues = [self unarchiveFromDefaultsDictionary:currentDict];
+        for (NSString *key in self.values) {
+            if (![[self.values valueForKey:key] isEqual:[defaultsValues valueForKey:key]])
                 [self.values setValue:[defaultsValues valueForKey:key] forKey:key];
-            }
         }
 	}
-}
-
-- (BOOL)isPersistent
-{
-	return _persistent;
 }
 
 
@@ -171,16 +174,22 @@ static NSMutableDictionary *controllerInstances;
  */
 - (instancetype)initWithGroupID:(NSString *)groupID
 {
-	if ((self = [super init]))
-	{
-		_groupID = groupID;
+    NSDictionary *defaults;
+    
+	if (!(self = [super init]))
+        return self;
+    
+    _groupID = groupID;
 
-		NSDictionary *defaults = [[MGSUserDefaultsDefinitions class] fragariaDefaultsDictionary];
+    defaults = [[MGSUserDefaultsDefinitions class] fragariaDefaultsDictionary];
 		
-		[[MGSUserDefaults sharedUserDefaultsForGroupID:groupID] registerDefaults:defaults];
-        defaults = [[NSUserDefaults standardUserDefaults] valueForKey:groupID];
-        self.values = [[MGSMutableDictionary alloc] initWithController:self dictionary:[self unarchiveFromDefaultsDictionary:defaults]];
-	}
+    [[MGSUserDefaults sharedUserDefaultsForGroupID:groupID] registerDefaults:defaults];
+    defaults = [[NSUserDefaults standardUserDefaults] valueForKey:groupID];
+    
+    self.values = [[MGSMutableDictionary alloc] initWithController:self
+      dictionary:[self unarchiveFromDefaultsDictionary:defaults]];
+    
+    _managedInstances = [NSHashTable hashTableWithWeakObjects];
 	
 	return self;
 }
@@ -201,17 +210,23 @@ static NSMutableDictionary *controllerInstances;
 
 
 /*
- *  -registerBindings
+ *  - registerBindings
  */
 - (void)registerBindings:(NSSet *)propertySet
 {
-	// Bind all relevant properties of each instance to `values` dictionary.
-    for (NSString *key in propertySet)
-    {
-        for (MGSFragariaView *fragaria in self.managedInstances)
-        {
-            [fragaria bind:key toObject:self.values withKeyPath:key options:nil];
-        }
+    NSHashTable *fragarias = [self managedInstancesHashTable];
+    for (MGSFragariaView *fragaria in fragarias)
+        [self registerBindings:propertySet forFragaria:fragaria];
+}
+
+
+/*
+ *  - registerBindings:forFragaria:
+ */
+- (void)registerBindings:(NSSet *)propertySet forFragaria:(MGSFragariaView *)fragaria
+{
+    for (NSString *key in propertySet) {
+        [fragaria bind:key toObject:self.values withKeyPath:key options:nil];
     }
 }
 
@@ -221,13 +236,19 @@ static NSMutableDictionary *controllerInstances;
  */
 - (void)unregisterBindings:(NSSet *)propertySet
 {
-    // Stop observing properties
-    for (NSString *key in propertySet)
-    {
-        for (MGSFragariaView *fragaria in self.managedInstances)
-        {
-            [fragaria unbind:key];
-        }
+    NSHashTable *fragarias = [self managedInstancesHashTable];
+    for (MGSFragariaView *fragaria in fragarias)
+        [self unregisterBindings:propertySet forFragaria:fragaria];
+}
+
+
+/*
+ *  - unregisterBindings:forFragaria:
+ */
+- (void)unregisterBindings:(NSSet *)propertySet forFragaria:(MGSFragariaView *)fragaria
+{
+    for (NSString *key in propertySet) {
+        [fragaria unbind:key];
     }
 }
 
@@ -237,18 +258,18 @@ static NSMutableDictionary *controllerInstances;
  */
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+    NSDictionary *currentDict, *defaultsValues;
+    
 	// The only keypath we've registered, but let's check in case we accidentally something.
-	if ([[NSString stringWithFormat:@"values.%@", self.groupID] isEqualToString:keyPath])
+	if ([[NSString stringWithFormat:@"values.%@", self.groupID] isEqual:keyPath])
 	{
-        NSDictionary *currentDict = [[NSUserDefaults standardUserDefaults] objectForKey:self.groupID];
-        NSDictionary *defaultsValues = [self unarchiveFromDefaultsDictionary:currentDict];
-        for (NSString *key in defaultsValues)
-        {
+        currentDict = [[NSUserDefaults standardUserDefaults] objectForKey:self.groupID];
+        defaultsValues = [self unarchiveFromDefaultsDictionary:currentDict];
+        
+        for (NSString *key in defaultsValues) {
             // If we use self.value valueForKey: here, we will get the value from defaults.
-            if (![[defaultsValues valueForKey:key] isEqualTo:[self.values objectForKey:key]])
-            {
+            if (![[defaultsValues valueForKey:key] isEqual:[self.values objectForKey:key]])
                 [self.values setValue:[defaultsValues valueForKey:key] forKey:key];
-            }
         }
 	}
 }
@@ -265,14 +286,14 @@ static NSMutableDictionary *controllerInstances;
  */
 - (NSDictionary *)unarchiveFromDefaultsDictionary:(NSDictionary *)source
 {
-    NSMutableDictionary *destination = [[NSMutableDictionary alloc] initWithCapacity:source.count];
-    for (NSString *key in source)
-    {
+    NSMutableDictionary *destination;
+    
+    destination = [NSMutableDictionary dictionaryWithCapacity:source.count];
+    for (NSString *key in source) {
         id object = [source objectForKey:key];
+        
         if ([object isKindOfClass:[NSData class]])
-        {
             object = [NSUnarchiver unarchiveObjectWithData:object];
-        }
         [destination setObject:object forKey:key];
     }
 
@@ -287,20 +308,18 @@ static NSMutableDictionary *controllerInstances;
  */
 - (NSDictionary *)archiveForDefaultsDictionary:(NSDictionary *)source
 {
-    NSMutableDictionary *destination = [[NSMutableDictionary alloc] initWithCapacity:source.count];
-    for (NSString *key in source)
-    {
+    NSMutableDictionary *destination;
+    
+    destination = [NSMutableDictionary dictionaryWithCapacity:source.count];
+    for (NSString *key in source) {
         id object = [source objectForKey:key];
+        
         if ([object isKindOfClass:[NSFont class]] || [object isKindOfClass:[NSColor class]])
-        {
             object = [NSArchiver archivedDataWithRootObject:object];
-        }
-
         [destination setObject:object forKey:key];
     }
 
     return destination;
-
 }
 
 

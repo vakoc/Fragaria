@@ -110,29 +110,6 @@
 
 
 /*
- * - test_sharedController_managedInstances_is_readonly
- *   Ensure that managedInstances is read-only for sharedController.
- */
-- (void)test_sharedController_managedInstances_is_readonly
-{
-	NSSet *instances = [NSSet setWithObject:self.view1];
-	
-	BOOL pass = NO;
-	@try {
-		// Yes, you SHOULD see an assertion failure in the log.
-		[MGSUserDefaultsController sharedController].managedInstances = instances;
-	}
-	@catch (NSException *exception){
-		pass = YES;
-	}
-	@finally {
-		XCTAssert(pass);
-	}
-	
-}
-
-
-/*
  * - test_instances_share_property_values
  *   Demonstrate that when instances are assigned to a groupID:
  *   - They take each others value.
@@ -146,7 +123,6 @@
 	NSUInteger result1, result2;
 	
 	MGSUserDefaultsController *controller = [MGSUserDefaultsController sharedControllerForGroupID:@"UnitTest"];
-	NSSet *instances = [NSSet setWithArray:@[self.view1, self.view2]];
 	
 	
 	self.view1.startingLineNumber = expect1;
@@ -156,7 +132,8 @@
 	XCTAssert(self.view1.startingLineNumber == expect1 && self.view2.startingLineNumber == expect2);
 	
 	// Add them to a group and then test.
-	controller.managedInstances = instances;
+    [controller addFragariaToManagedSet:self.view1];
+    [controller addFragariaToManagedSet:self.view2];
 	controller.managedProperties = [NSSet setWithArray:@[ @"startingLineNumber" ]];
 	result1 = self.view1.startingLineNumber;
 	result2 = self.view2.startingLineNumber;
@@ -192,9 +169,9 @@
 	
 	MGSUserDefaultsController *controller = [MGSUserDefaultsController sharedControllerForGroupID:@"UnitTest"];
 	MGSUserDefaults *defaults = [MGSUserDefaults sharedUserDefaultsForGroupID:@"UnitTest"];
-	NSSet *instances = [NSSet setWithArray:@[self.view1, self.view2]];
 
-	controller.managedInstances = instances;
+    [controller addFragariaToManagedSet:self.view1];
+    [controller addFragariaToManagedSet:self.view2];
 	controller.managedProperties = [NSSet setWithArray:@[ @"startingLineNumber" ]];
 
 	
@@ -283,8 +260,8 @@
     XCTAssert(self.view1.startingLineNumber == expect1 && self.view2.startingLineNumber == expect2);
 
     // Add each instance to a different group, and then test.
-    controller1.managedInstances = [NSSet setWithArray:@[self.view1]];
-    controller2.managedInstances = [NSSet setWithArray:@[self.view2]];
+    [controller1 addFragariaToManagedSet:self.view1];
+    [controller2 addFragariaToManagedSet:self.view2];
 
     // Prove they are *still* independent:
     XCTAssert(self.view1.startingLineNumber == expect1 && self.view2.startingLineNumber == expect2);
@@ -311,7 +288,7 @@
     MGSUserDefaultsController *controller = [MGSUserDefaultsController sharedControllerForGroupID:@"test_all_properties"];
     NSArray *managedProperties = [[MGSUserDefaultsDefinitions fragariaDefaultsDictionary] allKeys];
 
-    controller.managedInstances = [NSSet setWithObject:self.view1];
+    [controller addFragariaToManagedSet:self.view1];
     controller.managedProperties = [NSSet setWithArray:managedProperties];
 
     XCTAssert(YES, @"Did not pass without an error.");

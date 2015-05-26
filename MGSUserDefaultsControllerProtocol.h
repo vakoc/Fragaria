@@ -6,6 +6,7 @@
 //
 //
 
+
 /**
  *  The MGSUserDefaultsController protocol defines the properties and methods
  *  that are required for objects to be used with the Defaults Coordinator
