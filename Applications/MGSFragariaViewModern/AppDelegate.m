@@ -345,11 +345,11 @@
     MGSUserDefaultsController *globalGroup = [MGSUserDefaultsController sharedController];
 
     /* This cheat simply provides us a list of all MGSFragaria properties. */
-    NSMutableArray *groupProperties = [NSMutableArray arrayWithArray:[[MGSUserDefaultsDefinitions fragariaDefaultsDictionary] allKeys]];
+    NSMutableArray *groupProperties = [NSMutableArray arrayWithArray:[[MGSFragariaView defaultsDictionary] allKeys]];
 
     /* For fun, let's say that the global controller should manage these
        properties, and take away the power to do so from the groups. */
-	NSArray *colourProperties = [[[MGSUserDefaultsDefinitions class] propertyGroupTheme] allObjects];
+	NSArray *colourProperties = [[MGSFragariaView propertyGroupTheme] allObjects];
 	NSMutableArray *globalProperties = [NSMutableArray arrayWithArray:colourProperties];
 	[globalProperties addObjectsFromArray:@[
 											MGSFragariaDefaultsTextFont,

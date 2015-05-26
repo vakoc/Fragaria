@@ -101,7 +101,7 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 
 #pragma mark - Implementation
 
-@implementation MGSUserDefaultsDefinitions
+@implementation MGSFragariaView (MGSUserDefaultsDefinitions)
 
 
 #pragma mark - Defaults Dictionaries
@@ -113,14 +113,9 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 /*
  *  + fragariaDefaultsDictionary
  */
-+ (NSDictionary *)fragariaDefaultsDictionary
++ (NSDictionary *)defaultsDictionary
 {
-	NSMutableDictionary *tmp;
-    static NSDictionary *cache;
-    
-    if (cache) return cache;
-	
-	tmp = [@{
+	return @{
 		 MGSFragariaDefaultsIsSyntaxColoured : @YES,
 		 MGSFragariaDefaultsSyntaxDefinitionName : [[MGSSyntaxController class] standardSyntaxDefinitionName],
 		 MGSFragariaDefaultsColoursMultiLineStrings : @NO,
@@ -151,7 +146,6 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 		 MGSFragariaDefaultsIndentBracesAutomatically : @YES,
 		 MGSFragariaDefaultsIndentNewLinesAutomatically : @YES,
          MGSFragariaDefaultsLineHeightMultiple : @(0.0),
-         
 		 
 		 MGSFragariaDefaultsInsertClosingBraceAutomatically : @NO,
 		 MGSFragariaDefaultsInsertClosingParenthesisAutomatically : @NO,
@@ -191,19 +185,7 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 		 MGSFragariaDefaultsColoursNumbers : @YES,
 		 MGSFragariaDefaultsColoursStrings : @YES,
 		 MGSFragariaDefaultsColoursVariables : @YES,
-	 } mutableCopy];
-	
-    [tmp addEntriesFromDictionary:[[self class] fragariaSupplementalDefaultsDictionary]];
-    return cache = [tmp copy];
-}
-
-
-/*
- *  + fragariaSupplementalDefaultsDictionary
- */
-+ (NSDictionary *)fragariaSupplementalDefaultsDictionary
-{
-	return @{ };
+    };
 }
 
 
@@ -212,7 +194,7 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 /*
  *  + fragariaNamespacedKeyForKey:
  */
-+ (NSString *)fragariaNamespacedKeyForKey:(NSString *)aString
++ (NSString *)namespacedKeyForKey:(NSString *)aString
 {
 	NSString *character = [[aString substringToIndex:1] uppercaseString];
 	NSMutableString *changedString = [NSMutableString stringWithString:aString];
@@ -224,25 +206,33 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
 /*
  *  + fragariaDefaultsDictionaryWithNamespace
  */
-+ (NSDictionary *)fragariaDefaultsDictionaryWithNamespace
++ (NSDictionary *)defaultsDictionaryWithNamespace
 {
-	__block NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
-	[[[self class] fragariaDefaultsDictionary] enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
-		dictionary[[[self class] fragariaNamespacedKeyForKey:key]] = object;
+    __block NSMutableDictionary *dictionary;
+    NSDictionary *def;
+    
+    dictionary = [[NSMutableDictionary alloc] init];
+    def = [[self class] defaultsDictionary];
+    
+	[def enumerateKeysAndObjectsUsingBlock:^(id key, id object, BOOL *stop) {
+        [dictionary setObject:object forKey:[self namespacedKeyForKey:key]];
 	}];
-	return dictionary;
+    
+	return [dictionary copy];
 }
 
 
 /*
  *  + applyDefaultsToFragariaView
  */
-+ (void)applyDefaultsToFragariaView:(MGSFragariaView *)fragaria
+- (void)resetDefaults
 {
-	for (NSString *key in [[self class] fragariaDefaultsDictionary])
-	{
-		[fragaria setValue:[[self class] fragariaDefaultsDictionary][key] forKey:key];
-	}
+    NSDictionary *def;
+    
+    def = [[self class] defaultsDictionary];
+    
+	for (NSString *key in def)
+		[self setValue:def[key] forKey:key];
 }
 
 
@@ -254,19 +244,13 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
  */
 + (NSSet *)propertyGroupEditing
 {
-	return [NSSet setWithArray:@[
-								 MGSFragariaDefaultsIsSyntaxColoured,
-								 MGSFragariaDefaultsHighlightsCurrentLine,
-								 MGSFragariaDefaultsPageGuideColumn,
-								 MGSFragariaDefaultsShowsSyntaxErrors,
-								 MGSFragariaDefaultsShowsIndividualErrors,
-								 MGSFragariaDefaultsShowsPageGuide,
-								 MGSFragariaDefaultsLineWrap,
-								 MGSFragariaDefaultsLineWrapsAtPageGuide,
-								 MGSFragariaDefaultsShowsInvisibleCharacters,
-								 MGSFragariaDefaultsLineHeightMultiple,
-								 MGSFragariaDefaultsShowsMatchingBraces,
-								 ]];
+	return [NSSet setWithArray:@[MGSFragariaDefaultsIsSyntaxColoured,
+        MGSFragariaDefaultsHighlightsCurrentLine, MGSFragariaDefaultsPageGuideColumn,
+		MGSFragariaDefaultsShowsSyntaxErrors, MGSFragariaDefaultsShowsIndividualErrors,
+		MGSFragariaDefaultsShowsPageGuide, MGSFragariaDefaultsLineWrap,
+		MGSFragariaDefaultsLineWrapsAtPageGuide, MGSFragariaDefaultsShowsInvisibleCharacters,
+		MGSFragariaDefaultsLineHeightMultiple, MGSFragariaDefaultsShowsMatchingBraces,
+	]];
 }
 
 
@@ -275,11 +259,9 @@ NSString * const MGSFragariaDefaultsColoursVariables =    @"coloursVariables";
  */
 + (NSSet *)propertyGroupGutter
 {
-return [NSSet setWithArray:@[
-							 MGSFragariaDefaultsMinimumGutterWidth,
-							 MGSFragariaDefaultsShowsGutter,
-							 MGSFragariaDefaultsShowsLineNumbers,
-							 ]];
+    return [NSSet setWithArray:@[MGSFragariaDefaultsMinimumGutterWidth,
+        MGSFragariaDefaultsShowsGutter, MGSFragariaDefaultsShowsLineNumbers,
+	]];
 }
 
 /*
@@ -287,13 +269,11 @@ return [NSSet setWithArray:@[
  */
 + (NSSet *)propertyGroupAutocomplete
 {
-	return [NSSet setWithArray:@[
-								 MGSFragariaDefaultsAutoCompleteDelay,
-								 MGSFragariaDefaultsAutoCompleteEnabled,
-								 MGSFragariaDefaultsAutoCompleteWithKeywords,
-								 MGSFragariaDefaultsInsertClosingBraceAutomatically,
-								 MGSFragariaDefaultsInsertClosingParenthesisAutomatically,
-								 ]];
+	return [NSSet setWithArray:@[MGSFragariaDefaultsAutoCompleteDelay,
+		MGSFragariaDefaultsAutoCompleteEnabled, MGSFragariaDefaultsAutoCompleteWithKeywords,
+		MGSFragariaDefaultsInsertClosingBraceAutomatically,
+        MGSFragariaDefaultsInsertClosingParenthesisAutomatically,
+	]];
 }
 
 
@@ -302,14 +282,11 @@ return [NSSet setWithArray:@[
  */
 + (NSSet *)propertyGroupIndenting
 {
-	return [NSSet setWithArray:@[
-								 MGSFragariaDefaultsTabWidth,
-								 MGSFragariaDefaultsIndentWidth,
-								 MGSFragariaDefaultsIndentWithSpaces,
-								 MGSFragariaDefaultsUseTabStops,
-								 MGSFragariaDefaultsIndentBracesAutomatically,
-								 MGSFragariaDefaultsIndentNewLinesAutomatically,
-								 ]];
+	return [NSSet setWithArray:@[MGSFragariaDefaultsTabWidth,
+        MGSFragariaDefaultsIndentWidth, MGSFragariaDefaultsIndentWithSpaces,
+		MGSFragariaDefaultsUseTabStops, MGSFragariaDefaultsIndentBracesAutomatically,
+		MGSFragariaDefaultsIndentNewLinesAutomatically
+	]];
 }
 
 
@@ -318,9 +295,7 @@ return [NSSet setWithArray:@[
  */
 + (NSSet *)propertyGroupTextFont
 {
-	return [NSSet setWithArray:@[
-								 MGSFragariaDefaultsTextFont,
-								 ]];
+	return [NSSet setWithArray:@[MGSFragariaDefaultsTextFont]];
 }
 
 
@@ -329,14 +304,12 @@ return [NSSet setWithArray:@[
  */
 + (NSSet *)propertyGroupEditorColours
 {
-	return [NSSet setWithArray:@[
-								 MGSFragariaDefaultsInsertionPointColor,
-								 MGSFragariaDefaultsCurrentLineHighlightColour,
-								 MGSFragariaDefaultsDefaultErrorHighlightingColor,
-								 MGSFragariaDefaultsTextColor,
-								 MGSFragariaDefaultsBackgroundColor,
-								 MGSFragariaDefaultsTextInvisibleCharactersColour,
-								 ]];
+	return [NSSet setWithArray:@[MGSFragariaDefaultsInsertionPointColor,
+        MGSFragariaDefaultsCurrentLineHighlightColour,
+        MGSFragariaDefaultsDefaultErrorHighlightingColor,
+        MGSFragariaDefaultsTextColor, MGSFragariaDefaultsBackgroundColor,
+		MGSFragariaDefaultsTextInvisibleCharactersColour,
+	]];
 }
 
 
@@ -345,17 +318,12 @@ return [NSSet setWithArray:@[
  */
 + (NSSet *)propertyGroupSyntaxHighlightingColours
 {
-	return [NSSet setWithArray:@[
-								 MGSFragariaDefaultsColourForAutocomplete,
-								 MGSFragariaDefaultsColourForAttributes,
-								 MGSFragariaDefaultsColourForCommands,
-								 MGSFragariaDefaultsColourForComments,
-								 MGSFragariaDefaultsColourForInstructions,
-								 MGSFragariaDefaultsColourForKeywords,
-								 MGSFragariaDefaultsColourForNumbers,
-								 MGSFragariaDefaultsColourForStrings,
-								 MGSFragariaDefaultsColourForVariables,
-								 ]];
+	return [NSSet setWithArray:@[MGSFragariaDefaultsColourForAutocomplete,
+        MGSFragariaDefaultsColourForAttributes, MGSFragariaDefaultsColourForCommands,
+		MGSFragariaDefaultsColourForComments, MGSFragariaDefaultsColourForInstructions,
+		MGSFragariaDefaultsColourForKeywords, MGSFragariaDefaultsColourForNumbers,
+		MGSFragariaDefaultsColourForStrings, MGSFragariaDefaultsColourForVariables,
+	]];
 }
 
 
@@ -364,17 +332,12 @@ return [NSSet setWithArray:@[
  */
 + (NSSet *)propertyGroupSyntaxHighlightingBools
 {
-	return [NSSet setWithArray:@[
-								 MGSFragariaDefaultsColoursAttributes,
-								 MGSFragariaDefaultsColoursAutocomplete,
-								 MGSFragariaDefaultsColoursCommands,
-								 MGSFragariaDefaultsColoursComments,
-								 MGSFragariaDefaultsColoursInstructions,
-								 MGSFragariaDefaultsColoursKeywords,
-								 MGSFragariaDefaultsColoursNumbers,
-								 MGSFragariaDefaultsColoursStrings,
-								 MGSFragariaDefaultsColoursVariables,
-								 ]];
+	return [NSSet setWithArray:@[MGSFragariaDefaultsColoursAttributes,
+        MGSFragariaDefaultsColoursAutocomplete, MGSFragariaDefaultsColoursCommands,
+		MGSFragariaDefaultsColoursComments, MGSFragariaDefaultsColoursInstructions,
+		MGSFragariaDefaultsColoursKeywords, MGSFragariaDefaultsColoursNumbers,
+		MGSFragariaDefaultsColoursStrings, MGSFragariaDefaultsColoursVariables,
+	]];
 }
 
 
@@ -403,10 +366,8 @@ return [NSSet setWithArray:@[
  */
 + (NSSet *)propertyGroupColouringExtraOptions
 {
-	return [NSSet setWithArray:@[
-								 MGSFragariaDefaultsColoursMultiLineStrings,
-								 MGSFragariaDefaultsColoursOnlyUntilEndOfLine,
-								 ]];
+	return [NSSet setWithArray:@[MGSFragariaDefaultsColoursMultiLineStrings,
+        MGSFragariaDefaultsColoursOnlyUntilEndOfLine]];
 }
 
 

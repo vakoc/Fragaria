@@ -100,11 +100,11 @@
 - (NSDictionary *)propertiesForPanelSubviews
 {
 	return @{
-			 NSStringFromSelector(@selector(paneEditing)) : [[MGSUserDefaultsDefinitions class] propertyGroupEditing],
-			 NSStringFromSelector(@selector(paneGutter)) : [[MGSUserDefaultsDefinitions class] propertyGroupGutter],
-			 NSStringFromSelector(@selector(paneAutocomplete)) : [[MGSUserDefaultsDefinitions class] propertyGroupAutocomplete],
-			 NSStringFromSelector(@selector(paneIndenting)) : [[MGSUserDefaultsDefinitions class] propertyGroupIndenting],
-			 NSStringFromSelector(@selector(paneTextFont)) : [[MGSUserDefaultsDefinitions class] propertyGroupTextFont],
+			 NSStringFromSelector(@selector(paneEditing)) : [MGSFragariaView propertyGroupEditing],
+			 NSStringFromSelector(@selector(paneGutter)) : [MGSFragariaView propertyGroupGutter],
+			 NSStringFromSelector(@selector(paneAutocomplete)) : [MGSFragariaView propertyGroupAutocomplete],
+			 NSStringFromSelector(@selector(paneIndenting)) : [MGSFragariaView propertyGroupIndenting],
+			 NSStringFromSelector(@selector(paneTextFont)) : [MGSFragariaView propertyGroupTextFont],
 			 };
 }
 

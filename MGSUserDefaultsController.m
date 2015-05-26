@@ -181,7 +181,7 @@ static NSHashTable *allManagedInstances;
     
     _groupID = groupID;
 
-    defaults = [[MGSUserDefaultsDefinitions class] fragariaDefaultsDictionary];
+    defaults = [MGSFragariaView defaultsDictionary];
 		
     [[MGSUserDefaults sharedUserDefaultsForGroupID:groupID] registerDefaults:defaults];
     defaults = [[NSUserDefaults standardUserDefaults] valueForKey:groupID];

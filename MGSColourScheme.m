@@ -222,7 +222,7 @@
 - (void)setDefaults
 {
     // Use the built-in defaults instead of reinventing wheels.
-    NSDictionary *defaults = [MGSUserDefaultsDefinitions fragariaDefaultsDictionary];
+    NSDictionary *defaults = [MGSFragariaView defaultsDictionary];
 
 	self.loadedFromBundle = NO;
 	
@@ -263,7 +263,7 @@
  */
 + (NSSet *)propertiesAll
 {
-	return [[[MGSUserDefaultsDefinitions class] propertyGroupTheme]
+	return [[MGSFragariaView propertyGroupTheme]
 			setByAddingObjectsFromSet:[[self class] propertiesOfTypeString]];
 }
 
@@ -273,7 +273,7 @@
  */
 + (NSSet*)propertiesOfTypeBool
 {
-	return [[MGSUserDefaultsDefinitions class] propertyGroupSyntaxHighlightingBools];
+	return [MGSFragariaView propertyGroupSyntaxHighlightingBools];
 }
 
 
@@ -282,8 +282,8 @@
  */
 + (NSSet *)propertiesOfTypeColor
 {
-	return [[[MGSUserDefaultsDefinitions class] propertyGroupEditorColours]
-			setByAddingObjectsFromSet:[[MGSUserDefaultsDefinitions class] propertyGroupSyntaxHighlightingColours]];
+	return [[MGSFragariaView propertyGroupEditorColours]
+			setByAddingObjectsFromSet:[MGSFragariaView propertyGroupSyntaxHighlightingColours]];
 }
 
 
@@ -301,7 +301,7 @@
  */
 + (NSArray *)propertiesOfScheme
 {
-	return [[[MGSUserDefaultsDefinitions class] propertyGroupTheme] allObjects];
+	return [[MGSFragariaView propertyGroupTheme] allObjects];
 }
 
 

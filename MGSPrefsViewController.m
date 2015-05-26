@@ -163,7 +163,7 @@
 - (BOOL)areAllColourPropertiesAvailable
 {
 	NSSet *propertiesAvailable = self.userDefaultsController.managedProperties;
-	NSSet *propertiesRequired = [[MGSUserDefaultsDefinitions class] propertyGroupTheme];
+	NSSet *propertiesRequired = [MGSFragariaView propertyGroupTheme];
 	return [propertiesRequired isSubsetOfSet:propertiesAvailable];
 }
 

@@ -10,6 +10,11 @@
 #import "MGSUserDefaultsDefinitions.h"
 
 
+/** This macro defines the groupID that should correspond to the global group
+ *  for MGSUserDefaults and, by extension, MGSUserDefaultsController. */
+#define MGSUSERDEFAULTS_GLOBAL_ID @"Global"
+
+
 /**
  *  MGSUserDefaults is the NSUserDefaults internal replacement for use by
  *  MGSUserDefaultsController. The main characteristic versus NSUserDefaults

@@ -286,7 +286,7 @@
 - (void)test_all_properties
 {
     MGSUserDefaultsController *controller = [MGSUserDefaultsController sharedControllerForGroupID:@"test_all_properties"];
-    NSArray *managedProperties = [[MGSUserDefaultsDefinitions fragariaDefaultsDictionary] allKeys];
+    NSArray *managedProperties = [[MGSFragariaView defaultsDictionary] allKeys];
 
     [controller addFragariaToManagedSet:self.view1];
     controller.managedProperties = [NSSet setWithArray:managedProperties];

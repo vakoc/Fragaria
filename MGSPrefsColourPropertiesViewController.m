@@ -49,10 +49,10 @@
 - (NSDictionary *)propertiesForPanelSubviews
 {
 	return @{
-			 NSStringFromSelector(@selector(paneScheme)) : [[MGSUserDefaultsDefinitions class] propertyGroupTheme],
-			 NSStringFromSelector(@selector(paneEditorColours)) : [[MGSUserDefaultsDefinitions class] propertyGroupEditorColours],
-			 NSStringFromSelector(@selector(paneSyntaxColours)) : [[MGSUserDefaultsDefinitions class] propertyGroupSyntaxHighlighting],
-			 NSStringFromSelector(@selector(paneOtherSettings)) : [[MGSUserDefaultsDefinitions class] propertyGroupColouringExtraOptions],
+			 NSStringFromSelector(@selector(paneScheme)) : [MGSFragariaView propertyGroupTheme],
+			 NSStringFromSelector(@selector(paneEditorColours)) : [MGSFragariaView propertyGroupEditorColours],
+			 NSStringFromSelector(@selector(paneSyntaxColours)) : [MGSFragariaView propertyGroupSyntaxHighlighting],
+			 NSStringFromSelector(@selector(paneOtherSettings)) : [MGSFragariaView propertyGroupColouringExtraOptions],
 			 };
 }
 

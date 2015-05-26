@@ -6,10 +6,12 @@
 //
 //
 
+#import <Cocoa/Cocoa.h>
+#import "MGSFragariaView.h"
 
-#pragma mark - Property User Defaults Keys
+
 /**
- *  #Fragaria Property User Defaults Keys
+ *  # Fragaria Property User Defaults Keys
  *
  *  ## Use with MGSUserDefaultsController and MGSUserDefaults:
  *  These keys can be used in your code to manage Fragaria properties and
@@ -17,11 +19,11 @@
  *  correspond fairly well with MGSFragariaView's properties properties.
  *
  *  ## For use in KVO/KVC/IB:
- *  The string values can be found in MGSUserDefaults.m and is also documented
+ *  The string values can be found in MGSUserDefaults.m and are also documented
  *  in the comments after each declaration below. For convenience the string
  *  value is identical to the MGSFragariaView property name. These definitions
  *  are also critical to how MGSUserDefaultsController operates, so do not
- *  change them for namespacing purposes (see +fragariaNamespacedKeyForKey).
+ *  change them for namespacing purposes (see +namespacedKeyForKey).
  *
  *  ## For use when managing defaults and properties yourself:
  *  For convenience and type safety some convenience methods are provided in
@@ -112,130 +114,76 @@ extern NSString * const MGSFragariaDefaultsColoursStrings;                      
 extern NSString * const MGSFragariaDefaultsColoursVariables;                      // BOOL coloursVariables
 
 
-
 /**
- *  This macro defines the identifier for the global defaults, and is the name
- *  that will be used for the global defaults dictionary written to defaults.
- *  You should never have to worry about this, and is only used if you are
- *  using MGSUserDefaultsController.
- **/
-#define MGSUSERDEFAULTS_GLOBAL_ID @"Global"
+ *  This category consists of several methods that serve as conveniences for
+ *  working with the defaults coordinator and MGSFragariaView. It might be
+ *  useful for other purposes too.
+ */
+
+@interface MGSFragariaView (MGSUserDefaultsDefinitions)
 
 
-@class MGSFragariaView;
+#pragma mark - Setting and getting default values
+/// @name Setting and getting default values
 
 
-/**
- *  MGSUserDefaultsDefinitions class consists of several class methods that
- *  serve as conveniences for working with MGSFragaria. Although it is used
- *  by MGSUserDefaultsController, it may be of value to you if you choose to
- *  manage your own defaults and properties, as it can provide useful defaults
- *  for instances of Fragaria.
- **/
-@interface MGSUserDefaultsDefinitions : NSObject
+/** An NSDictionary of default values for MGSFragariaView's properties.
+ *  @discuss The key names are standard KVO key names of MGSFragariaView's
+ *      properties, thus they are not prefixed. The key names can also be
+ *      accessed by using the Fragaria Property User Defaults Keys. */
++ (NSDictionary *)defaultsDictionary;
 
-
-#pragma mark - Class Methods - Defaults Dictionaries
-
-
-/**
- *  This class method returns an NSDictionary with key-value pairs offering
- *  suitable defaults that you can use in your application with
- *  `registerDefaults`, if you are managing your own defaults and properties.
+/** An NSDictionary of default values for MGSFragariaView's properties.
+ *  @discuss The key names are namespaced with -namespacedKeyForKey:. They can't
+ *      be accessed directly using the Fragaria Property User Defaults Keys
+ *      unless you namespace them with -namespacedKeyForKey: before.
  *
- *  @discuss If you are using MGSUserDefaultsController, then you should have
- *  no need to registerDefaults with these; it will be handled automatically.
- **/
-+ (NSDictionary *)fragariaDefaultsDictionary;
+ *      This method is intended to be used with NSUserDefaults, to register
+ *      initial defaults. If you are using MGSUserDefaultsController, you don't
+ *      need to do this automatically though. */
++ (NSDictionary *)defaultsDictionaryWithNamespace;
 
 
-/**
- *  This class method returns an dictionary that will be added automatically
- *  to +fragariaDefaultsDictionary and +fragariaDefaultsDictionaryWithNamespace.
- *
- *  @discuss The default implementation returns an empty dictionary. This method
- *  should be implemented by subclasses to return a dictionary of your preferred
- *  defaults settings so that you can override defaults choices that are already
- *  made. In this way you can avoid both altering the original source code of 
- *  this class and rewriting it entirely.
- **/
-+ (NSDictionary *)fragariaSupplementalDefaultsDictionary;
+/** Reset the properties of Fragaria to the defaults.
+ *  @discuss The defaults used are the ones returned by -defaultsDictionary. */
+- (void)resetDefaults;
 
 
-#pragma mark - Class Methods - Manual Management Support
+#pragma mark - Getting defaults keys
+/// @name Getting defaults keys
 
 
-/**
- *  This method will namespace the string values of the constant string above,
- *  and is intended for use if you are managing your own properties and
- *  defaults.
- *
- *  @discuss Because the string values are simply the property name, you may
- *  not want to use them as NSUserDefaults keys without applying a namespace to
- *  them, lest you collide with other keys in your application.
- *
- *  @param aString The key to namespace.
- **/
-+ (NSString *)fragariaNamespacedKeyForKey:(NSString *)aString;
+/** Returns a namespaced defaults key for the specified KVO key of Fragaria.
+ *  @discuss This method adds a prefix to the given string to avoid
+ *      clashing with other defaults keys.
+ *  @param aString The key to namespace. */
++ (NSString *)namespacedKeyForKey:(NSString *)aString;
 
-
-/**
- *  This method will return the `fragariaDefaultsDictionary` as above, but with
- *  each key namespaced via `fragariaNamespacedKeyForKey:`. It is intended for
- *  use if you are managing your own properties and defaults.
- *
- *  @discuss Just in case you're adamant about managing Fragaria properties and
- *  user defaults yourself, you can use this class method instead of 
- *  `fragariaDefaultsDictionary`.
- **/
-+ (NSDictionary *)fragariaDefaultsDictionaryWithNamespace;
-
-
-/**
- *  This method will apply the defaults to an instance of MGSFragaria. It is
- *  meant only as a convenience to set your instance' defaults one time only,
- *  and only if you are managing your own properties and user defaults. After
- *  this, you're on your own.
- *
- *  @param fragaria In instance of Fragaria in which to apply defaults.
- **/
-+ (void)applyDefaultsToFragariaView:(MGSFragariaView *)fragaria;
-
-
-#pragma mark - Class Methods - Convenience Sets of Properties
 
 /** A convenience NSSet of all of the editing group property strings. */
 + (NSSet *)propertyGroupEditing;
-
 /** A convenience NSSet of all of the gutter group property strings. */
 + (NSSet *)propertyGroupGutter;
-
 /** A convenience NSSet of all of the autocomplete group property strings. */
 + (NSSet *)propertyGroupAutocomplete;
-
 /** A convenience NSSet of all of the indenting group property strings. */
 + (NSSet *)propertyGroupIndenting;
 
 /** A convenience NSSet of all of the text font group property strings. */
 + (NSSet *)propertyGroupTextFont;
-
 /** A convenience NSSet of all of the editor colours group property strings. */
 + (NSSet *)propertyGroupEditorColours;
-
 /** A convenience NSSet of all of the syntax colours group property strings. */
 + (NSSet *)propertyGroupSyntaxHighlightingColours;
-
 /** A convenience NSSet of all of the syntax colours bools group property strings. */
 + (NSSet *)propertyGroupSyntaxHighlightingBools;
-
 /** A convenience NSSet of all of the syntax colours group property strings. */
 + (NSSet *)propertyGroupSyntaxHighlighting;
 
 /** A convenience NSSet of all of the colours property strings. */
 + (NSSet *)propertyGroupTheme;
-
 /** A convenience NSSet of all of the syntax colours extra option group
-    property strings. */
+ *  property strings. */
 + (NSSet *)propertyGroupColouringExtraOptions;
 
 

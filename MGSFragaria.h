@@ -15,13 +15,13 @@
 #import "SMLSyntaxDefinition.h"
 
 #import "MGSFragariaView.h"
+#import "MGSUserDefaultsDefinitions.h"
 #import "SMLSyntaxError.h"
 #import "SMLTextView.h"
 #import "SMLTextView+MGSTextActions.h"
 #import "SMLTextView+MGSDragging.h"
 #import "MGSSyntaxController.h"
 
-#import "MGSUserDefaultsDefinitions.h"
 #import "MGSUserDefaultsControllerProtocol.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSPrefsViewController.h"

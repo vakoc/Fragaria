@@ -42,7 +42,7 @@
 {
 	NSString *expects = @"MGSFragariaDefaultsUseTabStops";
 	
-	XCTAssert([expects isEqualToString:[[MGSUserDefaultsDefinitions class] fragariaNamespacedKeyForKey:MGSFragariaDefaultsUseTabStops]]);
+	XCTAssert([expects isEqualToString:[MGSFragariaView namespacedKeyForKey:MGSFragariaDefaultsUseTabStops]]);
 }
 
 
@@ -51,8 +51,8 @@
  */
 - (void)test_fragariaDefaultsDictionaryWithNamespace
 {
-	NSLog(@"%@", [MGSUserDefaultsDefinitions fragariaDefaultsDictionaryWithNamespace]);
-	id object = [[MGSUserDefaultsDefinitions fragariaDefaultsDictionaryWithNamespace] objectForKey:@"MGSFragariaDefaultsAutoCompleteDelay"];
+	NSLog(@"%@", [MGSFragariaView defaultsDictionaryWithNamespace]);
+	id object = [[MGSFragariaView defaultsDictionaryWithNamespace] objectForKey:@"MGSFragariaDefaultsAutoCompleteDelay"];
 	XCTAssert(object != nil);
 }
 
@@ -63,7 +63,7 @@
 - (void)test_properties_exist
 {
 	NSDictionary *properties = [MGSUserDefaultsUtilities propertiesOfClass:[MGSFragariaView class]];
-	NSDictionary *localDict = [MGSUserDefaultsDefinitions fragariaDefaultsDictionary];
+	NSDictionary *localDict = [MGSFragariaView defaultsDictionary];
 	NSUInteger count = 0;
 	
 	for (NSString *key in [localDict allKeys])
