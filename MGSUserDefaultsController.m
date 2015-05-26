@@ -174,11 +174,19 @@ static NSHashTable *allManagedInstances;
 /*
  *  @property managedProperties
  */
-- (void)setManagedProperties:(NSSet *)managedProperties
+- (void)setManagedProperties:(NSSet *)new
 {
-    [self unregisterBindings:_managedProperties];
-    _managedProperties = managedProperties;
-	[self registerBindings:_managedProperties];
+    NSSet *old = _managedProperties;
+    NSMutableSet *added, *removed;
+    
+    added = [new mutableCopy];
+    [added minusSet:old];
+    removed = [old mutableCopy];
+    [removed minusSet:new];
+    
+    [self unregisterBindings:removed];
+    _managedProperties = new;
+	[self registerBindings:added];
 }
 
 
@@ -227,6 +235,8 @@ static NSHashTable *allManagedInstances;
         return self;
     
     _groupID = groupID;
+    _managedProperties = [NSSet set];
+    _managedInstances = MGSWeakOrUnretainedHashTable();
 
     defaults = [MGSFragariaView defaultsDictionary];
 		
@@ -235,8 +245,6 @@ static NSHashTable *allManagedInstances;
     
     self.values = [[MGSMutableDictionary alloc] initWithController:self
       dictionary:[self unarchiveFromDefaultsDictionary:defaults]];
-    
-    _managedInstances = MGSWeakOrUnretainedHashTable();
 	
 	return self;
 }
