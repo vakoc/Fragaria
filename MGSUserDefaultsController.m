@@ -68,20 +68,21 @@ static NSHashTable *allManagedInstances;
  */
 + (instancetype)sharedControllerForGroupID:(NSString *)groupID
 {
+    MGSUserDefaultsController *res;
+    
     if (!groupID || [groupID length] == 0)
         groupID = MGSUSERDEFAULTS_GLOBAL_ID;
 
 	@synchronized(self) {
         if (!controllerInstances)
             controllerInstances = [[NSMutableDictionary alloc] init];
-
-		if ([[controllerInstances allKeys] containsObject:groupID])
-			return [controllerInstances objectForKey:groupID];
+        else if ((res = [controllerInstances objectForKey:groupID]))
+			return res;
 	
-		MGSUserDefaultsController *newController = [[[self class] alloc] initWithGroupID:groupID];
-		[controllerInstances setObject:newController forKey:groupID];
+		res = [[[self class] alloc] initWithGroupID:groupID];
+		[controllerInstances setObject:res forKey:groupID];
         
-		return newController;
+		return res;
 	}
 }
 
