@@ -14,7 +14,7 @@
 
 
 /* This method exists only because Apple added +weakObjectsHashTable in 10.8,
- * but we still need to support 10.7 */
+ * but we still want to support 10.7 */
 static NSHashTable *MGSWeakOrUnretainedHashTable(void)
 {
     NSPointerFunctions *pf;
@@ -127,6 +127,8 @@ static NSHashTable *allManagedInstances;
  */
 - (void)addFragariaToManagedSet:(MGSFragariaView *)object
 {
+    MGSUserDefaultsController *shc;
+    
     if (!allManagedInstances)
         allManagedInstances = MGSWeakOrUnretainedHashTable();
     if ([allManagedInstances containsObject:object])
@@ -134,6 +136,12 @@ static NSHashTable *allManagedInstances;
       "to manage Fragaria %@ with more than one MGSUserDefaultsController!", object];
     
     [self registerBindings:_managedProperties forFragaria:object];
+    
+    if (![self isGlobal]) {
+        shc = [MGSUserDefaultsController sharedController];
+        [shc registerBindings:shc.managedProperties forFragaria:object];
+    }
+    
     [_managedInstances addObject:object];
     [allManagedInstances addObject:object];
 }
@@ -144,7 +152,20 @@ static NSHashTable *allManagedInstances;
  */
 - (void)removeFragariaFromManagedSet:(MGSFragariaView *)object
 {
+    MGSUserDefaultsController *shc;
+    
+    if (![_managedInstances containsObject:object]) {
+        NSLog(@"Attempted to remove Fragaria %@ from %@ but it was not "
+              "registered in the first place!", object, self);
+        return;
+    }
+    
     [self unregisterBindings:_managedProperties forFragaria:object];
+    if (![self isGlobal]) {
+        shc = [MGSUserDefaultsController sharedController];
+        [shc unregisterBindings:shc.managedProperties forFragaria:object];
+    }
+    
     [_managedInstances removeObject:object];
     [allManagedInstances addObject:object];
 }
