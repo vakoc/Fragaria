@@ -299,4 +299,36 @@
 }
 
 
+- (void)test_bugCatchers
+{
+    BOOL ok = NO;
+    
+    MGSUserDefaultsController *c2 = [MGSUserDefaultsController sharedControllerForGroupID:@"bugCatch1"];
+    MGSUserDefaultsController *c1 = [MGSUserDefaultsController sharedControllerForGroupID:@"bugCatch2"];
+    MGSUserDefaultsController *g = [MGSUserDefaultsController sharedController];
+    
+    [c1 addFragariaToManagedSet:self.view1];
+    @try {
+        [c2 addFragariaToManagedSet:self.view1];
+    } @catch (NSException *ex) {
+        ok = YES;
+    } @finally {
+        XCTAssert(ok, @"Adding an already registered Fragaria to another "
+                  "controller did not raise an exception.");
+    }
+    
+    ok = NO;
+    [c1 setManagedProperties:[NSSet setWithArray:@[@"startingLineNumber"]]];
+    @try {
+        [g setManagedProperties:[NSSet setWithArray:@[@"startingLineNumber"]]];
+    } @catch (NSException *ex) {
+        ok = YES;
+    } @finally {
+        XCTAssert(ok, @"Adding an already managed property to the global "
+                  "controller did not raise an exception.");
+    }
+    [c1 setManagedProperties:[NSSet set]];
+}
+
+
 @end
