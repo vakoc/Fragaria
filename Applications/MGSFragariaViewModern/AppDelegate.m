@@ -358,7 +358,7 @@
     /* And the groups' properties will simply be the remaining properties. */
     [groupProperties removeObjectsInArray:globalProperties];
 
-    globalGroup.managedProperties = [NSSet setWithArray:globalProperties];
+    //globalGroup.managedProperties = [NSSet setWithArray:globalProperties];
     globalGroup.persistent = YES;
 
     /* Tell the groups which instances and properties to manage. */

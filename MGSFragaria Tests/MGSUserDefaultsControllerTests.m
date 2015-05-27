@@ -267,6 +267,7 @@
     XCTAssert(self.view1.startingLineNumber == expect1 && self.view2.startingLineNumber == expect2);
 
     // Let the global controller manage the startingLineNumberProperty.
+    
     controllerG.managedProperties = [NSSet setWithArray:@[ @"startingLineNumber" ]];
 
     // Check that their properties are now linked.
@@ -292,6 +293,9 @@
     controller.managedProperties = [NSSet setWithArray:managedProperties];
 
     XCTAssert(YES, @"Did not pass without an error.");
+    
+    // Clean up to pave way for other tests
+    controller.managedProperties = [NSSet set];
 }
 
 

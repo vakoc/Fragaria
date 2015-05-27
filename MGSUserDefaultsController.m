@@ -53,6 +53,7 @@ static NSHashTable *MGSWeakOrUnretainedHashTable(void)
 
 static NSMutableDictionary *controllerInstances;
 static NSHashTable *allManagedInstances;
+static NSCountedSet *allNonGlobalProperties;
 
 
 @implementation MGSUserDefaultsController {
@@ -177,12 +178,30 @@ static NSHashTable *allManagedInstances;
 - (void)setManagedProperties:(NSSet *)new
 {
     NSSet *old = _managedProperties;
-    NSMutableSet *added, *removed;
+    NSMutableSet *added, *removed, *diag, *glob;
     
     added = [new mutableCopy];
     [added minusSet:old];
     removed = [old mutableCopy];
     [removed minusSet:new];
+    
+    if ([self isGlobal]) {
+        if ([allNonGlobalProperties intersectsSet:new]) {
+            diag = [NSMutableSet setWithSet:allNonGlobalProperties];
+            [diag intersectSet:new];
+            [NSException raise:@"MGSUserDefaultsControllerPropertyClash" format:
+             @"Tried to manage globally properties which are already managed "
+             "locally.\nConflicting properties: %@", diag];
+        }
+    } else {
+        if (!allNonGlobalProperties)
+            allNonGlobalProperties = [NSCountedSet set];
+        [allNonGlobalProperties minusSet:old];
+        [allNonGlobalProperties unionSet:new];
+        glob = [[[[self class] sharedController] managedProperties] mutableCopy];
+        [glob minusSet:new];
+        [[[self class] sharedController] setManagedProperties:glob];
+    }
     
     [self unregisterBindings:removed];
     _managedProperties = new;
@@ -234,11 +253,14 @@ static NSHashTable *allManagedInstances;
 	if (!(self = [super init]))
         return self;
     
-    _groupID = groupID;
-    _managedProperties = [NSSet set];
-    _managedInstances = MGSWeakOrUnretainedHashTable();
-
     defaults = [MGSFragariaView defaultsDictionary];
+    
+    _groupID = groupID;
+    if ([self isGlobal])
+        _managedProperties = [NSSet setWithArray:[defaults allKeys]];
+    else
+        _managedProperties = [NSSet set];
+    _managedInstances = MGSWeakOrUnretainedHashTable();
 		
     [[MGSUserDefaults sharedUserDefaultsForGroupID:groupID] registerDefaults:defaults];
     defaults = [[NSUserDefaults standardUserDefaults] valueForKey:groupID];

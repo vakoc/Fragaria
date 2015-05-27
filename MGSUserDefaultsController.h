@@ -61,7 +61,16 @@
 @property (nonatomic, assign, getter=isPersistent) BOOL persistent;
 
 
-/** The set of property names managed by this class. */
+/** The set of property names managed by this class. 
+ *  @discuss This is initially set to all available properties of 
+ *      MGSFragariaView for the global controller, and to an empty set for all
+ *      the other controllers.
+ *
+ *      This property is meant to be seldom changed. When setting this property
+ *      on a local controller, the properties are automatically removed from
+ *      the responsibility of the global controller. When setting this property
+ *      on a global controller, if the property set contains any property
+ *      already managed by any local controller, an exception will be raised.*/
 @property (nonatomic, strong) NSSet *managedProperties;
 
 
