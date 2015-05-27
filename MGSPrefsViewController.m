@@ -67,6 +67,7 @@
  */
 @interface MGSManagedGlobalPropertiesProxy : MGSManagedPropertiesProxy
 
+
 @end
 
 
@@ -87,6 +88,7 @@
 
 @interface MGSPrefsViewController ()
 
+@property IBOutlet NSView *nothingPane;
 @property (nonatomic, strong) MGSManagedPropertiesProxy *managedPropertiesProxy;
 @property (nonatomic, strong) MGSManagedGlobalPropertiesProxy *managedGlobalPropertiesProxy;
 
@@ -105,8 +107,13 @@
  */
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
+    NSBundle *bundle;
+    
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
     {
+        bundle = [NSBundle bundleForClass:[MGSPrefsViewController class]];
+        [bundle loadNibNamed:@"MGSPrefsCommonViews" owner:self topLevelObjects:nil];
+        
         _managedPropertiesProxy = [[MGSManagedPropertiesProxy alloc] initWithViewController:self];
 		_managedGlobalPropertiesProxy = [[MGSManagedGlobalPropertiesProxy alloc] initWithViewController:self];
         separators = [[NSMutableArray alloc] init];
@@ -213,8 +220,9 @@
 - (void)showOrHideViews
 {
 	NSSet *propertiesAvailable = self.userDefaultsController.managedProperties;
-    NSView *sep, *prev;
     NSArray *allViewsKeys, *cs;
+    NSView *sep, *prev;
+    BOOL hidden, anyVisible = NO;
     
     [self.view removeConstraints:[self.view constraints]];
     for (sep in separators) {
@@ -226,7 +234,8 @@
 	for (NSString *key in allViewsKeys) {
         NSView *thisView = [self valueForKey:key];
 		NSSet *propertiesRequired = [[self propertiesForPanelSubviews] objectForKey:key];
-        BOOL hidden = propertiesRequired && ![propertiesAvailable intersectsSet:propertiesRequired];
+        hidden = propertiesRequired && ![propertiesAvailable intersectsSet:propertiesRequired];
+        anyVisible = anyVisible || !hidden;
 		
 		if (self.hidesUselessPanels && hidden) {
             [self hidePanelView:thisView];
@@ -236,6 +245,10 @@
 		}
 	}
     
+    if (!anyVisible) {
+        [self stackPanelView:_nothingPane underPanelView:prev];
+        prev = _nothingPane;
+    }
     if (prev) {
         cs = [NSLayoutConstraint constraintsWithVisualFormat:@"V:[prev]|" options:0
           metrics:nil views:NSDictionaryOfVariableBindings(prev)];
