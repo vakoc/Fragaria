@@ -11,8 +11,8 @@
 
 
 
-/** MGSPrefsViewController provides a base class for other MGSPrefsViewController
- *  classes. It is not implemented directly anywhere.
+/** MGSPrefsViewController is an abstract class for other MGSPrefsViewController
+ *  classes. It is not to be used directly.
  *  @see MGSPrefsEditorPropertiesViewController
  *  @see MGSPrefsColourPropertiesViewController */
 
