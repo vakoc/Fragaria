@@ -23,7 +23,7 @@
  *  controller for the model object instance MGSUserDefaults controller). Make
  *  sure an instance of this class in IB has its `objectController` outlet
  *  connected to the same objectController that all properties are connected to.
-*
+ *
  *  Schemes are loaded first from the framework bundle, then the application
  *  bundle, then finally from the application's Application Support folder.
  *  Subsequent schemes with the same displayName replace schemes loaded
@@ -54,22 +54,23 @@
 /// @name IBOutlet Properties - Controls
 
 /** A reference to the MGSUserDefaultsController for the view.
-    @discuss This controller needs to know where the model controller for your
-    view is. Your view should access MGSFragariaView properties with an
-    NSObjectController. This property is a reference to that controller. */
+ *  @discussion This controller needs to know where the model controller for
+ *      your view is. Your view should access MGSFragariaView properties with
+ *      an NSObjectController. This property is a reference to that
+ *      controller. */
 @property (nonatomic, assign) IBOutlet NSObjectController *objectController;
 
 /** A popup list that provides the current list of available schemes. */
 @property (nonatomic, assign) IBOutlet NSPopUpButton *schemeMenu;
 
 /** A button used to save or delete a scheme.
-    @discuss Its action should be set to -addDeleteButtonAction:
-    You can get a suitable title and enabled state from buttonSaveDeleteTitle
-    and buttonSaveDeleteEnabled respectively. */
+ *  @discussion Its action should be set to -addDeleteButtonAction:
+ *  You can get a suitable title and enabled state from buttonSaveDeleteTitle
+ *  and buttonSaveDeleteEnabled respectively. */
 @property (nonatomic, assign) IBOutlet NSButton *schemeSaveDeleteButton;
 
 /** A reference to the parent view. You must set this in IB otherwise
-    save and delete dialogues will not attach as sheet to the window. */
+ *  save and delete dialogues will not attach as sheet to the window. */
 @property (nonatomic, assign) IBOutlet NSView *parentView;
 
 
@@ -89,9 +90,9 @@
 /// @name Actions
 
 /** The add/delete button action.
-    @discuss When your button's title is bound to buttonSaveDelete title,
-    the title will update dynamically to reflect the correct action. 
-    @param sender The object that sent the action. */
+ *  @discussion When your button's title is bound to buttonSaveDelete title,
+ *  the title will update dynamically to reflect the correct action.
+ *  @param sender The object that sent the action. */
 - (IBAction)addDeleteButtonAction:(id)sender;
 
 

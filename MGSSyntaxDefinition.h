@@ -57,9 +57,9 @@
 
 /** A set of words that are considered instructions. If keywordsCaseSensitive
  *  is YES, this set will contain lowercase strings only.
- *  @discuss If this property is nil, instructions should be detected using
- *           beginInstruction and endInstruction, otherwise they should be
- *           ignored. */
+ *  @discussion If this property is nil, instructions should be detected using
+ *       beginInstruction and endInstruction, otherwise they should be
+ *       ignored. */
 @property (readonly) NSSet *instructions;
 /**  Delimiter for the start of an instruction iff instructions == nil. */
 @property (readonly) NSString *beginInstruction;
@@ -67,10 +67,10 @@
 @property (readonly) NSString *endInstruction;
 
 /** A regular expression that matches a variable.
- *  @discuss This property supersedes beginVariableCharacterSet and
- *           endVariableCharacterSet. If this property is nil, a syntax
- *           colourer should use these properties instead, otherwise they
- *           should be ignored. */
+ *  @discussion This property supersedes beginVariableCharacterSet and
+ *       endVariableCharacterSet. If this property is nil, a syntax
+ *       colourer should use these properties instead, otherwise they
+ *       should be ignored. */
 @property (readonly) NSString *variableRegex;
 /**  Characters that may start a variable. */
 @property (readonly) NSCharacterSet *beginVariableCharacterSet;
@@ -78,9 +78,9 @@
 @property (readonly) NSCharacterSet *endVariableCharacterSet;
 
 /** A regular expression that matches a single line comment.
- *  @discuss This property supersedes singleLineComments. If this property is
- *           nil, a syntax colourer should use singleLineComments instead,
- *           otherwise it is ignored. */
+ *  @discussion This property supersedes singleLineComments. If this property
+ *      is nil, a syntax colourer should use singleLineComments instead,
+ *      otherwise it is ignored. */
 @property (readonly) NSString *singleLineCommentRegex;
 /** An array of strings that should mark the beginning of a single-line comment.
  *  This kind of comments extends from the characters that mark its start
@@ -97,20 +97,20 @@
 @property (readonly) NSCharacterSet *attributesCharacterSet;
 
 /** A regular expression that matches numbers.
- *  @discuss This property supersedes numberCharacterSet, nameCharacterSet and
- *           decimalPointCharacter. If this property is nil, a syntax
- *           colourer should use those properties instead, otherwise they are
- *           ignored. */
+ *  @discussion This property supersedes numberCharacterSet, nameCharacterSet
+ *      and decimalPointCharacter. If this property is nil, a syntax
+ *      colourer should use those properties instead, otherwise they are
+ *      ignored. */
 @property (readonly) NSString *numberDefinition;
 /** Characters to be coloured as numbers, if numberDefinition is nil. This
  *  includes eventual decimal separators. */
 @property (readonly) NSCharacterSet *numberCharacterSet;
 /** Characters that should not precede a number for it to be coloured.
- *  @discuss This property has no effect if numberDefinition is non-nil. */
+ *  @discussion This property has no effect if numberDefinition is non-nil. */
 @property (readonly) NSCharacterSet *nameCharacterSet;
 /** A character that will not be coloured as a number - even if included in
  *  numberCharacterSet - if it is the last character of the number.
- *  @discuss This property has no effect if numberDefinition is non-nil. */
+ *  @discussion This property has no effect if numberDefinition is non-nil. */
 @property (readonly) unichar decimalPointCharacter;
 
 

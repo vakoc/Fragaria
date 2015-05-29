@@ -38,17 +38,17 @@
 
 
 /** Returns the shared controller for `groupID`.
- *  @discuss All instances of MGSFragariaView that you wish to manage with this
- *      toolset must belong to at least one `groupID`. Every instance of
+ *  @discussion All instances of MGSFragariaView that you wish to manage with
+ *      this toolset must belong to at least one `groupID`. Every instance of
  *      MGSFragariaView within the same `groupID` is affected.
  *  @param groupID An user defaults group identifier. */
 + (instancetype)sharedControllerForGroupID:(NSString *)groupID;
 
 
 /** Provides the shared controller for global defaults.
- *  @discuss This controller manages properties that you wish to remain common
- *      among all groups in your application. Every instance of MGSFragariaView
- *      that belongs to a `groupID` is affected. */
+ *  @discussion This controller manages properties that you wish to remain
+ *      common among all groups in your application. Every instance of
+ *      MGSFragariaView that belongs to a `groupID` is affected. */
 + (instancetype)sharedController;
 
 
@@ -62,7 +62,7 @@
 
 
 /** The set of property names managed by this class. 
- *  @discuss This is initially set to all available properties of 
+ *  @discussion This is initially set to all available properties of
  *      MGSFragariaView for the global controller, and to an empty set for all
  *      the other controllers.
  *
@@ -76,7 +76,7 @@
 
 /** Returns a key value coding compliant object that is used to access the user
  *  default properties.
- *  @discuss Use only KVC setValue:forKey: and valueForKey: with this
+ *  @discussion Use only KVC setValue:forKey: and valueForKey: with this
  *      object. In general you have no reason to manually manipulate values
  *      within this structure. Simply set MGSFragariaView properties instead.*/
 @property (nonatomic,strong, readonly) id values;
@@ -88,7 +88,7 @@
 
 /** Specifies the instances of MGSFragaria whose properties are managed by
  *  this controller.
- *  @discuss The shared controller returns the union set of the managed
+ *  @discussion The shared controller returns the union set of the managed
  *      instances across all controllers, including the managed instances
  *      registered to itself by means of -addFragariaToManagedSet: and
  *      -removeFragariaFromManagedSet:.*/
@@ -96,14 +96,14 @@
 
 /** Adds an instance of MGSFragariaView to the set of managed instances for
  *  this controller.
- *  @discuss If the same instance is already managed by another controller, an
- *      exception will fire.
+ *  @discussion If the same instance is already managed by another controller,
+ *      an exception will be raised.
  *  @param fragaria The instance of MGSFragariaView to be added. */
 - (void)addFragariaToManagedSet:(MGSFragariaView *)fragaria;
 
 /** Removes an instance of MGSFragariaView to the set of managed instances for
  *  this controller.
- *  @discuss If the specified instance of Fragaria is not registered to this
+ *  @discussion If the specified instance of Fragaria is not registered to this
  *      controller, nothing happens.
  *  @param fragaria The instance of MGSFragariaView to be removed. */
 - (void)removeFragariaFromManagedSet:(MGSFragariaView *)fragaria;

@@ -128,15 +128,15 @@ extern NSString * const MGSFragariaDefaultsColoursVariables;                    
 
 
 /** An NSDictionary of default values for MGSFragariaView's properties.
- *  @discuss The key names are standard KVO key names of MGSFragariaView's
+ *  @discussion The key names are standard KVO key names of MGSFragariaView's
  *      properties, thus they are not prefixed. The key names can also be
  *      accessed by using the Fragaria Property User Defaults Keys. */
 + (NSDictionary *)defaultsDictionary;
 
 /** An NSDictionary of default values for MGSFragariaView's properties.
- *  @discuss The key names are namespaced with -namespacedKeyForKey:. They can't
- *      be accessed directly using the Fragaria Property User Defaults Keys
- *      unless you namespace them with -namespacedKeyForKey: before.
+ *  @discussion The key names are namespaced with -namespacedKeyForKey:. They
+ *      can't be accessed directly using the Fragaria Property User Defaults
+ *      Keys unless you namespace them with -namespacedKeyForKey: before.
  *
  *      This method is intended to be used with NSUserDefaults, to register
  *      initial defaults. If you are using MGSUserDefaultsController, you don't
@@ -145,7 +145,8 @@ extern NSString * const MGSFragariaDefaultsColoursVariables;                    
 
 
 /** Reset the properties of Fragaria to the defaults.
- *  @discuss The defaults used are the ones returned by -defaultsDictionary. */
+ *  @discussion The defaults used are the ones returned by 
+ *      -defaultsDictionary. */
 - (void)resetDefaults;
 
 
@@ -154,7 +155,7 @@ extern NSString * const MGSFragariaDefaultsColoursVariables;                    
 
 
 /** Returns a namespaced defaults key for the specified KVO key of Fragaria.
- *  @discuss This method adds a prefix to the given string to avoid
+ *  @discussion This method adds a prefix to the given string to avoid
  *      clashing with other defaults keys.
  *  @param aString The key to namespace. */
 + (NSString *)namespacedKeyForKey:(NSString *)aString;
