@@ -30,16 +30,10 @@
 - (id)init
 {
     NSBundle *bundle;
-    NSView *v;
-    CGFloat width;
     
     self = [super init];
     bundle = [NSBundle bundleForClass:[MGSPrefsEditorPropertiesViewController class]];
     [bundle loadNibNamed:@"MGSPrefsEditorProperties" owner:self topLevelObjects:nil];
-    
-    width = [self.paneEditing frame].size.width;
-    v = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, width, 0)];
-    [self setView:v];
 
     return self;
 }

@@ -28,16 +28,10 @@
 - (id)init
 {
     NSBundle *bundle;
-    NSView *view;
-    CGFloat width;
     
     self = [super init];
     bundle = [NSBundle bundleForClass:[MGSPrefsColourPropertiesViewController class]];
     [bundle loadNibNamed:@"MGSPrefsColourProperties" owner:self topLevelObjects:nil];
-    
-    width = [self.paneScheme frame].size.width;
-    view = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, width, 0)];
-    [self setView:view];
     
     return self;
 }

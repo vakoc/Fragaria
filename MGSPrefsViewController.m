@@ -109,16 +109,24 @@
 {
     NSBundle *bundle;
     
-    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]))
-    {
-        bundle = [NSBundle bundleForClass:[MGSPrefsViewController class]];
-        [bundle loadNibNamed:@"MGSPrefsCommonViews" owner:self topLevelObjects:nil];
-        
-        _managedPropertiesProxy = [[MGSManagedPropertiesProxy alloc] initWithViewController:self];
-		_managedGlobalPropertiesProxy = [[MGSManagedGlobalPropertiesProxy alloc] initWithViewController:self];
-        separators = [[NSMutableArray alloc] init];
-    }
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (!self) return nil;
+    
+    bundle = [NSBundle bundleForClass:[MGSPrefsViewController class]];
+    [bundle loadNibNamed:@"MGSPrefsCommonViews" owner:self topLevelObjects:nil];
+    
+    _managedPropertiesProxy = [[MGSManagedPropertiesProxy alloc] initWithViewController:self];
+	_managedGlobalPropertiesProxy = [[MGSManagedGlobalPropertiesProxy alloc] initWithViewController:self];
+    separators = [[NSMutableArray alloc] init];
 
+    return self;
+}
+
+
+- (instancetype)init
+{
+    self = [super init];
+    [self setView:[[NSView alloc] initWithFrame:NSMakeRect(0, 0, 500, 0)]];
     return self;
 }
 
