@@ -9,6 +9,7 @@
 //  Also provides property abstractions for Fragaria's settings and methods.
 //
 
+#import "NSObject+Fragaria.h"
 #import "MGSFragariaView.h"
 #import "MGSFragariaViewPrivate.h"
 #import "SMLLayoutManager.h"
@@ -76,7 +77,7 @@
 
 
 /*
- * When using propagateValue:forBinding we can help ensure type safety by using
+ * When using mgs_propagateValue:forBinding we can help ensure type safety by using
  * NSStringFromSelector(@selector(string))] instead of passing a string.
  */
 
@@ -100,7 +101,7 @@
 - (void)setString:(NSString *)string
 {
 	self.textView.string = string;
-    [self propagateValue:string forBinding:NSStringFromSelector(@selector(string))];
+    [self mgs_propagateValue:string forBinding:NSStringFromSelector(@selector(string))];
 }
 
 - (NSString *)string
@@ -153,7 +154,7 @@
 - (void)setSyntaxColoured:(BOOL)syntaxColoured
 {
 	self.textView.syntaxColoured = syntaxColoured;
-	[self propagateValue:@(syntaxColoured) forBinding:NSStringFromSelector(@selector(isSyntaxColoured))];
+	[self mgs_propagateValue:@(syntaxColoured) forBinding:NSStringFromSelector(@selector(isSyntaxColoured))];
 }
 
 - (BOOL)isSyntaxColoured
@@ -168,7 +169,7 @@
 - (void)setSyntaxDefinitionName:(NSString *)syntaxDefinitionName
 {
 	self.textView.syntaxColouring.syntaxDefinitionName = syntaxDefinitionName;
-	[self propagateValue:syntaxDefinitionName forBinding:NSStringFromSelector(@selector(syntaxDefinitionName))];
+	[self mgs_propagateValue:syntaxDefinitionName forBinding:NSStringFromSelector(@selector(syntaxDefinitionName))];
 }
 
 - (NSString *)syntaxDefinitionName
@@ -197,7 +198,7 @@
 - (void)setColoursMultiLineStrings:(BOOL)coloursMultiLineStrings
 {
     self.textView.syntaxColouring.coloursMultiLineStrings = coloursMultiLineStrings;
-	[self propagateValue:@(coloursMultiLineStrings) forBinding:NSStringFromSelector(@selector(coloursMultiLineStrings))];
+	[self mgs_propagateValue:@(coloursMultiLineStrings) forBinding:NSStringFromSelector(@selector(coloursMultiLineStrings))];
 }
 
 - (BOOL)coloursMultiLineStrings
@@ -212,7 +213,7 @@
 - (void)setColoursOnlyUntilEndOfLine:(BOOL)coloursOnlyUntilEndOfLine
 {
     self.textView.syntaxColouring.coloursOnlyUntilEndOfLine = coloursOnlyUntilEndOfLine;
-	[self propagateValue:@(coloursOnlyUntilEndOfLine) forBinding:NSStringFromSelector(@selector(coloursOnlyUntilEndOfLine))];
+	[self mgs_propagateValue:@(coloursOnlyUntilEndOfLine) forBinding:NSStringFromSelector(@selector(coloursOnlyUntilEndOfLine))];
 }
 
 - (BOOL)coloursOnlyUntilEndOfLine
@@ -244,7 +245,7 @@
 - (void)setAutoCompleteDelay:(double)autoCompleteDelay
 {
     self.textView.autoCompleteDelay = autoCompleteDelay;
-	[self propagateValue:@(autoCompleteDelay) forBinding:NSStringFromSelector(@selector(autoCompleteDelay))];
+	[self mgs_propagateValue:@(autoCompleteDelay) forBinding:NSStringFromSelector(@selector(autoCompleteDelay))];
 }
 
 - (double)autoCompleteDelay
@@ -259,7 +260,7 @@
 - (void)setAutoCompleteEnabled:(BOOL)autoCompleteEnabled
 {
     self.textView.autoCompleteEnabled = autoCompleteEnabled;
-	[self propagateValue:@(autoCompleteEnabled) forBinding:NSStringFromSelector(@selector(autoCompleteEnabled))];
+	[self mgs_propagateValue:@(autoCompleteEnabled) forBinding:NSStringFromSelector(@selector(autoCompleteEnabled))];
 }
 
 - (BOOL)autoCompleteEnabled
@@ -274,7 +275,7 @@
 - (void)setAutoCompleteWithKeywords:(BOOL)autoCompleteWithKeywords
 {
     self.textView.autoCompleteWithKeywords = autoCompleteWithKeywords;
-	[self propagateValue:@(autoCompleteWithKeywords) forBinding:NSStringFromSelector(@selector(autoCompleteWithKeywords))];
+	[self mgs_propagateValue:@(autoCompleteWithKeywords) forBinding:NSStringFromSelector(@selector(autoCompleteWithKeywords))];
 }
 
 - (BOOL)autoCompleteWithKeywords
@@ -292,7 +293,7 @@
 - (void)setCurrentLineHighlightColour:(NSColor *)currentLineHighlightColour
 {
     self.textView.currentLineHighlightColour = currentLineHighlightColour;
-	[self propagateValue:currentLineHighlightColour forBinding:NSStringFromSelector(@selector(currentLineHighlightColour))];
+	[self mgs_propagateValue:currentLineHighlightColour forBinding:NSStringFromSelector(@selector(currentLineHighlightColour))];
 }
 
 - (NSColor *)currentLineHighlightColour
@@ -307,7 +308,7 @@
 - (void)setHighlightsCurrentLine:(BOOL)highlightsCurrentLine
 {
     self.textView.highlightsCurrentLine = highlightsCurrentLine;
-	[self propagateValue:@(highlightsCurrentLine) forBinding:NSStringFromSelector(@selector(highlightsCurrentLine))];
+	[self mgs_propagateValue:@(highlightsCurrentLine) forBinding:NSStringFromSelector(@selector(highlightsCurrentLine))];
 }
 
 - (BOOL)highlightsCurrentLine
@@ -325,7 +326,7 @@
 - (void)setShowsGutter:(BOOL)showsGutter
 {
 	self.scrollView.rulersVisible = showsGutter;
-	[self propagateValue:@(showsGutter) forBinding:NSStringFromSelector(@selector(showsGutter))];
+	[self mgs_propagateValue:@(showsGutter) forBinding:NSStringFromSelector(@selector(showsGutter))];
 }
 
 - (BOOL)showsGutter
@@ -340,7 +341,7 @@
 - (void)setMinimumGutterWidth:(CGFloat)minimumGutterWidth
 {
 	self.gutterView.minimumWidth = minimumGutterWidth;
-	[self propagateValue:@(minimumGutterWidth) forBinding:NSStringFromSelector(@selector(minimumGutterWidth))];
+	[self mgs_propagateValue:@(minimumGutterWidth) forBinding:NSStringFromSelector(@selector(minimumGutterWidth))];
 }
 
 - (CGFloat)minimumGutterWidth
@@ -355,7 +356,7 @@
 - (void)setShowsLineNumbers:(BOOL)showsLineNumbers
 {
 	self.gutterView.showsLineNumbers = showsLineNumbers;
-	[self propagateValue:@(showsLineNumbers) forBinding:NSStringFromSelector(@selector(showsLineNumbers))];
+	[self mgs_propagateValue:@(showsLineNumbers) forBinding:NSStringFromSelector(@selector(showsLineNumbers))];
 }
 
 - (BOOL)showsLineNumbers
@@ -370,7 +371,7 @@
 - (void)setStartingLineNumber:(NSUInteger)startingLineNumber
 {
 	[self.gutterView setStartingLineNumber:startingLineNumber];
-	[self propagateValue:@(startingLineNumber) forBinding:NSStringFromSelector(@selector(startingLineNumber))];
+	[self mgs_propagateValue:@(startingLineNumber) forBinding:NSStringFromSelector(@selector(startingLineNumber))];
 }
 
 - (NSUInteger)startingLineNumber
@@ -385,7 +386,7 @@
 - (void)setGutterFont:(NSFont *)gutterFont
 {
     [self.gutterView setFont:gutterFont];
-	[self propagateValue:gutterFont forBinding:NSStringFromSelector(@selector(gutterFont))];
+	[self mgs_propagateValue:gutterFont forBinding:NSStringFromSelector(@selector(gutterFont))];
 }
 
 - (NSFont *)gutterFont
@@ -399,7 +400,7 @@
 - (void)setGutterTextColour:(NSColor *)gutterTextColour
 {
     self.gutterView.textColor = gutterTextColour;
-	[self propagateValue:gutterTextColour forBinding:NSStringFromSelector(@selector(gutterTextColour))];
+	[self mgs_propagateValue:gutterTextColour forBinding:NSStringFromSelector(@selector(gutterTextColour))];
 }
 
 - (NSColor *)gutterTextColour
@@ -431,7 +432,7 @@
 - (void)setShowsSyntaxErrors:(BOOL)showsSyntaxErrors
 {
 	self.syntaxErrorController.showsSyntaxErrors = showsSyntaxErrors;
-	[self propagateValue:@(showsSyntaxErrors) forBinding:NSStringFromSelector(@selector(showsSyntaxErrors))];
+	[self mgs_propagateValue:@(showsSyntaxErrors) forBinding:NSStringFromSelector(@selector(showsSyntaxErrors))];
 }
 
 - (BOOL)showsSyntaxErrors
@@ -446,7 +447,7 @@
 - (void)setShowsIndividualErrors:(BOOL)showsIndividualErrors
 {
 	self.syntaxErrorController.showsIndividualErrors = showsIndividualErrors;
-	[self propagateValue:@(showsIndividualErrors) forBinding:NSStringFromSelector(@selector(showsIndividualErrors))];
+	[self mgs_propagateValue:@(showsIndividualErrors) forBinding:NSStringFromSelector(@selector(showsIndividualErrors))];
 }
 
 - (BOOL)showsIndividualErrors
@@ -461,7 +462,7 @@
 - (void)setDefaultSyntaxErrorHighlightingColour:(NSColor *)defaultSyntaxErrorHighlightingColour
 {
     self.syntaxErrorController.defaultSyntaxErrorHighlightingColour = defaultSyntaxErrorHighlightingColour;
-    [self propagateValue:defaultSyntaxErrorHighlightingColour forBinding:NSStringFromSelector(@selector(defaultSyntaxErrorHighlightingColour))];
+    [self mgs_propagateValue:defaultSyntaxErrorHighlightingColour forBinding:NSStringFromSelector(@selector(defaultSyntaxErrorHighlightingColour))];
 }
 
 -(NSColor *)defaultSyntaxErrorHighlightingColour
@@ -496,7 +497,7 @@
 - (void)setTabWidth:(NSInteger)tabWidth
 {
     self.textView.tabWidth = tabWidth;
-	[self propagateValue:@(tabWidth) forBinding:NSStringFromSelector(@selector(tabWidth))];
+	[self mgs_propagateValue:@(tabWidth) forBinding:NSStringFromSelector(@selector(tabWidth))];
 }
 
 - (NSInteger)tabWidth
@@ -511,7 +512,7 @@
 - (void)setIndentWidth:(NSUInteger)indentWidth
 {
     self.textView.indentWidth = indentWidth;
-	[self propagateValue:@(indentWidth) forBinding:NSStringFromSelector(@selector(indentWidth))];
+	[self mgs_propagateValue:@(indentWidth) forBinding:NSStringFromSelector(@selector(indentWidth))];
 }
 
 - (NSUInteger)indentWidth
@@ -526,7 +527,7 @@
 - (void)setIndentWithSpaces:(BOOL)indentWithSpaces
 {
     self.textView.indentWithSpaces = indentWithSpaces;
-	[self propagateValue:@(indentWithSpaces) forBinding:NSStringFromSelector(@selector(indentWithSpaces))];
+	[self mgs_propagateValue:@(indentWithSpaces) forBinding:NSStringFromSelector(@selector(indentWithSpaces))];
 }
 
 - (BOOL)indentWithSpaces
@@ -541,7 +542,7 @@
 - (void)setUseTabStops:(BOOL)useTabStops
 {
     self.textView.useTabStops = useTabStops;
-	[self propagateValue:@(useTabStops) forBinding:NSStringFromSelector(@selector(useTabStops))];
+	[self mgs_propagateValue:@(useTabStops) forBinding:NSStringFromSelector(@selector(useTabStops))];
 }
 
 - (BOOL)useTabStops
@@ -556,7 +557,7 @@
 - (void)setIndentBracesAutomatically:(BOOL)indentBracesAutomatically
 {
     self.textView.indentBracesAutomatically = indentBracesAutomatically;
-	[self propagateValue:@(indentBracesAutomatically) forBinding:NSStringFromSelector(@selector(indentBracesAutomatically))];
+	[self mgs_propagateValue:@(indentBracesAutomatically) forBinding:NSStringFromSelector(@selector(indentBracesAutomatically))];
 }
 
 - (BOOL)indentBracesAutomatically
@@ -571,7 +572,7 @@
 - (void)setIndentNewLinesAutomatically:(BOOL)indentNewLinesAutomatically
 {
     self.textView.indentNewLinesAutomatically = indentNewLinesAutomatically;
-	[self propagateValue:@(indentNewLinesAutomatically) forBinding:NSStringFromSelector(@selector(indentNewLinesAutomatically))];
+	[self mgs_propagateValue:@(indentNewLinesAutomatically) forBinding:NSStringFromSelector(@selector(indentNewLinesAutomatically))];
 }
 
 - (BOOL)indentNewLinesAutomatically
@@ -589,7 +590,7 @@
 - (void)setInsertClosingParenthesisAutomatically:(BOOL)insertClosingParenthesisAutomatically
 {
     self.textView.insertClosingParenthesisAutomatically = insertClosingParenthesisAutomatically;
-	[self propagateValue:@(insertClosingParenthesisAutomatically) forBinding:NSStringFromSelector(@selector(insertClosingParenthesisAutomatically))];
+	[self mgs_propagateValue:@(insertClosingParenthesisAutomatically) forBinding:NSStringFromSelector(@selector(insertClosingParenthesisAutomatically))];
 }
 
 - (BOOL)insertClosingParenthesisAutomatically
@@ -604,7 +605,7 @@
 - (void)setInsertClosingBraceAutomatically:(BOOL)insertClosingBraceAutomatically
 {
     self.textView.insertClosingBraceAutomatically = insertClosingBraceAutomatically;
-	[self propagateValue:@(insertClosingBraceAutomatically) forBinding:NSStringFromSelector(@selector(insertClosingBraceAutomatically))];
+	[self mgs_propagateValue:@(insertClosingBraceAutomatically) forBinding:NSStringFromSelector(@selector(insertClosingBraceAutomatically))];
 }
 
 - (BOOL)insertClosingBraceAutomatically
@@ -619,7 +620,7 @@
 - (void)setShowsMatchingBraces:(BOOL)showsMatchingBraces
 {
     self.textView.showsMatchingBraces = showsMatchingBraces;
-	[self propagateValue:@(showsMatchingBraces) forBinding:NSStringFromSelector(@selector(showsMatchingBraces))];
+	[self mgs_propagateValue:@(showsMatchingBraces) forBinding:NSStringFromSelector(@selector(showsMatchingBraces))];
 }
 
 - (BOOL)showsMatchingBraces
@@ -637,7 +638,7 @@
 - (void)setPageGuideColumn:(NSInteger)pageGuideColumn
 {
     self.textView.pageGuideColumn = pageGuideColumn;
-	[self propagateValue:@(pageGuideColumn) forBinding:NSStringFromSelector(@selector(pageGuideColumn))];
+	[self mgs_propagateValue:@(pageGuideColumn) forBinding:NSStringFromSelector(@selector(pageGuideColumn))];
 }
 
 - (NSInteger)pageGuideColumn
@@ -652,7 +653,7 @@
 -(void)setShowsPageGuide:(BOOL)showsPageGuide
 {
     self.textView.showsPageGuide = showsPageGuide;
-	[self propagateValue:@(showsPageGuide) forBinding:NSStringFromSelector(@selector(showsPageGuide))];
+	[self mgs_propagateValue:@(showsPageGuide) forBinding:NSStringFromSelector(@selector(showsPageGuide))];
 }
 
 - (BOOL)showsPageGuide
@@ -667,7 +668,7 @@
 - (void)setLineWrap:(BOOL)lineWrap
 {
 	self.textView.lineWrap = lineWrap;
-	[self propagateValue:@(lineWrap) forBinding:NSStringFromSelector(@selector(lineWrap))];
+	[self mgs_propagateValue:@(lineWrap) forBinding:NSStringFromSelector(@selector(lineWrap))];
 }
 
 - (BOOL)lineWrap
@@ -682,7 +683,7 @@
 - (void)setLineWrapsAtPageGuide:(BOOL)lineWrapsAtPageGuide
 {
     self.textView.lineWrapsAtPageGuide = lineWrapsAtPageGuide;
-    [self propagateValue:@(lineWrapsAtPageGuide) forBinding:NSStringFromSelector(@selector(lineWrapsAtPageGuide))];
+    [self mgs_propagateValue:@(lineWrapsAtPageGuide) forBinding:NSStringFromSelector(@selector(lineWrapsAtPageGuide))];
 }
 
 - (BOOL)lineWrapsAtPageGuide
@@ -699,7 +700,7 @@
 - (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
 {
     self.textView.showsInvisibleCharacters = showsInvisibleCharacters;
-	[self propagateValue:@(showsInvisibleCharacters) forBinding:NSStringFromSelector(@selector(showsInvisibleCharacters))];
+	[self mgs_propagateValue:@(showsInvisibleCharacters) forBinding:NSStringFromSelector(@selector(showsInvisibleCharacters))];
 }
 
 - (BOOL)showsInvisibleCharacters
@@ -714,7 +715,7 @@
 - (void)setTextInvisibleCharactersColour:(NSColor *)textInvisibleCharactersColour
 {
 	self.textView.textInvisibleCharactersColour = textInvisibleCharactersColour;
-	[self propagateValue:textInvisibleCharactersColour forBinding:NSStringFromSelector(@selector(textInvisibleCharactersColour))];
+	[self mgs_propagateValue:textInvisibleCharactersColour forBinding:NSStringFromSelector(@selector(textInvisibleCharactersColour))];
 }
 
 - (NSColor *)textInvisibleCharactersColour
@@ -732,7 +733,7 @@
 - (void)setTextColor:(NSColor *)textColor
 {
     self.textView.textColor = textColor;
-	[self propagateValue:textColor forBinding:NSStringFromSelector(@selector(textColor))];
+	[self mgs_propagateValue:textColor forBinding:NSStringFromSelector(@selector(textColor))];
 }
 
 - (NSColor *)textColor
@@ -747,7 +748,7 @@
 - (void)setBackgroundColor:(NSColor *)backgroundColor
 {
     self.textView.backgroundColor = backgroundColor;
-	[self propagateValue:backgroundColor forBinding:NSStringFromSelector(@selector(backgroundColor))];
+	[self mgs_propagateValue:backgroundColor forBinding:NSStringFromSelector(@selector(backgroundColor))];
 }
 
 - (NSColor *)backgroundColor
@@ -762,7 +763,7 @@
 - (void)setTextFont:(NSFont *)textFont
 {
 	self.textView.textFont = textFont;
-	[self propagateValue:textFont forBinding:NSStringFromSelector(@selector(textFont))];
+	[self mgs_propagateValue:textFont forBinding:NSStringFromSelector(@selector(textFont))];
 }
 
 - (NSFont *)textFont
@@ -777,7 +778,7 @@
 - (void)setLineHeightMultiple:(CGFloat)lineHeightMultiple
 {
     self.textView.lineHeightMultiple = lineHeightMultiple;
-    [self propagateValue:@(lineHeightMultiple) forBinding:NSStringFromSelector(@selector(lineHeightMultiple))];
+    [self mgs_propagateValue:@(lineHeightMultiple) forBinding:NSStringFromSelector(@selector(lineHeightMultiple))];
 }
 
 - (CGFloat)lineHeightMultiple
@@ -809,7 +810,7 @@
 - (void)setHasVerticalScroller:(BOOL)hasVerticalScroller
 {
 	self.scrollView.hasVerticalScroller = hasVerticalScroller;
-	[self propagateValue:@(hasVerticalScroller) forBinding:NSStringFromSelector(@selector(hasVerticalScroller))];
+	[self mgs_propagateValue:@(hasVerticalScroller) forBinding:NSStringFromSelector(@selector(hasVerticalScroller))];
 }
 
 - (BOOL)hasVerticalScroller
@@ -824,7 +825,7 @@
 - (void)setInsertionPointColor:(NSColor *)insertionPointColor
 {
     self.textView.insertionPointColor = insertionPointColor;
-	[self propagateValue:insertionPointColor forBinding:NSStringFromSelector(@selector(insertionPointColor))];
+	[self mgs_propagateValue:insertionPointColor forBinding:NSStringFromSelector(@selector(insertionPointColor))];
 }
 
 - (NSColor *)insertionPointColor
@@ -840,7 +841,7 @@
 {
 	NSScrollElasticity setting = scrollElasticityDisabled ? NSScrollElasticityNone : NSScrollElasticityAutomatic;
 	self.scrollView.verticalScrollElasticity = setting;
-	[self propagateValue:@(scrollElasticityDisabled) forBinding:NSStringFromSelector(@selector(scrollElasticityDisabled))];
+	[self mgs_propagateValue:@(scrollElasticityDisabled) forBinding:NSStringFromSelector(@selector(scrollElasticityDisabled))];
 }
 
 - (BOOL)scrollElasticityDisabled
@@ -869,7 +870,7 @@
 - (void)setColourForAutocomplete:(NSColor *)colourForAutocomplete
 {
     self.textView.syntaxColouring.colourForAutocomplete = colourForAutocomplete;
-	[self propagateValue:colourForAutocomplete forBinding:NSStringFromSelector(@selector(colourForAutocomplete))];
+	[self mgs_propagateValue:colourForAutocomplete forBinding:NSStringFromSelector(@selector(colourForAutocomplete))];
 }
 
 - (NSColor *)colourForAutocomplete
@@ -884,7 +885,7 @@
 - (void)setColourForAttributes:(NSColor *)colourForAttributes
 {
     self.textView.syntaxColouring.colourForAttributes = colourForAttributes;
-	[self propagateValue:colourForAttributes forBinding:NSStringFromSelector(@selector(colourForAttributes))];
+	[self mgs_propagateValue:colourForAttributes forBinding:NSStringFromSelector(@selector(colourForAttributes))];
 }
 
 - (NSColor *)colourForAttributes
@@ -899,7 +900,7 @@
 - (void)setColourForCommands:(NSColor *)colourForCommands
 {
     self.textView.syntaxColouring.colourForCommands = colourForCommands;
-	[self propagateValue:colourForCommands forBinding:NSStringFromSelector(@selector(colourForCommands))];
+	[self mgs_propagateValue:colourForCommands forBinding:NSStringFromSelector(@selector(colourForCommands))];
 }
 
 - (NSColor *)colourForCommands
@@ -914,7 +915,7 @@
 - (void)setColourForComments:(NSColor *)colourForComments
 {
     self.textView.syntaxColouring.colourForComments = colourForComments;
-	[self propagateValue:colourForComments forBinding:NSStringFromSelector(@selector(colourForComments))];
+	[self mgs_propagateValue:colourForComments forBinding:NSStringFromSelector(@selector(colourForComments))];
 }
 
 - (NSColor *)colourForComments
@@ -929,7 +930,7 @@
 - (void)setColourForInstructions:(NSColor *)colourForInstructions
 {
     self.textView.syntaxColouring.colourForInstructions = colourForInstructions;
-	[self propagateValue:colourForInstructions forBinding:NSStringFromSelector(@selector(colourForInstructions))];
+	[self mgs_propagateValue:colourForInstructions forBinding:NSStringFromSelector(@selector(colourForInstructions))];
 }
 
 - (NSColor *)colourForInstructions
@@ -944,7 +945,7 @@
 - (void)setColourForKeywords:(NSColor *)colourForKeywords
 {
     self.textView.syntaxColouring.colourForKeywords = colourForKeywords;
-	[self propagateValue:colourForKeywords forBinding:NSStringFromSelector(@selector(colourForKeywords))];
+	[self mgs_propagateValue:colourForKeywords forBinding:NSStringFromSelector(@selector(colourForKeywords))];
 }
 
 - (NSColor *)colourForKeywords
@@ -959,7 +960,7 @@
 - (void)setColourForNumbers:(NSColor *)colourForNumbers
 {
     self.textView.syntaxColouring.colourForNumbers = colourForNumbers;
-	[self propagateValue:colourForNumbers forBinding:NSStringFromSelector(@selector(colourForNumbers))];
+	[self mgs_propagateValue:colourForNumbers forBinding:NSStringFromSelector(@selector(colourForNumbers))];
 }
 
 - (NSColor *)colourForNumbers
@@ -974,7 +975,7 @@
 - (void)setColourForStrings:(NSColor *)colourForStrings
 {
     self.textView.syntaxColouring.colourForStrings = colourForStrings;
-	[self propagateValue:colourForStrings forBinding:NSStringFromSelector(@selector(colourForStrings))];
+	[self mgs_propagateValue:colourForStrings forBinding:NSStringFromSelector(@selector(colourForStrings))];
 }
 
 - (NSColor *)colourForStrings
@@ -989,7 +990,7 @@
 - (void)setColourForVariables:(NSColor *)colourForVariables
 {
     self.textView.syntaxColouring.colourForVariables = colourForVariables;
-	[self propagateValue:colourForVariables forBinding:NSStringFromSelector(@selector(colourForVariables))];
+	[self mgs_propagateValue:colourForVariables forBinding:NSStringFromSelector(@selector(colourForVariables))];
 }
 
 - (NSColor *)colourForVariables
@@ -1007,7 +1008,7 @@
 - (void)setColoursAttributes:(BOOL)coloursAttributes
 {
     self.textView.syntaxColouring.coloursAttributes = coloursAttributes;
-	[self propagateValue:@(coloursAttributes) forBinding:NSStringFromSelector(@selector(coloursAttributes))];
+	[self mgs_propagateValue:@(coloursAttributes) forBinding:NSStringFromSelector(@selector(coloursAttributes))];
 }
 
 - (BOOL)coloursAttributes
@@ -1021,7 +1022,7 @@
 - (void)setColoursAutocomplete:(BOOL)coloursAutocomplete
 {
     self.textView.syntaxColouring.coloursAutocomplete = coloursAutocomplete;
-	[self propagateValue:@(coloursAutocomplete) forBinding:NSStringFromSelector(@selector(coloursAutocomplete))];
+	[self mgs_propagateValue:@(coloursAutocomplete) forBinding:NSStringFromSelector(@selector(coloursAutocomplete))];
 }
 
 - (BOOL)coloursAutocomplete
@@ -1036,7 +1037,7 @@
 - (void)setColoursCommands:(BOOL)coloursCommands
 {
     self.textView.syntaxColouring.coloursCommands = coloursCommands;
-	[self propagateValue:@(coloursCommands) forBinding:NSStringFromSelector(@selector(coloursCommands))];
+	[self mgs_propagateValue:@(coloursCommands) forBinding:NSStringFromSelector(@selector(coloursCommands))];
 }
 
 - (BOOL)coloursCommands
@@ -1051,7 +1052,7 @@
 - (void)setColoursComments:(BOOL)coloursComments
 {
     self.textView.syntaxColouring.coloursComments = coloursComments;
-	[self propagateValue:@(coloursComments) forBinding:NSStringFromSelector(@selector(coloursComments))];
+	[self mgs_propagateValue:@(coloursComments) forBinding:NSStringFromSelector(@selector(coloursComments))];
 }
 
 - (BOOL)coloursComments
@@ -1066,7 +1067,7 @@
 - (void)setColoursInstructions:(BOOL)coloursInstructions
 {
     self.textView.syntaxColouring.coloursInstructions = coloursInstructions;
-	[self propagateValue:@(coloursInstructions) forBinding:NSStringFromSelector(@selector(coloursInstructions))];
+	[self mgs_propagateValue:@(coloursInstructions) forBinding:NSStringFromSelector(@selector(coloursInstructions))];
 }
 
 - (BOOL)coloursInstructions
@@ -1081,7 +1082,7 @@
 - (void)setColoursKeywords:(BOOL)coloursKeywords
 {
     self.textView.syntaxColouring.coloursKeywords = coloursKeywords;
-	[self propagateValue:@(coloursKeywords) forBinding:NSStringFromSelector(@selector(coloursKeywords))];
+	[self mgs_propagateValue:@(coloursKeywords) forBinding:NSStringFromSelector(@selector(coloursKeywords))];
 }
 
 - (BOOL)coloursKeywords
@@ -1096,7 +1097,7 @@
 - (void)setColoursNumbers:(BOOL)coloursNumbers
 {
     self.textView.syntaxColouring.coloursNumbers = coloursNumbers;
-	[self propagateValue:@(coloursNumbers) forBinding:NSStringFromSelector(@selector(coloursNumbers))];
+	[self mgs_propagateValue:@(coloursNumbers) forBinding:NSStringFromSelector(@selector(coloursNumbers))];
 }
 
 - (BOOL)coloursNumbers
@@ -1111,7 +1112,7 @@
 - (void)setColoursStrings:(BOOL)coloursStrings
 {
     self.textView.syntaxColouring.coloursStrings = coloursStrings;
-	[self propagateValue:@(coloursStrings) forBinding:NSStringFromSelector(@selector(coloursStrings))];
+	[self mgs_propagateValue:@(coloursStrings) forBinding:NSStringFromSelector(@selector(coloursStrings))];
 }
 
 - (BOOL)coloursStrings
@@ -1126,80 +1127,12 @@
 - (void)setColoursVariables:(BOOL)coloursVariables
 {
     self.textView.syntaxColouring.coloursVariables = coloursVariables;
-	[self propagateValue:@(coloursVariables) forBinding:NSStringFromSelector(@selector(coloursVariables))];
+	[self mgs_propagateValue:@(coloursVariables) forBinding:NSStringFromSelector(@selector(coloursVariables))];
 }
 
 - (BOOL)coloursVariables
 {
     return self.textView.syntaxColouring.coloursVariables;
-}
-
-
-#pragma mark - KVO/KVC/BINDING Handling
-
-
-/*
- * - propagateValue:forBinding
- *   courtesy of Tom Dalling.
- */
--(void)propagateValue:(id)value forBinding:(NSString*)binding;
-{
-    NSParameterAssert(binding != nil);
-
-    // WARNING: bindingInfo contains NSNull, so it must be accounted for
-    NSDictionary* bindingInfo = [self infoForBinding:binding];
-    if (!bindingInfo)
-    {
-        return; //there is no binding
-    }
-
-    // Apply the value transformer, if one has been set
-    NSDictionary* bindingOptions = [bindingInfo objectForKey:NSOptionsKey];
-
-    if (bindingOptions)
-    {
-        NSValueTransformer* transformer = [bindingOptions valueForKey:NSValueTransformerBindingOption];
-
-        if (!transformer || (id)transformer == [NSNull null])
-        {
-            NSString* transformerName = [bindingOptions valueForKey:NSValueTransformerNameBindingOption];
-
-            if(transformerName && (id)transformerName != [NSNull null])
-            {
-                transformer = [NSValueTransformer valueTransformerForName:transformerName];
-            }
-        }
-
-        if (transformer && (id)transformer != [NSNull null])
-        {
-            if([[transformer class] allowsReverseTransformation])
-            {
-                value = [transformer reverseTransformedValue:value];
-            }
-            else
-            {
-                NSLog(@"WARNING: binding \"%@\" has value transformer, but it doesn't allow reverse transformations in %s", binding, __PRETTY_FUNCTION__);
-            }
-        }
-    }
-
-    id boundObject = [bindingInfo objectForKey:NSObservedObjectKey];
-
-    if (!boundObject || boundObject == [NSNull null])
-    {
-        NSLog(@"ERROR: NSObservedObjectKey was nil for binding \"%@\" in %s", binding, __PRETTY_FUNCTION__);
-        return;
-    }
-
-    NSString* boundKeyPath = [bindingInfo objectForKey:NSObservedKeyPathKey];
-
-    if (!boundKeyPath || (id)boundKeyPath == [NSNull null])
-    {
-        NSLog(@"ERROR: NSObservedKeyPathKey was nil for binding \"%@\" in %s", binding, __PRETTY_FUNCTION__);
-        return;
-    }
-
-    [boundObject setValue:value forKeyPath:boundKeyPath];
 }
 
 
