@@ -29,6 +29,7 @@
 		0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */; };
 		013A79191AA8C715008ADFA1 /* MGSContextMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 013A791B1AA8C715008ADFA1 /* MGSContextMenu.xib */; };
 		01684A841B159AC7008A900D /* MGSPrefsCommonViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01684A831B159AC7008A900D /* MGSPrefsCommonViews.xib */; };
+		01684A881B15FBD9008A900D /* MGSFontWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01684A861B15FBD9008A900D /* MGSFontWell.m */; };
 		016E310F1B0324D3000D3497 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 016E31111B0324D3000D3497 /* Localizable.strings */; };
 		017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FD5871A7A992700B305FB /* MGSLineNumberView.m */; };
 		018CFA0D1AE46B8F00334011 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 018CFA0C1AE46B8F00334011 /* main.m */; };
@@ -105,7 +106,6 @@
 		D0718B921AB556280073493A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0718B901AB556280073493A /* MainMenu.xib */; };
 		D0718B941AB5566F0073493A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B931AB5566F0073493A /* main.m */; };
 		D0718B971AB556990073493A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B961AB556990073493A /* AppDelegate.m */; };
-		D0718B9B1AB5C53D0073493A /* MGSFontToTextTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B991AB5C53D0073493A /* MGSFontToTextTransformer.m */; };
 		D0718BA81AB70BE70073493A /* MGSColourScheme.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718BA61AB70BE70073493A /* MGSColourScheme.m */; };
 		D0718BAC1AB71FE00073493A /* MGSColourSchemeController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718BAA1AB71FE00073493A /* MGSColourSchemeController.m */; };
 		D0718BAE1AB721280073493A /* MGSColourSchemeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718BAD1AB721280073493A /* MGSColourSchemeTests.m */; };
@@ -218,6 +218,8 @@
 		013A791C1AA8C719008ADFA1 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/MGSContextMenu.xib"; sourceTree = "<group>"; };
 		0166D9971A9FC3B20099AB81 /* SMLTextViewPrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SMLTextViewPrivate.h; sourceTree = "<group>"; };
 		01684A831B159AC7008A900D /* MGSPrefsCommonViews.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MGSPrefsCommonViews.xib; sourceTree = "<group>"; };
+		01684A851B15FBD9008A900D /* MGSFontWell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFontWell.h; sourceTree = "<group>"; };
+		01684A861B15FBD9008A900D /* MGSFontWell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFontWell.m; sourceTree = "<group>"; };
 		016E31101B0324D3000D3497 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		017FD5861A7A992700B305FB /* MGSLineNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberView.h; sourceTree = "<group>"; };
 		017FD5871A7A992700B305FB /* MGSLineNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLineNumberView.m; sourceTree = "<group>"; };
@@ -321,8 +323,6 @@
 		D0718B931AB5566F0073493A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Applications/MGSFragariaViewModern/main.m; sourceTree = SOURCE_ROOT; };
 		D0718B951AB556990073493A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Applications/MGSFragariaViewModern/AppDelegate.h; sourceTree = SOURCE_ROOT; };
 		D0718B961AB556990073493A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Applications/MGSFragariaViewModern/AppDelegate.m; sourceTree = SOURCE_ROOT; };
-		D0718B981AB5C53D0073493A /* MGSFontToTextTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFontToTextTransformer.h; sourceTree = "<group>"; };
-		D0718B991AB5C53D0073493A /* MGSFontToTextTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFontToTextTransformer.m; sourceTree = "<group>"; };
 		D0718BA51AB70BE70073493A /* MGSColourScheme.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSColourScheme.h; sourceTree = "<group>"; };
 		D0718BA61AB70BE70073493A /* MGSColourScheme.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSColourScheme.m; sourceTree = "<group>"; };
 		D0718BA91AB71FE00073493A /* MGSColourSchemeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSColourSchemeController.h; sourceTree = "<group>"; };
@@ -699,6 +699,8 @@
 		D0718BA41AB7062A0073493A /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				01684A851B15FBD9008A900D /* MGSFontWell.h */,
+				01684A861B15FBD9008A900D /* MGSFontWell.m */,
 				D071884D1AB54CCA0073493A /* MGSPrefsViewController.h */,
 				D071884E1AB54CCA0073493A /* MGSPrefsViewController.m */,
 				01684A831B159AC7008A900D /* MGSPrefsCommonViews.xib */,
@@ -785,8 +787,6 @@
 				D07717AF1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m */,
 				D06653D01AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.h */,
 				D06653D11AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.m */,
-				D0718B981AB5C53D0073493A /* MGSFontToTextTransformer.h */,
-				D0718B991AB5C53D0073493A /* MGSFontToTextTransformer.m */,
 				D06653D61AC02A0400ACE8B0 /* NSColor+TransformedCompare.h */,
 				D06653D71AC02A0400ACE8B0 /* NSColor+TransformedCompare.m */,
 			);
@@ -1103,7 +1103,6 @@
 				D07717B11AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m in Sources */,
 				017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */,
 				AB69B68F118B78D400903D1D /* SMLTextView.m in Sources */,
-				D0718B9B1AB5C53D0073493A /* MGSFontToTextTransformer.m in Sources */,
 				D06653D31AC00D3D00ACE8B0 /* MGSColourToPlainTextTransformer.m in Sources */,
 				AB69B6DA118B7F2A00903D1D /* SMLLayoutManager.m in Sources */,
 				AB3971CB118C1F8A00AEF388 /* MGSSyntaxController.m in Sources */,
@@ -1124,6 +1123,7 @@
 				01FBC7EC1B0679520008EAF8 /* MGSMutableSubstring.m in Sources */,
 				D071883F1AB3CDFA0073493A /* MGSFragariaView+Definitions.m in Sources */,
 				D07188501AB54CCA0073493A /* MGSPrefsViewController.m in Sources */,
+				01684A881B15FBD9008A900D /* MGSFontWell.m in Sources */,
 				D07188441AB3D2220073493A /* MGSMutableDictionary.m in Sources */,
 				D071883D1AB3CDFA0073493A /* MGSUserDefaultsController.m in Sources */,
 				0191FA821A8829930099B50D /* SMLTextView+MGSTextActions.m in Sources */,

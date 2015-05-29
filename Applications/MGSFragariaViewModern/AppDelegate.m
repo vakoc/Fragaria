@@ -352,6 +352,7 @@
 	NSMutableArray *globalProperties = [NSMutableArray arrayWithArray:colourProperties];
 	[globalProperties addObjectsFromArray:@[
 											MGSFragariaDefaultsTextFont,
+                                            MGSFragariaDefaultsGutterFont,
 											MGSFragariaDefaultsShowsGutter,
 											]];
 

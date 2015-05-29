@@ -8,6 +8,7 @@
 
 #import "MGSPrefsEditorPropertiesViewController.h"
 #import "MGSUserDefaultsController.h"
+#import "MGSFontWell.h"
 
 
 @interface MGSPrefsEditorPropertiesViewController ()
@@ -28,7 +29,6 @@
  */
 - (id)init
 {
-    id nextResp;
     NSBundle *bundle;
     NSView *v;
     CGFloat width;
@@ -40,57 +40,18 @@
     width = [self.paneEditing frame].size.width;
     v = [[NSView alloc] initWithFrame:NSMakeRect(0, 0, width, 0)];
     [self setView:v];
-    
-    /* Install this view controller in the responder chain so that it will
-     * receive the changeFont message. */
-    v = [self view];
-    nextResp = [v nextResponder];
-    /* Yosemite already does this for us, so don't do it if it is not
-     * needed. */
-    if (nextResp != self) {
-        [v setNextResponder:self];
-        [self setNextResponder:nextResp];
-    }
 
     return self;
 }
 
 
 /*
- *  - setFontAction:
- */
-- (IBAction)setFontAction:(id)sender
-{
-    NSFontManager *fontManager = [NSFontManager sharedFontManager];
-    [fontManager setSelectedFont:self.editorFont isMultiple:NO];
-    [fontManager orderFrontFontPanel:nil];
-}
-
-
-/*
- *  - changeFont:
- */
-- (void)changeFont:(id)sender
-{
-    self.editorFont = [(NSFontManager *)sender convertFont:self.editorFont];
-}
-
-
-/*
  *  @property editorFont
- *  The property binding for the font is only one way because the value
- *  transformer is only one way, and it would be dangerous to make it
- *  reversible. As such we shall manage the properties directly.
+ *  This is just to keep the editor font synced with the gutter font.
  */
-- (void)setEditorFont:(NSFont *)editorFont
+- (IBAction)setEditorFont:(id)sender
 {
-    [self.userDefaultsController.values setValue:editorFont forKey:MGSFragariaDefaultsTextFont];
-    [self.userDefaultsController.values setValue:editorFont forKey:MGSFragariaDefaultsGutterFont];
-}
-
-- (NSFont *)editorFont
-{
-    return [self.userDefaultsController.values valueForKey:MGSFragariaDefaultsTextFont];
+    [self.userDefaultsController.values setValue:[sender font] forKey:MGSFragariaDefaultsGutterFont];
 }
 
 

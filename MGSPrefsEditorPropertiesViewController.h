@@ -17,17 +17,5 @@
 @interface MGSPrefsEditorPropertiesViewController : MGSPrefsViewController
 
 
-/** 
- *  Open the system font picker.
- *  @param sender The object which sent the message.
- **/
-- (IBAction)setFontAction:(id)sender;
-
-/**
- *  Called as part of the responder chain when the font is changed.
- *  @param sender indicates the send of the action. 
- **/
-- (void)changeFont:(id)sender;
-
 
 @end

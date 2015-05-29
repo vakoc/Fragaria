@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7706"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -808,31 +808,10 @@
                         <font key="font" metaFont="smallSystem"/>
                     </buttonCell>
                     <connections>
-                        <action selector="setFontAction:" target="-2" id="4G3-ZF-ftW"/>
+                        <action selector="activate:" target="pe6-oV-l5I" id="Xuv-9B-vqE"/>
                         <binding destination="-2" name="enabled" keyPath="self.managedProperties.textFont" id="ru6-BL-rYT"/>
                     </connections>
                 </button>
-                <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="10" translatesAutoresizingMaskIntoConstraints="NO" id="mNY-OV-Hfv">
-                    <rect key="frame" x="120" y="20" width="360" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="72i-wN-Sxp"/>
-                    </constraints>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" alignment="center" drawsBackground="YES" id="1rc-k1-a5d">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                    <connections>
-                        <binding destination="nB4-Iz-pOA" name="value" keyPath="selection.textFont" id="buQ-iY-FqW">
-                            <dictionary key="options">
-                                <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
-                                <string key="NSValueTransformerName">MGSFontToTextTransformer</string>
-                            </dictionary>
-                        </binding>
-                        <binding destination="nB4-Iz-pOA" name="font" keyPath="selection.textFont" id="lLp-1D-ck1"/>
-                        <binding destination="-2" name="enabled" keyPath="self.managedProperties.textFont" id="Gem-i3-8tV"/>
-                    </connections>
-                </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="5gZ-ci-ZgZ">
                     <rect key="frame" x="18" y="68" width="61" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Text Font" id="n90-sX-z4w">
@@ -849,16 +828,27 @@
                         <binding destination="-2" name="fontBold" keyPath="self.managedGlobalProperties.textFont" id="hW4-Oq-pob"/>
                     </connections>
                 </textField>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="pe6-oV-l5I" customClass="MGSFontWell">
+                    <rect key="frame" x="120" y="20" width="360" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="WQd-tu-za7"/>
+                    </constraints>
+                    <connections>
+                        <action selector="setEditorFont:" target="-2" id="LPE-F7-nsy"/>
+                        <binding destination="nB4-Iz-pOA" name="font" keyPath="selection.textFont" id="fff-00-002"/>
+                        <binding destination="-2" name="enabled" keyPath="self.managedProperties.textFont" id="fff-00-001"/>
+                    </connections>
+                </customView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="mNY-OV-Hfv" secondAttribute="bottom" priority="900" constant="20" symbolic="YES" id="9Wg-nI-G8C"/>
-                <constraint firstItem="acX-VI-HCT" firstAttribute="top" secondItem="5gZ-ci-ZgZ" secondAttribute="bottom" priority="900" constant="8" symbolic="YES" id="TNx-h5-3Dj"/>
-                <constraint firstAttribute="trailing" secondItem="mNY-OV-Hfv" secondAttribute="trailing" priority="800" constant="20" symbolic="YES" id="TUB-WB-MuM"/>
-                <constraint firstItem="mNY-OV-Hfv" firstAttribute="top" secondItem="acX-VI-HCT" secondAttribute="top" priority="900" id="ZP0-gT-bHY"/>
-                <constraint firstItem="5gZ-ci-ZgZ" firstAttribute="top" secondItem="bZI-wA-fV8" secondAttribute="top" priority="900" constant="10" id="i3r-R3-mGf"/>
-                <constraint firstItem="5gZ-ci-ZgZ" firstAttribute="leading" secondItem="bZI-wA-fV8" secondAttribute="leading" priority="900" constant="20" symbolic="YES" id="rpM-9b-YBw"/>
-                <constraint firstItem="mNY-OV-Hfv" firstAttribute="leading" secondItem="acX-VI-HCT" secondAttribute="trailing" priority="900" constant="8" symbolic="YES" id="x64-Co-1uc"/>
-                <constraint firstItem="acX-VI-HCT" firstAttribute="leading" secondItem="bZI-wA-fV8" secondAttribute="leading" priority="900" constant="40" id="yUO-7W-cQS"/>
+                <constraint firstAttribute="bottom" secondItem="pe6-oV-l5I" secondAttribute="bottom" constant="20" id="EUH-m4-rjc"/>
+                <constraint firstItem="acX-VI-HCT" firstAttribute="top" secondItem="pe6-oV-l5I" secondAttribute="top" id="V9g-Yt-29s"/>
+                <constraint firstItem="5gZ-ci-ZgZ" firstAttribute="leading" secondItem="bZI-wA-fV8" secondAttribute="leading" constant="20" id="VDS-ku-Nf3"/>
+                <constraint firstItem="acX-VI-HCT" firstAttribute="leading" secondItem="bZI-wA-fV8" secondAttribute="leading" constant="40" id="YqJ-GK-dBE"/>
+                <constraint firstAttribute="trailing" secondItem="pe6-oV-l5I" secondAttribute="trailing" constant="20" id="hMv-kW-UK1"/>
+                <constraint firstItem="pe6-oV-l5I" firstAttribute="leading" secondItem="acX-VI-HCT" secondAttribute="trailing" constant="8" id="k94-KY-ZJZ"/>
+                <constraint firstItem="acX-VI-HCT" firstAttribute="top" secondItem="5gZ-ci-ZgZ" secondAttribute="bottom" constant="8" id="lHH-eI-GM6"/>
+                <constraint firstItem="5gZ-ci-ZgZ" firstAttribute="top" secondItem="bZI-wA-fV8" secondAttribute="top" constant="10" id="yiV-GC-Ae6"/>
             </constraints>
         </customView>
         <customView id="kX7-bx-8Jg" userLabel="Gutter View">
