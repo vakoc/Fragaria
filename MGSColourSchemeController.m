@@ -46,9 +46,9 @@ NSString * const KMGSColourSchemeExt = @"plist";
  */
 - (void)awakeFromNib
 {
-    /* Currently the objectController that gets its data from MGSUserDefaults
-       isn't connected to any data, so we don't want to do too much while we
-       wait for it to connect by monitoring it via KVO. */
+    /* The objectController that gets its data from MGSUserDefaults
+       might not be connected to any data, so we don't want to do too much
+       while we wait for it to connect by monitoring it via KVO. */
 
     [self setupEarly];
 }
@@ -68,9 +68,6 @@ NSString * const KMGSColourSchemeExt = @"plist";
  */
 - (void)setupEarly
 {
-    /* Listen for the objectController to connect. */
-    [self addObserver:self forKeyPath:@"objectController.content" options:NSKeyValueObservingOptionNew context:@"objectController"];
-
     /* Load our schemes and get them ready for use. */
 	[self loadColourSchemes];
 	
@@ -80,6 +77,12 @@ NSString * const KMGSColourSchemeExt = @"plist";
                                 ]];
 
     [self setContent:self.colourSchemes];
+    
+    /* Listen for the objectController to connect, if it didn't already */
+    if (!self.objectController.content)
+        [self addObserver:self forKeyPath:@"objectController.content" options:NSKeyValueObservingOptionNew context:@"objectController"];
+    else
+        [self setupLate];
 }
 
 
