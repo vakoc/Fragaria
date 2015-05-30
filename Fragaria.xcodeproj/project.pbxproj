@@ -311,10 +311,10 @@
 		D0718B471AB54EA70073493A /* MGSPrefsColourPropertiesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSPrefsColourPropertiesViewController.m; sourceTree = "<group>"; };
 		D0718B501AB551460073493A /* MGSFragariaViewModern.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MGSFragariaViewModern.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0718B531AB551460073493A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = Applications/MGSFragariaViewModern/Info.plist; sourceTree = "<group>"; };
-		D0718B7F1AB553A20073493A /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesViewController.h; sourceTree = "<group>"; };
-		D0718B801AB553A20073493A /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MASPreferencesWindow.xib; sourceTree = "<group>"; };
-		D0718B811AB553A20073493A /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
-		D0718B821AB553A20073493A /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
+		D0718B7F1AB553A20073493A /* MASPreferencesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MASPreferencesViewController.h; path = Applications/MASPreferences/MASPreferencesViewController.h; sourceTree = SOURCE_ROOT; };
+		D0718B801AB553A20073493A /* MASPreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MASPreferencesWindow.xib; path = Applications/MASPreferences/MASPreferencesWindow.xib; sourceTree = SOURCE_ROOT; };
+		D0718B811AB553A20073493A /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MASPreferencesWindowController.h; path = Applications/MASPreferences/MASPreferencesWindowController.h; sourceTree = SOURCE_ROOT; };
+		D0718B821AB553A20073493A /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MASPreferencesWindowController.m; path = Applications/MASPreferences/MASPreferencesWindowController.m; sourceTree = SOURCE_ROOT; };
 		D0718B881AB553E80073493A /* README.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = README.html; path = Applications/MGSFragariaViewModern/README.html; sourceTree = SOURCE_ROOT; };
 		D0718B911AB556280073493A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Applications/MGSFragariaViewModern/en.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
 		D0718B931AB5566F0073493A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Applications/MGSFragariaViewModern/main.m; sourceTree = SOURCE_ROOT; };
@@ -610,6 +610,7 @@
 				AB648E2211FB37AF00AEF7BD /* Simple */,
 				D0E521001A90B899005CB80B /* MGSFragariaView */,
 				D0718B511AB551460073493A /* MGSFragariaViewModern */,
+				D0718B7D1AB553A20073493A /* MASPreferences */,
 			);
 			name = Applications;
 			sourceTree = "<group>";
@@ -665,7 +666,6 @@
 				D0718B901AB556280073493A /* MainMenu.xib */,
 				D0718B881AB553E80073493A /* README.html */,
 				D0718B521AB551460073493A /* Supporting Files */,
-				D0718B7D1AB553A20073493A /* MASPreferences */,
 			);
 			path = MGSFragariaViewModern;
 			sourceTree = "<group>";
