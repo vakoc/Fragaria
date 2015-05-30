@@ -43,6 +43,7 @@ static NSNumberFormatter *formatter;
     if (!self) return nil;
     
     [self awakeFromNib];
+    _font = [NSFont userFontOfSize:0];
     
     return self;
 }
@@ -54,6 +55,7 @@ static NSNumberFormatter *formatter;
     if (!self) return nil;
     
     self.cell = [[[[self class] cellClass] alloc] initTextCell:@""];
+    _font = [NSFont userFontOfSize:0];
     
     return self;
 }
@@ -69,7 +71,6 @@ static NSNumberFormatter *formatter;
     [self.cell setShowsFirstResponder:YES];
     [self.cell setDrawsBackground:YES];
     [self setFocusRingType:NSFocusRingTypeExterior];
-    _font = [NSFont userFontOfSize:0];
     wasActivatedOnce = NO;
 }
 
