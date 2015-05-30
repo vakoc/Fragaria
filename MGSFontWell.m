@@ -69,7 +69,7 @@ static NSNumberFormatter *formatter;
     [self.cell setShowsFirstResponder:YES];
     [self.cell setDrawsBackground:YES];
     [self setFocusRingType:NSFocusRingTypeExterior];
-    self.font = [NSFont userFontOfSize:0];
+    _font = [NSFont userFontOfSize:0];
     wasActivatedOnce = NO;
 }
 
