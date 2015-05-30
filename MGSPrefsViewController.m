@@ -193,6 +193,33 @@
 }
 
 
+/*
+ * @property toolbarItemImage
+ */
+- (NSImage *)toolbarItemImage
+{
+    return [NSImage imageNamed:NSImageNameAdvanced];
+}
+
+
+/*
+ * @property identifier
+ */
+- (NSString *)identifier
+{
+    return NSStringFromClass([self class]);;
+}
+
+
+/*
+ * @property toolbarItemLabel
+ */
+- (NSString *)toolbarItemLabel
+{
+    return [self identifier];
+}
+
+
 #pragma mark - Instance Methods
 
 /*

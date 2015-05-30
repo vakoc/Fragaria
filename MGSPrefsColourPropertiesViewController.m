@@ -37,6 +37,12 @@
 }
 
 
+- (NSString *)toolbarItemLabel
+{
+    return NSLocalizedString(@"Colors", @"Toolbar item name for the Colors preference pane");
+}
+
+
 /*
  * - hideableViews
  */

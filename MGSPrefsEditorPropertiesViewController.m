@@ -39,6 +39,12 @@
 }
 
 
+- (NSString *)toolbarItemLabel
+{
+    return NSLocalizedString(@"Editor", @"Toolbar item name for the Editor preference pane");
+}
+
+
 /*
  *  @property editorFont
  *  This is just to keep the editor font synced with the gutter font.

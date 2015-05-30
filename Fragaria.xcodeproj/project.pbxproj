@@ -102,8 +102,6 @@
 		D0718B851AB553A20073493A /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0718B801AB553A20073493A /* MASPreferencesWindow.xib */; };
 		D0718B861AB553A20073493A /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B821AB553A20073493A /* MASPreferencesWindowController.m */; };
 		D0718B8D1AB553E80073493A /* README.html in Resources */ = {isa = PBXBuildFile; fileRef = D0718B881AB553E80073493A /* README.html */; };
-		D0718B8E1AB553E80073493A /* ColorSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B8A1AB553E80073493A /* ColorSettingsViewController.m */; };
-		D0718B8F1AB553E80073493A /* EditorSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B8C1AB553E80073493A /* EditorSettingsViewController.m */; };
 		D0718B921AB556280073493A /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0718B901AB556280073493A /* MainMenu.xib */; };
 		D0718B941AB5566F0073493A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B931AB5566F0073493A /* main.m */; };
 		D0718B971AB556990073493A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B961AB556990073493A /* AppDelegate.m */; };
@@ -318,10 +316,6 @@
 		D0718B811AB553A20073493A /* MASPreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASPreferencesWindowController.h; sourceTree = "<group>"; };
 		D0718B821AB553A20073493A /* MASPreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASPreferencesWindowController.m; sourceTree = "<group>"; };
 		D0718B881AB553E80073493A /* README.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = README.html; path = Applications/MGSFragariaViewModern/README.html; sourceTree = SOURCE_ROOT; };
-		D0718B891AB553E80073493A /* ColorSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ColorSettingsViewController.h; path = Applications/MGSFragariaViewModern/ColorSettingsViewController.h; sourceTree = SOURCE_ROOT; };
-		D0718B8A1AB553E80073493A /* ColorSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ColorSettingsViewController.m; path = Applications/MGSFragariaViewModern/ColorSettingsViewController.m; sourceTree = SOURCE_ROOT; };
-		D0718B8B1AB553E80073493A /* EditorSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditorSettingsViewController.h; path = Applications/MGSFragariaViewModern/EditorSettingsViewController.h; sourceTree = SOURCE_ROOT; };
-		D0718B8C1AB553E80073493A /* EditorSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EditorSettingsViewController.m; path = Applications/MGSFragariaViewModern/EditorSettingsViewController.m; sourceTree = SOURCE_ROOT; };
 		D0718B911AB556280073493A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = Applications/MGSFragariaViewModern/en.lproj/MainMenu.xib; sourceTree = SOURCE_ROOT; };
 		D0718B931AB5566F0073493A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Applications/MGSFragariaViewModern/main.m; sourceTree = SOURCE_ROOT; };
 		D0718B951AB556990073493A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Applications/MGSFragariaViewModern/AppDelegate.h; sourceTree = SOURCE_ROOT; };
@@ -668,10 +662,6 @@
 				D0718B961AB556990073493A /* AppDelegate.m */,
 				D07717B21AC2670500B23867 /* MGSSampleBreakpointDelegate.h */,
 				D07717B31AC2670500B23867 /* MGSSampleBreakpointDelegate.m */,
-				D0718B891AB553E80073493A /* ColorSettingsViewController.h */,
-				D0718B8A1AB553E80073493A /* ColorSettingsViewController.m */,
-				D0718B8B1AB553E80073493A /* EditorSettingsViewController.h */,
-				D0718B8C1AB553E80073493A /* EditorSettingsViewController.m */,
 				D0718B901AB556280073493A /* MainMenu.xib */,
 				D0718B881AB553E80073493A /* README.html */,
 				D0718B521AB551460073493A /* Supporting Files */,
@@ -1154,8 +1144,6 @@
 			files = (
 				D0718B941AB5566F0073493A /* main.m in Sources */,
 				D0718B861AB553A20073493A /* MASPreferencesWindowController.m in Sources */,
-				D0718B8F1AB553E80073493A /* EditorSettingsViewController.m in Sources */,
-				D0718B8E1AB553E80073493A /* ColorSettingsViewController.m in Sources */,
 				D0718B971AB556990073493A /* AppDelegate.m in Sources */,
 				D07717B41AC2670500B23867 /* MGSSampleBreakpointDelegate.m in Sources */,
 			);

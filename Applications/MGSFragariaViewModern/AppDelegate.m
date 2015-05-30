@@ -12,8 +12,6 @@
 #import "AppDelegate.h"
 #import <MGSFragaria/MGSFragaria.h>
 #import "MASPreferencesWindowController.h"
-#import "ColorSettingsViewController.h"
-#import "EditorSettingsViewController.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSHybridUserDefaultsController.h"
 #import "MGSSyntaxController.h"
@@ -134,8 +132,8 @@
 
     if (!_preferencesHybridTopWindowController)
     {
-        EditorSettingsViewController *editorSettingsController = [[EditorSettingsViewController alloc] init];
-        ColorSettingsViewController *colorSettingsController = [[ColorSettingsViewController alloc] init];
+        MGSPrefsEditorPropertiesViewController *editorSettingsController = [[MGSPrefsEditorPropertiesViewController alloc] init];
+        MGSPrefsColourPropertiesViewController *colorSettingsController = [[MGSPrefsColourPropertiesViewController alloc] init];
 
         editorSettingsController.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:@"topWindowGroup"];
         colorSettingsController.userDefaultsController = [MGSHybridUserDefaultsController sharedControllerForGroupID:@"topWindowGroup"];
@@ -200,14 +198,12 @@
  *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
 - (NSWindowController *)createWindowControllerForGroup:(NSString *)group title:(NSString *)title
 {
-    /* We're using MASPreferences to show the views, and so the classes
-       `EditorSettingsViewController` and `ColorSettingsViewController` are
-       simply subclasses of `MGSPrefsEditorPropertiesViewController` and
-       `MGSPrefsColourPropertiesViewController` respectively, that add a
-       couple of methods that MASPreference requires. */
+    /* `MGSPrefsEditorPropertiesViewController` and
+       `MGSPrefsColourPropertiesViewController` already support the methods
+       required by MASPreferences */
 
-    EditorSettingsViewController *editorSettingsController = [[EditorSettingsViewController alloc] init];
-    ColorSettingsViewController *colorSettingsController = [[ColorSettingsViewController alloc] init];
+    MGSPrefsEditorPropertiesViewController *editorSettingsController = [[MGSPrefsEditorPropertiesViewController alloc] init];
+    MGSPrefsColourPropertiesViewController *colorSettingsController = [[MGSPrefsColourPropertiesViewController alloc] init];
 
     /* We have to tell the controllers who the associated defaults controllers
        is so that they will know which properties they are allowed to control,

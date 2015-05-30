@@ -29,6 +29,16 @@
 @property (nonatomic, weak) id <MGSUserDefaultsController> userDefaultsController;
 
 
+/** An unique identifier for the preference panel. */
+@property (nonatomic, readonly) NSString *identifier;
+
+/** An icon for this preference panel to be used in an NSToolbar. */
+@property (nonatomic, readonly) NSImage *toolbarItemImage;
+
+/** A string to be used as a title to this preference panel. */
+@property (nonatomic, readonly) NSString *toolbarItemLabel;
+
+
 /** Returns whether or not a property is a managed property. This is a KVC
  *  structure that returns @(YES) or @(NO) for keyPaths in the form of
  *  this_controller.managedProperties.propertyName.
