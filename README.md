@@ -62,7 +62,7 @@ The best way to learn how to use the framework is to look at the sample apps.
 
 * __Fragaria__ : a simple editor window that features language selection, and a wired up text menu.
 
-* __Fragaria Doc__ : a simple `NSDocument` based editor.
+* __Fragaria Doc__ : a simple `NSDocument` based editor with the new preferences panels.
 
 * __MGSFragariaView__ : a split view editor with an hard-wired options panel
 
@@ -133,22 +133,41 @@ The new preferences system allows for having multiple preference groups in the s
 all or some of the available options. Every `MGSFragariaView` that you want to be controlled by preferences
 must be added manually to a preference group; after you've done that, everything's automatic.
 
-The easiest way to use the new preference panels is to use the global group, but to do that
-you must have at least one local group.
+The easiest way to use the new preference panels is to only use the global group; this results in a single
+set of preferences for all the instances of Fragaria in the app, which is what you want 90% of the time.
+
+First, you set the persistent flag on the group when the application initializes. This is typically done by the
+application delegate inside `-applicationWillFinishLaunching:` (not in `-applicationDidFinishLaunching:` because
+other initialization code which uses the defaults controller may be called before `-applicationDidFinishLaunching:`)
 
 ```obj-c
-MGSUserDefaultsController *globalGroup = [MGSUserDefaultsController sharedController];
-MGSUserDefaultsController *tmpGroup = [MGSUserDefaultsController sharedControllerForGroupID:@"MainGroup"];
-
-/* Create a dummy group with our MGSFragaria object */
-tmpGroup.managedInstances = [NSSet setWithObject:fragaria];
-tmpGroup.managedProperties = [NSSet set];
-tmpGroup.persistent = NO;
-
-NSArray *groupProperties = [[MGSUserDefaultsDefinitions fragariaDefaultsDictionary] allKeys];
-globalGroup.managedProperties = [NSSet setWithArray:groupProperties];
-globalGroup.persistent = YES;
+- (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
+    [[MGSUserDefaultsController sharedController] setPersistent:YES];
+}
 ```
+
+The global controller by default manages all the available properties of `MGSFragariaView`. If you want to
+manage some of these properties manually, you should also remove them from the managed properties set in this
+stage.
+
+Then, when you create a new `MGSFragariaView`, you register it to the global group in this way:
+
+```obj-c
+[[MGSUserDefaultsController sharedController] addFragariaToManagedSet:fragaria];
+```
+
+Before an `MGSFragariaView` registered to a defaults controller is deallocated, you should remove it from
+the controller's managed set. Not doing this may result in seemingly random crashes because the defaults
+controller does not retain the registered views (doing that would create a retain cycle).
+
+```obj-c
+[[MGSUserDefaultsController sharedController] removeFragariaFromManagedSet:fragaria];
+```
+
+Done this, to use the standard preference panels, you just use `MGSPrefsColourPropertiesViewController` and
+`MGSPrefsEditorPropertiesViewController`. See [ApplicationDelegate.m](Applications/Doc/ApplicationDelegate.m)
+in the Fragaria Doc example to see how to use these view controllers with the popular preference panel library
+[MASPreferences](https://github.com/shpakovski/MASPreferences).
 
 This feature is very new and still needs improvements, so it may change in potentially breaking ways.
 
