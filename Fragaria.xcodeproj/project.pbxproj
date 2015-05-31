@@ -43,6 +43,9 @@
 		01AC7E721AA341AA00DF7620 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01AC7E711AA341AA00DF7620 /* Images.xcassets */; };
 		01B50A801B07AD8C00C9A856 /* NSString+Fragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = 01B50A7E1B07AD8C00C9A856 /* NSString+Fragaria.m */; };
 		01BB1BF41A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01BB1BF21A79AA15006C0056 /* MGSSimpleBreakpointDelegate.m */; };
+		01D39A431B19DA690072F43F /* ApplicationDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01D39A421B19DA690072F43F /* ApplicationDelegate.m */; };
+		01D39A441B19DDD20072F43F /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B821AB553A20073493A /* MASPreferencesWindowController.m */; };
+		01D39A451B19DFAF0072F43F /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0718B801AB553A20073493A /* MASPreferencesWindow.xib */; };
 		01D81AD21AA7E37E006DF8B8 /* Features.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D81ACF1AA7E37E006DF8B8 /* Features.xib */; };
 		01D81AD31AA7E37E006DF8B8 /* Lorem.html in Resources */ = {isa = PBXBuildFile; fileRef = 01D81AD01AA7E37E006DF8B8 /* Lorem.html */; };
 		01D81AD41AA7E37E006DF8B8 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01D81AD11AA7E37E006DF8B8 /* MainMenu.xib */; };
@@ -238,6 +241,8 @@
 		01BEF2A31AA7E761005F11B4 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/SMLDetab.xib"; sourceTree = "<group>"; };
 		01BEF2A41AA7E761005F11B4 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/SMLEntab.xib"; sourceTree = "<group>"; };
 		01BEF2A51AA7E761005F11B4 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/SMLGoToLine.xib"; sourceTree = "<group>"; };
+		01D39A411B19DA690072F43F /* ApplicationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ApplicationDelegate.h; path = Applications/Doc/ApplicationDelegate.h; sourceTree = "<group>"; };
+		01D39A421B19DA690072F43F /* ApplicationDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ApplicationDelegate.m; path = Applications/Doc/ApplicationDelegate.m; sourceTree = "<group>"; };
 		01D81ACF1AA7E37E006DF8B8 /* Features.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Features.xib; path = Applications/MGSFragariaView/Features.xib; sourceTree = "<group>"; };
 		01D81AD01AA7E37E006DF8B8 /* Lorem.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = Lorem.html; path = Applications/MGSFragariaView/Lorem.html; sourceTree = "<group>"; };
 		01D81AD11AA7E37E006DF8B8 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = Applications/MGSFragariaView/MainMenu.xib; sourceTree = "<group>"; };
@@ -570,6 +575,8 @@
 		AB648E2311FB37D200AEF7BD /* NSDocument based */ = {
 			isa = PBXGroup;
 			children = (
+				01D39A411B19DA690072F43F /* ApplicationDelegate.h */,
+				01D39A421B19DA690072F43F /* ApplicationDelegate.m */,
 				AB648E3E11FB38E700AEF7BD /* MyDocument.h */,
 				AB648E3F11FB38E700AEF7BD /* MyDocument.m */,
 				D034C8091A99807F003D3A41 /* MainMenu-Document.xib */,
@@ -1000,6 +1007,7 @@
 			files = (
 				D034C80C1A99807F003D3A41 /* MyDocument.xib in Resources */,
 				D034C80B1A99807F003D3A41 /* MainMenu-Document.xib in Resources */,
+				01D39A451B19DFAF0072F43F /* MASPreferencesWindow.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1084,8 +1092,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01D39A441B19DDD20072F43F /* MASPreferencesWindowController.m in Sources */,
 				018CFA0D1AE46B8F00334011 /* main.m in Sources */,
 				AB648E4011FB38E700AEF7BD /* MyDocument.m in Sources */,
+				01D39A431B19DA690072F43F /* ApplicationDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

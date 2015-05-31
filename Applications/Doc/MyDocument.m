@@ -64,9 +64,17 @@
 
     // set text
 	[fragaria setString:@"// We Don't need the future"];
+
+    [[MGSUserDefaultsController sharedController] addFragariaToManagedSet:fragaria];
 	
     // Set the undo manager. This is fundamental and allows NSDocument to perform its magic.
     [self setUndoManager:[fragaria.textView undoManager]];
+}
+
+
+- (void)close
+{
+    [[MGSUserDefaultsController sharedController] removeFragariaFromManagedSet:fragaria];
 }
 
 
@@ -77,8 +85,6 @@
  */
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
-#pragma unused(typeName)
-	
     // Insert code here to write your document to data of the specified type. If the given outError != NULL,
     // ensure that you set *outError when returning nil.
 
@@ -97,9 +103,6 @@
  */
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
 {
-#pragma unused(data)
-#pragma unused(typeName)
-	
     // Insert code here to read your document from the given data of the specified type.
     // If the given outError != NULL, ensure that you set *outError when returning NO.
 
