@@ -96,6 +96,7 @@
 
 
 @implementation MGSPrefsViewController {
+    BOOL subviewsNeedUpdate;
     NSMutableArray *separators;
 }
 
@@ -117,6 +118,12 @@
     
     _managedPropertiesProxy = [[MGSManagedPropertiesProxy alloc] initWithViewController:self];
 	_managedGlobalPropertiesProxy = [[MGSManagedGlobalPropertiesProxy alloc] initWithViewController:self];
+    
+    _userDefaultsController = [MGSUserDefaultsController sharedController];
+    self.managedPropertiesProxy.userDefaultsController = _userDefaultsController;
+    self.managedGlobalPropertiesProxy.userDefaultsController = _userDefaultsController;
+    subviewsNeedUpdate = YES;
+    
     separators = [[NSMutableArray alloc] init];
 
     return self;
@@ -133,6 +140,17 @@
 
 #pragma mark - Property Accessors
 
+
+- (NSView *)view
+{
+    if (subviewsNeedUpdate) {
+        subviewsNeedUpdate = NO;
+        [self showOrHideViews];
+    }
+    return [super view];
+}
+
+
 /*
  *  @property setUserDefaultsController
  */
@@ -143,7 +161,7 @@
     self.managedPropertiesProxy.userDefaultsController = userDefaultsController;
 	self.managedGlobalPropertiesProxy.userDefaultsController = userDefaultsController;
     [self didChangeValueForKey:@"managedProperties"];
-	[self showOrHideViews];
+    subviewsNeedUpdate = YES;
 }
 
 
