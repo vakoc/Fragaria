@@ -10,7 +10,7 @@
 #import <MGSFragaria/MGSFragaria.h>
 
 @implementation MyDocument{
-    IBOutlet MGSFragariaView *fragaria;
+    __weak IBOutlet MGSFragariaView *fragaria;
 }
 
 
