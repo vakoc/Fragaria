@@ -24,6 +24,7 @@
 
 #import "MGSUserDefaultsControllerProtocol.h"
 #import "MGSUserDefaultsController.h"
+#import "MGSHybridUserDefaultsController.h"
 #import "MGSPrefsViewController.h"
 #import "MGSPrefsColourPropertiesViewController.h"
 #import "MGSPrefsEditorPropertiesViewController.h"

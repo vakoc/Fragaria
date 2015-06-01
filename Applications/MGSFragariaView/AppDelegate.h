@@ -9,8 +9,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Fragaria/MGSBreakpointDelegate.h>
-#import <Fragaria/MGSDragOperationDelegate.h>
+#import <Fragaria/Fragaria.h>
+
 
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, MGSBreakpointDelegate, MGSDragOperationDelegate>

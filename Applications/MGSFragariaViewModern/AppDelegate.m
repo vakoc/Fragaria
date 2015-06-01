@@ -11,11 +11,8 @@
 
 #import "AppDelegate.h"
 #import <Fragaria/Fragaria.h>
-#import "MASPreferencesWindowController.h"
-#import "MGSUserDefaultsController.h"
-#import "MGSHybridUserDefaultsController.h"
-#import "MGSSyntaxController.h"
 #import "MGSSampleBreakpointDelegate.h"
+#import "MASPreferencesWindowController.h"
 
 
 #pragma mark - PRIVATE INTERFACE

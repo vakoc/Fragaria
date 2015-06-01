@@ -10,6 +10,7 @@
 #import <Fragaria/Fragaria.h>
 #import "MGSSimpleBreakpointDelegate.h"
 
+
 @implementation FragariaAppDelegate {
     IBOutlet MGSFragariaView *fragaria;
     MGSSimpleBreakpointDelegate *breakptDelegate;
