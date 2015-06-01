@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <objc/runtime.h>
 #import <XCTest/XCTest.h>
-#import "MGSFragaria.h"
+#import "Fragaria.h"
 #import "MGSUserDefaults.h"
 
 

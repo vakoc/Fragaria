@@ -8,9 +8,9 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import <MGSFragaria/MGSFragariaTextViewDelegate.h>
-#import <MGSFragaria/SMLSyntaxColouringDelegate.h>
-#import <MGSFragaria/MGSDragOperationDelegate.h>
+#import <Fragaria/MGSFragariaTextViewDelegate.h>
+#import <Fragaria/SMLSyntaxColouringDelegate.h>
+#import <Fragaria/MGSDragOperationDelegate.h>
 
 
 @class MGSFragariaView;

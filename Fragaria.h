@@ -1,5 +1,5 @@
 /*
- *  MGSFragaria.h
+ *  Fragaria.h
  *  Fragaria
  *
  *  Created by Jonathan on 30/04/2010.

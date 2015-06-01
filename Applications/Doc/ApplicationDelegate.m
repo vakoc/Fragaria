@@ -7,7 +7,7 @@
 //
 
 #import "ApplicationDelegate.h"
-#import <MGSFragaria/MGSFragaria.h>
+#import <Fragaria/Fragaria.h>
 #import "MASPreferencesWindowController.h"
 
 

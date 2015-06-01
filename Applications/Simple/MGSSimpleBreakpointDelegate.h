@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MGSFragaria/MGSBreakpointDelegate.h>
+#import <Fragaria/MGSBreakpointDelegate.h>
 
 
 @interface MGSSimpleBreakpointDelegate : NSObject <MGSBreakpointDelegate> {

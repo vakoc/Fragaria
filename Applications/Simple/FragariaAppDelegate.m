@@ -7,7 +7,7 @@
 //
 
 #import "FragariaAppDelegate.h"
-#import <MGSFragaria/MGSFragaria.h>
+#import <Fragaria/Fragaria.h>
 #import "MGSSimpleBreakpointDelegate.h"
 
 @implementation FragariaAppDelegate {
@@ -27,7 +27,7 @@
 {
 	// define initial object configuration
 	//
-	// see MGSFragaria.h for details
+	// see Fragaria.h for details
 	//
     fragaria.textViewDelegate = self;
 	

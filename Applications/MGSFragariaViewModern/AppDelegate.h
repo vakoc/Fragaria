@@ -10,8 +10,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <MGSFragaria/MGSBreakpointDelegate.h>
-#import <MGSFragaria/MGSDragOperationDelegate.h>
+#import <Fragaria/MGSBreakpointDelegate.h>
+#import <Fragaria/MGSDragOperationDelegate.h>
 
 
 /**

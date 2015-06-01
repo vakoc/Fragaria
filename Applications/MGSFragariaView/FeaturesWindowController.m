@@ -7,7 +7,7 @@
 //
 
 #import "FeaturesWindowController.h"
-#import <MGSFragaria/MGSFragaria.h>
+#import <Fragaria/Fragaria.h>
 
 @interface FeaturesWindowController ()
 

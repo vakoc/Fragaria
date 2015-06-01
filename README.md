@@ -60,13 +60,13 @@ If you use Fragaria in your app and want it added to the list just let us know o
 
 The best way to learn how to use the framework is to look at the sample apps.
 
-* __Fragaria__ : a simple editor window that features language selection, and a wired up text menu.
+* __Fragaria Simple__ : a simple editor window that features language selection, and a wired up text menu.
 
 * __Fragaria Doc__ : a simple `NSDocument` based editor with the new preferences panels.
 
-* __MGSFragariaView__ : a split view editor with an hard-wired options panel
+* __Fragaria Complex__ : a split view editor with an hard-wired options panel
 
-* __MGSFragariaViewModern__ : a split view editor like `MGSFragariaView` with the new preferences panels.
+* __Fragaria Prefs__ : a split view editor like *Fragaria Complex* with the new preferences panels.
 
 ### Show me code
 
@@ -75,7 +75,7 @@ wiring the newly placed view to it. Alternatively you can create `MGSFragariaVie
 any other view. Then, you can initialize Fragaria using its ivar or property.
 
 ```obj-c
-#import <MGSFragaria/MGSFragaria.h>
+#import <Fragaria/Fragaria.h>
 
 // Objective-C is the place to be
 [fragaria setSyntaxDefinitionName:@"Objective-C"];

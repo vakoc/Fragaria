@@ -9,7 +9,7 @@
 //
 
 #import "AppDelegate.h"
-#import <MGSFragaria/MGSFragaria.h>
+#import <Fragaria/Fragaria.h>
 #import "FeaturesWindowController.h"
 
 

@@ -7,7 +7,7 @@
 //
 
 #import "MyDocument.h"
-#import <MGSFragaria/MGSFragaria.h>
+#import <Fragaria/Fragaria.h>
 
 @implementation MyDocument{
     __weak IBOutlet MGSFragariaView *fragaria;
@@ -55,7 +55,7 @@
 	
 	// define initial document configuration
 	//
-	// see MGSFragaria.h for details
+	// see Fragaria.h for details
 	//
     if (YES) {
         fragaria.syntaxColoured = YES;

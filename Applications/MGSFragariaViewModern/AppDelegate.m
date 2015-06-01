@@ -10,7 +10,7 @@
 //
 
 #import "AppDelegate.h"
-#import <MGSFragaria/MGSFragaria.h>
+#import <Fragaria/Fragaria.h>
 #import "MASPreferencesWindowController.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSHybridUserDefaultsController.h"
