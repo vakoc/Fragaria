@@ -25,6 +25,7 @@
 		01098F171AA7BD0400ED4CFD /* SMLGoToLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F191AA7BD0400ED4CFD /* SMLGoToLine.xib */; };
 		01098F1A1AA7BD0900ED4CFD /* SMLEntab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F1C1AA7BD0900ED4CFD /* SMLEntab.xib */; };
 		01098F1D1AA7BD0D00ED4CFD /* SMLDetab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F1F1AA7BD0D00ED4CFD /* SMLDetab.xib */; };
+		010AACAD1B1CDFC2005D9984 /* MGSHybridUserDefaultsController.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F353561AC1A369007B9E2E /* MGSHybridUserDefaultsController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		010F6D2F1AFEA19C0054F3D2 /* MGSUserDefaultsControllerProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = D0F353541AC19E56007B9E2E /* MGSUserDefaultsControllerProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */; };
 		013A79191AA8C715008ADFA1 /* MGSContextMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 013A791B1AA8C715008ADFA1 /* MGSContextMenu.xib */; };
@@ -829,6 +830,7 @@
 				AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */,
 				AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */,
 				E3D4B2771714D89700BB2CC6 /* SMLSyntaxError.h in Headers */,
+				010AACAD1B1CDFC2005D9984 /* MGSHybridUserDefaultsController.h in Headers */,
 				D071883C1AB3CDFA0073493A /* MGSUserDefaultsController.h in Headers */,
 				D0C146751A871A0B00DDE90A /* MGSFragariaView.h in Headers */,
 				010F6D2F1AFEA19C0054F3D2 /* MGSUserDefaultsControllerProtocol.h in Headers */,
