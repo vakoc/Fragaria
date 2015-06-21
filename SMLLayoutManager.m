@@ -25,6 +25,11 @@
 #import "SMLLayoutManager.h"
 
 
+#if __MAC_OS_X_VERSION_MAX_ALLOWED < 101100
+typedef NSInteger NSUnderlineStyle;
+#endif
+
+
 typedef enum : NSUInteger {
     kTabLine = 0,
     kSpaceLine = 1,
@@ -237,9 +242,12 @@ static CGFloat SquiggleFunction(CGFloat x) {
 #pragma mark - Syntax Error Underlining
 
 
-- (void)drawUnderlineForGlyphRange:(NSRange)glyphRange underlineType:(NSInteger)underlineVal
-  baselineOffset:(CGFloat)baselineOffset lineFragmentRect:(NSRect)lineRect
-  lineFragmentGlyphRange:(NSRange)lineGlyphRange containerOrigin:(NSPoint)containerOrigin
+- (void)drawUnderlineForGlyphRange:(NSRange)glyphRange
+                     underlineType:(NSUnderlineStyle)underlineVal
+                    baselineOffset:(CGFloat)baselineOffset
+                  lineFragmentRect:(NSRect)lineRect
+            lineFragmentGlyphRange:(NSRange)lineGlyphRange
+                   containerOrigin:(NSPoint)containerOrigin
 {
     NSRect gr;
     NSTextContainer *tc;
