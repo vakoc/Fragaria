@@ -124,6 +124,9 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 - (void)layoutManagerWillChangeTextStorage
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    
+    if (!self.textView)
+        return;
     [nc removeObserver:self name:NSTextStorageDidProcessEditingNotification
       object:self.textView.textStorage];
 }
@@ -223,6 +226,12 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
 
 
 #pragma mark - Instance Methods
+
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 
 - (NSArray *)linesWithErrors
