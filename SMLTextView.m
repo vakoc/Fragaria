@@ -286,7 +286,10 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 
 - (NSColor *)textColor
 {
-    return [[self typingAttributes] objectForKey:NSForegroundColorAttributeName];
+    NSColor *res;
+    
+    res = [[self typingAttributes] objectForKey:NSForegroundColorAttributeName];
+    return res ? res : [NSColor blackColor];
 }
 
 
