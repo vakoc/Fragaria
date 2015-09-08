@@ -468,23 +468,11 @@
     CGContextRef drawingContext;
     NSColor *markerColor;
 
-	bounds = [self bounds];
+    [self drawBackgroundInRect:dirtyRect];
+    
+    bounds = [self bounds];
     view = [self clientView];
     visibleRect = [[[self scrollView] contentView] bounds];
-
-	[self.backgroundColor set];
-    NSRectFill(bounds);
-    
-    [[NSColor lightGrayColor] set];
-    NSBezierPath *dottedLine = [NSBezierPath bezierPath];
-    [dottedLine moveToPoint:NSMakePoint(bounds.size.width-0.5, 0)];
-    [dottedLine lineToPoint:NSMakePoint(bounds.size.width-0.5, bounds.size.height)];
-    CGFloat dash[2];
-    dash[0] = 1.0f;
-    dash[1] = 2.0f;
-    [dottedLine setLineDash:dash count:2 phase:visibleRect.origin.y];
-    [dottedLine stroke];
-
     layoutManager = [view layoutManager];
 
     drawingContext = [[NSGraphicsContext currentContext] graphicsPort];
@@ -544,6 +532,34 @@
             break;
         }
     }
+}
+
+
+- (void)drawBackgroundInRect:(NSRect)dirtyRect {
+    NSRect bounds, visibleRect;
+    NSBezierPath *dottedLine;
+    NSColor *dotColor, *borderColor;
+    const CGFloat dash[2] = {1.0f, 2.0f};
+    
+    bounds = [self bounds];
+    visibleRect = [[[self scrollView] contentView] bounds];
+    
+    [self.backgroundColor set];
+    NSRectFill(bounds);
+    
+    borderColor = [self.backgroundColor blendedColorWithFraction:.5 ofColor:self.clientView.backgroundColor];
+    dotColor = [borderColor blendedColorWithFraction:(2.0*2.0/3.0)-.94 ofColor:[NSColor blackColor]];
+    
+    dottedLine = [NSBezierPath bezierPath];
+    [dottedLine moveToPoint:NSMakePoint(bounds.size.width-0.5, 0)];
+    [dottedLine lineToPoint:NSMakePoint(bounds.size.width-0.5, bounds.size.height)];
+    
+    [borderColor set];
+    [dottedLine stroke];
+    
+    [dotColor set];
+    [dottedLine setLineDash:dash count:2 phase:visibleRect.origin.y];
+    [dottedLine stroke];
 }
 
 
