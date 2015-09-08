@@ -408,6 +408,20 @@
     return self.gutterView.textColor;
 }
 
+/*
+ * @property gutterBackgroundColour
+ */
+- (void)setGutterBackgroundColour:(NSColor *)gutterBackgroundColour
+{
+    self.gutterView.backgroundColor = gutterBackgroundColour;
+    [self mgs_propagateValue:gutterBackgroundColour forBinding:NSStringFromSelector(@selector(gutterBackgroundColour))];
+}
+
+- (NSColor *)gutterBackgroundColour
+{
+    return self.gutterView.backgroundColor;
+}
+
 
 #pragma mark - Showing Syntax Errors
 

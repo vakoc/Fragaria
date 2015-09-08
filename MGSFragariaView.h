@@ -154,6 +154,8 @@
 @property (nonatomic, assign) NSFont *gutterFont;
 /** Specifies the standard color of the line numbers in the gutter.*/
 @property (nonatomic, assign) NSColor *gutterTextColour;
+/** Specifies the background colour of the gutter view */
+@property (nonatomic, assign) NSColor *gutterBackgroundColour;
 
 
 #pragma mark - Showing Syntax Errors
