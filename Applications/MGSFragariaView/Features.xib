@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6751" systemVersion="14C1510" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="8187.4" systemVersion="14F27" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="6751"/>
+        <development version="6300" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="8187.4"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FeaturesWindowController">
@@ -16,12 +17,12 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="272" y="176" width="450" height="487"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1600" height="877"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" id="1Bg-1l-liR">
                 <rect key="frame" x="0.0" y="0.0" width="450" height="487"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box autoresizesSubviews="NO" misplaced="YES" title="Lower View" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="OMj-yp-1Jo">
+                    <box autoresizesSubviews="NO" title="Lower View" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="OMj-yp-1Jo">
                         <rect key="frame" x="17" y="16" width="416" height="225"/>
                         <view key="contentView">
                             <rect key="frame" x="1" y="1" width="414" height="209"/>
@@ -201,7 +202,7 @@
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewTop.pageGuideColumn" id="MUd-Im-AyM">
+                                        <binding destination="-2" name="value" keyPath="self.viewBottom.pageGuideColumn" id="fCs-S6-P6n">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEditable" value="NO"/>
@@ -225,7 +226,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewTop.showsPageGuide" id="6nc-T4-hNA">
+                                        <binding destination="-2" name="value" keyPath="self.viewBottom.showsPageGuide" id="lF3-k9-y01">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEnabled" value="NO"/>
@@ -241,7 +242,7 @@
                                         <font key="font" metaFont="system"/>
                                     </buttonCell>
                                     <connections>
-                                        <binding destination="-2" name="value" keyPath="self.viewTop.lineWrap" id="JVO-ch-E4T">
+                                        <binding destination="-2" name="value" keyPath="self.viewBottom.lineWrap" id="lLe-mH-AIS">
                                             <dictionary key="options">
                                                 <bool key="NSAllowsEditingMultipleValuesSelection" value="NO"/>
                                                 <bool key="NSConditionallySetsEnabled" value="NO"/>
@@ -266,7 +267,7 @@
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </box>
-                    <box autoresizesSubviews="NO" misplaced="YES" title="Upper View" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="UbJ-ck-GAa">
+                    <box autoresizesSubviews="NO" title="Upper View" borderType="line" translatesAutoresizingMaskIntoConstraints="NO" id="UbJ-ck-GAa">
                         <rect key="frame" x="17" y="243" width="416" height="224"/>
                         <view key="contentView">
                             <rect key="frame" x="1" y="1" width="414" height="208"/>
