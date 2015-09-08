@@ -111,7 +111,8 @@
 - (IBAction)copyToPasteBoard:(id)sender
 {
 	NSAttributedString *attString = fragaria.textView.attributedString;
-	NSData *data = [attString RTFFromRange:NSMakeRange(0, [attString length]) documentAttributes:nil];
+    NSData *data = [attString RTFFromRange:NSMakeRange(0, [attString length])
+                        documentAttributes:@{NSDocumentTypeDocumentAttribute: NSRTFTextDocumentType}];
 	NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
 	[pasteboard clearContents];
 	[pasteboard setData:data forType:NSRTFPboardType];
