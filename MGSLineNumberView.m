@@ -453,23 +453,17 @@
 - (void)drawRect:(NSRect)dirtyRect
 {
     SMLTextView	*view;
-	NSRect bounds;
     NSRect visibleRect;
     NSLayoutManager	*layoutManager;
     NSRange range, glyphRange;
-    NSString *labelText;
     NSUInteger index, line;
     NSRect wholeLineRect;
-    CGFloat ypos;
-    NSDictionary *currentTextAttributes;
     NSMutableArray *lines;
-    NSAttributedString *drawingAttributedString;
     CGContextRef drawingContext;
     NSColor *markerColor;
 
     [self drawBackgroundInRect:dirtyRect];
     
-    bounds = [self bounds];
     view = [self clientView];
     visibleRect = [[[self scrollView] contentView] bounds];
     layoutManager = [view layoutManager];
@@ -494,34 +488,16 @@
         {
             wholeLineRect = [self wholeLineRectForLine:line];
 
-            // Note that the ruler view is only as tall as the visible
-            // portion. Need to compensate for the clipview's coordinates.
-            ypos = wholeLineRect.origin.y;
-
+            /* Draw line numbers first so that error images won't be buried
+             * underneath long line numbers.
+             * Line numbers are internally stored starting at 0 */
             if ((markerColor = [_breakpointData objectForKey:@(line + 1)])) {
                 [self drawMarkerInRect:wholeLineRect withColor:markerColor];
-                currentTextAttributes = [self highlightTextAttributesForLine:line];
+                if (self.showsLineNumbers)
+                    [self drawLineNumber:line inRect:wholeLineRect hasMarker:YES];
             } else {
-                currentTextAttributes = [self textAttributes];
-            }
-
-            if (self.showsLineNumbers)
-            {
-                // Draw line numbers first so that error images won't be buried underneath long line numbers.
-                // Line numbers are internally stored starting at 0
-                labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + _startingLineNumber];
-                drawingAttributedString = [[NSAttributedString alloc] initWithString:labelText attributes:currentTextAttributes];
-
-                CGFloat descent, leading;
-                CTLineRef textline;
-                textline = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)drawingAttributedString);
-                CGFloat width = CTLineGetTypographicBounds(textline, NULL, &descent, &leading);
-                
-                CGFloat xpos = NSWidth(bounds) - width - RULER_MARGIN;
-                CGFloat baselinepos = ypos + NSHeight(wholeLineRect) - floor(descent + 0.5) - floor(leading+0.5);
-                CGContextSetTextPosition(drawingContext, xpos, baselinepos);
-                CTLineDraw(textline, drawingContext);
-                CFRelease(textline);
+                if (self.showsLineNumbers)
+                    [self drawLineNumber:line inRect:wholeLineRect hasMarker:NO];
             }
 
             [self drawDecorationOfLine:line];
@@ -534,7 +510,8 @@
 }
 
 
-- (void)drawBackgroundInRect:(NSRect)dirtyRect {
+- (void)drawBackgroundInRect:(NSRect)dirtyRect
+{
     NSRect bounds, visibleRect;
     NSBezierPath *dottedLine;
     NSColor *dotColor, *borderColor;
@@ -559,6 +536,41 @@
     [dotColor set];
     [dottedLine setLineDash:dash count:2 phase:visibleRect.origin.y];
     [dottedLine stroke];
+}
+
+
+/// @param line uses zero-based indexing.
+- (void)drawLineNumber:(NSUInteger)line inRect:(NSRect)wholeLineRect hasMarker:(BOOL)marked
+{
+    CGFloat ypos;
+    NSRect bounds;
+    NSString *labelText;
+    NSAttributedString *drawingAttributedString;
+    NSDictionary *currentTextAttributes;
+    CGContextRef drawingContext;
+    
+    drawingContext = [[NSGraphicsContext currentContext] graphicsPort];
+    bounds = [self bounds];
+    ypos = wholeLineRect.origin.y;
+    
+    if (marked)
+        currentTextAttributes = [self highlightTextAttributesForLine:line];
+    else
+        currentTextAttributes = [self textAttributes];
+    
+    labelText = [NSString stringWithFormat:@"%jd", (intmax_t)line + _startingLineNumber];
+    drawingAttributedString = [[NSAttributedString alloc] initWithString:labelText attributes:currentTextAttributes];
+    
+    CGFloat descent, leading;
+    CTLineRef textline;
+    textline = CTLineCreateWithAttributedString((__bridge CFAttributedStringRef)drawingAttributedString);
+    CGFloat width = CTLineGetTypographicBounds(textline, NULL, &descent, &leading);
+    
+    CGFloat xpos = NSWidth(bounds) - width - RULER_MARGIN;
+    CGFloat baselinepos = ypos + NSHeight(wholeLineRect) - floor(descent + 0.5) - floor(leading+0.5);
+    CGContextSetTextPosition(drawingContext, xpos, baselinepos);
+    CTLineDraw(textline, drawingContext);
+    CFRelease(textline);
 }
 
 
