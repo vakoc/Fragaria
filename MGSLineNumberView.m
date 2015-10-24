@@ -409,7 +409,7 @@
     // See if we need to adjust the width of the view
     oldThickness = [self ruleThickness];
     newThickness = [self requiredThickness];
-    if (fabs(oldThickness - newThickness) > 1) {
+    if (fabs(oldThickness - newThickness) >= 1) {
         [self willChangeValueForKey:@"requiredThickness"];
         [self setRuleThickness:newThickness];
         [self didChangeValueForKey:@"requiredThickness"];
