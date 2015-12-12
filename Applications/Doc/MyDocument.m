@@ -75,6 +75,7 @@
 - (void)close
 {
     [[MGSUserDefaultsController sharedController] removeFragariaFromManagedSet:fragaria];
+    [super close];
 }
 
 
