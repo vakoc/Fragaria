@@ -16,5 +16,6 @@
 @interface MyDocument : NSDocument <MGSFragariaTextViewDelegate, SMLSyntaxColouringDelegate, MGSDragOperationDelegate>
 
 @property (nonatomic,assign) NSString *syntaxDefinition;
+@property NSTextStorage *contents;
 
 @end

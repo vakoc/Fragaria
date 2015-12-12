@@ -21,7 +21,7 @@
 {
     if ((self = [super init]))
     {
-        // Add your subclass-specific initialization here.
+        _contents = [[NSTextStorage alloc] initWithString:@"// We don't need the future"];
     }
     return self;
 }
@@ -34,9 +34,6 @@
  */
 - (NSString *)windowNibName
 {
-    // Override returning the nib file name of the document.
-    // If you need to use a subclass of NSWindowController or if your document supports multiple
-    // NSWindowControllers, you should remove this method and override -makeWindowControllers instead.
     return @"MyDocument";
 }
 
@@ -63,7 +60,7 @@
     }
 
     // set text
-	[fragaria setString:@"// We Don't need the future"];
+    [fragaria replaceTextStorage:_contents];
 
     [[MGSUserDefaultsController sharedController] addFragariaToManagedSet:fragaria];
 	
@@ -86,16 +83,7 @@
  */
 - (NSData *)dataOfType:(NSString *)typeName error:(NSError **)outError
 {
-    // Insert code here to write your document to data of the specified type. If the given outError != NULL,
-    // ensure that you set *outError when returning nil.
-
-    // You can also choose to override -fileWrapperOfType:error:, -writeToURL:ofType:error:,
-    // or -writeToURL:ofType:forSaveOperation:originalContentsURL:error: instead.
-
-    if ( outError != NULL ) {
-		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-	}
-	return nil;
+    return [[self.contents string] dataUsingEncoding:NSUTF8StringEncoding];
 }
 
 
@@ -104,15 +92,15 @@
  */
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
 {
-    // Insert code here to read your document from the given data of the specified type.
-    // If the given outError != NULL, ensure that you set *outError when returning NO.
-
-    // You can also choose to override -readFromFileWrapper:ofType:error: or -readFromURL:ofType:error: instead. 
-
-    if ( outError != NULL ) {
-		*outError = [NSError errorWithDomain:NSOSStatusErrorDomain code:unimpErr userInfo:NULL];
-	}
-    return YES;
+    NSTextStorage *ts;
+    
+    ts = [[NSTextStorage alloc] initWithData:data options:@{NSDocumentTypeDocumentOption:NSPlainTextDocumentType, NSCharacterEncodingDocumentOption:@(NSUTF8StringEncoding)} documentAttributes:nil error:outError];
+    
+    if (ts) {
+        self.contents = ts;
+        return YES;
+    }
+    return NO;
 }
 
 
