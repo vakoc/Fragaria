@@ -31,7 +31,6 @@
 		0132786A1A81650300D2DCA5 /* MGSSyntaxDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */; };
 		013A79191AA8C715008ADFA1 /* MGSContextMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 013A791B1AA8C715008ADFA1 /* MGSContextMenu.xib */; };
 		0148656A1B19036900BE1DC4 /* NSObject+Fragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = 014865681B19036900BE1DC4 /* NSObject+Fragaria.m */; };
-		014E7DA91C1C8D430093ACA6 /* NSTextStorage+Fragaria.h in Headers */ = {isa = PBXBuildFile; fileRef = 014E7DA71C1C8D430093ACA6 /* NSTextStorage+Fragaria.h */; };
 		014E7DAA1C1C8D430093ACA6 /* NSTextStorage+Fragaria.m in Sources */ = {isa = PBXBuildFile; fileRef = 014E7DA81C1C8D430093ACA6 /* NSTextStorage+Fragaria.m */; };
 		01684A841B159AC7008A900D /* MGSPrefsCommonViews.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01684A831B159AC7008A900D /* MGSPrefsCommonViews.xib */; };
 		01684A881B15FBD9008A900D /* MGSFontWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01684A861B15FBD9008A900D /* MGSFontWell.m */; };
@@ -923,7 +922,6 @@
 				E373BF131718A64700D71602 /* SMLAutoCompleteDelegate.h in Headers */,
 				AB8387AA171B4505004408F4 /* SMLSyntaxColouringDelegate.h in Headers */,
 				D071884F1AB54CCA0073493A /* MGSPrefsViewController.h in Headers */,
-				014E7DA91C1C8D430093ACA6 /* NSTextStorage+Fragaria.h in Headers */,
 				AB8387C5171D6115004408F4 /* SMLSyntaxDefinition.h in Headers */,
 				0191FA811A8829930099B50D /* SMLTextView+MGSTextActions.h in Headers */,
 			);
