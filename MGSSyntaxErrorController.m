@@ -8,6 +8,7 @@
 
 #import "MGSSyntaxErrorController.h"
 #import "SMLLayoutManager.h"
+#import "NSTextStorage+Fragaria.h"
 
 
 #define kSMLErrorPopOverMargin        6.0
@@ -17,37 +18,6 @@
  * balloons when there is only a single error to display. */
 #define kSMLAlwaysShowBadgesInBalloon 0
 
-
-static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger character, NSString* str)
-{
-    NSScanner* scanner = [NSScanner scannerWithString:str];
-    [scanner setCharactersToBeSkipped:[NSCharacterSet characterSetWithCharactersInString:@""]];
-    
-    character -= character ? 1 : 0;
-    
-    NSUInteger currentLine = 1;
-    while (![scanner isAtEnd])
-    {
-        if (currentLine == line)
-        {
-            // Found the right line
-            NSInteger location = [scanner scanLocation] + character;
-            if (location >= (NSInteger)str.length) location = str.length - 1;
-            return location;
-        }
-        
-        // Scan to a new line
-        [scanner scanUpToString:@"\n" intoString:NULL];
-        
-        if (![scanner isAtEnd])
-        {
-            scanner.scanLocation += 1;
-        }
-        currentLine++;
-    }
-    
-    return -1;
-}
 
 
 @interface MGSErrorBadgeAttachmentCell : NSTextAttachmentCell
@@ -194,10 +164,12 @@ static NSInteger CharacterIndexFromRowAndColumn(NSUInteger line, NSUInteger char
     for (SMLSyntaxError* err in self.nonHiddenErrors)
     {
         // Highlight an erroneous line
-        NSInteger location = CharacterIndexFromRowAndColumn(err.line, err.character, text);
+        NSUInteger zbc = err.character - (err.character != 0);
+        NSUInteger zbl = err.line - (err.line != 0);
+        NSUInteger location = [layoutManager.textStorage mgs_characterAtIndex:zbc withinRow:zbl];
         
         // Skip lines we cannot identify in the text
-        if (location == -1) continue;
+        if (location == NSNotFound) continue;
         
         NSRange lineRange = [text lineRangeForRange:NSMakeRange(location, 0)];
         
