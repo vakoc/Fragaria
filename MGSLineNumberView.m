@@ -38,18 +38,14 @@
 #import "MGSFragariaView.h"
 #import "MGSLineNumberView.h"
 #import "MGSBreakpointDelegate.h"
+#import "NSTextStorage+Fragaria.h"
 
 
 #define RULER_MARGIN		5.0
 
 
-@implementation MGSLineNumberView {
-    // Array of character indices for the beginning of each line
-    NSMutableArray      *_lineIndices;
-    // When text is edited, this is the start of the editing region. All line
-    // calculations after this point are invalid and need to be recalculated.
-    NSUInteger          _invalidCharacterIndex;
-    
+@implementation MGSLineNumberView
+{
     NSUInteger _mouseDownLineTracking;
     NSRect     _mouseDownRectTracking;
     
@@ -74,7 +70,6 @@
 {
     if ((self = [super initWithScrollView:aScrollView orientation:NSVerticalRuler]) != nil)
     {
-        _lineIndices = [[NSMutableArray alloc] init];
         _startingLineNumber = 1;
         _markerImagesSize = NSMakeSize(0,0);
         _markerImages = [[NSMutableDictionary alloc] init];
@@ -168,7 +163,6 @@
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(textStorageDidProcessEditing:)
       name:NSTextStorageDidProcessEditingNotification object:self.clientView.textStorage];
-    [self invalidateLineIndicesFromCharacterIndex:0];
 }
 
 
@@ -200,137 +194,25 @@
 }
 
 
-#pragma mark - Line number cache
-
-
-- (NSMutableArray *)lineIndices
-{
-	if (_invalidCharacterIndex < NSUIntegerMax)
-	{
-		[self calculateLines];
-	}
-	return _lineIndices;
-}
-
-
-// Forces recalculation of line indices starting from the given index
-- (void)invalidateLineIndicesFromCharacterIndex:(NSUInteger)charIndex
-{
-    _invalidCharacterIndex = MIN(charIndex, _invalidCharacterIndex);
-}
-
-
 - (void)textStorageDidProcessEditing:(NSNotification *)notification
 {
-    NSTextStorage       *storage;
-    NSRange             range;
-    
-    storage = [notification object];
-
-    // Invalidate the line indices. They will be recalculated and re-cached on demand.
-    range = [storage editedRange];
-    if (range.location != NSNotFound)
-    {
-        [self invalidateLineIndicesFromCharacterIndex:range.location];
-        [self setNeedsDisplay:YES];
-    }
-}
-
-
-- (void)calculateLines
-{
-    id              view;
-
-    view = [self clientView];
-    
-    NSUInteger      charIndex, stringLength, lineEnd, contentEnd, count, lineIndex;
-    NSString        *text;
-    
-    text = [view string];
-    stringLength = [text length];
-    count = [_lineIndices count];
-
-    charIndex = 0;
-    lineIndex = [self lineNumberForCharacterIndex:_invalidCharacterIndex inText:text];
-    if (count > 0)
-    {
-        charIndex = [[_lineIndices objectAtIndex:lineIndex] unsignedIntegerValue];
-    }
-    
-    do
-    {
-        if (lineIndex < count)
-        {
-            [_lineIndices replaceObjectAtIndex:lineIndex withObject:[NSNumber numberWithUnsignedInteger:charIndex]];
-        }
-        else
-        {
-            [_lineIndices addObject:[NSNumber numberWithUnsignedInteger:charIndex]];
-        }
-        
-        charIndex = NSMaxRange([text lineRangeForRange:NSMakeRange(charIndex, 0)]);
-        lineIndex++;
-    }
-    while (charIndex < stringLength);
-    
-    if (lineIndex < count)
-    {
-        [_lineIndices removeObjectsInRange:NSMakeRange(lineIndex, count - lineIndex)];
-    }
-    _invalidCharacterIndex = NSUIntegerMax;
-
-    // Check if text ends with a new line.
-    [text getLineStart:NULL end:&lineEnd contentsEnd:&contentEnd forRange:NSMakeRange([[_lineIndices lastObject] unsignedIntegerValue], 0)];
-    if (contentEnd < lineEnd)
-    {
-        [_lineIndices addObject:[NSNumber numberWithUnsignedInteger:charIndex]];
-    }
-}
-
-
-- (NSUInteger)lineNumberForCharacterIndex:(NSUInteger)charIndex inText:(NSString *)text
-{
-    NSUInteger			left, right, mid, lineStart;
-	NSMutableArray		*lines;
-
-    if (_invalidCharacterIndex < NSUIntegerMax)
-    {
-        // We do not want to risk calculating the indices again since we are
-        // probably doing it right now, thus possibly causing an infinite loop.
-        lines = _lineIndices;
-    }
-    else
-    {
-        lines = [self lineIndices];
-    }
-	
-    // Binary search
-    left = 0;
-    right = [lines count];
-
-    while ((right - left) > 1)
-    {
-        mid = (right + left) / 2;
-        lineStart = [[lines objectAtIndex:mid] unsignedIntegerValue];
-        
-        if (charIndex < lineStart)
-        {
-            right = mid;
-        }
-        else if (charIndex > lineStart)
-        {
-            left = mid;
-        }
-        else
-        {
-            return mid;
-        }
-    }
-    return left;
+    [self setNeedsDisplay:YES];
 }
 
 
 #pragma mark - Automatic thickness control
+
+
+- (NSUInteger)lineCount
+{
+    NSTextStorage *ts;
+    NSUInteger i;
+    
+    ts = self.clientView.textStorage;
+    i = [ts length];
+    return [ts mgs_rowOfCharacter:i] + 1;
+}
+
 
 + (NSSet *)keyPathsForValuesAffectingRequiredThickness
 {
@@ -351,10 +233,8 @@
     CGFloat decorationsWidth;
     
     if (_showsLineNumbers) {
-        lineCount = [[self lineIndices] count] + (_startingLineNumber - 1);
-        digits = 1;
-        if (lineCount > 0)
-            digits = (NSUInteger)log10(lineCount) + 1;
+        lineCount = [self lineCount] + _startingLineNumber - 1;
+        digits = (NSUInteger)log10(lineCount) + 1;
         
         sampleString = [NSMutableString string];
         for (i = 0; i < digits; i++) {
@@ -387,7 +267,7 @@
 
     for (line in linesWithDecorations) {
         linenum = [line integerValue] - 1;
-        if (linenum < [self.lineIndices count]) {
+        if (linenum < [self lineCount]) {
             decorationRect = [self decorationRectOfLine:linenum];
             value = decorationRect.origin.x + decorationRect.size.width;
             if (value > max) max = value;
@@ -402,9 +282,6 @@
     CGFloat         oldThickness, newThickness;
     
     [super viewWillDraw];
-    
-    if (_invalidCharacterIndex < NSUIntegerMax)
-        [self calculateLines];
     
     // See if we need to adjust the width of the view
     oldThickness = [self ruleThickness];
@@ -455,10 +332,10 @@
     SMLTextView	*view;
     NSRect visibleRect;
     NSLayoutManager	*layoutManager;
+    NSTextStorage *ts;
     NSRange range, glyphRange;
-    NSUInteger index, line;
+    NSUInteger index, line, lastline;
     NSRect wholeLineRect;
-    NSMutableArray *lines;
     CGContextRef drawingContext;
     NSColor *markerColor;
 
@@ -467,22 +344,22 @@
     view = [self clientView];
     visibleRect = [[[self scrollView] contentView] bounds];
     layoutManager = [view layoutManager];
+    ts = [layoutManager textStorage];
 
     drawingContext = [[NSGraphicsContext currentContext] graphicsPort];
     CGAffineTransform flipTransform = {1, 0, 0, -1, 0, 0};
     CGContextSetTextMatrix(drawingContext, flipTransform);
-    
-    lines = [self lineIndices];
 
     // Find the characters that are currently visible, make a range,  then fudge the range a tad in case
     // there is an extra new line at end. It doesn't show up in the glyphs so would not be accounted for.
     glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:[view textContainer]];
     range = [layoutManager characterRangeForGlyphRange:glyphRange actualGlyphRange:NULL];
     range.length++;
+    lastline = self.lineCount - 1;
 
-    for (line = [self lineNumberForCharacterIndex:range.location inText:[view string]]; line < [lines count]; line++)
+    for (line = [ts mgs_rowOfCharacter:range.location]; line <= lastline; line++)
     {
-        index = [[lines objectAtIndex:line] unsignedIntegerValue];
+        index = [ts mgs_firstCharacterInRow:line];
         
         if (NSLocationInRange(index, range))
         {
@@ -583,7 +460,6 @@
     NSTextContainer	  *container;
     NSUInteger        index, stringLength;
     NSRect            rect;
-    NSMutableArray    *lines;
     NSRect            wholeLineRect = NSZeroRect;
 
     view = [self clientView];
@@ -593,9 +469,7 @@
     visibleRect = [[[self scrollView] contentView] bounds];
     stringLength = [[view string] length];
 
-    lines = [self lineIndices];
-
-    index = [[lines objectAtIndex:line] unsignedIntegerValue];
+    index = [layoutManager.textStorage mgs_firstCharacterInRow:line];
 
     NSUInteger glyphIdx = [layoutManager glyphIndexForCharacterAtIndex:index];
     if (index < stringLength)
@@ -623,26 +497,25 @@
 	NSRectArray		rects;
 	NSRect			visibleRect;
 	NSLayoutManager	*layoutManager;
+    NSTextStorage *ts;
 	NSTextContainer	*container;
 	NSRange			nullRange;
-	NSMutableArray	*lines;
 	id				view;
     
 	view = [self clientView];
 	visibleRect = [[[self scrollView] contentView] bounds];
-	
-	lines = [self lineIndices];
     
 	location += NSMinY(visibleRect);
 	
     nullRange = NSMakeRange(NSNotFound, 0);
     layoutManager = [view layoutManager];
     container = [view textContainer];
-    count = [lines count];
+    ts = [layoutManager textStorage];
+    count = [self lineCount];
     
     for (line = 0; line < count; line++)
     {
-        index = [[lines objectAtIndex:line] unsignedIntegerValue];
+        index = [ts mgs_firstCharacterInRow:line];
         
         rects = [layoutManager rectArrayForCharacterRange:NSMakeRange(index, 0)
                              withinSelectedCharacterRange:nullRange
