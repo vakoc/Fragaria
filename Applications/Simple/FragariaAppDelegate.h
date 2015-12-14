@@ -21,5 +21,8 @@
 
 @property (nonatomic,assign) NSString *syntaxDefinition;
 
+@property NSString *row;
+@property NSString *column;
+
 
 @end

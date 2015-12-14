@@ -167,6 +167,17 @@
 }
 
 
+- (void)textViewDidChangeSelection:(NSNotification *)notification
+{
+    NSUInteger i, r, c;
+    
+    i = fragaria.textView.selectedRange.location;
+    [fragaria getRow:&r column:&c forCharacterIndex:i];
+    self.row = [NSString stringWithFormat:@"%lu", (unsigned long)r+1];
+    self.column = [NSString stringWithFormat:@"%lu", (unsigned long)c+1];
+}
+
+
 #pragma mark - MGSFragariaTextViewDelegate
 
 /*
