@@ -45,13 +45,13 @@
 
 
 /** Fragaria's text view. */
-@property (nonatomic, strong, readonly) SMLTextView *textView;
+@property (nonatomic, strong, readonly, nonnull) SMLTextView *textView;
 /** Fragaria's scroll view. */
-@property (nonatomic, strong, readonly) NSScrollView *scrollView;
+@property (nonatomic, strong, readonly, nonnull) NSScrollView *scrollView;
 /** Fragaria's gutter view. */
-@property (nonatomic, strong, readonly) MGSLineNumberView *gutterView;
+@property (nonatomic, strong, readonly, nonnull) MGSLineNumberView *gutterView;
 /** Fragaria's syntax colouring object. */
-@property  (nonatomic, assign, readonly) SMLSyntaxColouring *syntaxColouring;
+@property  (nonatomic, assign, readonly, nonnull) SMLSyntaxColouring *syntaxColouring;
 
 
 #pragma mark - Accessing Text Content
@@ -59,11 +59,11 @@
 
 
 /** The plain text string of the text editor.*/
-@property (nonatomic, assign) NSString *string;
+@property (nonatomic, assign, nonnull) NSString *string;
 
 /** The text editor string, including temporary attributes which
  *  have been applied by the syntax highlighter. */
-@property (nonatomic, readonly) NSAttributedString *attributedStringWithTemporaryAttributesApplied;
+- (nonnull NSAttributedString *)attributedStringWithTemporaryAttributesApplied;
 
 
 #pragma mark - Creating Split Panels
@@ -85,7 +85,7 @@
  *       the attributes of the first character in this text storage.
  *
  *  @param textStorage The new text storage for this instance of Fragaria. */
-- (void)replaceTextStorage:(NSTextStorage*)textStorage;
+- (void)replaceTextStorage:(nonnull NSTextStorage *)textStorage;
 
 
 #pragma mark - Configuring Syntax Highlighting
@@ -96,7 +96,7 @@
 @property (nonatomic, getter=isSyntaxColoured) BOOL syntaxColoured;
 
 /** Specifies the current syntax definition name.*/
-@property (nonatomic, assign) NSString *syntaxDefinitionName;
+@property (nonatomic, assign, nonnull) NSString *syntaxDefinitionName;
 /** The syntax colouring delegate for this instance of Fragaria. The syntax
  * colouring delegate gets notified of the start and end of each colouring pass
  * so that it can modify the default syntax colouring provided by Fragaria. */
@@ -131,7 +131,7 @@
 
 
 /** Specifies the color to use when highlighting the current line.*/
-@property (nonatomic, assign) NSColor *currentLineHighlightColour;
+@property (nonatomic, assign, nonnull) NSColor *currentLineHighlightColour;
 /** Specifies whether or not the line with the cursor should be highlighted.*/
 @property (nonatomic, assign) BOOL highlightsCurrentLine;
 
@@ -151,11 +151,11 @@
 @property (nonatomic, assign) NSUInteger startingLineNumber;
 
 /** Specifies the standard font for the line numbers in the gutter.*/
-@property (nonatomic, assign) NSFont *gutterFont;
+@property (nonatomic, assign, nonnull) NSFont *gutterFont;
 /** Specifies the standard color of the line numbers in the gutter.*/
-@property (nonatomic, assign) NSColor *gutterTextColour;
+@property (nonatomic, assign, nonnull) NSColor *gutterTextColour;
 /** Specifies the background colour of the gutter view */
-@property (nonatomic, assign) NSColor *gutterBackgroundColour;
+@property (nonatomic, assign, nonnull) NSColor *gutterBackgroundColour;
 
 
 #pragma mark - Showing Syntax Errors
@@ -167,7 +167,7 @@
  *   - highlighting lines and syntax errors in the text view.
  *   - displaying warning icons in the gutter.
  *   - providing a description of the syntax errors in popovers. */
-@property (nonatomic, assign) NSArray *syntaxErrors;
+@property (nonatomic, assign, nullable) NSArray *syntaxErrors;
 
 /** Indicates whether or not error warnings are displayed.*/
 @property (nonatomic, assign) BOOL showsSyntaxErrors;
@@ -177,7 +177,8 @@
 @property (nonatomic, assign) BOOL showsIndividualErrors;
 
 /** The default syntax error line highlighting colour. */
-@property (nonatomic, assign) NSColor *defaultSyntaxErrorHighlightingColour;
+@property (nonatomic, assign, nonnull) NSColor *defaultSyntaxErrorHighlightingColour;
+
 
 #pragma mark - Showing Breakpoints
 /// @name Showing Breakpoints
@@ -246,7 +247,7 @@
 /** Indicates whether or not invisible characters in the editor are revealed.*/
 @property (nonatomic, assign) BOOL showsInvisibleCharacters;
 /** Specifies the colour to render invisible characters in the text view.*/
-@property (nonatomic, assign) NSColor *textInvisibleCharactersColour;
+@property (nonatomic, assign, nonnull) NSColor *textInvisibleCharactersColour;
 
 
 #pragma mark - Configuring Text Appearance
@@ -254,11 +255,11 @@
 
 
 /** Indicates the base (non-highlighted) text color.*/
-@property (copy) NSColor *textColor;
+@property (copy, nonnull) NSColor *textColor;
 /** Indicates the text view background color.*/
-@property NSColor *backgroundColor;
+@property (nonnull) NSColor *backgroundColor;
 /** Specifies the text editor font.*/
-@property (nonatomic) NSFont *textFont;
+@property (nonatomic, nonnull) NSFont *textFont;
 /** The real line height as a multiple of the natural line height for the
  *  current font. */
 @property (nonatomic) CGFloat lineHeightMultiple;
@@ -275,7 +276,7 @@
 /** Indicates whether or not the vertical scroller should be displayed.*/
 @property (nonatomic, assign) BOOL hasVerticalScroller;
 /** Indicates the color of the insertion point.*/
-@property (nonatomic, assign) NSColor *insertionPointColor;
+@property (nonatomic, assign, nonnull) NSColor *insertionPointColor;
 /** Indicates whether or not the "rubber band" effect is disabled.*/
 @property (nonatomic, assign) BOOL scrollElasticityDisabled;
 
@@ -291,31 +292,31 @@
 
 
 /** Specifies the autocomplete color **/
-@property (nonatomic, assign) NSColor *colourForAutocomplete;
+@property (nonatomic, assign, nonnull) NSColor *colourForAutocomplete;
 
 /** Specifies the attributes color **/
-@property (nonatomic, assign) NSColor *colourForAttributes;
+@property (nonatomic, assign, nonnull) NSColor *colourForAttributes;
 
 /** Specifies the commands color **/
-@property (nonatomic, assign) NSColor *colourForCommands;
+@property (nonatomic, assign, nonnull) NSColor *colourForCommands;
 
 /** Specifies the comments color **/
-@property (nonatomic, assign) NSColor *colourForComments;
+@property (nonatomic, assign, nonnull) NSColor *colourForComments;
 
 /** Specifies the instructions color **/
-@property (nonatomic, assign) NSColor *colourForInstructions;
+@property (nonatomic, assign, nonnull) NSColor *colourForInstructions;
 
 /** Specifies the keywords color **/
-@property (nonatomic, assign) NSColor *colourForKeywords;
+@property (nonatomic, assign, nonnull) NSColor *colourForKeywords;
 
 /** Specifies the numbers color **/
-@property (nonatomic, assign) NSColor *colourForNumbers;
+@property (nonatomic, assign, nonnull) NSColor *colourForNumbers;
 
 /** Specifies the strings color **/
-@property (nonatomic, assign) NSColor *colourForStrings;
+@property (nonatomic, assign, nonnull) NSColor *colourForStrings;
 
 /** Specifies the variables color **/
-@property (nonatomic, assign) NSColor *colourForVariables;
+@property (nonatomic, assign, nonnull) NSColor *colourForVariables;
 
 
 #pragma mark - Syntax Highlighter Colouring Options
