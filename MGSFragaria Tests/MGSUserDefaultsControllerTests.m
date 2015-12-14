@@ -183,7 +183,7 @@
 	XCTAssert(result1 == expect && result2 == expect);
 	
 	// Turn ON persistence. Does defaults take the correct value now?
-	expect = arc4random_uniform(100) + 1;
+	expect = arc4random_uniform(100) + 101;
     [controller.values setValue:@(expect) forKey:@"startingLineNumber"];
 	controller.persistent = YES;
 	result1 = [defaults integerForKey:@"startingLineNumber"];
@@ -200,7 +200,7 @@
 	XCTAssert(result1 == expect && result2 == expect && result3 == expect);
 	
     // Setting a property should reflect in defaults and the other instance.
-	expect = arc4random_uniform(100) + 1;
+	expect = arc4random_uniform(100) + 101;
 	self.view1.startingLineNumber = expect;
 	result1 = [defaults integerForKey:@"startingLineNumber"];
 	result2 = self.view2.startingLineNumber;
@@ -215,22 +215,22 @@
 
     // Now turn off persistence and ensure that:
     // - setting the controller updates views, but not defaults.
-    expect = arc4random_uniform(100) + 1;
+    expect = arc4random_uniform(100) + 101;
     controller.persistent = NO;
     [controller.values setValue:@(expect) forKey:@"startingLineNumber"];
     result1 = self.view1.startingLineNumber;
     result2 = [defaults integerForKey:@"startingLineNumber"];
-    XCTAssert(result1 == expect && result2 != expect, @"Should pass unless the random number was unlucky.");
+    XCTAssert(result1 == expect && result2 != expect);
 
     // - setting the view updates the controller, but not defaults.
-    expect = arc4random_uniform(100) + 1;
+    expect = arc4random_uniform(100) + 201;
     self.view1.startingLineNumber = expect;
     result1 = [[controller.values valueForKey:@"startingLineNumber"] integerValue];
     result2 = [defaults integerForKey:@"startingLineNumber"];
-    XCTAssert(result1 == expect && result2 != expect, @"Should pass unless the random number was unlucky.");
+    XCTAssert(result1 == expect && result2 != expect);
 
     // - setting defaults updates nothing.
-    expect = arc4random_uniform(100) + 1;
+    expect = arc4random_uniform(100) + 301;
     [defaults setInteger:expect forKey:@"startingLineNumber"];
     result1 = self.view1.startingLineNumber;
     result2 = [[controller.values valueForKey:@"startingLineNumber"] integerValue];
