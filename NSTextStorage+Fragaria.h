@@ -36,14 +36,15 @@
 
 /** The character index corresponding to the offset of a character in its row
  *  (line).
- *  @param i A character index, relative to the beginning of a line.
+ *  @param i A character index, relative to the beginning of the line.
  *  @param l A line number.
+ *  @returns A character index, or NSNotFound the line number is invalid.
  *  @discussion Any line number returned by mgs_rowOfCharacter: is a valid
- *    line number for this function.
- *  @result If the specified line exists (mgs_rowOfCharacter: does not return
- *    NSNotFound), this function will always return a valid character index
- *    in that line, even if the index parameter specifies a character outside
- *    the bounds of the line.*/
+ *    line number for this function. If the line number is valid, this function
+ *    will always return a valid character index in that line. If the
+ *    index parameter specifies a character outside the bounds of the line,
+ *    the index of one past the last character of content of that line will be
+ *    returned. */
 - (NSUInteger)mgs_characterAtIndex:(NSUInteger)i withinRow:(NSUInteger)l;
 
 
