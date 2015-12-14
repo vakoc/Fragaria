@@ -91,13 +91,17 @@
     NSMutableString *string = [[self textStorage] mutableString];
     
     indexset = [NSMutableIndexSet indexSet];
+    newsel = [NSMutableArray array];
+    
     sel = [self selectedRanges];
     for (rangeval in sel) {
         range = [string lineRangeForRange:[rangeval rangeValue]];
-        [indexset addIndexesInRange:range];
+        if (range.length)
+            [indexset addIndexesInRange:range];
+        else /* Last line */
+            [newsel addObject:[NSValue valueWithRange:range]];
     }
     
-    newsel = [NSMutableArray array];
     [indexset enumerateRangesUsingBlock:^(NSRange range, BOOL *stop) {
         [newsel addObject:[NSValue valueWithRange:range]];
     }];
