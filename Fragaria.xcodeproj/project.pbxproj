@@ -36,6 +36,7 @@
 		01684A881B15FBD9008A900D /* MGSFontWell.m in Sources */ = {isa = PBXBuildFile; fileRef = 01684A861B15FBD9008A900D /* MGSFontWell.m */; };
 		016E310F1B0324D3000D3497 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 016E31111B0324D3000D3497 /* Localizable.strings */; };
 		017FD58B1A7A992700B305FB /* MGSLineNumberView.m in Sources */ = {isa = PBXBuildFile; fileRef = 017FD5871A7A992700B305FB /* MGSLineNumberView.m */; };
+		018546711C1F1ABC00F1B79B /* MGSLineRangeForCharacterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 018546701C1F1ABC00F1B79B /* MGSLineRangeForCharacterTests.m */; };
 		018CFA0D1AE46B8F00334011 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 018CFA0C1AE46B8F00334011 /* main.m */; };
 		018CFA101AE46BA100334011 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 018CFA0E1AE46B9800334011 /* main.m */; };
 		0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0191FA7C1A881F280099B50D /* MGSDragOperationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -60,6 +61,7 @@
 		01F0D7111C120FC1000A08B6 /* Fragaria.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* Fragaria.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		01F0D7151C126957000A08B6 /* MASPreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718B821AB553A20073493A /* MASPreferencesWindowController.m */; };
 		01F0D7171C126E04000A08B6 /* MASPreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0718B801AB553A20073493A /* MASPreferencesWindow.xib */; };
+		01FBC3831C1EADDF00837F04 /* MGSStringColumnTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC3821C1EADDF00837F04 /* MGSStringColumnTests.m */; };
 		01FBC7EC1B0679520008EAF8 /* MGSMutableSubstring.m in Sources */ = {isa = PBXBuildFile; fileRef = 01FBC7EA1B0679520008EAF8 /* MGSMutableSubstring.m */; };
 		01FC487F1C1C7EC600F4227E /* Fragaria.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* Fragaria.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		AB257FCE129B1BF500A3FF76 /* SMLTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = AB69B666118B768000903D1D /* SMLTextView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -271,6 +273,7 @@
 		016E31101B0324D3000D3497 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		017FD5861A7A992700B305FB /* MGSLineNumberView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberView.h; sourceTree = "<group>"; };
 		017FD5871A7A992700B305FB /* MGSLineNumberView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLineNumberView.m; sourceTree = "<group>"; };
+		018546701C1F1ABC00F1B79B /* MGSLineRangeForCharacterTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSLineRangeForCharacterTests.m; sourceTree = "<group>"; };
 		018CFA0C1AE46B8F00334011 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Applications/Doc/main.m; sourceTree = "<group>"; };
 		018CFA0E1AE46B9800334011 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Applications/Simple/main.m; sourceTree = "<group>"; };
 		0191FA7C1A881F280099B50D /* MGSDragOperationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGSDragOperationDelegate.h; sourceTree = "<group>"; };
@@ -297,6 +300,7 @@
 		01F0D7081C120F7D000A08B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		01F0D70A1C120F7D000A08B6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01F0D7161C1269A2000A08B6 /* Fragaria-Swift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Fragaria-Swift-Bridging-Header.h"; sourceTree = "<group>"; };
+		01FBC3821C1EADDF00837F04 /* MGSStringColumnTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSStringColumnTests.m; sourceTree = "<group>"; };
 		01FBC7E91B0679520008EAF8 /* MGSMutableSubstring.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSMutableSubstring.h; sourceTree = "<group>"; };
 		01FBC7EA1B0679520008EAF8 /* MGSMutableSubstring.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSMutableSubstring.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
@@ -843,6 +847,8 @@
 			isa = PBXGroup;
 			children = (
 				011B56D61C1DC7AB00540669 /* MGSLineNumberCacheTests.m */,
+				01FBC3821C1EADDF00837F04 /* MGSStringColumnTests.m */,
+				018546701C1F1ABC00F1B79B /* MGSLineRangeForCharacterTests.m */,
 				D0718BAD1AB721280073493A /* MGSColourSchemeTests.m */,
 				D06653D41AC0159800ACE8B0 /* MGSColourToPlainTextTransformerTests.m */,
 				D01F51701AAF1D35006A3A90 /* MGSFragariaViewTests.m */,
@@ -1309,8 +1315,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D07188301AB3CDDC0073493A /* MGSUserDefaultsControllerTests.m in Sources */,
+				018546711C1F1ABC00F1B79B /* MGSLineRangeForCharacterTests.m in Sources */,
 				D01A8CEC1ABE75E0003B2719 /* MGSPrefsViewControllerTests.m in Sources */,
 				D0AB50F01A91CDC200A6DF58 /* SMLSyntaxErrorTests.m in Sources */,
+				01FBC3831C1EADDF00837F04 /* MGSStringColumnTests.m in Sources */,
 				D0E5211A1A90E399005CB80B /* MGSSyntaxErrorControllerTests.m in Sources */,
 				D07188311AB3CDDC0073493A /* MGSUserDefaultsDefinitionsTests.m in Sources */,
 				D0718BAE1AB721280073493A /* MGSColourSchemeTests.m in Sources */,
