@@ -42,6 +42,7 @@
 		0191FA7D1A881F6E0099B50D /* MGSDragOperationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0191FA7C1A881F280099B50D /* MGSDragOperationDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0191FA811A8829930099B50D /* SMLTextView+MGSTextActions.h in Headers */ = {isa = PBXBuildFile; fileRef = 0191FA7F1A8829930099B50D /* SMLTextView+MGSTextActions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0191FA821A8829930099B50D /* SMLTextView+MGSTextActions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0191FA801A8829930099B50D /* SMLTextView+MGSTextActions.m */; };
+		019B02EF1C1F4FE20026548F /* MGSFragariaRowColumnFunctionsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 019B02EE1C1F4FE20026548F /* MGSFragariaRowColumnFunctionsTests.m */; };
 		019B80191A9E77330007D234 /* MGSFragariaTextViewDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 019B80181A9E77330007D234 /* MGSFragariaTextViewDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		019F56D51A9D3511009F9DCD /* SMLTextView+MGSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = D0C145C21A85E1FD00DDE90A /* SMLTextView+MGSDragging.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01AC7E721AA341AA00DF7620 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01AC7E711AA341AA00DF7620 /* Images.xcassets */; };
@@ -279,6 +280,7 @@
 		0191FA7C1A881F280099B50D /* MGSDragOperationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MGSDragOperationDelegate.h; sourceTree = "<group>"; };
 		0191FA7F1A8829930099B50D /* SMLTextView+MGSTextActions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SMLTextView+MGSTextActions.h"; sourceTree = "<group>"; };
 		0191FA801A8829930099B50D /* SMLTextView+MGSTextActions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SMLTextView+MGSTextActions.m"; sourceTree = "<group>"; };
+		019B02EE1C1F4FE20026548F /* MGSFragariaRowColumnFunctionsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFragariaRowColumnFunctionsTests.m; sourceTree = "<group>"; };
 		019B80181A9E77330007D234 /* MGSFragariaTextViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFragariaTextViewDelegate.h; sourceTree = "<group>"; };
 		01AC7E711AA341AA00DF7620 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		01B50A7D1B07AD8C00C9A856 /* NSString+Fragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Fragaria.h"; sourceTree = "<group>"; };
@@ -849,6 +851,7 @@
 				011B56D61C1DC7AB00540669 /* MGSLineNumberCacheTests.m */,
 				01FBC3821C1EADDF00837F04 /* MGSStringColumnTests.m */,
 				018546701C1F1ABC00F1B79B /* MGSLineRangeForCharacterTests.m */,
+				019B02EE1C1F4FE20026548F /* MGSFragariaRowColumnFunctionsTests.m */,
 				D0718BAD1AB721280073493A /* MGSColourSchemeTests.m */,
 				D06653D41AC0159800ACE8B0 /* MGSColourToPlainTextTransformerTests.m */,
 				D01F51701AAF1D35006A3A90 /* MGSFragariaViewTests.m */,
@@ -1323,6 +1326,7 @@
 				D07188311AB3CDDC0073493A /* MGSUserDefaultsDefinitionsTests.m in Sources */,
 				D0718BAE1AB721280073493A /* MGSColourSchemeTests.m in Sources */,
 				D07188331AB3CDDC0073493A /* MGSUserDefaultsUtilities.m in Sources */,
+				019B02EF1C1F4FE20026548F /* MGSFragariaRowColumnFunctionsTests.m in Sources */,
 				D07188321AB3CDDC0073493A /* MGSUserDefaultsTests.m in Sources */,
 				D06653D51AC0159800ACE8B0 /* MGSColourToPlainTextTransformerTests.m in Sources */,
 				011B56D71C1DC7AB00540669 /* MGSLineNumberCacheTests.m in Sources */,
