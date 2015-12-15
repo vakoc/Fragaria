@@ -334,7 +334,7 @@
     NSLayoutManager	*layoutManager;
     NSTextStorage *ts;
     NSRange range, glyphRange;
-    NSUInteger index, line, lastline;
+    NSUInteger index, line;
     NSRect wholeLineRect;
     CGContextRef drawingContext;
     NSColor *markerColor;
@@ -355,11 +355,13 @@
     glyphRange = [layoutManager glyphRangeForBoundingRect:visibleRect inTextContainer:[view textContainer]];
     range = [layoutManager characterRangeForGlyphRange:glyphRange actualGlyphRange:NULL];
     range.length++;
-    lastline = self.lineCount - 1;
 
-    for (line = [ts mgs_rowOfCharacter:range.location]; line <= lastline; line++)
+    for (line = [ts mgs_rowOfCharacter:range.location]; ; line++)
     {
         index = [ts mgs_firstCharacterInRow:line];
+        
+        if (index == NSNotFound || index > NSMaxRange(range))
+            break;
         
         if (NSLocationInRange(index, range))
         {
@@ -378,10 +380,6 @@
             }
 
             [self drawDecorationOfLine:line];
-        }
-        if (index > NSMaxRange(range))
-        {
-            break;
         }
     }
 }
