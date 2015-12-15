@@ -35,10 +35,8 @@
 /** Returns the range of characters representing the line containing a given
  *  character.
  *  @param i A character index in the string. 
- *  @returns If i points to a character of the string, calling this method
+ *  @returns If i points to a valid index in the string, calling this method
  *     is equivalent to calling [self lineRangeForRange:NSMakeRange(i, 0)].
- *     Otherwise, if i is one past the last character of the string, this
- *     method returns the line range where that character would be placed.
  *     In all other cases, this function returns a range with NSNotFound as
  *     location, and 0 as length. */
 - (NSRange)mgs_lineRangeForCharacterIndex:(NSUInteger)i;

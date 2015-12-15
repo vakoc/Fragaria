@@ -200,14 +200,15 @@
 {
     NSUInteger fcr, ci;
     NSRange lr;
-    NSString *tmp;
+    NSString *tmp, *s;
     
     fcr = [self.textView.textStorage mgs_firstCharacterInRow:r];
     if (fcr == NSNotFound)
         return NSNotFound;
     
-    lr = [self.string mgs_lineRangeForCharacterIndex:fcr];
-    tmp = [self.string substringWithRange:lr];
+    s = self.string;
+    lr = [s lineRangeForRange:NSMakeRange(fcr, 0)];
+    tmp = [s substringWithRange:lr];
     ci = [tmp mgs_characterInColumn:c tabWidth:self.tabWidth];
     if (ci == NSNotFound)
         return NSNotFound;

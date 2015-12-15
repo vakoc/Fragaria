@@ -69,20 +69,9 @@
 
 - (NSRange)mgs_lineRangeForCharacterIndex:(NSUInteger)i
 {
-    NSUInteger len = self.length;
-    NSUInteger s, e, ce;
-    
-    if (i < len)
+    if (i <= self.length)
         return [self lineRangeForRange:NSMakeRange(i, 0)];
-    if (i > len)
-        return NSMakeRange(NSNotFound, 0);
-    
-    if (len == 0)
-        return NSMakeRange(0, 0);
-    [self getLineStart:&s end:&e contentsEnd:&ce forRange:NSMakeRange(i-1, 0)];
-    if (ce == e)
-        return NSMakeRange(s, e-s);
-    return NSMakeRange(e, 0);
+    return NSMakeRange(NSNotFound, 0);
 }
 
 
