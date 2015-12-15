@@ -89,11 +89,19 @@
 {
     NSTextStorage *ts;
     
-    ts = [[NSTextStorage alloc] initWithString:@"1234\n6789ABCD\n\nGHIJK"];
+    ts = [[NSTextStorage alloc] initWithString:@"1234\n6789ABCD\n\nGHI"];
     [self realTestExaustiveLine:0 inTextStorage:ts start:0 end:5 contentsEnd:4];
     [self realTestExaustiveLine:1 inTextStorage:ts start:5 end:14 contentsEnd:13];
     [self realTestExaustiveLine:2 inTextStorage:ts start:14 end:15 contentsEnd:14];
-    [self realTestExaustiveLine:3 inTextStorage:ts start:15 end:20 contentsEnd:20];
+    [self realTestExaustiveLine:3 inTextStorage:ts start:15 end:18 contentsEnd:18];
+    [self realTestIntegerMaxOnTextStorage:ts];
+    
+    [ts.mutableString replaceCharactersInRange:NSMakeRange(13, 1) withString:@"E"];
+    [ts.mutableString appendString:@"JK"];
+    /* resulting string: 1234\n6789ABCDE\nGHIJK */
+    [self realTestExaustiveLine:0 inTextStorage:ts start:0 end:5 contentsEnd:4];
+    [self realTestExaustiveLine:1 inTextStorage:ts start:5 end:15 contentsEnd:14];
+    [self realTestExaustiveLine:2 inTextStorage:ts start:15 end:20 contentsEnd:20];
     [self realTestIntegerMaxOnTextStorage:ts];
     
     [ts replaceCharactersInRange:NSMakeRange(9, 9) withString:@"ABCDEFGHIJ\nLMNOP\nRST\n"];

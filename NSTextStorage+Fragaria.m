@@ -56,7 +56,7 @@
     NSTextStorage *ts;
     
     ts = [notification object];
-    firstInvalidCharacter = ts.editedRange.location;
+    firstInvalidCharacter = MIN(firstInvalidCharacter, ts.editedRange.location);
 }
 
 
