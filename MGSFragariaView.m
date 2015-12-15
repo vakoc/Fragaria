@@ -150,75 +150,27 @@
 #pragma mark - Getting Line and Column Information
 
 
-- (void)getRow:(NSUInteger * __nullable)r column:(NSUInteger * __nullable)c forCharacterIndex:(NSUInteger)i
+- (void)getRow:(NSUInteger *)r column:(NSUInteger *)c forCharacterIndex:(NSUInteger)i
 {
-    NSTextStorage *ts = self.textView.textStorage;
-    NSString *temp;
-    NSRange lr;
-    NSUInteger j;
-    
-    if (r)
-        *r = [ts mgs_rowOfCharacter:i];
-    if (c) {
-        lr = [ts.string mgs_lineRangeForCharacterIndex:i];
-        if (lr.location != NSNotFound) {
-            temp = [ts.string substringWithRange:lr];
-            j = i - lr.location;
-            *c = [temp mgs_columnOfCharacter:j tabWidth:self.tabWidth];
-        } else
-            *c = NSNotFound;
-    }
+    [self.textView getRow:r column:c forCharacterIndex:i];
 }
 
 
-- (void)getRow:(NSUInteger * __nullable)r indexInRow:(NSUInteger * __nullable)c forCharacterIndex:(NSUInteger)i
+- (void)getRow:(NSUInteger *)r indexInRow:(NSUInteger *)c forCharacterIndex:(NSUInteger)i
 {
-    NSTextStorage *ts = self.textView.textStorage;
-    NSUInteger fc;
-    NSRange lr;
-    
-    if (r) {
-        *r = [ts mgs_rowOfCharacter:i];
-        if (c) {
-            if (*r != NSNotFound) {
-                fc = [ts mgs_firstCharacterInRow:*r];
-                *c = i - fc;
-            } else
-                *c = NSNotFound;
-        }
-    } else if (c) {
-        lr = [ts.string mgs_lineRangeForCharacterIndex:i];
-        if (lr.location != NSNotFound)
-            *c = i - lr.location;
-        else
-            *c = NSNotFound;
-    }
+    [self.textView getRow:r indexInRow:c forCharacterIndex:i];
 }
 
 
 - (NSUInteger)characterIndexAtColumn:(NSUInteger)c withinRow:(NSUInteger)r
 {
-    NSUInteger fcr, ci;
-    NSRange lr;
-    NSString *tmp, *s;
-    
-    fcr = [self.textView.textStorage mgs_firstCharacterInRow:r];
-    if (fcr == NSNotFound)
-        return NSNotFound;
-    
-    s = self.string;
-    lr = [s lineRangeForRange:NSMakeRange(fcr, 0)];
-    tmp = [s substringWithRange:lr];
-    ci = [tmp mgs_characterInColumn:c tabWidth:self.tabWidth];
-    if (ci == NSNotFound)
-        return NSNotFound;
-    return fcr + ci;
+    return [self.textView characterIndexAtColumn:c withinRow:r];
 }
 
 
 - (NSUInteger)characterIndexAtIndex:(NSUInteger)c withinRow:(NSUInteger)r
 {
-    return [self.textView.textStorage mgs_characterAtIndex:c withinRow:r];
+    return [self.textView characterIndexAtIndex:c withinRow:r];
 }
 
 
