@@ -494,44 +494,18 @@
 /// @returns zero-based indexing.
 - (NSUInteger)lineNumberForLocation:(CGFloat)location
 {
-	NSUInteger		line, count, index, rectCount, i;
-	NSRectArray		rects;
-	NSRect			visibleRect;
-	NSLayoutManager	*layoutManager;
-    NSTextStorage *ts;
-	NSTextContainer	*container;
-	NSRange			nullRange;
-	id				view;
+	NSUInteger i;
+	NSRect visibleRect;
+    SMLTextView *view;
     
 	view = [self clientView];
 	visibleRect = [[[self scrollView] contentView] bounds];
-    
 	location += NSMinY(visibleRect);
-	
-    nullRange = NSMakeRange(NSNotFound, 0);
-    layoutManager = [view layoutManager];
-    container = [view textContainer];
-    ts = [layoutManager textStorage];
-    count = [self lineCount];
     
-    for (line = 0; line < count; line++)
-    {
-        index = [ts mgs_firstCharacterInRow:line];
-        
-        rects = [layoutManager rectArrayForCharacterRange:NSMakeRange(index, 0)
-                             withinSelectedCharacterRange:nullRange
-                                          inTextContainer:container
-                                                rectCount:&rectCount];
-        
-        for (i = 0; i < rectCount; i++)
-        {
-            if (location < NSMinY(rects[i]) && line)
-                return line-1;
-            else if (location < NSMaxY(rects[i]))
-                return line;
-        }
-    }
-	return NSNotFound;
+    i = [view.layoutManager characterIndexForPoint:NSMakePoint(0, location)
+          inTextContainer:view.textContainer
+          fractionOfDistanceBetweenInsertionPoints:NULL];
+	return [view.textStorage mgs_rowOfCharacter:i];
 }
 
 
