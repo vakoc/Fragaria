@@ -205,12 +205,7 @@
 
 - (NSUInteger)lineCount
 {
-    NSTextStorage *ts;
-    NSUInteger i;
-    
-    ts = self.clientView.textStorage;
-    i = [ts length];
-    return [ts mgs_rowOfCharacter:i] + 1;
+    return self.clientView.textStorage.mgs_lineCount;
 }
 
 
