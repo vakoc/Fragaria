@@ -47,5 +47,8 @@
  *    returned. */
 - (NSUInteger)mgs_characterAtIndex:(NSUInteger)i withinRow:(NSUInteger)l;
 
+/** Returns the amount of text lines in this storage. */
+- (NSUInteger)mgs_lineCount;
+
 
 @end

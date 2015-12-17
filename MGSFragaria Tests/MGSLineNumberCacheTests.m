@@ -139,6 +139,66 @@
 }
 
 
+- (void)testLineNumberCache
+{
+    NSTextStorage *ts;
+    
+    ts = [[NSTextStorage alloc] initWithString:@"1234\n56789A\nBCDEF"];
+    XCTAssertEqual([ts mgs_rowOfCharacter:ts.length-1], (NSUInteger)2);
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)3);
+    
+    [ts replaceCharactersInRange:NSMakeRange(4,1) withString:@""];
+    [ts replaceCharactersInRange:NSMakeRange(10,1) withString:@""];
+    /* resulting string: 123456789ABCDEF */
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)1);
+    XCTAssertEqual([ts mgs_rowOfCharacter:ts.length-1], (NSUInteger)0);
+    
+    [ts replaceCharactersInRange:NSMakeRange(4,0) withString:@"\n\n\n"];
+    /* resulting string: 1234\n\n\n56789ABCDEF */
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)4);
+    XCTAssertEqual([ts mgs_rowOfCharacter:ts.length-1], (NSUInteger)3);
+    
+    [ts replaceCharactersInRange:NSMakeRange(5,1) withString:@""];
+    /* resulting string: 1234\n\n56789ABCDEF */
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)3);
+    XCTAssertEqual([ts mgs_rowOfCharacter:ts.length-1], (NSUInteger)2);
+    
+    [ts replaceCharactersInRange:NSMakeRange(ts.length,0) withString:@"\n\n\n"];
+    /* resulting string: 1234\n\n56789ABCDEF\n\n\n */
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)6);
+    XCTAssertEqual([ts mgs_rowOfCharacter:ts.length-1], (NSUInteger)4);
+    
+    [ts replaceCharactersInRange:NSMakeRange(ts.length-3,0) withString:@"\r\n"];
+    /* resulting string: 1234\n\n56789ABCDEF\r\n\n\n\n */
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)7);
+    XCTAssertEqual([ts mgs_rowOfCharacter:ts.length-1], (NSUInteger)5);
+    
+    [ts replaceCharactersInRange:NSMakeRange(ts.length-4,0) withString:@"G"];
+    /* resulting string: 1234\n\n56789ABCDEF\rG\n\n\n\n */
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)8);
+    XCTAssertEqual([ts mgs_rowOfCharacter:ts.length-1], (NSUInteger)6);
+    
+    [ts replaceCharactersInRange:NSMakeRange(6,1) withString:@""];
+    /* resulting string: 1234\n\n6789ABCDEF\rG\n\n\n\n */
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)8);
+    XCTAssertEqual([ts mgs_rowOfCharacter:ts.length-1], (NSUInteger)6);
+    
+    [ts replaceCharactersInRange:NSMakeRange(3,1) withString:@""];
+    /* resulting string: 123\n\n6789ABCDEF\rG\n\n\n\n */
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)8);
+    XCTAssertEqual([ts mgs_rowOfCharacter:ts.length-1], (NSUInteger)6);
+    
+    [ts replaceCharactersInRange:NSMakeRange(ts.length-5,1) withString:@""];
+    /* resulting string: 123\n\n6789ABCDEF\r\n\n\n\n */
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)7);
+    XCTAssertEqual([ts mgs_rowOfCharacter:ts.length-1], (NSUInteger)5);
+    
+    [ts replaceCharactersInRange:NSMakeRange(0,ts.length) withString:@""];
+    /* resulting string:  */
+    XCTAssertEqual([ts mgs_lineCount], (NSUInteger)1);
+}
+
+
 - (void)realTestExaustiveLine:(NSUInteger)l inTextStorage:(NSTextStorage *)ts start:(NSUInteger)s end:(NSUInteger)e contentsEnd:(NSUInteger)ce
 {
     NSUInteger i;

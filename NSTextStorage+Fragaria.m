@@ -26,6 +26,17 @@
     @public
     NSUInteger firstInvalidCharacter;
     NSMutableArray *firstCharacterOfEachLine;
+    
+    NSUInteger lineCountGuess;
+    /* lineCountGuess == NSNotFound also means that lastEditedRange and
+     * lastChangeInLength are invalid */
+    NSRange lastEditedRange;
+    NSInteger lastChangeInLength;
+    /* The character range starting at firstInvalidCharacter and ending at
+     * previousInvalidCharacter is the range where the indices in
+     * firstCharacterOfEachLine are still reflecting the situation of the
+     * text contents before the last edit. */
+    NSUInteger previousInvalidCharacter;
 }
 
 @end
@@ -43,6 +54,8 @@
     firstInvalidCharacter = 0;
     firstCharacterOfEachLine = [[NSMutableArray alloc] init];
     
+    lineCountGuess = NSNotFound;
+    
     nc = [NSNotificationCenter defaultCenter];
     [nc addObserver:self selector:@selector(textStorageWillProcessEditing:)
       name:NSTextStorageWillProcessEditingNotification object:ts];
@@ -56,7 +69,20 @@
     NSTextStorage *ts;
     
     ts = [notification object];
+    previousInvalidCharacter = firstInvalidCharacter;
     firstInvalidCharacter = MIN(firstInvalidCharacter, ts.editedRange.location);
+    
+    if (lineCountGuess) {
+        if (lastEditedRange.length == 0 && lastChangeInLength == 0) {
+            lastEditedRange = ts.editedRange;
+            lastChangeInLength = ts.changeInLength;
+        } else {
+            /* Merging edited ranges is difficult, so we give up. Also, it is
+             * unreliable because I saw this notification fire twice for
+             * the same edit. */
+            lineCountGuess = NSNotFound;
+        }
+    }
 }
 
 
@@ -111,7 +137,7 @@ const static void *MGSLineNumberData = &MGSLineNumberData;
     if ([fcla count] > l)
         [fcla removeObjectsInRange:NSMakeRange(l, [fcla count] - l)];
     
-    s = [self mutableString];
+    s = [self string];
     lr = [s lineRangeForRange:NSMakeRange(i, 0)];
     while (maxc >= lr.location && maxl >= l) {
         [fcla addObject:@(lr.location)];
@@ -133,6 +159,7 @@ const static void *MGSLineNumberData = &MGSLineNumberData;
         } else
             lr = [s lineRangeForRange:NSMakeRange(i, 0)];
     }
+    lnd->previousInvalidCharacter = lnd->firstInvalidCharacter;
     lnd->firstInvalidCharacter = i;
     return l-1;
 }
@@ -148,10 +175,6 @@ const static void *MGSLineNumberData = &MGSLineNumberData;
     fcla = lnd->firstCharacterOfEachLine;
     n = [fcla count];
     
-    /* Optimize last character */
-    if (c == [self length])
-        return n - 1;
-    
     i = [fcla indexOfObject:@(c) inSortedRange:NSMakeRange(0, n)
                     options:NSBinarySearchingInsertionIndex | NSBinarySearchingLastEqual
             usingComparator:^ NSComparisonResult(id obj1, id obj2) {
@@ -164,18 +187,107 @@ const static void *MGSLineNumberData = &MGSLineNumberData;
 }
 
 
-- (NSUInteger)mgs_rowOfCharacter:(NSUInteger)c
+/* Getting the line count by querying the line number cache means that we
+ * have to rebuild it until the end if it is outdated, and this is expensive.
+ *   So we keep track of the last edit, and we just update a line number cache
+ * by examining the range which was changed to determine how many lines were
+ * added or deleted without iterating over the whole string.
+ *   If more than one edit was made since the last call to mgs_lineCount, or if
+ * we encounter an edit we can't get reliable information about, we give up and
+ * rebuild the cache. 
+ *   Note that CRLF is a bitch of a newline format to handle with this method
+ * because we can't just assume people are nice... */
+- (NSUInteger)mgs_lineCount
+{
+    MGSTextStorageLineNumberData *lnd = [self mgs_lineNumberData];
+    NSRange er = lnd->lastEditedRange;
+    NSInteger lc = lnd->lastChangeInLength;
+    NSUInteger l0, l1, lcg;
+    NSString *s;
+    BOOL onlyRemoval, onlyInsertion;
+    
+    onlyRemoval = lc < 0 && er.length == 0;
+    onlyInsertion = lc >= 0 && er.length == (NSUInteger)(lc);
+    
+    if (lnd->lineCountGuess == NSNotFound)
+        goto fallback;
+    
+    if (onlyInsertion || onlyRemoval) {
+        if (onlyInsertion && er.length > 0) {
+            lcg = lnd->lineCountGuess;
+            
+            /* Did somebody (=our unit test) break a CRLF into a CR and a LF? */
+            if (er.location > 0 && NSMaxRange(er) < self.length) {
+                s = [self string];
+                if ([s characterAtIndex:er.location-1] == '\r')
+                    if ([s characterAtIndex:NSMaxRange(er)] == '\n')
+                        lcg++;
+            }
+            
+            l0 = [self mgs_rowOfMaybeInvalidCharacter:er.location];
+            l1 = [self mgs_rowOfMaybeInvalidCharacter:NSMaxRange(er)];
+            lnd->lineCountGuess = lcg + (l1 - l0);
+            lnd->lastEditedRange = NSMakeRange(0, 0);
+            lnd->lastChangeInLength = 0;
+        } else if (onlyRemoval) {
+            er.length = (-lc);
+            
+            /* Bail out if we do not have enough info about the previous state
+             * of the string (we can't go back in time after the string is
+             * edited and thus we get the past state by querying the outdated
+             * parts of the cache) */
+            if (!(lnd->firstInvalidCharacter <= er.location &&
+                  NSMaxRange(er) < lnd->previousInvalidCharacter))
+                goto fallback;
+            
+            /* Did somebody (=our unit test) recompose a CRLF into a CR and a LF? */
+            if (er.location > 0 && er.location < self.length) {
+                s = [self string];
+                if ([s characterAtIndex:er.location-1] == '\r')
+                    if ([s characterAtIndex:er.location] == '\n')
+                        lnd->lineCountGuess--;
+            }
+            
+            l0 = [self mgs_rowOfValidCharacter:er.location];
+            l1 = [self mgs_rowOfValidCharacter:NSMaxRange(er)];
+            [self mgs_cacheLineNumberDataUntilCharacter:er.location+1 orLine:NSUIntegerMax];
+            lnd->lineCountGuess -= (l1 - l0);
+            lnd->lastEditedRange = NSMakeRange(0, 0);
+            lnd->lastChangeInLength = 0;
+        }
+        return lnd->lineCountGuess;
+    }
+    
+fallback:
+    lnd->lineCountGuess = [self mgs_rowOfMaybeInvalidCharacter:self.length] + 1;
+    lnd->lastEditedRange = NSMakeRange(0, 0);
+    lnd->lastChangeInLength = 0;
+    return lnd->lineCountGuess;
+}
+
+
+- (NSUInteger)mgs_rowOfMaybeInvalidCharacter:(NSUInteger)c
 {
     MGSTextStorageLineNumberData *lnd = [self mgs_lineNumberData];
     
-    if (c > [self length])
-        return NSNotFound;
     if (c == 0)
         return 0;
     
     if (c < lnd->firstInvalidCharacter)
         return [self mgs_rowOfValidCharacter:c];
     return [self mgs_cacheLineNumberDataUntilCharacter:c orLine:NSUIntegerMax];
+}
+
+
+- (NSUInteger)mgs_rowOfCharacter:(NSUInteger)c
+{
+    NSUInteger len = self.length;
+    
+    if (c > len)
+        return NSNotFound;
+    if (c == len)
+        return [self mgs_lineCount] - 1;
+    return [self mgs_rowOfMaybeInvalidCharacter:c];
 }
 
 
