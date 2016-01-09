@@ -49,6 +49,7 @@
     NSUInteger _mouseDownLineTracking;
     NSRect     _mouseDownRectTracking;
     
+    CGFloat _maxDigitWidthOfCurrentFont;
     NSMutableDictionary *_markerImages;
     NSSize _markerImagesSize;
     
@@ -78,8 +79,11 @@
         _showsLineNumbers = YES;
         _backgroundColor = [NSColor colorWithCalibratedWhite:0.94 alpha:1.0];
         _minimumWidth = 40;
+        
         _font = [NSFont fontWithName:@"Menlo" size:11];
         _textColor = [NSColor colorWithCalibratedWhite:0.42 alpha:1.0];
+        [self updateDigitWidthCache];
+        
         _breakpointData = [[NSDictionary alloc] init];
         
         [self setClientView:[aScrollView documentView]];
@@ -131,6 +135,7 @@
 - (void)setFont:(NSFont *)font
 {
     _font = font;
+    [self updateDigitWidthCache];
     [self setRuleThickness:[self requiredThickness]];
     [self setNeedsDisplay:YES];
 }
@@ -211,44 +216,47 @@
 
 + (NSSet *)keyPathsForValuesAffectingRequiredThickness
 {
-    return [NSSet setWithArray:@[
-                                 @"decorations",
-                                 @"minimumWidth",
-                                 @"drawsLineNumbers",
-                                 @"font",
-                                 @"startingLineNumber",
-                                 ]];
+    return [NSSet setWithArray:@[@"decorations", @"minimumWidth",
+      @"drawsLineNumbers", @"font", @"startingLineNumber"]];
 }
+
+
+- (void)updateDigitWidthCache
+{
+    NSDictionary *attr;
+    NSString *tmp;
+    CGFloat maxw;
+    int i;
+    
+    attr = [self textAttributes];
+    maxw = [@"0" sizeWithAttributes:attr].width;
+    for (i=1; i<10; i++) {
+        tmp = [NSString stringWithFormat:@"%d", i];
+        maxw = MAX(maxw, [tmp sizeWithAttributes:attr].width);
+    }
+    _maxDigitWidthOfCurrentFont = maxw;
+}
+
 
 - (CGFloat)requiredThickness
 {
-    NSUInteger			lineCount, digits, i;
-    NSMutableString     *sampleString;
-    NSSize              stringSize;
+    NSUInteger lineCount, digits;
+    CGFloat stringWidth;
     CGFloat decorationsWidth;
     
     if (_showsLineNumbers) {
         lineCount = [self lineCount] + _startingLineNumber - 1;
         digits = (NSUInteger)log10(lineCount) + 1;
-        
-        sampleString = [NSMutableString string];
-        for (i = 0; i < digits; i++) {
-            // Use "8" since it is one of the fatter numbers. Anything but "1"
-            // will probably be ok here. I could be pedantic and actually find the fattest
-            // number for the current font but nah.
-            [sampleString appendString:@"8"];
-        }
-        stringSize = [sampleString sizeWithAttributes:[self textAttributes]];
-        stringSize.width += RULER_MARGIN;
+        stringWidth = digits * _maxDigitWidthOfCurrentFont + RULER_MARGIN;
     } else {
-        stringSize = NSZeroSize;
+        stringWidth = 0;
     }
     
     decorationsWidth = [self decorationColumnWidth];
 
 	// Round up the value. There is a bug on 10.4 where the display gets all
     // wonky when scrolling if you don't return an integral value here.
-    return ceil(MAX(_minimumWidth, decorationsWidth + stringSize.width + RULER_MARGIN));
+    return ceil(MAX(_minimumWidth, decorationsWidth + stringWidth + RULER_MARGIN));
 }
 
 
