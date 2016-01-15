@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <XCTest/XCTest.h>
-#import "MGSMutableDictionary.h"
+#import "MGSPreferencesProxyDictionary.h"
 #import "MGSFragariaView+Definitions.h"
 #import "MGSUserDefaultsController.h"
 #import "MGSUserDefaults.h"
@@ -23,8 +23,8 @@
 @property MGSFragariaView *view1;
 @property MGSFragariaView *view2;
 
-@property MGSMutableDictionary *dict1;
-@property MGSMutableDictionary *dict2;
+@property MGSPreferencesProxyDictionary *dict1;
+@property MGSPreferencesProxyDictionary *dict2;
 
 @end
 
@@ -42,8 +42,8 @@
 	self.view1 = [[MGSFragariaView alloc] initWithFrame:NSMakeRect(1.0, 1.0, 1.0, 1.0)];
 	self.view2 = [[MGSFragariaView alloc] initWithFrame:NSMakeRect(1.0, 1.0, 1.0, 1.0)];
 	
-	self.dict1 = [MGSMutableDictionary dictionaryWithDictionary:@{ @"name" : @"jim" }];
-	self.dict2 = [MGSMutableDictionary dictionaryWithDictionary:@{ @"name" : @"john" }];
+	self.dict1 = [MGSPreferencesProxyDictionary dictionaryWithDictionary:@{ @"name" : @"jim" }];
+	self.dict2 = [MGSPreferencesProxyDictionary dictionaryWithDictionary:@{ @"name" : @"john" }];
 }
 
 
