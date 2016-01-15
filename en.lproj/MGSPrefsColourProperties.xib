@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9059"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="MGSPrefsColourPropertiesViewController">
@@ -34,7 +34,6 @@
             <subviews>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="soo-KG-LXb">
                     <rect key="frame" x="353" y="36" width="133" height="32"/>
-                    <animations/>
                     <buttonCell key="cell" type="push" title="Save Scheme…" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="puF-St-KA8">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -47,7 +46,6 @@
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="430" translatesAutoresizingMaskIntoConstraints="NO" id="wpy-Xl-NUw">
                     <rect key="frame" x="48" y="10" width="434" height="28"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Color schemes allow you to select attractive combinations of colors, or to define your own color combination schemes." id="C3W-NE-5HP">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -56,7 +54,6 @@
                 </textField>
                 <popUpButton horizontalHuggingPriority="249" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cfm-EI-KQe">
                     <rect key="frame" x="115" y="40" width="239" height="26"/>
-                    <animations/>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="7AC-M6-c5F" id="xgZ-Ts-CTp">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="menu"/>
@@ -77,7 +74,6 @@
                 </popUpButton>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="eKe-mh-aBb">
                     <rect key="frame" x="18" y="46" width="93" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Color Scheme:" id="adW-t3-6cT">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -98,7 +94,6 @@
                 <constraint firstItem="wpy-Xl-NUw" firstAttribute="leading" secondItem="xfo-Mv-vNh" secondAttribute="leading" constant="50" id="s7X-Zt-eRF"/>
                 <constraint firstItem="eKe-mh-aBb" firstAttribute="top" secondItem="xfo-Mv-vNh" secondAttribute="top" constant="10" id="y7c-3N-LuQ"/>
             </constraints>
-            <animations/>
         </customView>
         <customView id="RcN-cf-clt" userLabel="Editor Colors View">
             <rect key="frame" x="0.0" y="0.0" width="500" height="175"/>
@@ -106,7 +101,6 @@
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="x1g-me-5AE">
                     <rect key="frame" x="110" y="83" width="30" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Text" id="i7d-74-IV1">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -132,7 +126,6 @@
                         <constraint firstAttribute="width" constant="54" id="AYe-uI-CoK"/>
                         <constraint firstAttribute="height" constant="26" id="mfw-jS-7zu"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.backgroundColor" id="VY6-GL-SF9">
@@ -149,7 +142,6 @@
                         <constraint firstAttribute="width" constant="54" id="Yyu-mK-gYg"/>
                         <constraint firstAttribute="height" constant="26" id="xHD-Le-tdX"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.defaultSyntaxErrorHighlightingColour" id="L58-qc-pVV">
@@ -162,7 +154,6 @@
                 </colorWell>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Xq7-24-fYB">
                     <rect key="frame" x="110" y="49" width="77" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Background" id="yof-vd-C5K">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -184,7 +175,6 @@
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ohg-cE-z0V">
                     <rect key="frame" x="328" y="15" width="154" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Invisible Characters" id="IxP-xz-9xk">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -210,7 +200,6 @@
                         <constraint firstAttribute="width" constant="54" id="38h-ev-0qU"/>
                         <constraint firstAttribute="height" constant="26" id="5uN-Dl-az0"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.insertionPointColor" id="lup-eO-bsU">
@@ -223,7 +212,6 @@
                 </colorWell>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="W0x-0N-9kD">
                     <rect key="frame" x="328" y="49" width="154" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Insertion Point" id="FS4-kc-HlF">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -249,7 +237,6 @@
                         <constraint firstAttribute="width" constant="54" id="TiM-Vb-al3"/>
                         <constraint firstAttribute="height" constant="26" id="jYv-Ge-jLZ"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.currentLineHighlightColour" id="pkh-t9-FVy">
@@ -262,7 +249,6 @@
                 </colorWell>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" preferredMaxLayoutWidth="430" translatesAutoresizingMaskIntoConstraints="NO" id="bx6-hL-JOT">
                     <rect key="frame" x="48" y="112" width="434" height="28"/>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These colors determine the overall appearance of the text editor. These colors are always used and cannot be disabled." id="SOX-V5-eX0">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -271,7 +257,6 @@
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RVW-uf-4pJ">
                     <rect key="frame" x="18" y="148" width="464" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Editor Colors" id="naY-hv-yh1">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -284,7 +269,6 @@
                         <constraint firstAttribute="width" constant="54" id="7wP-RD-2Mq"/>
                         <constraint firstAttribute="height" constant="26" id="Fnv-g6-hQU"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.textColor" id="dZe-GI-hq3"/>
@@ -297,7 +281,6 @@
                         <constraint firstAttribute="height" constant="26" id="dgP-Zj-kcR"/>
                         <constraint firstAttribute="width" constant="54" id="oXL-7d-Epj"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.textInvisibleCharactersColour" id="ufP-3x-Cju">
@@ -310,7 +293,6 @@
                 </colorWell>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="nw5-L7-LzE">
                     <rect key="frame" x="110" y="15" width="111" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Error Highlighting" id="Asd-2O-2uG">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -335,7 +317,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="150" id="iMo-y3-aCK"/>
                     </constraints>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Current Line Highlight" id="qb0-Fj-0v1">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -392,7 +373,6 @@
                 <constraint firstItem="RVW-uf-4pJ" firstAttribute="leading" secondItem="RcN-cf-clt" secondAttribute="leading" priority="900" constant="20" symbolic="YES" id="vsU-RV-l9l"/>
                 <constraint firstItem="nw5-L7-LzE" firstAttribute="leading" secondItem="0ws-Xa-iLK" secondAttribute="trailing" priority="900" constant="8" symbolic="YES" id="xoa-3e-g9O"/>
             </constraints>
-            <animations/>
         </customView>
         <customView id="DgW-LA-ddL" userLabel="Syntax Colors View">
             <rect key="frame" x="0.0" y="0.0" width="500" height="243"/>
@@ -400,7 +380,6 @@
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mu2-ho-SOU">
                     <rect key="frame" x="18" y="216" width="165" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Syntax Highlighting Colors" id="haj-FW-7sN">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -412,7 +391,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="430" id="GmY-MI-tLv"/>
                     </constraints>
-                    <animations/>
                     <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="These colors are used to perform syntax highlighting of document elements. Individual elements can be enabled or disabled." id="IEj-XQ-fK8">
                         <font key="font" metaFont="smallSystem"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -425,7 +403,6 @@
                         <constraint firstAttribute="height" constant="26" id="ivb-Ay-v3d"/>
                         <constraint firstAttribute="width" constant="54" id="yPs-F8-bEO"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForKeywords" id="54r-q9-ccl">
@@ -450,7 +427,6 @@
                         <constraint firstAttribute="width" constant="54" id="MHI-Jv-9WH"/>
                         <constraint firstAttribute="height" constant="26" id="bT5-ME-zig"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForComments" id="IHN-2Z-DAm">
@@ -475,7 +451,6 @@
                         <constraint firstAttribute="width" constant="54" id="8Tx-fI-PtK"/>
                         <constraint firstAttribute="height" constant="26" id="OFA-Tc-usk"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForVariables" id="JyA-m8-6gu">
@@ -496,7 +471,6 @@
                 </colorWell>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="TOc-jO-4sb">
                     <rect key="frame" x="328" y="117" width="63" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Keywords" id="T8y-0J-bmG">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -518,7 +492,6 @@
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="nfD-xh-8sc">
                     <rect key="frame" x="110" y="151" width="95" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Auto-complete" id="7M7-Tz-T50">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -544,7 +517,6 @@
                         <constraint firstAttribute="height" constant="26" id="7DE-EW-648"/>
                         <constraint firstAttribute="width" constant="54" id="cP6-10-Lfd"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForAutocomplete" id="QlK-ol-H3Q">
@@ -568,7 +540,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="2RZ-yE-2HO"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="fcj-tQ-ADq">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -587,7 +558,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="rb7-8C-g9V"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="nV2-RA-8g0">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -607,7 +577,6 @@
                         <constraint firstAttribute="height" constant="26" id="YCO-hd-V5Q"/>
                         <constraint firstAttribute="width" constant="54" id="w2o-JM-Rkd"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForNumbers" id="LEA-MV-HYs">
@@ -628,7 +597,6 @@
                 </colorWell>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="vDT-p7-kgb">
                     <rect key="frame" x="328" y="83" width="60" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Numbers" id="PdC-9Y-2e0">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -650,7 +618,6 @@
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="v4T-e7-yZh">
                     <rect key="frame" x="328" y="151" width="76" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Instructions" id="cKq-z9-x4A">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -676,7 +643,6 @@
                         <constraint firstAttribute="height" constant="26" id="T2i-gH-GzU"/>
                         <constraint firstAttribute="width" constant="54" id="Xvv-iu-BrC"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForInstructions" id="l06-3m-7pN">
@@ -701,7 +667,6 @@
                         <constraint firstAttribute="width" constant="54" id="LZt-d2-vQn"/>
                         <constraint firstAttribute="height" constant="26" id="wDo-Gc-Hlt"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForStrings" id="93F-lE-o2G">
@@ -722,7 +687,6 @@
                 </colorWell>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="3nd-T1-W99">
                     <rect key="frame" x="110" y="83" width="73" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Commands" id="TdG-mk-mV6">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -744,7 +708,6 @@
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ydh-pU-Nug">
                     <rect key="frame" x="328" y="49" width="48" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Strings" id="L7L-kL-fXS">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -770,7 +733,6 @@
                         <constraint firstAttribute="width" constant="54" id="0gm-Of-GtP"/>
                         <constraint firstAttribute="height" constant="26" id="vzH-dR-UId"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForCommands" id="k4d-A5-Pg9">
@@ -794,7 +756,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="DkI-8b-r0T"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="CVR-9O-iCc">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -813,7 +774,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="E0U-ty-yuS"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="mnx-YL-YX7">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -832,7 +792,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="TlV-WT-wHJ"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="DNZ-Xi-ajv">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -848,7 +807,6 @@
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="5LH-va-u1D">
                     <rect key="frame" x="110" y="117" width="64" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Attributes" id="aeg-j4-HIa">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -873,7 +831,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="8KR-1g-QkS"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="Mi9-Dn-3iP">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -892,7 +849,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="Acd-Fj-1KB"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="TnS-zl-vbz">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -911,7 +867,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="bfV-iK-JuR"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="center" inset="2" id="WYF-Ya-bhk">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -930,7 +885,6 @@
                     <constraints>
                         <constraint firstAttribute="width" constant="18" id="XSN-Nw-CZK"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="5Yq-n1-UYT">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -946,7 +900,6 @@
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="hbu-0o-gw6">
                     <rect key="frame" x="110" y="49" width="70" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Comments" id="Auu-Yr-f0A">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -968,7 +921,6 @@
                 </textField>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="xIm-q5-TgG">
                     <rect key="frame" x="328" y="15" width="60" height="17"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="Variables" id="WSJ-ge-3fn">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -994,7 +946,6 @@
                         <constraint firstAttribute="height" constant="26" id="8Gc-q0-bWf"/>
                         <constraint firstAttribute="width" constant="54" id="lKg-EZ-0lu"/>
                     </constraints>
-                    <animations/>
                     <color key="color" red="0.058130499000000002" green="0.055541898999999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <connections>
                         <binding destination="x5m-Ak-VJo" name="value" keyPath="selection.colourForAttributes" id="IsF-Oa-hFu">
@@ -1075,7 +1026,6 @@
                 <constraint firstItem="6iM-S9-3yf" firstAttribute="leading" secondItem="K5Q-js-K0g" secondAttribute="trailing" id="xgb-6Q-pQJ"/>
                 <constraint firstItem="Anu-T0-SbV" firstAttribute="top" secondItem="3Xn-UK-klk" secondAttribute="bottom" constant="8" id="zVx-bs-gjK"/>
             </constraints>
-            <animations/>
         </customView>
         <customView id="8dm-4z-17A" userLabel="Color Options View">
             <rect key="frame" x="0.0" y="0.0" width="500" height="74"/>
@@ -1086,7 +1036,6 @@
                     <constraints>
                         <constraint firstAttribute="height" priority="900" constant="14" id="Zdm-QD-GDp"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Color multi-line strings" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="VD0-tP-TG2">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -1111,7 +1060,6 @@
                     <constraints>
                         <constraint firstAttribute="height" priority="900" constant="14" id="Q0X-IX-9Bk"/>
                     </constraints>
-                    <animations/>
                     <buttonCell key="cell" type="check" title="Only color until the end of the line if the closing tag cannot be found " bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="mHo-tD-wMd">
                         <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                         <font key="font" metaFont="system"/>
@@ -1139,7 +1087,6 @@
                 <constraint firstItem="5oR-v8-2jt" firstAttribute="leading" secondItem="tEB-mt-DKY" secondAttribute="leading" priority="900" id="W0Q-Ea-LZZ"/>
                 <constraint firstAttribute="bottom" secondItem="5oR-v8-2jt" secondAttribute="bottom" priority="900" constant="20" symbolic="YES" id="s12-Y1-WeF"/>
             </constraints>
-            <animations/>
         </customView>
     </objects>
 </document>
