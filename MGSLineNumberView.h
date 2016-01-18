@@ -33,6 +33,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 // OTHER DEALINGS IN THE SOFTWARE.
 //
+/// @cond PRIVATE
 
 #import <Cocoa/Cocoa.h>
 #import "SMLTextView.h"

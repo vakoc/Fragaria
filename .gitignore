@@ -22,5 +22,6 @@ profile
 
 ## Generated Documentation
 AppleDoc
-Doxygen
 Jazzy
+Doxygen/html
+Doxygen/latex
