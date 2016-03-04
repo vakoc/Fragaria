@@ -10,8 +10,6 @@
 
 
 @class SMLTextView;
-@class MGSLineNumberView;
-@class SMLSyntaxColouring;
 
 @protocol SMLSyntaxColouringDelegate;
 @protocol SMLAutoCompleteDelegate;
@@ -48,10 +46,6 @@
 @property (nonatomic, strong, readonly, nonnull) SMLTextView *textView;
 /** Fragaria's scroll view. */
 @property (nonatomic, strong, readonly, nonnull) NSScrollView *scrollView;
-/** Fragaria's gutter view. */
-@property (nonatomic, strong, readonly, nonnull) MGSLineNumberView *gutterView;
-/** Fragaria's syntax colouring object. */
-@property  (nonatomic, assign, readonly, nonnull) SMLSyntaxColouring *syntaxColouring;
 
 
 #pragma mark - Accessing Text Content
