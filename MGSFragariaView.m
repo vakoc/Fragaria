@@ -531,6 +531,12 @@
 }
 
 
+- (void)reloadBreakpointData
+{
+    [self.gutterView reloadBreakpointData];
+}
+
+
 #pragma mark - Tabulation and Indentation
 
 

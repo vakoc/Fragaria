@@ -236,6 +236,14 @@
  * marker is present. */
 @property (nonatomic, weak) IBOutlet id<MGSBreakpointDelegate> breakpointDelegate;
 
+/** Forces the line number view to reload the the breakpoint data from the
+ *  breakpoint delegate.
+ *  @discussion This method should be called when you want to update the
+ *              shown breakpoints without an input from the user. It's not
+ *              necessary to call this method in response to a
+ *              toggleBreakpointForFragaria:onLine: message. */
+- (void)reloadBreakpointData;
+
 
 #pragma mark - Tabulation and Indentation
 /// @name Tabulation and Indentation
