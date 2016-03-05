@@ -497,6 +497,7 @@
 	NSUInteger i;
 	NSRect visibleRect;
     SMLTextView *view;
+    CGFloat insptdist;
     
 	view = [self clientView];
 	visibleRect = [[[self scrollView] contentView] bounds];
@@ -504,7 +505,14 @@
     
     i = [view.layoutManager characterIndexForPoint:NSMakePoint(0, location)
           inTextContainer:view.textContainer
-          fractionOfDistanceBetweenInsertionPoints:NULL];
+          fractionOfDistanceBetweenInsertionPoints:&insptdist];
+    /* insptdist is how far the returned character's insertion point is from
+     * the insertion point that would appear when clicking on the specified
+     * point. 0 means that the user clicked before the character i, and
+     * 1 means the user clicked after the character i.*/
+    if (insptdist >= 1.0)
+        /* Adjust the character index to become the insertion point's index */
+        i++;
 	return [view.textStorage mgs_rowOfCharacter:i];
 }
 
