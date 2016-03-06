@@ -77,9 +77,7 @@
             lastEditedRange = ts.editedRange;
             lastChangeInLength = ts.changeInLength;
         } else {
-            /* Merging edited ranges is difficult, so we give up. Also, it is
-             * unreliable because I saw this notification fire twice for
-             * the same edit. */
+            /* Merging edited ranges is difficult, so we give up. */
             lineCountGuess = NSNotFound;
         }
     }

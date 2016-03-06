@@ -55,6 +55,7 @@
     NSSize _markerImagesSize;
     
     NSDictionary *_breakpointData;
+    NSUInteger _lastLineCount;
 }
 
 
@@ -167,6 +168,7 @@
 - (void)layoutManagerDidChangeTextStorage
 {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    _lastLineCount = self.clientView.textStorage.mgs_lineCount;
     [nc addObserver:self selector:@selector(textStorageDidProcessEditing:)
       name:NSTextStorageDidProcessEditingNotification object:self.clientView.textStorage];
 }
@@ -202,6 +204,33 @@
 
 - (void)textStorageDidProcessEditing:(NSNotification *)notification
 {
+    id <MGSBreakpointDelegate> bd;
+    NSTextStorage *ts;
+    NSRange ecr, elr;
+    NSInteger charDelta, lineDelta;
+    
+    bd = self.breakpointDelegate;
+    if ([bd respondsToSelector:
+         @selector(fixBreakpointsOfAddedLines:inLineRange:ofFragaria:)]) {
+        ts = self.clientView.textStorage;
+        charDelta = ts.changeInLength;
+        if (charDelta && self.lineCount != _lastLineCount) {
+            lineDelta = self.lineCount - _lastLineCount;
+            
+            ecr = ts.editedRange;
+            elr.location = [ts mgs_rowOfCharacter:ecr.location];
+            if (ecr.length)
+                elr.length = [ts mgs_rowOfCharacter:NSMaxRange(ecr)] - elr.location;
+            else
+                elr.length = 0;
+            elr.location++;
+            elr.length++;
+            
+            [bd fixBreakpointsOfAddedLines:lineDelta inLineRange:elr ofFragaria:_fragaria];
+        }
+    }
+    _lastLineCount = self.lineCount;
+    
     [self setNeedsDisplay:YES];
 }
 

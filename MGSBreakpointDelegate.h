@@ -54,5 +54,16 @@
  *  @param line The one-based line number which the user clicked on. */
 - (void)toggleBreakpointForFragaria:(MGSFragariaView *)sender onLine:(NSUInteger)line;
 
+/** Tells the delegate that some lines were added or deleted from the text,
+ *  to allow fixing any breakpoints that lie on these lines.
+ *  @discussion Your implementation of this method should call
+ *              -reloadBreakpointData on sender if any line number had to be
+ *              fixed (it is not automatic).
+ *  @param newRange The affected range of one-based line numbers.
+ *  @param delta How many lines were added (if positive) or deleted (if
+ *               negative) during the edit.
+ *  @param sender The MGSFragaria instance which sent the message. */
+- (void)fixBreakpointsOfAddedLines:(NSInteger)delta inLineRange:(NSRange)newRange ofFragaria:(MGSFragariaView *)sender;
+
 
 @end
