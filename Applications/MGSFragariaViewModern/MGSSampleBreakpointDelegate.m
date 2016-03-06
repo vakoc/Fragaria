@@ -12,26 +12,20 @@
 @implementation MGSSampleBreakpointDelegate
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	init
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+/*
+ *  -init
+ */
 - (instancetype)init
 {
     self = [super init];
-    breakpoints = [[NSMutableSet alloc] init];
+    breakpoints = [[NSMutableIndexSet alloc] init];
     return self;
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	breakpointColourForLine:ofFragaria:
-		The ruler requests that this delegate provide an NSColor
-		for this line. If this delegate is not implemented, then a
-		built-in default color will be used.
- 
-		This is just a demo! A real app would have a more
-		sophisticated way of deciding a breakpoint's color.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+/*
+ *  -breakpointColourForLine:ofFragaria:
+ */
 - (NSColor *)breakpointColourForLine:(NSUInteger)line ofFragaria:(MGSFragariaView *)sender
 {
 	if (line % 2 == 0)
@@ -47,35 +41,64 @@
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	toggleBreakpointForFragaria:onLine:
-		The ruler is indicating that the user click or activated a
-		spot on the rule consistent with breakpoint location, and
-		is reporting that even via this delegate method.
-		
-		This is just a demo! A real app would have a more
-		sophisticated way of managing breakpoint events.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
+/*
+ * -toggleBreakpointForFragaria:onLine:
+ */
 - (void)toggleBreakpointForFragaria:(MGSFragariaView *)sender onLine:(NSUInteger)line
 {
-    NSNumber *lineNumber;
-    
-    lineNumber = [NSNumber numberWithUnsignedLong:line];
-    if ([breakpoints containsObject:lineNumber])
-        [breakpoints removeObject:lineNumber];
+    if ([breakpoints containsIndex:line])
+        [breakpoints removeIndex:line];
     else
-        [breakpoints addObject:lineNumber];
+        [breakpoints addIndex:line];
 }
 
 
-/*–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*
-	breakpointsForFragaria:
-		The ruler is indicating that it needs to know the set of
-		breakpoints (if any) in order to display them. This delegate
-		method should return an NSSet of NSNumber objects containing
-		the line numbers of breakpoints.
- *–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––*/
-- (NSSet *)breakpointsForFragaria:(MGSFragariaView *)sender
+/*
+ *   -fixBreakpointsOfAddedLines:inLineRange:ofFragaria:
+ *
+ *  We want to keep our breakpoints in sync with the movement of the text.
+ *    newRange is a range of lines that were edited, and delta is the amount of
+ *  lines added (or removed, if negative).
+ *    If delta is positive, we just want to shift the existing breakpoints
+ *  down delta lines, from the beginning of the added range. If delta is
+ *  negative, we also want to move the breakpoints that were located on lines 
+ *  that do not exist anymore.
+ */
+- (void)fixBreakpointsOfAddedLines:(NSInteger)delta inLineRange:(NSRange)newRange ofFragaria:(MGSFragariaView *)sender
+{
+    NSRange oldRange;
+    BOOL changed = NO;
+    NSUInteger tmp, minAffectedIdx;
+    
+    oldRange = newRange;
+    oldRange.length -= delta;
+    
+    if (delta < 0) {
+        tmp = [breakpoints indexLessThanIndex:NSMaxRange(oldRange)];
+        if (tmp != NSNotFound && tmp >= oldRange.location) {
+            /* Move all breakpoints that were located in deleted lines to the
+             * end of the new range. */
+            [breakpoints addIndex:NSMaxRange(newRange)-1];
+            changed = YES;
+        }
+        minAffectedIdx = NSMaxRange(newRange);
+    } else {
+        minAffectedIdx = NSMaxRange(oldRange);
+    }
+    
+    if ([breakpoints indexGreaterThanOrEqualToIndex:minAffectedIdx] != NSNotFound) {
+        [breakpoints shiftIndexesStartingAtIndex:NSMaxRange(oldRange) by:delta];
+        changed = YES;
+    }
+    if (changed)
+        [sender reloadBreakpointData];
+}
+
+
+/*
+ *  -breakpointsForFragaria:
+ */
+- (NSIndexSet *)breakpointsForFragaria:(MGSFragariaView *)sender
 {
     return [breakpoints copy];
 }

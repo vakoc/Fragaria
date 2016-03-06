@@ -12,12 +12,10 @@
 
 /**
  *  This class serves as an example on how to use an external delegate class
- *  with MGSFragariaView. By default the AppDelegate would ordinarilly act
- *  as the delegate, but we've delegate to an instance of this class for the
- *  purpose of demonstration.
+ *  with MGSFragariaView.
  **/
 @interface MGSSampleBreakpointDelegate : NSObject <MGSBreakpointDelegate> {
-    NSMutableSet *breakpoints;
+    NSMutableIndexSet *breakpoints;
 }
 
 @end
