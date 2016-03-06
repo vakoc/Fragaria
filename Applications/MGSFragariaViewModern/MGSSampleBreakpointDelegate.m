@@ -75,7 +75,7 @@
     
     if (delta < 0) {
         tmp = [breakpoints indexLessThanIndex:NSMaxRange(oldRange)];
-        if (tmp != NSNotFound && tmp >= oldRange.location) {
+        if (tmp != NSNotFound && tmp >= NSMaxRange(newRange)) {
             /* Move all breakpoints that were located in deleted lines to the
              * end of the new range. */
             [breakpoints addIndex:NSMaxRange(newRange)-1];
