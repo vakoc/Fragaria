@@ -39,6 +39,7 @@
 #import "MGSLineNumberView.h"
 #import "MGSBreakpointDelegate.h"
 #import "NSTextStorage+Fragaria.h"
+#import "NSSet+Fragaria.h"
 
 
 #define RULER_MARGIN		5.0
@@ -710,6 +711,7 @@
 {
     NSMutableDictionary *data;
     NSSet *linesWithBreakpoints;
+    id tmp;
     NSNumber *line;
     
     if (!_breakpointDelegate) {
@@ -725,7 +727,17 @@
     data = [NSMutableDictionary dictionary];
     
     if ([_breakpointDelegate respondsToSelector:@selector(breakpointsForFragaria:)]) {
-        linesWithBreakpoints = [_breakpointDelegate breakpointsForFragaria:self.fragaria];
+        tmp = [_breakpointDelegate breakpointsForFragaria:self.fragaria];
+        if ([tmp isKindOfClass:[NSIndexSet class]]) {
+            linesWithBreakpoints = [[NSSet alloc] mgs_initWithIndexSet:tmp];
+        } else if ([tmp isKindOfClass:[NSSet class]]) {
+            linesWithBreakpoints = tmp;
+        } else {
+            [NSException raise:@"MGSBrokenBreakpointDelegate" format:@"The "
+             "breakpoint delegate %@ of %@ returned an object which is not an "
+             "NSSet or an NSIndexSet, from the -breakpointsForFragaria: method.",
+             _breakpointDelegate, self];
+        }
     } else {
         [NSException raise:@"MGSBrokenBreakpointDelegate" format:@"The breakpoint "
          "delegate %@ of %@ does not implement at least one of the following "

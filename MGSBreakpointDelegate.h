@@ -35,9 +35,9 @@
 
 /** Returns a set of one-based line numbers containing breakpoints.
  *  @param sender The MGSFragaria instance which sent the message.
- *  @return A set of NSNumber indicating the line numbers that have
- *          breakpoints. */
-- (NSSet *)breakpointsForFragaria:(MGSFragariaView *)sender;
+ *  @return An NSSet of NSNumbers, or an NSIndexSet, indicating the line
+ *          numbers that have breakpoints. */
+- (id)breakpointsForFragaria:(MGSFragariaView *)sender;
 
 /** Returns the color for the breakpoint marker to be shown at the specified
  *  line.
