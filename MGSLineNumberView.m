@@ -735,7 +735,7 @@ typedef enum {
     MGSGutterHitType where;
     NSRect tr;
     
-    if ([theEvent buttonNumber] != 0) {
+    if ([theEvent buttonNumber] != 0 || [theEvent modifierFlags] & NSControlKeyMask) {
         _mouseDownLineTracking = NSNotFound;
         return;
     }
@@ -760,7 +760,7 @@ typedef enum {
     MGSGutterHitType where;
     NSRect tr;
     
-    if ([theEvent buttonNumber] != 0)
+    if ([theEvent buttonNumber] != 0 || [theEvent modifierFlags] & NSControlKeyMask)
         return;
     
     if (_mouseDownLineTracking == NSNotFound)
@@ -784,8 +784,7 @@ typedef enum {
     NSUInteger line;
     MGSGutterHitType where;
     
-    if ([event buttonNumber] != 0)
-        _mouseDownLineTracking = NSNotFound;
+    _mouseDownLineTracking = NSNotFound;
     
     line = [self testHitAtWindowPoint:event.locationInWindow decoration:&where trackingRect:NULL];
     if (line != NSNotFound) {
