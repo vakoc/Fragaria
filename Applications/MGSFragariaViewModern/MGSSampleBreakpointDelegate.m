@@ -104,4 +104,15 @@
 }
 
 
+- (NSMenu *)menuForBreakpointInLine:(NSUInteger)line ofFragaria:(MGSFragariaView *)sender
+{
+    if ([breakpoints containsIndex:line]) {
+        NSMenu *menu = [[NSMenu alloc] init];
+        [menu addItemWithTitle:@"Menu item example" action:nil keyEquivalent:@""];
+        return menu;
+    }
+    return nil;
+}
+
+
 @end

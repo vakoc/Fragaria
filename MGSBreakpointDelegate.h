@@ -65,5 +65,14 @@
  *  @param sender The MGSFragaria instance which sent the message. */
 - (void)fixBreakpointsOfAddedLines:(NSInteger)delta inLineRange:(NSRange)newRange ofFragaria:(MGSFragariaView *)sender;
 
+/** Allows the delegate to return a contextual menu for the specified
+ *  breakpoint line.
+ *  @discussion This method is called even if there is no breakpoint set on
+ *              the specified line.
+ *  @param line The line associated to the contextual menu.
+ *  @param sender The MGSFragaria instance which sent the message.
+ *  @return A NSMenu, or nil if you don't want to show a contextual menu. */
+- (NSMenu *)menuForBreakpointInLine:(NSUInteger)line ofFragaria:(MGSFragariaView *)sender;
+
 
 @end

@@ -45,10 +45,18 @@
 #define RULER_MARGIN		5.0
 
 
+typedef enum {
+    MGSGutterHitTypeOutside = -1,
+    MGSGutterHitTypeBreakpoint,
+    MGSGutterHitTypeDecoration
+} MGSGutterHitType;
+
+
 @implementation MGSLineNumberView
 {
     NSUInteger _mouseDownLineTracking;
-    NSRect     _mouseDownRectTracking;
+    NSRect _mouseDownRectTracking;
+    MGSGutterHitType _lastHitPosition;
     
     CGFloat _maxDigitWidthOfCurrentFont;
     NSMutableDictionary *_markerImages;
@@ -505,7 +513,7 @@
     NSUInteger glyphIdx = [layoutManager glyphIndexForCharacterAtIndex:index];
     if (index < stringLength)
         rect = [layoutManager lineFragmentRectForGlyphAtIndex:glyphIdx effectiveRange:NULL];
-    else
+    else /* Last line */
         rect = [layoutManager boundingRectForGlyphRange:NSMakeRange(glyphIdx, 0) inTextContainer:container];
 
     // Note that the ruler view is only as tall as the visible
@@ -521,7 +529,7 @@
 }
 
 
-/// @returns zero-based indexing.
+/// @returns zero-based indexing. Never returns NSNotFound
 - (NSUInteger)lineNumberForLocation:(CGFloat)location
 {
 	NSUInteger i;
@@ -688,48 +696,103 @@
 #pragma mark - NSResponder
 
 
+- (NSUInteger)testHitAtWindowPoint:(NSPoint)p decoration:(MGSGutterHitType *)w trackingRect:(NSRect *)tr
+{
+    NSPoint location;
+    NSUInteger line;
+    NSRect trackRect;
+    MGSGutterHitType where;
+    
+    location = [self convertPoint:p fromView:nil];
+    if (!CGRectContainsPoint(self.bounds, location)) {
+        where = MGSGutterHitTypeOutside;
+        trackRect = NSZeroRect;
+        line = NSNotFound;
+    } else {
+        line = [self lineNumberForLocation:location.y];
+        where = MGSGutterHitTypeBreakpoint;
+        
+        if ([_decorations objectForKey:@(line+1)]) {
+            trackRect = [self decorationRectOfLine:line];
+            if (CGRectContainsPoint(trackRect, location))
+                where = MGSGutterHitTypeDecoration;
+        }
+        if (where == MGSGutterHitTypeBreakpoint)
+            trackRect = [self wholeLineRectForLine:line];
+    }
+    
+    if (w)
+        *w = where;
+    if (tr)
+        *tr = trackRect;
+    return line;
+}
+
+
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-    NSUInteger line = [self lineNumberForLocation:location.y];
-    NSRect imageRect;
-    BOOL errorHit = NO;
-
-    if (line != NSNotFound) {
-        _mouseDownLineTracking = line + 1; // now has 1-based index.
-        _mouseDownRectTracking = NSMakeRect(0.0, 0.0, 0.0, 0.0);
-
-        if ([_decorations objectForKey:@(_mouseDownLineTracking)]) {
-            _mouseDownRectTracking = imageRect = [self decorationRectOfLine:line];
-
-            if (CGRectContainsPoint(imageRect, location))
-                errorHit = YES;
-        }
-
-        if (errorHit) {
-            _mouseDownRectTracking = imageRect;
-        } else {
-            [self breakpointClickedOnLine:_mouseDownLineTracking];
-        }
+    NSUInteger line;
+    MGSGutterHitType where;
+    NSRect tr;
+    
+    if ([theEvent buttonNumber] != 0) {
+        _mouseDownLineTracking = NSNotFound;
+        return;
     }
+    
+    line = [self testHitAtWindowPoint:theEvent.locationInWindow decoration:&where trackingRect:&tr];
+    
+    if (line != NSNotFound) {
+        _lastHitPosition = where;
+        _mouseDownLineTracking = line;
+        _mouseDownRectTracking = tr;
+        
+        if (where == MGSGutterHitTypeBreakpoint)
+            [self breakpointClickedOnLine:_mouseDownLineTracking+1];
+    } else
+        _mouseDownLineTracking = NSNotFound;
 }
 
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    NSPoint location = [self convertPoint:[theEvent locationInWindow] fromView:nil];
-    NSUInteger line = [self lineNumberForLocation:location.y]; // method returns 0-based index.
-
-    if (line != _mouseDownLineTracking - 1 || location.x > self.frame.size.width) {
-        [self breakpointClickedOnLine:_mouseDownLineTracking];
-    } else {
-        if ([_decorations objectForKey:@(_mouseDownLineTracking)]) {
-            if (CGRectContainsPoint(_mouseDownRectTracking, location)) {
-                _selectedLineNumber = line;
-                [NSApp sendAction:_decorationActionSelector to:_decorationActionTarget from:self];
-            }
+    NSUInteger line;
+    MGSGutterHitType where;
+    NSRect tr;
+    
+    if ([theEvent buttonNumber] != 0)
+        return;
+    
+    if (_mouseDownLineTracking == NSNotFound)
+        return;
+    
+    line = [self testHitAtWindowPoint:theEvent.locationInWindow decoration:&where trackingRect:&tr];
+    if (CGRectEqualToRect(tr, _mouseDownRectTracking)) {
+        if (where == _lastHitPosition && where == MGSGutterHitTypeDecoration) {
+            _selectedLineNumber = _mouseDownLineTracking;
+            [NSApp sendAction:_decorationActionSelector to:_decorationActionTarget from:self];
         }
+    } else {
+        if (_lastHitPosition == MGSGutterHitTypeBreakpoint)
+            [self breakpointClickedOnLine:_mouseDownLineTracking+1];
     }
+}
+
+
+- (NSMenu *)menuForEvent:(NSEvent *)event
+{
+    NSUInteger line;
+    MGSGutterHitType where;
+    
+    if ([event buttonNumber] != 0)
+        _mouseDownLineTracking = NSNotFound;
+    
+    line = [self testHitAtWindowPoint:event.locationInWindow decoration:&where trackingRect:NULL];
+    if (line != NSNotFound) {
+        if (where == MGSGutterHitTypeBreakpoint && _breakpointDelegate)
+            return [_breakpointDelegate menuForBreakpointInLine:line+1 ofFragaria:_fragaria];
+    }
+    return [super menuForEvent:event];
 }
 
 
