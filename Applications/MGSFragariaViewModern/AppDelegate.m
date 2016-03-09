@@ -380,24 +380,22 @@
 - (NSArray *)makeSyntaxErrors
 {
     /* Errors can be instantiated via a class method from a dictionary: */
-    SMLSyntaxError *error1 = [SMLSyntaxError errorWithDictionary:@{
-                                                                   @"errorDescription" : @"This is a sample error, and it has the highest warning level.",
-                                                                   @"line" : @(4),
-                                                                   @"character" : @(2),
-                                                                   @"length" : @(4),
-                                                                   @"hidden" : @(NO),
-                                                                   @"warningLevel" : @(kMGSErrorCategoryError)
-                                                                   }];
+    SMLSyntaxError *error1 = [SMLSyntaxError errorWithDictionary:
+        @{ @"errorDescription" : @"This is a sample error, and it has the highest warning level.",
+           @"line" : @(4),
+           @"character" : @(2),
+           @"length" : @(4),
+           @"hidden" : @(NO),
+           @"warningLevel" : @(kMGSErrorCategoryError) }];
 
     /* They can also be created manually and initialized from a dictionary: */
-    SMLSyntaxError *error2 = [[SMLSyntaxError alloc] initWithDictionary:@{
-                                                                          @"errorDescription" : @"This is a lower level error on the same line.",
-                                                                          @"line" : @(4),
-                                                                          @"character" : @(13),
-                                                                          @"length" : @(8),
-                                                                          @"hidden" : @(NO),
-                                                                          @"warningLevel" : @(kMGSErrorCategoryAccess)
-                                                                          }];
+    SMLSyntaxError *error2 = [[SMLSyntaxError alloc] initWithDictionary:
+        @{ @"errorDescription" : @"This is a lower level error on the same line.",
+           @"line" : @(4),
+           @"character" : @(13),
+           @"length" : @(8),
+           @"hidden" : @(NO),
+           @"warningLevel" : @(kMGSErrorCategoryAccess) }];
 
     /* You can create syntax errors and address their properties directly: */
     SMLSyntaxError *error3 = [[SMLSyntaxError alloc] init];
@@ -414,8 +412,20 @@
     error4.character = 11;
     error4.length = 21;
     error4.hidden = NO;
+    
+    /* You can set a contextual menu on a syntax error. */
+    NSMenu *cmenu = [[NSMenu alloc] init];
+    [[cmenu addItemWithTitle:@"Make a Sound" action:@selector(beep:)
+               keyEquivalent:@""] setTarget:self];
+    error4.contextualMenu = cmenu;
 
     return @[error1, error2, error3, error4];
+}
+
+
+- (void)beep:(id)sender
+{
+    NSBeep();
 }
 
 
