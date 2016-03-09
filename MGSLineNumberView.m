@@ -785,13 +785,16 @@ typedef enum {
     MGSGutterHitType where;
     
     _mouseDownLineTracking = NSNotFound;
+    if (!_breakpointDelegate)
+        return nil;
+    if (![_breakpointDelegate respondsToSelector:@selector(menuForBreakpointInLine:ofFragaria:)])
+        return nil;
     
-    line = [self testHitAtWindowPoint:event.locationInWindow decoration:&where trackingRect:NULL];
-    if (line != NSNotFound) {
-        if (where == MGSGutterHitTypeBreakpoint && _breakpointDelegate)
-            return [_breakpointDelegate menuForBreakpointInLine:line+1 ofFragaria:_fragaria];
-    }
-    return [super menuForEvent:event];
+    line = [self testHitAtWindowPoint:event.locationInWindow locationType:&where trackingRect:NULL];
+    if (line == NSNotFound || where != MGSGutterHitTypeBreakpoint)
+        return nil;
+    
+    return [_breakpointDelegate menuForBreakpointInLine:line+1 ofFragaria:_fragaria];
 }
 
 
