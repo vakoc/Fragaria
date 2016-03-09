@@ -27,9 +27,8 @@
  *  @discussion This method supersedes both breakpointsForFragaria: and
  *              breakpointColourForLine:ofFragaria:, and is provided as an
  *              higher-performance alternative to these other two methods.
- *              Thus, if you implement colouredBreakpointsForFragaria:, 
- *              breakpointsForFragaria: and breakpointColourForLine:ofFragaria:
- *              will never be called.
+ *              Thus, if you implement this method, -breakpointsForFragaria:
+ *              and -breakpointColourForLine:ofFragaria: will never be called.
  *  @param sender The MGSFragaria instance which sent the message. */
 - (NSDictionary *)colouredBreakpointsForFragaria:(MGSFragariaView *)sender;
 
@@ -42,7 +41,7 @@
 /** Returns the color for the breakpoint marker to be shown at the specified
  *  line.
  *  @discussion This method is not called for lines which are not included in
- *              the set returned by breakpointsForFragaria:. If this method
+ *              the set returned by -breakpointsForFragaria:. If this method
  *              returns nil or is unimplemented, a default color is used.
  *  @param line A one-based line number.
  *  @param sender The MGSFragaria instance which sent the message. */
@@ -56,12 +55,13 @@
 
 /** Tells the delegate that some lines were added or deleted from the text,
  *  to allow fixing any breakpoints that lie on these lines.
- *  @discussion Your implementation of this method should call
- *              -reloadBreakpointData on sender if any line number had to be
- *              fixed (it is not automatic).
+ *  @discussion Your implementation of this method must call 
+ *      -reloadBreakpointData on sender if any line number had to be fixed. You
+ *      can see a sample implementation of this method in the Fragaria Prefs 
+ *      example.
  *  @param newRange The affected range of one-based line numbers.
  *  @param delta How many lines were added (if positive) or deleted (if
- *               negative) during the edit.
+ *      negative) during the edit.
  *  @param sender The MGSFragaria instance which sent the message. */
 - (void)fixBreakpointsOfAddedLines:(NSInteger)delta inLineRange:(NSRange)newRange ofFragaria:(MGSFragariaView *)sender;
 
