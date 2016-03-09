@@ -54,10 +54,6 @@ typedef enum {
 
 @implementation MGSLineNumberView
 {
-    NSUInteger _mouseDownLineTracking;
-    NSRect _mouseDownRectTracking;
-    MGSGutterHitType _lastHitPosition;
-    
     CGFloat _maxDigitWidthOfCurrentFont;
     NSMutableDictionary *_markerImages;
     NSSize _markerImagesSize;
@@ -696,7 +692,7 @@ typedef enum {
 #pragma mark - NSResponder
 
 
-- (NSUInteger)testHitAtWindowPoint:(NSPoint)p decoration:(MGSGutterHitType *)w trackingRect:(NSRect *)tr
+- (NSUInteger)testHitAtWindowPoint:(NSPoint)p locationType:(MGSGutterHitType *)w trackingRect:(NSRect *)tr
 {
     NSPoint location;
     NSUInteger line;
@@ -729,53 +725,53 @@ typedef enum {
 }
 
 
-- (void)mouseDown:(NSEvent *)theEvent
+- (void)mouseDown:(NSEvent *)e
 {
-    NSUInteger line;
     MGSGutterHitType where;
-    NSRect tr;
+    NSUInteger line;
     
-    if ([theEvent buttonNumber] != 0 || [theEvent modifierFlags] & NSControlKeyMask) {
-        _mouseDownLineTracking = NSNotFound;
+    if ([e buttonNumber] != 0 || [e modifierFlags] & NSControlKeyMask)
         return;
-    }
     
-    line = [self testHitAtWindowPoint:theEvent.locationInWindow decoration:&where trackingRect:&tr];
+    line = [self testHitAtWindowPoint:e.locationInWindow locationType:&where trackingRect:NULL];
+    if (line == NSNotFound)
+        return;
     
-    if (line != NSNotFound) {
-        _lastHitPosition = where;
-        _mouseDownLineTracking = line;
-        _mouseDownRectTracking = tr;
-        
+    [self trackDragBeginningWithEvent:e dragBonduaryEvent:^(BOOL inside){
         if (where == MGSGutterHitTypeBreakpoint)
-            [self breakpointClickedOnLine:_mouseDownLineTracking+1];
-    } else
-        _mouseDownLineTracking = NSNotFound;
+            [self breakpointClickedOnLine:line+1];
+    } dragEndEvent:^(BOOL inside){
+        if (where == MGSGutterHitTypeDecoration && inside) {
+            _selectedLineNumber = line;
+            [NSApp sendAction:_decorationActionSelector to:_decorationActionTarget from:self];
+        }
+    }];
 }
 
 
-- (void)mouseUp:(NSEvent *)theEvent
+- (void)trackDragBeginningWithEvent:(NSEvent *)e dragBonduaryEvent:(void (^)(BOOL inside))bound dragEndEvent:(void (^)(BOOL inside))end
 {
-    NSUInteger line;
-    MGSGutterHitType where;
-    NSRect tr;
+    MGSGutterHitType where, cwhere;
+    NSRect tr, ctr;
+    BOOL previnside, inside;
     
-    if ([theEvent buttonNumber] != 0 || [theEvent modifierFlags] & NSControlKeyMask)
-        return;
+    [self testHitAtWindowPoint:e.locationInWindow locationType:&where trackingRect:&tr];
     
-    if (_mouseDownLineTracking == NSNotFound)
-        return;
-    
-    line = [self testHitAtWindowPoint:theEvent.locationInWindow decoration:&where trackingRect:&tr];
-    if (CGRectEqualToRect(tr, _mouseDownRectTracking)) {
-        if (where == _lastHitPosition && where == MGSGutterHitTypeDecoration) {
-            _selectedLineNumber = _mouseDownLineTracking;
-            [NSApp sendAction:_decorationActionSelector to:_decorationActionTarget from:self];
+    inside = YES;
+    bound(inside);
+    while (e.type != NSLeftMouseUp) {
+        previnside = inside;
+        
+        e = [self.window nextEventMatchingMask:NSLeftMouseDraggedMask | NSLeftMouseUpMask];
+        [self testHitAtWindowPoint:e.locationInWindow locationType:&cwhere trackingRect:&ctr];
+        inside = (cwhere == where) && (CGRectEqualToRect(ctr, tr));
+        
+        if (e.type == NSLeftMouseDragged) {
+            if (inside != previnside)
+                bound(inside);
         }
-    } else {
-        if (_lastHitPosition == MGSGutterHitTypeBreakpoint)
-            [self breakpointClickedOnLine:_mouseDownLineTracking+1];
     }
+    end(inside);
 }
 
 
@@ -784,7 +780,6 @@ typedef enum {
     NSUInteger line;
     MGSGutterHitType where;
     
-    _mouseDownLineTracking = NSNotFound;
     if (!_breakpointDelegate)
         return nil;
     if (![_breakpointDelegate respondsToSelector:@selector(menuForBreakpointInLine:ofFragaria:)])
