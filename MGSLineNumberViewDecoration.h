@@ -17,5 +17,8 @@
 /** The image to display. */
 - (NSImage *)warningImage;
 
+/** Returns nil or a contextual menu appropriate for the decoration. */
+- (NSMenu *)contextualMenu;
+
 
 @end

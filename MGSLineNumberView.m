@@ -786,6 +786,7 @@ typedef enum {
 {
     NSUInteger line;
     MGSGutterHitType where;
+    id<MGSLineNumberViewDecoration> decor;
     
     if (!_breakpointDelegate)
         return nil;
@@ -793,10 +794,18 @@ typedef enum {
         return nil;
     
     line = [self testHitAtWindowPoint:event.locationInWindow locationType:&where trackingRect:NULL];
-    if (line == NSNotFound || where != MGSGutterHitTypeBreakpoint)
+    if (line == NSNotFound)
         return nil;
     
-    return [_breakpointDelegate menuForBreakpointInLine:line+1 ofFragaria:_fragaria];
+    if (where == MGSGutterHitTypeBreakpoint)
+        return [_breakpointDelegate menuForBreakpointInLine:line+1 ofFragaria:_fragaria];
+    else if (where == MGSGutterHitTypeDecoration) {
+        decor = [_decorations objectForKey:@(line+1)];
+        if (!decor)
+            return nil;
+        return [decor contextualMenu];
+    }
+    return nil;
 }
 
 
