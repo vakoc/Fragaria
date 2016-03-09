@@ -40,6 +40,7 @@
 #import "MGSBreakpointDelegate.h"
 #import "NSTextStorage+Fragaria.h"
 #import "NSSet+Fragaria.h"
+#import "MGSLineNumberViewDecoration.h"
 
 
 #define RULER_MARGIN		5.0
@@ -574,12 +575,15 @@ typedef enum {
 /// @param line uses zero-based indexing.
 - (void)drawDecorationOfLine:(NSUInteger)line
 {
+    id<MGSLineNumberViewDecoration> decoration;
     NSImage *image;
     NSRect centeredRect;
     
-    image = [_decorations objectForKey:@(line + 1)];
-    if (!image) return;
+    decoration = [_decorations objectForKey:@(line + 1)];
+    if (!decoration)
+        return;
     
+    image = [decoration warningImage];
     centeredRect = [self decorationRectOfLine:line];
 
     [image drawInRect:centeredRect fromRect:NSZeroRect operation:NSCompositeSourceAtop fraction:1.0 respectFlipped:YES hints:nil];
@@ -588,15 +592,18 @@ typedef enum {
 
 - (NSRect)decorationRectOfLine:(NSUInteger)line
 {
+    id<MGSLineNumberViewDecoration> decoration;
     NSRect rect;
     NSImage *image;
     CGFloat height;
     NSRect centeredRect;
     CGFloat margin, fontsize;
     
-    image = [_decorations objectForKey:@(line+1)];
-    if (!image) return NSZeroRect;
+    decoration = [_decorations objectForKey:@(line+1)];
+    if (!decoration)
+        return NSZeroRect;
     
+    image = [decoration warningImage];
     rect = [self wholeLineRectForLine:line];
     fontsize = self.font.pointSize;
     

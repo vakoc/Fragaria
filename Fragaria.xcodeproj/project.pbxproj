@@ -264,6 +264,7 @@
 		013278671A81614600D2DCA5 /* MGSSyntaxDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxDefinition.m; sourceTree = "<group>"; };
 		013A791A1AA8C715008ADFA1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MGSContextMenu.xib; sourceTree = "<group>"; };
 		013A791C1AA8C719008ADFA1 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "en-GB"; path = "en-GB.lproj/MGSContextMenu.xib"; sourceTree = "<group>"; };
+		0144942C1C908A88008DFDC9 /* MGSLineNumberViewDecoration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSLineNumberViewDecoration.h; sourceTree = "<group>"; };
 		014865671B19036900BE1DC4 /* NSObject+Fragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+Fragaria.h"; sourceTree = "<group>"; };
 		014865681B19036900BE1DC4 /* NSObject+Fragaria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+Fragaria.m"; sourceTree = "<group>"; };
 		014E7DA71C1C8D430093ACA6 /* NSTextStorage+Fragaria.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextStorage+Fragaria.h"; sourceTree = "<group>"; };
@@ -542,6 +543,7 @@
 		01BB1BEE1A7964DC006C0056 /* Gutter View */ = {
 			isa = PBXGroup;
 			children = (
+				0144942C1C908A88008DFDC9 /* MGSLineNumberViewDecoration.h */,
 				017FD5861A7A992700B305FB /* MGSLineNumberView.h */,
 				017FD5871A7A992700B305FB /* MGSLineNumberView.m */,
 			);

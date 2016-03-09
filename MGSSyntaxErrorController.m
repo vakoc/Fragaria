@@ -129,7 +129,7 @@
 {
     if (_textView) [self highlightErrors];
     if (!_showsSyntaxErrors) {
-        [self.lineNumberView setDecorations:[NSDictionary dictionary]];
+        [self.lineNumberView setDecorations:@{}];
         return;
     }
     [self.lineNumberView setDecorations:[self errorDecorations]];
@@ -244,24 +244,13 @@
 
 - (NSDictionary *)errorDecorations
 {
-    return [self errorDecorationsHavingSize:NSMakeSize(0.0, 0.0)];
-}
-
-
-- (NSDictionary *)errorDecorationsHavingSize:(NSSize)size
-{
     NSMutableDictionary *result = [[NSMutableDictionary alloc] init];
-
-    for (NSNumber *line in [self linesWithErrors])
-    {
-        NSImage *image = [[self errorForLine:[line integerValue]] warningImage];
-        if (size.height > 0.0 && size.width > 0)
-        {
-            [image setSize:size];
-        }
-        [result setObject:image forKey:line];
+    
+    for (NSNumber *line in [self linesWithErrors]) {
+        id decoration = [self errorForLine:[line integerValue]];
+        [result setObject:decoration forKey:line];
     }
-
+    
     return result;
 }
 

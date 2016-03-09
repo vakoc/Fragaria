@@ -94,17 +94,6 @@
 - (NSDictionary *)errorDecorations;
 
 /**
- *  Returns an NSDictionary of key-value pairs indicating decorations
- *  suitable for each line.
- *  Syntax errors that have hidden == true will not be counted.
- *  @discussion each key represents a unique line number as NSNUmber,
- *  and its value is an NSImage representing the first error with the
- *  highest warningLevel for that line, sized per `size`.
- *  @param size indicates the size of the image in the dictionary.
- **/
-- (NSDictionary *)errorDecorationsHavingSize:(NSSize)size;
-
-/**
  *  Displays an NSPopover indicating the error(s).
  *  @param line indicates the line number from which errors should be shown.
  *  @param rect indicates the relative location to display the popover.

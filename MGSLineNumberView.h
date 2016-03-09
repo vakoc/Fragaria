@@ -72,8 +72,10 @@
 
 /** The starting line number in the editor. */
 @property (nonatomic) NSUInteger startingLineNumber;
-/** A dictionary of NSImages, keyed by one-based line numbers as NSNumbers.
- * The NSImages will be shown at the line specified by their key. */
+/** A dictionary of objects conforming to MGSLineNumberViewDecoration, keyed by
+ * one-based line numbers as NSNumbers.
+ * The warningImage of each decoration will be shown at the line specified by
+ * their key. */
 @property (nonatomic) NSDictionary *decorations;
 /** The target of the action that is sent when a decoration is clicked. */
 @property (weak) id decorationActionTarget;

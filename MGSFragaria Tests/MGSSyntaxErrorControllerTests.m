@@ -158,28 +158,9 @@
 - (void)test_errorDecorations
 {
     NSDictionary *resultDict = [self.errorController errorDecorations];
-    NSImage *image = [resultDict objectForKey:@(189)];
+    SMLSyntaxError *decor = [resultDict objectForKey:@(189)];
 
-    // kMGSErrorError is line 189's image, and that is in the bundle messagesError.icns.
-    NSImage *compare = [[NSBundle bundleForClass:[SMLSyntaxError class]] imageForResource:@"messagesError"];
-
-    XCTAssert([[image TIFFRepresentation] isEqualToData:[compare TIFFRepresentation]]);
-
-}
-
-
-/*
- *  - test_errorDecorationsHavingSize
- */
-- (void)test_errorDecorationsHavingSize
-{
-    NSDictionary *resultDict = [self.errorController errorDecorationsHavingSize:NSMakeSize(123.0, 119.4)];
-    NSImage *image = [resultDict objectForKey:@(4)];
-
-    // kMGSErrorAccess is line 4's image, and that is in the bundle messagesError.icns.
-    NSImage *compare = [[NSBundle bundleForClass:[SMLSyntaxError class]] imageForResource:@"messagesAccess"];
-
-    XCTAssert([[image TIFFRepresentation] isEqualToData:[compare TIFFRepresentation]] && image.size.width == 123.0 && image.size.height == 119.4 );
+    XCTAssert(decor.line == 189);
 }
 
 
