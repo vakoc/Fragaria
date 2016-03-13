@@ -1007,7 +1007,10 @@ static char kcColoursChanged;
                 }
                 
                 // this is a single line comment so we can scan to the end of the line
-                endOfLine = NSMaxRange([rangeString lineRangeForRange:NSMakeRange(colourStartLocation, 0)]);
+                /* We omit the newline characters from the coloring area to
+                 * avoid merging adjacent single-line comments that span the 
+                 * whole line. */
+                [rangeString getLineStart:NULL end:NULL contentsEnd:&endOfLine forRange:NSMakeRange(colourStartLocation, 0)];
                 [rangeScanner mgs_setScanLocation:endOfLine];
                 
                 // colour the comment
