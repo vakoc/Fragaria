@@ -96,43 +96,7 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 @synthesize showsPageGuide = _showsPageGuide;
 
 
-#pragma mark - Properties - Internal
-
-/*
- * @property fragaria
- * (synthesized)
- */
-
-/*
- * @property inspectedCharacterIndexes
- * (synthesized)
- */
-
-
 #pragma mark - Properties - Appearance and Behaviours
-
-/*
- * @property currentLineHighlightColour
- * (synthesized)
- */
-- (void)setCurrentLineHighlightColour:(NSColor *)currentLineHighlightColour
-{
-    _currentLineHighlightColour = currentLineHighlightColour;
-    currentLineRect = [self lineHighlightingRect];
-    [self setNeedsDisplayInRect:currentLineRect];
-}
-
-
-/*
- * @property highlightCurrentLine
- */
-- (void)setHighlightsCurrentLine:(BOOL)highlightCurrentLine
-{
-    [self setNeedsDisplayInRect:currentLineRect];
-    _highlightsCurrentLine = highlightCurrentLine;
-    currentLineRect = [self lineHighlightingRect];
-    [self setNeedsDisplayInRect:currentLineRect];
-}
 
 
 /*
@@ -152,41 +116,6 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 
 
 /*
- * @property lineWrap
- *   see /developer/examples/appkit/TextSizingExample
- */
-- (void)setLineWrap:(BOOL)value
-{
-    _lineWrap = value;
-    [self updateLineWrap];
-	[self.syntaxColouring invalidateAllColouring];
-}
-
-
-/*
- * @property lineWrapsAtPageGuide
- */
-- (void)setLineWrapsAtPageGuide:(BOOL)lineWrapsAtPageGuide
-{
-    _lineWrapsAtPageGuide = lineWrapsAtPageGuide;
-    [self updateLineWrap];
-    [self.syntaxColouring invalidateAllColouring];
-}
-
-
-/*
- * @property pageGuideColumn
- */
-- (void)setPageGuideColumn:(NSInteger)pageGuideColumn
-{
-    _pageGuideColumn = pageGuideColumn;
-    [self configurePageGuide];
-    [self updateLineWrap];
-    [self.syntaxColouring invalidateAllColouring];
-}
-
-
-/*
  * @property showsInvisibleCharacters
  */
 - (void)setShowsInvisibleCharacters:(BOOL)showsInvisibleCharacters
@@ -197,55 +126,6 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 - (BOOL)showsInvisibleCharacters
 {
 	return self.layoutManager.showsInvisibleCharacters;
-}
-
-
-/*
- * @property showsPageGuide
- */
-- (void)setShowsPageGuide:(BOOL)showsPageGuide
-{
-    _showsPageGuide = showsPageGuide;
-    [self configurePageGuide];
-}
-
-- (BOOL)showsPageGuide
-{
-    return _showsPageGuide;
-}
-
-
-/*
- * @property tabWidth
- */
-- (void)setTabWidth:(NSInteger)tabWidth
-{
-    _tabWidth = tabWidth;
-
-    // Set the width of every tab by first checking the size of the tab in spaces in the current font,
-    // and then remove all tabs that sets automatically and then set the default tab stop distance.
-    NSMutableString *sizeString = [NSMutableString string];
-    NSInteger numberOfSpaces = _tabWidth;
-    while (numberOfSpaces--) {
-        [sizeString appendString:@" "];
-    }
-    NSDictionary *ta = [self typingAttributes];
-    CGFloat sizeOfTab = [sizeString sizeWithAttributes:ta].width;
-
-    NSMutableParagraphStyle *style = [[ta objectForKey:NSParagraphStyleAttributeName] mutableCopy];
-    if (!style) style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
-    
-    NSArray *array = [style tabStops];
-    for (id item in array) {
-        [style removeTabStop:item];
-    }
-    [style setDefaultTabInterval:sizeOfTab];
-    
-    NSMutableDictionary *attributes = [ta mutableCopy];
-    [attributes setObject:style forKey:NSParagraphStyleAttributeName];
-    [self setTypingAttributes:attributes];
-    
-    [[self textStorage] addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0,[[self textStorage] length])];
 }
 
 
@@ -530,11 +410,9 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
  */
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    if ([menuItem action] == @selector(toggleAutomaticDashSubstitution:))
-        return NO;
-    if ([menuItem action] == @selector(toggleAutomaticQuoteSubstitution:))
-        return NO;
-    if ([menuItem action] == @selector(changeLayoutOrientation:))
+    if ([menuItem action] == @selector(toggleAutomaticDashSubstitution:) ||
+        [menuItem action] == @selector(toggleAutomaticQuoteSubstitution:) ||
+        [menuItem action] == @selector(changeLayoutOrientation:))
         return NO;
     return [super validateMenuItem:menuItem];
 }
@@ -607,6 +485,30 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 
 
 #pragma mark - Line Highlighting
+
+
+/*
+ * @property currentLineHighlightColour
+ * (synthesized)
+ */
+- (void)setCurrentLineHighlightColour:(NSColor *)currentLineHighlightColour
+{
+    _currentLineHighlightColour = currentLineHighlightColour;
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
+
+
+/*
+ * @property highlightCurrentLine
+ */
+- (void)setHighlightsCurrentLine:(BOOL)highlightCurrentLine
+{
+    [self setNeedsDisplayInRect:currentLineRect];
+    _highlightsCurrentLine = highlightCurrentLine;
+    currentLineRect = [self lineHighlightingRect];
+    [self setNeedsDisplayInRect:currentLineRect];
+}
 
 
 /*
@@ -834,7 +736,42 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 }
 
 
-#pragma mark - Tab and page guide handling
+#pragma mark - Tab and page guide
+
+
+/*
+ * @property tabWidth
+ */
+- (void)setTabWidth:(NSInteger)tabWidth
+{
+    _tabWidth = tabWidth;
+    
+    // Set the width of every tab by first checking the size of the tab in spaces in the current font,
+    // and then remove all tabs that sets automatically and then set the default tab stop distance.
+    NSMutableString *sizeString = [NSMutableString string];
+    NSInteger numberOfSpaces = _tabWidth;
+    while (numberOfSpaces--) {
+        [sizeString appendString:@" "];
+    }
+    NSDictionary *ta = [self typingAttributes];
+    CGFloat sizeOfTab = [sizeString sizeWithAttributes:ta].width;
+    
+    NSMutableParagraphStyle *style = [[ta objectForKey:NSParagraphStyleAttributeName] mutableCopy];
+    if (!style) style = [[NSParagraphStyle defaultParagraphStyle] mutableCopy];
+    
+    NSArray *array = [style tabStops];
+    for (id item in array) {
+        [style removeTabStop:item];
+    }
+    [style setDefaultTabInterval:sizeOfTab];
+    
+    NSMutableDictionary *attributes = [ta mutableCopy];
+    [attributes setObject:style forKey:NSParagraphStyleAttributeName];
+    [self setTypingAttributes:attributes];
+    
+    [[self textStorage] addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0,[[self textStorage] length])];
+}
+
 
 /*
  * - insertTab:
@@ -1350,6 +1287,30 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 
 #pragma mark - Line Wrap
 
+
+/*
+ * @property lineWrap
+ *   see /developer/examples/appkit/TextSizingExample
+ */
+- (void)setLineWrap:(BOOL)value
+{
+    _lineWrap = value;
+    [self updateLineWrap];
+    [self.syntaxColouring invalidateAllColouring];
+}
+
+
+/*
+ * @property lineWrapsAtPageGuide
+ */
+- (void)setLineWrapsAtPageGuide:(BOOL)lineWrapsAtPageGuide
+{
+    _lineWrapsAtPageGuide = lineWrapsAtPageGuide;
+    [self updateLineWrap];
+    [self.syntaxColouring invalidateAllColouring];
+}
+
+
 /*
  * - updateLineWrap
  *   see http://developer.apple.com/library/mac/#samplecode/TextSizingExample
@@ -1447,7 +1408,35 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
     self.enclosingScrollView.hasHorizontalScroller = needsScroller;
 }
 
+
 #pragma mark - Page Guide
+
+
+/*
+ * @property showsPageGuide
+ */
+- (void)setShowsPageGuide:(BOOL)showsPageGuide
+{
+    _showsPageGuide = showsPageGuide;
+    [self configurePageGuide];
+}
+
+- (BOOL)showsPageGuide
+{
+    return _showsPageGuide;
+}
+
+
+/*
+ * @property pageGuideColumn
+ */
+- (void)setPageGuideColumn:(NSInteger)pageGuideColumn
+{
+    _pageGuideColumn = pageGuideColumn;
+    [self configurePageGuide];
+    [self updateLineWrap];
+    [self.syntaxColouring invalidateAllColouring];
+}
 
 
 /*
