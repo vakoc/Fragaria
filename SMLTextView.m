@@ -375,6 +375,8 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
     [self setRichText:NO];
     [self setImportsGraphics:NO];
     [self setUsesFontPanel:NO];
+    [self setUsesInspectorBar:NO];
+    [self setUsesRuler:NO];
 
     [self setAutomaticDashSubstitutionEnabled:NO];
     [self setAutomaticQuoteSubstitutionEnabled:NO];
