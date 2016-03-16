@@ -22,6 +22,97 @@
 
 /* Begin PBXBuildFile section */
 		0105F3E31A8681430045BDD3 /* SMLSyntaxColouring.m in Resources */ = {isa = PBXBuildFile; fileRef = 0105F3E11A86811C0045BDD3 /* SMLSyntaxColouring.m */; };
+		010870491C99E1C100C335DA /* actionscript.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086F9A1C99E16E00C335DA /* actionscript.plist */; };
+		0108704A1C99E1C100C335DA /* actionscript3.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086F9B1C99E16E00C335DA /* actionscript3.plist */; };
+		0108704B1C99E1C100C335DA /* active4d.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086F9C1C99E16E00C335DA /* active4d.plist */; };
+		0108704C1C99E1C100C335DA /* ada.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086F9D1C99E16E00C335DA /* ada.plist */; };
+		0108704D1C99E1C100C335DA /* ampl.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086F9E1C99E16E00C335DA /* ampl.plist */; };
+		0108704E1C99E1C100C335DA /* apache.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086F9F1C99E16E00C335DA /* apache.plist */; };
+		0108704F1C99E1C100C335DA /* applescript.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FA01C99E16E00C335DA /* applescript.plist */; };
+		010870501C99E1C100C335DA /* asm-m68k.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FA11C99E16E00C335DA /* asm-m68k.plist */; };
+		010870511C99E1C100C335DA /* asm-mips.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FA21C99E16E00C335DA /* asm-mips.plist */; };
+		010870521C99E1C100C335DA /* asm-x86.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FA31C99E16E00C335DA /* asm-x86.plist */; };
+		010870531C99E1C100C335DA /* asp-js.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FA41C99E16E00C335DA /* asp-js.plist */; };
+		010870541C99E1C100C335DA /* asp-vb.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FA51C99E16E00C335DA /* asp-vb.plist */; };
+		010870551C99E1C100C335DA /* aspdotnet-cs.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FA61C99E16E00C335DA /* aspdotnet-cs.plist */; };
+		010870561C99E1C100C335DA /* aspdotnet-vb.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FA71C99E16E00C335DA /* aspdotnet-vb.plist */; };
+		010870571C99E1C100C335DA /* awk.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FA81C99E16E00C335DA /* awk.plist */; };
+		010870581C99E1C100C335DA /* batch.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FA91C99E16E00C335DA /* batch.plist */; };
+		010870591C99E1C100C335DA /* c.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FAA1C99E16E00C335DA /* c.plist */; };
+		0108705A1C99E1C100C335DA /* cobol.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FAB1C99E16E00C335DA /* cobol.plist */; };
+		0108705B1C99E1C100C335DA /* coffeescript.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FAC1C99E16E00C335DA /* coffeescript.plist */; };
+		0108705C1C99E1C100C335DA /* coldfusion.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FAD1C99E16E00C335DA /* coldfusion.plist */; };
+		0108705D1C99E1C100C335DA /* cpp.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FAE1C99E16E00C335DA /* cpp.plist */; };
+		0108705E1C99E1C100C335DA /* csharp.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FAF1C99E16E00C335DA /* csharp.plist */; };
+		0108705F1C99E1C100C335DA /* csound.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FB01C99E16E00C335DA /* csound.plist */; };
+		010870601C99E1C100C335DA /* css.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FB11C99E16E00C335DA /* css.plist */; };
+		010870611C99E1C100C335DA /* d.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FB21C99E16E00C335DA /* d.plist */; };
+		010870621C99E1C100C335DA /* dylan.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FB31C99E16E00C335DA /* dylan.plist */; };
+		010870631C99E1C100C335DA /* eiffel.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FB41C99E16E00C335DA /* eiffel.plist */; };
+		010870641C99E1C100C335DA /* erl.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FB51C99E16E00C335DA /* erl.plist */; };
+		010870651C99E1C100C335DA /* eztpl.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FB61C99E16E00C335DA /* eztpl.plist */; };
+		010870661C99E1C100C335DA /* f-script.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FB71C99E16E00C335DA /* f-script.plist */; };
+		010870671C99E1C100C335DA /* fortran.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FB81C99E16E00C335DA /* fortran.plist */; };
+		010870681C99E1C100C335DA /* freefem.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FB91C99E16E00C335DA /* freefem.plist */; };
+		010870691C99E1C100C335DA /* gedcom.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FBA1C99E16E00C335DA /* gedcom.plist */; };
+		0108706A1C99E1C100C335DA /* gnuassembler.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FBB1C99E16E00C335DA /* gnuassembler.plist */; };
+		0108706B1C99E1C100C335DA /* graphviz.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FBC1C99E16E00C335DA /* graphviz.plist */; };
+		0108706C1C99E1C100C335DA /* haskell.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FBD1C99E16E00C335DA /* haskell.plist */; };
+		0108706D1C99E1C100C335DA /* header.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FBE1C99E16E00C335DA /* header.plist */; };
+		0108706E1C99E1C100C335DA /* html.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FBF1C99E16E00C335DA /* html.plist */; };
+		0108706F1C99E1C100C335DA /* idl.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FC01C99E16E00C335DA /* idl.plist */; };
+		010870701C99E1C100C335DA /* java.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FC11C99E16E00C335DA /* java.plist */; };
+		010870711C99E1C100C335DA /* javafx.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FC21C99E16E00C335DA /* javafx.plist */; };
+		010870721C99E1C100C335DA /* javascript.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FC31C99E16E00C335DA /* javascript.plist */; };
+		010870731C99E1C100C335DA /* jsp.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FC41C99E16E00C335DA /* jsp.plist */; };
+		010870741C99E1C100C335DA /* latex.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FC51C99E16E00C335DA /* latex.plist */; };
+		010870751C99E1C100C335DA /* lilypond.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FC61C99E16E00C335DA /* lilypond.plist */; };
+		010870761C99E1C100C335DA /* lisp.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FC71C99E16E00C335DA /* lisp.plist */; };
+		010870771C99E1C100C335DA /* logtalk.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FC81C99E16E00C335DA /* logtalk.plist */; };
+		010870781C99E1C100C335DA /* lsl.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FC91C99E16E00C335DA /* lsl.plist */; };
+		010870791C99E1C100C335DA /* lua.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FCA1C99E16E00C335DA /* lua.plist */; };
+		0108707A1C99E1C100C335DA /* markdown.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FCB1C99E16E00C335DA /* markdown.plist */; };
+		0108707B1C99E1C100C335DA /* matlab.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FCC1C99E16E00C335DA /* matlab.plist */; };
+		0108707C1C99E1C100C335DA /* mel.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FCD1C99E16E00C335DA /* mel.plist */; };
+		0108707D1C99E1C100C335DA /* metapost.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FCE1C99E16E00C335DA /* metapost.plist */; };
+		0108707E1C99E1C100C335DA /* metaslang.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FCF1C99E16E00C335DA /* metaslang.plist */; };
+		0108707F1C99E1C100C335DA /* mysql.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FD01C99E16E00C335DA /* mysql.plist */; };
+		010870801C99E1C100C335DA /* nemerle.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FD11C99E16E00C335DA /* nemerle.plist */; };
+		010870811C99E1C100C335DA /* none.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FD21C99E16E00C335DA /* none.plist */; };
+		010870821C99E1C100C335DA /* nrnhoc.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FD31C99E16E00C335DA /* nrnhoc.plist */; };
+		010870831C99E1C100C335DA /* objectivec.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FD41C99E16E00C335DA /* objectivec.plist */; };
+		010870841C99E1C100C335DA /* objectivecaml.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FD51C99E16E00C335DA /* objectivecaml.plist */; };
+		010870851C99E1C100C335DA /* ox.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FD61C99E16E00C335DA /* ox.plist */; };
+		010870861C99E1C100C335DA /* pascal.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FD71C99E16E00C335DA /* pascal.plist */; };
+		010870871C99E1C100C335DA /* pdf.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FD81C99E16E00C335DA /* pdf.plist */; };
+		010870881C99E1C100C335DA /* perl.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FD91C99E16E00C335DA /* perl.plist */; };
+		010870891C99E1C100C335DA /* php.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FDA1C99E16E00C335DA /* php.plist */; };
+		0108708A1C99E1C100C335DA /* plist.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FDB1C99E16E00C335DA /* plist.plist */; };
+		0108708B1C99E1C100C335DA /* postscript.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FDC1C99E16E00C335DA /* postscript.plist */; };
+		0108708C1C99E1C100C335DA /* prolog.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FDD1C99E16E00C335DA /* prolog.plist */; };
+		0108708D1C99E1C100C335DA /* python.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FDE1C99E16E00C335DA /* python.plist */; };
+		0108708E1C99E1C100C335DA /* r.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FDF1C99E16E00C335DA /* r.plist */; };
+		0108708F1C99E1C100C335DA /* rhtml.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FE01C99E16E00C335DA /* rhtml.plist */; };
+		010870901C99E1C100C335DA /* ruby.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FE11C99E16E00C335DA /* ruby.plist */; };
+		010870911C99E1C200C335DA /* scala.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FE21C99E16E00C335DA /* scala.plist */; };
+		010870921C99E1C200C335DA /* sgml.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FE31C99E16E00C335DA /* sgml.plist */; };
+		010870931C99E1C200C335DA /* shell.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FE41C99E16E00C335DA /* shell.plist */; };
+		010870941C99E1C200C335DA /* sml.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FE51C99E16E00C335DA /* sml.plist */; };
+		010870951C99E1C200C335DA /* sql.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FE61C99E16E00C335DA /* sql.plist */; };
+		010870961C99E1C200C335DA /* standard.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FE71C99E16E00C335DA /* standard.plist */; };
+		010870971C99E1C200C335DA /* stata.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FE81C99E16E00C335DA /* stata.plist */; };
+		010870981C99E1C200C335DA /* supercollider.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FE91C99E16E00C335DA /* supercollider.plist */; };
+		010870991C99E1C200C335DA /* tcltk.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FEA1C99E16E00C335DA /* tcltk.plist */; };
+		0108709A1C99E1C200C335DA /* torquescript.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FEB1C99E16E00C335DA /* torquescript.plist */; };
+		0108709B1C99E1C200C335DA /* udo.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FEC1C99E16E00C335DA /* udo.plist */; };
+		0108709C1C99E1C200C335DA /* vb.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FED1C99E16E00C335DA /* vb.plist */; };
+		0108709D1C99E1C200C335DA /* verilog.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FEE1C99E16E00C335DA /* verilog.plist */; };
+		0108709E1C99E1C200C335DA /* vhdl.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FEF1C99E16E00C335DA /* vhdl.plist */; };
+		0108709F1C99E1C200C335DA /* xml.plist in Copy Syntax Definitions */ = {isa = PBXBuildFile; fileRef = 01086FF01C99E16E00C335DA /* xml.plist */; };
+		010870A61C99E26E00C335DA /* Classic Fragaria.plist in Copy Colour Schemes */ = {isa = PBXBuildFile; fileRef = 010870A11C99E24F00C335DA /* Classic Fragaria.plist */; };
+		010870A71C99E26E00C335DA /* Midnight.plist in Copy Colour Schemes */ = {isa = PBXBuildFile; fileRef = 010870A21C99E24F00C335DA /* Midnight.plist */; };
+		010870A81C99E26E00C335DA /* Solarized Dark.plist in Copy Colour Schemes */ = {isa = PBXBuildFile; fileRef = 010870A31C99E24F00C335DA /* Solarized Dark.plist */; };
+		010870A91C99E26E00C335DA /* Solarized Light.plist in Copy Colour Schemes */ = {isa = PBXBuildFile; fileRef = 010870A41C99E24F00C335DA /* Solarized Light.plist */; };
 		01098F171AA7BD0400ED4CFD /* SMLGoToLine.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F191AA7BD0400ED4CFD /* SMLGoToLine.xib */; };
 		01098F1A1AA7BD0900ED4CFD /* SMLEntab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F1C1AA7BD0900ED4CFD /* SMLEntab.xib */; };
 		01098F1D1AA7BD0D00ED4CFD /* SMLDetab.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01098F1F1AA7BD0D00ED4CFD /* SMLDetab.xib */; };
@@ -71,7 +162,6 @@
 		AB257FE0129B1CE300A3FF76 /* MGSSyntaxController.h in Headers */ = {isa = PBXBuildFile; fileRef = AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB3971CB118C1F8A00AEF388 /* MGSSyntaxController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */; };
 		AB39723A118C27E700AEF388 /* SyntaxDefinitions.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */; };
-		AB3972E5118C28E700AEF388 /* Syntax Definitions in Resources */ = {isa = PBXBuildFile; fileRef = AB397291118C28E700AEF388 /* Syntax Definitions */; };
 		AB472BF41299BBB100202CB5 /* MGSExtraInterfaceController.m in Sources */ = {isa = PBXBuildFile; fileRef = AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */; };
 		AB648E3311FB386E00AEF7BD /* Fragaria.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB69B62B118B745700903D1D /* Fragaria.framework */; };
 		AB648E4011FB38E700AEF7BD /* MyDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = AB648E3F11FB38E700AEF7BD /* MyDocument.m */; };
@@ -129,7 +219,6 @@
 		D0718BAE1AB721280073493A /* MGSColourSchemeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0718BAD1AB721280073493A /* MGSColourSchemeTests.m */; };
 		D07717B11AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = D07717AF1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m */; };
 		D07717B41AC2670500B23867 /* MGSSampleBreakpointDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D07717B31AC2670500B23867 /* MGSSampleBreakpointDelegate.m */; };
-		D079D85D1AB7DEE600169F82 /* Colour Schemes in Resources */ = {isa = PBXBuildFile; fileRef = D079D85C1AB7DEE600169F82 /* Colour Schemes */; };
 		D08359DB1A9F0446001B7B50 /* FeaturesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = D08359D91A9F0446001B7B50 /* FeaturesWindowController.m */; };
 		D0AB50F01A91CDC200A6DF58 /* SMLSyntaxErrorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0AB50EF1A91CDC200A6DF58 /* SMLSyntaxErrorTests.m */; };
 		D0C13BBC1ABD12A400E191A9 /* MGSColourSchemeSaveController.m in Sources */ = {isa = PBXBuildFile; fileRef = D0C13BBA1ABD12A400E191A9 /* MGSColourSchemeSaveController.m */; };
@@ -197,6 +286,117 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		010870481C99E19F00C335DA /* Copy Syntax Definitions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "Syntax Definitions";
+			dstSubfolderSpec = 7;
+			files = (
+				010870491C99E1C100C335DA /* actionscript.plist in Copy Syntax Definitions */,
+				0108704A1C99E1C100C335DA /* actionscript3.plist in Copy Syntax Definitions */,
+				0108704B1C99E1C100C335DA /* active4d.plist in Copy Syntax Definitions */,
+				0108704C1C99E1C100C335DA /* ada.plist in Copy Syntax Definitions */,
+				0108704D1C99E1C100C335DA /* ampl.plist in Copy Syntax Definitions */,
+				0108704E1C99E1C100C335DA /* apache.plist in Copy Syntax Definitions */,
+				0108704F1C99E1C100C335DA /* applescript.plist in Copy Syntax Definitions */,
+				010870501C99E1C100C335DA /* asm-m68k.plist in Copy Syntax Definitions */,
+				010870511C99E1C100C335DA /* asm-mips.plist in Copy Syntax Definitions */,
+				010870521C99E1C100C335DA /* asm-x86.plist in Copy Syntax Definitions */,
+				010870531C99E1C100C335DA /* asp-js.plist in Copy Syntax Definitions */,
+				010870541C99E1C100C335DA /* asp-vb.plist in Copy Syntax Definitions */,
+				010870551C99E1C100C335DA /* aspdotnet-cs.plist in Copy Syntax Definitions */,
+				010870561C99E1C100C335DA /* aspdotnet-vb.plist in Copy Syntax Definitions */,
+				010870571C99E1C100C335DA /* awk.plist in Copy Syntax Definitions */,
+				010870581C99E1C100C335DA /* batch.plist in Copy Syntax Definitions */,
+				010870591C99E1C100C335DA /* c.plist in Copy Syntax Definitions */,
+				0108705A1C99E1C100C335DA /* cobol.plist in Copy Syntax Definitions */,
+				0108705B1C99E1C100C335DA /* coffeescript.plist in Copy Syntax Definitions */,
+				0108705C1C99E1C100C335DA /* coldfusion.plist in Copy Syntax Definitions */,
+				0108705D1C99E1C100C335DA /* cpp.plist in Copy Syntax Definitions */,
+				0108705E1C99E1C100C335DA /* csharp.plist in Copy Syntax Definitions */,
+				0108705F1C99E1C100C335DA /* csound.plist in Copy Syntax Definitions */,
+				010870601C99E1C100C335DA /* css.plist in Copy Syntax Definitions */,
+				010870611C99E1C100C335DA /* d.plist in Copy Syntax Definitions */,
+				010870621C99E1C100C335DA /* dylan.plist in Copy Syntax Definitions */,
+				010870631C99E1C100C335DA /* eiffel.plist in Copy Syntax Definitions */,
+				010870641C99E1C100C335DA /* erl.plist in Copy Syntax Definitions */,
+				010870651C99E1C100C335DA /* eztpl.plist in Copy Syntax Definitions */,
+				010870661C99E1C100C335DA /* f-script.plist in Copy Syntax Definitions */,
+				010870671C99E1C100C335DA /* fortran.plist in Copy Syntax Definitions */,
+				010870681C99E1C100C335DA /* freefem.plist in Copy Syntax Definitions */,
+				010870691C99E1C100C335DA /* gedcom.plist in Copy Syntax Definitions */,
+				0108706A1C99E1C100C335DA /* gnuassembler.plist in Copy Syntax Definitions */,
+				0108706B1C99E1C100C335DA /* graphviz.plist in Copy Syntax Definitions */,
+				0108706C1C99E1C100C335DA /* haskell.plist in Copy Syntax Definitions */,
+				0108706D1C99E1C100C335DA /* header.plist in Copy Syntax Definitions */,
+				0108706E1C99E1C100C335DA /* html.plist in Copy Syntax Definitions */,
+				0108706F1C99E1C100C335DA /* idl.plist in Copy Syntax Definitions */,
+				010870701C99E1C100C335DA /* java.plist in Copy Syntax Definitions */,
+				010870711C99E1C100C335DA /* javafx.plist in Copy Syntax Definitions */,
+				010870721C99E1C100C335DA /* javascript.plist in Copy Syntax Definitions */,
+				010870731C99E1C100C335DA /* jsp.plist in Copy Syntax Definitions */,
+				010870741C99E1C100C335DA /* latex.plist in Copy Syntax Definitions */,
+				010870751C99E1C100C335DA /* lilypond.plist in Copy Syntax Definitions */,
+				010870761C99E1C100C335DA /* lisp.plist in Copy Syntax Definitions */,
+				010870771C99E1C100C335DA /* logtalk.plist in Copy Syntax Definitions */,
+				010870781C99E1C100C335DA /* lsl.plist in Copy Syntax Definitions */,
+				010870791C99E1C100C335DA /* lua.plist in Copy Syntax Definitions */,
+				0108707A1C99E1C100C335DA /* markdown.plist in Copy Syntax Definitions */,
+				0108707B1C99E1C100C335DA /* matlab.plist in Copy Syntax Definitions */,
+				0108707C1C99E1C100C335DA /* mel.plist in Copy Syntax Definitions */,
+				0108707D1C99E1C100C335DA /* metapost.plist in Copy Syntax Definitions */,
+				0108707E1C99E1C100C335DA /* metaslang.plist in Copy Syntax Definitions */,
+				0108707F1C99E1C100C335DA /* mysql.plist in Copy Syntax Definitions */,
+				010870801C99E1C100C335DA /* nemerle.plist in Copy Syntax Definitions */,
+				010870811C99E1C100C335DA /* none.plist in Copy Syntax Definitions */,
+				010870821C99E1C100C335DA /* nrnhoc.plist in Copy Syntax Definitions */,
+				010870831C99E1C100C335DA /* objectivec.plist in Copy Syntax Definitions */,
+				010870841C99E1C100C335DA /* objectivecaml.plist in Copy Syntax Definitions */,
+				010870851C99E1C100C335DA /* ox.plist in Copy Syntax Definitions */,
+				010870861C99E1C100C335DA /* pascal.plist in Copy Syntax Definitions */,
+				010870871C99E1C100C335DA /* pdf.plist in Copy Syntax Definitions */,
+				010870881C99E1C100C335DA /* perl.plist in Copy Syntax Definitions */,
+				010870891C99E1C100C335DA /* php.plist in Copy Syntax Definitions */,
+				0108708A1C99E1C100C335DA /* plist.plist in Copy Syntax Definitions */,
+				0108708B1C99E1C100C335DA /* postscript.plist in Copy Syntax Definitions */,
+				0108708C1C99E1C100C335DA /* prolog.plist in Copy Syntax Definitions */,
+				0108708D1C99E1C100C335DA /* python.plist in Copy Syntax Definitions */,
+				0108708E1C99E1C100C335DA /* r.plist in Copy Syntax Definitions */,
+				0108708F1C99E1C100C335DA /* rhtml.plist in Copy Syntax Definitions */,
+				010870901C99E1C100C335DA /* ruby.plist in Copy Syntax Definitions */,
+				010870911C99E1C200C335DA /* scala.plist in Copy Syntax Definitions */,
+				010870921C99E1C200C335DA /* sgml.plist in Copy Syntax Definitions */,
+				010870931C99E1C200C335DA /* shell.plist in Copy Syntax Definitions */,
+				010870941C99E1C200C335DA /* sml.plist in Copy Syntax Definitions */,
+				010870951C99E1C200C335DA /* sql.plist in Copy Syntax Definitions */,
+				010870961C99E1C200C335DA /* standard.plist in Copy Syntax Definitions */,
+				010870971C99E1C200C335DA /* stata.plist in Copy Syntax Definitions */,
+				010870981C99E1C200C335DA /* supercollider.plist in Copy Syntax Definitions */,
+				010870991C99E1C200C335DA /* tcltk.plist in Copy Syntax Definitions */,
+				0108709A1C99E1C200C335DA /* torquescript.plist in Copy Syntax Definitions */,
+				0108709B1C99E1C200C335DA /* udo.plist in Copy Syntax Definitions */,
+				0108709C1C99E1C200C335DA /* vb.plist in Copy Syntax Definitions */,
+				0108709D1C99E1C200C335DA /* verilog.plist in Copy Syntax Definitions */,
+				0108709E1C99E1C200C335DA /* vhdl.plist in Copy Syntax Definitions */,
+				0108709F1C99E1C200C335DA /* xml.plist in Copy Syntax Definitions */,
+			);
+			name = "Copy Syntax Definitions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		010870A51C99E25800C335DA /* Copy Colour Schemes */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "Colour Schemes";
+			dstSubfolderSpec = 7;
+			files = (
+				010870A61C99E26E00C335DA /* Classic Fragaria.plist in Copy Colour Schemes */,
+				010870A71C99E26E00C335DA /* Midnight.plist in Copy Colour Schemes */,
+				010870A81C99E26E00C335DA /* Solarized Dark.plist in Copy Colour Schemes */,
+				010870A91C99E26E00C335DA /* Solarized Light.plist in Copy Colour Schemes */,
+			);
+			name = "Copy Colour Schemes";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		01F0D7141C120FC2000A08B6 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -256,6 +456,97 @@
 
 /* Begin PBXFileReference section */
 		0105F3E11A86811C0045BDD3 /* SMLSyntaxColouring.m */ = {isa = PBXFileReference; explicitFileType = text; fileEncoding = 4; path = SMLSyntaxColouring.m; sourceTree = "<group>"; };
+		01086F9A1C99E16E00C335DA /* actionscript.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = actionscript.plist; sourceTree = "<group>"; };
+		01086F9B1C99E16E00C335DA /* actionscript3.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = actionscript3.plist; sourceTree = "<group>"; };
+		01086F9C1C99E16E00C335DA /* active4d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = active4d.plist; sourceTree = "<group>"; };
+		01086F9D1C99E16E00C335DA /* ada.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ada.plist; sourceTree = "<group>"; };
+		01086F9E1C99E16E00C335DA /* ampl.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ampl.plist; sourceTree = "<group>"; };
+		01086F9F1C99E16E00C335DA /* apache.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = apache.plist; sourceTree = "<group>"; };
+		01086FA01C99E16E00C335DA /* applescript.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = applescript.plist; sourceTree = "<group>"; };
+		01086FA11C99E16E00C335DA /* asm-m68k.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "asm-m68k.plist"; sourceTree = "<group>"; };
+		01086FA21C99E16E00C335DA /* asm-mips.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "asm-mips.plist"; sourceTree = "<group>"; };
+		01086FA31C99E16E00C335DA /* asm-x86.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "asm-x86.plist"; sourceTree = "<group>"; };
+		01086FA41C99E16E00C335DA /* asp-js.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "asp-js.plist"; sourceTree = "<group>"; };
+		01086FA51C99E16E00C335DA /* asp-vb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "asp-vb.plist"; sourceTree = "<group>"; };
+		01086FA61C99E16E00C335DA /* aspdotnet-cs.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "aspdotnet-cs.plist"; sourceTree = "<group>"; };
+		01086FA71C99E16E00C335DA /* aspdotnet-vb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "aspdotnet-vb.plist"; sourceTree = "<group>"; };
+		01086FA81C99E16E00C335DA /* awk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = awk.plist; sourceTree = "<group>"; };
+		01086FA91C99E16E00C335DA /* batch.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = batch.plist; sourceTree = "<group>"; };
+		01086FAA1C99E16E00C335DA /* c.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = c.plist; sourceTree = "<group>"; };
+		01086FAB1C99E16E00C335DA /* cobol.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cobol.plist; sourceTree = "<group>"; };
+		01086FAC1C99E16E00C335DA /* coffeescript.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = coffeescript.plist; sourceTree = "<group>"; };
+		01086FAD1C99E16E00C335DA /* coldfusion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = coldfusion.plist; sourceTree = "<group>"; };
+		01086FAE1C99E16E00C335DA /* cpp.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = cpp.plist; sourceTree = "<group>"; };
+		01086FAF1C99E16E00C335DA /* csharp.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = csharp.plist; sourceTree = "<group>"; };
+		01086FB01C99E16E00C335DA /* csound.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = csound.plist; sourceTree = "<group>"; };
+		01086FB11C99E16E00C335DA /* css.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = css.plist; sourceTree = "<group>"; };
+		01086FB21C99E16E00C335DA /* d.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = d.plist; sourceTree = "<group>"; };
+		01086FB31C99E16E00C335DA /* dylan.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = dylan.plist; sourceTree = "<group>"; };
+		01086FB41C99E16E00C335DA /* eiffel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = eiffel.plist; sourceTree = "<group>"; };
+		01086FB51C99E16E00C335DA /* erl.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = erl.plist; sourceTree = "<group>"; };
+		01086FB61C99E16E00C335DA /* eztpl.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = eztpl.plist; sourceTree = "<group>"; };
+		01086FB71C99E16E00C335DA /* f-script.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "f-script.plist"; sourceTree = "<group>"; };
+		01086FB81C99E16E00C335DA /* fortran.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = fortran.plist; sourceTree = "<group>"; };
+		01086FB91C99E16E00C335DA /* freefem.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = freefem.plist; sourceTree = "<group>"; };
+		01086FBA1C99E16E00C335DA /* gedcom.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gedcom.plist; sourceTree = "<group>"; };
+		01086FBB1C99E16E00C335DA /* gnuassembler.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gnuassembler.plist; sourceTree = "<group>"; };
+		01086FBC1C99E16E00C335DA /* graphviz.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = graphviz.plist; sourceTree = "<group>"; };
+		01086FBD1C99E16E00C335DA /* haskell.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = haskell.plist; sourceTree = "<group>"; };
+		01086FBE1C99E16E00C335DA /* header.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = header.plist; sourceTree = "<group>"; };
+		01086FBF1C99E16E00C335DA /* html.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = html.plist; sourceTree = "<group>"; };
+		01086FC01C99E16E00C335DA /* idl.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = idl.plist; sourceTree = "<group>"; };
+		01086FC11C99E16E00C335DA /* java.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = java.plist; sourceTree = "<group>"; };
+		01086FC21C99E16E00C335DA /* javafx.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = javafx.plist; sourceTree = "<group>"; };
+		01086FC31C99E16E00C335DA /* javascript.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = javascript.plist; sourceTree = "<group>"; };
+		01086FC41C99E16E00C335DA /* jsp.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = jsp.plist; sourceTree = "<group>"; };
+		01086FC51C99E16E00C335DA /* latex.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = latex.plist; sourceTree = "<group>"; };
+		01086FC61C99E16E00C335DA /* lilypond.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = lilypond.plist; sourceTree = "<group>"; };
+		01086FC71C99E16E00C335DA /* lisp.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = lisp.plist; sourceTree = "<group>"; };
+		01086FC81C99E16E00C335DA /* logtalk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = logtalk.plist; sourceTree = "<group>"; };
+		01086FC91C99E16E00C335DA /* lsl.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = lsl.plist; sourceTree = "<group>"; };
+		01086FCA1C99E16E00C335DA /* lua.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = lua.plist; sourceTree = "<group>"; };
+		01086FCB1C99E16E00C335DA /* markdown.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = markdown.plist; sourceTree = "<group>"; };
+		01086FCC1C99E16E00C335DA /* matlab.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = matlab.plist; sourceTree = "<group>"; };
+		01086FCD1C99E16E00C335DA /* mel.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = mel.plist; sourceTree = "<group>"; };
+		01086FCE1C99E16E00C335DA /* metapost.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = metapost.plist; sourceTree = "<group>"; };
+		01086FCF1C99E16E00C335DA /* metaslang.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = metaslang.plist; sourceTree = "<group>"; };
+		01086FD01C99E16E00C335DA /* mysql.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = mysql.plist; sourceTree = "<group>"; };
+		01086FD11C99E16E00C335DA /* nemerle.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = nemerle.plist; sourceTree = "<group>"; };
+		01086FD21C99E16E00C335DA /* none.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = none.plist; sourceTree = "<group>"; };
+		01086FD31C99E16E00C335DA /* nrnhoc.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = nrnhoc.plist; sourceTree = "<group>"; };
+		01086FD41C99E16E00C335DA /* objectivec.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = objectivec.plist; sourceTree = "<group>"; };
+		01086FD51C99E16E00C335DA /* objectivecaml.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = objectivecaml.plist; sourceTree = "<group>"; };
+		01086FD61C99E16E00C335DA /* ox.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ox.plist; sourceTree = "<group>"; };
+		01086FD71C99E16E00C335DA /* pascal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = pascal.plist; sourceTree = "<group>"; };
+		01086FD81C99E16E00C335DA /* pdf.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = pdf.plist; sourceTree = "<group>"; };
+		01086FD91C99E16E00C335DA /* perl.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = perl.plist; sourceTree = "<group>"; };
+		01086FDA1C99E16E00C335DA /* php.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = php.plist; sourceTree = "<group>"; };
+		01086FDB1C99E16E00C335DA /* plist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = plist.plist; sourceTree = "<group>"; };
+		01086FDC1C99E16E00C335DA /* postscript.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = postscript.plist; sourceTree = "<group>"; };
+		01086FDD1C99E16E00C335DA /* prolog.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = prolog.plist; sourceTree = "<group>"; };
+		01086FDE1C99E16E00C335DA /* python.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = python.plist; sourceTree = "<group>"; };
+		01086FDF1C99E16E00C335DA /* r.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = r.plist; sourceTree = "<group>"; };
+		01086FE01C99E16E00C335DA /* rhtml.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = rhtml.plist; sourceTree = "<group>"; };
+		01086FE11C99E16E00C335DA /* ruby.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ruby.plist; sourceTree = "<group>"; };
+		01086FE21C99E16E00C335DA /* scala.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = scala.plist; sourceTree = "<group>"; };
+		01086FE31C99E16E00C335DA /* sgml.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sgml.plist; sourceTree = "<group>"; };
+		01086FE41C99E16E00C335DA /* shell.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = shell.plist; sourceTree = "<group>"; };
+		01086FE51C99E16E00C335DA /* sml.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sml.plist; sourceTree = "<group>"; };
+		01086FE61C99E16E00C335DA /* sql.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = sql.plist; sourceTree = "<group>"; };
+		01086FE71C99E16E00C335DA /* standard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = standard.plist; sourceTree = "<group>"; };
+		01086FE81C99E16E00C335DA /* stata.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = stata.plist; sourceTree = "<group>"; };
+		01086FE91C99E16E00C335DA /* supercollider.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = supercollider.plist; sourceTree = "<group>"; };
+		01086FEA1C99E16E00C335DA /* tcltk.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = tcltk.plist; sourceTree = "<group>"; };
+		01086FEB1C99E16E00C335DA /* torquescript.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = torquescript.plist; sourceTree = "<group>"; };
+		01086FEC1C99E16E00C335DA /* udo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = udo.plist; sourceTree = "<group>"; };
+		01086FED1C99E16E00C335DA /* vb.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = vb.plist; sourceTree = "<group>"; };
+		01086FEE1C99E16E00C335DA /* verilog.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = verilog.plist; sourceTree = "<group>"; };
+		01086FEF1C99E16E00C335DA /* vhdl.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = vhdl.plist; sourceTree = "<group>"; };
+		01086FF01C99E16E00C335DA /* xml.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = xml.plist; sourceTree = "<group>"; };
+		010870A11C99E24F00C335DA /* Classic Fragaria.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Classic Fragaria.plist"; sourceTree = "<group>"; };
+		010870A21C99E24F00C335DA /* Midnight.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Midnight.plist; sourceTree = "<group>"; };
+		010870A31C99E24F00C335DA /* Solarized Dark.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Solarized Dark.plist"; sourceTree = "<group>"; };
+		010870A41C99E24F00C335DA /* Solarized Light.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Solarized Light.plist"; sourceTree = "<group>"; };
 		01098F181AA7BD0400ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMLGoToLine.xib; sourceTree = "<group>"; };
 		01098F1B1AA7BD0900ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMLEntab.xib; sourceTree = "<group>"; };
 		01098F1E1AA7BD0D00ED4CFD /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SMLDetab.xib; sourceTree = "<group>"; };
@@ -318,7 +609,6 @@
 		AB3971C8118C1F8A00AEF388 /* MGSSyntaxController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSSyntaxController.h; sourceTree = "<group>"; };
 		AB3971C9118C1F8A00AEF388 /* MGSSyntaxController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSSyntaxController.m; sourceTree = "<group>"; };
 		AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SyntaxDefinitions.plist; sourceTree = "<group>"; };
-		AB397291118C28E700AEF388 /* Syntax Definitions */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Syntax Definitions"; sourceTree = "<group>"; };
 		AB472BF31299BBB100202CB5 /* MGSExtraInterfaceController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSExtraInterfaceController.m; sourceTree = "<group>"; };
 		AB472BF51299BBBA00202CB5 /* MGSExtraInterfaceController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSExtraInterfaceController.h; sourceTree = "<group>"; };
 		AB648E2A11FB385700AEF7BD /* Fragaria Doc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Fragaria Doc.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -395,7 +685,6 @@
 		D07717AF1AC25A8800B23867 /* MGSBoolToGlobalHintTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSBoolToGlobalHintTransformer.m; sourceTree = "<group>"; };
 		D07717B21AC2670500B23867 /* MGSSampleBreakpointDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGSSampleBreakpointDelegate.h; path = Applications/MGSFragariaViewModern/MGSSampleBreakpointDelegate.h; sourceTree = SOURCE_ROOT; };
 		D07717B31AC2670500B23867 /* MGSSampleBreakpointDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MGSSampleBreakpointDelegate.m; path = Applications/MGSFragariaViewModern/MGSSampleBreakpointDelegate.m; sourceTree = SOURCE_ROOT; };
-		D079D85C1AB7DEE600169F82 /* Colour Schemes */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Colour Schemes"; sourceTree = "<group>"; };
 		D08359D81A9F0446001B7B50 /* FeaturesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FeaturesWindowController.h; path = Applications/MGSFragariaView/FeaturesWindowController.h; sourceTree = "<group>"; };
 		D08359D91A9F0446001B7B50 /* FeaturesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FeaturesWindowController.m; path = Applications/MGSFragariaView/FeaturesWindowController.m; sourceTree = "<group>"; };
 		D0AB50EF1A91CDC200A6DF58 /* SMLSyntaxErrorTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMLSyntaxErrorTests.m; sourceTree = "<group>"; };
@@ -487,6 +776,113 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		01086F991C99E16D00C335DA /* Syntax Definitions */ = {
+			isa = PBXGroup;
+			children = (
+				01086F9A1C99E16E00C335DA /* actionscript.plist */,
+				01086F9B1C99E16E00C335DA /* actionscript3.plist */,
+				01086F9C1C99E16E00C335DA /* active4d.plist */,
+				01086F9D1C99E16E00C335DA /* ada.plist */,
+				01086F9E1C99E16E00C335DA /* ampl.plist */,
+				01086F9F1C99E16E00C335DA /* apache.plist */,
+				01086FA01C99E16E00C335DA /* applescript.plist */,
+				01086FA11C99E16E00C335DA /* asm-m68k.plist */,
+				01086FA21C99E16E00C335DA /* asm-mips.plist */,
+				01086FA31C99E16E00C335DA /* asm-x86.plist */,
+				01086FA41C99E16E00C335DA /* asp-js.plist */,
+				01086FA51C99E16E00C335DA /* asp-vb.plist */,
+				01086FA61C99E16E00C335DA /* aspdotnet-cs.plist */,
+				01086FA71C99E16E00C335DA /* aspdotnet-vb.plist */,
+				01086FA81C99E16E00C335DA /* awk.plist */,
+				01086FA91C99E16E00C335DA /* batch.plist */,
+				01086FAA1C99E16E00C335DA /* c.plist */,
+				01086FAB1C99E16E00C335DA /* cobol.plist */,
+				01086FAC1C99E16E00C335DA /* coffeescript.plist */,
+				01086FAD1C99E16E00C335DA /* coldfusion.plist */,
+				01086FAE1C99E16E00C335DA /* cpp.plist */,
+				01086FAF1C99E16E00C335DA /* csharp.plist */,
+				01086FB01C99E16E00C335DA /* csound.plist */,
+				01086FB11C99E16E00C335DA /* css.plist */,
+				01086FB21C99E16E00C335DA /* d.plist */,
+				01086FB31C99E16E00C335DA /* dylan.plist */,
+				01086FB41C99E16E00C335DA /* eiffel.plist */,
+				01086FB51C99E16E00C335DA /* erl.plist */,
+				01086FB61C99E16E00C335DA /* eztpl.plist */,
+				01086FB71C99E16E00C335DA /* f-script.plist */,
+				01086FB81C99E16E00C335DA /* fortran.plist */,
+				01086FB91C99E16E00C335DA /* freefem.plist */,
+				01086FBA1C99E16E00C335DA /* gedcom.plist */,
+				01086FBB1C99E16E00C335DA /* gnuassembler.plist */,
+				01086FBC1C99E16E00C335DA /* graphviz.plist */,
+				01086FBD1C99E16E00C335DA /* haskell.plist */,
+				01086FBE1C99E16E00C335DA /* header.plist */,
+				01086FBF1C99E16E00C335DA /* html.plist */,
+				01086FC01C99E16E00C335DA /* idl.plist */,
+				01086FC11C99E16E00C335DA /* java.plist */,
+				01086FC21C99E16E00C335DA /* javafx.plist */,
+				01086FC31C99E16E00C335DA /* javascript.plist */,
+				01086FC41C99E16E00C335DA /* jsp.plist */,
+				01086FC51C99E16E00C335DA /* latex.plist */,
+				01086FC61C99E16E00C335DA /* lilypond.plist */,
+				01086FC71C99E16E00C335DA /* lisp.plist */,
+				01086FC81C99E16E00C335DA /* logtalk.plist */,
+				01086FC91C99E16E00C335DA /* lsl.plist */,
+				01086FCA1C99E16E00C335DA /* lua.plist */,
+				01086FCB1C99E16E00C335DA /* markdown.plist */,
+				01086FCC1C99E16E00C335DA /* matlab.plist */,
+				01086FCD1C99E16E00C335DA /* mel.plist */,
+				01086FCE1C99E16E00C335DA /* metapost.plist */,
+				01086FCF1C99E16E00C335DA /* metaslang.plist */,
+				01086FD01C99E16E00C335DA /* mysql.plist */,
+				01086FD11C99E16E00C335DA /* nemerle.plist */,
+				01086FD21C99E16E00C335DA /* none.plist */,
+				01086FD31C99E16E00C335DA /* nrnhoc.plist */,
+				01086FD41C99E16E00C335DA /* objectivec.plist */,
+				01086FD51C99E16E00C335DA /* objectivecaml.plist */,
+				01086FD61C99E16E00C335DA /* ox.plist */,
+				01086FD71C99E16E00C335DA /* pascal.plist */,
+				01086FD81C99E16E00C335DA /* pdf.plist */,
+				01086FD91C99E16E00C335DA /* perl.plist */,
+				01086FDA1C99E16E00C335DA /* php.plist */,
+				01086FDB1C99E16E00C335DA /* plist.plist */,
+				01086FDC1C99E16E00C335DA /* postscript.plist */,
+				01086FDD1C99E16E00C335DA /* prolog.plist */,
+				01086FDE1C99E16E00C335DA /* python.plist */,
+				01086FDF1C99E16E00C335DA /* r.plist */,
+				01086FE01C99E16E00C335DA /* rhtml.plist */,
+				01086FE11C99E16E00C335DA /* ruby.plist */,
+				01086FE21C99E16E00C335DA /* scala.plist */,
+				01086FE31C99E16E00C335DA /* sgml.plist */,
+				01086FE41C99E16E00C335DA /* shell.plist */,
+				01086FE51C99E16E00C335DA /* sml.plist */,
+				01086FE61C99E16E00C335DA /* sql.plist */,
+				01086FE71C99E16E00C335DA /* standard.plist */,
+				01086FE81C99E16E00C335DA /* stata.plist */,
+				01086FE91C99E16E00C335DA /* supercollider.plist */,
+				01086FEA1C99E16E00C335DA /* tcltk.plist */,
+				01086FEB1C99E16E00C335DA /* torquescript.plist */,
+				01086FEC1C99E16E00C335DA /* udo.plist */,
+				01086FED1C99E16E00C335DA /* vb.plist */,
+				01086FEE1C99E16E00C335DA /* verilog.plist */,
+				01086FEF1C99E16E00C335DA /* vhdl.plist */,
+				01086FF01C99E16E00C335DA /* xml.plist */,
+			);
+			name = "Syntax Definitions";
+			path = "../../Fragaria/Syntax Definitions";
+			sourceTree = "<group>";
+		};
+		010870A01C99E24F00C335DA /* Colour Schemes */ = {
+			isa = PBXGroup;
+			children = (
+				010870A11C99E24F00C335DA /* Classic Fragaria.plist */,
+				010870A21C99E24F00C335DA /* Midnight.plist */,
+				010870A31C99E24F00C335DA /* Solarized Dark.plist */,
+				010870A41C99E24F00C335DA /* Solarized Light.plist */,
+			);
+			name = "Colour Schemes";
+			path = "../../Fragaria/Colour Schemes";
+			sourceTree = "<group>";
+		};
 		013278651A81610E00D2DCA5 /* Syntax Definition Manager */ = {
 			isa = PBXGroup;
 			children = (
@@ -646,8 +1042,8 @@
 				AB69B62C118B745700903D1D /* MGSFragaria-Info.plist */,
 				AB3971E6118C27E700AEF388 /* SyntaxDefinitions.plist */,
 				016E31111B0324D3000D3497 /* Localizable.strings */,
-				D079D85C1AB7DEE600169F82 /* Colour Schemes */,
-				AB397291118C28E700AEF388 /* Syntax Definitions */,
+				010870A01C99E24F00C335DA /* Colour Schemes */,
+				01086F991C99E16D00C335DA /* Syntax Definitions */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -990,6 +1386,8 @@
 			buildPhases = (
 				AB69B626118B745700903D1D /* Headers */,
 				AB69B627118B745700903D1D /* Resources */,
+				010870481C99E19F00C335DA /* Copy Syntax Definitions */,
+				010870A51C99E25800C335DA /* Copy Colour Schemes */,
 				AB69B628118B745700903D1D /* Sources */,
 				AB69B629118B745700903D1D /* Frameworks */,
 			);
@@ -1156,9 +1554,7 @@
 			files = (
 				D07188481AB423830073493A /* MGSPrefsEditorProperties.xib in Resources */,
 				AB39723A118C27E700AEF388 /* SyntaxDefinitions.plist in Resources */,
-				D079D85D1AB7DEE600169F82 /* Colour Schemes in Resources */,
 				016E310F1B0324D3000D3497 /* Localizable.strings in Resources */,
-				AB3972E5118C28E700AEF388 /* Syntax Definitions in Resources */,
 				ABA1C12316144EFD00C8723F /* README.md in Resources */,
 				ABA812DC11B6855200A29990 /* LICENSE-2.0.txt in Resources */,
 				01098F171AA7BD0400ED4CFD /* SMLGoToLine.xib in Resources */,
@@ -1664,6 +2060,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -1684,6 +2081,7 @@
 					"-framework",
 					AppKit,
 				);
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mugginsoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Fragaria;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1741,6 +2139,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1763,6 +2162,7 @@
 					"-framework",
 					AppKit,
 				);
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mugginsoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Fragaria;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1773,6 +2173,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APPLY_RULES_IN_COPY_FILES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "-";
 				COMBINE_HIDPI_IMAGES = YES;
@@ -1794,6 +2195,7 @@
 					"-framework",
 					AppKit,
 				);
+				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mugginsoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Fragaria;
 				VERSIONING_SYSTEM = "apple-generic";
