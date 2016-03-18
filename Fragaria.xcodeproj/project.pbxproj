@@ -2084,6 +2084,7 @@
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mugginsoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Fragaria;
+				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Testing;
@@ -2165,6 +2166,7 @@
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mugginsoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Fragaria;
+				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -2198,6 +2200,7 @@
 				PLIST_FILE_OUTPUT_FORMAT = binary;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mugginsoft.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = Fragaria;
+				SKIP_INSTALL = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
