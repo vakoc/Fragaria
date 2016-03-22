@@ -867,8 +867,7 @@
 				01086FEF1C99E16E00C335DA /* vhdl.plist */,
 				01086FF01C99E16E00C335DA /* xml.plist */,
 			);
-			name = "Syntax Definitions";
-			path = "../../Fragaria/Syntax Definitions";
+			path = "Syntax Definitions";
 			sourceTree = "<group>";
 		};
 		010870A01C99E24F00C335DA /* Colour Schemes */ = {
@@ -879,8 +878,7 @@
 				010870A31C99E24F00C335DA /* Solarized Dark.plist */,
 				010870A41C99E24F00C335DA /* Solarized Light.plist */,
 			);
-			name = "Colour Schemes";
-			path = "../../Fragaria/Colour Schemes";
+			path = "Colour Schemes";
 			sourceTree = "<group>";
 		};
 		013278651A81610E00D2DCA5 /* Syntax Definition Manager */ = {
