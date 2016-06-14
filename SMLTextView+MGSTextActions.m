@@ -30,7 +30,7 @@
     BOOL enableItem = YES;
     SEL action = [anItem action];
     
-    // All items who should only be active if something is selected
+    // All items who should only be active if something is selected and view is editable.
     if (action == @selector(removeNeedlessWhitespace:) ||
         action == @selector(removeLineEndings:) ||
         action == @selector(entab:) ||
@@ -39,12 +39,15 @@
         action == @selector(uppercaseCharacters:) ||
         action == @selector(lowercaseCharacters:)
         ) {
-        if ([self selectedRange].length < 1) {
+        if (([self selectedRange].length < 1) || (!self.editable)) {
             enableItem = NO;
         }
+    } else if (action == @selector(shiftLeft:) || action == @selector(shiftRight:)) {
+        if (!self.editable)
+            enableItem = NO;
     } else if (action == @selector(commentOrUncomment:) ) {
         // Comment Or Uncomment
-        if ([self.syntaxColouring.syntaxDefinition.singleLineComments count] == 0) {
+        if (([self.syntaxColouring.syntaxDefinition.singleLineComments count] == 0) || (!self.editable)) {
             enableItem = NO;
         }
     } else {
