@@ -21,19 +21,19 @@ override init() {
 }
 
 
-override func windowControllerDidLoadNib(aController: NSWindowController) {
+override func windowControllerDidLoadNib(_ aController: NSWindowController) {
     super.windowControllerDidLoadNib(aController)
     fragaria.syntaxDefinitionName = "Objective-C"
-    fragaria.syntaxColoured = true
+    fragaria.isSyntaxColoured = true
     fragaria.showsLineNumbers = true
     fragaria.string = "// This is the future"
     self.undoManager = fragaria.undoManager
-    MGSUserDefaultsController.sharedController().addFragariaToManagedSet(fragaria)
+    MGSUserDefaultsController.shared().addFragaria(toManagedSet: fragaria)
 }
     
     
 deinit {
-    MGSUserDefaultsController.sharedController().removeFragariaFromManagedSet(fragaria)
+    MGSUserDefaultsController.shared().removeFragaria(fromManagedSet: fragaria)
 }
 
 
@@ -47,12 +47,12 @@ override var windowNibName: String? {
 }
 
     
-override func dataOfType(typeName: String) throws -> NSData {
+override func data(ofType typeName: String) throws -> Data {
     throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
 }
 
     
-override func readFromData(data: NSData, ofType typeName: String) throws {
+override func read(from data: Data, ofType typeName: String) throws {
     throw NSError(domain: NSOSStatusErrorDomain, code: unimpErr, userInfo: nil)
 }
 

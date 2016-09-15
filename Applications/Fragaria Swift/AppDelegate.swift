@@ -16,19 +16,19 @@ import Fragaria
 var prefsWindow: MASPreferencesWindowController!
     
 
-func applicationWillFinishLaunching(aNotification: NSNotification) {
+func applicationWillFinishLaunching(_ aNotification: Notification) {
     var shc: MGSUserDefaultsController
-    var tmp: Set<NSObject>
+    var tmp: Set<AnyHashable>
     
-    shc = MGSUserDefaultsController.sharedController()
-    tmp = shc.managedProperties
+    shc = MGSUserDefaultsController.shared()
+    tmp = shc.managedProperties as Set<AnyHashable>
     tmp.remove(MGSFragariaDefaultsSyntaxDefinitionName)
     shc.managedProperties = tmp
-    shc.persistent = true
+    shc.isPersistent = true
 }
     
     
-@IBAction func openPreferences(sender: AnyObject) {
+@IBAction func openPreferences(_ sender: AnyObject) {
     var c: Array<MGSPrefsViewController>
     var color, editor: MGSPrefsViewController
     
