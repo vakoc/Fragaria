@@ -17,26 +17,17 @@ var prefsWindow: MASPreferencesWindowController!
     
 
 func applicationWillFinishLaunching(_ aNotification: Notification) {
-    var shc: MGSUserDefaultsController
-    var tmp: Set<AnyHashable>
-    
-    shc = MGSUserDefaultsController.shared()
-    tmp = shc.managedProperties as Set<AnyHashable>
-    tmp.remove(MGSFragariaDefaultsSyntaxDefinitionName)
-    shc.managedProperties = tmp
+    let shc: MGSUserDefaultsController = MGSUserDefaultsController.shared()
+    shc.managedProperties.remove(MGSFragariaDefaultsSyntaxDefinitionName)
     shc.isPersistent = true
 }
-    
+
     
 @IBAction func openPreferences(_ sender: AnyObject) {
-    var c: Array<MGSPrefsViewController>
-    var color, editor: MGSPrefsViewController
-    
     if prefsWindow == nil {
-        color = MGSPrefsColourPropertiesViewController()
-        editor = MGSPrefsEditorPropertiesViewController()
-        c = [color, editor]
-        prefsWindow = MASPreferencesWindowController(viewControllers: c)
+        let color = MGSPrefsColourPropertiesViewController()
+        let editor = MGSPrefsEditorPropertiesViewController()
+        prefsWindow = MASPreferencesWindowController(viewControllers: [color, editor])
     }
     prefsWindow.showWindow(self)
 }
