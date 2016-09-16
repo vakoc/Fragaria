@@ -445,7 +445,7 @@ static char kcColoursChanged;
     // colouring delegate
     NSDictionary *delegateInfo =  nil;
 	
-    // define a block that the colour delegate can use to effect colouring
+    // define a block that the colour delegate can use to affect colouring
     BOOL (^colourRangeBlock)(NSDictionary *, NSRange) = ^(NSDictionary *colourInfo, NSRange range) {
         [self setColour:colourInfo range:range];
         

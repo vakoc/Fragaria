@@ -202,10 +202,8 @@
 /*
  * - fragariaDocument:shouldColourWithBlock:string:range:info
  */
-- (BOOL)fragariaDocument:(id)document shouldColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
+- (BOOL)fragariaDocument:(MGSFragariaView *)fragaria shouldColourWithBlock:(BOOL (^)(NSDictionary<NSString *, id> *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary <NSString *, id> *)info
 {
-    #pragma unused(document, colourWithBlock, string, range, info)
-    
     // query info
     BOOL willColour = [[info objectForKey:SMLSyntaxWillColour] boolValue];
     NSDictionary *syntaxInfo = [info objectForKey:SMLSyntaxInfo];
@@ -226,9 +224,8 @@
 /*
  * - fragariaDocument:shouldColourGroupWithBlock:string:range:info
  */
-- (BOOL)fragariaDocument:(id)document shouldColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
+- (BOOL)fragariaDocument:(MGSFragariaView *)fragaria shouldColourGroupWithBlock:(BOOL (^)(NSDictionary<NSString *, id> *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary<NSString *, id> *)info
 {
-    #pragma unused(document, string)
     BOOL fragariaShouldColour = YES;
     
     // query info
@@ -311,10 +308,8 @@
 /*
  * - fragariaDocument:didColourGroupWithBlock:string:range:info
  */
-- (void)fragariaDocument:(MGSFragariaView *)fragaria didColourGroupWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
+- (void)fragariaDocument:(MGSFragariaView *)fragaria didColourGroupWithBlock:(BOOL (^)(NSDictionary<NSString *, id> *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary<NSString *, id> *)info
 {
-    #pragma unused(fragaria, string)
-    
     // query info
     NSString *group = [info objectForKey:SMLSyntaxGroup];
     NSInteger groupID = [[info objectForKey:SMLSyntaxGroupID] integerValue];
@@ -395,13 +390,11 @@
 /*
  * - fragariaDocument:didColourWithBlock:string:range:info
  */
-- (void)fragariaDocument:(MGSFragariaView *)fragaria didColourWithBlock:(BOOL (^)(NSDictionary *, NSRange))colourWithBlock string:(NSString *)string range:(NSRange)range info:(NSDictionary *)info
+- (void)fragariaDocument:(MGSFragariaView *)fragaria didColourWithBlock:(BOOL (^)(NSDictionary<NSString *, id> *, NSRange))block string:(NSString *)string range:(NSRange)range info:(NSDictionary<NSString *, id> *)info
 {
-    #pragma unused(fragaria, colourWithBlock, string, range, info)
     NSLog(@"Did colour document.");
     
     // we can call colourWithBlock to perform final colouring
-
 }
 
 
