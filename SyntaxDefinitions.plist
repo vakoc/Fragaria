@@ -144,7 +144,7 @@
 		<key>file</key>
 		<string>cpp</string>
 		<key>extensions</key>
-		<string>cpp cxx cc</string>
+		<string>cpp cxx cc ino</string>
 	</dict>
 	<dict>
 		<key>name</key>
