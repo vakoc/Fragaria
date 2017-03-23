@@ -137,6 +137,27 @@
     return self;
 }
 
+- (instancetype) initWithCoder:(NSCoder *)coder {
+    if (self = [super initWithCoder:coder])
+    {
+        NSBundle *bundle = [NSBundle bundleForClass:[MGSPrefsViewController class]];
+        [bundle loadNibNamed:@"MGSPrefsCommonViews" owner:self topLevelObjects:nil];
+        
+        _managedPropertiesProxy = [[MGSManagedPropertiesProxy alloc] initWithViewController:self];
+        _managedGlobalPropertiesProxy = [[MGSManagedGlobalPropertiesProxy alloc] initWithViewController:self];
+        
+        _userDefaultsController = [MGSUserDefaultsController sharedController];
+        self.managedPropertiesProxy.userDefaultsController = _userDefaultsController;
+        self.managedGlobalPropertiesProxy.userDefaultsController = _userDefaultsController;
+        subviewsNeedUpdate = YES;
+        
+        separators = [[NSMutableArray alloc] init];
+        
+    }
+    return self;
+}
+
+
 
 #pragma mark - Property Accessors
 

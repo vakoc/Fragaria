@@ -38,6 +38,16 @@
     return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        NSBundle *bundle = [NSBundle bundleForClass:[MGSPrefsEditorPropertiesViewController class]];
+        [bundle loadNibNamed:@"MGSPrefsEditorProperties" owner:self topLevelObjects:nil];
+    }
+    return self;
+}
+
 
 - (NSString *)toolbarItemLabel
 {

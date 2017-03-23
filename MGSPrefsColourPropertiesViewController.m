@@ -36,6 +36,16 @@
     return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder
+{
+    self = [super initWithCoder:coder];
+    if (self) {
+        NSBundle *bundle = [NSBundle bundleForClass:[MGSPrefsColourPropertiesViewController class]];
+        [bundle loadNibNamed:@"MGSPrefsColourProperties" owner:self topLevelObjects:nil];
+
+    }
+    return self;
+}
 
 - (NSString *)toolbarItemLabel
 {
