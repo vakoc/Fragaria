@@ -459,8 +459,7 @@ NSString * const KMGSColourSchemeExt = @"plist";
     [self addColourSchemesFromPath:path bundleFlag:YES];
 
     // Load schemes from app bundle
-    path = [[NSBundle mainBundle] bundlePath];
-    path = [path stringByAppendingPathComponent:@"Resources"];
+    path = [[NSBundle mainBundle] resourcePath];
     [self addColourSchemesFromPath:path bundleFlag:YES];
 
     // Load schemes from application support
