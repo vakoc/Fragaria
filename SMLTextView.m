@@ -86,8 +86,14 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
     NSTimer *autocompleteWordsTimer;
     NSArray *cachedKeywords;
     id __weak syntaxDefOfCachedKeywords;
+    BOOL _shouldConsiderAutoscroll;
 }
 
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
 
 /* Properties implemented by superclass */
 @dynamic delegate, layoutManager;
@@ -1457,6 +1463,58 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
 
     [self display]; // To reflect the new values in the view
 }
+
+#pragma mark - vakoc -
+
+- (void)layoutManagerWillChangeTextStorage
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:NSTextStorageWillProcessEditingNotification
+                object:self.textStorage];
+    [nc removeObserver:self name:NSTextStorageDidProcessEditingNotification
+                object:self.textStorage];
+    
+    
+}
+
+
+- (void)layoutManagerDidChangeTextStorage
+{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(textStorageWillProcessEditing2:)
+               name:NSTextStorageWillProcessEditingNotification object:self.textStorage];
+    
+    [nc addObserver:self selector:@selector(textStorageDidProcessEditing2:)
+               name:NSTextStorageDidProcessEditingNotification object:self.textStorage];
+}
+
+- (void)textStorageWillProcessEditing2:(NSNotification *)notification
+{
+    if (self.smartScroll)
+    {
+        
+        
+        NSClipView* cv = self.enclosingScrollView.contentView;
+        NSLog(@"%f %f", NSMaxY(cv.documentVisibleRect), NSMaxY(cv.documentRect));
+
+        _shouldConsiderAutoscroll = (NSMaxY(cv.documentVisibleRect) >= NSMaxY(cv.documentRect));
+    }
+}
+
+- (void)textStorageDidProcessEditing2:(NSNotification *)notification
+{
+
+    if (_shouldConsiderAutoscroll) {
+        _shouldConsiderAutoscroll = false;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self scrollRangeToVisible: NSMakeRange(self.textStorage.length, 0)];
+        });
+        
+
+    }
+    
+}
+
 
 
 @end

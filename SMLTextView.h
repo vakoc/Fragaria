@@ -226,5 +226,11 @@
 /** Indicates the current insertion point color. */
 @property (nonatomic, assign) NSColor *insertionPointColor;
 
+/** scroll the text view to the end when we are currently at the end of the view and text is appended */
+@property (nonatomic, assign) BOOL smartScroll;
+
+- (void) layoutManagerWillChangeTextStorage;
+
+- (void) layoutManagerDidChangeTextStorage;
 
 @end

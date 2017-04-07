@@ -134,6 +134,7 @@
     [self.gutterView layoutManagerWillChangeTextStorage];
     [self.syntaxErrorController layoutManagerWillChangeTextStorage];
     [self.textView.syntaxColouring layoutManagerWillChangeTextStorage];
+    [self.textView layoutManagerWillChangeTextStorage];
     
     [self.textView.layoutManager replaceTextStorage:textStorage];
     if ([textStorage length]) {
@@ -144,6 +145,7 @@
     [self.gutterView layoutManagerDidChangeTextStorage];
     [self.syntaxErrorController layoutManagerDidChangeTextStorage];
     [self.textView.syntaxColouring layoutManagerDidChangeTextStorage];
+    [self.textView layoutManagerDidChangeTextStorage];
 }
 
 
