@@ -77,6 +77,11 @@
     return self;
 }
 
+- (void) dealloc {
+    
+    int x = 234;
+}
+
 
 /*
  * When using mgs_propagateValue:forBinding we can help ensure type safety by using
