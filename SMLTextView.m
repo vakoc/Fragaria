@@ -1495,8 +1495,6 @@ static unichar ClosingBraceForOpeningBrace(unichar c)
         
         
         NSClipView* cv = self.enclosingScrollView.contentView;
-        NSLog(@"%f %f", NSMaxY(cv.documentVisibleRect), NSMaxY(cv.documentRect));
-
         _shouldConsiderAutoscroll = (NSMaxY(cv.documentVisibleRect) >= NSMaxY(cv.documentRect));
     }
 }
