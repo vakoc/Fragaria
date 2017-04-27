@@ -30,8 +30,14 @@
     BOOL enableItem = YES;
     SEL action = [anItem action];
     
+    if (action == @selector(lookupInDocumentation:)) {
+        if ([self selectedRange].length < 1) {
+            enableItem = NO;
+        }
+    }
+    
     // All items who should only be active if something is selected and view is editable.
-    if (action == @selector(removeNeedlessWhitespace:) ||
+    else if (action == @selector(removeNeedlessWhitespace:) ||
         action == @selector(removeLineEndings:) ||
         action == @selector(entab:) ||
         action == @selector(detab:) ||
@@ -633,6 +639,19 @@
             range = [string rangeOfCharacterFromSet:newlines options:0 range:range];
         }
     }];
+}
+
+#pragma mark -
+#pragma mark Documentation
+
+- (IBAction) lookupInDocumentation:(id)sender
+{
+    NSString *selection = [self.string substringWithRange:self.selectedRange];
+    if (selection.length == 0)
+        return;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"LookupInDocumentation" object:self userInfo:@{@"selection" : selection}];
+    
 }
 
 
