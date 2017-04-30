@@ -20,6 +20,12 @@
                         <action selector="lookupInDocumentation:" target="-1" id="TDA-6x-4ao"/>
                     </connections>
                 </menuItem>
+                <menuItem title="Reformat" tag="102" keyEquivalent="i" id="Qrq-Z6-jNm">
+                    <modifierMask key="keyEquivalentModifierMask" control="YES"/>
+                    <connections>
+                        <action selector="reformatCode:" target="-1" id="Qsl-HM-xMO"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Structure" id="yoM-jw-wca">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <menu key="submenu" id="6HI-IO-0Sn">
