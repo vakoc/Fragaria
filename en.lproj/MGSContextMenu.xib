@@ -18,12 +18,22 @@
                     <modifierMask key="keyEquivalentModifierMask" control="YES" option="YES" command="YES"/>
                     <connections>
                         <action selector="lookupInDocumentation:" target="-1" id="TDA-6x-4ao"/>
+                        <binding destination="-3" name="hidden" keyPath="self.delegate.subscribed" id="nGZ-HN-RYJ">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </menuItem>
                 <menuItem title="Reformat" tag="102" keyEquivalent="i" id="Qrq-Z6-jNm">
                     <modifierMask key="keyEquivalentModifierMask" control="YES"/>
                     <connections>
                         <action selector="reformatCode:" target="-1" id="Qsl-HM-xMO"/>
+                        <binding destination="-3" name="hidden" keyPath="self.delegate.subscribed" id="XNN-8P-sz6">
+                            <dictionary key="options">
+                                <string key="NSValueTransformerName">NSNegateBoolean</string>
+                            </dictionary>
+                        </binding>
                     </connections>
                 </menuItem>
                 <menuItem title="Structure" id="yoM-jw-wca">
